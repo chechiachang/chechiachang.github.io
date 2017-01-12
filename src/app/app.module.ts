@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent }  from './app.component';
 import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
+
 import { ResumeComponent } from "./resume/resume.component";
 import { BlogComponent } from "./blog/blog.component";
 import { AboutComponent } from "./about/about.component";
