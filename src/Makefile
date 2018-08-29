@@ -1,4 +1,3 @@
-
 THEME := "hugo-theme-air"
 
 hugo:
