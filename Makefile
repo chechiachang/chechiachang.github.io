@@ -1,5 +1,8 @@
+
+THEME := "hugo-theme-air"
+
 hugo:
-	hugo
+	hugo -t ${THEME}
 
 publish: hugo
 	rm -rf public
