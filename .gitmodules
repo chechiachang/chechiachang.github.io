@@ -1,3 +1,6 @@
 [submodule "themes/hugo-theme-air"]
 	path = themes/hugo-theme-air
 	url = https://github.com/syui/hugo-theme-air
+[submodule "themes/hyde"]
+	path = themes/hyde
+	url = https://github.com/spf13/hyde
