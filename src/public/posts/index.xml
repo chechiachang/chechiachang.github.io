@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Che Chia (David) Chang</title>
+    <link>https://chechiachang.github.io/posts/</link>
+    <description>Recent content in Posts on Che Chia (David) Chang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Aug 2018 08:49:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://chechiachang.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Second</title>
+      <link>https://chechiachang.github.io/posts/second/</link>
+      <pubDate>Thu, 30 Aug 2018 08:49:30 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/posts/second/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>First</title>
+      <link>https://chechiachang.github.io/posts/first/</link>
+      <pubDate>Thu, 30 Aug 2018 08:43:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/posts/first/</guid>
+      <description>This is my first post.</description>
+    </item>
+    
+  </channel>
+</rss>
