@@ -1,5 +1,0 @@
-baseURL = "https://chechiachang.github.io/"
-languageCode = "en-us"
-title = "Che Chia (David) Chang"
-publishDir = "docs"
-theme = "hyde"
