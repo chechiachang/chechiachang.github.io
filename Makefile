@@ -1,11 +1,9 @@
 THEME := "hugo-theme-air"
+PUBLISH_DIR := "docs"
 
 server:
 	hugo server -t ${THEME}
 
 hugo:
-	rm -rf public
+	rm -rf ${PUBLISH_DIR}
 	hugo -t ${THEME}
-
-publish: hugo
-	cp -r public/* ..
