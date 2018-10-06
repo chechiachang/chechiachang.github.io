@@ -1,7 +1,7 @@
 ---
 title: "About"
-date: 2017-08-20T21:38:52+08:00
-lastmod: 2017-08-28T21:41:52+08:00
+date: 2018-08-20T21:38:52+08:00
+lastmod: 2018-10-06:41:52+08:00
 menu: "main"
 weight: 50
 
@@ -10,15 +10,10 @@ comment: false
 mathjax: false
 ---
 
-Hugo is a static site engine written in Go.
+我是張哲嘉，社群上常用的名子是 Che-Chia Chang.
 
+我是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
 
-It makes use of a variety of open source projects including:
+Hi, I'm Che-Chia Chang. Also known as David Chang in communities in Taiwan.
 
-* [Cobra](https://github.com/spf13/cobra)
-* [Viper](https://github.com/spf13/viper)
-* [J Walter Weatherman](https://github.com/spf13/jWalterWeatherman)
-* [Cast](https://github.com/spf13/cast)
-
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
-
+I'm a software engineer specilized in Back-End design and development, DevOps, containerization and Kubernetes administration.

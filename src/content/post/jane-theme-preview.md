@@ -4,7 +4,7 @@ date: 2018-03-06T16:01:23+08:00
 lastmod: 2018-03-07T16:01:23+08:00
 draft: false
 tags: ["preview", "shortcodes", "tag-6"]
-categories: ["docs", "shortcodes", "index"]
+categories: []
 author: "Typora"
 
 # You can also close(false) or open(true) something for this content.
@@ -20,7 +20,7 @@ mathjax: true
 menu:
   main:
     parent: "docs"
-    weight: 1
+    weight: 10
 ---
 
 **Markdown** is created by [Daring Fireball](http://daringfireball.net/), the original guideline is [here](http://daringfireball.net/projects/markdown/syntax). Its syntax, however, varies between different parsers or editors.
