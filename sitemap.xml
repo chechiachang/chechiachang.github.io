@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="https://chechiachang.github.io/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://chechiachang.github.io/loaderio-f26c5b0405445e879c642c0d70db1d7e.txt</loc>
+    <lastmod>2018-10-06T12:07:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
   
   <url>
     <loc>https://chechiachang.github.io/about/</loc>
