@@ -6,6 +6,7 @@
     <description>Recent content in admin on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
     
 	<atom:link href="https://chechiachang.github.io/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     
@@ -16,7 +17,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chechiachang.github.io/author/admin/</guid>
-      <description>我是張哲嘉，社群上常用的名子是 Che-Chia Chang. 我是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 Golang Taiwan Meetup 的 organizer。對 Golang 有興趣的朋友請務必加入。
+      <description>我是Che-Chia Chang，社群上常用的名子是 David Chang. 我是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 Golang Taiwan Meetup 的 organizer。對 Golang 有興趣的朋友請務必加入。
 Hi, I&amp;rsquo;m Che-Chia Chang. Also known as David Chang in communities in Taiwan. I&amp;rsquo;m a software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration. I&amp;rsquo;m hosting a developer community, Golang Taiwan Meetup. Join us if you are interested in Golang!</description>
     </item>
     
