@@ -14,10 +14,10 @@
     
     <item>
       <title>Service Mesh for Microservices on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/new/</link>
+      <link>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</link>
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/new/</guid>
+      <guid>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</guid>
       <description> 何為 Service Mesh ？為何需要 Service Mesh ？ Service Mesh 基本概念 如何Service-to-Service的網路層管理監控 導入 Istio 到 Kubernetes  </description>
     </item>
     
