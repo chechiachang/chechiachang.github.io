@@ -2,14 +2,47 @@
   
     <url>
     
-      <loc>https://chechiachang.github.io/categories/</loc>
-      <lastmod>2019-04-01T17:53:58+08:00</lastmod>
+      <loc>https://chechiachang.github.io/</loc>
+      <lastmod>2019-04-02T17:23:16+08:00</lastmod>
       <priority>0</priority>
     </url>
   
     <url>
     
-      <loc>https://chechiachang.github.io/</loc>
+      <loc>https://chechiachang.github.io/talk/</loc>
+      <lastmod>2019-04-02T17:23:16+08:00</lastmod>
+    </url>
+  
+    <url>
+    
+      <loc>https://chechiachang.github.io/talk/new/</loc>
+      <lastmod>2019-04-02T17:23:16+08:00</lastmod>
+    </url>
+  
+    <url>
+    
+      <loc>https://chechiachang.github.io/tags/</loc>
+      <lastmod>2019-04-02T17:23:16+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+  
+    <url>
+    
+      <loc>https://chechiachang.github.io/tags/istio/</loc>
+      <lastmod>2019-04-02T17:23:16+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+  
+    <url>
+    
+      <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
+      <lastmod>2019-04-02T17:23:16+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+  
+    <url>
+    
+      <loc>https://chechiachang.github.io/categories/</loc>
       <lastmod>2019-04-01T17:53:58+08:00</lastmod>
       <priority>0</priority>
     </url>
@@ -18,13 +51,6 @@
     
       <loc>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</loc>
       <lastmod>2019-04-01T17:53:58+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/</loc>
-      <lastmod>2019-04-01T17:53:58+08:00</lastmod>
-      <priority>0</priority>
     </url>
   
     <url>
@@ -51,13 +77,6 @@
     <url>
     
       <loc>https://chechiachang.github.io/categories/kubernetes/</loc>
-      <lastmod>2019-04-01T17:53:58+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
       <lastmod>2019-04-01T17:53:58+08:00</lastmod>
       <priority>0</priority>
     </url>
@@ -97,11 +116,6 @@
     
       <loc>https://chechiachang.github.io/publication/</loc>
       <lastmod>2019-04-01T17:53:58+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/</loc>
     </url>
   
     <url>
