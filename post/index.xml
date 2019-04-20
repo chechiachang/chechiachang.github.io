@@ -12,20 +12,23 @@
     
     
     <item>
+      <title>Jenkins X on Kubernetes</title>
+      <link>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</link>
+      <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</guid>
+      <description>Jenkins is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.
+Jenkins X, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.
+Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.</description>
+    </item>
+    
+    <item>
       <title>Kubernetes Container Runtime Interface</title>
       <link>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</link>
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</guid>
-      <description>Outline  CRI-O Open Container Initiative (OCI) Container Runtime Interface (CRI) Kubernetes on CRI-O  Trend  OCI established in June 2015
- Kubernetes 1.3 introduced rktnetes
- Kubernetes 1.5 introduced CRI
- Pre-CRI Docker integration was removed in Kubernetes 1.7
- CRI-O 1.0.x released to match Kubernetes 1.7
- Working kubelet to use CRI
-  What is CRI-O OCI-based implementation of Kubernetes Container Runtime Interface
-http://cri-o.io/
-OCI and CRI Open Container Inititive - A industrial standard for container - OCI established in June 2015 by Docker and other leaders in the container industry</description>
+      <description>-&amp;gt; Slides here &amp;lt;-</description>
     </item>
     
   </channel>

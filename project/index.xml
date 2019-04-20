@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Che-Chia Chang</title>
+    <link>https://chechiachang.github.io/project/</link>
+    <description>Recent content in Projects on Che-Chia Chang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
+    
+	<atom:link href="https://chechiachang.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jenkins X on Kubernetes</title>
+      <link>https://chechiachang.github.io/project/jenkins-x-on-kubernetes/</link>
+      <pubDate>Fri, 19 Apr 2019 11:11:59 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/project/jenkins-x-on-kubernetes/</guid>
+      <description>An example project to demonstrate a working pipeline with jenkins-x on Kubernetes.</description>
+    </item>
+    
+    <item>
+      <title>Scouter: face recognition.</title>
+      <link>https://chechiachang.github.io/project/scouter/</link>
+      <pubDate>Wed, 19 Apr 2017 17:45:16 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/project/scouter/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

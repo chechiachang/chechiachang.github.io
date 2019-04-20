@@ -31,6 +31,150 @@
     </item>
     
     <item>
+      <title>devops</title>
+      <link>https://chechiachang.github.io/tags/devops/</link>
+      <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jenkins</title>
+      <link>https://chechiachang.github.io/tags/jenkins/</link>
+      <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/jenkins/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ar</title>
+      <link>https://chechiachang.github.io/tags/ar/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>face-detection</title>
+      <link>https://chechiachang.github.io/tags/face-detection/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/face-detection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>face-recognition</title>
+      <link>https://chechiachang.github.io/tags/face-recognition/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/face-recognition/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github-api</title>
+      <link>https://chechiachang.github.io/tags/github-api/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/github-api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://chechiachang.github.io/tags/golang/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ios</title>
+      <link>https://chechiachang.github.io/tags/ios/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ios/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine-learning</title>
+      <link>https://chechiachang.github.io/tags/machine-learning/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unity</title>
+      <link>https://chechiachang.github.io/tags/unity/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/unity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cd</title>
+      <link>https://chechiachang.github.io/tags/cd/</link>
+      <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/cd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ci</title>
+      <link>https://chechiachang.github.io/tags/ci/</link>
+      <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ci/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elasticsearch</title>
+      <link>https://chechiachang.github.io/tags/elasticsearch/</link>
+      <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/elasticsearch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elk</title>
+      <link>https://chechiachang.github.io/tags/elk/</link>
+      <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/elk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>monitoring</title>
+      <link>https://chechiachang.github.io/tags/monitoring/</link>
+      <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>webassembly</title>
+      <link>https://chechiachang.github.io/tags/webassembly/</link>
+      <pubDate>Tue, 18 Dec 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/webassembly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>container</title>
       <link>https://chechiachang.github.io/tags/container/</link>
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
@@ -54,6 +198,96 @@
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
+      <link>https://chechiachang.github.io/tags/github/</link>
+      <pubDate>Tue, 28 Aug 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flannel</title>
+      <link>https://chechiachang.github.io/tags/flannel/</link>
+      <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/flannel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>networking</title>
+      <link>https://chechiachang.github.io/tags/networking/</link>
+      <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>automation</title>
+      <link>https://chechiachang.github.io/tags/automation/</link>
+      <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/automation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud-computing</title>
+      <link>https://chechiachang.github.io/tags/cloud-computing/</link>
+      <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/cloud-computing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gpu-computing</title>
+      <link>https://chechiachang.github.io/tags/gpu-computing/</link>
+      <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/gpu-computing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubespray</title>
+      <link>https://chechiachang.github.io/tags/kubespray/</link>
+      <pubDate>Wed, 28 Mar 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/kubespray/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>filesystem</title>
+      <link>https://chechiachang.github.io/tags/filesystem/</link>
+      <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/filesystem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>glusterfs</title>
+      <link>https://chechiachang.github.io/tags/glusterfs/</link>
+      <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/glusterfs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>storage</title>
+      <link>https://chechiachang.github.io/tags/storage/</link>
+      <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/storage/</guid>
       <description></description>
     </item>
     

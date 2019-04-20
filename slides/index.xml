@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Slides on Che-Chia Chang</title>
+    <link>https://chechiachang.github.io/slides/</link>
+    <description>Recent content in Slides on Che-Chia Chang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
+    
+	<atom:link href="https://chechiachang.github.io/slides/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jenkins X on Kubernetes</title>
+      <link>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</link>
+      <pubDate>Fri, 19 Apr 2019 21:36:50 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</guid>
+      <description>Jenkins  One of the earliest open source antomation server Most common option in use Flexible and customizable. Hundreds of plugins Support automation for any project  Jenkins X  CI/CD platform (Jenkins Platform) Cloud native serverless For modern cloud applications on Kubernetes.  Outlines  Install Jenkins with jx Create a Pipeline with jx Develope with jx client  check Jenkins-X Github Repo
+
+Install Create GKE cluster &amp;amp; Get Credentials</description>
+    </item>
+    
+    <item>
+      <title>CRI, OCI, CRI-O</title>
+      <link>https://chechiachang.github.io/slides/container-runtime-interface/</link>
+      <pubDate>Sun, 19 Aug 2018 18:00:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/slides/container-runtime-interface/</guid>
+      <description>footer: Che-Chia David Chang, 2018, https://github.com/chechiachang slidenumbers: true
+CRI, OCI, CRI-O David Chang DevOps @ Mithril Back-End Developer, Kuberentes admin, DevOps
+    
+Outline  Container Runtime Interface (CRI) Open Container Initiative (OCI) CRI-O Kubernetes on CRI-O      
+Trend Kubernetes  Kubernetes 1.3 introduced rktnetes Kubernetes 1.5 introduced CRI Kubernetes 1.7 removed pre-CRI Docker / rkt integration Currently works Kubelet to use CRI</description>
+    </item>
+    
+    <item>
+      <title>Github API with go-github</title>
+      <link>https://chechiachang.github.io/slides/go-github/</link>
+      <pubDate>Thu, 19 Apr 2018 18:00:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/slides/go-github/</guid>
+      <description>footer: Che-Chia David Chang, 2018, https://github.com/chechiachang/my-speeches/tree/master/go-github slidenumbers: true
+Github API with Go-Github David Chang Back-End Developer, Kuberentes admin, DevOps
+  Outline  Let&amp;rsquo;s try Github API Use github API with go-github Work with limitation of github API An application of github user data    Let&amp;rsquo;s Try Github API Get data of a user with username
+Web page
+https://github.com/chechiachang
+Api
+https://api.github.com/users/chechiachang
+https://github.com/search?q=location:Taiwan+type:user
+  /users?q=location:Taiwan&amp;amp;sort=followers&amp;amp;order=desc
+  Github Search User API Docs</description>
+    </item>
+    
+    <item>
+      <title>Scouter</title>
+      <link>https://chechiachang.github.io/slides/coscup-2018-scouter/</link>
+      <pubDate>Thu, 19 Apr 2018 18:00:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/slides/coscup-2018-scouter/</guid>
+      <description>footer: Che-Chia David Chang, 2018, https://github.com/chechiachang/scouter slidenumbers: true
+Scouter: Face recognition contribution detector David Chang Back-End Developer, Kuberentes admin, DevOps
+Scouter: 3 reasons why Garbage Talks with Linkers Drangon Ball! For COSCUP!
+Let&amp;rsquo;s Live Demo! Outline Data mining Face detection &amp;amp; recognition
+Feature &amp;amp; Architecture  Face + Contributino &amp;mdash;-&amp;gt; Github api + go-github (Golang) Face Recognitiion &amp;mdash;-&amp;gt; Face detection api (Python) API server + Database &amp;mdash;-&amp;gt; Flask + PyMongodb (Python) Webcam + AR + Face detection &amp;mdash;-&amp;gt; Unity + face tracker (C#)  Face and User Data Mining  Download user data and avatar Fetch contribution statics  Github API go-github (Api library in Golang)</description>
+    </item>
+    
+  </channel>
+</rss>

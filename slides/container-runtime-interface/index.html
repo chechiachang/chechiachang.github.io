@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.1.0">
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://chechiachang.github.io/slides/container-runtime-interface/">
+
+  <title>CRI, OCI, CRI-O | Che-Chia Chang</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/reveal.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/theme/black.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css" crossorigin="anonymous">
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/reveal_custom.min.css">
+
+  
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/css/print/pdf.css' : 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+
+</head>
+<body>
+
+  
+<div class="reveal">
+  <div class="slides">
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<p>footer: Che-Chia David Chang, 2018,  <a href="https://github.com/chechiachang" target="_blank">https://github.com/chechiachang</a>
+slidenumbers: true</p>
+
+<h1 id="cri-oci-cri-o">CRI, OCI, CRI-O</h1>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<p>David Chang DevOps @ Mithril
+Back-End Developer, Kuberentes admin, DevOps</p>
+
+<p>
+
+
+  
+
+<figure>
+
+<img src="/img/davidchang.jpg" />
+
+
+</figure>
+
+
+
+  
+
+<figure>
+
+<img src="/img/mithril.jpg" />
+
+
+</figure></p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="outline">Outline</h3>
+
+<ol>
+<li>Container Runtime Interface (CRI)</li>
+<li>Open Container Initiative (OCI)</li>
+<li>CRI-O</li>
+<li>Kubernetes on CRI-O</li>
+</ol>
+
+<p>
+
+
+  
+
+<figure>
+
+<img src="/img/cri-o.png" />
+
+
+</figure>
+
+
+
+  
+
+<figure>
+
+<img src="/img/kubernetes.png" />
+
+
+</figure></p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="trend-kubernetes">Trend Kubernetes</h3>
+
+<ul>
+<li>Kubernetes 1.3 introduced rktnetes</li>
+<li>Kubernetes 1.5 introduced CRI</li>
+<li>Kubernetes 1.7 removed pre-CRI Docker / rkt integration</li>
+
+<li><p>Currently works Kubelet to use CRI</p></li>
+
+<li><p>CRI-O: released 1.0.x to match Kubernetes 1.7</p></li>
+</ul>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="nomination">Nomination</h3>
+
+<p>CRI-O
+- OCI-based implementation of Kubernetes Container Runtime Interface</p>
+
+<p>CRI
+- Kubernetes Container Runtime Interface</p>
+
+<p>OCI
+- Open Container initiative</p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="projects-with-container-runtime">Projects with Container Runtime</h3>
+
+<p>docker, rkt, LXC/LXD, runC, containerd, OpenVZ, systemd-nspawn, machinectl, qemu-kvm, lkvm&hellip;</p>
+
+<p>Kubernetes (before 1.6) native supports
+- Docker
+- rkt</p>
+
+<p>
+
+
+  
+
+<figure>
+
+<img src="/img/docker-angry.png" />
+
+
+</figure>
+
+
+
+  
+
+<figure>
+
+<img src="/img/rkt.png" />
+
+
+</figure></p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="container-runtime-interface-cri">Container Runtime Interface(CRI)</h3>
+
+<ul>
+<li>Enable Kubernetes to support more runtimes</li>
+<li>Free kubernetes to focus on orchestration from runtime integration</li>
+<li>Consists
+
+<ul>
+<li>a protocol buffers and gRPC API</li>
+<li>libraries, additional specifications and tools</li>
+</ul></li>
+</ul>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="container-runtime-interface-cri-1">Container Runtime Interface(CRI)</h3>
+
+
+
+
+  
+
+<figure>
+
+<img src="/img/containerd.png" />
+
+
+</figure>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="cri-api-in-kubernetes">CRI api in kubernetes</h3>
+
+<p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/apis/cri/runtime/v1alpha2/api.proto" target="_blank">https://github.com/kubernetes/kubernetes/
+blob/master/pkg/kubelet/apis/
+cri/runtime/v1alpha2/api.proto</a></p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="cri-runtimes">CRI runtimes</h3>
+
+<ul>
+<li>Docker CRI shim (cri-containerd)</li>
+<li>CoreOS <a href="https://github.com/kubernetes-incubator/rktlet" target="_blank">rktlet</a></li>
+<li><a href="https://github.com/kubernetes/frakti" target="_blank">frakti</a>: hypervisor-based container runtimes</li>
+<li>Intel <a href="https://github.com/clearcontainers/runtime" target="_blank">Clear container</a></li>
+<li>OpenStack <a href="https://github.com/kata-containers/runtime" target="_blank">kata runtime</a></li>
+<li><a href="http://cri-o.io/" target="_blank">cri-o</a></li>
+</ul>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="open-container-inititive-oci">Open Container Inititive (OCI)</h3>
+
+<ul>
+<li>open governance structure</li>
+
+<li><p>container industry standards</p></li>
+
+<li><p><a href="https://github.com/opencontainers/runtime-spec/blob/master/spec.md" target="_blank">runtime spec</a> defines configuration, execution environment, and lifecycle of a container</p></li>
+
+<li><p><a href="https://github.com/opencontainers/image-spec/blob/master/spec.md" target="_blank">image spec</a> spec on archetecture and OS, filesystem layers and configuration</p></li>
+</ul>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="oci-from-aspect-of-user">OCI from aspect of user</h3>
+
+<ul>
+<li>Use all OCI-conplimant container runtime</li>
+<li>Use all OCI-complimant images registries</li>
+<li>Similar UX</li>
+</ul>
+
+<p><a href="https://www.opencontainers.org/blog/2018/06/20/cri-o-how-standards-power-a-container-runtime" target="_blank">https://www.opencontainers.org/blog/2018/06/20/cri-o-how-standards-power-a-container-runtime</a></p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="cri-o">CRI-O</h3>
+
+<ul>
+<li>OCI-based implementation of Kubernetes Container Runtime Interface</li>
+<li>Kubernetes incubator project also part of the CNCF</li>
+<li>Dedicated for Kubernetes</li>
+<li>Enable CRI-O plugin to other runtimes</li>
+<li>Available on RHEL, Fedora, Centos, Ubuntu&hellip;</li>
+</ul>
+
+<p><a href="http://cri-o.io/" target="_blank">http://cri-o.io/</a></p>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="cri-o-vs-docker-containerd">CRI-O vs Docker (containerd)</h3>
+
+<p>kubelet -&gt; cri-containerd (shim) -&gt; containerd -&gt; runC -&gt; container
+kubelet -&gt; cri-o -&gt; runC -&gt; container</p>
+
+<ul>
+<li>Lightweight</li>
+<li>Stability
+
+<ul>
+<li>built for Kubernetes</li>
+<li>No cli, image utilities, &hellip;</li>
+<li>No swarm, mesosphere integration, &hellip;</li>
+</ul></li>
+</ul>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+
+
+
+  
+
+<figure>
+
+<img src="/img/cri-o-arch.png" />
+
+
+</figure>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="let-s-use-cri-o">Let&rsquo;s use CRI-O</h3>
+
+<ul>
+<li><a href="https://github.com/kubernetes-sigs/cri-o" target="_blank">Install cri-o</a> and dependencies, runC and CNI</li>
+
+<li><p>Install <a href="https://github.com/containers/libpod" target="_blank">Podman</a></p>
+
+<ul>
+<li><p>Podman to cri-o as Docker-cli to Docker daemon</p>
+
+<pre><code>sudo podman run --name my-golang golang:alpine bash
+</code></pre></li>
+</ul></li>
+</ul>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<p><a href="https://github.com/kubernetes/minikube/blob/master/docs/alternative_runtimes.md#using-cri-o" target="_blank">Minikube</a></p>
+
+<pre><code class="language-bash">minikube start \
+  --network-plugin=cni \
+  --container-runtime=cri-o
+
+minikube start \
+  --network-plugin=cni \
+  --extra-config=kubelet.container-runtime=remote \
+  --extra-config=kubelet.container-runtime-endpoint=/var/run/crio/crio.sock \
+  --extra-config=kubelet.image-service-endpoint=/var/run/crio/crio.sock
+</code></pre>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="run-kubernetes-on-cri-o">Run Kubernetes on CRI-O</h3>
+
+<p><a href="https://github.com/kubernetes-incubator/kubespray/blob/master/docs/cri-o.md" target="_blank">Kubespray</a></p>
+
+<pre><code>kubeadm_enabled: true
+...
+container_manager: crio
+</code></pre>
+
+<p><a href="https://github.com/kubernetes-sigs/cri-o/blob/master/kubernetes.md" target="_blank">Full cluster</a></p>
+
+<pre><code>kubelet --container-runtime-endpoint=unix:///var/run/crio/crio.sock
+...
+</code></pre>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+
+<h3 id="references">References</h3>
+
+<p><a href="https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/" target="_blank">https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/</a>
+<a href="https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/" target="_blank">https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/</a>
+Rttps://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/
+<a href="https://xuxinkun.github.io/2017/12/12/docker-oci-runc-and-kubernetes/" target="_blank">https://xuxinkun.github.io/2017/12/12/docker-oci-runc-and-kubernetes/</a>
+<a href="https://www.kubernetes.org.cn/1079.html" target="_blank">https://www.kubernetes.org.cn/1079.html</a></p>
+
+    </section>
+    
+
+    
+    
+  </div>
+</div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/lib/js/head.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/js/reveal.min.js"></script>
+
+  <script>
+    window.revealPlugins = { dependencies: [
+      { src: 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/plugin/math/math.js', async: true },
+      { src: 'https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/reveal.js\/3.7.0/plugin/print-pdf/print-pdf.js', async: true },
+      
+      { src: '\/js\/vendor\/reveal.js\/plugin\/notes\/notes.js', async: true }
+    ]};
+
+    let revealDefaults = { center: true, controls: true, history: true, progress: true, transition: 'slide', mouseWheel: true };
+    let revealOptions = Object.assign({}, revealDefaults, revealPlugins);
+    Reveal.initialize(revealOptions);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>storage on Che-Chia Chang</title>
+    <link>https://chechiachang.github.io/tags/storage/</link>
+    <description>Recent content in storage on Che-Chia Chang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
+    <lastBuildDate>Sat, 10 Feb 2018 10:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://chechiachang.github.io/tags/storage/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes Storage and Glusterfs</title>
+      <link>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</link>
+      <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</guid>
+      <description>Outlines  Docker Storage Kubernetes Storage
+ GlusterFS for K8s
+  Docker Storage Doc
+ within container: inside writable layer of a container
+ deleted with container couple with host machine require storage driver
+docker ps -s docker inspect ubuntu dd if=/dev/zero of=1Mfile bs=1k count=1000   Docker volume
+ a directory on host prepare: provision on host usage: set volume on docker run   Kubernetes Storage https://kubernetes.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>automation on Che-Chia Chang</title>
+    <link>https://chechiachang.github.io/tags/automation/</link>
+    <description>Recent content in automation on Che-Chia Chang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
+    <lastBuildDate>Wed, 16 May 2018 11:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://chechiachang.github.io/tags/automation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Manage and Schedule GPU Computing Tasks on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</link>
+      <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</guid>
+      <description>Manage and Schedule GPU Computing Tasks on Kubernetes
+使用Kubernets管理集群GPU機器，靈活的分配調度GPU資源，並自動排程GPU運算工作。 使用者如資料科學家，只需將運算工作實施到Kubernetes上，Kubernetes便會檢視機器上可用的GPU資源，將運算工作分配到合適的機器 上，並監控工作的狀況。如資源不足Kubernetes會自動將工作加入排程，當前面的工作完成，GPU資源釋放後，Kubernetes會自動將運算 工作，配置到合適的機器上。管理者如系統工程師，只需透過Kubernetes，將機器上的GPU資源加入到Kubernetes。
+ Why we need Kubernetes for GPUs computing? Pros &amp;amp; Cons How to deploy a GPU-enabled Kubernetes cluster Run GPU computing on Kubernetes cluster  </description>
+    </item>
+    
+  </channel>
+</rss>

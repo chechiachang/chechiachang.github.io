@@ -18,7 +18,119 @@
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</guid>
-      <description> 何為 Service Mesh ？為何需要 Service Mesh ？ Service Mesh 基本概念 如何Service-to-Service的網路層管理監控 導入 Istio 到 Kubernetes  </description>
+      <description>Outlines 微服務蓬勃發展，傳統的 Monolith被分解為分散的為服務，已取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供&amp;gt;穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。
+ 何為 Service Mesh ？為何需要 Service Mesh ？ Service Mesh 基本概念 如何Service-to-Service的網路層管理監控 導入 Istio 到 Kubernetes  收穫 了解為服務的優勢與Cloud Native應用發展趨勢，了解 Service Mesh 與 Istio 觀念，並能使用 Istio 於 Kubernetes。</description>
+    </item>
+    
+    <item>
+      <title>Jenkins on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</link>
+      <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</guid>
+      <description> How to deploy a cloud-native Jenkins with Jenkins X. A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes). Give it a try. (Defered) Customized test reports for multiple language (ex. go-junit-report)  </description>
+    </item>
+    
+    <item>
+      <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
+      <link>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</link>
+      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</guid>
+      <description>是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。
+本次演講內容有:
+ 初心者的人臉辨識技術 ，Face Recognition API 使用 Golang 在 Github 上做 Data Mining 從零開始的 side project，開發心路歷程與收穫分享  </description>
+    </item>
+    
+    <item>
+      <title>ELK for Applications on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/elk-on-kubernetes/</link>
+      <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/elk-on-kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go Webassembly Intro</title>
+      <link>https://chechiachang.github.io/talk/go-webassembly-intro/</link>
+      <pubDate>Tue, 18 Dec 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/go-webassembly-intro/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>使用 go-github 接 github api</title>
+      <link>https://chechiachang.github.io/talk/go-github/</link>
+      <pubDate>Tue, 28 Aug 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/go-github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
+      <link>https://chechiachang.github.io/talk/coscup-2018-scouter/</link>
+      <pubDate>Sat, 11 Aug 2018 09:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/coscup-2018-scouter/</guid>
+      <description>是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。
+本次演講內容有:
+ 初心者的人臉辨識技術 ，Face Recognition API 使用 Golang 在 Github 上做 Data Mining 從零開始的 side project，開發心路歷程與收穫分享  Live Stream on Youtube
+  </description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Networking</title>
+      <link>https://chechiachang.github.io/talk/kubernetes-networking/</link>
+      <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/kubernetes-networking/</guid>
+      <description>從系統管理層面看Kubernetes的網路架構
+網路實作為Kubernetes架構，也是開發過程中容易出錯的部分。本次演講將從群集管理員的角度，說明Kubernetes 中網路的實作。
+大綱:
+ Docker 與 Kubernetes 的網路架構 不同層級的網路溝通實作  容器對容器 Pod對Pod 集群內部與Service 集群外部對Service  以flannel為例講解網路實作 開發過程中常遇到的網路問題  希望聽眾對Kubernetes的網路架構能有基礎的概念，並在開發過程中遇到問題時，有明確的除錯步驟來判定網路是否有問題。遇到網路的問題，也能明確的知道問題的核心，並找到解法。</description>
+    </item>
+    
+    <item>
+      <title>Manage and Schedule GPU Computing Tasks on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</link>
+      <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</guid>
+      <description>Manage and Schedule GPU Computing Tasks on Kubernetes
+使用Kubernets管理集群GPU機器，靈活的分配調度GPU資源，並自動排程GPU運算工作。 使用者如資料科學家，只需將運算工作實施到Kubernetes上，Kubernetes便會檢視機器上可用的GPU資源，將運算工作分配到合適的機器 上，並監控工作的狀況。如資源不足Kubernetes會自動將工作加入排程，當前面的工作完成，GPU資源釋放後，Kubernetes會自動將運算 工作，配置到合適的機器上。管理者如系統工程師，只需透過Kubernetes，將機器上的GPU資源加入到Kubernetes。
+ Why we need Kubernetes for GPUs computing? Pros &amp;amp; Cons How to deploy a GPU-enabled Kubernetes cluster Run GPU computing on Kubernetes cluster  </description>
+    </item>
+    
+    <item>
+      <title>Deploy Kubernetes With Kubespray</title>
+      <link>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</link>
+      <pubDate>Wed, 28 Mar 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</guid>
+      <description>Prerequisites If you&amp;rsquo;re interested in building your own Kubernetes. Install the following tools we use.
+virtualbox 5.1+ to create VMs, on which we deploy our Kubernetes.
+vagrant 2.0.x+ to control virtualbox to build and manage vms.
+ansible-playbook to run Kubespray playbook to deploy Kuberentes
+kubectl to control Kubernetes cluster
+# Ubuntu apt-add-repository ppa:ansible/ansible \ &amp;amp;&amp;amp; apt-get update \ &amp;amp;&amp;amp; apt-get install -y python3 ansible &amp;amp;&amp;amp; pip install netaddr # Mac pip install ansible port install py27-netaddr # netaddr is required by Kubespray  Let&amp;rsquo;s get started clone https://github.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Storage and Glusterfs</title>
+      <link>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</link>
+      <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</guid>
+      <description>Outlines  Docker Storage Kubernetes Storage
+ GlusterFS for K8s
+  Docker Storage Doc
+ within container: inside writable layer of a container
+ deleted with container couple with host machine require storage driver
+docker ps -s docker inspect ubuntu dd if=/dev/zero of=1Mfile bs=1k count=1000   Docker volume
+ a directory on host prepare: provision on host usage: set volume on docker run   Kubernetes Storage https://kubernetes.</description>
     </item>
     
   </channel>

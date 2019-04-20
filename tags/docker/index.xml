@@ -18,15 +18,19 @@
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</guid>
-      <description>Outline  CRI-O Open Container Initiative (OCI) Container Runtime Interface (CRI) Kubernetes on CRI-O  Trend  OCI established in June 2015
- Kubernetes 1.3 introduced rktnetes
- Kubernetes 1.5 introduced CRI
- Pre-CRI Docker integration was removed in Kubernetes 1.7
- CRI-O 1.0.x released to match Kubernetes 1.7
- Working kubelet to use CRI
-  What is CRI-O OCI-based implementation of Kubernetes Container Runtime Interface
-http://cri-o.io/
-OCI and CRI Open Container Inititive - A industrial standard for container - OCI established in June 2015 by Docker and other leaders in the container industry</description>
+      <description>-&amp;gt; Slides here &amp;lt;-</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Networking</title>
+      <link>https://chechiachang.github.io/talk/kubernetes-networking/</link>
+      <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/kubernetes-networking/</guid>
+      <description>從系統管理層面看Kubernetes的網路架構
+網路實作為Kubernetes架構，也是開發過程中容易出錯的部分。本次演講將從群集管理員的角度，說明Kubernetes 中網路的實作。
+大綱:
+ Docker 與 Kubernetes 的網路架構 不同層級的網路溝通實作  容器對容器 Pod對Pod 集群內部與Service 集群外部對Service  以flannel為例講解網路實作 開發過程中常遇到的網路問題  希望聽眾對Kubernetes的網路架構能有基礎的概念，並在開發過程中遇到問題時，有明確的除錯步驟來判定網路是否有問題。遇到網路的問題，也能明確的知道問題的核心，並找到解法。</description>
     </item>
     
   </channel>
