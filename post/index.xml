@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Service Mesh on Kubernetes</title>
+      <link>https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/</link>
+      <pubDate>Mon, 06 May 2019 18:12:15 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/</guid>
+      <description>Outline  What is Service Mesh Why Istio Demo  Workshop
+Create GKE gcloud beta container --project &amp;quot;istio-playground-239810&amp;quot; clusters create &amp;quot;istio-playground&amp;quot; \ --zone &amp;quot;asia-east1-b&amp;quot; \ --username &amp;quot;admin&amp;quot; \ --cluster-version &amp;quot;1.11.8-gke.6&amp;quot; \ --machine-type &amp;quot;n1-standard-2&amp;quot; \ --image-type &amp;quot;COS&amp;quot; \ --disk-type &amp;quot;pd-standard&amp;quot; \ --disk-size &amp;quot;100&amp;quot; \ --preemptible \ --num-nodes &amp;quot;1&amp;quot; \ --enable-cloud-logging \ --enable-cloud-monitoring \ --no-enable-ip-alias \ --addons HorizontalPodAutoscaling,HttpLoadBalancing,KubernetesDashboard,Istio \ --istio-config auth=MTLS_PERMISSIVE \ --no-enable-autoupgrade \ --enable-autorepair  Take a Peek $ kubectl get namespaces NAME STATUS AGE default Active 2m istio-system Active 1m kube-public Active 2m kube-system Active 2m $ kubectl get po -n istio-system NAME READY STATUS RESTARTS AGE istio-citadel-7f6f77cd7b-nxfbf 1/1 Running 0 3m istio-cleanup-secrets-h454m 0/1 Completed 0 3m istio-egressgateway-7c56db84cc-nlrwq 1/1 Running 0 3m istio-galley-6c747bdb4f-45jrp 1/1 Running 0 3m istio-ingressgateway-6ff68cf95d-tlkq4 1/1 Running 0 3m istio-pilot-8ff66f8c4-q9chz 2/2 Running 0 3m istio-policy-69b78b7d6-c8pld 2/2 Running 0 3m istio-sidecar-injector-558996c897-hr6q4 1/1 Running 0 3m istio-telemetry-f96459fb-5cbpg 2/2 Running 0 3m promsd-ff878d44b-hv8nh 2/2 Running 1 3m  Deploy app kubectl label namespace default istio-injection=enabled  Bookinfo Application</description>
+    </item>
+    
+    <item>
       <title>Jenkins X on Kubernetes</title>
       <link>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</link>
       <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>

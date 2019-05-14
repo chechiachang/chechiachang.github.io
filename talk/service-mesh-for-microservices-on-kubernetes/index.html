@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。">
+  <meta name="description" content="基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。">
 
   
   <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/">
@@ -136,7 +136,7 @@
   <meta property="og:site_name" content="Che-Chia Chang">
   <meta property="og:url" content="https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/">
   <meta property="og:title" content="Service Mesh for Microservices on Kubernetes | Che-Chia Chang">
-  <meta property="og:description" content="當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:description" content="基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-04-02T17:10:57&#43;08:00">
@@ -213,9 +213,9 @@
         
 
         <li class="nav-item">
-          <a class="nav-link" href="/#about">
+          <a class="nav-link" href="/#talks">
             
-            <span>Home</span>
+            <span>Talks</span>
             
           </a>
         </li>
@@ -270,28 +270,9 @@
         
 
         <li class="nav-item">
-          <a class="nav-link" href="/#featured">
+          <a class="nav-link" href="/#about">
             
-            <span>Publications</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-        
-        
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link" href="/#talks">
-            
-            <span>Talks</span>
+            <span>Me</span>
             
           </a>
         </li>
@@ -508,7 +489,7 @@
 
 
 
-
+  
 
 
 
@@ -559,9 +540,9 @@
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">Event</div>
           <div class="col-12 col-md-9">
-            
+            <a href="https://cloudsummit.ithome.com.tw/" target="_blank" rel="noopener">
             IThome Cloud Summit 2019
-            
+            </a>
           </div>
         </div>
       </div>
@@ -599,9 +580,52 @@
 <li>導入 Istio 到 Kubernetes</li>
 </ol>
 
+<h3 id="目標聽眾">目標聽眾</h3>
+
+<ol>
+<li>微運大量微服務，希望導入Service Mesh 的Operator</li>
+<li>想了解微服務生態中竄紅的 Service Mesh</li>
+</ol>
+
 <h3 id="收穫">收穫</h3>
 
-<p>了解為服務的優勢與Cloud Native應用發展趨勢，了解 Service Mesh 與 Istio 觀念，並能使用 Istio 於 Kubernetes。</p>
+<ol>
+<li>了解為服務的優勢與Cloud Native應用發展趨勢</li>
+<li>了解 Service Mesh 與 Istio 觀念</li>
+<li>能使用 Istio 於 Kubernetes，進行服務網路的管理。</li>
+</ol>
+
+<hr />
+
+<p>今天來介紹一款好藥：Istio。
+如果你有以下問題：
+- 維運大量(成千上百)微服務
+- 需要服務對服務的流量控制，監控，管理</p>
+
+<hr />
+
+<p>談 Service Mesh 之前，不免的要先談一下 Microservice，這個目前好像很夯的一個技術名詞。</p>
+
+<p>如果手上有一個 App，會希望依照 Monolith 的架構，或是 Microservices？
+Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處：
+- Decoupling
+- Scalability
+- Performance
+也有明顯的壞處：
+- Development Complexity
+- Operation Cost</p>
+
+<blockquote>
+<p>沒事別挖坑跳</p>
+</blockquote>
+
+<hr />
+
+<p>何為 Service Mesh？
+使用Microservie 可能會遇到的問題：
+- Monitoring
+- Traffic control
+- A/B Testing</p>
 
     </div>
 
@@ -613,6 +637,8 @@
   <a class="badge badge-light" href="/tags/kubernetes/">kubernetes</a>
   
   <a class="badge badge-light" href="/tags/istio/">istio</a>
+  
+  <a class="badge badge-light" href="/tags/service-mesh/">service-mesh</a>
   
 </div>
 

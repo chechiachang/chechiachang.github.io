@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -28,10 +30,10 @@
   
     
   
-  <meta name="description" content="使用 go-github 接 api 的一些眉角">
+  <meta name="description" content="Back-End / DevOps">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/talk/go-github/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/tags/kubernetes/">
 
   
 
@@ -112,15 +114,15 @@
   
 
   
-  <link rel="alternate" href="https://chechiachang.github.io/index.xml" type="application/rss+xml" title="Che-Chia Chang">
-  <link rel="feed" href="https://chechiachang.github.io/index.xml" type="application/rss+xml" title="Che-Chia Chang">
+  <link rel="alternate" href="https://chechiachang.github.io/tags/kubernetes/index.xml" type="application/rss+xml" title="Che-Chia Chang">
+  <link rel="feed" href="https://chechiachang.github.io/tags/kubernetes/index.xml" type="application/rss+xml" title="Che-Chia Chang">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/talk/go-github/">
+  <link rel="canonical" href="https://chechiachang.github.io/tags/kubernetes/">
 
   
   
@@ -134,21 +136,19 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/talk/go-github/">
-  <meta property="og:title" content="使用 go-github 接 github api | Che-Chia Chang">
-  <meta property="og:description" content="使用 go-github 接 api 的一些眉角"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:url" content="https://chechiachang.github.io/tags/kubernetes/">
+  <meta property="og:title" content="kubernetes | Che-Chia Chang">
+  <meta property="og:description" content="Back-End / DevOps"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2018-08-28T19:00:00&#43;08:00">
-  
-  <meta property="article:modified_time" content="2019-04-19T21:19:04&#43;08:00">
+  <meta property="og:updated_time" content="2019-05-15T12:00:00&#43;08:00">
   
 
   
 
   
 
-  <title>使用 go-github 接 github api | Che-Chia Chang</title>
+  <title>kubernetes | Che-Chia Chang</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
@@ -347,9 +347,6 @@
   </div>
 </nav>
 
-<div class="pub" itemscope itemtype="http://schema.org/Event">
-
-  
 
 
 
@@ -357,92 +354,6 @@
 
 
 
-
-
-
-
-
-  
-
-  
-  
-  
-<div class="article-container pt-3">
-  <h1 itemprop="name">使用 go-github 接 github api</h1>
-
-  
-
-  
-    
-
-
-
-<meta content="2018-08-28 19:00:00 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-04-19 21:19:04 &#43;0800 CST" itemprop="dateModified">
-
-<div class="article-metadata">
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-    
-<div class="share-box" aria-hidden="true">
-  <ul class="share">
-    <li>
-      <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=%e4%bd%bf%e7%94%a8%20go-github%20%e6%8e%a5%20github%20api&amp;url=https%3a%2f%2fchechiachang.github.io%2ftalk%2fgo-github%2f"
-         target="_blank" rel="noopener">
-        <i class="fab fa-twitter"></i>
-      </a>
-    </li>
-    <li>
-      <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechiachang.github.io%2ftalk%2fgo-github%2f"
-         target="_blank" rel="noopener">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-    </li>
-    <li>
-      <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fchechiachang.github.io%2ftalk%2fgo-github%2f&amp;title=%e4%bd%bf%e7%94%a8%20go-github%20%e6%8e%a5%20github%20api"
-         target="_blank" rel="noopener">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-    </li>
-    <li>
-      <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fchechiachang.github.io%2ftalk%2fgo-github%2f&amp;title=%e4%bd%bf%e7%94%a8%20go-github%20%e6%8e%a5%20github%20api"
-         target="_blank" rel="noopener">
-        <i class="fab fa-weibo"></i>
-      </a>
-    </li>
-    <li>
-      <a class="email"
-         href="mailto:?subject=%e4%bd%bf%e7%94%a8%20go-github%20%e6%8e%a5%20github%20api&amp;body=https%3a%2f%2fchechiachang.github.io%2ftalk%2fgo-github%2f">
-        <i class="fas fa-envelope"></i>
-      </a>
-    </li>
-  </ul>
-</div>
-
-
-  
-
-</div>
-
-    
 
 
 
@@ -452,283 +363,48 @@
 
   
 
-
-
-
-
-
-
-
-<div class="btn-links mb-3">
   
-  
-
-
-
-
-
-
-
-  
-
-
-
-
-
   
   
     
   
-<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/chechiachang/scouter" target="_blank" rel="noopener">
-  Code
-</a>
-
-
-
-
-
-
+<div class="universal-wrapper pt-3">
+  <h1 itemprop="name">kubernetes</h1>
 
   
-  <a class="btn btn-outline-primary my-1 mr-1" href="/slides/go-github/" target="_blank">
-    Slides
-  </a>
-  
-
-
-
-
-
-
-</div>
-
 
   
 </div>
 
 
 
-  <div class="article-container">
+<div class="universal-wrapper">
+  
 
-    
-      <h3>Abstract</h3>
-      <p class="pub-abstract" itemprop="text">使用 go-github 接 api 的一些眉角</p>
-    
-
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Date</div>
-          <div class="col-12 col-md-9" itemprop="datePublished">
-            
-            Aug 28, 2018
-            <div class="talk-time">
-              
-                7:00 PM
-                
-                  &mdash; 9:00 PM
-                
-              
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="d-md-none space-below"></div>
-
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Event</div>
-          <div class="col-12 col-md-9">
-            <a href="https://golang.kktix.cc/events/gtg34" target="_blank" rel="noopener">
-            Golang Taipei Gathering #34
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="d-md-none space-below"></div>
-
-    
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Location</div>
-          <div class="col-12 col-md-9">Carousell 旋轉拍賣 Taipei office</div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="d-md-none space-below"></div>
-    
-
-    <div class="space-below"></div>
-
+  
+  
+  <div>
+    <h2><a href="/talk/kubernetes-storage-and-glusterfs/">Kubernetes Storage and Glusterfs</a></h2>
     <div class="article-style">
       
+      Kubernetes storage system: use GlusterFS as an example
+      
     </div>
+  </div>
+  
 
+  
+<nav>
+  <ul class="pagination justify-content-center">
     
-
-
-<div class="article-tags">
-  
-  <a class="badge badge-light" href="/tags/golang/">golang</a>
-  
-  <a class="badge badge-light" href="/tags/github/">github</a>
-  
-</div>
-
-
-
+    <li class="page-item"><a class="page-link" href="/tags/kubernetes/">&laquo;</a></li>
     
+    
+  </ul>
+</nav>
 
-
-
-
-
-
-  
-
-
-
-
-
-
-
-<div class="media author-card" itemscope itemtype="http://schema.org/Person">
-  
-  
-  <img class="portrait mr-3" src="/author/admin/avatar_hu2c43387b68a5b6b528d86c827c9ada90_16517_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
-  
-
-  <div class="media-body">
-    <h5 class="card-title" itemprop="name"><a href="/authors/admin">Che-Chia Chang</a></h5>
-    <h6 class="card-subtitle">Back-End / DevOps</h6>
-    <p class="card-text" itemprop="description">A software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration.</p>
-    <ul class="network-icon" aria-hidden="true">
-      
-      
-      
-      
-        
-      
-      
-      
-      
-      
-        
-      
-      <li>
-        <a itemprop="sameAs" href="/#contact" >
-          <i class="fas fa-envelope"></i>
-        </a>
-      </li>
-      
-      
-      
-      
-        
-      
-      
-      
-      
-      
-        
-      
-      <li>
-        <a itemprop="sameAs" href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-      
-      
-      
-      
-        
-      
-      
-      
-      
-      
-        
-      
-      <li>
-        <a itemprop="sameAs" href="https://www.facebook.com/chechia.david.chang" target="_blank" rel="noopener">
-          <i class="fab fa-facebook"></i>
-        </a>
-      </li>
-      
-      
-      
-      
-        
-      
-      
-      
-      
-      
-        
-      
-      <li>
-        <a itemprop="sameAs" href="https://github.com/chechiachang" target="_blank" rel="noopener">
-          <i class="fab fa-github"></i>
-        </a>
-      </li>
-      
-      
-      
-      
-        
-      
-      
-      
-      
-      
-        
-      
-      <li>
-        <a itemprop="sameAs" href="https://www.meetup.com/golang-taipei-meetup/" target="_blank" rel="noopener">
-          <i class="fab fa-meetup"></i>
-        </a>
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-
-
-
-  </div>
-</div>
-
-
-<div class="article-container article-widget">
-  <div class="post-nav">
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="https://chechiachang.github.io/talk/go-webassembly-intro/" rel="next">Go Webassembly Intro</a>
-  </div>
-  
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="https://chechiachang.github.io/talk/coscup-2018-scouter/" rel="prev">從零開始的人臉辨識，七龍珠戰鬥力探測器</a>
-  </div>
-  
-</div>
 
 </div>
-
-
 <div class="container">
   <footer class="site-footer">
   
@@ -877,4 +553,6 @@
 
   </body>
 </html>
+
+
 
