@@ -18,10 +18,10 @@
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</guid>
-      <description>Outlines 微服務蓬勃發展，傳統的 Monolith被分解為分散的為服務，已取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供&amp;gt;穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。
- 何為 Service Mesh ？為何需要 Service Mesh ？ Service Mesh 基本概念 如何Service-to-Service的網路層管理監控 導入 Istio 到 Kubernetes  目標聽眾  微運大量微服務，希望導入Service Mesh 的Operator 想了解微服務生態中竄紅的 Service Mesh  收穫  了解為服務的優勢與Cloud Native應用發展趨勢 了解 Service Mesh 與 Istio 觀念 能使用 Istio 於 Kubernetes，進行服務網路的管理。  今天來介紹一款好藥：Istio。 如果你有以下問題： - 維運大量(成千上百)微服務 - 需要服務對服務的流量控制，監控，管理
-談 Service Mesh 之前，不免的要先談一下 Microservice，這個目前好像很夯的一個技術名詞。
-如果手上有一個 App，會希望依照 Monolith 的架構，或是 Microservices？ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處： - Decoupling - Scalability - Performance 也有明顯的壞處： - Development Complexity - Operation Cost</description>
+      <description>Outlines 傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。
+ 何為 Service Mesh ？為何需要 Service Mesh ？ Service Mesh 基本概念 如何Service-to-Service的網路層管理監控 導入 Istio 到 Kubernetes  目標聽眾  微運大量微服務，希望導入Service Mesh 的Operator 想了解微服務生態中竄紅的 Service Mesh  收穫  了解為服務的優勢與Cloud Native應用發展趨勢 了解 Service Mesh 與 Istio 觀念 能使用 Istio 於 Kubernetes，進行服務網路的管理。  你有聽過 Microservice / Istio有聽過嗎？ 今天來介紹一款好藥：Istio。如果你有以下問題：
+ 維運大量(成千上百)微服務 需要服務對服務的流量控制，監控，管理  談 Service Mesh 之前，不免的要先談一下 Microservice，這個目前好像很夯的一個技術名詞。
+如果手上有一個 App，會希望依照 Monolith 的架構，或是 Microservices？ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處：</description>
     </item>
     
     <item>

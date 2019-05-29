@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="微服務蓬勃發展，傳統的 Monolith 被分解為分散的為服務，已取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。">
+  <meta name="description" content="基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。">
 
   
   <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/">
@@ -135,20 +135,20 @@
   
   <meta property="og:site_name" content="Che-Chia Chang">
   <meta property="og:url" content="https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/">
-  <meta property="og:title" content="Service Mesh on Kubernetes | Che-Chia Chang">
-  <meta property="og:description" content="微服務蓬勃發展，傳統的 Monolith 被分解為分散的為服務，已取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:title" content="Istio 三分鐘就入坑 佈署篇 | Che-Chia Chang">
+  <meta property="og:description" content="基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-05-06T18:12:15&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-05-06T18:35:43&#43;08:00">
+  <meta property="article:modified_time" content="2019-05-15T09:51:30&#43;08:00">
   
 
   
 
   
 
-  <title>Service Mesh on Kubernetes | Che-Chia Chang</title>
+  <title>Istio 三分鐘就入坑 佈署篇 | Che-Chia Chang</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
@@ -369,10 +369,10 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Service Mesh on Kubernetes</h1>
+  <h1 itemprop="name">Istio 三分鐘就入坑 佈署篇</h1>
 
   
-  <p class="page-subtitle">Service Mesh on Kubernetes</p>
+  <p class="page-subtitle">Istio 三分鐘就入坑 佈署篇</p>
   
 
   
@@ -381,7 +381,7 @@
 
 
 <meta content="2019-05-06 18:12:15 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-05-06 18:35:43 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-05-15 09:51:30 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -396,7 +396,7 @@
           Last updated on
       
     
-    <time>May 6, 2019</time>
+    <time>May 15, 2019</time>
   </span>
   
 
@@ -420,7 +420,7 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Service%20Mesh%20on%20Kubernetes&amp;url=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f"
+         href="https://twitter.com/intent/tweet?text=Istio%20%e4%b8%89%e5%88%86%e9%90%98%e5%b0%b1%e5%85%a5%e5%9d%91%20%e4%bd%88%e7%bd%b2%e7%af%87&amp;url=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f"
          target="_blank" rel="noopener">
         <i class="fab fa-twitter"></i>
       </a>
@@ -434,21 +434,21 @@
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f&amp;title=Service%20Mesh%20on%20Kubernetes"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f&amp;title=Istio%20%e4%b8%89%e5%88%86%e9%90%98%e5%b0%b1%e5%85%a5%e5%9d%91%20%e4%bd%88%e7%bd%b2%e7%af%87"
          target="_blank" rel="noopener">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f&amp;title=Service%20Mesh%20on%20Kubernetes"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f&amp;title=Istio%20%e4%b8%89%e5%88%86%e9%90%98%e5%b0%b1%e5%85%a5%e5%9d%91%20%e4%bd%88%e7%bd%b2%e7%af%87"
          target="_blank" rel="noopener">
         <i class="fab fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Service%20Mesh%20on%20Kubernetes&amp;body=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f">
+         href="mailto:?subject=Istio%20%e4%b8%89%e5%88%86%e9%90%98%e5%b0%b1%e5%85%a5%e5%9d%91%20%e4%bd%88%e7%bd%b2%e7%af%87&amp;body=https%3a%2f%2fchechiachang.github.io%2fpost%2fservice-mesh-for-microservice-on-kubernetes%2f">
         <i class="fas fa-envelope"></i>
       </a>
     </li>
@@ -487,18 +487,6 @@
 
     <div class="article-style" itemprop="articleBody">
       
-
-<h1 id="outline">Outline</h1>
-
-<ul>
-<li>What is Service Mesh</li>
-<li>Why Istio</li>
-<li>Demo</li>
-</ul>
-
-<hr />
-
-<p>Workshop</p>
 
 <h1 id="create-gke">Create GKE</h1>
 
