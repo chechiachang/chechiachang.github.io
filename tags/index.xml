@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Wed, 15 May 2019 12:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 02 Jun 2019 13:51:54 +0800</lastBuildDate>
     
 	<atom:link href="https://chechiachang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ibm-q-experience</title>
+      <link>https://chechiachang.github.io/tags/ibm-q-experience/</link>
+      <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ibm-q-experience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quantum-computing</title>
+      <link>https://chechiachang.github.io/tags/quantum-computing/</link>
+      <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/quantum-computing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://chechiachang.github.io/tags/tutorial/</link>
+      <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/tutorial/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>istio</title>
