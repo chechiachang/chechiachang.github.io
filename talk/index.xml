@@ -4,12 +4,11 @@
     <title>Recent &amp; Upcoming Talks on Che-Chia Chang</title>
     <link>https://chechiachang.github.io/talk/</link>
     <description>Recent content in Recent &amp; Upcoming Talks on Che-Chia Chang</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Wed, 15 May 2019 12:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://chechiachang.github.io/talk/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechiachang.github.io/talk/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,10 +17,89 @@
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</guid>
-      <description>Outlines 傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。
- 何為 Service Mesh ？為何需要 Service Mesh ？ Service Mesh 基本概念 如何Service-to-Service的網路層管理監控 導入 Istio 到 Kubernetes  目標聽眾  微運大量微服務，希望導入Service Mesh 的Operator 想了解微服務生態中竄紅的 Service Mesh  收穫  了解為服務的優勢與Cloud Native應用發展趨勢 了解 Service Mesh 與 Istio 觀念 能使用 Istio 於 Kubernetes，進行服務網路的管理。  你有聽過 Microservice / Istio有聽過嗎？ 今天來介紹一款好藥：Istio。如果你有以下問題：
- 維運大量(成千上百)微服務 需要服務對服務的流量控制，監控，管理  談 Service Mesh 之前，不免的要先談一下 Microservice，這個目前好像很夯的一個技術名詞。
-如果手上有一個 App，會希望依照 Monolith 的架構，或是 Microservices？ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處：</description>
+      <description>
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
+
+&lt;p&gt;傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;何為 Service Mesh ？為何需要 Service Mesh ？&lt;/li&gt;
+&lt;li&gt;Service Mesh 基本概念&lt;/li&gt;
+&lt;li&gt;如何Service-to-Service的網路層管理監控&lt;/li&gt;
+&lt;li&gt;導入 Istio 到 Kubernetes&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;目標聽眾&#34;&gt;目標聽眾&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;微運大量微服務，希望導入Service Mesh 的Operator&lt;/li&gt;
+&lt;li&gt;想了解微服務生態中竄紅的 Service Mesh&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;收穫&#34;&gt;收穫&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;了解為服務的優勢與Cloud Native應用發展趨勢&lt;/li&gt;
+&lt;li&gt;了解 Service Mesh 與 Istio 觀念&lt;/li&gt;
+&lt;li&gt;能使用 Istio 於 Kubernetes，進行服務網路的管理。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;你有聽過-microservice-istio有聽過嗎&#34;&gt;你有聽過 Microservice / Istio有聽過嗎？&lt;/h3&gt;
+
+&lt;p&gt;今天來介紹一款好藥：Istio。如果你有以下問題：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;維運大量(成千上百)微服務&lt;/li&gt;
+&lt;li&gt;需要服務對服務的流量控制，監控，管理&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;談 Service Mesh 之前，不免的要先談一下 Microservice，這個目前好像很夯的一個技術名詞。&lt;/p&gt;
+
+&lt;p&gt;如果手上有一個 App，會希望依照 Monolith 的架構，或是 Microservices？
+Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Decoupling&lt;/li&gt;
+&lt;li&gt;Scalability&lt;/li&gt;
+&lt;li&gt;Performance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;也有明顯的壞處：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Development Complexity&lt;/li&gt;
+&lt;li&gt;Operation Cost&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;沒事別挖坑跳&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;何為 Service Mesh？&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Service Mesh: Model / Pattern&lt;/li&gt;
+&lt;li&gt;Implementations: linkerd, istio, &amp;hellip;&lt;/li&gt;
+&lt;li&gt;基於底層的網路服務，在複雜的 topology 中可靠的傳遞&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;使用Microservie 可能會遇到的問題：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Traffic control&lt;/li&gt;
+&lt;li&gt;Monitoring&lt;/li&gt;
+&lt;li&gt;A/B Testing&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -30,7 +108,13 @@
       <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</guid>
-      <description> How to deploy a cloud-native Jenkins with Jenkins X. A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes). Give it a try. (Defered) Customized test reports for multiple language (ex. go-junit-report)  </description>
+      <description>&lt;ol&gt;
+&lt;li&gt;How to deploy a cloud-native Jenkins with Jenkins X.&lt;/li&gt;
+&lt;li&gt;A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes).&lt;/li&gt;
+&lt;li&gt;Give it a try.&lt;/li&gt;
+&lt;li&gt;(Defered) Customized test reports for multiple language (ex. go-junit-report)&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
     <item>
@@ -39,9 +123,16 @@
       <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</guid>
-      <description>是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。
-本次演講內容有:
- 初心者的人臉辨識技術 ，Face Recognition API 使用 Golang 在 Github 上做 Data Mining 從零開始的 side project，開發心路歷程與收穫分享  </description>
+      <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
+
+&lt;p&gt;本次演講內容有:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;初心者的人臉辨識技術 ，Face Recognition API&lt;/li&gt;
+&lt;li&gt;使用 Golang 在 Github 上做 Data Mining&lt;/li&gt;
+&lt;li&gt;從零開始的 side project，開發心路歷程與收穫分享&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
     <item>
@@ -77,10 +168,24 @@
       <pubDate>Sat, 11 Aug 2018 09:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/coscup-2018-scouter/</guid>
-      <description>是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。
-本次演講內容有:
- 初心者的人臉辨識技術 ，Face Recognition API 使用 Golang 在 Github 上做 Data Mining 從零開始的 side project，開發心路歷程與收穫分享  Live Stream on Youtube
-  </description>
+      <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
+
+&lt;p&gt;本次演講內容有:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;初心者的人臉辨識技術 ，Face Recognition API&lt;/li&gt;
+&lt;li&gt;使用 Golang 在 Github 上做 Data Mining&lt;/li&gt;
+&lt;li&gt;從零開始的 side project，開發心路歷程與收穫分享&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Live Stream on Youtube&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/4SWO4x7bNjo?start=23633&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+</description>
     </item>
     
     <item>
@@ -89,10 +194,28 @@
       <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/kubernetes-networking/</guid>
-      <description>從系統管理層面看Kubernetes的網路架構
-網路實作為Kubernetes架構，也是開發過程中容易出錯的部分。本次演講將從群集管理員的角度，說明Kubernetes 中網路的實作。
-大綱:
- Docker 與 Kubernetes 的網路架構 不同層級的網路溝通實作  容器對容器 Pod對Pod 集群內部與Service 集群外部對Service  以flannel為例講解網路實作 開發過程中常遇到的網路問題  希望聽眾對Kubernetes的網路架構能有基礎的概念，並在開發過程中遇到問題時，有明確的除錯步驟來判定網路是否有問題。遇到網路的問題，也能明確的知道問題的核心，並找到解法。</description>
+      <description>&lt;p&gt;從系統管理層面看Kubernetes的網路架構&lt;/p&gt;
+
+&lt;p&gt;網路實作為Kubernetes架構，也是開發過程中容易出錯的部分。本次演講將從群集管理員的角度，說明Kubernetes 中網路的實作。&lt;/p&gt;
+
+&lt;p&gt;大綱:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Docker 與 Kubernetes 的網路架構&lt;/li&gt;
+&lt;li&gt;不同層級的網路溝通實作
+
+&lt;ul&gt;
+&lt;li&gt;容器對容器&lt;/li&gt;
+&lt;li&gt;Pod對Pod&lt;/li&gt;
+&lt;li&gt;集群內部與Service&lt;/li&gt;
+&lt;li&gt;集群外部對Service&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;以flannel為例講解網路實作&lt;/li&gt;
+&lt;li&gt;開發過程中常遇到的網路問題&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;希望聽眾對Kubernetes的網路架構能有基礎的概念，並在開發過程中遇到問題時，有明確的除錯步驟來判定網路是否有問題。遇到網路的問題，也能明確的知道問題的核心，並找到解法。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -101,9 +224,19 @@
       <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</guid>
-      <description>Manage and Schedule GPU Computing Tasks on Kubernetes
-使用Kubernets管理集群GPU機器，靈活的分配調度GPU資源，並自動排程GPU運算工作。 使用者如資料科學家，只需將運算工作實施到Kubernetes上，Kubernetes便會檢視機器上可用的GPU資源，將運算工作分配到合適的機器 上，並監控工作的狀況。如資源不足Kubernetes會自動將工作加入排程，當前面的工作完成，GPU資源釋放後，Kubernetes會自動將運算 工作，配置到合適的機器上。管理者如系統工程師，只需透過Kubernetes，將機器上的GPU資源加入到Kubernetes。
- Why we need Kubernetes for GPUs computing? Pros &amp;amp; Cons How to deploy a GPU-enabled Kubernetes cluster Run GPU computing on Kubernetes cluster  </description>
+      <description>&lt;p&gt;Manage and Schedule GPU Computing Tasks on Kubernetes&lt;/p&gt;
+
+&lt;p&gt;使用Kubernets管理集群GPU機器，靈活的分配調度GPU資源，並自動排程GPU運算工作。
+使用者如資料科學家，只需將運算工作實施到Kubernetes上，Kubernetes便會檢視機器上可用的GPU資源，將運算工作分配到合適的機器
+上，並監控工作的狀況。如資源不足Kubernetes會自動將工作加入排程，當前面的工作完成，GPU資源釋放後，Kubernetes會自動將運算
+工作，配置到合適的機器上。管理者如系統工程師，只需透過Kubernetes，將機器上的GPU資源加入到Kubernetes。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Why we need Kubernetes for GPUs computing? Pros &amp;amp; Cons&lt;/li&gt;
+&lt;li&gt;How to deploy a GPU-enabled Kubernetes cluster&lt;/li&gt;
+&lt;li&gt;Run GPU computing on Kubernetes cluster&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
     <item>
@@ -112,12 +245,138 @@
       <pubDate>Wed, 28 Mar 2018 19:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</guid>
-      <description>Prerequisites If you&amp;rsquo;re interested in building your own Kubernetes. Install the following tools we use.
-virtualbox 5.1+ to create VMs, on which we deploy our Kubernetes.
-vagrant 2.0.x+ to control virtualbox to build and manage vms.
-ansible-playbook to run Kubespray playbook to deploy Kuberentes
-kubectl to control Kubernetes cluster
-# Ubuntu apt-add-repository ppa:ansible/ansible \ &amp;amp;&amp;amp; apt-get update \ &amp;amp;&amp;amp; apt-get install -y python3 ansible &amp;amp;&amp;amp; pip install netaddr # Mac pip install ansible port install py27-netaddr # netaddr is required by Kubespray  Let&amp;rsquo;s get started clone https://github.</description>
+      <description>
+
+&lt;h1 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h1&gt;
+
+&lt;p&gt;If you&amp;rsquo;re interested in building your own Kubernetes. Install the following tools we use.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34; target=&#34;_blank&#34;&gt;virtualbox 5.1+&lt;/a&gt; to create VMs, on which we deploy our Kubernetes.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34; target=&#34;_blank&#34;&gt;vagrant 2.0.x+&lt;/a&gt; to control virtualbox to build and manage vms.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://docs.ansible.com/ansible/latest/intro_installation.html&#34; target=&#34;_blank&#34;&gt;ansible-playbook&lt;/a&gt; to run Kubespray playbook to deploy Kuberentes&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/install-kubectl/&#34; target=&#34;_blank&#34;&gt;kubectl&lt;/a&gt; to control Kubernetes cluster&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Ubuntu
+apt-add-repository ppa:ansible/ansible \
+  &amp;amp;&amp;amp; apt-get update \
+  &amp;amp;&amp;amp; apt-get install -y python3 ansible
+  &amp;amp;&amp;amp; pip install netaddr
+
+# Mac
+pip install ansible
+
+port install py27-netaddr
+
+# netaddr is required by Kubespray
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;let-s-get-started&#34;&gt;Let&amp;rsquo;s get started&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;clone https://github.com/kubernetes-incubator/kubespray.git
+
+cd kubespray
+vagrant up
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it!&lt;/p&gt;
+
+&lt;p&gt;This gonna take a while. Let&amp;rsquo;s get to some details.&lt;/p&gt;
+
+&lt;h3 id=&#34;virtualbox&#34;&gt;Virtualbox&lt;/h3&gt;
+
+&lt;p&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34; target=&#34;_blank&#34;&gt;virtualbox 5.1+&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Disadvantage about vbox GUI:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Clicking is time-consuming and engineers are lazy.&lt;/li&gt;
+&lt;li&gt;Bad for automation.&lt;/li&gt;
+&lt;li&gt;Lack of Scalibility&lt;/li&gt;
+&lt;li&gt;Manual operation could cause mistakes.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;A good practice is to Write shell script with VBoxManage, the client of virtualbox&lt;/p&gt;
+
+&lt;p&gt;Or even better, use Vagrant&lt;/p&gt;
+
+&lt;h3 id=&#34;vagrant&#34;&gt;Vagrant&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34; target=&#34;_blank&#34;&gt;vagrant 2.0.x+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Create you VMs with (ruby based) script.&lt;/p&gt;
+
+&lt;p&gt;Bring VMs up &amp;amp; down within only one command&lt;/p&gt;
+
+&lt;p&gt;Check the Vagrantfile&lt;/p&gt;
+
+&lt;h3 id=&#34;ansible-playbook&#34;&gt;Ansible playbook&lt;/h3&gt;
+
+&lt;p&gt;Ansible is a IT automation tools&lt;/p&gt;
+
+&lt;p&gt;Basically, ansible playbook ssh and execute bash command on servers.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Reduce manual efforts. Deliver and deploy faster&lt;/li&gt;
+&lt;li&gt;Install K8s components to each servers and check components status on each step&lt;/li&gt;
+&lt;li&gt;Come with lots of handy tools (like native array supports)&lt;/li&gt;
+&lt;li&gt;Automation is everything&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;kubespay&#34;&gt;Kubespay&lt;/h3&gt;
+
+&lt;p&gt;Deploy k8s with ansible-playbook&lt;/p&gt;
+
+&lt;p&gt;Available on AWS, GCE, or baremetal&lt;/p&gt;
+
+&lt;p&gt;High Available cluster&lt;/p&gt;
+
+&lt;p&gt;Generate inventory file with inventory.py&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp -rfp inventory/sample inventory/mycluster
+
+declare -a IPS=(10.10.1.3 10.10.1.4 10.10.1.5)
+CONFIG_FILE=inventory/mycluster/hosts.ini python3 contrib/inventory_builder/inventory.py ${IPS[@]}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(Optional) Change parameters&lt;/p&gt;
+
+&lt;p&gt;deploy&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ansible-playbook -i inventory/myCluster/hosts.ini cluster.yml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;kubectl&#34;&gt;Kubectl&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl config use-context
+
+kubectl get po
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;destroy&#34;&gt;Destroy&lt;/h3&gt;
+
+&lt;p&gt;Remember to suspend / destroy VMs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vagrant suspend
+vagrant destroy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;more-about-kubernetes&#34;&gt;More about Kubernetes&lt;/h1&gt;
+
+&lt;p&gt;Why k8s&lt;/p&gt;
+
+&lt;h3 id=&#34;use-case-1-when-data-scientist-wants-gpu&#34;&gt;Use case 1: when data scientist wants GPU&lt;/h3&gt;
+
+&lt;p&gt;Workflow dispatching and resouce management&lt;/p&gt;
+
+&lt;h3 id=&#34;use-case-2-when-your-site-grows-bigger&#34;&gt;Use case 2: when your site grows bigger&lt;/h3&gt;
+
+&lt;p&gt;Scalibility&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/&#34; target=&#34;_blank&#34;&gt;FYI&lt;/a&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -126,13 +385,213 @@ kubectl to control Kubernetes cluster
       <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</guid>
-      <description>Outlines  Docker Storage Kubernetes Storage
- GlusterFS for K8s
-  Docker Storage Doc
- within container: inside writable layer of a container
- deleted with container couple with host machine require storage driver
-docker ps -s docker inspect ubuntu dd if=/dev/zero of=1Mfile bs=1k count=1000   Docker volume
- a directory on host prepare: provision on host usage: set volume on docker run   Kubernetes Storage https://kubernetes.</description>
+      <description>
+
+&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Docker Storage&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kubernetes Storage&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;GlusterFS for K8s&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;docker-storage&#34;&gt;Docker Storage&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/storage/&#34; target=&#34;_blank&#34;&gt;Doc&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;within container: inside writable layer of a container&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;deleted with container&lt;/li&gt;
+&lt;li&gt;couple with host machine&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;require storage driver&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker ps -s
+docker inspect ubuntu
+dd if=/dev/zero of=1Mfile bs=1k count=1000
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Docker volume&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a directory on host&lt;/li&gt;
+&lt;li&gt;prepare: provision on host&lt;/li&gt;
+&lt;li&gt;usage: set volume on docker run&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;kubernetes-storage&#34;&gt;Kubernetes Storage&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/volumes/&#34; target=&#34;_blank&#34;&gt;https://kubernetes.io/docs/concepts/storage/volumes/&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;On-disk files:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Deleted on container restart&lt;/li&gt;
+&lt;li&gt;File sharing in Pod&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kubernetes Volume:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a directory&lt;/li&gt;
+&lt;li&gt;Coexist with Pod&lt;/li&gt;
+&lt;li&gt;Data preserved across container restarts&lt;/li&gt;
+&lt;li&gt;Pod can use many volumes of different types&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;(Some of) Types of volumes :
+  * emptyDir
+    - first created volume
+    - prepare: none
+    - usage: always&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;gcePersistentDisk&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;independent to pod&lt;/li&gt;
+&lt;li&gt;prepare: gcp&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;usage: claim by name&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gcloud compute disks create --size=500GB --zone=us-central1-a my-data-disk
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;PersistentVolumeClaim&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;prepare: provision by admin&lt;/li&gt;
+&lt;li&gt;usage: add PVC request&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/&#34; target=&#34;_blank&#34;&gt;Example&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;persistentvolume&#34;&gt;PersistentVolume&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/persistent-volumes/&#34; target=&#34;_blank&#34;&gt;Doc&lt;/a&gt;
+  * Persistent Volume
+    - a piece of provisioned storage
+    - Independent lifecycle
+    - abstract with k8s object API
+    - many implementations: ex. GCEPersistentDisk, NFS, GlusterFS&amp;hellip;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Why PersistentVolume&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;one APIs, many PV implementations&lt;/li&gt;
+&lt;li&gt;Separates providers (admin) and consumers (users)&lt;/li&gt;
+&lt;li&gt;PV subsystem API handles details of implementation&lt;/li&gt;
+&lt;li&gt;Handle different need like size, access mode, performance&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;PersistentVolumeClaim&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;PV: a resource&lt;/li&gt;
+&lt;li&gt;PVC: a request for storage&lt;/li&gt;
+&lt;li&gt;Pods consume Node resources and PVCs consume PV resources&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;PVC lifecycle&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Povisioning&lt;/li&gt;
+&lt;li&gt;Binding&lt;/li&gt;
+&lt;li&gt;Using&lt;/li&gt;
+&lt;li&gt;Reclaiming&lt;/li&gt;
+&lt;li&gt;Deleting&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;PV Access Modes&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ReadWriteOnce: 1 node R/W&lt;/li&gt;
+&lt;li&gt;ReadOnlyMany: n node R, 1 node W&lt;/li&gt;
+&lt;li&gt;ReadWriteMany: n node R/W&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;StorageClass&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;usage:PV.storageClassName&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/storage-classes/&#34; target=&#34;_blank&#34;&gt;Doc&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;glusterfs&#34;&gt;GlusterFS&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://docs.gluster.org/en/latest/Administrator%20Guide/GlusterFS%20Introduction/&#34; target=&#34;_blank&#34;&gt;Doc&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Why glusterFS&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Network FS&lt;/li&gt;
+&lt;li&gt;Distributed FS
+
+&lt;ul&gt;
+&lt;li&gt;High Availability&lt;/li&gt;
+&lt;li&gt;Scalability&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;High performance&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Architecture: Types of Volumes&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Distributed&lt;/li&gt;
+&lt;li&gt;Replicated&lt;/li&gt;
+&lt;li&gt;Distributed Replicated&lt;/li&gt;
+&lt;li&gt;Striped: file&lt;/li&gt;
+&lt;li&gt;Distributed Striped&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;note: glusterFS Volume vs Kubernetes PV&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;glusterfs-for-k8s&#34;&gt;GlusterFS for k8s&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Heketi&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;REST storage management API&lt;/li&gt;
+&lt;li&gt;Receive requests from k8s storage driver&lt;/li&gt;
+&lt;li&gt;use secret to control glusterFS&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Usage&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;has a glusterFS&lt;/li&gt;
+&lt;li&gt;apply storage class and secret to k8s&lt;/li&gt;
+&lt;li&gt;Create PV&lt;/li&gt;
+&lt;li&gt;Request PVC with Pods&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;demo&#34;&gt;Demo&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Env
+
+&lt;ul&gt;
+&lt;li&gt;Kubernetes 1.9.2&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
   </channel>

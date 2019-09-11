@@ -4,12 +4,12 @@
     <title>devops on Che-Chia Chang</title>
     <link>https://chechiachang.github.io/tags/devops/</link>
     <description>Recent content in devops on Che-Chia Chang</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Sat, 20 Apr 2019 13:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://chechiachang.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechiachang.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,7 +18,13 @@
       <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</guid>
-      <description> How to deploy a cloud-native Jenkins with Jenkins X. A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes). Give it a try. (Defered) Customized test reports for multiple language (ex. go-junit-report)  </description>
+      <description>&lt;ol&gt;
+&lt;li&gt;How to deploy a cloud-native Jenkins with Jenkins X.&lt;/li&gt;
+&lt;li&gt;A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes).&lt;/li&gt;
+&lt;li&gt;Give it a try.&lt;/li&gt;
+&lt;li&gt;(Defered) Customized test reports for multiple language (ex. go-junit-report)&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
     <item>

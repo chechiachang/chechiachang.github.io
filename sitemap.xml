@@ -1,482 +1,358 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</loc>
-      <lastmod>2019-09-09T18:33:35+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/</loc>
-      <lastmod>2019-09-09T18:33:35+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/kuberentes-source-code/</loc>
-      <lastmod>2019-08-23T16:09:00+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/project/quantum-computing-journey/</loc>
-      <lastmod>2019-06-02T13:57:47+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/</loc>
-      <lastmod>2019-06-03T11:05:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/ibm-q-experience/</loc>
-      <lastmod>2019-06-03T11:05:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/quantum-computing/</loc>
-      <lastmod>2019-06-03T11:05:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/tutorial/</loc>
-      <lastmod>2019-06-03T11:05:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/journey-to-quantum-computing/</loc>
-      <lastmod>2019-06-03T11:05:17+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/</loc>
-      <lastmod>2019-05-23T11:30:14+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</loc>
-      <lastmod>2019-05-23T11:30:14+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/istio/</loc>
-      <lastmod>2019-05-23T11:30:14+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
-      <lastmod>2019-05-23T11:30:14+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/service-mesh/</loc>
-      <lastmod>2019-05-23T11:30:14+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/</loc>
-      <lastmod>2019-05-15T09:51:30+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</loc>
-      <lastmod>2019-04-19T22:26:02+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/devops/</loc>
-      <lastmod>2019-04-19T22:26:02+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/jenkins/</loc>
-      <lastmod>2019-04-19T22:26:02+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</loc>
-      <lastmod>2019-04-20T10:25:02+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/ar/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/face-detection/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/face-recognition/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/github-api/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/golang/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/ios/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/machine-learning/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/unity/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</loc>
-      <lastmod>2019-04-19T14:28:43+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/cd/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/ci/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/project/jenkins-x-on-kubernetes/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/elk-on-kubernetes/</loc>
-      <lastmod>2019-04-19T21:04:05+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/elasticsearch/</loc>
-      <lastmod>2019-04-19T21:04:05+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/elk/</loc>
-      <lastmod>2019-04-19T21:04:05+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/monitoring/</loc>
-      <lastmod>2019-04-19T21:04:05+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/go-webassembly-intro/</loc>
-      <lastmod>2019-04-19T19:57:09+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/webassembly/</loc>
-      <lastmod>2019-04-19T19:57:09+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/categories/</loc>
-      <lastmod>2019-04-19T20:41:11+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</loc>
-      <lastmod>2019-04-19T20:41:11+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/container/</loc>
-      <lastmod>2019-04-19T20:41:11+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/cri/</loc>
-      <lastmod>2019-04-19T20:41:11+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/docker/</loc>
-      <lastmod>2019-04-19T20:41:11+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/categories/kubernetes/</loc>
-      <lastmod>2019-04-19T20:41:11+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/github/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/go-github/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/slides/container-runtime-interface/</loc>
-      <lastmod>2019-04-19T21:38:51+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/coscup-2018-scouter/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/kubernetes-networking/</loc>
-      <lastmod>2019-04-19T18:44:52+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/flannel/</loc>
-      <lastmod>2019-04-19T18:44:52+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/networking/</loc>
-      <lastmod>2019-04-19T18:44:52+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</loc>
-      <lastmod>2019-04-19T19:02:50+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/automation/</loc>
-      <lastmod>2019-04-19T19:02:50+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/cloud-computing/</loc>
-      <lastmod>2019-04-19T19:02:50+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/gpu-computing/</loc>
-      <lastmod>2019-04-19T19:02:50+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/slides/go-github/</loc>
-      <lastmod>2019-04-19T21:38:51+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/slides/coscup-2018-scouter/</loc>
-      <lastmod>2019-04-19T21:38:51+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</loc>
-      <lastmod>2019-04-19T19:17:41+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/kubespray/</loc>
-      <lastmod>2019-04-19T19:17:41+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</loc>
-      <lastmod>2019-04-19T21:19:17+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/filesystem/</loc>
-      <lastmod>2019-04-19T21:19:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/glusterfs/</loc>
-      <lastmod>2019-04-19T21:19:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/tags/storage/</loc>
-      <lastmod>2019-04-19T21:19:17+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/project/scouter/</loc>
-      <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/author/admin/</loc>
-      <lastmod>2019-09-09T16:13:56+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/authors/</loc>
-      <lastmod>2019-09-09T16:13:56+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/author/</loc>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/post/</loc>
-      <lastmod>2019-04-19T21:19:17+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/project/</loc>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/publication_types/</loc>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/publication/</loc>
-      <lastmod>2019-04-01T17:53:58+08:00</lastmod>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/slides/</loc>
-      <priority>0</priority>
-    </url>
-  
-    <url>
-    
-      <loc>https://chechiachang.github.io/authors/admin/</loc>
-      <lastmod>2019-09-09T16:13:56+08:00</lastmod>
-      <priority>0</priority>
-    </url>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kuberentes-source-code/</loc>
+    <lastmod>2019-08-23T16:09:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ibm-q-experience/</loc>
+    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/project/</loc>
+    <lastmod>2019-06-02T13:57:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/project/quantum-computing-journey/</loc>
+    <lastmod>2019-06-02T13:57:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/quantum-computing/</loc>
+    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/tutorial/</loc>
+    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/journey-to-quantum-computing/</loc>
+    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/istio/</loc>
+    <lastmod>2019-05-23T11:30:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</loc>
+    <lastmod>2019-05-23T11:30:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/service-mesh/</loc>
+    <lastmod>2019-05-23T11:30:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/</loc>
+    <lastmod>2019-05-15T09:51:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/devops/</loc>
+    <lastmod>2019-04-19T22:26:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/jenkins/</loc>
+    <lastmod>2019-04-19T22:26:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</loc>
+    <lastmod>2019-04-19T22:26:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ar/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/face-detection/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/face-recognition/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/github-api/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/golang/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ios/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/machine-learning/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/unity/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/cd/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ci/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</loc>
+    <lastmod>2019-04-19T14:28:43+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/project/jenkins-x-on-kubernetes/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/elasticsearch/</loc>
+    <lastmod>2019-04-19T21:04:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/elk/</loc>
+    <lastmod>2019-04-19T21:04:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/elk-on-kubernetes/</loc>
+    <lastmod>2019-04-19T21:04:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/monitoring/</loc>
+    <lastmod>2019-04-19T21:04:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/go-webassembly-intro/</loc>
+    <lastmod>2019-04-19T19:57:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/webassembly/</loc>
+    <lastmod>2019-04-19T19:57:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/categories/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/container/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/cri/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/docker/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/categories/kubernetes/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/github/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/go-github/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/container-runtime-interface/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/coscup-2018-scouter/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/flannel/</loc>
+    <lastmod>2019-04-19T18:44:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/kubernetes-networking/</loc>
+    <lastmod>2019-04-19T18:44:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/networking/</loc>
+    <lastmod>2019-04-19T18:44:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/automation/</loc>
+    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/cloud-computing/</loc>
+    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/gpu-computing/</loc>
+    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</loc>
+    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/go-github/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/coscup-2018-scouter/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</loc>
+    <lastmod>2019-04-19T19:17:41+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/kubespray/</loc>
+    <lastmod>2019-04-19T19:17:41+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/filesystem/</loc>
+    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/glusterfs/</loc>
+    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</loc>
+    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/storage/</loc>
+    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/project/scouter/</loc>
+    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/authors/admin/</loc>
+    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/authors/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/</loc>
+    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/publication_types/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/publication/</loc>
+    <lastmod>2019-04-01T17:53:58+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/</loc>
+    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+  </url>
   
 </urlset>
