@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Che-Chia Chang">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Self-host ELK stack on GCP - Installation">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-137400455-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@chechiachang">
+  <meta property="twitter:creator" content="@chechiachang">
+  
+  <meta property="og:site_name" content="Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">
+  <meta property="og:title" content="Self-host ELK stack - Installation | Che-Chia Chang">
+  <meta property="og:description" content="Self-host ELK stack on GCP - Installation"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-09-15T11:43:03&#43;08:00">
+  
+  <meta property="article:modified_time" content="2019-09-15T23:33:59&#43;08:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#3f51b5",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#3f51b5"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Self-host ELK stack - Installation | Che-Chia Chang</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Che-Chia Chang</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks"><span>Talks</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Me</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Docs</span><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            
+            <li class="dropdown-item my-0 py-0 mx-0 px-0">
+              <a href="/post/kubernetes-container-runtime-interface/"><span>Kubernetes Container Runtime Interface</span></a>
+            </li>
+            
+          </ul>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Self-host ELK stack - Installation</h1>
+
+  
+  <p class="page-subtitle">Self-host ELK stack - Installation</p>
+  
+
+  
+    
+
+
+
+<meta content="2019-09-15 11:43:03 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-09-15 23:33:59 &#43;0800 CST" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Sep 15, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&amp;text=Self-host%20ELK%20stack%20-%20Installation" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&amp;t=Self-host%20ELK%20stack%20-%20Installation" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Self-host%20ELK%20stack%20-%20Installation&amp;body=https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&amp;title=Self-host%20ELK%20stack%20-%20Installation" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Self-host%20ELK%20stack%20-%20Installation%20https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&amp;title=Self-host%20ELK%20stack%20-%20Installation" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+
+<ul>
+<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
+<li>監測 Google Compute Engine 上服務的各項數據</li>
+<li>監測 Google Kubernetes Engine 的各項數據</li>
+<li>使用 logstash pipeline 做數據前處理</li>
+<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
+<li>Debug ELK stack on GCP</li>
+</ul>
+
+<p>作為範例的 ELK 的版本是當前的 stable release 7.3.1。</p>
+
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+
+<p>&ndash;</p>
+
+<h1 id="簡介-elk-stack">簡介 ELK stack</h1>
+
+<p><a href="https://www.elastic.co/guide/index.html" target="_blank">官方說明文件</a></p>
+
+<h3 id="elk-的元件">ELK 的元件</h3>
+
+<ul>
+<li>Elasticsearch: 基於 Lucene 的分散式全文搜索引擎</li>
+<li>Logstash: 數據處理 pipeline</li>
+<li>Kibana: ELK stack 的管理後台與數據視覺化工具</li>
+<li>Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)</li>
+</ul>
+
+<h3 id="elk-的工作流程">ELK 的工作流程</h3>
+
+<p>beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana</p>
+
+<ol>
+<li>將 beats 放在應用端的主機上，或是在容器化環境種作為 sidecar，跟應用放在一起</li>
+<li>設定 beats 從指定的路徑收集 log 與 metrics</li>
+<li>設定 beats 向後輸出的遠端目標</li>
+<li>(Optional) beats 輸出到 logstash ，先進行數據的變更、格式整理，在後送到 elasticsearch</li>
+<li>beats 向後輸出到 elasticsearch，儲存數據文件(document)，並依照樣式(template)與索引(index)儲存，便可在 elasticsearch 上全文搜索數據</li>
+<li>透過 Kibana，將 elasticsearch 上的 log 顯示</li>
+</ol>
+
+<h1 id="官方不是有出文件嗎">官方不是有出文件嗎</h1>
+
+<p>Elastic 官方準備了大量的文件，理論上要跟著文件一步一步架設這整套工具應該是十分容易。然而實際照著做卻遇上很多困難。由於缺乏 get-started 的範例文件，不熟悉 ELK 設定的使用者，常常需要停下來除錯，甚至因為漏掉某個步驟，而需要回頭重做一遍。</p>
+
+<p>說穿了本篇的技術含量不高，就只是一個踩雷過程。</p>
+
+<p>Lets get our hands dirty.</p>
+
+<h1 id="warning">WARNING</h1>
+
+<p>這篇安裝過程沒有做安全性設定，由於 ELK stack 的安全性功能模組，在<a href="https://www.elastic.co/what-is/open-x-pack" target="_blank">v6.3.0 以前的版本是不包含安全性模組的</a>，官方的安裝說明文件將安全性設定另成一篇。我第一次安裝，全部安裝完後，才發現裏頭沒有任何安全性設定，包含帳號密碼登入、api secret token、https/tls 通通沒有，整組 elk 裸奔。</p>
+
+<p>我這邊分開的目的，不是讓大家都跟我一樣被雷(XD)，而是因為
+- 另起一篇對安全性設定多加說明
+- 在安全的內網中，沒有安全性設定，可以大幅加速開發與除錯</p>
+
+<p>雖然沒有安全性設定，但仍然有完整的功能，如果只是在測試環境，或是想要評估試用 self-hosted ELK，這篇的說明已足夠。但千萬不要用這篇上 public network 或是用在 production 環境喔。</p>
+
+<p>如果希望第一次安裝就有完整的 security 設定，請等待下篇 <a href="#secure-elk-stack">Secure ELK Stask</a></p>
+
+<h1 id="討論需求與規格">討論需求與規格</h1>
+
+<p>這邊只是帶大家過一下基礎安裝流程，我們在私有網路中搭建一台 standalone 的 ELK stack，通通放在一台節點(node)上。</p>
+
+<pre><code>elk-node-standalone 10.140.0.10
+app-node-1          10.140.0.11
+...                 ...
+</code></pre>
+
+<p>本機的 ELK stack 元件，彼此透過 localhost 連線</p>
+
+<ul>
+<li>Elasticsearch:  localhost:9200</li>
+<li>Kibana:         localhost:5601</li>
+<li>Apm-server:     localhost:8200</li>
+<li>Self Monitoring Services</li>
+</ul>
+
+<p>私有網路中的外部服務透過 10.140.0.10</p>
+
+<ul>
+<li>beats 從其他 node 輸出到 Elasticsearch: 10.140.0.10:9200</li>
+<li>beats 從其他 node 輸出到 Apm-server:    10.140.0.10:8200</li>
+<li>在內部網路中 透過 browser 存取 Kibana:  10.140.0.10:5601</li>
+</ul>
+
+<p>standalone 的好處:</p>
+
+<ul>
+<li>方便 (再次強調這篇只是示範，實務上不要貪一時方便，維運崩潰)</li>
+<li>最簡化設定，ELK 有非常大量的設定可以調整，這篇簡化了大部分</li>
+</ul>
+
+<p>Standalone可能造成的問題:</p>
+
+<ul>
+<li>No High Availablity: 沒有任何容錯備援可以 failover，這台掛就全掛</li>
+<li>外部服務多的話，很容易就超過 node 上對於網路存取的限制，造成 tcp drop 或 delay。需要調整 ulimit 來增加網路，當然這在雲端上會給維運帶來更多麻煩，不是一個好解法。</li>
+</ul>
+
+<p>如果要有 production ready 的 ELK</p>
+
+<ul>
+<li>HA 開起來</li>
+<li>把服務分散到不同 node 上, 方便之後 scale out 多開幾台
+
+<ul>
+<li>elasticsearch-1, elasticsearch-2, elasticsearch-3&hellip;</li>
+<li>kibana-1</li>
+<li>apm-server-1, apm-server-2, &hellip;</li>
+</ul></li>
+<li>如果應用在已經容器化, 這些服務元件也可以上 Kubernetes 做容器自動化，這個部份蠻好玩，如果有時間我們來聊這篇</li>
+</ul>
+
+<h1 id="主機設定">主機設定</h1>
+
+<p>Elasticsearch 儲存數據會佔用不少硬碟空間，我個人的習慣是只要有額外占用儲存空間，都要另外掛載硬碟，不要占用 root，所以這邊會需要另外掛載硬碟。</p>
+
+<p>GCP 上使用 Google Compote Engine 的朋友，可以照 <a href="https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=zh-tw" target="_blank">Google 官方操作步驟操作</a></p>
+
+<p>完成後接近這樣</p>
+
+<pre><code>$ df -h
+$ df --human-readable
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       9.6G  8.9G  682M  93% /
+/dev/sdb        492G   63G  429G  13% /mnt/disks/elk
+
+$ ls /mnt/disks/elk
+
+/mnt/disks/elk/elasticsearch
+/mnt/disks/elk/apm-server
+/mnt/disks/elk/kibana
+</code></pre>
+
+<p>至於需要多少容量，取決收集數據的數量，落差非常大，可以先上個 100Gb ，試跑一段時間，再視情況 scale storage disk。</p>
+
+<h1 id="開防火牆">開防火牆</h1>
+
+<p>需要開放 10.140.0.10 這台機器的幾個 port</p>
+
+<ul>
+<li>elasticsearch           :9200   來源只開放私有網路其他 ip 10.140.0.0/9</li>
+<li>apm-server              :8200   (同上)</li>
+<li>kibana                  :5601   (同上)，如果想從外部透過 browser開，需要 whitelist ip</li>
+</ul>
+
+<p>GCP 上有 default 的防火牆允許規則，私有網路可以彼此連線
+- default-allow-internal: :all    :10.140.0.0/9   tcp:0-65535</p>
+
+<h1 id="install-elasticsearch">Install Elasticsearch</h1>
+
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/install-elasticsearch.html" target="_blank">Install Elasticsearch 官方文件 7.3</a></p>
+
+<p>我們這邊直接在 ubuntu 18.04 上使用 apt 作為安裝</p>
+
+<pre><code>sudo apt-get install apt-transport-https
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+add-apt-repository &quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot;
+sudo apt-get update
+sudo apt-get install elasticsearch
+</code></pre>
+
+<p>安裝完後路徑長這樣</p>
+
+<pre><code>/etc/elasticsearch
+/etc/elasticsearch/elasticsearch.yml
+/etc/elasticsearch/jvm.options
+
+# Utility
+/usr/share/elasticsearch/bin/
+
+# Log
+/var/log/elasticsearch/elasticsearch.log
+</code></pre>
+
+<p>有需要也可以複寫設定檔，把 log 也移到 /mnt/disks/elk/elasticsearch/logs</p>
+
+<h3 id="服務控制">服務控制</h3>
+
+<p>透過 systemd 管理，我們可以用 systemctl 控制，
+用戶 elasticsearch:elasticsearch，操作時會需要 sudo 權限。</p>
+
+<p>但在啟動前要先調整數據儲存路徑，並把權限移轉給使用者。</p>
+
+<pre><code>mkdir -p /mnt/disks/elk/elasticsearch
+chown elasticsearch:elasticsearch /mnt/disks/elk/elasticsearch
+</code></pre>
+
+<h3 id="設定檔案">設定檔案</h3>
+
+<p>ELK 提供了許多可設定調整的設定,但龐大的設定檔案也十分難上手。我們這邊先簡單更改以下設定檔案</p>
+
+<pre><code>sudo vim /etc/elasticsearch/elasticsearch.yml
+
+# Change Network
+network.host: 0.0.0.0
+# Change data path
+path.data: /mnt/disks/elk/elasticsearch
+
+vim /etc/elasticsearch/jvm-options
+# Adjust heap to 4G
+-Xms4g
+-Xmx4g
+
+# Enable xpack.security
+discovery.seed_hosts: [&quot;10.140.0.10&quot;]
+discovery.type: &quot;single-node&quot;
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.license.self_generated.type: basic
+</code></pre>
+
+<p>6.3.0 後的版本已經附上安全性模組 xpack，這邊順便開起來。關於 xpack 的安全性設定，這邊先略過不提。</p>
+
+<p>有啟用 xpack ，可以讓我們透過 elasticsearch 附帶的工具，產生使用者與帳號密碼。</p>
+
+<pre><code>/usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto
+
+# Keep your passwords safe
+</code></pre>
+
+<p>然後把啟動 Elasticsearch</p>
+
+<pre><code>sudo systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
+sudo systemctl status elasticsearch.service
+</code></pre>
+
+<p>看一下 log，確定服務有在正常工作</p>
+
+<pre><code>tail -f /var/log/elasticsearch/elasticsearch.log
+</code></pre>
+
+<p>在 node 上試打 Elasticsearch API</p>
+
+<pre><code>$ curl localhost:9200
+
+{
+  &quot;name&quot; : &quot;elk&quot;,
+  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,
+  &quot;cluster_uuid&quot; : &quot;uiMZe7VETo-H6JLFLF4SZg&quot;,
+  &quot;version&quot; : {
+    &quot;number&quot; : &quot;7.3.1&quot;,
+    &quot;build_flavor&quot; : &quot;default&quot;,
+    &quot;build_type&quot; : &quot;deb&quot;,
+    &quot;build_hash&quot; : &quot;4749ba6&quot;,
+    &quot;build_date&quot; : &quot;2019-08-19T20:19:25.651794Z&quot;,
+    &quot;build_snapshot&quot; : false,
+    &quot;lucene_version&quot; : &quot;8.1.0&quot;,
+    &quot;minimum_wire_compatibility_version&quot; : &quot;6.8.0&quot;,
+    &quot;minimum_index_compatibility_version&quot; : &quot;6.0.0-beta1&quot;
+  },
+  &quot;tagline&quot; : &quot;You Know, for Search&quot;
+}
+</code></pre>
+
+<h1 id="kibana">Kibana</h1>
+
+<p>有了正常工作的 Elasticsearch，接下來要安裝 kibana，由於 apt repository 已經匯入，這邊直接</p>
+
+<pre><code>sudo apt-get update
+sudo apt-get install kibana
+</code></pre>
+
+<p>一樣快速設定一下</p>
+
+<pre><code>$ vim /etc/kibana/kinana.yml
+
+# change server.host from localhost to 0.0.0.0 to allow outside requests
+server.host: &quot;0.0.0.0&quot;
+
+# Add elasticsearch password
+elasticsearch.username: &quot;kibana&quot;
+elasticsearch.password:
+
+sudo systemctl enable kibana.service
+sudo systemctl start kibana.service
+sudo systemctl status kibana.service
+</code></pre>
+
+<p>檢查 log 並試打一下</p>
+
+<pre><code>sudo systemctl status kibana
+
+$ curl localhost:5601
+</code></pre>
+
+<p>透過內網 ip 也可以用 browser 存取
+使用 elastic 這組帳號密碼登入，可以有管理員權限
+可以檢視一下 kibana 的頁面，看一下是否系統功能都上常上線
+<a href="http://10.140.0.10/app/monitoring#" target="_blank">http://10.140.0.10/app/monitoring#</a></p>
+
+<h1 id="filebeat">Filebeat</h1>
+
+<p>以上是 ELK 最基本架構: elasticsearch 引擎與前端視覺化管理工具 Kibana。當然現在進去 kibana 是沒有數據的，所以我們現在來安裝第一個 beat，收集第一筆數據。</p>
+
+<p>你可能會覺得奇怪: 我現在沒有任何需要監控的應用，去哪收集數據?</p>
+
+<p>ELK 提供的自我監測 (self-monitoring) 的功能，也就是在 node 上部屬 filebeat 並啟用 modules，便可以把這台 node 上的 elasticsearch 運行的狀況，包含cpu 狀況、記憶體用量、儲存空間用量、安全性告警、&hellip;都做為數據，傳到 elasticsearch 中，並在 Kibana monitoring 頁面製圖顯示。</p>
+
+<p>這邊也剛好做為我們 ELK stack 的第一筆數據收集。</p>
+
+<p>WARNING: 這邊一樣要提醒， production 環境多半會使用另外一組的 elasticsearch 來監控主要的這組 elastic stack，以維持 elk stack 的穩定性，才不會自己 monitoring 自己，結果 elastic 掛了，metrics 跟錯誤訊息都看不到。</p>
+
+<p><a href="https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-installation.html" target="_blank">官方安裝文件</a></p>
+
+<pre><code>sudo apt-get update
+sudo apt-get install filebeat
+</code></pre>
+
+<p>預設的 filebeat.yml 設定檔案不是完整的，請到官網下載完整版，但官網沒給檔案連結(慘)，只有網頁版 <a href="https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html" target="_blank">https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html</a></p>
+
+<p>我們上 github 把她載下來</p>
+
+<pre><code>$ wget https://raw.githubusercontent.com/elastic/beats/v7.3.1/filebeat/filebeat.reference.yml
+$ sudo mv filebeat-reference-y
+$ sudo vim /etc/filebeat/filebeat.yml
+
+# Enable elasticsearch module and kibana module to process metrics of localhost elasticsearch &amp; kibana
+filebeat.modules:
+- module: elasticsearch
+  # Server log
+  server:
+    enabled: true
+
+- module: kibana
+  # All logs
+  log:
+    enabled: true
+
+# The name will be added to metadata
+name: filebeat-elk
+fields:
+  env: elk
+
+# Add additional cloud_metadata since we're on GCP
+processors:
+- add_cloud_metadata: ~
+
+# Output to elasticsearch
+output.elasticsearch:
+  enabled: true
+  hosts: [&quot;localhost:9200&quot;]
+  protocol: &quot;http&quot;
+  username: &quot;elastic&quot;
+  password: 
+
+# Configure kibana with filebeat: add template, dashboards, etc...
+setup.kibana:
+  host: &quot;localhost:5601&quot;
+  protocol: &quot;http&quot;
+  username: &quot;elastic&quot;
+  password: 
+</code></pre>
+
+<p>啟動 filebeat</p>
+
+<pre><code>sudo systemctl start filebeat
+</code></pre>
+
+<p>看一下 log，filebeat 會開始收集 elasticsearch 的 log 與 metrics，可以在 log 上看到收集的狀況。</p>
+
+<pre><code>$ sudo journalctl -fu filebeat
+
+Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {&quot;monitoring&quot;: {&quot;metrics&quot;: {&quot;beat&quot;:{&quot;cpu&quot;:{&quot;system&quot;:{&quot;ticks&quot;:1670860,&quot;time&quot;:{&quot;ms&quot;:66}},&quot;total&quot;:{&quot;ticks&quot;:6964660,&quot;time&quot;:{&quot;ms&quot;:336},&quot;value&quot;:6964660},&quot;user&quot;:{&quot;ticks&quot;:5293800,&quot;time&quot;:{&quot;ms&quot;:270}}},&quot;handles&quot;:{&quot;limit&quot;:{&quot;hard&quot;:4096,&quot;soft&quot;:1024},&quot;open&quot;:11},&quot;info&quot;:{&quot;ephemeral_id&quot;:&quot;62fd4bfa-1949-4356-9615-338ca6a95075&quot;,&quot;uptime&quot;:{&quot;ms&quot;:786150373}},&quot;memstats&quot;:{&quot;gc_next&quot;:7681520,&quot;memory_alloc&quot;:4672576,&quot;memory_total&quot;:457564560376,&quot;rss&quot;:-32768},&quot;runtime&quot;:{&quot;goroutines&quot;:98}},&quot;filebeat&quot;:{&quot;events&quot;:{&quot;active&quot;:-29,&quot;added&quot;:1026,&quot;done&quot;:1055},&quot;harvester&quot;:{&quot;open_files&quot;:4,&quot;running&quot;:4}},&quot;libbeat&quot;:{&quot;config&quot;:{&quot;module&quot;:{&quot;running&quot;:0}},&quot;output&quot;:{&quot;events&quot;:{&quot;acked&quot;:1055,&quot;active&quot;:-50,&quot;batches&quot;:34,&quot;total&quot;:1005},&quot;read&quot;:{&quot;bytes&quot;:248606},&quot;write&quot;:{&quot;bytes&quot;:945393}},&quot;pipeline&quot;:{&quot;clients&quot;:9,&quot;events&quot;:{&quot;active&quot;:32,&quot;published&quot;:1026,&quot;total&quot;:1026},&quot;queue&quot;:{&quot;acked&quot;:1055}}},&quot;registrar&quot;:{&quot;states&quot;:{&quot;current&quot;:34,&quot;update&quot;:1055},&quot;writes&quot;:{&quot;success&quot;:35,&quot;total&quot;:35}},&quot;system&quot;:{&quot;load&quot;:{&quot;1&quot;:1.49,&quot;15&quot;:0.94,&quot;5&quot;:1.15,&quot;norm&quot;:{&quot;1&quot;:0.745,&quot;15&quot;:0.47,&quot;5&quot;:0.575}}}}}}
+</code></pre>
+
+<p>如果數據都有送出，就可以回到 kibana 的頁面，看一下目前這個 elasticsearch 集群，有開啟 monitoring 功能的元件們，是否都有正常工作。</p>
+
+<p><a href="http://10.140.0.10/app/monitoring#" target="_blank">http://10.140.0.10/app/monitoring#</a></p>
+
+<p>頁面長得像這樣</p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+<img src="/img/elk/kibana-monitoring.png" width="100%" height="100%" >
+
+
+</figure>
+
+
+<p>Standalone cluster 中的 filebeat，是還未跟 elasticsearch 配對完成的數據，會顯示在另外一個集群中，配對完後會歸到 elk cluster 中，就是我們的主要 cluster。</p>
+
+<p>點進去可以看各個元件的服務情形。</p>
+
+<h1 id="小結">小結</h1>
+
+<ul>
+<li>簡單思考 self-host ELK stack 搭建的架構</li>
+<li>在單一 node 上安裝最簡易的 elastic stack</li>
+<li>設定元件的 output 位置</li>
+<li>設定 self-monitoring</li>
+</ul>
+
+<p>恭喜各位獲得一個裸奔但是功能完整的 ELK, 我們下篇再向安全性邁進。</p>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/gcp/">gcp</a>
+  
+  <a class="badge badge-light" href="/tags/elk/">elk</a>
+  
+  <a class="badge badge-light" href="/tags/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/tags/elasticsearch/">elasticsearch</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2c43387b68a5b6b528d86c827c9ada90_16517_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://chechiachang.github.io/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Back-End / DevOps</h6>
+      <p class="card-text" itemprop="description">A software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/chechia.david.chang" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.meetup.com/golang-taipei-meetup/" target="_blank" rel="noopener">
+              <i class="fab fa-meetup"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/talk/elk-on-kubernetes/">ELK for Applications on Kubernetes</a></li>
+          
+          <li><a href="/post/service-mesh-for-microservice-on-kubernetes/">Istio 三分鐘就入坑 佈署篇</a></li>
+          
+          <li><a href="/post/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></li>
+          
+          <li><a href="/project/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></li>
+          
+          <li><a href="/talk/jenkins-on-kubernetes/">Jenkins on Kubernetes</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/secure-elk-stack/" rel="next">Secure Elk Stack</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/2020-ithome-ironman-challenge/" rel="prev">2020 IT邦幫忙鐵人賽</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    chechiachang &copy; 2016 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

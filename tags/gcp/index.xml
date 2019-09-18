@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>elasticsearch on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/elasticsearch/</link>
-    <description>Recent content in elasticsearch on Che-Chia Chang</description>
+    <title>gcp on Che-Chia Chang</title>
+    <link>https://chechiachang.github.io/tags/gcp/</link>
+    <description>Recent content in gcp on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Sun, 15 Sep 2019 11:43:03 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/elasticsearch/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechiachang.github.io/tags/gcp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -432,15 +432,6 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 
 &lt;p&gt;恭喜各位獲得一個裸奔但是功能完整的 ELK, 我們下篇再向安全性邁進。&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>ELK for Applications on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/elk-on-kubernetes/</link>
-      <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/talk/elk-on-kubernetes/</guid>
-      <description></description>
     </item>
     
   </channel>
