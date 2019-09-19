@@ -4,36 +4,61 @@
   
   <url>
     <loc>https://chechiachang.github.io/</loc>
-    <lastmod>2019-09-19T00:19:00+08:00</lastmod>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/post/monitoring-gce-with-elk/</loc>
-    <lastmod>2019-09-19T00:19:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/post/elastic-or-not/</loc>
-    <lastmod>2019-09-18T19:11:33+08:00</lastmod>
+    <loc>https://chechiachang.github.io/tags/daemonsets/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/elk/</loc>
-    <lastmod>2019-09-17T14:51:38+08:00</lastmod>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/filebeat/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/fluentd/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
-    <lastmod>2019-09-17T14:51:38+08:00</lastmod>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/post/secure-elk-stack/</loc>
-    <lastmod>2019-09-17T14:51:38+08:00</lastmod>
+    <loc>https://chechiachang.github.io/tags/log/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/pod-affinity/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/monitoring-gce-with-elk/</loc>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/secure-elk-stack/</loc>
     <lastmod>2019-09-17T14:51:38+08:00</lastmod>
   </url>
   
@@ -49,17 +74,32 @@
   
   <url>
     <loc>https://chechiachang.github.io/tags/elasticsearch/</loc>
-    <lastmod>2019-09-15T23:33:59+08:00</lastmod>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/gcp/</loc>
-    <lastmod>2019-09-15T23:33:59+08:00</lastmod>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/</loc>
-    <lastmod>2019-09-15T23:33:59+08:00</lastmod>
+    <lastmod>2019-09-19T22:54:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk-clusterrulebinding/</loc>
+    <lastmod>2019-09-19T17:24:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk-config-configmap/</loc>
+    <lastmod>2019-09-19T17:24:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/</loc>
+    <lastmod>2019-09-19T17:24:31+08:00</lastmod>
   </url>
   
   <url>

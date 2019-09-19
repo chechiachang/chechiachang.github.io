@@ -25,8 +25,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;監測 Google Compute Engine 上服務的各項數據&lt;/li&gt;
-&lt;li&gt;監測 Google Kubernetes Engine 的各項數據&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;

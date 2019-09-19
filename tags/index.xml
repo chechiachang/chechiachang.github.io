@@ -7,26 +7,71 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Sun, 15 Sep 2019 23:00:33 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 19 Sep 2019 17:06:29 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>daemonsets</title>
+      <link>https://chechiachang.github.io/tags/daemonsets/</link>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/daemonsets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>elk</title>
       <link>https://chechiachang.github.io/tags/elk/</link>
-      <pubDate>Sun, 15 Sep 2019 23:00:33 +0800</pubDate>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/elk/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>filebeat</title>
+      <link>https://chechiachang.github.io/tags/filebeat/</link>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/filebeat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fluentd</title>
+      <link>https://chechiachang.github.io/tags/fluentd/</link>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/fluentd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>kubernetes</title>
       <link>https://chechiachang.github.io/tags/kubernetes/</link>
-      <pubDate>Sun, 15 Sep 2019 23:00:33 +0800</pubDate>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>log</title>
+      <link>https://chechiachang.github.io/tags/log/</link>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/log/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pod-affinity</title>
+      <link>https://chechiachang.github.io/tags/pod-affinity/</link>
+      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/pod-affinity/</guid>
       <description></description>
     </item>
     

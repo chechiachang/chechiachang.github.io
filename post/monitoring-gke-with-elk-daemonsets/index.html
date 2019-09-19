@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="2020 IT邦幫忙鐵人賽">
+  <meta name="description" content="apiVersion: extensions/v1beta1 kind: DaemonSet metadata: name: &amp;app-name filebeat namespace: elk labels: app.kubernetes.io/name: *app-name app: *app-name component: filebeat spec: selector: matchLabels: app.kubernetes.io/name: *app-name app: *app-name component: filebeat template: metadata: labels: app.kubernetes.io/name: *app-name app: *app-name component: filebeat spec: serviceAccountName: elk terminationGracePeriodSeconds: 30 # Run filebeat with my-app #affinity: # podAffinity: # requiredDuringSchedulingIgnoredDuringExecution: # - labelSelector: # matchExpressions: # - key: app # operator: In # values: # - my-app # topologyKey: &quot;kubernetes.io/hostname&quot; # namespaces: # - default containers: - name: filebeat image: docker.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/2020-ithome-ironman-challenge/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/">
 
   
 
@@ -110,7 +110,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/2020-ithome-ironman-challenge/">
+  <link rel="canonical" href="https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/">
 
   
   
@@ -124,14 +124,14 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/2020-ithome-ironman-challenge/">
-  <meta property="og:title" content="2020 IT邦幫忙鐵人賽 | Che-Chia Chang">
-  <meta property="og:description" content="2020 IT邦幫忙鐵人賽"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:url" content="https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/">
+  <meta property="og:title" content="Monitoring Gke With Elk - daemonsets | Che-Chia Chang">
+  <meta property="og:description" content="apiVersion: extensions/v1beta1 kind: DaemonSet metadata: name: &amp;app-name filebeat namespace: elk labels: app.kubernetes.io/name: *app-name app: *app-name component: filebeat spec: selector: matchLabels: app.kubernetes.io/name: *app-name app: *app-name component: filebeat template: metadata: labels: app.kubernetes.io/name: *app-name app: *app-name component: filebeat spec: serviceAccountName: elk terminationGracePeriodSeconds: 30 # Run filebeat with my-app #affinity: # podAffinity: # requiredDuringSchedulingIgnoredDuringExecution: # - labelSelector: # matchExpressions: # - key: app # operator: In # values: # - my-app # topologyKey: &quot;kubernetes.io/hostname&quot; # namespaces: # - default containers: - name: filebeat image: docker."><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-09T16:56:03&#43;08:00">
+  <meta property="article:published_time" content="2019-09-10T17:06:29&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-15T23:33:59&#43;08:00">
+  <meta property="article:modified_time" content="2019-09-19T17:24:31&#43;08:00">
   
 
   
@@ -169,7 +169,7 @@
 
 
 
-  <title>2020 IT邦幫忙鐵人賽 | Che-Chia Chang</title>
+  <title>Monitoring Gke With Elk - daemonsets | Che-Chia Chang</title>
 
 </head>
 
@@ -435,10 +435,8 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">2020 IT邦幫忙鐵人賽</h1>
+  <h1 itemprop="name">Monitoring Gke With Elk - daemonsets</h1>
 
-  
-  <p class="page-subtitle">2020 IT邦幫忙鐵人賽</p>
   
 
   
@@ -446,8 +444,8 @@
 
 
 
-<meta content="2019-09-09 16:56:03 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-15 23:33:59 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-10 17:06:29 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-09-19 17:24:31 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -462,7 +460,7 @@
           Last updated on
       
     
-    <time>Sep 15, 2019</time>
+    <time>Sep 19, 2019</time>
   </span>
   
 
@@ -494,7 +492,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/2020-ithome-ironman-challenge/&amp;text=2020%20IT%e9%82%a6%e5%b9%ab%e5%bf%99%e9%90%b5%e4%ba%ba%e8%b3%bd" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/&amp;text=Monitoring%20Gke%20With%20Elk%20-%20daemonsets" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +505,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/2020-ithome-ironman-challenge/&amp;t=2020%20IT%e9%82%a6%e5%b9%ab%e5%bf%99%e9%90%b5%e4%ba%ba%e8%b3%bd" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/&amp;t=Monitoring%20Gke%20With%20Elk%20-%20daemonsets" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +518,7 @@
       
       
       <li>
-        <a href="mailto:?subject=2020%20IT%e9%82%a6%e5%b9%ab%e5%bf%99%e9%90%b5%e4%ba%ba%e8%b3%bd&amp;body=https://chechiachang.github.io/post/2020-ithome-ironman-challenge/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Monitoring%20Gke%20With%20Elk%20-%20daemonsets&amp;body=https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +531,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/2020-ithome-ironman-challenge/&amp;title=2020%20IT%e9%82%a6%e5%b9%ab%e5%bf%99%e9%90%b5%e4%ba%ba%e8%b3%bd" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/&amp;title=Monitoring%20Gke%20With%20Elk%20-%20daemonsets" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +544,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=2020%20IT%e9%82%a6%e5%b9%ab%e5%bf%99%e9%90%b5%e4%ba%ba%e8%b3%bd%20https://chechiachang.github.io/post/2020-ithome-ironman-challenge/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Monitoring%20Gke%20With%20Elk%20-%20daemonsets%20https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +557,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/2020-ithome-ironman-challenge/&amp;title=2020%20IT%e9%82%a6%e5%b9%ab%e5%bf%99%e9%90%b5%e4%ba%ba%e8%b3%bd" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/&amp;title=Monitoring%20Gke%20With%20Elk%20-%20daemonsets" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -595,153 +593,153 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p>各位好，我是Che-Chia Chang，社群上常用的名子是 David Chang。是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 <a href="https://www.meetup.com/golang-taipei-meetup/" target="_blank">Golang Taiwan Meetup</a> 的 organizer。</p>
-
-<p>受到<a href="https://ithelp.ithome.com.tw/2020ironman/signup/team/63" target="_blank">友人們</a>邀請（推坑）參加了<a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a>，挑戰在30天內，每天發一篇技術分享文章。一方面將工作上遇到的問題與解法分享給社群，另一方面也是給自己一點成長的壓力，把這段時間的心得沈澱下來，因此也了這系列文章。</p>
-
-<p>本系列文章重點有三：</p>
-
-<ol>
-<li><p>提供的解決方案，附上一步步的操作步驟。希望讓讀者可以重現完整操作步驟，直接使用，或是加以修改</p></li>
-
-<li><p>著重 Google Cloud Platform，特別是Google Compute Engine (GCE) 與Google Kubernetes Engine (GKE) 兩大服務。這也是我最熟悉的平台，順便推廣，並分享一些雷點。</p></li>
-
-<li><p>從維運的角度除錯，分析問題，提升穩定性。</p></li>
-</ol>
-
-<p>預定的主題如下（可能會依照實際撰寫狀況微調）</p>
-
-<ul>
-<li>ELK Stask on GCP (8)
-
-<ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li>ELK Stask 的安全性連線(TLS/HTTP2) 設定</li>
-<li>監測 Google Compute Engine 上服務的各項數據</li>
-<li>監測 Google Kubernetes Engine 的各項數據</li>
-<li>使用 logstash pipeline 做數據前處理</li>
-<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
-<li>於 GKE 上為 ELK stack 除錯</li>
-<li>我們為何不使用 Elastic Cloud Sass 方案</li>
-</ul></li>
-<li>GKE 維運心得 (5)
-
-<ul>
-<li>我的 Kubernetes 除錯流程</li>
-<li>Kubectl cheat sheet</li>
-<li>使用 cert-manager 維護 TLS/HTTPS</li>
-<li>使用 redhat operator-sdk 初探 CRD 與 operator</li>
-<li>我的 operator 範例分享</li>
-</ul></li>
-<li>在 GKE 上部署 Kafka HA (4)
-
-<ul>
-<li>使用 helm 部署 kafka-ha</li>
-<li>集群內部的 HA 設定，網路設定</li>
-<li>應用端的基本範例，效能調校</li>
-<li>在 GKE 上維運 kafka</li>
-</ul></li>
-<li>在 GKE 上部署 Redis HA (4)
-
-<ul>
-<li>使用 helm 部署 redis-ha</li>
-<li>集群內部的 HA 設定，網路設定</li>
-<li>應用端的基本範例，效能調校</li>
-<li>在 GKE 上維運 redis</li>
-</ul></li>
-<li>Prometheus / Grafana (5)
-
-<ul>
-<li>GKE 上自架 Prometheus / Grafana</li>
-<li>使用 exporter 監測 GKE 上的各項服務</li>
-<li>輸出 kubernetes 的監測數據</li>
-<li>輸出 redis-ha 的監測數據</li>
-<li>輸出 kafka 的監測數據</li>
-</ul></li>
-<li>GCP 網路設定 (3)
-
-<ul>
-<li>防火牆的私有網路基本設定</li>
-<li>配合 GKE 實現負載均衡</li>
-<li>DNS 基本觀念，從 kube-dns 到 GCP DNS service</li>
-</ul></li>
-<li>GCP 日誌管理 (2)
-
-<ul>
-<li>基本 GCP 日誌管理與錯誤回報</li>
-<li>Stackdriver 服務的日誌管理，監測數據，告警</li>
-</ul></li>
-</ul>
-
-<p>文章發表於<a href="https://ithelp.ithome.com.tw/users/20120327/ironman/2444" target="_blank">鐵人挑戰頁面</a>，同時發布與本站備份。有任何謬誤，還煩請各方大德&lt;3透過底下的聯絡方式聯絡我，感激不盡。</p>
-
-<hr />
-
-<p>Features</p>
-
-<ul>
-<li>step-by-step guide for deployment: guarentee a running deployment on GCP</li>
-<li>basic configuration, usage, monitoring, networking on GKE</li>
-<li>debugging, stability analysis in an aspect of devop</li>
-</ul>
-
-<p>Topics</p>
-
-<ul class="task-list">
-<li>ELK stack(8)
-
-<ul>
-<li>Deploy self-hosted ELK stack on GCE instance</li>
-<li>Secure ELK stack with SSL and role-based authentication</li>
-<li>Monitoring services on Kubernetes with ELK beats</li>
-<li>Monitoring services on GCE instances</li>
-<li>Logstash pipelines and debugging walk through</li>
-<li>Elasticsearch operations: house-cleaning, tuning, pernament storage</li>
-<li>Elasticsearch maitainence, trouble shooting</li>
-<li>Get-Started with Elastic Cloud SASS</li>
-</ul></li>
-<li>General operations on Kubernetes(4)
-
-<ul>
-<li>Kubernetes Debug SOP</li>
-<li>Kubectl cheat sheet</li>
-<li>Secure services with SSL by cert-manager</li>
-<li>Speed up container updating with operator</li>
-<li>My operator example</li>
-</ul></li>
-<li>Deploy Kafka HA on Kubernetes(4)
-
-<ul>
-<li>deploy kafka-ha on Kubernertes with helm</li>
-<li>in-cluster networking configuration for high availability</li>
-<li>basic app-side usage, performance tuning</li>
-<li>Operate Kafka: update config, upgrade version, migrate data</li>
-</ul></li>
-<li>Promethus / grafana(5)
-
-<ul>
-<li>Deploy Prometheus / Grafana stack on GCE instance</li>
-<li>Monitoring services on Kubernetes with exporters</li>
-<li>Export Kubernetes metrics to Prometheus</li>
-<li>Export Redis-ha metrics to Prometheus</li>
-<li>Export Kafka metrics to Prometheus</li>
-</ul></li>
-<li>GCP networking(4)
-
-<ul>
-<li>Firewall basic concept for private network with GCE instances &amp; Kubernetes</li>
-<li>Load balancer for Kubernetes service &amp; ingress</li>
-<li>DNS on GCP from Kube-dns to GCP DNS service</li>
-</ul></li>
-<li>GCP log management(3)
-
-<ul class="task-list">
-<li>Basic usage about GCP logging &amp; GCP Error Report</li>
-<li>Stackdriver, metrics, alerts</li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Logging on GKE from gcp-fluentd to stackdriver</label></li>
-</ul></li>
-</ul>
+      <pre><code>apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: &amp;app-name filebeat
+  namespace: elk
+  labels:
+    app.kubernetes.io/name: *app-name
+    app: *app-name
+    component: filebeat
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: *app-name
+      app: *app-name
+      component: filebeat
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: *app-name
+        app: *app-name
+        component: filebeat
+    spec:
+      serviceAccountName: elk
+      terminationGracePeriodSeconds: 30
+      # Run filebeat with my-app
+      #affinity:
+      #  podAffinity:
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #    - labelSelector:
+      #        matchExpressions:
+      #        - key: app
+      #          operator: In
+      #          values:
+      #          - my-app
+      #      topologyKey: &quot;kubernetes.io/hostname&quot;
+      #      namespaces:
+      #        - default
+      containers:
+      - name: filebeat
+        image: docker.elastic.co/beats/filebeat:7.3.1
+        args: [
+          &quot;-c&quot;, &quot;/etc/filebeat.yml&quot;,
+          &quot;-e&quot;,
+        ]
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: ELASTICSEARCH_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: elk-config
+              key: ELASTICSEARCH_PROTOCOL
+        - name: ELASTICSEARCH_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: elk-config
+              key: ELASTICSEARCH_HOST
+        - name: ELASTICSEARCH_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: elk-config
+              key: ELASTICSEARCH_PORT
+        - name: ELASTICSEARCH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: elk-credentials
+              key: ELASTICSEARCH_ELASTIC_USERNAME
+        - name: ELASTICSEARCH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elk-credentials
+              key: ELASTICSEARCH_ELASTIC_PASSWORD
+        - name: KIBANA_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: elk-config
+              key: KIBANA_PROTOCOL
+        - name: KIBANA_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: elk-config
+              key: KIBANA_HOST
+        - name: KIBANA_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: elk-config
+              key: KIBANA_PORT
+        securityContext:
+          runAsUser: 0
+          # If using Red Hat OpenShift uncomment this:
+          #privileged: true
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        volumeMounts:
+        - name: config
+          mountPath: /etc/filebeat.yml
+          readOnly: true
+          subPath: filebeat.yml
+        #- name: inputs
+        #  mountPath: /usr/share/filebeat/inputs.d
+        #  readOnly: true
+        #- name: modules
+        #  mountPath: /usr/share/filebeat/modules.d
+        #  readOnly: true
+        - name: data
+          mountPath: /usr/share/filebeat/data
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: varlog
+          mountPath: /var/log
+          readOnly: true
+        - name: elk-client-certificates
+          mountPath: /etc/elk/certificates
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          defaultMode: 0600
+          name: filebeat-config
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+      - name: varlog
+        hostPath:
+          path: /var/log
+      #- name: inputs
+      #  configMap:
+      #    defaultMode: 0600
+      #    name: filebeat-inputs
+      #- name: modules
+      #  configMap:
+      #    defaultMode: 0600
+      #    name: server-filebeat-modules
+      # data folder stores a registry of read status for all files, so we don't send everything again on a Filebeat pod restart
+      - name: data
+        hostPath:
+          path: /var/lib/filebeat-data
+          type: DirectoryOrCreate
+      - name: elk-client-certificates
+        secret:
+          secretName: elk-client-certificates
+</code></pre>
 
     </div>
 
@@ -887,14 +885,14 @@
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/post/monitoring-gke-with-elk-daemonsets/" rel="next">Monitoring Gke With Elk - daemonsets</a>
+    <a href="/post/monitoring-gke-with-elk-config-configmap/" rel="next">Monitoring Gke With Elk - configmap</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/kuberentes-source-code/" rel="prev">Kuberentes Source Code</a>
+    <a href="/post/2020-ithome-ironman-challenge/" rel="prev">2020 IT邦幫忙鐵人賽</a>
   </div>
   
 </div>
