@@ -88,21 +88,6 @@
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk-clusterrulebinding/</loc>
-    <lastmod>2019-09-19T17:24:31+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk-config-configmap/</loc>
-    <lastmod>2019-09-19T17:24:31+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/post/monitoring-gke-with-elk-daemonsets/</loc>
-    <lastmod>2019-09-19T17:24:31+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</loc>
     <lastmod>2019-09-15T23:33:59+08:00</lastmod>
   </url>
