@@ -12,6 +12,341 @@
     
     
     <item>
+      <title>Logstash on GKE</title>
+      <link>https://chechiachang.github.io/post/logstash-on-gke/</link>
+      <pubDate>Sat, 21 Sep 2019 15:22:23 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/logstash-on-gke/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;作為範例的 ELK 的版本是當前的 stable release 7.3.1。&lt;/p&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;簡介 logstash&lt;/li&gt;
+&lt;li&gt;將 logstash 部屬到 kubernetes 上&lt;/li&gt;
+&lt;li&gt;設定 logstash pipeline 處理 nginx access log&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;介紹-logstash&#34;&gt;介紹 Logstash&lt;/h1&gt;
+
+&lt;p&gt;Logstash 是開元的資料處理引擎，可以動態的將輸入的資料做大量的處裡。原先的目的是處理 log ，但目前以不限於處理 log ，各種 ELK beat 或是其他來源的不同監測數據，都能處理。&lt;/p&gt;
+
+&lt;p&gt;Logastash 內部的功能也大多模組化，因此可以組裝不同的 plugin，來快速處理不同來源資料。&lt;/p&gt;
+
+&lt;p&gt;基本上常見的資料來源，logstash 都能夠處理，並且有寫好的 plugin 可以直接使用，細節請見&lt;a href=&#34;https://www.elastic.co/guide/en/logstash/current/introduction.html&#34; target=&#34;_blank&#34;&gt;logstash 官方文件&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.elastic.co/guide/en/logstash/current/static/images/logstash.png&#34; alt=&#34;官方架構圖&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;後送資料庫與最終儲存庫&#34;&gt;後送資料庫與最終儲存庫&lt;/h1&gt;
+
+&lt;p&gt;在開始架設 logstash 要先考慮 pipeline 處理過後送的資料庫，&lt;a href=&#34;https://www.elastic.co/guide/en/logstash/current/introduction.html#_choose_your_stash&#34; target=&#34;_blank&#34;&gt;可使用的資料庫非常多&lt;/a&gt;，這邊會展示的有：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ELK Stack 標準配備送到 Elasticsearch
+
+&lt;ul&gt;
+&lt;li&gt;存放會時常查詢的熱資料，只存放一段時間前的資料&lt;/li&gt;
+&lt;li&gt;太舊的資料自動 Rollout&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;最終 archieving 的資料庫，這邊使用 GCP 的 Big Query
+
+&lt;ul&gt;
+&lt;li&gt;存放查找次數少，但非常大量的歷史紀錄。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Elasticsearch 在前幾篇已經架設好，&lt;a href=&#34;https://cloud.google.com/bigquery/docs/?hl=zh-tw&#34; target=&#34;_blank&#34;&gt;GCP Big Query&lt;/a&gt; 的設定也事先開好。&lt;/p&gt;
+
+&lt;h1 id=&#34;部屬-logstash&#34;&gt;部屬 Logstash&lt;/h1&gt;
+
+&lt;p&gt;kubernetes resource 的 yaml 請參考 &lt;a href=&#34;https://github.com/chechiachang/elk-kubernetes/tree/master/logstash&#34; target=&#34;_blank&#34;&gt;我的 github elk-kubernetes&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl apply -f config-configmap.yaml
+kubectl apply -f pipelines-configmap.yam
+
+kubectl apply -f deployment.yaml
+
+kubectl apply -f service.yaml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;放上去的 resource&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;config-configmap:
+
+&lt;ul&gt;
+&lt;li&gt;Logstash 服務本身啟動的設定參數&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;pipelines-configmap:
+
+&lt;ul&gt;
+&lt;li&gt;Logstash 的 pipelines 設定檔案&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Lostagh Deployment
+
+&lt;ul&gt;
+&lt;li&gt;Logastash 的服務 instance&lt;/li&gt;
+&lt;li&gt;可以動態 scaling，也就是會有複數 Logstash instance 做負載均衡&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Logstash service
+
+&lt;ul&gt;
+&lt;li&gt;可透過 kubernetes 內部的 kube-dns 服務&lt;/li&gt;
+&lt;li&gt;集群內的 filebeat 可以直接透過 logstash.default.svc.chechiachang-cluster.local 的 dns 連線 logstash&lt;/li&gt;
+&lt;li&gt;集群內的網路，直接使用 http（當然使用 https 也是可以，相關步驟請見前幾篇文章）&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;簡單講一下 kubernetes service 的負載均衡，關於 &lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/service/&#34; target=&#34;_blank&#34;&gt;kubernetes service 細節這篇附上文件&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get services
+
+NAME              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)    AGE
+logstash          ClusterIP      10.15.254.47    &amp;lt;none&amp;gt;          5044/TCP   182d
+
+$ kubectl get endpoints
+
+NAME              ENDPOINTS                                                          AGE
+logstash          10.12.0.132:5044,10.12.10.162:5044,10.12.9.167:5044 + 12 more...   182d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在 Kubernetes 內部每個 Pod 都能看到 logstash, logstash.default.svc.chechiachang-cluster.local 這兩個 dns&lt;/li&gt;
+&lt;li&gt;DNS 直接指向複數的 logstash endpoints， 每一個 ip 都是 kubernetes 內部配置的一個 Pod 的 IP，開啟 5044 的 logstash port&lt;/li&gt;
+&lt;li&gt;Service 的 load balance 機制視 service 設定，細節可以看&lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies&#34; target=&#34;_blank&#34;&gt;這邊&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;講到最白，就是 filebeat LOGSTASH URL 設定為 &lt;a href=&#34;http://logstash&#34; target=&#34;_blank&#34;&gt;http://logstash&lt;/a&gt; 就會打到其中一台 logstash&lt;/p&gt;
+
+&lt;p&gt;更改 filebeat configmap&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl edit configmap filebeat-configmap
+
+# Disable output to elasticsearch
+output.elasticsearch:
+  enabled: false
+
+# Output to logstash
+output.logstash:
+  hosts: [&amp;quot;logstash:5044&amp;quot;]
+  protocol: &amp;quot;http&amp;quot;
+  username: &amp;quot;elastic&amp;quot;
+  password: 
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;設定-logstash&#34;&gt;設定 logstash&lt;/h1&gt;
+
+&lt;p&gt;這邊要先說，logstash 也支援 &lt;a href=&#34;https://www.elastic.co/guide/en/logstash/7.3/configuring-centralized-pipelines.html&#34; target=&#34;_blank&#34;&gt;centralized configuration&lt;/a&gt;，如果你的 logstash 不是跑在 Kubernetes 上，沒辦法配置一套 configmap 就應用到全部的 instance，記的一定要使用。&lt;/p&gt;
+
+&lt;p&gt;Logastash 的運行設定 logstash.yml，這邊我們沒有做設定，都是預設值，有需求可以自行更改&lt;/p&gt;
+
+&lt;p&gt;當然之後要調整 batch size 或是 queue, cache 等等效能調校，也是來這邊改，改完 configmap ，rolling update logstash 就可以。&lt;/p&gt;
+
+&lt;p&gt;這邊主要是來講 pipeline 設定。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl describe configmap pipelines-configmap
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipelines
+  namespace: elk
+  labels:
+    k8s-app: logstash
+data:
+  # Nginx Template
+  # https://www.elastic.co/guide/en/logstash/7.3/logstash-config-for-filebeat-modules.html#parsing-nginx
+  nginx.conf: |
+  ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Configmap 裡面只有一個 pipeline，就是 &lt;code&gt;nginx.conf&lt;/code&gt;，我們這邊就只有一條，這邊一段一段看&lt;/p&gt;
+
+&lt;h3 id=&#34;input&#34;&gt;Input&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;input {
+  beats {
+    # The lisening port of logstash
+    port =&amp;gt; 5044
+    host =&amp;gt; &amp;quot;0.0.0.0&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;設定 Input 來源，是 beat 從 5044 進來&lt;/p&gt;
+
+&lt;h3 id=&#34;filter&#34;&gt;Filter&lt;/h3&gt;
+
+&lt;p&gt;接下來一大段是 filter，每個 filter 中間的 block 都是一個 plugin，logstash 支援非常多有趣的 plugin ，處理不同來源的工作，&lt;a href=&#34;https://www.elastic.co/guide/en/logstash/7.3/filter-plugins.html&#34; target=&#34;_blank&#34;&gt;細節請看這篇&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;filter {
+
+  # Ignore data from other source in case filebeat input is incorrectly configured.
+  if [kubernetes][container][name] == &amp;quot;nginx-ingress-controller&amp;quot; {
+
+    # Parse message with grok
+    # Use grok debugger in kibana -&amp;gt; dev_tools -&amp;gt; grok_debugger
+    grok {
+      match =&amp;gt; { &amp;quot;message&amp;quot; =&amp;gt; &amp;quot;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&amp;quot;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&amp;quot; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&amp;quot;%{DATA:[nginx][access][referrer]}\&amp;quot; \&amp;quot;%{DATA:[nginx][access][agent]}\&amp;quot; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&amp;quot; }
+    }
+
+    # Match url parameters if has params
+    grok {
+      match =&amp;gt; { &amp;quot;[nginx][access][request_url]&amp;quot; =&amp;gt; &amp;quot;%{DATA:[nginx][access][url]}\?%{DATA:[nginx][access][url_params]}&amp;quot; }
+    }
+
+    # Remove and add fields
+    mutate {
+      remove_field =&amp;gt; &amp;quot;[nginx][access][request_url]&amp;quot;
+      add_field =&amp;gt; { &amp;quot;read_timestamp&amp;quot; =&amp;gt; &amp;quot;%{@timestamp}&amp;quot; }
+      # Add fileset.module:nginx to fit nginx dashboard
+      add_field =&amp;gt; { &amp;quot;[fileset][module]&amp;quot; =&amp;gt; &amp;quot;nginx&amp;quot;}
+      add_field =&amp;gt; { &amp;quot;[fileset][name]&amp;quot; =&amp;gt; &amp;quot;access&amp;quot;}
+    }
+
+    # Parse date string into timestamp
+    date {
+      match =&amp;gt; [ &amp;quot;[nginx][access][time]&amp;quot;, &amp;quot;dd/MMM/YYYY:H:m:s Z&amp;quot; ]
+      remove_field =&amp;gt; &amp;quot;[nginx][access][time]&amp;quot;
+    }
+
+    # Split url_parameters with &amp;amp;
+    # /api?uuid=123&amp;amp;query=456 
+    # become 
+    # nginx.access.url_params.uuid=123 nginx.access.url_params.query=456
+    kv {
+      source =&amp;gt; &amp;quot;[nginx][access][url_params]&amp;quot;
+      field_split =&amp;gt; &amp;quot;&amp;amp;&amp;quot;
+    }
+
+    # Parse useragent
+    useragent {
+      source =&amp;gt; &amp;quot;[nginx][access][agent]&amp;quot;
+      target =&amp;gt; &amp;quot;[nginx][access][user_agent]&amp;quot;
+      remove_field =&amp;gt; &amp;quot;[nginx][access][agent]&amp;quot;
+    }
+
+    # Search remote_ip with GeoIP database, output geoip information for map drawing
+    geoip {
+      source =&amp;gt; &amp;quot;[nginx][access][remote_ip]&amp;quot;
+      target =&amp;gt; &amp;quot;[nginx][access][geoip]&amp;quot;
+      #fields =&amp;gt; [&amp;quot;country_name&amp;quot;,&amp;quot;city_name&amp;quot;,&amp;quot;real_region_name&amp;quot;,&amp;quot;latitude&amp;quot;,&amp;quot;longitude&amp;quot;,&amp;quot;ip&amp;quot;,&amp;quot;location&amp;quot;]
+    }
+
+    # ==============
+    # Remove message to reduce data
+    # ==============
+    if [nginx][access][url] {
+      mutate {
+        # source:/var/lib/docker/containers/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109-json.log
+        remove_field =&amp;gt; &amp;quot;[source]&amp;quot;
+        # Origin message
+        remove_field =&amp;gt; &amp;quot;[message]&amp;quot;
+        #add_field =&amp;gt; { &amp;quot;[nginx][access][message]&amp;quot; =&amp;gt; &amp;quot;[message]&amp;quot;}
+        remove_field =&amp;gt; &amp;quot;[nginx][access][message]&amp;quot;
+        # url_params:client_id=1d5ffd378296c154d3e32e5890d6f4eb&amp;amp;timestamp=1546849955&amp;amp;nonce=9a52e3e6283f2a9263e5301b6724e2c0d723def860c4724c9121470152a42318
+        remove_field =&amp;gt; &amp;quot;[nginx][access][url_params]&amp;quot;
+      }
+    }
+
+  } # nginx-ingress-controller
+
+} # filter
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;grok&#34;&gt;Grok&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/logstash/7.3/plugins-filters-grok.html&#34; target=&#34;_blank&#34;&gt;Grok 本身的文件&lt;/a&gt;又是一大段，個人建議各路大德，如果要使用，請直接搜尋人家配置好的設定，不要自己寫&lt;/p&gt;
+
+&lt;p&gt;真的要寫的話要善用工具&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kibana Grok Debugger &lt;code&gt;YOUR_KIBANA_HOST/app/kibana#/dev_tools/grokdebugger&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;或是不知名大德貢獻&lt;a href=&#34;https://grokdebug.herokuapp.com/&#34; target=&#34;_blank&#34;&gt;線上 Debugger&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;grok {
+match =&amp;gt; { &amp;quot;message&amp;quot; =&amp;gt; &amp;quot;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&amp;quot;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&amp;quot; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&amp;quot;%{DATA:[nginx][access][referrer]}\&amp;quot; \&amp;quot;%{DATA:[nginx][access][agent]}\&amp;quot; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&amp;quot; }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;其實就是 nginx 的 access log&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1.2.3.4 - [1.2.3.4] - - [21/Sep/2019:07:21:21 +0000] &amp;quot;GET /v1/core/api/list?type=queued&amp;amp;timestamp=1569050481&amp;amp;nonce=d1e80e00381e0ba6e42d4601912befcf03fbf291748e77b178230c19cd1fdbe2 HTTP/1.1&amp;quot; 200 3 &amp;quot;-&amp;quot; &amp;quot;python-requests/2.18.4&amp;quot; 425 0.031 [default-chechiachang-server-80] 10.12.10.124:8003 3 0.031 200 f43db228afe66da67b2c7417d0ad2c04
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;預設的 log 送件來，格式是 text，經過 pattern matching 後變成 json-like format，也就是可以從資料結構取得 &lt;code&gt;.nginx.access.remote_ip&lt;/code&gt; 這樣的欄位，讓原本的 access log 從 text 變成可以查找的內容。&lt;/p&gt;
+
+&lt;p&gt;原本的 text 送進 elasticsearch 當然也可以查找，但就會在 text 裡面做全文檢索，功能很侷限，效率很差。&lt;/p&gt;
+
+&lt;h3 id=&#34;output&#34;&gt;Output&lt;/h3&gt;
+
+&lt;p&gt;logstash 支援的 output 以及設定&lt;a href=&#34;https://www.elastic.co/guide/en/logstash/7.3/output-plugins.html&#34; target=&#34;_blank&#34;&gt;在這邊&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;output {
+  elasticsearch {
+    hosts =&amp;gt; [&amp;quot;https://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}&amp;quot;]
+    user =&amp;gt; &amp;quot;${ELASTICSEARCH_USERNAME}&amp;quot;
+    password =&amp;gt; &amp;quot;${ELASTICSEARCH_PASSWORD}&amp;quot;
+    index =&amp;gt; &amp;quot;%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}&amp;quot;
+    manage_template =&amp;gt; false
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Elasticsearch 的配置很單純&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;output {
+  google_bigquery {
+    project_id =&amp;gt; ${GCP_PROJECT_ID}
+    dataset =&amp;gt; ${GCP_BIG_QUERY_DATASET_NAME}
+    csv_schema =&amp;gt; &amp;quot;path:STRING,status:INTEGER,score:FLOAT&amp;quot;
+    json_key_file =&amp;gt; ${GCP_JSON_KEY_FILE_PATH}
+    error_directory =&amp;gt; &amp;quot;/tmp/bigquery-errors&amp;quot;
+    date_pattern =&amp;gt; &amp;quot;%Y-%m-%dT%H:00&amp;quot;
+    flush_interval_secs =&amp;gt; 30
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其中的變數，我們全都用環境變數，在 deployment.yaml 配置，啟動 logstash pods 時代入&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;GCP_JSON_KEY_FILE_PATH&lt;/code&gt; 這邊要配置一隻 GCP 的服務帳號金鑰，一個有 Big Query 寫入權限的 service account，把 json 使用 kubernetes secret 放到集群上，然後在 pod 上使用 volume from secret 掛載進來。
+&lt;code&gt;csv_schema =&amp;gt; &amp;quot;path:STRING,status:INTEGER,score:FLOAT&amp;quot;&lt;/code&gt; 這邊要配置之後會存入 Big Query 的 csv 結構&lt;/p&gt;
+
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;部屬 Logstash deployment 到 kubernetes 上&lt;/li&gt;
+&lt;li&gt;設定 pipeline，超多 plugin，族繁不及備載&lt;/li&gt;
+&lt;li&gt;Grok 配置&lt;/li&gt;
+&lt;li&gt;Big Query output 配置&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Monitoring GKE With Elk</title>
       <link>https://chechiachang.github.io/post/monitoring-gke-with-elk/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
@@ -1744,13 +2079,12 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;ELK Stask 的安全性連線(TLS/HTTP2) 設定&lt;/li&gt;
-&lt;li&gt;監測 Google Compute Engine 上服務的各項數據&lt;/li&gt;
-&lt;li&gt;監測 Google Kubernetes Engine 的各項數據&lt;/li&gt;
-&lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
-&lt;li&gt;於 GKE 上為 ELK stack 除錯&lt;/li&gt;
-&lt;li&gt;我們為何不使用 Elastic Cloud Sass 方案&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;GKE 維運心得 (5)
 
