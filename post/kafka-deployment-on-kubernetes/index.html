@@ -28,10 +28,11 @@
   
     
   
-  <meta name="description" content="Logstash on GKE">
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/logstash-on-gke/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
 
   
 
@@ -110,7 +111,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/logstash-on-gke/">
+  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
 
   
   
@@ -124,14 +125,15 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/logstash-on-gke/">
-  <meta property="og:title" content="Logstash on GKE | Che-Chia Chang">
-  <meta property="og:description" content="Logstash on GKE"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
+  <meta property="og:title" content="Kafka Deployment on Kubernetes | Che-Chia Chang">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-21T15:22:23&#43;08:00">
+  <meta property="article:published_time" content="2019-09-22T09:58:41&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-21T17:02:01&#43;08:00">
+  <meta property="article:modified_time" content="2019-09-22T09:58:41&#43;08:00">
   
 
   
@@ -169,7 +171,7 @@
 
 
 
-  <title>Logstash on GKE | Che-Chia Chang</title>
+  <title>Kafka Deployment on Kubernetes | Che-Chia Chang</title>
 
 </head>
 
@@ -435,10 +437,8 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Logstash on GKE</h1>
+  <h1 itemprop="name">Kafka Deployment on Kubernetes</h1>
 
-  
-  <p class="page-subtitle">Logstash on GKE</p>
   
 
   
@@ -446,8 +446,8 @@
 
 
 
-<meta content="2019-09-21 15:22:23 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-21 17:02:01 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-22 09:58:41 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-09-22 09:58:41 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -459,10 +459,8 @@
     
     
       
-          Last updated on
-      
     
-    <time>Sep 21, 2019</time>
+    <time>Sep 22, 2019</time>
   </span>
   
 
@@ -471,7 +469,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    2 min read
   </span>
   
 
@@ -494,7 +492,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/logstash-on-gke/&amp;text=Logstash%20on%20GKE" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;text=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +505,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/logstash-on-gke/&amp;t=Logstash%20on%20GKE" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;t=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +518,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Logstash%20on%20GKE&amp;body=https://chechiachang.github.io/post/logstash-on-gke/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Kafka%20Deployment%20on%20Kubernetes&amp;body=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +531,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/logstash-on-gke/&amp;title=Logstash%20on%20GKE" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;title=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +544,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Logstash%20on%20GKE%20https://chechiachang.github.io/post/logstash-on-gke/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Kafka%20Deployment%20on%20Kubernetes%20https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +557,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/logstash-on-gke/&amp;title=Logstash%20on%20GKE" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;title=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -600,6 +598,9 @@
 <p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 
 <ul>
+<li>ELK Stack
+
+<ul>
 <li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
 <li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
 <li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
@@ -608,319 +609,185 @@
 <li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
+</ul></li>
+<li>Kafka HA on Kubernetes
+
+<ul>
+<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
+<li>應用使用 kafka 的設定</li>
+<li>kafka utility scripts, topic operation, kafka benchmark</li>
+<li>集群內部的 HA topology</li>
+<li>集群內部的 HA 設定，網路設定</li>
+<li>Prometheus Metrics Exporter 很重要</li>
+<li>效能調校
+<br /></li>
+</ul></li>
 </ul>
 
-<p>作為範例的 ELK 的版本是當前的 stable release 7.3.1。</p>
-
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+
+<hr />
+
+<h1 id="碎念">碎念</h1>
+
+<p>30 天每天一文真的蠻逼人的，每一篇都是新寫，還要盡可能顧及文章品質，下班趕文章，各位大德寫看看就知道</p>
+
+<ul>
+<li>這邊調整了當初想寫的文章，內容應該都會帶到
+
+<ul>
+<li>elk</li>
+<li>kafka-ha</li>
+<li>reids-ha</li>
+<li>prometheus</li>
+<li>kubernetes on gcp</li>
+</ul></li>
+<li>但不會再一篇 10000 字了，逼死我吧&hellip;</li>
+<li>寫不完的部份 30 天候會在IT邦幫忙，或是<a href="https:/chechiachang.github.io" target="_blank">我的 Github Page https://chechiachang.github.io/</a>補完</li>
+</ul>
+
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
 
 <hr />
 
 <h1 id="摘要">摘要</h1>
 
 <ul>
-<li>簡介 logstash</li>
-<li>將 logstash 部屬到 kubernetes 上</li>
-<li>設定 logstash pipeline 處理 nginx access log</li>
+<li>簡介 kafka</li>
+<li>部屬 kafka 到 kubernetes 上</li>
 </ul>
 
-<h1 id="介紹-logstash">介紹 Logstash</h1>
+<h1 id="簡介-kafka">簡介 kafka</h1>
 
-<p>Logstash 是開元的資料處理引擎，可以動態的將輸入的資料做大量的處裡。原先的目的是處理 log ，但目前以不限於處理 log ，各種 ELK beat 或是其他來源的不同監測數據，都能處理。</p>
+<p>Kafka 是分散式的 streaming platform，可以 subscribe &amp; publish 訊息，可以當作是一個功能強大的 message queue 系統，由於分散式的架構，讓 kafka 有很大程度的 fault tolerance。</p>
 
-<p>Logastash 內部的功能也大多模組化，因此可以組裝不同的 plugin，來快速處理不同來源資料。</p>
+<p>我們今天就來部屬一個 kafka。</p>
 
-<p>基本上常見的資料來源，logstash 都能夠處理，並且有寫好的 plugin 可以直接使用，細節請見<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html" target="_blank">logstash 官方文件</a></p>
+<h1 id="deploy">Deploy</h1>
 
-<p><img src="https://www.elastic.co/guide/en/logstash/current/static/images/logstash.png" alt="官方架構圖" /></p>
+<p>我把我的寶藏都在這了<a href="https://github.com/chechiachang/kafka-on-kubernetes" target="_blank">https://github.com/chechiachang/kafka-on-kubernetes</a></p>
 
-<h1 id="後送資料庫與最終儲存庫">後送資料庫與最終儲存庫</h1>
+<p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
 
-<p>在開始架設 logstash 要先考慮 pipeline 處理過後送的資料庫，<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html#_choose_your_stash" target="_blank">可使用的資料庫非常多</a>，這邊會展示的有：</p>
+<pre><code>cat install.sh
+
+
+#!/bin/bash
+#
+# https://github.com/helm/charts/tree/master/incubator/kafka
+
+#HELM_NAME=kafka
+HELM_NAME=kafka-1
+
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+
+# Stable: chart version: kafka-0.16.2	app version: 5.0.1
+helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
+</code></pre>
+
+<h3 id="helm">Helm</h3>
+
+<p>我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 kafka。所以我們先用。</p>
+
+<p>沒用過 helm 的大德可以參考 <a href="https://helm.sh/docs/using_helm/#quickstart" target="_blank">Helm Quickstart</a>，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好</p>
+
+<pre><code>helm init
+</code></pre>
+
+<h3 id="helm-chart">Helm Chart</h3>
+
+<p>一個 helm chart 可以當成一個獨立的專案，不同的 chart 可以在 kubernetes 上協助部屬不同的項目。</p>
+
+<p>這邊使用了還在 incubator 的chart，雖然是 prod ready，不過使用上還是要注意。</p>
+
+<p>使用前先把 incubator 的 helm repo 加進來</p>
+
+<pre><code>helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+</code></pre>
+
+<h3 id="install">Install</h3>
+
+<p>這邊是用 upgrade &ndash;install，已安裝就 upgrade，沒安裝就 install，之後可以用這個指令升版</p>
+
+<pre><code>helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
+</code></pre>
+
+<h3 id="version">Version</h3>
+
+<p>這邊使用的版本：</p>
 
 <ul>
-<li>ELK Stack 標準配備送到 Elasticsearch
-
-<ul>
-<li>存放會時常查詢的熱資料，只存放一段時間前的資料</li>
-<li>太舊的資料自動 Rollout</li>
-</ul></li>
-<li>最終 archieving 的資料庫，這邊使用 GCP 的 Big Query
-
-<ul>
-<li>存放查找次數少，但非常大量的歷史紀錄。</li>
-</ul></li>
+<li>chart version:    kafka-0.16.2</li>
+<li>app version:      5.0.1</li>
+<li>kafka Image:      confluentinc/cp-kafka:5.0.1</li>
+<li>zookeeper Image:  gcr.io/google_samples/k8szk:v3</li>
+<li>kafka exporter:   danielqsj/kafka-exporter:v1.2.0</li>
 </ul>
 
-<p>Elasticsearch 在前幾篇已經架設好，<a href="https://cloud.google.com/bigquery/docs/?hl=zh-tw" target="_blank">GCP Big Query</a> 的設定也事先開好。</p>
+<h3 id="values-staging">values-staging</h3>
 
-<h1 id="部屬-logstash">部屬 Logstash</h1>
+<p>透過 helm chart，把啟動參數帶進去，這邊我們看幾個比較重要的，細節之後的文章在一起討論。</p>
 
-<p>kubernetes resource 的 yaml 請參考 <a href="https://github.com/chechiachang/elk-kubernetes/tree/master/logstash" target="_blank">我的 github elk-kubernetes</a></p>
+<p><a href="https://github.com/chechiachang/kafka-on-kubernetes/blob/master/values-staging.yaml" target="_blank">https://github.com/chechiachang/kafka-on-kubernetes/blob/master/values-staging.yaml</a></p>
 
-<pre><code>kubectl apply -f config-configmap.yaml
-kubectl apply -f pipelines-configmap.yam
-
-kubectl apply -f deployment.yaml
-
-kubectl apply -f service.yaml
+<pre><code>replicas: 3
 </code></pre>
 
-<p>放上去的 resource</p>
+<p>安裝三個 kafka，topology 的東西也是敬待下篇XD</p>
 
-<ul>
-<li>config-configmap:
+<pre><code>## The kafka image repository
+image: &quot;confluentinc/cp-kafka&quot;
 
-<ul>
-<li>Logstash 服務本身啟動的設定參數</li>
-</ul></li>
-<li>pipelines-configmap:
+## The kafka image tag
 
-<ul>
-<li>Logstash 的 pipelines 設定檔案</li>
-</ul></li>
-<li>Lostagh Deployment
-
-<ul>
-<li>Logastash 的服務 instance</li>
-<li>可以動態 scaling，也就是會有複數 Logstash instance 做負載均衡</li>
-</ul></li>
-<li>Logstash service
-
-<ul>
-<li>可透過 kubernetes 內部的 kube-dns 服務</li>
-<li>集群內的 filebeat 可以直接透過 logstash.default.svc.chechiachang-cluster.local 的 dns 連線 logstash</li>
-<li>集群內的網路，直接使用 http（當然使用 https 也是可以，相關步驟請見前幾篇文章）</li>
-</ul></li>
-</ul>
-
-<p>簡單講一下 kubernetes service 的負載均衡，關於 <a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank">kubernetes service 細節這篇附上文件</a></p>
-
-<pre><code>$ kubectl get services
-
-NAME              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)    AGE
-logstash          ClusterIP      10.15.254.47    &lt;none&gt;          5044/TCP   182d
-
-$ kubectl get endpoints
-
-NAME              ENDPOINTS                                                          AGE
-logstash          10.12.0.132:5044,10.12.10.162:5044,10.12.9.167:5044 + 12 more...   182d
-</code></pre>
-
-<ul>
-<li>在 Kubernetes 內部每個 Pod 都能看到 logstash, logstash.default.svc.chechiachang-cluster.local 這兩個 dns</li>
-<li>DNS 直接指向複數的 logstash endpoints， 每一個 ip 都是 kubernetes 內部配置的一個 Pod 的 IP，開啟 5044 的 logstash port</li>
-<li>Service 的 load balance 機制視 service 設定，細節可以看<a href="https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies" target="_blank">這邊</a></li>
-</ul>
-
-<p>講到最白，就是 filebeat LOGSTASH URL 設定為 <a href="http://logstash" target="_blank">http://logstash</a> 就會打到其中一台 logstash</p>
-
-<p>更改 filebeat configmap</p>
-
-<pre><code>$ kubectl edit configmap filebeat-configmap
-
-# Disable output to elasticsearch
-output.elasticsearch:
-  enabled: false
-
-# Output to logstash
-output.logstash:
-  hosts: [&quot;logstash:5044&quot;]
-  protocol: &quot;http&quot;
-  username: &quot;elastic&quot;
-  password: 
+底層執行的 kafka 是 conluent kafka
 
 </code></pre>
 
-<h1 id="設定-logstash">設定 logstash</h1>
+<h2 id="configure-resource-requests-and-limits">Configure resource requests and limits</h2>
 
-<p>這邊要先說，logstash 也支援 <a href="https://www.elastic.co/guide/en/logstash/7.3/configuring-centralized-pipelines.html" target="_blank">centralized configuration</a>，如果你的 logstash 不是跑在 Kubernetes 上，沒辦法配置一套 configmap 就應用到全部的 instance，記的一定要使用。</p>
+<h2 id="ref-http-kubernetes-io-docs-user-guide-compute-resources">ref: <a href="http://kubernetes.io/docs/user-guide/compute-resources/" target="_blank">http://kubernetes.io/docs/user-guide/compute-resources/</a></h2>
 
-<p>Logastash 的運行設定 logstash.yml，這邊我們沒有做設定，都是預設值，有需求可以自行更改</p>
+<p>resources: {}
+  # limits:
+  #   cpu: 200m
+  #   memory: 4096Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 1024Mi
+kafkaHeapOptions: &ldquo;-Xmx4G -Xms1G&rdquo;</p>
 
-<p>當然之後要調整 batch size 或是 queue, cache 等等效能調校，也是來這邊改，改完 configmap ，rolling update logstash 就可以。</p>
+<pre><code>
+這邊可以調整在 kubernetes 上面的 limit 跟 request
 
-<p>這邊主要是來講 pipeline 設定。</p>
+* Deploy 會先去跟 node 問夠不夠，夠的話要求 node 保留這些資源給 Pod
+* Runtime 超過 limit，Pod 會被 kubernetes 幹掉，不過我們是 JVM，外部 resource 爆掉前，應該會先因 heap 滿而死。一個施主自盡的感覺。
+* CPU 蠻省的，吃比較多是 memory。但也要看你的使用情境
 
-<pre><code>$ kubectl describe configmap pipelines-configmap
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: logstash-pipelines
-  namespace: elk
-  labels:
-    k8s-app: logstash
-data:
-  # Nginx Template
-  # https://www.elastic.co/guide/en/logstash/7.3/logstash-config-for-filebeat-modules.html#parsing-nginx
-  nginx.conf: |
-  ...
 </code></pre>
 
-<p>Configmap 裡面只有一個 pipeline，就是 <code>nginx.conf</code>，我們這邊就只有一條，這邊一段一段看</p>
+<p>prometheus</p>
 
-<h3 id="input">Input</h3>
+<pre><code>
+對我們有上 promethues，基本上就是 kafka-exporter 把 kafka metrics 倒出去 prometheus，這個也是詳見下回分解。
 
-<pre><code>input {
-  beats {
-    # The lisening port of logstash
-    port =&gt; 5044
-    host =&gt; &quot;0.0.0.0&quot;
-  }
-}
+# 跑起來了
+
 </code></pre>
 
-<p>設定 Input 來源，是 beat 從 5044 進來</p>
+<p>$ kubectl get po | grep kafka</p>
 
-<h3 id="filter">Filter</h3>
-
-<p>接下來一大段是 filter，每個 filter 中間的 block 都是一個 plugin，logstash 支援非常多有趣的 plugin ，處理不同來源的工作，<a href="https://www.elastic.co/guide/en/logstash/7.3/filter-plugins.html" target="_blank">細節請看這篇</a></p>
-
-<pre><code>filter {
-
-  # Ignore data from other source in case filebeat input is incorrectly configured.
-  if [kubernetes][container][name] == &quot;nginx-ingress-controller&quot; {
-
-    # Parse message with grok
-    # Use grok debugger in kibana -&gt; dev_tools -&gt; grok_debugger
-    grok {
-      match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&quot;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&quot; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&quot;%{DATA:[nginx][access][referrer]}\&quot; \&quot;%{DATA:[nginx][access][agent]}\&quot; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&quot; }
-    }
-
-    # Match url parameters if has params
-    grok {
-      match =&gt; { &quot;[nginx][access][request_url]&quot; =&gt; &quot;%{DATA:[nginx][access][url]}\?%{DATA:[nginx][access][url_params]}&quot; }
-    }
-
-    # Remove and add fields
-    mutate {
-      remove_field =&gt; &quot;[nginx][access][request_url]&quot;
-      add_field =&gt; { &quot;read_timestamp&quot; =&gt; &quot;%{@timestamp}&quot; }
-      # Add fileset.module:nginx to fit nginx dashboard
-      add_field =&gt; { &quot;[fileset][module]&quot; =&gt; &quot;nginx&quot;}
-      add_field =&gt; { &quot;[fileset][name]&quot; =&gt; &quot;access&quot;}
-    }
-
-    # Parse date string into timestamp
-    date {
-      match =&gt; [ &quot;[nginx][access][time]&quot;, &quot;dd/MMM/YYYY:H:m:s Z&quot; ]
-      remove_field =&gt; &quot;[nginx][access][time]&quot;
-    }
-
-    # Split url_parameters with &amp;
-    # /api?uuid=123&amp;query=456 
-    # become 
-    # nginx.access.url_params.uuid=123 nginx.access.url_params.query=456
-    kv {
-      source =&gt; &quot;[nginx][access][url_params]&quot;
-      field_split =&gt; &quot;&amp;&quot;
-    }
-
-    # Parse useragent
-    useragent {
-      source =&gt; &quot;[nginx][access][agent]&quot;
-      target =&gt; &quot;[nginx][access][user_agent]&quot;
-      remove_field =&gt; &quot;[nginx][access][agent]&quot;
-    }
-
-    # Search remote_ip with GeoIP database, output geoip information for map drawing
-    geoip {
-      source =&gt; &quot;[nginx][access][remote_ip]&quot;
-      target =&gt; &quot;[nginx][access][geoip]&quot;
-      #fields =&gt; [&quot;country_name&quot;,&quot;city_name&quot;,&quot;real_region_name&quot;,&quot;latitude&quot;,&quot;longitude&quot;,&quot;ip&quot;,&quot;location&quot;]
-    }
-
-    # ==============
-    # Remove message to reduce data
-    # ==============
-    if [nginx][access][url] {
-      mutate {
-        # source:/var/lib/docker/containers/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109-json.log
-        remove_field =&gt; &quot;[source]&quot;
-        # Origin message
-        remove_field =&gt; &quot;[message]&quot;
-        #add_field =&gt; { &quot;[nginx][access][message]&quot; =&gt; &quot;[message]&quot;}
-        remove_field =&gt; &quot;[nginx][access][message]&quot;
-        # url_params:client_id=1d5ffd378296c154d3e32e5890d6f4eb&amp;timestamp=1546849955&amp;nonce=9a52e3e6283f2a9263e5301b6724e2c0d723def860c4724c9121470152a42318
-        remove_field =&gt; &quot;[nginx][access][url_params]&quot;
-      }
-    }
-
-  } # nginx-ingress-controller
-
-} # filter
-</code></pre>
-
-<h3 id="grok">Grok</h3>
-
-<p><a href="https://www.elastic.co/guide/en/logstash/7.3/plugins-filters-grok.html" target="_blank">Grok 本身的文件</a>又是一大段，個人建議各路大德，如果要使用，請直接搜尋人家配置好的設定，不要自己寫</p>
-
-<p>真的要寫的話要善用工具</p>
-
-<ul>
-<li>Kibana Grok Debugger <code>YOUR_KIBANA_HOST/app/kibana#/dev_tools/grokdebugger</code></li>
-
-<li><p>或是不知名大德貢獻<a href="https://grokdebug.herokuapp.com/" target="_blank">線上 Debugger</a></p>
-
-<pre><code>grok {
-match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&quot;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&quot; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&quot;%{DATA:[nginx][access][referrer]}\&quot; \&quot;%{DATA:[nginx][access][agent]}\&quot; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&quot; }
-}
-</code></pre></li>
-</ul>
-
-<p>其實就是 nginx 的 access log</p>
-
-<pre><code>1.2.3.4 - [1.2.3.4] - - [21/Sep/2019:07:21:21 +0000] &quot;GET /v1/core/api/list?type=queued&amp;timestamp=1569050481&amp;nonce=d1e80e00381e0ba6e42d4601912befcf03fbf291748e77b178230c19cd1fdbe2 HTTP/1.1&quot; 200 3 &quot;-&quot; &quot;python-requests/2.18.4&quot; 425 0.031 [default-chechiachang-server-80] 10.12.10.124:8003 3 0.031 200 f43db228afe66da67b2c7417d0ad2c04
-</code></pre>
-
-<p>預設的 log 送件來，格式是 text，經過 pattern matching 後變成 json-like format，也就是可以從資料結構取得 <code>.nginx.access.remote_ip</code> 這樣的欄位，讓原本的 access log 從 text 變成可以查找的內容。</p>
-
-<p>原本的 text 送進 elasticsearch 當然也可以查找，但就會在 text 裡面做全文檢索，功能很侷限，效率很差。</p>
-
-<h3 id="output">Output</h3>
-
-<p>logstash 支援的 output 以及設定<a href="https://www.elastic.co/guide/en/logstash/7.3/output-plugins.html" target="_blank">在這邊</a></p>
-
-<pre><code>output {
-  elasticsearch {
-    hosts =&gt; [&quot;https://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}&quot;]
-    user =&gt; &quot;${ELASTICSEARCH_USERNAME}&quot;
-    password =&gt; &quot;${ELASTICSEARCH_PASSWORD}&quot;
-    index =&gt; &quot;%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}&quot;
-    manage_template =&gt; false
-  }
-}
-</code></pre>
-
-<p>Elasticsearch 的配置很單純</p>
-
-<pre><code>output {
-  google_bigquery {
-    project_id =&gt; ${GCP_PROJECT_ID}
-    dataset =&gt; ${GCP_BIG_QUERY_DATASET_NAME}
-    csv_schema =&gt; &quot;path:STRING,status:INTEGER,score:FLOAT&quot;
-    json_key_file =&gt; ${GCP_JSON_KEY_FILE_PATH}
-    error_directory =&gt; &quot;/tmp/bigquery-errors&quot;
-    date_pattern =&gt; &quot;%Y-%m-%dT%H:00&quot;
-    flush_interval_secs =&gt; 30
-  }
-}
-</code></pre>
-
-<p>其中的變數，我們全都用環境變數，在 deployment.yaml 配置，啟動 logstash pods 時代入</p>
-
-<p><code>GCP_JSON_KEY_FILE_PATH</code> 這邊要配置一隻 GCP 的服務帳號金鑰，一個有 Big Query 寫入權限的 service account，把 json 使用 kubernetes secret 放到集群上，然後在 pod 上使用 volume from secret 掛載進來。
-<code>csv_schema =&gt; &quot;path:STRING,status:INTEGER,score:FLOAT&quot;</code> 這邊要配置之後會存入 Big Query 的 csv 結構</p>
-
-<h1 id="小結">小結</h1>
-
-<ul>
-<li>部屬 Logstash deployment 到 kubernetes 上</li>
-<li>設定 pipeline，超多 plugin，族繁不及備載</li>
-<li>Grok 配置</li>
-<li>Big Query output 配置</li>
-</ul>
+<p>NAME                                                     READY   STATUS      RESTARTS   AGE
+kafka-1-0                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+kafka-1-1                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+kafka-1-2                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+kafka-1-exporter-88786d84b-z954z                         <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+kafka-1-zookeeper-0                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+kafka-1-zookeeper-1                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+kafka-1-zookeeper-2                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
+```</p>
 
     </div>
 
@@ -1065,15 +932,8 @@ match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/post/kafka-deployment-on-kubernetes/" rel="next">Kafka Deployment on Kubernetes</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/monitoring-gke-with-elk/" rel="prev">Monitoring GKE With Elk</a>
+    <a href="/post/logstash-on-gke/" rel="prev">Logstash on GKE</a>
   </div>
   
 </div>
