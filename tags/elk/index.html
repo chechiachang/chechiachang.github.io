@@ -453,7 +453,24 @@
     <h2><a href="/post/monitoring-gke-with-elk/">Monitoring GKE With Elk</a></h2>
     <div class="article-style">
       
-      Monitoring GKE With Elk
+      2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+這篇來要 Kubernetes 環境(GKE)裡面的 log 抓出來，送到 ELK 上。
+官方文件 ，寫得很簡易，如果已經很熟 kubernetes 的人可以直接腦補其他的部屬設定。
+這邊有幾個做法，依照 filebeat 部署的位置與收集目標簡單分為：
+ node: 處理每一台 node 的 log ，包含 system log 與 node 監測資料(metrics) cluster: 處理 cluster 等級的 log, event 或是 metrics pod: 針對特定 pod 直接去掛一個 sidecar  上面的方法是可以混搭的，kubernetes 個個層級有log 處理流程，我們這邊把 log 送往第三方平台，也是需要依照原本的 log 流程，去收取我們想收集的 log。
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/x.509-certificate/">X.509 certificate</a></h2>
+    <div class="article-style">
+      
+      簡單講一下 certificate  X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL) certificate 包含公鑰及識別資訊(hostname, organization, &hellip;等資訊) certificate 是由 certificate authority(CA) 簽署，或是自簽(Self-signed) 使用 browser 連入 https server時，會檢查 server 的 certificate 是否有效，確定這個 server 真的是合法的 site
+ 在 elastic stack 上，如果有多個 elasticsearch server node 彼此連線，由於 node 彼此是 client 也是 server
+ 使用 self-signed CA 產出來的 certificate，連入時會檢查使用的 certificate 是否由同一組 CA 簽署 server 使用 certificate，確定連入 server 的 client 都帶有正確的私鑰與 public certificate，是 authenticated user   附帶說明，X.509 有多種檔案格式
       
     </div>
   </div>
@@ -462,7 +479,13 @@
     <h2><a href="/post/secure-elk-stack/">Secure Elk Stack</a></h2>
     <div class="article-style">
       
-      Secure ELK stack
+      2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&ndash;
+上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
+官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
+總之為了啟用 authentication &amp; https，這篇要做的事情：
+ enable x-pack &amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server   啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6.
       
     </div>
   </div>
@@ -471,7 +494,13 @@
     <h2><a href="/post/self-host-elk-stack-on-gcp/">Self-host ELK stack - Installation</a></h2>
     <div class="article-style">
       
-      Self-host ELK stack on GCP - Installation
+      2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&ndash;
+簡介 ELK stack 官方說明文件
+ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana
       
     </div>
   </div>

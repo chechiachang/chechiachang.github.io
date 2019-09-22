@@ -28,7 +28,13 @@
   
     
   
-  <meta name="description" content="Self-host ELK stack on GCP - Installation">
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&ndash;
+簡介 ELK stack 官方說明文件
+ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana">
 
   
   <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">
@@ -126,12 +132,18 @@
   <meta property="og:site_name" content="Che-Chia Chang">
   <meta property="og:url" content="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">
   <meta property="og:title" content="Self-host ELK stack - Installation | Che-Chia Chang">
-  <meta property="og:description" content="Self-host ELK stack on GCP - Installation"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&ndash;
+簡介 ELK stack 官方說明文件
+ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-09-15T11:43:03&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-19T22:54:42&#43;08:00">
+  <meta property="article:modified_time" content="2019-09-22T11:32:44&#43;08:00">
   
 
   
@@ -438,8 +450,6 @@
   <h1 itemprop="name">Self-host ELK stack - Installation</h1>
 
   
-  <p class="page-subtitle">Self-host ELK stack - Installation</p>
-  
 
   
     
@@ -447,7 +457,7 @@
 
 
 <meta content="2019-09-15 11:43:03 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-19 22:54:42 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-22 11:32:44 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -462,7 +472,7 @@
           Last updated on
       
     
-    <time>Sep 19, 2019</time>
+    <time>Sep 22, 2019</time>
   </span>
   
 
