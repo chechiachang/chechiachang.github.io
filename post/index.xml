@@ -12,6 +12,482 @@
     
     
     <item>
+      <title>Kafka-basic-usage</title>
+      <link>https://chechiachang.github.io/post/kafka-basic-usage/</link>
+      <pubDate>Tue, 24 Sep 2019 21:59:49 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/kafka-basic-usage/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ELK Stack
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Kafka HA on Kubernetes
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;kafka utility scripts, topic operation, kafka benchmark&lt;/li&gt;
+&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
+&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在 Kubernetes 中連線 kafka&lt;/li&gt;
+&lt;li&gt;使用 golang library 連線到 Kafka&lt;/li&gt;
+&lt;li&gt;透過 kafka script 操作 kafka&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;kubernetes-中連線-kafka&#34;&gt;kubernetes 中連線 kafka&lt;/h1&gt;
+
+&lt;p&gt;先看一看 kafka pods&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get pods --selector=&#39;app=kafka&#39;
+
+NAME        READY   STATUS    RESTARTS   AGE
+kafka-1-0   1/1     Running   1          26d
+kafka-1-1   1/1     Running   0          26d
+kafka-1-2   1/1     Running   0          26d
+
+$ kubectl get pods -l &#39;app=zookeeper&#39;
+
+NAME                  READY   STATUS    RESTARTS   AGE
+kafka-1-zookeeper-0   1/1     Running   0          26d
+kafka-1-zookeeper-1   1/1     Running   0          26d
+kafka-1-zookeeper-2   1/1     Running   0          26d
+
+$ kubectl get pods -l &#39;app=kafka-exporter&#39;
+
+NAME                               READY   STATUS    RESTARTS   AGE
+kafka-1-exporter-88786d84b-z954z   1/1     Running   5          26d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl describe pods kafka-1-0
+
+Name:           kafka-1-0
+Namespace:      default
+Priority:       0
+Node:           gke-chechiachang-pool-1-e4622744-wcq0/10.140.15.212
+Labels:         app=kafka
+                controller-revision-hash=kafka-1-69986d7477
+                release=kafka-1
+                statefulset.kubernetes.io/pod-name=kafka-1-0
+Annotations:    kubernetes.io/limit-ranger: LimitRanger plugin set: cpu request for container kafka-broker
+Status:         Running
+IP:             10.12.6.178
+Controlled By:  StatefulSet/kafka-1
+Containers:
+  kafka-broker:
+    Image:         confluentinc/cp-kafka:5.0.1
+    Port:          9092/TCP
+    Host Port:     0/TCP
+    Command:
+      sh
+      -exc
+      unset KAFKA_PORT &amp;amp;&amp;amp; \
+      export KAFKA_BROKER_ID=${POD_NAME##*-} &amp;amp;&amp;amp; \
+      export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${POD_IP}:9092 &amp;amp;&amp;amp; \
+      exec /etc/confluent/docker/run
+
+    Requests:
+      cpu:      100m
+    Liveness:   exec [sh -ec /usr/bin/jps | /bin/grep -q SupportedKafka] delay=30s timeout=5s period=10s #success=1 #failure=3
+    Readiness:  tcp-socket :kafka delay=30s timeout=5s period=10s #success=1 #failure=3
+    Environment:
+      POD_IP:                                   (v1:status.podIP)
+      POD_NAME:                                kafka-1-0 (v1:metadata.name)
+      POD_NAMESPACE:                           default (v1:metadata.namespace)
+      KAFKA_HEAP_OPTS:                         -Xmx4G -Xms1G
+      KAFKA_ZOOKEEPER_CONNECT:                 kafka-1-zookeeper:2181
+      KAFKA_LOG_DIRS:                          /opt/kafka/data/logs
+      KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE:  false
+      KAFKA_DEFAULT_REPLICATION_FACTOR:        3
+      KAFKA_MESSAGE_MAX_BYTES:                 16000000
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:  1
+      KAFKA_JMX_PORT:                          5555
+    Mounts:
+      /opt/kafka/data from datadir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-2tm8c (ro)
+Conditions:
+Volumes:
+  datadir:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  datadir-kafka-1-0
+    ReadOnly:   false
+  default-token-2tm8c:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-2tm8c
+    Optional:    false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;講幾個重點：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;這邊跑起來的是 kafka-broker，接收 producer 與 consumer 來的 request&lt;/li&gt;
+&lt;li&gt;這邊用的是 statefulsets，不是完全無狀態的 kafka broker，而把 message 記在 datadir 上，降低故障重啟時可能遺失資料的風險。&lt;/li&gt;
+&lt;li&gt;啟動時，把 kubernetes 指定的 pod name 塞進環境變數，然後作為當前 broker 的 ID&lt;/li&gt;
+&lt;li&gt;沒有設定 Pod antiAffinity，所以有可能會啟三個 kafka 結果三個跑在同一台 node 上，這樣 node 故障就全死，沒有HA&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;service-endpoints&#34;&gt;Service &amp;amp; Endpoints&lt;/h3&gt;
+
+&lt;p&gt;看一下 service 與 endpoints
+zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與服務監測時，再來討論。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get service -l &#39;app=kafka&#39;
+
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+kafka-1            ClusterIP   10.15.242.178   &amp;lt;none&amp;gt;        9092/TCP   26d
+kafka-1-headless   ClusterIP   None            &amp;lt;none&amp;gt;        9092/TCP   26d
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;兩個 services&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一個是 cluster-ip service，有 single cluster IP 與 load-balance，DNS 會過 kube-proxy。&lt;/li&gt;
+&lt;li&gt;一個是 headless service，DNS 沒有過 kube-proxy，而是由 endpoint controller 直接 address record，指向把符合 service selector 的 pod。適合做 service discovery，不會依賴於 kubernetes 的實現。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/service/#headless-services&#34; target=&#34;_blank&#34;&gt;詳細說明在官方文件&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;簡單來說，kafka broker 會做 auto service discovery，我們可以使用 headless service。&lt;/p&gt;
+
+&lt;p&gt;客戶端(consumer &amp;amp; producer) 連入時，則使用 cluster-ip service，做 load balancing。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get endpoints -l &#39;app=kafka&#39;
+
+NAME                            ENDPOINTS                                                          AGE
+kafka-1                         10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
+kafka-1-headless                10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;golang-example&#34;&gt;Golang Example&lt;/h1&gt;
+
+&lt;p&gt;附上簡單的 Golang 客戶端，&lt;a href=&#34;https://github.com/chechiachang/kafka-on-kubernetes&#34; target=&#34;_blank&#34;&gt;完整 Github Repository 在這邊&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package main
+
+import (
+	&amp;quot;context&amp;quot;
+	&amp;quot;fmt&amp;quot;
+	&amp;quot;strconv&amp;quot;
+	&amp;quot;time&amp;quot;
+
+	&amp;quot;github.com/segmentio/kafka-go&amp;quot; // 使用的套件
+)
+
+func main() {
+	topic := &amp;quot;ticker&amp;quot; // 指定 message 要使用的 topic
+	partition := 0 // 指定 partition，由於底下連線指定連線到 partition 的 leader，所以需要指定 partition
+	kafkaURL := &amp;quot;kafka-0:9092&amp;quot; // 指定 kafkaURL，也可以透過 os.GetEnv() 從環境變數裡拿到。
+
+  // producer 對指定 topic, partition 的 leader 產生連線
+	producerConn, _ := kafka.DialLeader(context.Background(), &amp;quot;tcp&amp;quot;, kafkaURL, topic, partition)
+  // 程式結束最後把 connection 關掉。不關會造成 broker 累積大量 connection，需要等待 broker 端 timeout 才會釋放。
+	defer producerConn.Close()
+
+	//producerConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+  // 使用 go routine 跑一個 subprocess for loop，一直產生 message 到 kafka topic，這邊的範例是每秒推一個秒數。
+	go func() {
+		for {
+			producerConn.WriteMessages(
+				kafka.Message{
+					Value: []byte(strconv.Itoa(time.Now().Second())),
+				},
+			)
+			time.Sleep(1 * time.Second)
+		}
+	}()
+
+	// make a new reader that consumes from topic-A, partition 0
+	r := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:   []string{kafkaURL},
+		Topic:     topic,
+		Partition: 0,
+		MinBytes:  10e2, // 1KB
+		MaxBytes:  10e3, // 10KB
+	})
+	defer r.Close()
+	//r.SetOffset(42)
+
+  // 印出 reader 收到的 message
+	for {
+		m, err := r.ReadMessage(context.Background())
+		if err != nil {
+			break
+		}
+		fmt.Printf(&amp;quot;%v message at offset %d: %s = %s\n&amp;quot;, time.Now(), m.Offset, string(m.Key), string(m.Value))
+	}
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這邊可以使用 Dockerfile 包成一個 container image，然後丟上 kubernetes&lt;/p&gt;
+
+&lt;p&gt;我稍晚補一下 docker image 跟 deployment 方便大家操作好了。&lt;/p&gt;
+
+&lt;p&gt;或是攋人測試，直接 kubectl run 一個 golang base image 讓它 sleep，然後在連進去&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl run DEPLOYMENT_NAME --image=golang:1.13.0-alpine3.10 sleep 3600
+
+kubectl exec -it POD_NAME sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;# 裡面沒有 Git 跟 vim 裝一下
+apk add git vim
+
+go get github.com/chechiachang/kafka-on-kubernetes
+
+cd src/github.com/chechiachang/kafka-on-kubernetes/
+vim main.go
+
+go build .
+./kafka-on-kubernetes
+
+2019-09-24 14:20:46.872554693 +0000 UTC m=+9.154112787 message at offset 1:  = 46
+2019-09-24 14:20:47.872563087 +0000 UTC m=+9.154121166 message at offset 2:  = 47
+2019-09-24 14:20:48.872568848 +0000 UTC m=+9.154126926 message at offset 3:  = 48
+2019-09-24 14:20:49.872574499 +0000 UTC m=+9.154132576 message at offset 4:  = 49
+2019-09-24 14:20:50.872579957 +0000 UTC m=+9.154138032 message at offset 5:  = 50
+2019-09-24 14:20:51.872588823 +0000 UTC m=+9.154146892 message at offset 6:  = 51
+2019-09-24 14:20:52.872594672 +0000 UTC m=+9.154152748 message at offset 7:  = 52
+2019-09-24 14:20:53.872599986 +0000 UTC m=+9.154158060 message at offset 8:  = 53
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這樣就連上了，完成一個最簡單的使用範例。&lt;/p&gt;
+
+&lt;p&gt;這個例子太過簡單，上一篇講的 consumer group, partitions, offset 什麼設定全都沒用上。實務上這些都需要好好思考，並且依據需求做調整設定。&lt;/p&gt;
+
+&lt;h3 id=&#34;clean-up&#34;&gt;Clean up&lt;/h3&gt;
+
+&lt;p&gt;把測試用的 deployment 幹掉&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl delete deployment DEPLOYMENT_NAME
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;簡述 kafka 在 kubernetes 上運行的狀況，連線方法&lt;/li&gt;
+&lt;li&gt;Demo 一個小程式&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kafka-introduction</title>
+      <link>https://chechiachang.github.io/post/kafka-introduction/</link>
+      <pubDate>Mon, 23 Sep 2019 21:59:49 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/kafka-introduction/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ELK Stack
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Kafka HA on Kubernetes
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;應用使用 kafka 的設定&lt;/li&gt;
+&lt;li&gt;kafka utility scripts, topic operation, kafka benchmark&lt;/li&gt;
+&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
+&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;寫了部屬，本想談一下 kafka 的高可用性配置，看到大德的留言，才想到應該要先跟各位介紹一下 kafka，跟 kafka 的用途。也感謝大德路過發問，我也會順代調整內容。今天就說明何為 kafka，以及在什麼樣的狀況使用。&lt;/p&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;簡介 kafka&lt;/li&gt;
+&lt;li&gt;基本元件&lt;/li&gt;
+&lt;li&gt;Kafka 的工作流程&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;簡介-kafka&#34;&gt;簡介 Kafka&lt;/h1&gt;
+
+&lt;p&gt;Kafka 是分散式的 streaming platform，可以 subscribe &amp;amp; publish 訊息，可以當作是一個功能強大的 message queue 系統，由於分散式的架構，讓 kafka 有很大程度的 fault tolerance。&lt;a href=&#34;https://kafka.apache.org/documentation/#gettingStarted&#34; target=&#34;_blank&#34;&gt;原版的說明在這邊&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;這邊有幾個東西要解釋。&lt;/p&gt;
+
+&lt;h1 id=&#34;message-queue-system&#34;&gt;Message Queue System&lt;/h1&gt;
+
+&lt;p&gt;當一個系統開始運作時，裡頭會有很多變數，這些變數其實就是在一定的範圍(scope）內，做訊息(message)的傳遞。例如在 app 寫了一個 function ，傳入一個變數的值給 function。&lt;/p&gt;
+
+&lt;p&gt;在複雜的系統中，服務元件彼此也會有傳遞訊息的需求。例如我原本有一個 api-server，其中一段程式碼是效能瓶頸，我把它切出來獨立成一個 worker 的元件，讓它可以在更高效能地方執行，甚至 horizontal scaling。這種情境，辨可能歲需要把一部分的 message 從 api-server 傳到 worker，worker 把吃效能的工作做完，再把結果回傳給 api-server。這時就會需要一個穩定的 message queue system，來穩定，且高效能的傳遞這些 message。&lt;/p&gt;
+
+&lt;p&gt;Message Queue System 實做很多，ActiveMQ, RabbitMQ, &amp;hellip; 等，一些 database 做 message queue 在某些應用場景下也十分適合，例如 Redis 是 in-memory key-value database，內部也實做 pubsub，能夠在某些環境穩定的傳送 message。&lt;/p&gt;
+
+&lt;h1 id=&#34;request-response-vs-publish-subscribe&#34;&gt;Request-Response vs Publish-Subscribe&lt;/h1&gt;
+
+&lt;p&gt;訊息的傳送有很多方式，例如 Http request-response 很適合 server 在無狀態(stateless) 下接受來自客戶端的訊息，每次傳送都重新建立新的 http connection，這樣做有很多好處也很多壞處。其中明顯的壞處是網路資源的浪費，以及訊息的不夠即時，指定特定收件人時發件人會造成額外負擔等。&lt;/p&gt;
+
+&lt;p&gt;使用 Pub-sub pattern的好處，是 publisher 不需要額外處理『這個訊息要送給誰』的工作，而是讓 subscriber 來訂閱需要的訊息類別，一有新的 event 送到該訊息類別，直接透過 broker 推播給 subscriber。不僅即時，節省效能，而且訂閱的彈性很大。&lt;/p&gt;
+
+&lt;h1 id=&#34;kafka-producer-consumer-api&#34;&gt;Kafka producer &amp;amp; Consumer API&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://kafka.apache.org/23/images/kafka-apis.png&#34; alt=&#34;kafka diagram&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Kafka 作為 client 與 server 兩邊的溝通平台，提供了許多 API 葛不同角色使用。Producer 產生 message 到特定 topic 上，consumer 訂閱特定 topics，kafak 把符合條件的訊息推播給 consumer。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Producer API: 讓 app publish 一連的訊息&lt;/li&gt;
+&lt;li&gt;Consumer API: 讓 app subscribe 許多特定 topic，並處理訊息串流(stream)&lt;/li&gt;
+&lt;li&gt;Stream API: 讓 app 作為串流中介處理(stream processor)&lt;/li&gt;
+&lt;li&gt;Connect API: 與 producer 與 consumer 可以對外部服務連結&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;topics-logs&#34;&gt;Topics &amp;amp; Logs&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://kafka.apache.org/23/images/log_anatomy.png&#34; alt=&#34;kafka-topics&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Topic 是 kafka 為訊息串流提供的抽象，topic 是訊息傳送到 kafka 時賦予的類別(category)，作為 publish 與 consume 的判斷依據。&lt;/p&gt;
+
+&lt;h1 id=&#34;partition&#34;&gt;Partition&lt;/h1&gt;
+
+&lt;p&gt;訊息依據 topic 分類存放，並可以依據 replication factor 設定，在 kafka 中存放多個訊息分割(partition)。partition 可以想成是 message queue 的平行化 (parallel)，併發處理訊息可以大幅提昇訊息接收與發送的速度，並且多個副本也提高資料的可用性。&lt;/p&gt;
+
+&lt;p&gt;由於訊息發送跟接收過程可能因為網路與環境而不穩定，這些相同 topic 的 partition 不一定會完全一樣。但 kafka 確保了以下幾點。&lt;/p&gt;
+
+&lt;h1 id=&#34;guarantees&#34;&gt;Guarantees&lt;/h1&gt;
+
+&lt;p&gt;良好配置的 kafka 有以下保證&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;訊息在系統中送出跟被收到的時間不一定，但kafak中，從相同 producer 送出的訊息，送到 topic partition 會維持送出的順序&lt;/li&gt;
+&lt;li&gt;Consumer 看見的訊息是與 kafka 中的存放順序一致&lt;/li&gt;
+&lt;li&gt;有 replication factor 為 N 的 topic ，可以容忍(fault-tolerance) N-1 個 kafka-server 壞掉，而不影響資料。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;當然，這邊的前提是有良好配置。錯誤的配置可能會導致訊息不穩定，效能低落，甚至遺失。&lt;/p&gt;
+
+&lt;h1 id=&#34;producer&#34;&gt;Producer&lt;/h1&gt;
+
+&lt;p&gt;Producer 負責把訊息推向一個 topic，並指定訊息應該放在 topic 的哪個 partition。&lt;/p&gt;
+
+&lt;h1 id=&#34;consumer&#34;&gt;Consumer&lt;/h1&gt;
+
+&lt;p&gt;Consumer 會自行標記，形成 consumer group，透過 consumer group 來保障訊息傳遞的次序，容錯，以及擴展的效率。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://kafka.apache.org/23/images/consumer-groups.png&#34; alt=&#34;consumer group&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Consumer 透過 consumer group 共享一個 group.id。&lt;/li&gt;
+&lt;li&gt;Consumer group 去所有 partitions 裡拿訊息，所有 partitions 的訊息分配到 consumer group 中的 consumer。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;app 在接收訊息時，設置正確的化，在一個 consumer group 中，可以容忍 consumer 失效，仍能確保訊息一指定的次序送達。在需要大流量時，也可調整 consumer 的數量提高負載。&lt;/p&gt;
+
+&lt;h1 id=&#34;用例&#34;&gt;用例&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kafka.apache.org/documentation/#uses&#34; target=&#34;_blank&#34;&gt;kafka 的使用例子&lt;/a&gt;非常的多，使用範圍非常廣泛。&lt;/p&gt;
+
+&lt;p&gt;基本上是訊息傳遞的使用例子，kafka 大多能勝任。&lt;/p&gt;
+
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+
+&lt;p&gt;這邊只提了 kafka 的基本概念，基本元件，以及 consumer group 機制，為我們底下要談的 configuration 與 topology 鋪路。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kafka Helm Configuration</title>
+      <link>https://chechiachang.github.io/post/kafka-helm-configuration/</link>
+      <pubDate>Mon, 23 Sep 2019 21:55:29 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/kafka-helm-configuration/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ELK Stack
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Kafka HA on Kubernetes
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;應用使用 kafka 的設定&lt;/li&gt;
+&lt;li&gt;kafka utility scripts, topic operation, kafka benchmark&lt;/li&gt;
+&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
+&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Kafka Deployment on Kubernetes</title>
       <link>https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/</link>
       <pubDate>Sun, 22 Sep 2019 09:58:41 +0800</pubDate>

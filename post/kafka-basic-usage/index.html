@@ -29,10 +29,10 @@
     
   
   <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-basic-usage/">
 
   
 
@@ -111,7 +111,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
+  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-basic-usage/">
 
   
   
@@ -125,15 +125,15 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
-  <meta property="og:title" content="Kafka Deployment on Kubernetes | Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-basic-usage/">
+  <meta property="og:title" content="Kafka-basic-usage | Che-Chia Chang">
   <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-22T09:58:41&#43;08:00">
+  <meta property="article:published_time" content="2019-09-24T21:59:49&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-22T11:29:42&#43;08:00">
+  <meta property="article:modified_time" content="2019-09-24T22:34:17&#43;08:00">
   
 
   
@@ -171,7 +171,7 @@
 
 
 
-  <title>Kafka Deployment on Kubernetes | Che-Chia Chang</title>
+  <title>Kafka-basic-usage | Che-Chia Chang</title>
 
 </head>
 
@@ -437,7 +437,7 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Kafka Deployment on Kubernetes</h1>
+  <h1 itemprop="name">Kafka-basic-usage</h1>
 
   
 
@@ -446,8 +446,8 @@
 
 
 
-<meta content="2019-09-22 09:58:41 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-22 11:29:42 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-24 21:59:49 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-09-24 22:34:17 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -462,7 +462,7 @@
           Last updated on
       
     
-    <time>Sep 22, 2019</time>
+    <time>Sep 24, 2019</time>
   </span>
   
 
@@ -471,7 +471,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    4 min read
   </span>
   
 
@@ -494,7 +494,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;text=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-basic-usage/&amp;text=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +507,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;t=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-basic-usage/&amp;t=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +520,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Kafka%20Deployment%20on%20Kubernetes&amp;body=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Kafka-basic-usage&amp;body=https://chechiachang.github.io/post/kafka-basic-usage/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +533,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;title=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-basic-usage/&amp;title=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +546,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Kafka%20Deployment%20on%20Kubernetes%20https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Kafka-basic-usage%20https://chechiachang.github.io/post/kafka-basic-usage/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;title=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-basic-usage/&amp;title=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -616,7 +616,8 @@
 
 <ul>
 <li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
-<li>應用使用 kafka 的設定</li>
+<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
+<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
 <li>kafka utility scripts, topic operation, kafka benchmark</li>
 <li>集群內部的 HA topology</li>
 <li>集群內部的 HA 設定，網路設定</li>
@@ -628,27 +629,9 @@
 
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
 
-<hr />
-
-<h1 id="碎念">碎念</h1>
-
-<p>30 天每天一文真的蠻逼人的，每一篇都是新寫，還要盡可能顧及文章品質，下班趕文章，各位大德寫看看就知道</p>
-
-<ul>
-<li>這邊調整了當初想寫的文章，內容應該都會帶到
-
-<ul>
-<li>elk</li>
-<li>kafka-ha</li>
-<li>reids-ha</li>
-<li>prometheus</li>
-<li>kubernetes on gcp</li>
-</ul></li>
-<li>但不會再一篇 10000 字了，逼死我吧&hellip;</li>
-<li>寫不完的部份 30 天候會在IT邦幫忙，或是<a href="https:/chechiachang.github.io" target="_blank">我的 Github Page https://chechiachang.github.io/</a>補完</li>
-</ul>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
 
@@ -657,139 +640,245 @@
 <h1 id="摘要">摘要</h1>
 
 <ul>
-<li>簡介 kafka</li>
-<li>部屬 kafka 到 kubernetes 上</li>
+<li>在 Kubernetes 中連線 kafka</li>
+<li>使用 golang library 連線到 Kafka</li>
+<li>透過 kafka script 操作 kafka</li>
 </ul>
 
-<h1 id="簡介-kafka">簡介 kafka</h1>
+<h1 id="kubernetes-中連線-kafka">kubernetes 中連線 kafka</h1>
 
-<p>Kafka 是分散式的 streaming platform，可以 subscribe &amp; publish 訊息，可以當作是一個功能強大的 message queue 系統，由於分散式的架構，讓 kafka 有很大程度的 fault tolerance。</p>
+<p>先看一看 kafka pods</p>
 
-<p>我們今天就來部屬一個 kafka。</p>
+<pre><code>$ kubectl get pods --selector='app=kafka'
 
-<h1 id="deploy">Deploy</h1>
+NAME        READY   STATUS    RESTARTS   AGE
+kafka-1-0   1/1     Running   1          26d
+kafka-1-1   1/1     Running   0          26d
+kafka-1-2   1/1     Running   0          26d
 
-<p>我把我的寶藏都在這了<a href="https://github.com/chechiachang/kafka-on-kubernetes" target="_blank">https://github.com/chechiachang/kafka-on-kubernetes</a></p>
+$ kubectl get pods -l 'app=zookeeper'
 
-<p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
+NAME                  READY   STATUS    RESTARTS   AGE
+kafka-1-zookeeper-0   1/1     Running   0          26d
+kafka-1-zookeeper-1   1/1     Running   0          26d
+kafka-1-zookeeper-2   1/1     Running   0          26d
 
-<pre><code>cat install.sh
+$ kubectl get pods -l 'app=kafka-exporter'
 
-
-#!/bin/bash
-#
-# https://github.com/helm/charts/tree/master/incubator/kafka
-
-#HELM_NAME=kafka
-HELM_NAME=kafka-1
-
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-
-# Stable: chart version: kafka-0.16.2	app version: 5.0.1
-helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
+NAME                               READY   STATUS    RESTARTS   AGE
+kafka-1-exporter-88786d84b-z954z   1/1     Running   5          26d
 </code></pre>
 
-<h3 id="helm">Helm</h3>
+<pre><code>kubectl describe pods kafka-1-0
 
-<p>我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 kafka。所以我們先用。</p>
+Name:           kafka-1-0
+Namespace:      default
+Priority:       0
+Node:           gke-chechiachang-pool-1-e4622744-wcq0/10.140.15.212
+Labels:         app=kafka
+                controller-revision-hash=kafka-1-69986d7477
+                release=kafka-1
+                statefulset.kubernetes.io/pod-name=kafka-1-0
+Annotations:    kubernetes.io/limit-ranger: LimitRanger plugin set: cpu request for container kafka-broker
+Status:         Running
+IP:             10.12.6.178
+Controlled By:  StatefulSet/kafka-1
+Containers:
+  kafka-broker:
+    Image:         confluentinc/cp-kafka:5.0.1
+    Port:          9092/TCP
+    Host Port:     0/TCP
+    Command:
+      sh
+      -exc
+      unset KAFKA_PORT &amp;&amp; \
+      export KAFKA_BROKER_ID=${POD_NAME##*-} &amp;&amp; \
+      export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${POD_IP}:9092 &amp;&amp; \
+      exec /etc/confluent/docker/run
 
-<p>沒用過 helm 的大德可以參考 <a href="https://helm.sh/docs/using_helm/#quickstart" target="_blank">Helm Quickstart</a>，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好</p>
-
-<pre><code>helm init
+    Requests:
+      cpu:      100m
+    Liveness:   exec [sh -ec /usr/bin/jps | /bin/grep -q SupportedKafka] delay=30s timeout=5s period=10s #success=1 #failure=3
+    Readiness:  tcp-socket :kafka delay=30s timeout=5s period=10s #success=1 #failure=3
+    Environment:
+      POD_IP:                                   (v1:status.podIP)
+      POD_NAME:                                kafka-1-0 (v1:metadata.name)
+      POD_NAMESPACE:                           default (v1:metadata.namespace)
+      KAFKA_HEAP_OPTS:                         -Xmx4G -Xms1G
+      KAFKA_ZOOKEEPER_CONNECT:                 kafka-1-zookeeper:2181
+      KAFKA_LOG_DIRS:                          /opt/kafka/data/logs
+      KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE:  false
+      KAFKA_DEFAULT_REPLICATION_FACTOR:        3
+      KAFKA_MESSAGE_MAX_BYTES:                 16000000
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:  1
+      KAFKA_JMX_PORT:                          5555
+    Mounts:
+      /opt/kafka/data from datadir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-2tm8c (ro)
+Conditions:
+Volumes:
+  datadir:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  datadir-kafka-1-0
+    ReadOnly:   false
+  default-token-2tm8c:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-2tm8c
+    Optional:    false
 </code></pre>
 
-<h3 id="helm-chart">Helm Chart</h3>
-
-<p>一個 helm chart 可以當成一個獨立的專案，不同的 chart 可以在 kubernetes 上協助部屬不同的項目。</p>
-
-<p>這邊使用了還在 incubator 的chart，雖然是 prod ready，不過使用上還是要注意。</p>
-
-<p>使用前先把 incubator 的 helm repo 加進來</p>
-
-<pre><code>helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-</code></pre>
-
-<h3 id="install">Install</h3>
-
-<p>這邊是用 upgrade &ndash;install，已安裝就 upgrade，沒安裝就 install，之後可以用這個指令升版</p>
-
-<pre><code>helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
-</code></pre>
-
-<h3 id="version">Version</h3>
-
-<p>這邊使用的版本：</p>
+<p>講幾個重點：</p>
 
 <ul>
-<li>chart version:    kafka-0.16.2</li>
-<li>app version:      5.0.1</li>
-<li>kafka Image:      confluentinc/cp-kafka:5.0.1</li>
-<li>zookeeper Image:  gcr.io/google_samples/k8szk:v3</li>
-<li>kafka exporter:   danielqsj/kafka-exporter:v1.2.0</li>
+<li>這邊跑起來的是 kafka-broker，接收 producer 與 consumer 來的 request</li>
+<li>這邊用的是 statefulsets，不是完全無狀態的 kafka broker，而把 message 記在 datadir 上，降低故障重啟時可能遺失資料的風險。</li>
+<li>啟動時，把 kubernetes 指定的 pod name 塞進環境變數，然後作為當前 broker 的 ID</li>
+<li>沒有設定 Pod antiAffinity，所以有可能會啟三個 kafka 結果三個跑在同一台 node 上，這樣 node 故障就全死，沒有HA</li>
 </ul>
 
-<h3 id="values-staging">values-staging</h3>
+<h3 id="service-endpoints">Service &amp; Endpoints</h3>
 
-<p>透過 helm chart，把啟動參數帶進去，這邊我們看幾個比較重要的，細節之後的文章在一起討論。</p>
+<p>看一下 service 與 endpoints
+zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與服務監測時，再來討論。</p>
 
-<p><a href="https://github.com/chechiachang/kafka-on-kubernetes/blob/master/values-staging.yaml" target="_blank">https://github.com/chechiachang/kafka-on-kubernetes/blob/master/values-staging.yaml</a></p>
+<pre><code>$ kubectl get service -l 'app=kafka'
 
-<pre><code>replicas: 3
-</code></pre>
-
-<p>安裝三個 kafka，topology 的東西也是敬待下篇XD</p>
-
-<pre><code>## The kafka image repository
-image: &quot;confluentinc/cp-kafka&quot;
-
-## The kafka image tag
-
-底層執行的 kafka 是 conluent kafka
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+kafka-1            ClusterIP   10.15.242.178   &lt;none&gt;        9092/TCP   26d
+kafka-1-headless   ClusterIP   None            &lt;none&gt;        9092/TCP   26d
 
 </code></pre>
 
-<h2 id="configure-resource-requests-and-limits">Configure resource requests and limits</h2>
+<p>兩個 services</p>
 
-<h2 id="ref-http-kubernetes-io-docs-user-guide-compute-resources">ref: <a href="http://kubernetes.io/docs/user-guide/compute-resources/" target="_blank">http://kubernetes.io/docs/user-guide/compute-resources/</a></h2>
+<ul>
+<li>一個是 cluster-ip service，有 single cluster IP 與 load-balance，DNS 會過 kube-proxy。</li>
+<li>一個是 headless service，DNS 沒有過 kube-proxy，而是由 endpoint controller 直接 address record，指向把符合 service selector 的 pod。適合做 service discovery，不會依賴於 kubernetes 的實現。</li>
+</ul>
 
-<p>resources: {}
-  # limits:
-  #   cpu: 200m
-  #   memory: 4096Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 1024Mi
-kafkaHeapOptions: &ldquo;-Xmx4G -Xms1G&rdquo;</p>
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services" target="_blank">詳細說明在官方文件</a></p>
 
-<pre><code>
-這邊可以調整在 kubernetes 上面的 limit 跟 request
+<p>簡單來說，kafka broker 會做 auto service discovery，我們可以使用 headless service。</p>
 
-* Deploy 會先去跟 node 問夠不夠，夠的話要求 node 保留這些資源給 Pod
-* Runtime 超過 limit，Pod 會被 kubernetes 幹掉，不過我們是 JVM，外部 resource 爆掉前，應該會先因 heap 滿而死。一個施主自盡的感覺。
-* CPU 蠻省的，吃比較多是 memory。但也要看你的使用情境
+<p>客戶端(consumer &amp; producer) 連入時，則使用 cluster-ip service，做 load balancing。</p>
 
+<pre><code>$ kubectl get endpoints -l 'app=kafka'
+
+NAME                            ENDPOINTS                                                          AGE
+kafka-1                         10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
+kafka-1-headless                10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
 </code></pre>
 
-<p>prometheus</p>
+<h1 id="golang-example">Golang Example</h1>
 
-<pre><code>
-對我們有上 promethues，基本上就是 kafka-exporter 把 kafka metrics 倒出去 prometheus，這個也是詳見下回分解。
+<p>附上簡單的 Golang 客戶端，<a href="https://github.com/chechiachang/kafka-on-kubernetes" target="_blank">完整 Github Repository 在這邊</a></p>
 
-# 跑起來了
+<pre><code>package main
 
+import (
+	&quot;context&quot;
+	&quot;fmt&quot;
+	&quot;strconv&quot;
+	&quot;time&quot;
+
+	&quot;github.com/segmentio/kafka-go&quot; // 使用的套件
+)
+
+func main() {
+	topic := &quot;ticker&quot; // 指定 message 要使用的 topic
+	partition := 0 // 指定 partition，由於底下連線指定連線到 partition 的 leader，所以需要指定 partition
+	kafkaURL := &quot;kafka-0:9092&quot; // 指定 kafkaURL，也可以透過 os.GetEnv() 從環境變數裡拿到。
+
+  // producer 對指定 topic, partition 的 leader 產生連線
+	producerConn, _ := kafka.DialLeader(context.Background(), &quot;tcp&quot;, kafkaURL, topic, partition)
+  // 程式結束最後把 connection 關掉。不關會造成 broker 累積大量 connection，需要等待 broker 端 timeout 才會釋放。
+	defer producerConn.Close()
+
+	//producerConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+  // 使用 go routine 跑一個 subprocess for loop，一直產生 message 到 kafka topic，這邊的範例是每秒推一個秒數。
+	go func() {
+		for {
+			producerConn.WriteMessages(
+				kafka.Message{
+					Value: []byte(strconv.Itoa(time.Now().Second())),
+				},
+			)
+			time.Sleep(1 * time.Second)
+		}
+	}()
+
+	// make a new reader that consumes from topic-A, partition 0
+	r := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:   []string{kafkaURL},
+		Topic:     topic,
+		Partition: 0,
+		MinBytes:  10e2, // 1KB
+		MaxBytes:  10e3, // 10KB
+	})
+	defer r.Close()
+	//r.SetOffset(42)
+
+  // 印出 reader 收到的 message
+	for {
+		m, err := r.ReadMessage(context.Background())
+		if err != nil {
+			break
+		}
+		fmt.Printf(&quot;%v message at offset %d: %s = %s\n&quot;, time.Now(), m.Offset, string(m.Key), string(m.Value))
+	}
+
+}
 </code></pre>
 
-<p>$ kubectl get po | grep kafka</p>
+<p>這邊可以使用 Dockerfile 包成一個 container image，然後丟上 kubernetes</p>
 
-<p>NAME                                                     READY   STATUS      RESTARTS   AGE
-kafka-1-0                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-1                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-2                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-exporter-88786d84b-z954z                         <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-zookeeper-0                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-zookeeper-1                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-zookeeper-2                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-```</p>
+<p>我稍晚補一下 docker image 跟 deployment 方便大家操作好了。</p>
+
+<p>或是攋人測試，直接 kubectl run 一個 golang base image 讓它 sleep，然後在連進去</p>
+
+<pre><code>kubectl run DEPLOYMENT_NAME --image=golang:1.13.0-alpine3.10 sleep 3600
+
+kubectl exec -it POD_NAME sh
+</code></pre>
+
+<pre><code># 裡面沒有 Git 跟 vim 裝一下
+apk add git vim
+
+go get github.com/chechiachang/kafka-on-kubernetes
+
+cd src/github.com/chechiachang/kafka-on-kubernetes/
+vim main.go
+
+go build .
+./kafka-on-kubernetes
+
+2019-09-24 14:20:46.872554693 +0000 UTC m=+9.154112787 message at offset 1:  = 46
+2019-09-24 14:20:47.872563087 +0000 UTC m=+9.154121166 message at offset 2:  = 47
+2019-09-24 14:20:48.872568848 +0000 UTC m=+9.154126926 message at offset 3:  = 48
+2019-09-24 14:20:49.872574499 +0000 UTC m=+9.154132576 message at offset 4:  = 49
+2019-09-24 14:20:50.872579957 +0000 UTC m=+9.154138032 message at offset 5:  = 50
+2019-09-24 14:20:51.872588823 +0000 UTC m=+9.154146892 message at offset 6:  = 51
+2019-09-24 14:20:52.872594672 +0000 UTC m=+9.154152748 message at offset 7:  = 52
+2019-09-24 14:20:53.872599986 +0000 UTC m=+9.154158060 message at offset 8:  = 53
+</code></pre>
+
+<p>這樣就連上了，完成一個最簡單的使用範例。</p>
+
+<p>這個例子太過簡單，上一篇講的 consumer group, partitions, offset 什麼設定全都沒用上。實務上這些都需要好好思考，並且依據需求做調整設定。</p>
+
+<h3 id="clean-up">Clean up</h3>
+
+<p>把測試用的 deployment 幹掉</p>
+
+<pre><code>kubectl delete deployment DEPLOYMENT_NAME
+</code></pre>
+
+<h1 id="小結">小結</h1>
+
+<ul>
+<li>簡述 kafka 在 kubernetes 上運行的狀況，連線方法</li>
+<li>Demo 一個小程式</li>
+</ul>
 
     </div>
 
@@ -934,15 +1023,8 @@ kafka-1-zookeeper-2                                      <sup>1</sup>&frasl;<sub
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/post/kafka-helm-configuration/" rel="next">Kafka Helm Configuration</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/logstash-on-gke/" rel="prev">Logstash on GKE</a>
+    <a href="/post/kafka-introduction/" rel="prev">Kafka-introduction</a>
   </div>
   
 </div>

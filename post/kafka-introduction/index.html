@@ -29,10 +29,10 @@
     
   
   <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-introduction/">
 
   
 
@@ -111,7 +111,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
+  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-introduction/">
 
   
   
@@ -125,15 +125,15 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/">
-  <meta property="og:title" content="Kafka Deployment on Kubernetes | Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-introduction/">
+  <meta property="og:title" content="Kafka-introduction | Che-Chia Chang">
   <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction 應用使用 kafka 的設定 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-22T09:58:41&#43;08:00">
+  <meta property="article:published_time" content="2019-09-23T21:59:49&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-22T11:29:42&#43;08:00">
+  <meta property="article:modified_time" content="2019-09-23T23:21:04&#43;08:00">
   
 
   
@@ -171,7 +171,7 @@
 
 
 
-  <title>Kafka Deployment on Kubernetes | Che-Chia Chang</title>
+  <title>Kafka-introduction | Che-Chia Chang</title>
 
 </head>
 
@@ -437,7 +437,7 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Kafka Deployment on Kubernetes</h1>
+  <h1 itemprop="name">Kafka-introduction</h1>
 
   
 
@@ -446,8 +446,8 @@
 
 
 
-<meta content="2019-09-22 09:58:41 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-22 11:29:42 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-23 21:59:49 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-09-23 23:21:04 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -462,7 +462,7 @@
           Last updated on
       
     
-    <time>Sep 22, 2019</time>
+    <time>Sep 23, 2019</time>
   </span>
   
 
@@ -494,7 +494,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;text=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-introduction/&amp;text=Kafka-introduction" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +507,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;t=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-introduction/&amp;t=Kafka-introduction" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +520,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Kafka%20Deployment%20on%20Kubernetes&amp;body=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Kafka-introduction&amp;body=https://chechiachang.github.io/post/kafka-introduction/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +533,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;title=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-introduction/&amp;title=Kafka-introduction" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +546,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Kafka%20Deployment%20on%20Kubernetes%20https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Kafka-introduction%20https://chechiachang.github.io/post/kafka-introduction/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/&amp;title=Kafka%20Deployment%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-introduction/&amp;title=Kafka-introduction" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -616,6 +616,7 @@
 
 <ul>
 <li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
+<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
 <li>應用使用 kafka 的設定</li>
 <li>kafka utility scripts, topic operation, kafka benchmark</li>
 <li>集群內部的 HA topology</li>
@@ -628,168 +629,107 @@
 
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
 
-<hr />
-
-<h1 id="碎念">碎念</h1>
-
-<p>30 天每天一文真的蠻逼人的，每一篇都是新寫，還要盡可能顧及文章品質，下班趕文章，各位大德寫看看就知道</p>
-
-<ul>
-<li>這邊調整了當初想寫的文章，內容應該都會帶到
-
-<ul>
-<li>elk</li>
-<li>kafka-ha</li>
-<li>reids-ha</li>
-<li>prometheus</li>
-<li>kubernetes on gcp</li>
-</ul></li>
-<li>但不會再一篇 10000 字了，逼死我吧&hellip;</li>
-<li>寫不完的部份 30 天候會在IT邦幫忙，或是<a href="https:/chechiachang.github.io" target="_blank">我的 Github Page https://chechiachang.github.io/</a>補完</li>
-</ul>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
 
 <hr />
 
+<p>寫了部屬，本想談一下 kafka 的高可用性配置，看到大德的留言，才想到應該要先跟各位介紹一下 kafka，跟 kafka 的用途。也感謝大德路過發問，我也會順代調整內容。今天就說明何為 kafka，以及在什麼樣的狀況使用。</p>
+
 <h1 id="摘要">摘要</h1>
 
 <ul>
 <li>簡介 kafka</li>
-<li>部屬 kafka 到 kubernetes 上</li>
+<li>基本元件</li>
+<li>Kafka 的工作流程</li>
 </ul>
 
-<h1 id="簡介-kafka">簡介 kafka</h1>
+<h1 id="簡介-kafka">簡介 Kafka</h1>
 
-<p>Kafka 是分散式的 streaming platform，可以 subscribe &amp; publish 訊息，可以當作是一個功能強大的 message queue 系統，由於分散式的架構，讓 kafka 有很大程度的 fault tolerance。</p>
+<p>Kafka 是分散式的 streaming platform，可以 subscribe &amp; publish 訊息，可以當作是一個功能強大的 message queue 系統，由於分散式的架構，讓 kafka 有很大程度的 fault tolerance。<a href="https://kafka.apache.org/documentation/#gettingStarted" target="_blank">原版的說明在這邊</a></p>
 
-<p>我們今天就來部屬一個 kafka。</p>
+<p>這邊有幾個東西要解釋。</p>
 
-<h1 id="deploy">Deploy</h1>
+<h1 id="message-queue-system">Message Queue System</h1>
 
-<p>我把我的寶藏都在這了<a href="https://github.com/chechiachang/kafka-on-kubernetes" target="_blank">https://github.com/chechiachang/kafka-on-kubernetes</a></p>
+<p>當一個系統開始運作時，裡頭會有很多變數，這些變數其實就是在一定的範圍(scope）內，做訊息(message)的傳遞。例如在 app 寫了一個 function ，傳入一個變數的值給 function。</p>
 
-<p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
+<p>在複雜的系統中，服務元件彼此也會有傳遞訊息的需求。例如我原本有一個 api-server，其中一段程式碼是效能瓶頸，我把它切出來獨立成一個 worker 的元件，讓它可以在更高效能地方執行，甚至 horizontal scaling。這種情境，辨可能歲需要把一部分的 message 從 api-server 傳到 worker，worker 把吃效能的工作做完，再把結果回傳給 api-server。這時就會需要一個穩定的 message queue system，來穩定，且高效能的傳遞這些 message。</p>
 
-<pre><code>cat install.sh
+<p>Message Queue System 實做很多，ActiveMQ, RabbitMQ, &hellip; 等，一些 database 做 message queue 在某些應用場景下也十分適合，例如 Redis 是 in-memory key-value database，內部也實做 pubsub，能夠在某些環境穩定的傳送 message。</p>
 
+<h1 id="request-response-vs-publish-subscribe">Request-Response vs Publish-Subscribe</h1>
 
-#!/bin/bash
-#
-# https://github.com/helm/charts/tree/master/incubator/kafka
+<p>訊息的傳送有很多方式，例如 Http request-response 很適合 server 在無狀態(stateless) 下接受來自客戶端的訊息，每次傳送都重新建立新的 http connection，這樣做有很多好處也很多壞處。其中明顯的壞處是網路資源的浪費，以及訊息的不夠即時，指定特定收件人時發件人會造成額外負擔等。</p>
 
-#HELM_NAME=kafka
-HELM_NAME=kafka-1
+<p>使用 Pub-sub pattern的好處，是 publisher 不需要額外處理『這個訊息要送給誰』的工作，而是讓 subscriber 來訂閱需要的訊息類別，一有新的 event 送到該訊息類別，直接透過 broker 推播給 subscriber。不僅即時，節省效能，而且訂閱的彈性很大。</p>
 
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+<h1 id="kafka-producer-consumer-api">Kafka producer &amp; Consumer API</h1>
 
-# Stable: chart version: kafka-0.16.2	app version: 5.0.1
-helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
-</code></pre>
+<p><img src="https://kafka.apache.org/23/images/kafka-apis.png" alt="kafka diagram" /></p>
 
-<h3 id="helm">Helm</h3>
-
-<p>我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 kafka。所以我們先用。</p>
-
-<p>沒用過 helm 的大德可以參考 <a href="https://helm.sh/docs/using_helm/#quickstart" target="_blank">Helm Quickstart</a>，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好</p>
-
-<pre><code>helm init
-</code></pre>
-
-<h3 id="helm-chart">Helm Chart</h3>
-
-<p>一個 helm chart 可以當成一個獨立的專案，不同的 chart 可以在 kubernetes 上協助部屬不同的項目。</p>
-
-<p>這邊使用了還在 incubator 的chart，雖然是 prod ready，不過使用上還是要注意。</p>
-
-<p>使用前先把 incubator 的 helm repo 加進來</p>
-
-<pre><code>helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-</code></pre>
-
-<h3 id="install">Install</h3>
-
-<p>這邊是用 upgrade &ndash;install，已安裝就 upgrade，沒安裝就 install，之後可以用這個指令升版</p>
-
-<pre><code>helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
-</code></pre>
-
-<h3 id="version">Version</h3>
-
-<p>這邊使用的版本：</p>
+<p>Kafka 作為 client 與 server 兩邊的溝通平台，提供了許多 API 葛不同角色使用。Producer 產生 message 到特定 topic 上，consumer 訂閱特定 topics，kafak 把符合條件的訊息推播給 consumer。</p>
 
 <ul>
-<li>chart version:    kafka-0.16.2</li>
-<li>app version:      5.0.1</li>
-<li>kafka Image:      confluentinc/cp-kafka:5.0.1</li>
-<li>zookeeper Image:  gcr.io/google_samples/k8szk:v3</li>
-<li>kafka exporter:   danielqsj/kafka-exporter:v1.2.0</li>
+<li>Producer API: 讓 app publish 一連的訊息</li>
+<li>Consumer API: 讓 app subscribe 許多特定 topic，並處理訊息串流(stream)</li>
+<li>Stream API: 讓 app 作為串流中介處理(stream processor)</li>
+<li>Connect API: 與 producer 與 consumer 可以對外部服務連結</li>
 </ul>
 
-<h3 id="values-staging">values-staging</h3>
+<h1 id="topics-logs">Topics &amp; Logs</h1>
 
-<p>透過 helm chart，把啟動參數帶進去，這邊我們看幾個比較重要的，細節之後的文章在一起討論。</p>
+<p><img src="https://kafka.apache.org/23/images/log_anatomy.png" alt="kafka-topics" /></p>
 
-<p><a href="https://github.com/chechiachang/kafka-on-kubernetes/blob/master/values-staging.yaml" target="_blank">https://github.com/chechiachang/kafka-on-kubernetes/blob/master/values-staging.yaml</a></p>
+<p>Topic 是 kafka 為訊息串流提供的抽象，topic 是訊息傳送到 kafka 時賦予的類別(category)，作為 publish 與 consume 的判斷依據。</p>
 
-<pre><code>replicas: 3
-</code></pre>
+<h1 id="partition">Partition</h1>
 
-<p>安裝三個 kafka，topology 的東西也是敬待下篇XD</p>
+<p>訊息依據 topic 分類存放，並可以依據 replication factor 設定，在 kafka 中存放多個訊息分割(partition)。partition 可以想成是 message queue 的平行化 (parallel)，併發處理訊息可以大幅提昇訊息接收與發送的速度，並且多個副本也提高資料的可用性。</p>
 
-<pre><code>## The kafka image repository
-image: &quot;confluentinc/cp-kafka&quot;
+<p>由於訊息發送跟接收過程可能因為網路與環境而不穩定，這些相同 topic 的 partition 不一定會完全一樣。但 kafka 確保了以下幾點。</p>
 
-## The kafka image tag
+<h1 id="guarantees">Guarantees</h1>
 
-底層執行的 kafka 是 conluent kafka
+<p>良好配置的 kafka 有以下保證</p>
 
-</code></pre>
+<ul>
+<li>訊息在系統中送出跟被收到的時間不一定，但kafak中，從相同 producer 送出的訊息，送到 topic partition 會維持送出的順序</li>
+<li>Consumer 看見的訊息是與 kafka 中的存放順序一致</li>
+<li>有 replication factor 為 N 的 topic ，可以容忍(fault-tolerance) N-1 個 kafka-server 壞掉，而不影響資料。</li>
+</ul>
 
-<h2 id="configure-resource-requests-and-limits">Configure resource requests and limits</h2>
+<p>當然，這邊的前提是有良好配置。錯誤的配置可能會導致訊息不穩定，效能低落，甚至遺失。</p>
 
-<h2 id="ref-http-kubernetes-io-docs-user-guide-compute-resources">ref: <a href="http://kubernetes.io/docs/user-guide/compute-resources/" target="_blank">http://kubernetes.io/docs/user-guide/compute-resources/</a></h2>
+<h1 id="producer">Producer</h1>
 
-<p>resources: {}
-  # limits:
-  #   cpu: 200m
-  #   memory: 4096Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 1024Mi
-kafkaHeapOptions: &ldquo;-Xmx4G -Xms1G&rdquo;</p>
+<p>Producer 負責把訊息推向一個 topic，並指定訊息應該放在 topic 的哪個 partition。</p>
 
-<pre><code>
-這邊可以調整在 kubernetes 上面的 limit 跟 request
+<h1 id="consumer">Consumer</h1>
 
-* Deploy 會先去跟 node 問夠不夠，夠的話要求 node 保留這些資源給 Pod
-* Runtime 超過 limit，Pod 會被 kubernetes 幹掉，不過我們是 JVM，外部 resource 爆掉前，應該會先因 heap 滿而死。一個施主自盡的感覺。
-* CPU 蠻省的，吃比較多是 memory。但也要看你的使用情境
+<p>Consumer 會自行標記，形成 consumer group，透過 consumer group 來保障訊息傳遞的次序，容錯，以及擴展的效率。</p>
 
-</code></pre>
+<p><img src="https://kafka.apache.org/23/images/consumer-groups.png" alt="consumer group" /></p>
 
-<p>prometheus</p>
+<ul>
+<li>Consumer 透過 consumer group 共享一個 group.id。</li>
+<li>Consumer group 去所有 partitions 裡拿訊息，所有 partitions 的訊息分配到 consumer group 中的 consumer。</li>
+</ul>
 
-<pre><code>
-對我們有上 promethues，基本上就是 kafka-exporter 把 kafka metrics 倒出去 prometheus，這個也是詳見下回分解。
+<p>app 在接收訊息時，設置正確的化，在一個 consumer group 中，可以容忍 consumer 失效，仍能確保訊息一指定的次序送達。在需要大流量時，也可調整 consumer 的數量提高負載。</p>
 
-# 跑起來了
+<h1 id="用例">用例</h1>
 
-</code></pre>
+<p><a href="https://kafka.apache.org/documentation/#uses" target="_blank">kafka 的使用例子</a>非常的多，使用範圍非常廣泛。</p>
 
-<p>$ kubectl get po | grep kafka</p>
+<p>基本上是訊息傳遞的使用例子，kafka 大多能勝任。</p>
 
-<p>NAME                                                     READY   STATUS      RESTARTS   AGE
-kafka-1-0                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-1                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-2                                                <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-exporter-88786d84b-z954z                         <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-zookeeper-0                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-zookeeper-1                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-kafka-1-zookeeper-2                                      <sup>1</sup>&frasl;<sub>1</sub>     Running     0          224d
-```</p>
+<h1 id="小結">小結</h1>
+
+<p>這邊只提了 kafka 的基本概念，基本元件，以及 consumer group 機制，為我們底下要談的 configuration 與 topology 鋪路。</p>
 
     </div>
 
@@ -935,14 +875,14 @@ kafka-1-zookeeper-2                                      <sup>1</sup>&frasl;<sub
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/post/kafka-helm-configuration/" rel="next">Kafka Helm Configuration</a>
+    <a href="/post/kafka-basic-usage/" rel="next">Kafka-basic-usage</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/logstash-on-gke/" rel="prev">Logstash on GKE</a>
+    <a href="/post/kafka-helm-configuration/" rel="prev">Kafka Helm Configuration</a>
   </div>
   
 </div>
