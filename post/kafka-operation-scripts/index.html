@@ -29,10 +29,10 @@
     
   
   <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-basic-usage/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-operation-scripts/">
 
   
 
@@ -111,7 +111,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-basic-usage/">
+  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-operation-scripts/">
 
   
   
@@ -125,15 +125,15 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-basic-usage/">
-  <meta property="og:title" content="Kafka-basic-usage | Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-operation-scripts/">
+  <meta property="og:title" content="Kafka Operation Scripts | Che-Chia Chang">
   <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-24T21:59:49&#43;08:00">
+  <meta property="article:published_time" content="2019-09-25T22:50:32&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-24T22:34:17&#43;08:00">
+  <meta property="article:modified_time" content="2019-09-25T23:50:52&#43;08:00">
   
 
   
@@ -171,7 +171,7 @@
 
 
 
-  <title>Kafka-basic-usage | Che-Chia Chang</title>
+  <title>Kafka Operation Scripts | Che-Chia Chang</title>
 
 </head>
 
@@ -437,7 +437,7 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Kafka-basic-usage</h1>
+  <h1 itemprop="name">Kafka Operation Scripts</h1>
 
   
 
@@ -446,8 +446,8 @@
 
 
 
-<meta content="2019-09-24 21:59:49 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-24 22:34:17 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-25 22:50:32 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-09-25 23:50:52 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -462,7 +462,7 @@
           Last updated on
       
     
-    <time>Sep 24, 2019</time>
+    <time>Sep 25, 2019</time>
   </span>
   
 
@@ -494,7 +494,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-basic-usage/&amp;text=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-operation-scripts/&amp;text=Kafka%20Operation%20Scripts" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +507,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-basic-usage/&amp;t=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-operation-scripts/&amp;t=Kafka%20Operation%20Scripts" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +520,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Kafka-basic-usage&amp;body=https://chechiachang.github.io/post/kafka-basic-usage/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Kafka%20Operation%20Scripts&amp;body=https://chechiachang.github.io/post/kafka-operation-scripts/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +533,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-basic-usage/&amp;title=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-operation-scripts/&amp;title=Kafka%20Operation%20Scripts" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +546,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Kafka-basic-usage%20https://chechiachang.github.io/post/kafka-basic-usage/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Kafka%20Operation%20Scripts%20https://chechiachang.github.io/post/kafka-operation-scripts/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-basic-usage/&amp;title=Kafka-basic-usage" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-operation-scripts/&amp;title=Kafka%20Operation%20Scripts" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -618,7 +618,7 @@
 <li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
 <li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
 <li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
-<li>kafka utility scripts, topic operation, kafka benchmark</li>
+<li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
 <li>集群內部的 HA topology</li>
 <li>集群內部的 HA 設定，網路設定</li>
 <li>Prometheus Metrics Exporter 很重要</li>
@@ -640,245 +640,242 @@
 <h1 id="摘要">摘要</h1>
 
 <ul>
-<li>在 Kubernetes 中連線 kafka</li>
-<li>使用 golang library 連線到 Kafka</li>
-<li>透過 kafka script 操作 kafka</li>
+<li>從 Zookeeper 獲取資訊</li>
+<li>取得並處理 topic</li>
+<li>benchmark kafka</li>
 </ul>
 
-<h1 id="kubernetes-中連線-kafka">kubernetes 中連線 kafka</h1>
+<h1 id="zookeeper">zookeeper</h1>
 
-<p>先看一看 kafka pods</p>
+<p>zookeeper 是 kafka 的分散式協調系統，在 kafka 上多個節點間需要協調的內容，例如：彼此節點的ID，位置與當前狀態，或是跨節點 topic 的設定與狀態。取名叫做 zookeeper 就是在協調混亂的分散式系統，,裡面各種不同種類的服務都要協調，象個動物園管理員。<a href="https://zookeeper.apache.org/doc/r3.3.3/zookeeperAdmin.html" target="_blank">Zookeeper 的官方文件</a> 有更詳細的說明。</p>
 
-<pre><code>$ kubectl get pods --selector='app=kafka'
+<p>Kafka 的節點資訊，與當前狀態，是放在 zookeeper 上，我們可以透過以下指令取得</p>
 
-NAME        READY   STATUS    RESTARTS   AGE
-kafka-1-0   1/1     Running   1          26d
-kafka-1-1   1/1     Running   0          26d
-kafka-1-2   1/1     Running   0          26d
+<pre><code># 首先先取得 zkCli 的 cli，這個只有連進任何一台 zookeeper 內部都有
+kubectl exec -it kafka-0-zookeeper-0 --container kafka-broker bash
 
-$ kubectl get pods -l 'app=zookeeper'
+# 由於是在 Pod 內部，直接 localhost 詢問本地
+/usr/bin/zkCli.sh -server localhost:2181
 
-NAME                  READY   STATUS    RESTARTS   AGE
-kafka-1-zookeeper-0   1/1     Running   0          26d
-kafka-1-zookeeper-1   1/1     Running   0          26d
-kafka-1-zookeeper-2   1/1     Running   0          26d
+Connecting to localhost:2181
+2019-09-25 15:02:36,089 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+2019-09-25 15:02:36,096 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=kafka-0-zookeeper-0.kafka-0-zookeeper-headless.default.svc.cluster.local
+2019-09-25 15:02:36,096 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_131
+2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation
+2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/usr/bin/../build/classes:/usr/bin/../build/lib/*.jar:/usr/bin/../share/zookeeper/zookeeper-3.4.10.jar:/usr/bin/../share/zookeeper/slf4j-log4j12-1.6.1.jar:/usr/bin/../share/zookeeper/slf4j-api-1.6.1.jar:/usr/bin/../share/zookeeper/netty-3.10.5.Final.jar:/usr/bin/../share/zookeeper/log4j-1.2.16.jar:/usr/bin/../share/zookeeper/jline-0.9.94.jar:/usr/bin/../src/java/lib/*.jar:/usr/bin/../etc/zookeeper:
+2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp
+2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;
+2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux
+2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd64
+2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=4.14.127+
+2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=zookeeper
+2019-09-25 15:02:36,102 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/home/zookeeper
+2019-09-25 15:02:36,102 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/
+2019-09-25 15:02:36,105 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=localhost:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@42110406
+Welcome to ZooKeeper!
+2019-09-25 15:02:36,160 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1032] - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+JLine support is enabled
+2019-09-25 15:02:36,374 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@876] - Socket connection established to localhost/127.0.0.1:2181, initiating session
+2019-09-25 15:02:36,393 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1299] - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x16d67baf1310001, negotiated timeout = 30000
 
-$ kubectl get pods -l 'app=kafka-exporter'
+WATCHER::
 
-NAME                               READY   STATUS    RESTARTS   AGE
-kafka-1-exporter-88786d84b-z954z   1/1     Running   5          26d
+WatchedEvent state:SyncConnected type:None path:null
+[zk: localhost:2181(CONNECTED) 0]
 </code></pre>
 
-<pre><code>kubectl describe pods kafka-1-0
+<p>取得 kafka broker 資料</p>
 
-Name:           kafka-1-0
-Namespace:      default
-Priority:       0
-Node:           gke-chechiachang-pool-1-e4622744-wcq0/10.140.15.212
-Labels:         app=kafka
-                controller-revision-hash=kafka-1-69986d7477
-                release=kafka-1
-                statefulset.kubernetes.io/pod-name=kafka-1-0
-Annotations:    kubernetes.io/limit-ranger: LimitRanger plugin set: cpu request for container kafka-broker
-Status:         Running
-IP:             10.12.6.178
-Controlled By:  StatefulSet/kafka-1
-Containers:
-  kafka-broker:
-    Image:         confluentinc/cp-kafka:5.0.1
-    Port:          9092/TCP
-    Host Port:     0/TCP
-    Command:
-      sh
-      -exc
-      unset KAFKA_PORT &amp;&amp; \
-      export KAFKA_BROKER_ID=${POD_NAME##*-} &amp;&amp; \
-      export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${POD_IP}:9092 &amp;&amp; \
-      exec /etc/confluent/docker/run
+<pre><code># List root Nodes
+$ ls /
 
-    Requests:
-      cpu:      100m
-    Liveness:   exec [sh -ec /usr/bin/jps | /bin/grep -q SupportedKafka] delay=30s timeout=5s period=10s #success=1 #failure=3
-    Readiness:  tcp-socket :kafka delay=30s timeout=5s period=10s #success=1 #failure=3
-    Environment:
-      POD_IP:                                   (v1:status.podIP)
-      POD_NAME:                                kafka-1-0 (v1:metadata.name)
-      POD_NAMESPACE:                           default (v1:metadata.namespace)
-      KAFKA_HEAP_OPTS:                         -Xmx4G -Xms1G
-      KAFKA_ZOOKEEPER_CONNECT:                 kafka-1-zookeeper:2181
-      KAFKA_LOG_DIRS:                          /opt/kafka/data/logs
-      KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE:  false
-      KAFKA_DEFAULT_REPLICATION_FACTOR:        3
-      KAFKA_MESSAGE_MAX_BYTES:                 16000000
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:  1
-      KAFKA_JMX_PORT:                          5555
-    Mounts:
-      /opt/kafka/data from datadir (rw)
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-2tm8c (ro)
-Conditions:
-Volumes:
-  datadir:
-    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
-    ClaimName:  datadir-kafka-1-0
-    ReadOnly:   false
-  default-token-2tm8c:
-    Type:        Secret (a volume populated by a Secret)
-    SecretName:  default-token-2tm8c
-    Optional:    false
+[cluster, controller, controller_epoch, brokers, zookeeper, admin, isr_change_notification, consumers, log_dir_event_notification, latest_producer_id_block, config]
+
+# Brokers 的資料節點
+$ ls /brokers
+[ids, topics, seqid]
+
+# List /brokers/ids 得到三個 kafka broker
+$ ls /brokers/ids
+[0, 1, 2]
+
+# 列出所有 topic 名稱
+ls /brokers/topics
+[ticker]
 </code></pre>
 
-<p>講幾個重點：</p>
+<p>ticker 是上篇範利用到的 topic</p>
+
+<p>簡單來說，zookeeper 存放這些狀態與 topic 的 metadata</p>
 
 <ul>
-<li>這邊跑起來的是 kafka-broker，接收 producer 與 consumer 來的 request</li>
-<li>這邊用的是 statefulsets，不是完全無狀態的 kafka broker，而把 message 記在 datadir 上，降低故障重啟時可能遺失資料的風險。</li>
-<li>啟動時，把 kubernetes 指定的 pod name 塞進環境變數，然後作為當前 broker 的 ID</li>
-<li>沒有設定 Pod antiAffinity，所以有可能會啟三個 kafka 結果三個跑在同一台 node 上，這樣 node 故障就全死，沒有HA</li>
+<li>儲存核心的狀態與資料，特別是 broker 萬一掛掉，也還需要維持的資料</li>
+
+<li><p>協調工作，例如協助 broker 處理 quorum，紀錄 partition master 等</p>
+
+<pre><code># 離開 zkCli
+quit
+</code></pre></li>
 </ul>
 
-<h3 id="service-endpoints">Service &amp; Endpoints</h3>
+<h1 id="kafka">Kafka</h1>
 
-<p>看一下 service 與 endpoints
-zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與服務監測時，再來討論。</p>
+<p>這邊一樣先連線進去一台 broker，取得 kafka binary</p>
 
-<pre><code>$ kubectl get service -l 'app=kafka'
+<pre><code>kubectl exec -it kafka-0-0 --container kafka-broker bash
 
-NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-kafka-1            ClusterIP   10.15.242.178   &lt;none&gt;        9092/TCP   26d
-kafka-1-headless   ClusterIP   None            &lt;none&gt;        9092/TCP   26d
+ ls /usr/bin/ | grep kafka
+kafka-acls
+kafka-broker-api-versions
+kafka-configs
+kafka-console-consumer
+kafka-console-producer
+kafka-consumer-groups
+kafka-consumer-perf-test
+kafka-delegation-tokens
+kafka-delete-records
+kafka-dump-log
+kafka-log-dirs
+kafka-mirror-maker
+kafka-preferred-replica-election
+kafka-producer-perf-test
+kafka-reassign-partitions
+kafka-replica-verification
+kafka-run-class
+kafka-server-start
+kafka-server-stop
+kafka-streams-application-reset
+kafka-topics
+kafka-verifiable-consumer
+kafka-verifiable-producer
+</code></pre>
+
+<p>很多工具，我們這邊只會看其中幾個</p>
+
+<h3 id="topic-資訊">topic 資訊</h3>
+
+<p>Topic 的資訊，跟 zookeeper 要</p>
+
+<pre><code># List topics
+/usr/bin/kafka-topics --list --zookeeper kafka-0-zookeeper
+
+ticker
+</code></pre>
+
+<h3 id="操作-message">操作 message</h3>
+
+<p>從 topic 取得 message</p>
+
+<pre><code># This will create a new console-consumer and start consuming message to stdout
+/usr/bin/kafka-console-consumer \
+--bootstrap-server localhost:9092 \
+--topic engine_topic_soundwave_USD \
+--timeout 0 \
+--from-beginning
+</code></pre>
+
+<p>如果 ticker 那個 example pod 還在執行，這邊就會收到 ticker 的每秒 message</p>
+
+<p>如果沒有，也可以開啟另一個 broker 的連線</p>
+
+<pre><code>kubectl exec -it kafka-0-1 --container kafka-broker bash
+
+# 使用 producer 的 console 連入，topic 把 message 塞進去
+/usr/bin/kafka-console-producer \
+--broker-list localhost:9092\
+ --topic ticker
+
+tick [enter]
+tick [enter]
+</code></pre>
+
+<p>kafka-console-consumer 那個 terminal 就會收到 message</p>
+
+<pre><code>tick
+tick
+</code></pre>
+
+<p>當然也可以使用 consumer group</p>
+
+<pre><code># Use consumer to check ticker topics
+/usr/bin/kafka-console-consumer \
+--bootstrap-server localhost:9092 \
+--topic ticker \
+--group test
+</code></pre>
+
+<p>有做過上面的操作產生 consumer group，就可以透過 consumer API，取得 consumer group 狀態</p>
+
+<pre><code># Check consumer group
+/usr/bin/kafka-consumer-groups \
+--bootstrap-server localhost:9092 \
+--group ticker \
+--describe
+
+Consumer group 'test' has no active members.
+
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+ticker          0          23              23              0               -               -               -
+</code></pre>
+
+<h1 id="topic-設定操作">Topic 設定操作</h1>
+
+<p><a href="https://kafka.apache.org/documentation/#topicconfigs" target="_blank">Topic 設定文件</a> 在此</p>
+
+<p>這邊透過 kafka-configs 從 zookeeper 取得 topic 設定，這邊的 max.message.bytes，是這個 topic 每個 message 的最大上限。</p>
+
+<pre><code>/usr/bin/kafka-configs --zookeeper kafka-0-zookeeper:2181 --describe max.message.bytes --entity-type topics
+
+Configs for topic '__consumer_offsets' are segment.bytes=104857600,cleanup.policy=compact,compression.type=producer
+Configs for topic 'ticker' are
+</code></pre>
+
+<p><code>__consumer__offsets</code> 是系統的 topic ，紀錄目前 consumer 讀取的位置。</p>
+
+<p>ticker 沒有設定，就是 producer 當初產生 topic 時沒有指定，使用 default 值</p>
+
+<p>由於我們公司的使用情境常常會超過，所以可以檢查 producer app 那端送出的 message 大小，在比較這邊的設定。當然現在 ticker 的範例，只有一個 0-60 的數值，並不會超過。這個可以在 helm install 的時候，使用 value.yaml 傳入時更改。</p>
+
+<p>不喜歡這個值，可以更改，這邊增加到 16MB</p>
+
+<pre><code>TOPIC=ticker
+
+/usr/bin/kafka-configs \
+  --zookeeper kafka-3-zookeeper:2181 \
+  --entity-type topics \
+  --alter \
+  --entity-name ${TOPIC} \
+  --add-config max.message.bytes=16000000
 
 </code></pre>
 
-<p>兩個 services</p>
+<h1 id="benchmark">Benchmark</h1>
 
-<ul>
-<li>一個是 cluster-ip service，有 single cluster IP 與 load-balance，DNS 會過 kube-proxy。</li>
-<li>一個是 headless service，DNS 沒有過 kube-proxy，而是由 endpoint controller 直接 address record，指向把符合 service selector 的 pod。適合做 service discovery，不會依賴於 kubernetes 的實現。</li>
-</ul>
+<p>使用內建工具跑 benchmark</p>
 
-<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services" target="_blank">詳細說明在官方文件</a></p>
+<p>Producer</p>
 
-<p>簡單來說，kafka broker 會做 auto service discovery，我們可以使用 headless service。</p>
+<pre><code>/usr/bin/kafka-producer-perf-test \
+  --num-records 100 \
+  --record-size 100 \
+  --topic performance-test \
+  --throughput 100 \
+  --producer-props bootstrap.servers=kafka:9092 max.in.flight.requests.per.connection=5 batch.size=100 compression.type=none
 
-<p>客戶端(consumer &amp; producer) 連入時，則使用 cluster-ip service，做 load balancing。</p>
-
-<pre><code>$ kubectl get endpoints -l 'app=kafka'
-
-NAME                            ENDPOINTS                                                          AGE
-kafka-1                         10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
-kafka-1-headless                10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
+100 records sent, 99.108028 records/sec (0.01 MB/sec), 26.09 ms avg latency, 334.00 ms max latency, 5 ms 50th, 70 ms 95th, 334 ms 99th, 334 ms 99.9th.
 </code></pre>
 
-<h1 id="golang-example">Golang Example</h1>
+<p>Consumer</p>
 
-<p>附上簡單的 Golang 客戶端，<a href="https://github.com/chechiachang/kafka-on-kubernetes" target="_blank">完整 Github Repository 在這邊</a></p>
-
-<pre><code>package main
-
-import (
-	&quot;context&quot;
-	&quot;fmt&quot;
-	&quot;strconv&quot;
-	&quot;time&quot;
-
-	&quot;github.com/segmentio/kafka-go&quot; // 使用的套件
-)
-
-func main() {
-	topic := &quot;ticker&quot; // 指定 message 要使用的 topic
-	partition := 0 // 指定 partition，由於底下連線指定連線到 partition 的 leader，所以需要指定 partition
-	kafkaURL := &quot;kafka-0:9092&quot; // 指定 kafkaURL，也可以透過 os.GetEnv() 從環境變數裡拿到。
-
-  // producer 對指定 topic, partition 的 leader 產生連線
-	producerConn, _ := kafka.DialLeader(context.Background(), &quot;tcp&quot;, kafkaURL, topic, partition)
-  // 程式結束最後把 connection 關掉。不關會造成 broker 累積大量 connection，需要等待 broker 端 timeout 才會釋放。
-	defer producerConn.Close()
-
-	//producerConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-  // 使用 go routine 跑一個 subprocess for loop，一直產生 message 到 kafka topic，這邊的範例是每秒推一個秒數。
-	go func() {
-		for {
-			producerConn.WriteMessages(
-				kafka.Message{
-					Value: []byte(strconv.Itoa(time.Now().Second())),
-				},
-			)
-			time.Sleep(1 * time.Second)
-		}
-	}()
-
-	// make a new reader that consumes from topic-A, partition 0
-	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{kafkaURL},
-		Topic:     topic,
-		Partition: 0,
-		MinBytes:  10e2, // 1KB
-		MaxBytes:  10e3, // 10KB
-	})
-	defer r.Close()
-	//r.SetOffset(42)
-
-  // 印出 reader 收到的 message
-	for {
-		m, err := r.ReadMessage(context.Background())
-		if err != nil {
-			break
-		}
-		fmt.Printf(&quot;%v message at offset %d: %s = %s\n&quot;, time.Now(), m.Offset, string(m.Key), string(m.Value))
-	}
-
-}
+<pre><code>/usr/bin/kafka-consumer-perf-test \
+  --messages 100 \
+  --broker-list=kafka:9092 \
+  --topic performance-test \
+  --group performance-test \
+  --num-fetch-threads 1
 </code></pre>
-
-<p>這邊可以使用 Dockerfile 包成一個 container image，然後丟上 kubernetes</p>
-
-<p>我稍晚補一下 docker image 跟 deployment 方便大家操作好了。</p>
-
-<p>或是攋人測試，直接 kubectl run 一個 golang base image 讓它 sleep，然後在連進去</p>
-
-<pre><code>kubectl run DEPLOYMENT_NAME --image=golang:1.13.0-alpine3.10 sleep 3600
-
-kubectl exec -it POD_NAME sh
-</code></pre>
-
-<pre><code># 裡面沒有 Git 跟 vim 裝一下
-apk add git vim
-
-go get github.com/chechiachang/kafka-on-kubernetes
-
-cd src/github.com/chechiachang/kafka-on-kubernetes/
-vim main.go
-
-go build .
-./kafka-on-kubernetes
-
-2019-09-24 14:20:46.872554693 +0000 UTC m=+9.154112787 message at offset 1:  = 46
-2019-09-24 14:20:47.872563087 +0000 UTC m=+9.154121166 message at offset 2:  = 47
-2019-09-24 14:20:48.872568848 +0000 UTC m=+9.154126926 message at offset 3:  = 48
-2019-09-24 14:20:49.872574499 +0000 UTC m=+9.154132576 message at offset 4:  = 49
-2019-09-24 14:20:50.872579957 +0000 UTC m=+9.154138032 message at offset 5:  = 50
-2019-09-24 14:20:51.872588823 +0000 UTC m=+9.154146892 message at offset 6:  = 51
-2019-09-24 14:20:52.872594672 +0000 UTC m=+9.154152748 message at offset 7:  = 52
-2019-09-24 14:20:53.872599986 +0000 UTC m=+9.154158060 message at offset 8:  = 53
-</code></pre>
-
-<p>這樣就連上了，完成一個最簡單的使用範例。</p>
-
-<p>這個例子太過簡單，上一篇講的 consumer group, partitions, offset 什麼設定全都沒用上。實務上這些都需要好好思考，並且依據需求做調整設定。</p>
-
-<h3 id="clean-up">Clean up</h3>
-
-<p>把測試用的 deployment 幹掉</p>
-
-<pre><code>kubectl delete deployment DEPLOYMENT_NAME
-</code></pre>
-
-<h1 id="小結">小結</h1>
-
-<ul>
-<li>簡述 kafka 在 kubernetes 上運行的狀況，連線方法</li>
-<li>Demo 一個小程式</li>
-</ul>
 
     </div>
 
@@ -1023,15 +1020,8 @@ go build .
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/post/kafka-operation-scripts/" rel="next">Kafka Operation Scripts</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/kafka-introduction/" rel="prev">Kafka-introduction</a>
+    <a href="/post/kafka-basic-usage/" rel="prev">Kafka-basic-usage</a>
   </div>
   
 </div>
