@@ -12,6 +12,933 @@
     
     
     <item>
+      <title>Redis Ha Sentinel</title>
+      <link>https://chechiachang.github.io/post/redis-ha-sentinel/</link>
+      <pubDate>Sun, 29 Sep 2019 17:14:38 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/redis-ha-sentinel/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在 GKE 上部署 Redis HA
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34; target=&#34;_blank&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-sentinel/&#34; target=&#34;_blank&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
+&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
+&lt;li&gt;在 GKE 上維運 redis&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;redis-sentinel&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis-cli -h redis-redis-ha -p 26479
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上篇我們的 redis-ha 安裝完變這樣&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get po | grep redis
+
+NAME                                                     READY   STATUS      RESTARTS   AGE
+redis-1-redis-ha-server-0                                3/3     Running     0          3d4h
+redis-1-redis-ha-server-1                                3/3     Running     0          3d5h
+redis-1-redis-ha-server-2                                3/3     Running     0          3d4h
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;有三個 Pod，裡面都是一個 redis, sentinel, 跟 exporter，這篇文章會專注講 sentinel 的功能與機制&lt;/p&gt;
+
+&lt;h1 id=&#34;redis-sentinel&#34;&gt;Redis Sentinel&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://redis.io/topics/sentinel&#34; target=&#34;_blank&#34;&gt;redis-sentinel&lt;/a&gt; 為 Redis 提供高可用服務，實務上可以透過 sentinel 在錯誤發生時，自動進行 failover。除此之外 sentinel 也提供監測，通知，與 redis 的設定。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Monitoring: 持續檢測 master 與 slave instances 的狀態&lt;/li&gt;
+&lt;li&gt;Notification: 有事件發生可以發出通知&lt;/li&gt;
+&lt;li&gt;Automatic failover: 如果 master 失效自動啟動 failover 程序，將一個 slave 指排為 master，並設定其他 slave 使用新的 master&lt;/li&gt;
+&lt;li&gt;Configuration provider: 為客戶端提供 service discovery，客戶可以通過 sentinel 取得 master 的連線資料。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;distributed&#34;&gt;Distributed&lt;/h1&gt;
+
+&lt;p&gt;Sentinel 本身是一個分散式系統，如我們的範例所示，三個 Pod 立面個含有一個 sentinel，組成 3 個 instace 的 sentinel cluster。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;錯誤檢測是由多個 sentinel 判定，要有多個 sentinel 都接收 master 已失效的訊息，才會判定成失效。這樣可以降低 false positive 的機率。&lt;/li&gt;
+&lt;li&gt;分散讓 sentinel 本身也具備高可用性，可以承受一定程度的錯誤。用來 fail over 的系統，不能因為自身的單點錯誤(single point failure) 而倒是整個 redis 失效。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;fundamental&#34;&gt;Fundamental&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一個耐用的 sentinel 需要至少三個 instance&lt;/li&gt;
+&lt;li&gt;最好把 instance 分散在多個獨立的隔離區域，意思是說，三個不會放在同一台機器上，或是放在同一個區域內，因為一個區域網路故障就全死。&lt;/li&gt;
+&lt;li&gt;app 使用 sentinel 的話，客戶端要支援&lt;/li&gt;
+&lt;li&gt;有時常測試的 HA 環境，才是有效的 HA&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;configuration&#34;&gt;Configuration&lt;/h1&gt;
+
+&lt;h2 id=&#34;sentinel-specific-configuration-options&#34;&gt;Sentinel specific configuration options&lt;/h2&gt;
+
+&lt;p&gt;在上篇我們跳過 sentinel 的設定，這邊說明一下&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sentinel:
+  port: 26379
+  quorum: 2
+  config:
+    ## Additional sentinel conf options can be added below. Only options that
+    ## are expressed in the format simialar to &#39;sentinel xxx mymaster xxx&#39; will
+    ## be properly templated.
+    ## For available options see http://download.redis.io/redis-stable/sentinel.conf
+    down-after-milliseconds: 10000
+    ## Failover timeout value in milliseconds
+    failover-timeout: 180000
+    parallel-syncs: 5
+
+  ## Custom sentinel.conf files used to override default settings. If this file is
+  ## specified then the sentinel.config above will be ignored.
+  # customConfig: |-
+      # Define configuration here
+
+  resources: {}
+  #  requests:
+  #    memory: 200Mi
+  #    cpu: 100m
+  #  limits:
+  #    memory: 200Mi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;quorum&#34;&gt;Quorum&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;quorum 是每次確定 master 失效時，需要達成共識的 sentinel 數量。&lt;/li&gt;
+&lt;li&gt;Quorum 使用在錯誤檢測，確定錯誤真的發生後，sentinel 會以多數決(majority) 的方式選出 sentinel leader，讓 leader 處理 failover。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以我們的例子為例，總共三個，確認 master 死掉只要兩個 sentinel 達成共識即可啟動 failover 程序。可以直接測試一下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl logs -f redis-1-redis-ha-server-0
+
+kubectl delete po redis-1-redis-ha-server-1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;log 一個 Pod ，然後直接把另一個 Pod 幹掉 這樣會有 &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;3&lt;/sub&gt; 的機率砍到 master，砍中的話可以看到 redis failover ，選出新的 master 的過程。&lt;/p&gt;
+
+&lt;p&gt;這邊要注意，由於我們的 sentinel 與 redis 是放在同樣一個 Pod，幹掉的同時也殺了一個 sentinel，只剩 2 個，剛好達成共識。如果 quorum 是三，就要等第三個 sentinel 回來才能取得 quorum。&lt;/p&gt;
+
+&lt;p&gt;sentinel 與 redis 的配置位置，之後的 topology 會討論。&lt;/p&gt;
+
+&lt;h3 id=&#34;configurations&#34;&gt;Configurations&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;down-after-milliseconds: 超過多少時間沒回應 ping 或正確回應，才覺得 master 壞了&lt;/li&gt;
+&lt;li&gt;parallel-syncs: failover 時，要重新與新 master sync 的 slave 數量。數量越多 sync 時間就越久，數量少就有較多 slave 沒 sync 資料，可能會讓 client read 到舊的資料
+
+&lt;ul&gt;
+&lt;li&gt;雖然 sync 是 non-blocking ，但在 sync 大筆資料時，slave 可能會沒有回應。設定為 1 的話，最多只會有一個 slave 下線 sync。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;這些參數也可以透過 redis-cli 直接連入更改，但我們是在 kubernetes 上跑，臨時的更改不易保存，所以盡可能把這些configurations 放在 configmap 裡面。&lt;/p&gt;
+
+&lt;h1 id=&#34;sentinel-command&#34;&gt;Sentinel command&lt;/h1&gt;
+
+&lt;p&gt;6379 port 連入 redis，26379 連入 redis sentinel。都是使用 redis-cli，兩者兼容的 protocol。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 使用 kubectl 連入，多個 container 要明確指出連入的 container
+kubectl exec -it redis-1-redis-ha-server-0 --container redis sh
+
+redis-cli -h redis-redis-ha -p 26479
+
+# 近來先 ping 一下
+$ ping
+PONG
+
+# 列出所有 master 的資訊，以及設定資訊
+sentinel master
+redis-2-redis-ha:26379&amp;gt; sentinel masters
+1)  1) &amp;quot;name&amp;quot;
+    2) &amp;quot;mymaster&amp;quot;
+    3) &amp;quot;ip&amp;quot;
+    4) &amp;quot;10.15.242.245&amp;quot;
+    5) &amp;quot;port&amp;quot;
+    6) &amp;quot;6379&amp;quot;
+    7) &amp;quot;runid&amp;quot;
+    8) &amp;quot;63a97460b7c3745577931dad406df9609c4e2464&amp;quot;
+    9) &amp;quot;flags&amp;quot;
+   10) &amp;quot;master&amp;quot;
+   11) &amp;quot;link-pending-commands&amp;quot;
+   12) &amp;quot;0&amp;quot;
+   13) &amp;quot;link-refcount&amp;quot;
+   14) &amp;quot;1&amp;quot;
+   15) &amp;quot;last-ping-sent&amp;quot;
+   16) &amp;quot;0&amp;quot;
+   17) &amp;quot;last-ok-ping-reply&amp;quot;
+   18) &amp;quot;479&amp;quot;
+   19) &amp;quot;last-ping-reply&amp;quot;
+   20) &amp;quot;479&amp;quot;
+   21) &amp;quot;down-after-milliseconds&amp;quot;
+   22) &amp;quot;5000&amp;quot;
+   23) &amp;quot;info-refresh&amp;quot;
+   24) &amp;quot;5756&amp;quot;
+   25) &amp;quot;role-reported&amp;quot;
+   26) &amp;quot;master&amp;quot;
+   27) &amp;quot;role-reported-time&amp;quot;
+   28) &amp;quot;348144787&amp;quot;
+   29) &amp;quot;config-epoch&amp;quot;
+   30) &amp;quot;13&amp;quot;
+   31) &amp;quot;num-slaves&amp;quot;
+   32) &amp;quot;2&amp;quot;
+   33) &amp;quot;num-other-sentinels&amp;quot;
+   34) &amp;quot;2&amp;quot;
+   35) &amp;quot;quorum&amp;quot;
+   36) &amp;quot;2&amp;quot;
+   37) &amp;quot;failover-timeout&amp;quot;
+   38) &amp;quot;180000&amp;quot;
+   39) &amp;quot;parallel-syncs&amp;quot;
+   40) &amp;quot;5&amp;quot;
+
+# 取得集群中的 master 訊息，目前有一個 master
+$ sentinel master mymaster
+
+# 取得集群中的 slaves 訊息，目前有兩個 slave
+$ sentinel slaves mymaster
+
+# 取得集群中的 master 訊息
+$ sentinel sentinels mymaster
+
+# 檢查 sentinel 的 quorum
+$ sentinel ckquorum mymaster
+
+OK 3 usable Sentinels. Quorum and failover authorization can be reached
+
+# 強迫觸發一次 failover
+sentinel failover mymaster
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;sentinel-connection&#34;&gt;Sentinel Connection&lt;/h1&gt;
+
+&lt;p&gt;有支援的客戶端設定，以&lt;a href=&#34;https://github.com/FZambia/sentinel/blob/master/sentinel.go&#34; target=&#34;_blank&#34;&gt;Golang FZambia/sentinel&lt;/a&gt; 為例，透過 sentinel 取得 redis-pool。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 使用獨立的 pod service 連入 sentinel，協助彼此識別
+sntnl := &amp;amp;sentinel.Sentinel{
+	Addrs:      []string{&amp;quot;redis-2-redis-ha-announce-0:26379&amp;quot;, &amp;quot;redis-2-redis-ha-announce-0:26379&amp;quot;, &amp;quot;redis-2-redis-ha-announce-0:26379&amp;quot;},
+	MasterName: &amp;quot;mymaster&amp;quot;,
+	Dial: func(addr string) (redis.Conn, error) {
+		timeout := 500 * time.Millisecond
+		c, err := redis.DialTimeout(&amp;quot;tcp&amp;quot;, addr, timeout, timeout, timeout)
+		if err != nil {
+			return nil, err
+		}
+		return c, nil
+	},
+}
+
+# 產生 connection pool
+return &amp;amp;redis.Pool{
+	MaxIdle:     3,
+	MaxActive:   64,
+	Wait:        true,
+	IdleTimeout: 240 * time.Second,
+	Dial: func() (redis.Conn, error) {
+
+    # 透過 sentinel 取得 master address，如果 master 死了，再執行可以拿到新的 master
+		masterAddr, err := sntnl.MasterAddr()
+		if err != nil {
+			return nil, err
+		}
+		c, err := redis.Dial(&amp;quot;tcp&amp;quot;, masterAddr)
+		if err != nil {
+			return nil, err
+		}
+		return c, nil
+	},
+	TestOnBorrow: func(c redis.Conn, t time.Time) error {
+		if !sentinel.TestRole(c, &amp;quot;master&amp;quot;) {
+			return errors.New(&amp;quot;Role check failed&amp;quot;)
+		} else {
+			return nil
+		}
+	},
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這邊要注意，客戶端 (golang) 處理 connection 的 exception，要記得重新執行 sntnl.MasterAddr() 來取得 failover 後新指派的 master。&lt;/p&gt;
+
+&lt;h1 id=&#34;client-測試&#34;&gt;Client 測試&lt;/h1&gt;
+
+&lt;p&gt;寫一個 golang redis 的 client 跑起來。這個部分我們在 &lt;a href=&#34;https://chechiachang.github.io/post/kafka-basic-usage/&#34; target=&#34;_blank&#34;&gt;kafka的章節&lt;/a&gt;做過類似的事情，可以簡單湊一個玩玩。&lt;/p&gt;
+
+&lt;h1 id=&#34;延伸問題&#34;&gt;延伸問題&lt;/h1&gt;
+
+&lt;p&gt;使用上面的 golang 範例，確實是能透過 sentinel 取得 master，再向 master 取得連線。但這邊有兩個問題&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;客戶端需要支援 sentinel&lt;/li&gt;
+&lt;li&gt;客戶端要感知 sentinel 的位址連線，才能知道所有 sentinel 的位置，設定又產生耦合
+
+&lt;ul&gt;
+&lt;li&gt;不能彈性的調度 sentinel，如果需要增加或是減少 sentinel，客戶端需要重新設定&lt;/li&gt;
+&lt;li&gt;雖然 sentinel 有 HA，可是客戶端對 sentinel 的設定沒有 HA，萬一已知的所有 sentinel 掛了就全掛&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;有沒有更優雅的方式使用 sentinel，我們下篇會討論使用 HAProxy 來完成&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Redis Ha Deployment</title>
+      <link>https://chechiachang.github.io/post/redis-ha-deployment/</link>
+      <pubDate>Sat, 28 Sep 2019 15:14:23 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/redis-ha-deployment/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在 GKE 上部署 Redis HA
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34; target=&#34;_blank&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Redis HA with sentinel&lt;/li&gt;
+&lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
+&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
+&lt;li&gt;在 GKE 上維運 redis&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;今天的文會比較短，因為我早上在綠島已經水肺潛水潛了三趟，有點累哈哈&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;redis-introduction&#34;&gt;Redis introduction&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://redis.io/&#34; target=&#34;_blank&#34;&gt;Redis&lt;/a&gt; 是常用的 in-memory 的資料儲存庫，可作為資料庫，快取，message broker 使用，都非常好用。Redis 官方支援 high availability，使用的是 &lt;a href=&#34;https://redis.io/topics/sentinel&#34; target=&#34;_blank&#34;&gt;redis-sentinel&lt;/a&gt;
+，今天我們就來部署一個有完整 sentinel 的 redis-ha。&lt;/p&gt;
+
+&lt;p&gt;Redis 另外提供了一個 solution &lt;a href=&#34;https://redis.io/topics/cluster-tutorial&#34; target=&#34;_blank&#34;&gt;Redis cluster (multiple writer solution)&lt;/a&gt;，作為增加資料輸出帶寬，與增加資料耐用度的分散式解決方案，與 redis sentinel  所處理的 ha 問題是不相同的。有機會我們也來談。&lt;/p&gt;
+
+&lt;h1 id=&#34;deploy&#34;&gt;Deploy&lt;/h1&gt;
+
+&lt;p&gt;我把我的寶藏都在這了&lt;a href=&#34;https://github.com/chechiachang/go-redis-ha&#34; target=&#34;_blank&#34;&gt;https://github.com/chechiachang/go-redis-ha&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;下載下來的 .sh ，跑之前養成習慣貓一下&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cat install.sh
+
+#!/bin/bash
+HELM_NAME=redis-1
+
+# Stable: chart version: redis-ha-3.6.1	app version: 5.0.5
+helm upgrade --install ${HELM_NAME} stable/redis-ha --version 3.6.1 -f values-staging.yaml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;helm&#34;&gt;Helm&lt;/h3&gt;
+
+&lt;p&gt;我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 kafka。所以我們先用。&lt;/p&gt;
+
+&lt;p&gt;沒用過 helm 的大德可以參考 &lt;a href=&#34;https://helm.sh/docs/using_helm/#quickstart&#34; target=&#34;_blank&#34;&gt;Helm Quickstart&lt;/a&gt;，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好&lt;/p&gt;
+
+&lt;h3 id=&#34;redis-ha&#34;&gt;Redis-ha&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/redis-ha&#34; target=&#34;_blank&#34;&gt;helm chart github&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;install&#34;&gt;Install&lt;/h1&gt;
+
+&lt;p&gt;這邊是用 upgrade &amp;ndash;install，已安裝就 upgrade，沒安裝就 install，之後可以用這個指令升版&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;values-staging&#34;&gt;values-staging&lt;/h3&gt;
+
+&lt;p&gt;完整的 values.yaml 在 &lt;a href=&#34;https://github.com/helm/charts/blob/master/stable/redis-ha/values.yaml&#34; target=&#34;_blank&#34;&gt;helm chart github&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;image:
+  repository: redis
+  tag: 5.0.5-alpine
+  pullPolicy: IfNotPresent
+
+## replicas number for each component
+replicas: 3
+
+servers:
+  serviceType: ClusterIP  # [ClusterIP|LoadBalancer]
+  annotations: {}
+
+auth: true
+
+## Redis password
+## Defaults to a random 10-character alphanumeric string if not set and auth is true
+## ref: https://github.com/kubernetes/charts/blob/master/stable/redis-ha/templates/redis-auth-secret.yaml
+##
+#redisPassword:
+
+## Use existing secret containing key `authKey` (ignores redisPassword)
+existingSecret: redis-credentials
+
+## Defines the key holding the redis password in existing secret.
+authKey: auth
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這邊有準備 secret/redis-credentials 裡面的 key[auth] 存放 redis 密碼，要連入的 pod 需要掛載 secret 並把 auth 匯入。&lt;/p&gt;
+
+&lt;h3 id=&#34;version&#34;&gt;Version&lt;/h3&gt;
+
+&lt;p&gt;這邊使用的版本：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;chart version:    redis-ha-3.6.1&lt;/li&gt;
+&lt;li&gt;app version:      5.0.5&lt;/li&gt;
+&lt;li&gt;Redis Image:      redis:5.0.5-alpine&lt;/li&gt;
+&lt;li&gt;Redis exporter:   oliver006/redis_exporter:v0.31.0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;安裝完變這樣&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get po | grep redis
+
+NAME                                                     READY   STATUS      RESTARTS   AGE
+redis-1-redis-ha-server-0                                3/3     Running     0          3d4h
+redis-1-redis-ha-server-1                                3/3     Running     0          3d5h
+redis-1-redis-ha-server-2                                3/3     Running     0          3d4h
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;describe pod 可以看到裡面有三個 container&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;redis: 主要的 redis&lt;/li&gt;
+&lt;li&gt;sentinel: 維護 redis 可用性的服務，會監測 redis 狀態，並把連線指派到新的 master&lt;/li&gt;
+&lt;li&gt;redis-exporter: 把 redis 的運行資料(metrics) 送出到 promethues&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;networking&#34;&gt;Networking&lt;/h1&gt;
+
+&lt;p&gt;Service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                       AGE    SELECTOR
+redis-redis-ha              ClusterIP   None           &amp;lt;none&amp;gt;        6379/TCP,26379/TCP,9121/TCP   46m    app=redis-ha,release=redis
+redis-redis-ha-announce-0   ClusterIP   10.3.243.81    &amp;lt;none&amp;gt;        6379/TCP,26379/TCP            46m    app=redis-ha,release=redis,statefulset.kubernetes.io/pod-name=redis-redis-ha-server-0
+redis-redis-ha-announce-1   ClusterIP   10.3.250.151   &amp;lt;none&amp;gt;        6379/TCP,26379/TCP            46m    app=redis-ha,release=redis,statefulset.kubernetes.io/pod-name=redis-redis-ha-server-1
+redis-redis-ha-announce-2   ClusterIP   10.3.242.59    &amp;lt;none&amp;gt;        6379/TCP,26379/TCP            46m    app=redis-ha,release=redis,statefulset.kubernetes.io/pod-name=redis-redis-ha-server-2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;nslookup redis-redis-ha
+
+Name:      redis-redis-ha
+Address 1: 10.0.0.42 redis-redis-ha-server-1.redis-redis-ha.default.svc.cluster.local
+Address 2: 10.0.1.13 redis-redis-ha-server-2.redis-redis-ha.default.svc.cluster.local
+Address 3: 10.0.2.8 redis-redis-ha-server-0.redis-redis-ha.default.svc.cluster.local
+
+Name:      redis-redis-ha-server-1.redis-redis-ha.default.svc.cluster.local
+Address 1: 10.0.0.43 redis-redis-ha-server-1.redis-redis-ha.default.svc.cluster.local
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;連線&#34;&gt;連線&lt;/h1&gt;
+
+&lt;p&gt;所有連線透過 redis-redis-ha service 連入&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis-cli -h redis-redis-ha -p 6479 -a &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或是直接指定 redis instance 連入。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis-cli -h redis-redis-ha-announce-0 -p 6479 -a &amp;lt;password&amp;gt;
+redis-cli -h redis-redis-ha-announce-1 -p 6479 -a &amp;lt;password&amp;gt;
+redis-cli -h redis-redis-ha-announce-2 -p 6479 -a &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但上面兩者會有問題，redis 只有 master 是 writable，連入 slave 會變成 readonly，如果沒有任何 probe 機智，那就是每次連線時有 &lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;3&lt;/sub&gt; 機率會連到 readonly 的 redis slave 。所以連線前要先找到正確的 master&lt;/p&gt;
+
+&lt;h1 id=&#34;sentinel&#34;&gt;Sentinel&lt;/h1&gt;
+
+&lt;p&gt;Sentinel 是 redis 官方提供的 HA solution，主要負責監控 redis 的狀態，並控制 redis master 的 failover 機制，一但超過 threshold，sentinel 就會把 master failover 到其他 slave 上。並把 master 連線指向新 master。&lt;/p&gt;
+
+&lt;p&gt;redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis-cli -h redis-redis-ha -p 26479
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;app-端支援-sentinel&#34;&gt;App 端支援 sentinel&lt;/h1&gt;
+
+&lt;p&gt;需要有支援 sentinel 的 redis client library，例如: python redis-py 有支援 sentinel 的設定。&lt;/p&gt;
+
+&lt;p&gt;這邊就會比較麻煩，因為不是所有的語言對 redis-sentinel 的支援性都夠好，或是沒辦法設定到妮旺使用的情境上。&lt;/p&gt;
+
+&lt;p&gt;如果你找得到支援性良好的套件，恭喜你。不然就像我們公司，與我們的需求有衝突，只好自己 fork library。&lt;/p&gt;
+
+&lt;p&gt;所以說直接使用有支援 redis-sentinel 可能會遇到一些問題。那也沒有更好的解決方法？我們下次說明使用 HAproxy 的高可用方案。&lt;/p&gt;
+
+&lt;h1 id=&#34;benchmark&#34;&gt;Benchmark&lt;/h1&gt;
+
+&lt;p&gt;部署完後，可以跑一下 benchmark，看看在 kubernetes 上運行的效能有沒有符合需求。&lt;/p&gt;
+
+&lt;p&gt;Run a redis pod with sleep command
+NOTE: CPU usage (rapidly) increasing during benchmark
+DON&amp;rsquo;T DO THIS on PRODUCTION&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl run test-redis --image redis:5.0.5-alpine --command sleep 36000
+kubectl exec -it test-redis-xxxxxxxxx-xxxxx sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Benchmark&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis-benchmark --help
+redis-benchmark \
+  -h haproxy-service.local \
+  -p 6379 \
+  -c 100 \
+  -d 30 \
+  -n 1000000
+
+====== MSET (10 keys) ======
+100000 requests completed in 2.32 seconds
+50 parallel clients
+3 bytes payload
+keep alive: 1
+
+85.37% &amp;lt;= 1 milliseconds
+98.06% &amp;lt;= 2 milliseconds
+99.18% &amp;lt;= 3 milliseconds
+99.62% &amp;lt;= 4 milliseconds
+99.93% &amp;lt;= 5 milliseconds
+100.00% &amp;lt;= 5 milliseconds
+43066.32 requests per second
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kafka HA Continued</title>
+      <link>https://chechiachang.github.io/post/kafka-ha-continue/</link>
+      <pubDate>Thu, 26 Sep 2019 22:50:32 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/kafka-ha-continue/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ELK Stack
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Kafka HA on Kubernetes
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kafka&amp;rsquo;s quorum set&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;kafka-的-quorum-set&#34;&gt;Kafka 的 quorum set&lt;/h1&gt;
+
+&lt;p&gt;這篇跟上篇其實再講 quorum，應該連在一起，但礙於篇幅（以及我個人的時間ＱＱ）拆成了兩篇。各位有需要可以回顧一下。&lt;/p&gt;
+
+&lt;h3 id=&#34;replicated-log-commit-decision&#34;&gt;Replicated log commit decision&lt;/h3&gt;
+
+&lt;p&gt;上篇提到了兩個維持 replicated log 的 model&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;有更新進來，leader 等待所有 follower 都 ack，才 commit。&lt;/li&gt;
+&lt;li&gt;有更新進來，leader 取得所有 node (2n+1) 中的多數 node 回應(n+1)，就 commit。而 leader election 時，必須比對 node 上的 log，決定誰是 electable leader(有最完整 log 的 follower)，這樣稱為共識(Quorum)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;前者的好處是，所有 node 都有完整的 log 後，leader 才會 commit，回覆給客戶 commit  的資訊，所以每個 follower 都是 leader electable 人人都可以當 leader，leader 一故障就選擇新的 leader 即可。壞處就是 leader 在等待所有 follow ack 的時間會非常久，而且時間複雜度可能會隨 cluster size scale，或是變成要等最慢的 node 回應(worst case)。這樣在 node 數量多的時候非常不經濟。&lt;/p&gt;
+
+&lt;p&gt;後者的好處是，n+1 node ack 後就 commit，leader commit 的速度是由前段班的回應速度決定。leader 出現故障，仍能維持多數 node 的資料正確。&lt;/p&gt;
+
+&lt;h3 id=&#34;leader-election-decision&#34;&gt;Leader election decision&lt;/h3&gt;
+
+&lt;p&gt;Leader Election 的問題也是類似，如果選擇 leader 時，所有的 follower 都比對過 log，這樣花的時間會很久。要知道，這是個分散式的架構，沒有中心化的 controller，也就是 follower 彼此需要交互比對。而且時間隨 follower 數量 scale。 造成topic partition 沒有 leader 的時間(downtime)太長。&lt;/p&gt;
+
+&lt;p&gt;如果使用 majority，也就是當 leader 死掉，產生新的 leader election 時，只詢問 n+1 個 follower ，然後從選出 log 最完整的人當 leader， 這樣過程中每個 follower 彼此比對，確認，然後才選出 leader，確認 leader 的結果，所花的時間會大幅縮短。&lt;/p&gt;
+
+&lt;p&gt;當然，這麼做產生的 tradeoff，就是萬一取得多數決的 n+1 個 follower 裡面，沒有最完整的 log ，那從裡頭選出來的 leader 自然也沒有完整 log，選出來的 leader 就會遺失資料。&lt;/p&gt;
+
+&lt;h3 id=&#34;一個完整的-quorum-機制&#34;&gt;一個完整的 Quorum 機制&lt;/h3&gt;
+
+&lt;p&gt;這不是 kafka 的機制，但我們順帶聊聊。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;commit decision 使用多數決(majority)&lt;/li&gt;
+&lt;li&gt;leader election 也使用多數決&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;總共有 2n+1 replicas，leader 取得 n+1 ack 才能 commit message。然後 leader election 時，從至少 n+1 個 follower 中取得多數決才能選出 leader。有過半的完整log，加上取得過半數的人確認，兩者產生 overlap。這樣的共識就確保有完整的 log 的 follower 一定會出現在 leader election 中，確保選出來的 leader 有完整 log。&lt;/p&gt;
+
+&lt;p&gt;好處如前面描述，整體效能由前段班的速度決定。&lt;/p&gt;
+
+&lt;p&gt;壞處是，很容易就沒有足夠的 electable leader。要容忍 1 個錯誤，需要 3 個完整備份，要容忍 2 個錯誤需要 5 個備份。在實務上，只靠依賴夠多的 redundency 容錯非常的不實際：每一次寫入需要 5 倍寫入跟硬碟空間，但整體效能只有 1/5。資料量大就直接ＧＧ。所以 quorum 才會只存在分散式集群(ex. zookeeper)，而不會直接用在儲存系統。&lt;/p&gt;
+
+&lt;h3 id=&#34;kafka-s-approach&#34;&gt;Kafka&amp;rsquo;s approach&lt;/h3&gt;
+
+&lt;p&gt;Kafka 不使用 majority vote，而是去動態維護一套 in-sync replicas(ISR) ，這些 ISR 會跟上 leader 的進度，而只有這些 ISR 才能是 leader eligible。一個 update 只有在所有 ISR 都 ack 後才會 commit。&lt;/p&gt;
+
+&lt;p&gt;ISR 的狀態不放在 kafka 而放在 zookeeper 上，也就是目前哪些 node 是 ISR 的記錄存在 zookeeper。這件事對維持 kafka 節點上，leader 能夠分散在各個 kafka node 上(leader rebalance)是很重要的。&lt;/p&gt;
+
+&lt;p&gt;kafka&amp;rsquo;s approach 與 majority vote，在等待 message commit ack 上所花的成本是一樣的。 然而在 leader election 上，kafka 的 ISR 確保了更多個 eligiable leader 的數量，持續維持在合理的數量，而不會要維持大量個 redundency。ISR 放在外部，更方便 kafka 做 leader rebalance，增加穩定度。&lt;/p&gt;
+
+&lt;h1 id=&#34;unclean-leader-election&#34;&gt;Unclean leader election&lt;/h1&gt;
+
+&lt;p&gt;如果 leaders 都死光了會怎樣？&lt;/p&gt;
+
+&lt;p&gt;只要有一個 replica in-sync，Kafka 就保證資料的完整性。然而所有可用的 leaders 都死了，這個就無法保證。&lt;/p&gt;
+
+&lt;p&gt;如果這個情形發生了，kafka 會做以下處理&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;等 ISR 中有人完全回復過來，然後選這個 node 作為 leader(有資料遺失的風險)&lt;/li&gt;
+&lt;li&gt;直接選擇第一個回覆的 node (不一定在 ISR 中)，先回覆的就指派為 leader&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;前者犧牲 availability （回覆前沒有 leader 可作讀寫）來確保資料是來自 ISR，雖然錯誤中無法讀寫(downtime)，但可以確定錯誤前跟錯誤後的資料都來自 ISR&lt;/p&gt;
+
+&lt;p&gt;後者犧牲 consistency （來自非 ISR 的 leader 可能導致資料不正確），然而卻能更快的從錯誤中回覆，減少 downtime&lt;/p&gt;
+
+&lt;p&gt;0.11.0.0  後的 kafka 預設是選擇前者，也就是 consistency over availability，當然這可以在設定更改。&lt;/p&gt;
+
+&lt;h1 id=&#34;availability-and-durability-guarantees&#34;&gt;Availability and Durability Guarantees&lt;/h1&gt;
+
+&lt;p&gt;近一步考慮 client 的影響。&lt;/p&gt;
+
+&lt;p&gt;Producer 在寫入時可以選擇 message 需要多少 acknowledge，0, 1 or all，ack=all 指的是 message 收到所有 in-sync replicas 的 ack&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果 2 replicas 中有 1 個故障，這時寫入只要收到 1 個 ISR 的 ack，就達成 ack=all&lt;/li&gt;
+&lt;li&gt;但如果不幸剩下一個 replicas 也死了 (0/0 ack)，寫入的資料就會遺失&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;有些使用情境，會希望資料的耐用度(Durability)優先於可用性(Availability)，可以透過以下兩個方式設定&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;禁用 unclean leader election，效果是如果所有的 replicas 都失效，則整個 partition 都失效，直到前一個 leader 回復正常。&lt;/li&gt;
+&lt;li&gt;指定可接受的最少 ISR，如果 partition 中的 ISR 低於這個數量，就停止寫入這個 partition，直到 ISR 的數量回覆。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;這樣雖然犧牲了可用性，卻可以最大程度地確保資料的可靠性。&lt;/p&gt;
+
+&lt;h1 id=&#34;複本管理&#34;&gt;複本管理&lt;/h1&gt;
+
+&lt;p&gt;上面的討論都只是再說一個 topic，實務中 kafka 中會有大量的 topic ，乘上 partition number 與 replication factor，成千上萬的複本分散在集群中，kafka 會試圖分散 replicas 到集群中，並讓 leader 的數量平均在 node 上&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kafka HA Topology</title>
+      <link>https://chechiachang.github.io/post/kafka-ha-topology/</link>
+      <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/kafka-ha-topology/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ELK Stack
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34; target=&#34;_blank&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34; target=&#34;_blank&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Kafka HA on Kubernetes
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Zookeeper Multi-server setup&lt;/li&gt;
+&lt;li&gt;Kafka Multi-broker setup&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;zookeeper-multi-server&#34;&gt;Zookeeper Multi-Server&lt;/h1&gt;
+
+&lt;p&gt;為了維持 zookeeper 有效運作，cluster 必須維持 majority (多數)，也就是至少一半的機器在線。如果總共 3 台，便可以忍受 1 台故障仍保有 majority。如果是 5 台就可以容忍 2 台故障。一般來說都建議使用基數數量。&lt;a href=&#34;https://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html#sc_zkMulitServerSetup&#34; target=&#34;_blank&#34;&gt;Zookeeper Multi Server Setup&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;普遍情況，3 台 zookeeper 已經是 production ready 的狀態，但如果為了更高的可用性，以方便進行單節點停機維護，可以增加節點數量。&lt;/p&gt;
+
+&lt;h3 id=&#34;topology&#34;&gt;Topology&lt;/h3&gt;
+
+&lt;p&gt;需要將 zookeeper 放在不同的機器上，不同的網路環境，甚至是不同的雲平台區域上，以承受不同程度的故障。例如單台機器故障，或是區域性的網路故障。&lt;/p&gt;
+
+&lt;p&gt;我們這邊會使用 Kubernetes PodAntiAffinity，要求 scheduler 在部屬時，必須將 zookeeper 分散到不同的機器上。設定如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vim values-staging.yaml
+
+zookeeper:
+  enabled: true
+
+  resources: ~
+
+  env:
+    ZK_HEAP_SIZE: &amp;quot;1G&amp;quot;
+
+  persistence:
+    enabled: false
+
+  image:
+    PullPolicy: &amp;quot;IfNotPresent&amp;quot;
+
+  url: &amp;quot;&amp;quot;
+  port: 2181
+
+  ## Pod scheduling preferences (by default keep pods within a release on separate nodes).
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## By default we don&#39;t set affinity:
+  affinity: # Criteria by which pod label-values influence scheduling for zookeeper pods.
+   podAntiAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       - topologyKey: &amp;quot;kubernetes.io/hostname&amp;quot;
+         labelSelector:
+           matchLabels:
+             release: zookeeper
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用 podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution，如果 topologyKey 已經有指定 label 的 pod 存在，則無法部署，需要數到其他台機器。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;kubectl get pods --output wide | grep zookeeper
+
+NAME                  READY   STATUS      RESTARTS   AGE     IP              NODE                                    
+kafka-0-zookeeper-0   1/1     Running     0          42d     10.8.12.4       gke-chechiachang-pool-1-e06e6d00-pc98   
+kafka-0-zookeeper-1   1/1     Running     0          42d     10.8.4.4        gke-chechiachang-pool-1-e06e6d00-c29q   
+kafka-0-zookeeper-2   1/1     Running     0          42d     10.8.3.6        gke-chechiachang-pool-1-e06e6d00-krwc   
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;效果是 zookeeper 都分配到不同的機器上。&lt;/p&gt;
+
+&lt;h3 id=&#34;guarantees&#34;&gt;Guarantees&lt;/h3&gt;
+
+&lt;p&gt;Zookeeper 對於資料一致性，有這些保障 &lt;a href=&#34;https://zookeeper.apache.org/doc/r3.5.5/zookeeperProgrammers.html#ch_zkGuarantees&#34; target=&#34;_blank&#34;&gt;Consistency Guarantees&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;順序一致性：資料更新的順序，與發送的順序一致&lt;/li&gt;
+&lt;li&gt;原子性：資料更新只有成功或失敗，沒有部份效果&lt;/li&gt;
+&lt;li&gt;系統一致性：可戶端連到 server 看到的東西都是一樣，無關連入哪個 server&lt;/li&gt;
+&lt;li&gt;可靠性：
+
+&lt;ul&gt;
+&lt;li&gt;客戶端的更新請求，一但收到 server 回覆更新成功，便會持續保存狀態。某些錯誤會造成客戶端收不到回覆， 可能是網路問題，或是 server 內部問題，這邊就無法確定 server 上的狀態，是否被更新了，或是請求已經遺失了。&lt;/li&gt;
+&lt;li&gt;從客戶讀取到的資料都是以確認的資料，不會因為 server 故障回滾(Roll back)而回到舊的狀態&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;kafka-的設定&#34;&gt;Kafka 的設定&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;## The StatefulSet installs 3 pods by default
+replicas: 3
+
+resources:
+   limits:
+     cpu: 200m
+     memory: 4096Mi
+   requests:
+     cpu: 100m
+     memory: 1024Mi
+kafkaHeapOptions: &amp;quot;-Xmx4G -Xms1G&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;設定 broker 的數量，以及 Pod 提供的 resource，並且透過 heapOption 把記憶體設定塞進 JVM&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;affinity:
+ affinity:
+   podAntiAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+     - labelSelector:
+         matchExpressions:
+         - key: app
+           operator: In
+           values:
+           - kafka
+       topologyKey: &amp;quot;kubernetes.io/hostname&amp;quot;
+   podAffinity:
+     preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 50
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+                - zookeeper
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這邊下了兩個 affinity&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;podAntiAffinity 盡量讓 kafka-broker 分散到不同機器上&lt;/li&gt;
+&lt;li&gt;podAffinity 讓 broker prefer 跟 zookeeper 放在一起&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;分散的理由同上，不希望一台機器死了，就讓多個 broker 跟著死&lt;/p&gt;
+
+&lt;p&gt;要和 zookeeper 放在一起，就要看需求與實際環境調整&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;configurationOverrides:
+  &amp;quot;default.replication.factor&amp;quot;: 3
+  &amp;quot;offsets.topic.replication.factor&amp;quot;: 2 # Increased from 1 to 2 for higher output
+  &amp;quot;offsets.topic.num.partitions&amp;quot;: 3
+  &amp;quot;confluent.support.metrics.enable&amp;quot;: false  # Disables confluent metric submission
+  &amp;quot;auto.leader.rebalance.enable&amp;quot;: true
+  &amp;quot;auto.create.topics.enable&amp;quot;: true
+  &amp;quot;message.max.bytes&amp;quot;: &amp;quot;16000000&amp;quot; # Extend global topic max message bytes to 16 Mb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這邊再把 broker 運行的設定參數塞進去，參數的用途大多與複本與高可用機制有關下面都會提到。&lt;/p&gt;
+
+&lt;h1 id=&#34;kafka-的複本機制&#34;&gt;Kafka 的複本機制&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://kafka.apache.org/documentation/#replication&#34; target=&#34;_blank&#34;&gt;kafka 的副本機制&lt;/a&gt; 預設將各個 topic partition 的 log 分散到 server 上，如果其中一台 server 故障，資料仍然可用。&lt;/p&gt;
+
+&lt;p&gt;兩個重要的設定&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;num.partitions=N&lt;/li&gt;
+&lt;li&gt;default.replication.factor=M&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;kafka 預設使用複本，所有機制與設計都圍繞著複本。如果（因為某些原因）不希望使用複本，可將 replication factor 設為 1。&lt;/p&gt;
+
+&lt;p&gt;replication 的單位是 topic partition，正常狀況下&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一個 partition 會有一個 leader，以及零個或以上個 follower&lt;/li&gt;
+&lt;li&gt;leader + follower 總數是 replication factor&lt;/li&gt;
+&lt;li&gt;所有讀寫都是對 leader 讀寫&lt;/li&gt;
+&lt;li&gt;leader 的 log 會同步到 follower 上，leader 與 follower 狀態是一樣的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;election-load-balance&#34;&gt;Election &amp;amp; Load balance&lt;/h3&gt;
+
+&lt;p&gt;通常一個 topic 會有多個 partition，也就是說，每個 topic 會有多個 partition leader，分散負載&lt;/p&gt;
+
+&lt;p&gt;通常 topic partition 的總數會比 broker 的數量多&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;以上一篇範例，我們有三個 kafka-0-broker 各自是一個 Pod&lt;/li&gt;
+&lt;li&gt;有 topic: ticker 跟預設的 &lt;code&gt;__consumer_offset__&lt;/code&gt;，乘上 partition number 的設定值(N)，會有 2N 個 partitions&lt;/li&gt;
+&lt;li&gt;partitiion 會有各自的複本，kafka 會盡量將相同 topic 的複本分散到不同 broker 上&lt;/li&gt;
+&lt;li&gt;kafka 也會盡量維持 partition 的 leader 分散在不同的 broker 上，這個部分 kafka 會透過算法做 leader election，也可手動使用腳本做 &lt;a href=&#34;https://kafka.apache.org/documentation/#basic_ops_leader_balancing&#34; target=&#34;_blank&#34;&gt;Balancing leadership&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;總之，topic 的 partition 與 leader 會分散到 broker 上，維持 partition 的可用性。&lt;/p&gt;
+
+&lt;h3 id=&#34;sync&#34;&gt;sync&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;node 要能夠維持 zookeeper 的 session (zookeeper 有 heartbeat 機制)&lt;/li&gt;
+&lt;li&gt;follower 不能落後 leader 太多&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;kafka 能保障資料不會遺失，只要至少一個 node 是在 sync 的狀態。例如本來有三個 partition，其中兩個 partition 不同步，只要其中一個 partition 是同步，便能作為 leader 持續提供正確的 message。&lt;/p&gt;
+
+&lt;h1 id=&#34;replicated-logs&#34;&gt;Replicated Logs&lt;/h1&gt;
+
+&lt;p&gt;kafka 透過 &lt;a href=&#34;https://kafka.apache.org/documentation/#design_replicatedlog&#34; target=&#34;_blank&#34;&gt;replicated log&lt;/a&gt; 維持分散式的 partition&lt;/p&gt;
+
+&lt;p&gt;複本間要維持共識(consensus)的最簡單機制，就是單一 leader 決定，其他 follower 跟隨。然而萬一 leader 死了，選出的新 leader 卻還沒跟上原先 leader 的資料。這時便使用 replicated log，來確保新的 leader 就算原先沒跟上，也能透過 replicated log 隨後跟上且不遺失資料。維持 log 一直都同步的前提，就是 leader 要一直確認 followers 的 log 都有跟上，這個其實就是變相的多 leader，效能消耗較大。&lt;/p&gt;
+
+&lt;p&gt;另一個維持 log 機制，如果希望 follower 彼此的 log 應該先進行比對，讓資料交接過程有 overlap，這個過程稱為 Quorum。一個常用的方式是多數決(majority)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果總共有 2n+1 的 node，leader 要向 n+1 個 follower 取得共識，才確定這個 log 已經 commit 了&lt;/li&gt;
+&lt;li&gt;leader 總是維持 n+1 follower 的 log 有跟上，因此可以容忍最多 n 個 node 死了，集群整體能有 n+1 的 node 維持著正確的 commited log&lt;/li&gt;
+&lt;li&gt;不用向所有 node 確認才 commit ，節省了一半的 ack&lt;/li&gt;
+&lt;li&gt;majarity 的另一個好處是，n+1 共識的速度是由前 &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt; 快的 node 決定的。由於只要先取得 n+1 就可以 commit，速度快的 node 會先回應，讓整體速度提升。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Kafka Operation Scripts</title>
       <link>https://chechiachang.github.io/post/kafka-operation-scripts/</link>
       <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
@@ -41,8 +968,8 @@
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
-&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
 &lt;li&gt;效能調校
 &lt;br /&gt;&lt;/li&gt;
@@ -622,17 +1549,17 @@ go build .
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;應用使用 kafka 的設定&lt;/li&gt;
-&lt;li&gt;kafka utility scripts, topic operation, kafka benchmark&lt;/li&gt;
-&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
-&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
 &lt;li&gt;效能調校
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
 
@@ -763,10 +1690,11 @@ go build .
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;應用使用 kafka 的設定&lt;/li&gt;
-&lt;li&gt;kafka utility scripts, topic operation, kafka benchmark&lt;/li&gt;
-&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
-&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
 &lt;li&gt;效能調校
 &lt;br /&gt;&lt;/li&gt;
@@ -804,10 +1732,11 @@ go build .
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;應用使用 kafka 的設定&lt;/li&gt;
-&lt;li&gt;kafka utility scripts, topic operation, kafka benchmark&lt;/li&gt;
-&lt;li&gt;集群內部的 HA topology&lt;/li&gt;
-&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
 &lt;li&gt;效能調校
 &lt;br /&gt;&lt;/li&gt;
@@ -3165,30 +4094,27 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;GKE 維運心得 (5)
+&lt;li&gt;Kafka HA on Kubernetes
 
 &lt;ul&gt;
-&lt;li&gt;我的 Kubernetes 除錯流程&lt;/li&gt;
-&lt;li&gt;Kubectl cheat sheet&lt;/li&gt;
-&lt;li&gt;使用 cert-manager 維護 TLS/HTTPS&lt;/li&gt;
-&lt;li&gt;使用 redhat operator-sdk 初探 CRD 與 operator&lt;/li&gt;
-&lt;li&gt;我的 operator 範例分享&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-introduction&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;在 GKE 上部署 Kafka HA (4)
+&lt;li&gt;在 GKE 上部署 Redis HA (5)
 
 &lt;ul&gt;
-&lt;li&gt;使用 helm 部署 kafka-ha&lt;/li&gt;
-&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
-&lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
-&lt;li&gt;在 GKE 上維運 kafka&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;在 GKE 上部署 Redis HA (4)
-
-&lt;ul&gt;
-&lt;li&gt;使用 helm 部署 redis-ha&lt;/li&gt;
-&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
-&lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
-&lt;li&gt;在 GKE 上維運 redis&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34; target=&#34;_blank&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-sentinel/&#34; target=&#34;_blank&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-topology/&#34; target=&#34;_blank&#34;&gt;Redis sentinel topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/redis-ha-on-haproxy&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Redis HA with HAproxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/redis-ha-failure-recovery&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Redis HA Failure Recovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 
@@ -3198,6 +4124,15 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;GKE 維運心得 (5)
+
+&lt;ul&gt;
+&lt;li&gt;我的 Kubernetes 除錯流程&lt;/li&gt;
+&lt;li&gt;Kubectl cheat sheet&lt;/li&gt;
+&lt;li&gt;使用 cert-manager 維護 TLS/HTTPS&lt;/li&gt;
+&lt;li&gt;使用 redhat operator-sdk 初探 CRD 與 operator&lt;/li&gt;
+&lt;li&gt;我的 operator 範例分享&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;GCP 網路設定 (3)
 
@@ -3281,6 +4216,182 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;Stackdriver, metrics, alerts&lt;/li&gt;
 &lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; Logging on GKE from gcp-fluentd to stackdriver&lt;/label&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Redis Ha Topology</title>
+      <link>https://chechiachang.github.io/post/redis-ha-topology/</link>
+      <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/redis-ha-topology/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在 GKE 上部署 Redis HA
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34; target=&#34;_blank&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Redis HA with sentinel&lt;/li&gt;
+&lt;li&gt;Redis sentinel topology&lt;/li&gt;
+&lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
+&lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
+&lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
+&lt;li&gt;在 GKE 上維運 redis&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Redis Sentinel Topology&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;topology&#34;&gt;Topology&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Masters: M1, M2, M3, &amp;hellip;, Mn.&lt;/li&gt;
+&lt;li&gt;Slaves: R1, R2, R3, &amp;hellip;, Rn (R stands for replica).&lt;/li&gt;
+&lt;li&gt;Sentinels: S1, S2, S3, &amp;hellip;, Sn.&lt;/li&gt;
+&lt;li&gt;Clients: C1, C2, C3, &amp;hellip;, Cn.&lt;/li&gt;
+&lt;li&gt;每個方格代表一台機器或是 VM&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;2-sentinels&#34;&gt;2 Sentinels&lt;/h3&gt;
+
+&lt;p&gt;DON&amp;rsquo;T DO THIS&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+----+         +----+
+| M1 |---------| R1 |
+| S1 |         | S2 |
++----+         +----+
+
+Configuration: quorum = 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這個設定下，如果 M1 掛了需要 failover，很有可能 S1 跟著機器一起掛了，S2 會沒有辦法取得多數來執行 failover，整個系統掛掉&lt;/p&gt;
+
+&lt;h3 id=&#34;3-vm&#34;&gt;3 VM&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;       +----+
+       | M1 |
+       | S1 |
+       +----+
+          |
++----+    |    +----+
+| R2 |----+----| R3 |
+| S2 |         | S3 |
++----+         +----+
+
+Configuration: quorum = 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這是最基本的蛋又兼顧安全設定的設置&lt;/p&gt;
+
+&lt;p&gt;如果 M1 死了 S1 跟著機器故障，S2 與 S3 還可以取得多數，順利 failover 到 R2 或是 R3。&lt;/p&gt;
+
+&lt;h3 id=&#34;寫入資料遺失&#34;&gt;寫入資料遺失&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;         +----+
+         | M1 |
+         | S1 | &amp;lt;- C1 (writes will be lost)
+         +----+
+            |
+            /
+            /
++------+    |    +----+
+| [M2] |----+----| R3 |
+| S2   |         | S3 |
++------+         +----+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;failover 之前，M1 是 master，Client 的寫入往 M1 寫&lt;/li&gt;
+&lt;li&gt;M1 網路故障，M2 failover 後成為新的 master，可是 Client 往 M1 寫入的資料並無法 sync 回 M2&lt;/li&gt;
+&lt;li&gt;等網路修復後，M1 回覆後會變成 R1 變成 slave，由 M2 去 sync R1，變成 R1 在 master 時收到的寫入資料遺失&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;為了避免這種情形，做額外的設定&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;min-slaves-to-write 1&lt;/li&gt;
+&lt;li&gt;min-slaves-max-lag 10&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;當 master 發現自己再也無法 sync 到足夠的 slave，表示 master 可能被孤立，這時主動拒絕客戶端的寫入請求。客戶端被拒絕後，會再向 sentinel 取得有效的 master，重新執行寫入請求，確保資料寫到有效的 master 上。&lt;/p&gt;
+
+&lt;h3 id=&#34;sentinel-放在-client-端&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;            +----+         +----+
+            | M1 |----+----| R1 |
+            |    |    |    |    |
+            +----+    |    +----+
+                      |
+         +------------+------------+
+         |            |            |
+         |            |            |
+      +----+        +----+      +----+
+      | C1 |        | C2 |      | C3 |
+      | S1 |        | S2 |      | S3 |
+      +----+        +----+      +----+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;有些情形，redis 這端只有兩台可用機器，這種情形可以考慮把 sentinel 放在客戶端的機器上&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;仍然維持了獨立的 3 sentinels 的穩定&lt;/li&gt;
+&lt;li&gt;sentinel 與 client 所觀察到的 redis 狀態是相同的&lt;/li&gt;
+&lt;li&gt;如果 M1 死了，要 failover ，客戶端的 3 sentinel 可以正確地執行 failover，不受故障影響&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;客戶端又不足-3-個&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;            +----+         +----+
+            | M1 |----+----| R1 |
+            | S1 |    |    | S2 |
+            +----+    |    +----+
+                      |
+               +------+-----+
+               |            |  
+               |            |
+            +----+        +----+
+            | C1 |        | C2 |
+            | S3 |        | S4 |
+            +----+        +----+
+
+      Configuration: quorum = 3
+
+            +----+         +----+
+            | M1 |----+----| R1 |
+            | S1 |    |    | S2 |
+            +----+    |    +----+
+                      |
+                      |        
+                      |        
+                   +----+      
+                   | C1 |      
+                   | S3 |      
+                   +----+      
+
+      Configuration: quorum = 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;跟上個例子類似，但又額外確保 3 sentinels&lt;/li&gt;
+&lt;li&gt;如果 M1 死了，剩下的 sentinel 可以正確 failover&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

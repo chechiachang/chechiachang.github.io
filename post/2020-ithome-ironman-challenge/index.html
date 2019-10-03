@@ -131,7 +131,7 @@
   
   <meta property="article:published_time" content="2019-09-09T16:56:03&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-22T11:32:44&#43;08:00">
+  <meta property="article:modified_time" content="2019-10-03T14:01:24&#43;08:00">
   
 
   
@@ -445,7 +445,7 @@
 
 
 <meta content="2019-09-09 16:56:03 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-22 11:32:44 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-10-03 14:01:24 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -460,7 +460,7 @@
           Last updated on
       
     
-    <time>Sep 22, 2019</time>
+    <time>Oct 3, 2019</time>
   </span>
   
 
@@ -622,30 +622,27 @@
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
 </ul></li>
-<li>GKE 維運心得 (5)
+<li>Kafka HA on Kubernetes
 
 <ul>
-<li>我的 Kubernetes 除錯流程</li>
-<li>Kubectl cheat sheet</li>
-<li>使用 cert-manager 維護 TLS/HTTPS</li>
-<li>使用 redhat operator-sdk 初探 CRD 與 operator</li>
-<li>我的 operator 範例分享</li>
+<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
+<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
+<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
+<li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
+<li><a href="{{ ref &quot;/post/kafka-ha-topology&quot; }}" target="_blank">集群內部的 HA topology</a></li>
+<li><a href="{{ ref &quot;/post/kafka-ha-continuerd&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
+<li>Prometheus Metrics Exporter 很重要</li>
+<li>效能調校</li>
 </ul></li>
-<li>在 GKE 上部署 Kafka HA (4)
+<li>在 GKE 上部署 Redis HA (5)
 
 <ul>
-<li>使用 helm 部署 kafka-ha</li>
-<li>集群內部的 HA 設定，網路設定</li>
-<li>應用端的基本範例，效能調校</li>
-<li>在 GKE 上維運 kafka</li>
-</ul></li>
-<li>在 GKE 上部署 Redis HA (4)
-
-<ul>
-<li>使用 helm 部署 redis-ha</li>
-<li>集群內部的 HA 設定，網路設定</li>
-<li>應用端的基本範例，效能調校</li>
-<li>在 GKE 上維運 redis</li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-deployment/" target="_blank">使用 helm 部署 redis-ha</a></li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-sentinel/" target="_blank">Redis HA with sentinel</a></li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-topology/" target="_blank">Redis sentinel topology</a></li>
+<li><a href="{{ ref &quot;/post/redis-ha-on-haproxy&quot; }}" target="_blank">Redis HA with HAproxy</a></li>
+<li><a href="{{ ref &quot;/post/redis-ha-failure-recovery&quot; }}" target="_blank">Redis HA Failure Recovery</a></li>
+<li>Prometheus Metrics Exporter</li>
 </ul></li>
 <li>Prometheus / Grafana (5)
 
@@ -655,6 +652,15 @@
 <li>輸出 kubernetes 的監測數據</li>
 <li>輸出 redis-ha 的監測數據</li>
 <li>輸出 kafka 的監測數據</li>
+</ul></li>
+<li>GKE 維運心得 (5)
+
+<ul>
+<li>我的 Kubernetes 除錯流程</li>
+<li>Kubectl cheat sheet</li>
+<li>使用 cert-manager 維護 TLS/HTTPS</li>
+<li>使用 redhat operator-sdk 初探 CRD 與 operator</li>
+<li>我的 operator 範例分享</li>
 </ul></li>
 <li>GCP 網路設定 (3)
 
@@ -891,7 +897,7 @@
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/kuberentes-source-code/" rel="prev">Kuberentes Source Code</a>
+    <a href="/post/redis-ha-topology/" rel="prev">Redis Ha Topology</a>
   </div>
   
 </div>

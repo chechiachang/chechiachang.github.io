@@ -4,12 +4,37 @@
   
   <url>
     <loc>https://chechiachang.github.io/</loc>
-    <lastmod>2019-09-25T23:50:52+08:00</lastmod>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/kafka-on-kubernetes/</loc>
+    <lastmod>2019-10-03T20:51:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/redis-ha-sentinel/</loc>
+    <lastmod>2019-10-03T19:24:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/redis-ha-deployment/</loc>
+    <lastmod>2019-10-03T19:24:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kafka-ha-continue/</loc>
+    <lastmod>2019-09-27T18:03:29+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kafka-ha-topology/</loc>
+    <lastmod>2019-09-27T22:57:44+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/post/kafka-operation-scripts/</loc>
-    <lastmod>2019-09-25T23:50:52+08:00</lastmod>
+    <lastmod>2019-09-27T22:57:44+08:00</lastmod>
   </url>
   
   <url>
@@ -19,17 +44,17 @@
   
   <url>
     <loc>https://chechiachang.github.io/post/kafka-introduction/</loc>
-    <lastmod>2019-09-23T23:21:04+08:00</lastmod>
+    <lastmod>2019-09-28T19:43:20+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/post/kafka-helm-configuration/</loc>
-    <lastmod>2019-09-23T23:21:04+08:00</lastmod>
+    <lastmod>2019-09-27T22:57:44+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/</loc>
-    <lastmod>2019-09-22T11:29:42+08:00</lastmod>
+    <lastmod>2019-09-27T22:57:44+08:00</lastmod>
   </url>
   
   <url>
@@ -59,7 +84,7 @@
   
   <url>
     <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
   </url>
   
   <url>
@@ -79,7 +104,7 @@
   
   <url>
     <loc>https://chechiachang.github.io/tags/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
   </url>
   
   <url>
@@ -139,7 +164,27 @@
   
   <url>
     <loc>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2019-10-03T14:01:24+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/cd/</loc>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ci/</loc>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/redis/</loc>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/redis-ha-topology/</loc>
+    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
   </url>
   
   <url>
@@ -264,16 +309,6 @@
   
   <url>
     <loc>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/cd/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/ci/</loc>
     <lastmod>2019-04-19T21:19:04+08:00</lastmod>
   </url>
   

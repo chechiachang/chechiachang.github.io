@@ -28,11 +28,10 @@
   
     
   
-  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
+  <meta name="description" content="">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-helm-configuration/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/talk/kafka-on-kubernetes/">
 
   
 
@@ -111,7 +110,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-helm-configuration/">
+  <link rel="canonical" href="https://chechiachang.github.io/talk/kafka-on-kubernetes/">
 
   
   
@@ -125,15 +124,14 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-helm-configuration/">
-  <meta property="og:title" content="Kafka Helm Configuration | Che-Chia Chang">
-  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:url" content="https://chechiachang.github.io/talk/kafka-on-kubernetes/">
+  <meta property="og:title" content="Kafka on Kubernetes | Che-Chia Chang">
+  <meta property="og:description" content=""><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-23T21:55:29&#43;08:00">
+  <meta property="article:published_time" content="2019-10-03T20:50:50&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-27T22:57:44&#43;08:00">
+  <meta property="article:modified_time" content="2019-10-03T20:51:04&#43;08:00">
   
 
   
@@ -171,7 +169,7 @@
 
 
 
-  <title>Kafka Helm Configuration | Che-Chia Chang</title>
+  <title>Kafka on Kubernetes | Che-Chia Chang</title>
 
 </head>
 
@@ -416,7 +414,7 @@
 </nav>
 
 
-  <article class="article" itemscope itemtype="http://schema.org/Article">
+  <div class="pub" itemscope itemtype="http://schema.org/Event">
 
   
 
@@ -437,7 +435,7 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Kafka Helm Configuration</h1>
+  <h1 itemprop="name">Kafka on Kubernetes</h1>
 
   
 
@@ -446,8 +444,8 @@
 
 
 
-<meta content="2019-09-23 21:55:29 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-27 22:57:44 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-10-03 20:50:50 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-10-03 20:51:04 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -455,24 +453,9 @@
   
 
   
-  <span class="article-date">
-    
-    
-      
-          Last updated on
-      
-    
-    <time>Sep 27, 2019</time>
-  </span>
-  
 
   
 
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
   
 
   
@@ -494,7 +477,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-helm-configuration/&amp;text=Kafka%20Helm%20Configuration" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/talk/kafka-on-kubernetes/&amp;text=Kafka%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +490,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-helm-configuration/&amp;t=Kafka%20Helm%20Configuration" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/talk/kafka-on-kubernetes/&amp;t=Kafka%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +503,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Kafka%20Helm%20Configuration&amp;body=https://chechiachang.github.io/post/kafka-helm-configuration/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Kafka%20on%20Kubernetes&amp;body=https://chechiachang.github.io/talk/kafka-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +516,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-helm-configuration/&amp;title=Kafka%20Helm%20Configuration" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/talk/kafka-on-kubernetes/&amp;title=Kafka%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +529,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Kafka%20Helm%20Configuration%20https://chechiachang.github.io/post/kafka-helm-configuration/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Kafka%20on%20Kubernetes%20https://chechiachang.github.io/talk/kafka-on-kubernetes/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +542,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-helm-configuration/&amp;title=Kafka%20Helm%20Configuration" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/talk/kafka-on-kubernetes/&amp;title=Kafka%20on%20Kubernetes" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -594,47 +577,52 @@
 
   <div class="article-container">
 
-    <div class="article-style" itemprop="articleBody">
-      <p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+    
+      <br>
+    
 
-<ul>
-<li>ELK Stack
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Date</div>
+          <div class="col-12 col-md-9" itemprop="datePublished">
+            Oct 3, 2019 8:50 PM &mdash; 8:50 PM
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
 
-<ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/" target="_blank">監測 Google Kubernetes Engine 的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/" target="_blank">是否選擇 ELK 作為解決方案</a></li>
-<li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
-<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
-<li>Debug ELK stack on GCP</li>
-</ul></li>
-<li>Kafka HA on Kubernetes
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Event</div>
+          <div class="col-12 col-md-9">
+            
+            
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
 
-<ul>
-<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
-<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
-<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
-<li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-topology&quot; }}" target="_blank">集群內部的 HA topology</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-continuerd&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
-<li>Prometheus Metrics Exporter 很重要</li>
-<li>效能調校
-<br /></li>
-</ul></li>
-</ul>
+    
 
-<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+    <div class="space-below"></div>
 
+    <div class="article-style">
+      
     </div>
 
     
 
 
-
     
-      
 
 
 
@@ -758,39 +746,26 @@
 
 
 
-      
-      
-    
 
-    
-    <div class="article-widget">
-      
+  </div>
+</div>
+
+
+<div class="article-container article-widget">
+  
 <div class="post-nav">
   
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/post/kafka-introduction/" rel="next">Kafka-introduction</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/kafka-deployment-on-kubernetes/" rel="prev">Kafka Deployment on Kubernetes</a>
+    <a href="/talk/service-mesh-for-microservices-on-kubernetes/" rel="prev">Service Mesh for Microservices on Kubernetes</a>
   </div>
   
 </div>
 
-    </div>
-    
+</div>
 
-    
-
-
-  </div>
-</article>
 
       
 
