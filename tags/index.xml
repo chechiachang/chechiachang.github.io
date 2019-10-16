@@ -7,10 +7,82 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Thu, 19 Sep 2019 17:06:29 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 10 Oct 2019 16:12:10 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>cert-manager</title>
+      <link>https://chechiachang.github.io/tags/cert-manager/</link>
+      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/cert-manager/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://chechiachang.github.io/tags/kubernetes/</link>
+      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ssl</title>
+      <link>https://chechiachang.github.io/tags/ssl/</link>
+      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ssl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tls</title>
+      <link>https://chechiachang.github.io/tags/tls/</link>
+      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/tls/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cd</title>
+      <link>https://chechiachang.github.io/tags/cd/</link>
+      <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/cd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ci</title>
+      <link>https://chechiachang.github.io/tags/ci/</link>
+      <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ci/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>https://chechiachang.github.io/tags/nginx/</link>
+      <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>https://chechiachang.github.io/tags/redis/</link>
+      <pubDate>Mon, 07 Oct 2019 08:12:10 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/redis/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>daemonsets</title>
@@ -49,15 +121,6 @@
     </item>
     
     <item>
-      <title>kubernetes</title>
-      <link>https://chechiachang.github.io/tags/kubernetes/</link>
-      <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>log</title>
       <link>https://chechiachang.github.io/tags/log/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
@@ -85,24 +148,6 @@
     </item>
     
     <item>
-      <title>ssl</title>
-      <link>https://chechiachang.github.io/tags/ssl/</link>
-      <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/ssl/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tls</title>
-      <link>https://chechiachang.github.io/tags/tls/</link>
-      <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/tls/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>xpack</title>
       <link>https://chechiachang.github.io/tags/xpack/</link>
       <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
@@ -126,33 +171,6 @@
       <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/gcp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cd</title>
-      <link>https://chechiachang.github.io/tags/cd/</link>
-      <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/cd/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ci</title>
-      <link>https://chechiachang.github.io/tags/ci/</link>
-      <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/ci/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>redis</title>
-      <link>https://chechiachang.github.io/tags/redis/</link>
-      <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/redis/</guid>
       <description></description>
     </item>
     

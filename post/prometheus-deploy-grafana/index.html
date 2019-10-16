@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Che-Chia Chang">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+摘要  Grafana Introduction Deploy Grafana  Grafana Introduction 上偏我們簡單介紹了 Prometheus，prometheus 的 Web Portol 已經附上簡單的 Query 與 Graph 工具，但一般我們在使用時，還是會搭配 Grafana 來使用。
+Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/prometheus-deploy-grafana/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-137400455-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://chechiachang.github.io/post/prometheus-deploy-grafana/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@chechiachang">
+  <meta property="twitter:creator" content="@chechiachang">
+  
+  <meta property="og:site_name" content="Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/prometheus-deploy-grafana/">
+  <meta property="og:title" content="Prometheus Deploy Grafana | Che-Chia Chang">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+ Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+摘要  Grafana Introduction Deploy Grafana  Grafana Introduction 上偏我們簡單介紹了 Prometheus，prometheus 的 Web Portol 已經附上簡單的 Query 與 Graph 工具，但一般我們在使用時，還是會搭配 Grafana 來使用。
+Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-10-04T08:12:10&#43;08:00">
+  
+  <meta property="article:modified_time" content="2019-10-08T11:16:19&#43;08:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#3f51b5",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#3f51b5"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Prometheus Deploy Grafana | Che-Chia Chang</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Che-Chia Chang</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks"><span>Talks</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Me</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Docs</span><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            
+            <li class="dropdown-item my-0 py-0 mx-0 px-0">
+              <a href="/post/kubernetes-container-runtime-interface/"><span>Kubernetes Container Runtime Interface</span></a>
+            </li>
+            
+          </ul>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Prometheus Deploy Grafana</h1>
+
+  
+
+  
+    
+
+
+
+<meta content="2019-10-04 08:12:10 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-10-08 11:16:19 &#43;0800 CST" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Oct 8, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/prometheus-deploy-grafana/&amp;text=Prometheus%20Deploy%20Grafana" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/prometheus-deploy-grafana/&amp;t=Prometheus%20Deploy%20Grafana" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Prometheus%20Deploy%20Grafana&amp;body=https://chechiachang.github.io/post/prometheus-deploy-grafana/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/prometheus-deploy-grafana/&amp;title=Prometheus%20Deploy%20Grafana" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Prometheus%20Deploy%20Grafana%20https://chechiachang.github.io/post/prometheus-deploy-grafana/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/prometheus-deploy-grafana/&amp;title=Prometheus%20Deploy%20Grafana" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+
+<ul>
+<li>Prometheus / Grafana (5)
+
+<ul>
+<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/" target="_blank">GKE 上自架 Prometheus / Grafana</a></li>
+<li>GKE 上自架 Grafana 與設定</li>
+<li>使用 exporter 監測 GKE 上的各項服務</li>
+<li>輸出 kubernetes 的監測數據</li>
+<li>輸出 redis-ha 的監測數據</li>
+<li>輸出 kafka 的監測數據</li>
+</ul></li>
+</ul>
+
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
+
+<hr />
+
+<h1 id="摘要">摘要</h1>
+
+<ul>
+<li>Grafana Introduction</li>
+<li>Deploy Grafana</li>
+</ul>
+
+<h1 id="grafana-introduction">Grafana Introduction</h1>
+
+<p>上偏我們簡單介紹了 Prometheus，prometheus 的 Web Portol 已經附上簡單的 Query 與 Graph 工具，但一般我們在使用時，還是會搭配 Grafana 來使用。</p>
+
+<p><a href="https://grafana.com/grafana/" target="_blank">Grafana 在官網上提到</a> 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。</p>
+
+<ul>
+<li>支援許多圖表，直線圖，長條圖，區域分析，基本上需要的都有</li>
+<li>在圖表上定義 alter，並且主動告警，整合其他通訊軟體</li>
+<li>對後端 data source 的整合，可以同時使用 ELK, prometheus, influxdb 等 30 多種的資料來源</li>
+<li>有許多公開的 plugin 與 dashboard 可以匯入使用</li>
+</ul>
+
+<p>總之功能強大，至於用起來的感覺，個人是非常推薦。如果有大得想要試玩看看，可以直接到 <a href="https://play.grafana.org/d/000000029/prometheus-demo-dashboard?orgId=1&amp;refresh=5m" target="_blank">Grafana Live Demo</a> 上面試玩</p>
+
+<ul>
+<li>一般使用都會圍繞 dashboard 為核心，透過單一畫面，一覽目前使用者需要讀取的資料</li>
+<li>左上角的下拉選單，可以選擇不同的 dashboards</li>
+</ul>
+
+<h1 id="與-kibana-做比較">與 Kibana 做比較</h1>
+
+<p>雖然大部分使用上，我們都會使用 ELK 一套，而 Prometheus + Grafana 另一套。但其實兩邊的 data source 都可以互接。例如 grafana 可以吃 elasticsearch 的 data source，而 kibana 有 prometheus module。</p>
+
+<p>我們這邊基於兩款前端分析工具，稍微做個比較，底層的 data source 差異這邊先不提。</p>
+
+<ul>
+<li>都是開源: 兩者的開源社群都非常強大</li>
+<li>兩者內建的 dashboard 都非常完整，而且不斷推出新功能</li>
+<li>Log vs Metrics:
+
+<ul>
+<li>Kibana 的 metrics 也是像 log 一樣的 key value pairs，能夠 explore 未定義的 log</li>
+<li>Grafana 的 UI 專注於呈現 time series 的 metrics，並沒有提供 data 的欄位搜尋，而是使用語法 Query 來取得數據</li>
+</ul></li>
+<li>Data source:
+
+<ul>
+<li>Grafana 可以收集各種不同的後端資料來源</li>
+<li>ELK 主要核心還是 ELK stack，用其他 Module 輔助其他資料源</li>
+</ul></li>
+</ul>
+
+<h1 id="deploy-grafana">Deploy Grafana</h1>
+
+<p>我把我的寶藏都放在這了<a href="https://github.com/chechiachang/prometheus-kubernetes" target="_blank">https://github.com/chechiachang/prometheus-kubernetes</a></p>
+
+<p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
+
+<pre><code>cd grafana
+
+cat install.sh
+
+#!/bin/bash
+HELM_NAME=grafana-1
+
+helm upgrade --install grafana stable/grafana \
+  --namespace default \
+  --values values-staging.yaml
+</code></pre>
+
+<h3 id="helm">Helm</h3>
+
+<p>我們這邊用 helm 部屬，<a href="https://github.com/helm/charts/tree/master/stable/grafana" target="_blank">Grafana Stable Chart</a></p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>簡單看一下設定檔</p>
+
+<pre><code>vim values-staging.yaml
+
+replicas: 1
+
+deploymentStrategy: RollingUpdate
+</code></pre>
+
+<p>Grafana 是支援 <a href="https://grafana.com/docs/tutorials/ha_setup/" target="_blank">Grafana HA</a> ，其實也非常簡單，就是把 grafana 本身的 dashboard database 從每個 grafana 一台 SQLite，變成外部統一的 MySQL，統一讀取後端資料，前端就可水平擴展。</p>
+
+<pre><code>readinessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+
+livenessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 60
+  timeoutSeconds: 30
+  failureThreshold: 10
+
+image:
+  repository: grafana/grafana
+  tag: 6.0.0
+  pullPolicy: IfNotPresent
+
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistrKeySecretName
+</code></pre>
+
+<p>一些 Pod 的基本配置， health check 使用內建的 api，有需要也可以直接打 api</p>
+
+<pre><code>securityContext:
+  runAsUser: 472
+  fsGroup: 472
+
+
+extraConfigmapMounts: []
+  # - name: certs-configmap
+  #   mountPath: /etc/grafana/ssl/
+  #   configMap: certs-configmap
+  #   readOnly: true
+</code></pre>
+
+<p>有要開外部 ingress，需要 ssl 的話可以從這邊掛進去</p>
+
+<pre><code>## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
+## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+## ref: http://kubernetes.io/docs/user-guide/services/
+##
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 3000
+    # targetPort: 4181 To be used with a proxy extraContainer
+  annotations: {}
+  labels: {}
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: &quot;true&quot;
+  labels: {}
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+</code></pre>
+
+<p>這邊可以開 service load balancer, 以及 ingress，看實際使用的需求</p>
+
+<pre><code>persistence:
+  enabled: true
+  initChownData: true
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  # annotations: {}
+  # subPath: &quot;&quot;
+  # existingClaim:
+</code></pre>
+
+<p>Persistent Volume 作為本地儲存建議都開起來，</p>
+
+<pre><code># Administrator credentials when not using an existing secret (see below)
+adminUser: admin
+# adminPassword: strongpassword
+
+# Use an existing secret for the admin user.
+admin:
+  existingSecret: &quot;&quot;
+  userKey: admin-user
+  passwordKey: admin-password
+</code></pre>
+
+<p>帳號密碼建議使用 secret 掛進去</p>
+
+<pre><code>datasources: {}
+#  datasources.yaml:
+#    apiVersion: 1
+#    datasources:
+#    - name: Prometheus
+#      type: prometheus
+#      url: http://prometheus-prometheus-server
+#      access: proxy
+#      isDefault: true
+
+## Configure grafana dashboard providers
+## ref: http://docs.grafana.org/administration/provisioning/#dashboards
+##
+## `path` must be /var/lib/grafana/dashboards/&lt;provider_name&gt;
+##
+dashboardProviders: {}
+#  dashboardproviders.yaml:
+#    apiVersion: 1
+#    providers:
+#    - name: 'default'
+#      orgId: 1
+#      folder: ''
+#      type: file
+#      disableDeletion: false
+#      editable: true
+#      options:
+#        path: /var/lib/grafana/dashboards/default
+
+## Configure grafana dashboard to import
+## NOTE: To use dashboards you must also enable/configure dashboardProviders
+## ref: https://grafana.com/dashboards
+##
+## dashboards per provider, use provider name as key.
+##
+dashboards: {}
+  # default:
+  #   some-dashboard:
+  #     json: |
+  #       $RAW_JSON
+  #   custom-dashboard:
+  #     file: dashboards/custom-dashboard.json
+  #   prometheus-stats:
+  #     gnetId: 2
+  #     revision: 2
+  #     datasource: Prometheus
+  #   local-dashboard:
+  #     url: https://example.com/repository/test.json
+  #   local-dashboard-base64:
+  #     url: https://example.com/repository/test-b64.json
+  #     b64content: true
+</code></pre>
+
+<p>Data source, Dashboard 想要直接載入，可以在這邊設定，或是 grafana 起來後，透過 Web UI 進去新增也可以</p>
+
+<pre><code>## Grafana's primary configuration
+## NOTE: values in map will be converted to ini format
+## ref: http://docs.grafana.org/installation/configuration/
+##
+grafana.ini:
+  paths:
+    data: /var/lib/grafana/data
+    logs: /var/log/grafana
+    plugins: /var/lib/grafana/plugins
+    provisioning: /etc/grafana/provisioning
+  analytics:
+    check_for_updates: true
+  log:
+    mode: console
+  grafana_net:
+    url: https://grafana.net
+</code></pre>
+
+<p>然後是 grafana.ini 核心 runtime 設定，更多設定可以參考<a href="http://docs.grafana.org/installation/configuration/" target="_blank">官方文件</a></p>
+
+<h1 id="deployment">Deployment</h1>
+
+<p>部屬完看一下</p>
+
+<pre><code>kubectl get po --selector='app=grafana'
+
+
+</code></pre>
+
+<h1 id="access">Access</h1>
+
+<p>如果沒有透過 service load balancer 打出來，一樣可以使用 kubectl 做 port forwarding，權限就是 context 的權限，沒有 cluster context 的使用者就會進步來</p>
+
+<pre><code>GRAFANA_POD_NAME=$(kc get po -n default --selector='app=grafana' -o=jsonpath='{.items[0].metadata.name}')
+kubectl --namespace default port-forward ${GRAFANA_POD_NAME} 3000
+
+http://localhost:3000
+</code></pre>
+
+<p>由於我們透過 service load balancer，gcp 會在外部幫忙架一個 load balancer，
+可以直接透過 load balancer ip 存取，如果想設定 dns，指向這個 ip 後記得去調整 grafana 的 server hostname。</p>
+
+<p>使用 secret 的密碼登入，username: grafana，這個是系統管理員</p>
+
+<pre><code>kubectl get secret --namespace default grafana -o jsonpath=&quot;{.data.admin-password}&quot; | base64 --decode ; echo
+</code></pre>
+
+<h1 id="configuration-1">Configuration</h1>
+
+<p>近來畫面後先到左邊的<a href="https://play.grafana.org/plugins" target="_blank">Configuration</a> 調整</p>
+
+<ul>
+<li>產生新的 user org 與 user，把 admin 權限控制在需要的人手上</li>
+<li>把 prometheus data source 加進來，就可以直接看到 prometheus 裡面的資料。</li>
+<li>切換到非管理員的 user 繼續操作</li>
+</ul>
+
+<h3 id="import-dashboard">Import Dashboard</h3>
+
+<p>Grafana 網站上已經有<a href="https://grafana.com/grafana/dashboards" target="_blank">超多設置好的 Dashboard</a> 可以直接 import，大部分的服務都已經有別人幫我們把視覺畫圖表拉好，使用社群主流的 exporter 的話，參數直接接好。我們匯入後再進行簡單的客製化調整即可。</p>
+
+<p>我們鐵人賽有用到的服務，都已經有 dashboard</p>
+
+<ul>
+<li>kubernetes Cluster: 6417
+
+<ul>
+<li><a href="https://grafana.com/dashboards/6417" target="_blank">https://grafana.com/dashboards/6417</a></li>
+</ul></li>
+<li>Kafka Exporter Overview: 7589
+
+<ul>
+<li><a href="https://grafana.com/dashboards/7589" target="_blank">https://grafana.com/dashboards/7589</a></li>
+</ul></li>
+<li>Prometheus Redis: 763
+
+<ul>
+<li><a href="https://grafana.com/dashboards/763" target="_blank">https://grafana.com/dashboards/763</a></li>
+</ul></li>
+<li>Kubernetes Deployment Statefulset Daemonset metrics: 8588
+
+<ul>
+<li><a href="https://grafana.com/dashboards/8588" target="_blank">https://grafana.com/dashboards/8588</a></li>
+</ul></li>
+<li>Haproxy Metrics Servers: 367
+
+<ul>
+<li><a href="https://grafana.com/dashboards/367" target="_blank">https://grafana.com/dashboards/367</a></li>
+</ul></li>
+<li>Go to grafana lab to find more dashboards</li>
+</ul>
+
+<h3 id="export-dashboard">Export Dashboard</h3>
+
+<p>dashboard 會依照登入使用者的需求做調整，每個腳色需要看到的圖表都不同，基本上讓各個腳色都能一眼看到所需的表格即可</p>
+
+<p>自己的調整過的 dashboard 也可以匯出分享</p>
+
+<h1 id="小結">小結</h1>
+
+<p>到這邊就可以正常使用 grafana了，資料來源的 exporter 我們會搭配前幾周分享過的服務，一起來講</p>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/tags/redis/">redis</a>
+  
+  <a class="badge badge-light" href="/tags/ci/">ci</a>
+  
+  <a class="badge badge-light" href="/tags/cd/">cd</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2c43387b68a5b6b528d86c827c9ada90_16517_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://chechiachang.github.io/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Back-End / DevOps</h6>
+      <p class="card-text" itemprop="description">A software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/chechia.david.chang" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.meetup.com/golang-taipei-meetup/" target="_blank" rel="noopener">
+              <i class="fab fa-meetup"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/prometheus-scrape/">Prometheus Deploy Grafana</a></li>
+          
+          <li><a href="/post/redis-ha-topology/">Redis Ha Topology</a></li>
+          
+          <li><a href="/post/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></li>
+          
+          <li><a href="/project/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></li>
+          
+          <li><a href="/post/monitoring-gke-with-elk/">Monitoring GKE With Elk</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/prometheus-deployment-on-kubernetes/" rel="next">Prometheus Deployment on Kubernetes</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/prometheus-scrape/" rel="prev">Prometheus Deploy Grafana</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    chechiachang &copy; 2016 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

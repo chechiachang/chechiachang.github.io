@@ -131,7 +131,7 @@
   <meta property="og:description" content="Back-End / DevOps"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-09-19T17:06:29&#43;08:00">
+  <meta property="og:updated_time" content="2019-10-10T16:12:10&#43;08:00">
   
 
   
@@ -450,6 +450,96 @@
   
   
   <div>
+    <h2><a href="/post/secure-elk-stack/">Secure Elk Stack</a></h2>
+    <div class="article-style">
+      
+      2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&ndash;
+上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
+官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
+總之為了啟用 authentication &amp; https，這篇要做的事情：
+ enable x-pack &amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server   啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/self-host-elk-stack-on-gcp/">Self-host ELK stack - Installation</a></h2>
+    <div class="article-style">
+      
+      2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&ndash;
+簡介 ELK stack 官方說明文件
+ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/redis-ha-topology/">Redis Ha Topology</a></h2>
+    <div class="article-style">
+      
+      2020 It邦幫忙鐵人賽 系列文章
+ 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+摘要  Redis Sentinel Topology  Topology  Masters: M1, M2, M3, &hellip;, Mn. Slaves: R1, R2, R3, &hellip;, Rn (R stands for replica).
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/talk/service-mesh-for-microservices-on-kubernetes/">Service Mesh for Microservices on Kubernetes</a></h2>
+    <div class="article-style">
+      
+      基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/service-mesh-for-microservice-on-kubernetes/">Istio 三分鐘就入坑 佈署篇</a></h2>
+    <div class="article-style">
+      
+      基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/talk/jenkins-on-kubernetes/">Jenkins on Kubernetes</a></h2>
+    <div class="article-style">
+      
+      Working pipeline with jenkins-x on Kubernetes.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></h2>
+    <div class="article-style">
+      
+      Jenkins is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.
+Jenkins X, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.
+Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/project/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></h2>
+    <div class="article-style">
+      
+      An example project to demonstrate a working pipeline with jenkins-x on Kubernetes.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/talk/elk-on-kubernetes/">ELK for Applications on Kubernetes</a></h2>
     <div class="article-style">
       
@@ -467,44 +557,6 @@
     </div>
   </div>
   
-  <div>
-    <h2><a href="/talk/kubernetes-networking/">Kubernetes Networking</a></h2>
-    <div class="article-style">
-      
-      從系統管理層面看Kubernetes的網路架構
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/talk/gpu-computing-on-kubernetes/">Manage and Schedule GPU Computing Tasks on Kubernetes</a></h2>
-    <div class="article-style">
-      
-      Manage and Schedule GPU Computing Tasks on Kubernetes
-使用Kubernets管理集群GPU機器，靈活的分配調度GPU資源，並自動排程GPU運算工作。 使用者如資料科學家，只需將運算工作實施到Kubernetes上，Kubernetes便會檢視機器上可用的GPU資源，將運算工作分配到合適的機器 上，並監控工作的狀況。如資源不足Kubernetes會自動將工作加入排程，當前面的工作完成，GPU資源釋放後，Kubernetes會自動將運算 工作，配置到合適的機器上。管理者如系統工程師，只需透過Kubernetes，將機器上的GPU資源加入到Kubernetes。
- Why we need Kubernetes for GPUs computing? Pros &amp; Cons How to deploy a GPU-enabled Kubernetes cluster Run GPU computing on Kubernetes cluster  
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/talk/deploy-kubernetes-with-kubespray/">Deploy Kubernetes With Kubespray</a></h2>
-    <div class="article-style">
-      
-      Build your own Kubernetes cluster with ease
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/talk/kubernetes-storage-and-glusterfs/">Kubernetes Storage and Glusterfs</a></h2>
-    <div class="article-style">
-      
-      Kubernetes storage system: use GlusterFS as an example
-      
-    </div>
-  </div>
-  
 
   
 <nav>
@@ -512,6 +564,8 @@
     
     <li class="page-item"><a class="page-link" href="/tags/kubernetes/">&laquo;</a></li>
     
+    
+    <li class="page-item"><a class="page-link" href="/tags/kubernetes/page/3/">&raquo;</a></li>
     
   </ul>
 </nav>

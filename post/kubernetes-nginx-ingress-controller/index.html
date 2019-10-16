@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Che-Chia Chang">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Jenkin-x on Kubernetes Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 nginx ingress controller  Nginx Introduction Nginx 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。
+ 高效能的 web server，遠勝傳統 apache server 的資源與效能 大量的模組與擴充功能 有充足的安全性功能與設定 輕量 容易水平擴展  Ingress &amp; Ingress Controller 這邊簡單講一下 kubernetes ingress。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-137400455-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@chechiachang">
+  <meta property="twitter:creator" content="@chechiachang">
+  
+  <meta property="og:site_name" content="Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/">
+  <meta property="og:title" content="Kubernetes Nginx Ingress Controller | Che-Chia Chang">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Jenkin-x on Kubernetes Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 nginx ingress controller  Nginx Introduction Nginx 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。
+ 高效能的 web server，遠勝傳統 apache server 的資源與效能 大量的模組與擴充功能 有充足的安全性功能與設定 輕量 容易水平擴展  Ingress &amp; Ingress Controller 這邊簡單講一下 kubernetes ingress。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-10-08T08:12:10&#43;08:00">
+  
+  <meta property="article:modified_time" content="2019-10-08T23:08:53&#43;08:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#3f51b5",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#3f51b5"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Kubernetes Nginx Ingress Controller | Che-Chia Chang</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Che-Chia Chang</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks"><span>Talks</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Me</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Docs</span><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            
+            <li class="dropdown-item my-0 py-0 mx-0 px-0">
+              <a href="/post/kubernetes-container-runtime-interface/"><span>Kubernetes Container Runtime Interface</span></a>
+            </li>
+            
+          </ul>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Kubernetes Nginx Ingress Controller</h1>
+
+  
+
+  
+    
+
+
+
+<meta content="2019-10-08 08:12:10 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-10-08 23:08:53 &#43;0800 CST" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Oct 8, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/&amp;text=Kubernetes%20Nginx%20Ingress%20Controller" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/&amp;t=Kubernetes%20Nginx%20Ingress%20Controller" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Kubernetes%20Nginx%20Ingress%20Controller&amp;body=https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/&amp;title=Kubernetes%20Nginx%20Ingress%20Controller" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Kubernetes%20Nginx%20Ingress%20Controller%20https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/&amp;title=Kubernetes%20Nginx%20Ingress%20Controller" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+
+<p>這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。</p>
+
+<ul>
+<li>Nginx Ingress Controller</li>
+<li>Cert-manager</li>
+<li>Jenkin-x on Kubernetes</li>
+<li>Kubernetes CRD &amp; Operator-sdk</li>
+</ul>
+
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
+
+<hr />
+
+<h1 id="nginx-ingress-controller">Nginx Ingress Controller</h1>
+
+<ul>
+<li>簡介 nginx &amp; Ingress Controller</li>
+<li>部屬並設定 nginx ingress controller</li>
+</ul>
+
+<h1 id="nginx-introduction">Nginx Introduction</h1>
+
+<p><a href="https://nginx.org/en/docs/" target="_blank">Nginx</a> 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。</p>
+
+<ul>
+<li>高效能的 web server，遠勝傳統 apache server 的資源與效能</li>
+<li>大量的模組與擴充功能</li>
+<li>有充足的安全性功能與設定</li>
+<li>輕量</li>
+<li>容易水平擴展</li>
+</ul>
+
+<h1 id="ingress-ingress-controller">Ingress &amp; Ingress Controller</h1>
+
+<p>這邊簡單講一下 <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/" target="_blank">kubernetes ingress</a>。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:</p>
+
+<ul>
+<li>service 連接</li>
+<li>load balance 設定</li>
+<li>SSL/TLS 終端</li>
+<li>虛擬主機設定</li>
+</ul>
+
+<p>一個簡單的 ingress 大概長這樣</p>
+
+<pre><code>apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /testpath
+        backend:
+          serviceName: test
+          servicePort: 80
+</code></pre>
+
+<p>除了一般的 k8s 資源，nginx 主要的設定會落在 spec，以及依賴底下實作不同，額外設定的 annotation。</p>
+
+<p>這邊可以看到 spec.rule 定義了外部 http 流量，引導到 backend service 的路徑。</p>
+
+<p>annotations 下已經標註的 nginx.ingress 的 annotation，來快速增加額外的設定。</p>
+
+<h1 id="ingress-ingress-controller-1">Ingress &amp; Ingress Controller</h1>
+
+<p>雖然已經指定 nginx 的 annotation，但這邊要注意，ingress resource 本身是不指定底層的實現 (ingress controller)，也就是說，底下是 nginx 也好，traefik 也行，只要能夠實現 ingress 裏頭設定的 routing rules 就可以。</p>
+
+<p>只設定好 ingress，集群上是不會有任何作用的，還需要在集群上安裝 ingress controller 的實作，實作安裝完了以後，會依據 ingress 的設定，在 controller 裏頭實現，不管是 routing、ssl/tls termination、load balancing 等等功能。如同許多 Kubernetes resource 的設計理念一樣，這邊也很優雅的用 ingress 與 ingress controller，拆分的需求設定與實作實現兩邊的職責。</p>
+
+<p>例如以 nginx ingress controller，安裝完後會依據 ingress 的設定，在 nginx pod 裡設定對應的 routing rules，如果有 ssl/tls 設定，也一併載入。</p>
+
+<p>Kubernetes 官方文件提供了<a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/#additional-controllers" target="_blank">許多不同的 controller</a> 可以依照需求選擇。</p>
+
+<p>但如果不知道如何選擇，個人會推薦使用 nginx ingress controller，穩定、功能強大、設定又不至於太過複雜，基本的設定就能很好的支撐服務，不熟悉的大德們比較不容易被雷到。</p>
+
+<p>底下我們就要來開始使用 nginx ingress controller。</p>
+
+<h1 id="deployment">Deployment</h1>
+
+<p>我們這邊使用的 <a href="https://github.com/kubernetes/ingress-nginx" target="_blank">ingress-nginx</a> 是 kubernetes org 內維護的專案，專案內容主要是再 k8s 上執行 nginx，抽象與實作的整合，並透過 configmap 來設定 nginx。針對 nginx ingress kubernetes 官方有提供<a href="https://kubernetes.github.io/ingress-nginx/" target="_blank">非常詳細的說明文件</a> ，剛接觸 nginx 的大德可以透過這份文件，快速的操作 nginx 的設定，而不用直接寫 nginx.conf 的設定檔案。</p>
+
+<ul>
+<li>repo 版本是 nginx-0.26.1</li>
+<li>Image 版本是 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1</li>
+</ul>
+
+<h3 id="helm">Helm</h3>
+
+<p>我們這邊用 helm 部屬，<a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress" target="_blank">Nginx Ingress Controller Stable Chart</a>，讓各位大德用最簡單的步驟，獲得一個功能完整的 nginx ingress controller。</p>
+
+<p>與前面幾個 helm chart 一樣，我們可以先取得 default values.yaml 設定檔，再進行更改。</p>
+
+<pre><code>$ wget https://raw.githubusercontent.com/helm/charts/master/stable/nginx-ingress/values.yaml
+$ vim values.yaml
+</code></pre>
+
+<p>安裝時也可以使用 &ndash;set 來變更<a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration" target="_blank">安裝 chart 時的 parameters</a></p>
+
+<pre><code>$ helm install stable/nginx-ingress \
+	--set controller.metrics.enabled=true \
+	-f values.yaml
+</code></pre>
+
+<p>安裝完後，resource 很快就起來。</p>
+
+<pre><code>kubectl get all --selector app=nginx-ingress
+NAME                                                 READY   STATUS    RESTARTS   AGE
+pod/nginx-ingress-controller-7bbcbdcf7f-tx69n        1/1     Running   0          216d
+pod/nginx-ingress-default-backend-544cfb69fc-rnn6h   1/1     Running   0          216d
+
+NAME                                    TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                      AGE
+service/nginx-ingress-controller        LoadBalancer   10.15.246.22   34.35.36.37    80:30782/TCP,443:31933/TCP   216d
+service/nginx-ingress-default-backend   ClusterIP      10.15.243.19   &lt;none&gt;         80/TCP                       216d
+
+NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-ingress-controller        1/1     1            1           216d
+deployment.apps/nginx-ingress-default-backend   1/1     1            1           216d
+
+NAME                                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-ingress-controller-7bbcbdcf7f        1         1         1       216d
+replicaset.apps/nginx-ingress-default-backend-544cfb69fc   1         1         1       216d
+
+kubectl get configmap -l app=nginx-ingress
+NAME                       DATA   AGE
+nginx-ingress-controller   2      216d
+
+kubectl get ingress
+NAME            HOSTS                  ADDRESS       PORTS     AGE
+ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
+</code></pre>
+
+<p>兩個 Pods</p>
+
+<ul>
+<li>Nginx ingress controller 是主要的 nginx pod，裡面跑的是 nginx</li>
+<li>Nginx default backend 跑的是 default backend，nginx 看不懂了 route request 都往這邊送。</li>
+</ul>
+
+<p>Service</p>
+
+<ul>
+<li>nginx-ingress-contrller 是我們在 GCP 上，在集群外部的 GCP 上的對外接口。如果在不同平台上，依據預設 service load balancer 有不同實作。</li>
+<li>在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量</li>
+<li>另外一個 service 就是 default backend 的 service</li>
+</ul>
+
+<h1 id="踩雷">踩雷</h1>
+
+<p>第一個雷點是 helm chart install 帶入的 <a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration" target="_blank">parameters</a>，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。</p>
+
+<pre><code>$ helm install stable/nginx-ingress \
+	--set controller.metrics.enabled=true \
+	--set controller.service.externalTrafficPolicy=Local \
+	-f values.yaml
+</code></pre>
+
+<p>這邊開了 prometheus metrics exporter，以及 source IP preservation。</p>
+
+<h1 id="nginx-config">Nginx Config</h1>
+
+<p>再安裝完後，外部的 load balancer 啟用後，就可以透過 GCP 的 external ip 連入 nginx，nginx 依照設定的 rule 向後端服務做集群內的 load balancing 與 routing。</p>
+
+<p>如果在使用過程中，有需要執行更改設定，或是 hot reload config，在 kubernetes 上要如何做呢? 我們下回分解。</p>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/tags/nginx/">nginx</a>
+  
+  <a class="badge badge-light" href="/tags/ci/">ci</a>
+  
+  <a class="badge badge-light" href="/tags/cd/">cd</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2c43387b68a5b6b528d86c827c9ada90_16517_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://chechiachang.github.io/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Back-End / DevOps</h6>
+      <p class="card-text" itemprop="description">A software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/chechia.david.chang" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.meetup.com/golang-taipei-meetup/" target="_blank" rel="noopener">
+              <i class="fab fa-meetup"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/kubernetes-nginx-ingress-config/">Kubernetes Nginx Ingress Controller Config</a></li>
+          
+          <li><a href="/post/prometheus-kube-state-metrics-exporter/">Prometheus &amp; Kubernetes State Metrics Exporter</a></li>
+          
+          <li><a href="/post/prometheus-exporter-library-redis-exporter/">Prometheus Exporter Library &amp; Redis Exporter</a></li>
+          
+          <li><a href="/post/prometheus-deployment-on-kubernetes/">Prometheus Deployment on Kubernetes</a></li>
+          
+          <li><a href="/post/prometheus-scrape/">Prometheus Deploy Grafana</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/cert-manager-deployment/" rel="next">Cert Manager Deployment on Kubernetes</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/kubernetes-nginx-ingress-config/" rel="prev">Kubernetes Nginx Ingress Controller Config</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    chechiachang &copy; 2016 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

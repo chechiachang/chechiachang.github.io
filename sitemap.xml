@@ -4,7 +4,112 @@
   
   <url>
     <loc>https://chechiachang.github.io/</loc>
-    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
+    <lastmod>2019-10-15T23:19:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/</loc>
+    <lastmod>2019-10-15T23:19:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kubernetes-custom-resources-basic/</loc>
+    <lastmod>2019-10-13T18:56:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/cert-manager-complete-workflow/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/cert-manager-how-it-work/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/cert-manager-deployment/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/cert-manager/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ssl/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/tls/</loc>
+    <lastmod>2019-10-13T18:01:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/cd/</loc>
+    <lastmod>2019-10-10T23:29:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/ci/</loc>
+    <lastmod>2019-10-10T23:29:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/</loc>
+    <lastmod>2019-10-08T23:08:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/</loc>
+    <lastmod>2019-10-10T23:29:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/nginx/</loc>
+    <lastmod>2019-10-10T23:29:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/</loc>
+    <lastmod>2019-10-08T11:16:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/redis/</loc>
+    <lastmod>2019-10-08T11:16:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/</loc>
+    <lastmod>2019-10-08T11:16:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/</loc>
+    <lastmod>2019-10-08T11:16:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/prometheus-deploy-grafana/</loc>
+    <lastmod>2019-10-08T11:16:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/prometheus-scrape/</loc>
+    <lastmod>2019-10-08T11:16:19+08:00</lastmod>
   </url>
   
   <url>
@@ -83,11 +188,6 @@
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
-    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechiachang.github.io/tags/log/</loc>
     <lastmod>2019-09-22T11:32:44+08:00</lastmod>
   </url>
@@ -103,11 +203,6 @@
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/tags/</loc>
-    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechiachang.github.io/post/monitoring-gce-with-elk/</loc>
     <lastmod>2019-09-22T11:32:44+08:00</lastmod>
   </url>
@@ -119,16 +214,6 @@
   
   <url>
     <loc>https://chechiachang.github.io/tags/https/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/ssl/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/tls/</loc>
     <lastmod>2019-09-22T11:32:44+08:00</lastmod>
   </url>
   
@@ -165,21 +250,6 @@
   <url>
     <loc>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</loc>
     <lastmod>2019-10-03T14:01:24+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/cd/</loc>
-    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/ci/</loc>
-    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/redis/</loc>
-    <lastmod>2019-10-03T22:50:30+08:00</lastmod>
   </url>
   
   <url>
