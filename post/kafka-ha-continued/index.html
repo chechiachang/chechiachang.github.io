@@ -32,7 +32,7 @@
  ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-ha-topology/">
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/kafka-ha-continued/">
 
   
 
@@ -111,7 +111,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-ha-topology/">
+  <link rel="canonical" href="https://chechiachang.github.io/post/kafka-ha-continued/">
 
   
   
@@ -125,15 +125,15 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-ha-topology/">
-  <meta property="og:title" content="Kafka HA Topology | Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/kafka-ha-continued/">
+  <meta property="og:title" content="Kafka HA Continued | Che-Chia Chang">
   <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
  ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  Kafka HA on Kubernetes  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-09-25T22:50:32&#43;08:00">
+  <meta property="article:published_time" content="2019-09-26T22:50:32&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-09-27T22:57:44&#43;08:00">
+  <meta property="article:modified_time" content="2019-10-16T20:40:22&#43;08:00">
   
 
   
@@ -171,7 +171,7 @@
 
 
 
-  <title>Kafka HA Topology | Che-Chia Chang</title>
+  <title>Kafka HA Continued | Che-Chia Chang</title>
 
 </head>
 
@@ -437,7 +437,7 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">Kafka HA Topology</h1>
+  <h1 itemprop="name">Kafka HA Continued</h1>
 
   
 
@@ -446,8 +446,8 @@
 
 
 
-<meta content="2019-09-25 22:50:32 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-09-27 22:57:44 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-09-26 22:50:32 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-10-16 20:40:22 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -462,7 +462,7 @@
           Last updated on
       
     
-    <time>Sep 27, 2019</time>
+    <time>Oct 16, 2019</time>
   </span>
   
 
@@ -494,7 +494,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-ha-topology/&amp;text=Kafka%20HA%20Topology" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/kafka-ha-continued/&amp;text=Kafka%20HA%20Continued" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -507,7 +507,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-ha-topology/&amp;t=Kafka%20HA%20Topology" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/kafka-ha-continued/&amp;t=Kafka%20HA%20Continued" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -520,7 +520,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Kafka%20HA%20Topology&amp;body=https://chechiachang.github.io/post/kafka-ha-topology/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Kafka%20HA%20Continued&amp;body=https://chechiachang.github.io/post/kafka-ha-continued/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -533,7 +533,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-ha-topology/&amp;title=Kafka%20HA%20Topology" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/kafka-ha-continued/&amp;title=Kafka%20HA%20Continued" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -546,7 +546,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Kafka%20HA%20Topology%20https://chechiachang.github.io/post/kafka-ha-topology/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Kafka%20HA%20Continued%20https://chechiachang.github.io/post/kafka-ha-continued/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-ha-topology/&amp;title=Kafka%20HA%20Topology" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/kafka-ha-continued/&amp;title=Kafka%20HA%20Continued" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -640,204 +640,99 @@
 <h1 id="摘要">摘要</h1>
 
 <ul>
-<li>Zookeeper Multi-server setup</li>
-<li>Kafka Multi-broker setup</li>
+<li>Kafka&rsquo;s quorum set</li>
 </ul>
 
-<h1 id="zookeeper-multi-server">Zookeeper Multi-Server</h1>
+<h1 id="kafka-的-quorum-set">Kafka 的 quorum set</h1>
 
-<p>為了維持 zookeeper 有效運作，cluster 必須維持 majority (多數)，也就是至少一半的機器在線。如果總共 3 台，便可以忍受 1 台故障仍保有 majority。如果是 5 台就可以容忍 2 台故障。一般來說都建議使用基數數量。<a href="https://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html#sc_zkMulitServerSetup" target="_blank">Zookeeper Multi Server Setup</a></p>
+<p>這篇跟上篇其實再講 quorum，應該連在一起，但礙於篇幅（以及我個人的時間ＱＱ）拆成了兩篇。各位有需要可以回顧一下。</p>
 
-<p>普遍情況，3 台 zookeeper 已經是 production ready 的狀態，但如果為了更高的可用性，以方便進行單節點停機維護，可以增加節點數量。</p>
+<h3 id="replicated-log-commit-decision">Replicated log commit decision</h3>
 
-<h3 id="topology">Topology</h3>
-
-<p>需要將 zookeeper 放在不同的機器上，不同的網路環境，甚至是不同的雲平台區域上，以承受不同程度的故障。例如單台機器故障，或是區域性的網路故障。</p>
-
-<p>我們這邊會使用 Kubernetes PodAntiAffinity，要求 scheduler 在部屬時，必須將 zookeeper 分散到不同的機器上。設定如下：</p>
-
-<pre><code>vim values-staging.yaml
-
-zookeeper:
-  enabled: true
-
-  resources: ~
-
-  env:
-    ZK_HEAP_SIZE: &quot;1G&quot;
-
-  persistence:
-    enabled: false
-
-  image:
-    PullPolicy: &quot;IfNotPresent&quot;
-
-  url: &quot;&quot;
-  port: 2181
-
-  ## Pod scheduling preferences (by default keep pods within a release on separate nodes).
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## By default we don't set affinity:
-  affinity: # Criteria by which pod label-values influence scheduling for zookeeper pods.
-   podAntiAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-       - topologyKey: &quot;kubernetes.io/hostname&quot;
-         labelSelector:
-           matchLabels:
-             release: zookeeper
-</code></pre>
-
-<p>使用 podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution，如果 topologyKey 已經有指定 label 的 pod 存在，則無法部署，需要數到其他台機器。</p>
-
-<pre><code>kubectl get pods --output wide | grep zookeeper
-
-NAME                  READY   STATUS      RESTARTS   AGE     IP              NODE                                    
-kafka-0-zookeeper-0   1/1     Running     0          42d     10.8.12.4       gke-chechiachang-pool-1-e06e6d00-pc98   
-kafka-0-zookeeper-1   1/1     Running     0          42d     10.8.4.4        gke-chechiachang-pool-1-e06e6d00-c29q   
-kafka-0-zookeeper-2   1/1     Running     0          42d     10.8.3.6        gke-chechiachang-pool-1-e06e6d00-krwc   
-</code></pre>
-
-<p>效果是 zookeeper 都分配到不同的機器上。</p>
-
-<h3 id="guarantees">Guarantees</h3>
-
-<p>Zookeeper 對於資料一致性，有這些保障 <a href="https://zookeeper.apache.org/doc/r3.5.5/zookeeperProgrammers.html#ch_zkGuarantees" target="_blank">Consistency Guarantees</a></p>
+<p>上篇提到了兩個維持 replicated log 的 model</p>
 
 <ul>
-<li>順序一致性：資料更新的順序，與發送的順序一致</li>
-<li>原子性：資料更新只有成功或失敗，沒有部份效果</li>
-<li>系統一致性：可戶端連到 server 看到的東西都是一樣，無關連入哪個 server</li>
-<li>可靠性：
-
-<ul>
-<li>客戶端的更新請求，一但收到 server 回覆更新成功，便會持續保存狀態。某些錯誤會造成客戶端收不到回覆， 可能是網路問題，或是 server 內部問題，這邊就無法確定 server 上的狀態，是否被更新了，或是請求已經遺失了。</li>
-<li>從客戶讀取到的資料都是以確認的資料，不會因為 server 故障回滾(Roll back)而回到舊的狀態</li>
-</ul></li>
+<li>有更新進來，leader 等待所有 follower 都 ack，才 commit。</li>
+<li>有更新進來，leader 取得所有 node (2n+1) 中的多數 node 回應(n+1)，就 commit。而 leader election 時，必須比對 node 上的 log，決定誰是 electable leader(有最完整 log 的 follower)，這樣稱為共識(Quorum)</li>
 </ul>
 
-<h1 id="kafka-的設定">Kafka 的設定</h1>
+<p>前者的好處是，所有 node 都有完整的 log 後，leader 才會 commit，回覆給客戶 commit  的資訊，所以每個 follower 都是 leader electable 人人都可以當 leader，leader 一故障就選擇新的 leader 即可。壞處就是 leader 在等待所有 follow ack 的時間會非常久，而且時間複雜度可能會隨 cluster size scale，或是變成要等最慢的 node 回應(worst case)。這樣在 node 數量多的時候非常不經濟。</p>
 
-<pre><code>## The StatefulSet installs 3 pods by default
-replicas: 3
+<p>後者的好處是，n+1 node ack 後就 commit，leader commit 的速度是由前段班的回應速度決定。leader 出現故障，仍能維持多數 node 的資料正確。</p>
 
-resources:
-   limits:
-     cpu: 200m
-     memory: 4096Mi
-   requests:
-     cpu: 100m
-     memory: 1024Mi
-kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
-</code></pre>
+<h3 id="leader-election-decision">Leader election decision</h3>
 
-<p>設定 broker 的數量，以及 Pod 提供的 resource，並且透過 heapOption 把記憶體設定塞進 JVM</p>
+<p>Leader Election 的問題也是類似，如果選擇 leader 時，所有的 follower 都比對過 log，這樣花的時間會很久。要知道，這是個分散式的架構，沒有中心化的 controller，也就是 follower 彼此需要交互比對。而且時間隨 follower 數量 scale。 造成topic partition 沒有 leader 的時間(downtime)太長。</p>
 
-<pre><code>affinity:
- affinity:
-   podAntiAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-     - labelSelector:
-         matchExpressions:
-         - key: app
-           operator: In
-           values:
-           - kafka
-       topologyKey: &quot;kubernetes.io/hostname&quot;
-   podAffinity:
-     preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 50
-        podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-                - zookeeper
-</code></pre>
+<p>如果使用 majority，也就是當 leader 死掉，產生新的 leader election 時，只詢問 n+1 個 follower ，然後從選出 log 最完整的人當 leader， 這樣過程中每個 follower 彼此比對，確認，然後才選出 leader，確認 leader 的結果，所花的時間會大幅縮短。</p>
 
-<p>這邊下了兩個 affinity</p>
+<p>當然，這麼做產生的 tradeoff，就是萬一取得多數決的 n+1 個 follower 裡面，沒有最完整的 log ，那從裡頭選出來的 leader 自然也沒有完整 log，選出來的 leader 就會遺失資料。</p>
+
+<h3 id="一個完整的-quorum-機制">一個完整的 Quorum 機制</h3>
+
+<p>這不是 kafka 的機制，但我們順帶聊聊。</p>
 
 <ul>
-<li>podAntiAffinity 盡量讓 kafka-broker 分散到不同機器上</li>
-<li>podAffinity 讓 broker prefer 跟 zookeeper 放在一起</li>
+<li>commit decision 使用多數決(majority)</li>
+<li>leader election 也使用多數決</li>
 </ul>
 
-<p>分散的理由同上，不希望一台機器死了，就讓多個 broker 跟著死</p>
+<p>總共有 2n+1 replicas，leader 取得 n+1 ack 才能 commit message。然後 leader election 時，從至少 n+1 個 follower 中取得多數決才能選出 leader。有過半的完整log，加上取得過半數的人確認，兩者產生 overlap。這樣的共識就確保有完整的 log 的 follower 一定會出現在 leader election 中，確保選出來的 leader 有完整 log。</p>
 
-<p>要和 zookeeper 放在一起，就要看需求與實際環境調整</p>
+<p>好處如前面描述，整體效能由前段班的速度決定。</p>
 
-<pre><code>configurationOverrides:
-  &quot;default.replication.factor&quot;: 3
-  &quot;offsets.topic.replication.factor&quot;: 2 # Increased from 1 to 2 for higher output
-  &quot;offsets.topic.num.partitions&quot;: 3
-  &quot;confluent.support.metrics.enable&quot;: false  # Disables confluent metric submission
-  &quot;auto.leader.rebalance.enable&quot;: true
-  &quot;auto.create.topics.enable&quot;: true
-  &quot;message.max.bytes&quot;: &quot;16000000&quot; # Extend global topic max message bytes to 16 Mb
-</code></pre>
+<p>壞處是，很容易就沒有足夠的 electable leader。要容忍 1 個錯誤，需要 3 個完整備份，要容忍 2 個錯誤需要 5 個備份。在實務上，只靠依賴夠多的 redundency 容錯非常的不實際：每一次寫入需要 5 倍寫入跟硬碟空間，但整體效能只有 1/5。資料量大就直接ＧＧ。所以 quorum 才會只存在分散式集群(ex. zookeeper)，而不會直接用在儲存系統。</p>
 
-<p>這邊再把 broker 運行的設定參數塞進去，參數的用途大多與複本與高可用機制有關下面都會提到。</p>
+<h3 id="kafka-s-approach">Kafka&rsquo;s approach</h3>
 
-<h1 id="kafka-的複本機制">Kafka 的複本機制</h1>
+<p>Kafka 不使用 majority vote，而是去動態維護一套 in-sync replicas(ISR) ，這些 ISR 會跟上 leader 的進度，而只有這些 ISR 才能是 leader eligible。一個 update 只有在所有 ISR 都 ack 後才會 commit。</p>
 
-<p><a href="https://kafka.apache.org/documentation/#replication" target="_blank">kafka 的副本機制</a> 預設將各個 topic partition 的 log 分散到 server 上，如果其中一台 server 故障，資料仍然可用。</p>
+<p>ISR 的狀態不放在 kafka 而放在 zookeeper 上，也就是目前哪些 node 是 ISR 的記錄存在 zookeeper。這件事對維持 kafka 節點上，leader 能夠分散在各個 kafka node 上(leader rebalance)是很重要的。</p>
 
-<p>兩個重要的設定</p>
+<p>kafka&rsquo;s approach 與 majority vote，在等待 message commit ack 上所花的成本是一樣的。 然而在 leader election 上，kafka 的 ISR 確保了更多個 eligiable leader 的數量，持續維持在合理的數量，而不會要維持大量個 redundency。ISR 放在外部，更方便 kafka 做 leader rebalance，增加穩定度。</p>
+
+<h1 id="unclean-leader-election">Unclean leader election</h1>
+
+<p>如果 leaders 都死光了會怎樣？</p>
+
+<p>只要有一個 replica in-sync，Kafka 就保證資料的完整性。然而所有可用的 leaders 都死了，這個就無法保證。</p>
+
+<p>如果這個情形發生了，kafka 會做以下處理</p>
 
 <ul>
-<li>num.partitions=N</li>
-<li>default.replication.factor=M</li>
+<li>等 ISR 中有人完全回復過來，然後選這個 node 作為 leader(有資料遺失的風險)</li>
+<li>直接選擇第一個回覆的 node (不一定在 ISR 中)，先回覆的就指派為 leader</li>
 </ul>
 
-<p>kafka 預設使用複本，所有機制與設計都圍繞著複本。如果（因為某些原因）不希望使用複本，可將 replication factor 設為 1。</p>
+<p>前者犧牲 availability （回覆前沒有 leader 可作讀寫）來確保資料是來自 ISR，雖然錯誤中無法讀寫(downtime)，但可以確定錯誤前跟錯誤後的資料都來自 ISR</p>
 
-<p>replication 的單位是 topic partition，正常狀況下</p>
+<p>後者犧牲 consistency （來自非 ISR 的 leader 可能導致資料不正確），然而卻能更快的從錯誤中回覆，減少 downtime</p>
+
+<p>0.11.0.0  後的 kafka 預設是選擇前者，也就是 consistency over availability，當然這可以在設定更改。</p>
+
+<h1 id="availability-and-durability-guarantees">Availability and Durability Guarantees</h1>
+
+<p>近一步考慮 client 的影響。</p>
+
+<p>Producer 在寫入時可以選擇 message 需要多少 acknowledge，0, 1 or all，ack=all 指的是 message 收到所有 in-sync replicas 的 ack</p>
 
 <ul>
-<li>一個 partition 會有一個 leader，以及零個或以上個 follower</li>
-<li>leader + follower 總數是 replication factor</li>
-<li>所有讀寫都是對 leader 讀寫</li>
-<li>leader 的 log 會同步到 follower 上，leader 與 follower 狀態是一樣的</li>
+<li>如果 2 replicas 中有 1 個故障，這時寫入只要收到 1 個 ISR 的 ack，就達成 ack=all</li>
+<li>但如果不幸剩下一個 replicas 也死了 (0/0 ack)，寫入的資料就會遺失</li>
 </ul>
 
-<h3 id="election-load-balance">Election &amp; Load balance</h3>
-
-<p>通常一個 topic 會有多個 partition，也就是說，每個 topic 會有多個 partition leader，分散負載</p>
-
-<p>通常 topic partition 的總數會比 broker 的數量多</p>
+<p>有些使用情境，會希望資料的耐用度(Durability)優先於可用性(Availability)，可以透過以下兩個方式設定</p>
 
 <ul>
-<li>以上一篇範例，我們有三個 kafka-0-broker 各自是一個 Pod</li>
-<li>有 topic: ticker 跟預設的 <code>__consumer_offset__</code>，乘上 partition number 的設定值(N)，會有 2N 個 partitions</li>
-<li>partitiion 會有各自的複本，kafka 會盡量將相同 topic 的複本分散到不同 broker 上</li>
-<li>kafka 也會盡量維持 partition 的 leader 分散在不同的 broker 上，這個部分 kafka 會透過算法做 leader election，也可手動使用腳本做 <a href="https://kafka.apache.org/documentation/#basic_ops_leader_balancing" target="_blank">Balancing leadership</a></li>
+<li>禁用 unclean leader election，效果是如果所有的 replicas 都失效，則整個 partition 都失效，直到前一個 leader 回復正常。</li>
+<li>指定可接受的最少 ISR，如果 partition 中的 ISR 低於這個數量，就停止寫入這個 partition，直到 ISR 的數量回覆。</li>
 </ul>
 
-<p>總之，topic 的 partition 與 leader 會分散到 broker 上，維持 partition 的可用性。</p>
+<p>這樣雖然犧牲了可用性，卻可以最大程度地確保資料的可靠性。</p>
 
-<h3 id="sync">sync</h3>
+<h1 id="複本管理">複本管理</h1>
 
-<ul>
-<li>node 要能夠維持 zookeeper 的 session (zookeeper 有 heartbeat 機制)</li>
-<li>follower 不能落後 leader 太多</li>
-</ul>
-
-<p>kafka 能保障資料不會遺失，只要至少一個 node 是在 sync 的狀態。例如本來有三個 partition，其中兩個 partition 不同步，只要其中一個 partition 是同步，便能作為 leader 持續提供正確的 message。</p>
-
-<h1 id="replicated-logs">Replicated Logs</h1>
-
-<p>kafka 透過 <a href="https://kafka.apache.org/documentation/#design_replicatedlog" target="_blank">replicated log</a> 維持分散式的 partition</p>
-
-<p>複本間要維持共識(consensus)的最簡單機制，就是單一 leader 決定，其他 follower 跟隨。然而萬一 leader 死了，選出的新 leader 卻還沒跟上原先 leader 的資料。這時便使用 replicated log，來確保新的 leader 就算原先沒跟上，也能透過 replicated log 隨後跟上且不遺失資料。維持 log 一直都同步的前提，就是 leader 要一直確認 followers 的 log 都有跟上，這個其實就是變相的多 leader，效能消耗較大。</p>
-
-<p>另一個維持 log 機制，如果希望 follower 彼此的 log 應該先進行比對，讓資料交接過程有 overlap，這個過程稱為 Quorum。一個常用的方式是多數決(majority)</p>
-
-<ul>
-<li>如果總共有 2n+1 的 node，leader 要向 n+1 個 follower 取得共識，才確定這個 log 已經 commit 了</li>
-<li>leader 總是維持 n+1 follower 的 log 有跟上，因此可以容忍最多 n 個 node 死了，集群整體能有 n+1 的 node 維持著正確的 commited log</li>
-<li>不用向所有 node 確認才 commit ，節省了一半的 ack</li>
-<li>majarity 的另一個好處是，n+1 共識的速度是由前 <sup>1</sup>&frasl;<sub>2</sub> 快的 node 決定的。由於只要先取得 n+1 就可以 commit，速度快的 node 會先回應，讓整體速度提升。</li>
-</ul>
+<p>上面的討論都只是再說一個 topic，實務中 kafka 中會有大量的 topic ，乘上 partition number 與 replication factor，成千上萬的複本分散在集群中，kafka 會試圖分散 replicas 到集群中，並讓 leader 的數量平均在 node 上</p>
 
     </div>
 
@@ -983,14 +878,14 @@ kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/post/kafka-ha-continued/" rel="next">Kafka HA Continued</a>
+    <a href="/post/redis-ha-deployment/" rel="next">Redis Ha Deployment</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/post/kafka-operation-scripts/" rel="prev">Kafka Operation Scripts</a>
+    <a href="/post/kafka-ha-topology/" rel="prev">Kafka HA Topology</a>
   </div>
   
 </div>

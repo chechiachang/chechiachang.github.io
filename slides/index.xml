@@ -7,10 +7,498 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Fri, 19 Apr 2019 21:36:50 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 18 Oct 2019 16:12:42 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/slides/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Deploy Kafka on Kubernetes</title>
+      <link>https://chechiachang.github.io/slides/kubernetes-kafka-ha/</link>
+      <pubDate>Fri, 18 Oct 2019 16:12:42 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/slides/kubernetes-kafka-ha/</guid>
+      <description>
+
+&lt;h3 id=&#34;deploy-kafka-on-kubernetes&#34;&gt;Deploy Kafka on Kubernetes&lt;/h3&gt;
+
+&lt;p&gt;David Chang&lt;/p&gt;
+
+&lt;p&gt;QRCode&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;about-me&#34;&gt;About Me&lt;/h3&gt;
+
+&lt;p&gt;David (Che-Chia) Chang&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Backend / Devops @ &lt;a href=&#34;https://machix.com/&#34; target=&#34;_blank&#34;&gt;MachiX&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.meetup.com/golang-taipei-meetup/&#34; target=&#34;_blank&#34;&gt;Golang Taipei Meetup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/users/20120327/ironman/2444&#34; target=&#34;_blank&#34;&gt;2020 Ithelp Ironman Challenge&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://t.me/chechiachang&#34; target=&#34;_blank&#34;&gt;https://t.me/chechiachang&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Introduction to Kafka&lt;/li&gt;
+&lt;li&gt;Deploy Kafka with Helm&lt;/li&gt;
+&lt;li&gt;Kafka Topology&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10219040&#34; target=&#34;_blank&#34;&gt;Ithelp Ironman 30 days Challenge (7th-12nd day)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;https://kafka.apache.org/images/logo.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+
+
+&lt;/figure&gt;
+
+
+&lt;p&gt;&lt;a href=&#34;https://kafka.apache.org/&#34; target=&#34;_blank&#34;&gt;https://kafka.apache.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;distributed-streaming-platform&#34;&gt;Distributed streaming platform&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Publish &amp;amp; Subscribe: r/w data like messaging system&lt;/li&gt;
+&lt;li&gt;Store data in distributed, replicated, fault-tolerant cluster&lt;/li&gt;
+&lt;li&gt;Scalable&lt;/li&gt;
+&lt;li&gt;Realtime&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;concepts&#34;&gt;Concepts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kafka run as a cluster&lt;/li&gt;
+&lt;li&gt;Kafka cluster stores streams of &lt;strong&gt;records&lt;/strong&gt; in categories called &lt;strong&gt;topics&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;record = (key, value, timestamp)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;kafka-diagram&#34;&gt;Kafka Diagram&lt;/h3&gt;
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;https://kafka.apache.org/23/images/kafka-apis.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+
+
+&lt;/figure&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;topic-partitions&#34;&gt;Topic Partitions&lt;/h3&gt;
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;https://kafka.apache.org/23/images/log_anatomy.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+
+
+&lt;/figure&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;topic-partitions-1&#34;&gt;Topic Partitions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data categorized by topic&lt;/li&gt;
+&lt;li&gt;Data replicated in partitions&lt;/li&gt;
+&lt;li&gt;Durability
+
+&lt;ul&gt;
+&lt;li&gt;consumer able to r/w complete data from at least 1 partition&lt;/li&gt;
+&lt;li&gt;in order&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;distributed-data-streaming&#34;&gt;Distributed Data Streaming&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Scalible r/w bandwith&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Data Durability&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Consistency&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Availability&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Partition Tolerance&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;multi-consumer&#34;&gt;Multi Consumer&lt;/h3&gt;
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;https://kafka.apache.org/23/images/log_consumer.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+
+
+&lt;/figure&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;consumer-group&#34;&gt;Consumer Group&lt;/h3&gt;
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;https://kafka.apache.org/23/images/consumer-groups.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+
+
+&lt;/figure&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;consumer-group-1&#34;&gt;Consumer Group&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Partition deliver record to one consumer within each subscribing consumer group&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;deployment&#34;&gt;Deployment&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/incubator/kafka&#34; target=&#34;_blank&#34;&gt;Helm Kafka&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;deployment-1&#34;&gt;Deployment&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/chechiachang/kafka-on-kubernetes&#34; target=&#34;_blank&#34;&gt;https://github.com/chechiachang/kafka-on-kubernetes&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cat install.sh
+
+#!/bin/bash
+# https://github.com/helm/charts/tree/master/incubator/kafka
+
+HELM_NAME=kafka-1
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+
+helm upgrade --install ${HELM_NAME} incubator/kafka --version 0.16.2 -f values-staging.yaml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Check values-staging.yaml before deployment&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;helm-chart-values&#34;&gt;Helm Chart Values&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;cat values-staging.yaml
+
+# ------------------------------------------------------------------------------
+# Kafka:
+# ------------------------------------------------------------------------------
+
+## The StatefulSet installs 3 pods by default
+replicas: 3
+
+## The kafka image repository
+image: &amp;quot;confluentinc/cp-kafka&amp;quot;
+
+## The kafka image tag
+imageTag: &amp;quot;5.0.1&amp;quot;  # Confluent image for Kafka 2.0.0
+
+## Specify a imagePullPolicy
+## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+imagePullPolicy: &amp;quot;IfNotPresent&amp;quot;
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+resources: {}
+  # limits:
+  #   cpu: 200m
+  #   memory: 1536Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 1024Mi
+kafkaHeapOptions: &amp;quot;-Xmx4G -Xms1G&amp;quot;
+
+## The StatefulSet Update Strategy which Kafka will use when changes are applied.
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+updateStrategy:
+  type: &amp;quot;OnDelete&amp;quot;
+
+## Start and stop pods in Parallel or OrderedReady (one-by-one.)  Note - Can not change after first release.
+## ref: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#pod-management-policy
+podManagementPolicy: OrderedReady
+
+## If RBAC is enabled on the cluster, the Kafka init container needs a service account
+## with permissisions sufficient to apply pod labels
+rbac:
+  enabled: false
+
+affinity:
+   podAntiAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+     - labelSelector:
+         matchExpressions:
+         - key: app
+           operator: In
+           values:
+           - kafka
+       topologyKey: &amp;quot;kubernetes.io/hostname&amp;quot;
+   podAffinity:
+     preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 50
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+                - zookeeper
+          topologyKey: &amp;quot;kubernetes.io/hostname&amp;quot;
+
+## Configuration Overrides. Specify any Kafka settings you would like set on the StatefulSet
+## here in map format, as defined in the official docs.
+## ref: https://kafka.apache.org/documentation/#brokerconfigs
+##
+
+configurationOverrides:
+  &amp;quot;default.replication.factor&amp;quot;: 3
+  &amp;quot;offsets.topic.replication.factor&amp;quot;: 1 # Increased from 1 to 2 for higher output
+  # &amp;quot;offsets.topic.num.partitions&amp;quot;: 3
+  &amp;quot;confluent.support.metrics.enable&amp;quot;: false  # Disables confluent metric submission
+  # &amp;quot;auto.leader.rebalance.enable&amp;quot;: true
+  # &amp;quot;auto.create.topics.enable&amp;quot;: true
+  # &amp;quot;controlled.shutdown.enable&amp;quot;: true
+  # &amp;quot;controlled.shutdown.max.retries&amp;quot;: 100
+  &amp;quot;message.max.bytes&amp;quot;: &amp;quot;16000000&amp;quot; # Extend global topic max message bytes to 16 Mb
+
+## Persistence configuration. Specify if and how to persist data to a persistent volume.
+##
+
+persistence:
+  enabled: true
+
+## Prometheus Exporters / Metrics
+##
+
+prometheus:
+  ## Prometheus JMX Exporter: exposes the majority of Kafkas metrics
+  jmx:
+    enabled: true
+
+  ## Prometheus Kafka Exporter: exposes complimentary metrics to JMX Exporter
+  kafka:
+    enabled: true
+topics: []
+
+# ------------------------------------------------------------------------------
+# Zookeeper:
+# ------------------------------------------------------------------------------
+
+zookeeper:
+  ## If true, install the Zookeeper chart alongside Kafka
+  ## ref: https://github.com/kubernetes/charts/tree/master/incubator/zookeeper
+  enabled: true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;kubernetes-configurations&#34;&gt;Kubernetes Configurations&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;replicas&lt;/li&gt;
+&lt;li&gt;resource&lt;/li&gt;
+&lt;li&gt;pod affinity&lt;/li&gt;
+&lt;li&gt;persistence&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;kafka-configurations&#34;&gt;Kafka Configurations&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;zookeeper&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;configurationOverrides&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;quot;default.replication.factor&amp;quot;: 3
+&amp;quot;offsets.topic.replication.factor&amp;quot;: 1 # Increased from 1 to 2 for higher output
+# &amp;quot;offsets.topic.num.partitions&amp;quot;: 3
+# &amp;quot;auto.leader.rebalance.enable&amp;quot;: true
+# &amp;quot;auto.create.topics.enable&amp;quot;: true
+&amp;quot;message.max.bytes&amp;quot;: &amp;quot;16000000&amp;quot; # Extend global topic max message bytes to 16 Mb
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;monitoring-configurations&#34;&gt;Monitoring Configurations&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;prometheus exporter&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;monitoring is the key to production&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;deploy-after-understande-configs&#34;&gt;Deploy after Understande Configs&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;All Kafka garantees are based on a correctly configured cluster&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Incorrect configs will cause cluster unstable and data loss&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now we can deploy :)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;pods&#34;&gt;Pods&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ kubectl get po | grep kafka
+
+NAME                                                     READY   STATUS      RESTARTS   AGE
+kafka-1-0                                                1/1     Running     0          224d
+kafka-1-1                                                1/1     Running     0          224d
+kafka-1-2                                                1/1     Running     0          224d
+kafka-1-exporter-88786d84b-z954z                         1/1     Running     0          224d
+kafka-1-zookeeper-0                                      1/1     Running     0          224d
+kafka-1-zookeeper-1                                      1/1     Running     0          224d
+kafka-1-zookeeper-2                                      1/1     Running     0          224d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;availability&#34;&gt;Availability&lt;/h3&gt;
+
+&lt;p&gt;ex. replication factor=3&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;3 partitions, each 1 in a kafka-broker&lt;/li&gt;
+&lt;li&gt;1 master partition 2 slave partitions (readonly)&lt;/li&gt;
+&lt;li&gt;data &lt;strong&gt;sync&lt;/strong&gt; from master to slave&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;availability-1&#34;&gt;Availability&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;kafka keep a number of slave in-synced
+
+&lt;ul&gt;
+&lt;li&gt;too many in-sync -&amp;gt; slow down write confirm&lt;/li&gt;
+&lt;li&gt;not enough will -&amp;gt; data loss&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;on-slave-failure&#34;&gt;On slave failure&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;client not affected&lt;/li&gt;
+&lt;li&gt;keep enough in-sync slaves&lt;/li&gt;
+&lt;li&gt;wait dead slave to back online&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;on-master-failure&#34;&gt;On master failure&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;slave select new master within in-synced slaves&lt;/li&gt;
+&lt;li&gt;new master sync to slaves&lt;/li&gt;
+&lt;li&gt;new master serve clients&lt;/li&gt;
+&lt;li&gt;wait dead master to back online and become slave&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;configs-availability&#34;&gt;Configs Availability&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Metadata are stored in zookeeper
+
+&lt;ul&gt;
+&lt;li&gt;topic configs&lt;/li&gt;
+&lt;li&gt;partition configs&lt;/li&gt;
+&lt;li&gt;consumer offsets&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;重點&#34;&gt;重點&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;要仔細看完 helm chart values 的設定，設錯就幹掉重來&lt;/li&gt;
+&lt;li&gt;kafka 的概念與設定，要花時間研究清楚&lt;/li&gt;
+&lt;li&gt;resource &amp;amp; JVM heap size&lt;/li&gt;
+&lt;li&gt;prometheus is a must&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;ithelp-ironman-challenge&#34;&gt;Ithelp Ironman Challenge&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;30 天內容都是 step-by-step&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;內容只是仔細看官方文件&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;challenge -&amp;gt; 自我成長&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;給輸在起跑點的人&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;thank-you&#34;&gt;Thank you&lt;/h3&gt;
+</description>
+    </item>
     
     <item>
       <title>Jenkins X on Kubernetes</title>

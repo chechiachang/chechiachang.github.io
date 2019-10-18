@@ -7,10 +7,19 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Tue, 15 Oct 2019 17:28:12 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 18 Oct 2019 16:12:42 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Slides</title>
+      <link>https://chechiachang.github.io/slides/</link>
+      <pubDate>Fri, 18 Oct 2019 16:12:42 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/slides/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Projects</title>
@@ -18,15 +27,6 @@
       <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/project/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Slides</title>
-      <link>https://chechiachang.github.io/slides/</link>
-      <pubDate>Fri, 19 Apr 2019 21:36:50 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/slides/</guid>
       <description></description>
     </item>
     

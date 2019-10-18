@@ -4,7 +4,17 @@
   
   <url>
     <loc>https://chechiachang.github.io/</loc>
-    <lastmod>2019-10-15T23:19:05+08:00</lastmod>
+    <lastmod>2019-10-18T18:10:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/kubernetes-kafka-ha/</loc>
+    <lastmod>2019-10-18T18:10:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/slides/</loc>
+    <lastmod>2019-10-18T18:10:45+08:00</lastmod>
   </url>
   
   <url>
@@ -128,8 +138,8 @@
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/post/kafka-ha-continue/</loc>
-    <lastmod>2019-09-27T18:03:29+08:00</lastmod>
+    <loc>https://chechiachang.github.io/post/kafka-ha-continued/</loc>
+    <lastmod>2019-10-16T20:40:22+08:00</lastmod>
   </url>
   
   <url>
@@ -249,7 +259,7 @@
   
   <url>
     <loc>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</loc>
-    <lastmod>2019-10-03T14:01:24+08:00</lastmod>
+    <lastmod>2019-10-16T20:40:22+08:00</lastmod>
   </url>
   
   <url>
@@ -329,11 +339,6 @@
   
   <url>
     <loc>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</loc>
-    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/slides/</loc>
     <lastmod>2019-09-11T11:17:01+08:00</lastmod>
   </url>
   
@@ -544,7 +549,7 @@
   
   <url>
     <loc>https://chechiachang.github.io/authors/admin/</loc>
-    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+    <lastmod>2019-10-16T20:40:22+08:00</lastmod>
   </url>
   
   <url>

@@ -2747,10 +2747,10 @@ keep alive: 1
     
     <item>
       <title>Kafka HA Continued</title>
-      <link>https://chechiachang.github.io/post/kafka-ha-continue/</link>
+      <link>https://chechiachang.github.io/post/kafka-ha-continued/</link>
       <pubDate>Thu, 26 Sep 2019 22:50:32 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-ha-continue/</guid>
+      <guid>https://chechiachang.github.io/post/kafka-ha-continued/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
@@ -6300,7 +6300,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Kafka HA on Kubernetes
+&lt;li&gt;Kafka HA on Kubernetes(6)
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-deployment-on-kubernetes&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
@@ -6308,7 +6308,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-basic-usage&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-operation-script&amp;quot;}}&#34; target=&#34;_blank&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-topology&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continuerd&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;{{ ref &amp;quot;/post/kafka-ha-continued&amp;quot; }}&#34; target=&#34;_blank&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
 &lt;li&gt;效能調校&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
@@ -6325,33 +6325,31 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;Prometheus / Grafana (5)
 
 &lt;ul&gt;
-&lt;li&gt;GKE 上自架 Prometheus / Grafana&lt;/li&gt;
-&lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
-&lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
-&lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
-&lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Prometheus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deploy-grafana/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-scrape/&#34; target=&#34;_blank&#34;&gt;scrape config &amp;amp; exporter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/&#34; target=&#34;_blank&#34;&gt;Dive into Redis Exporter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/&#34; target=&#34;_blank&#34;&gt;輸出 kube-state 的監測數據&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;GKE 維運心得 (5)
+&lt;li&gt;Nginx Ingress (3)
 
 &lt;ul&gt;
-&lt;li&gt;我的 Kubernetes 除錯流程&lt;/li&gt;
-&lt;li&gt;Kubectl cheat sheet&lt;/li&gt;
-&lt;li&gt;使用 cert-manager 維護 TLS/HTTPS&lt;/li&gt;
-&lt;li&gt;使用 redhat operator-sdk 初探 CRD 與 operator&lt;/li&gt;
-&lt;li&gt;我的 operator 範例分享&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/&#34; target=&#34;_blank&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/&#34; target=&#34;_blank&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;GCP 網路設定 (3)
+&lt;li&gt;Cert-manager (3)
 
 &lt;ul&gt;
-&lt;li&gt;防火牆的私有網路基本設定&lt;/li&gt;
-&lt;li&gt;配合 GKE 實現負載均衡&lt;/li&gt;
-&lt;li&gt;DNS 基本觀念，從 kube-dns 到 GCP DNS service&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/cert-manager-deployment/&#34; target=&#34;_blank&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/cert-manager-how-it-work/&#34; target=&#34;_blank&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/cert-manager-complete-workflow/&#34; target=&#34;_blank&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;GCP 日誌管理 (2)
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
 
 &lt;ul&gt;
-&lt;li&gt;基本 GCP 日誌管理與錯誤回報&lt;/li&gt;
-&lt;li&gt;Stackdriver 服務的日誌管理，監測數據，告警&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-custom-resources-basic/&#34; target=&#34;_blank&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-custom-resources-basic/&#34; target=&#34;_blank&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/&#34; target=&#34;_blank&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 

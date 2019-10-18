@@ -131,7 +131,7 @@
   
   <meta property="article:published_time" content="2019-09-09T16:56:03&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-10-03T14:01:24&#43;08:00">
+  <meta property="article:modified_time" content="2019-10-16T20:40:22&#43;08:00">
   
 
   
@@ -251,6 +251,35 @@
         
 
         <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Me</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
           <a class="nav-link " href="/#posts"><span>Posts</span></a>
         </li>
 
@@ -310,35 +339,6 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#projects"><span>Projects</span></a>
-        </li>
-
-        
-        
-
-        
-
-        
-        
-        
-          
-        
-
-        
-        
-        
-        
-        
-        
-          
-          
-          
-            
-          
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link " href="/#about"><span>Me</span></a>
         </li>
 
         
@@ -445,7 +445,7 @@
 
 
 <meta content="2019-09-09 16:56:03 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-10-03 14:01:24 &#43;0800 CST" itemprop="dateModified">
+<meta content="2019-10-16 20:40:22 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -460,7 +460,7 @@
           Last updated on
       
     
-    <time>Oct 3, 2019</time>
+    <time>Oct 16, 2019</time>
   </span>
   
 
@@ -622,7 +622,7 @@
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
 </ul></li>
-<li>Kafka HA on Kubernetes
+<li>Kafka HA on Kubernetes(6)
 
 <ul>
 <li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
@@ -630,7 +630,7 @@
 <li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
 <li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
 <li><a href="{{ ref &quot;/post/kafka-ha-topology&quot; }}" target="_blank">集群內部的 HA topology</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-continuerd&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
+<li><a href="{{ ref &quot;/post/kafka-ha-continued&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
 <li>Prometheus Metrics Exporter 很重要</li>
 <li>效能調校</li>
 </ul></li>
@@ -647,33 +647,31 @@
 <li>Prometheus / Grafana (5)
 
 <ul>
-<li>GKE 上自架 Prometheus / Grafana</li>
-<li>使用 exporter 監測 GKE 上的各項服務</li>
-<li>輸出 kubernetes 的監測數據</li>
-<li>輸出 redis-ha 的監測數據</li>
-<li>輸出 kafka 的監測數據</li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/" target="_blank">GKE 上自架 Prometheus</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deploy-grafana/" target="_blank">GKE 上自架 Grafana</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-scrape/" target="_blank">scrape config &amp; exporter</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/" target="_blank">Dive into Redis Exporter</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/" target="_blank">輸出 kube-state 的監測數據</a></li>
 </ul></li>
-<li>GKE 維運心得 (5)
+<li>Nginx Ingress (3)
 
 <ul>
-<li>我的 Kubernetes 除錯流程</li>
-<li>Kubectl cheat sheet</li>
-<li>使用 cert-manager 維護 TLS/HTTPS</li>
-<li>使用 redhat operator-sdk 初探 CRD 與 operator</li>
-<li>我的 operator 範例分享</li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/" target="_blank">Deploy Nginx Ingress Controller</a></li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/" target="_blank">Configure Nginx Ingress</a></li>
 </ul></li>
-<li>GCP 網路設定 (3)
+<li>Cert-manager (3)
 
 <ul>
-<li>防火牆的私有網路基本設定</li>
-<li>配合 GKE 實現負載均衡</li>
-<li>DNS 基本觀念，從 kube-dns 到 GCP DNS service</li>
+<li><a href="https://chechiachang.github.io/post/cert-manager-deployment/" target="_blank">Deploy cert-manager</a></li>
+<li><a href="https://chechiachang.github.io/post/cert-manager-how-it-work/" target="_blank">How cert-manager work</a></li>
+<li><a href="https://chechiachang.github.io/post/cert-manager-complete-workflow/" target="_blank">Cert-manager complete workflow</a></li>
 </ul></li>
-<li>GCP 日誌管理 (2)
+<li>Kubernetes CRD &amp; Operator-sdk (3)
 
 <ul>
-<li>基本 GCP 日誌管理與錯誤回報</li>
-<li>Stackdriver 服務的日誌管理，監測數據，告警</li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resources-basic/" target="_blank">Introduction about custom resource</a></li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resources-basic/" target="_blank">Deployment &amp; Usage</a></li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/" target="_blank">Deployment &amp; Usage</a></li>
 </ul></li>
 </ul>
 
