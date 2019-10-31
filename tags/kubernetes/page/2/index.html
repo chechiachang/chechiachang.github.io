@@ -131,7 +131,7 @@
   <meta property="og:description" content="Back-End / DevOps"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-10-10T16:12:10&#43;08:00">
+  <meta property="og:updated_time" content="2019-10-17T20:50:50&#43;08:00">
   
 
   
@@ -450,16 +450,19 @@
   
   
   <div>
+    <h2><a href="/post/x.509-certificate/">X.509 certificate</a></h2>
+    <div class="article-style">
+      
+      簡單講一下 certificate X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL) certificate 包含公鑰及識別資訊(hostname, organization, &hellip;
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/secure-elk-stack/">Secure Elk Stack</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-&ndash;
-上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
-官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
-總之為了啟用 authentication &amp; https，這篇要做的事情：
- enable x-pack &amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server   啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6.
+      2020 It邦幫忙鐵人賽 系列文章 Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，
       
     </div>
   </div>
@@ -468,13 +471,7 @@
     <h2><a href="/post/self-host-elk-stack-on-gcp/">Self-host ELK stack - Installation</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
-由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-&ndash;
-簡介 ELK stack 官方說明文件
-ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana
+      2020 It邦幫忙鐵人賽 系列文章 Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，
       
     </div>
   </div>
@@ -483,11 +480,7 @@ ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logst
     <h2><a href="/post/redis-ha-topology/">Redis Ha Topology</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Redis Sentinel Topology  Topology  Masters: M1, M2, M3, &hellip;, Mn. Slaves: R1, R2, R3, &hellip;, Rn (R stands for replica).
+      2020 It邦幫忙鐵人賽 系列文章 在 GKE 上部署 Redis HA 使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis 由
       
     </div>
   </div>
@@ -544,15 +537,6 @@ Here we talk about some basic concepts about Jenkins X and provide a hand-to-han
     <div class="article-style">
       
       手把手教你部屬 ELK 監測 Kubernetes 上的應用
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/kubernetes-container-runtime-interface/">Kubernetes Container Runtime Interface</a></h2>
-    <div class="article-style">
-      
-      -&gt; Slides here &lt;-
       
     </div>
   </div>

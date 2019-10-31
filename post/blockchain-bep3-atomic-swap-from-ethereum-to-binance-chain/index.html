@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Che-Chia Chang">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="BEP3 Atomic Swap 2 - 從 Ethereum swap 到 Binance Chain 在 Binance Chain 上互換兩個 address 的 binance asset 將 asset 從 ethereum token 與 binance asset 做交換 從 Ethereum swap 到 Binance Chain 這邊我們要從 ethereum 上，將 ERC-20 token 與 binance chain 上的 BNB 做交換，先準備需要用到的">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-137400455-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@chechiachang">
+  <meta property="twitter:creator" content="@chechiachang">
+  
+  <meta property="og:site_name" content="Che-Chia Chang">
+  <meta property="og:url" content="https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/">
+  <meta property="og:title" content="Blockchain Bep3 Atomic Swap From Ethereum to Binance Chain | Che-Chia Chang">
+  <meta property="og:description" content="BEP3 Atomic Swap 2 - 從 Ethereum swap 到 Binance Chain 在 Binance Chain 上互換兩個 address 的 binance asset 將 asset 從 ethereum token 與 binance asset 做交換 從 Ethereum swap 到 Binance Chain 這邊我們要從 ethereum 上，將 ERC-20 token 與 binance chain 上的 BNB 做交換，先準備需要用到的"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-10-31T15:21:44&#43;08:00">
+  
+  <meta property="article:modified_time" content="2019-10-31T18:54:01&#43;08:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#3f51b5",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#3f51b5"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Blockchain Bep3 Atomic Swap From Ethereum to Binance Chain | Che-Chia Chang</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Che-Chia Chang</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Me</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks"><span>Talks</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Docs</span><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            
+            <li class="dropdown-item my-0 py-0 mx-0 px-0">
+              <a href="/post/kubernetes-container-runtime-interface/"><span>Kubernetes Container Runtime Interface</span></a>
+            </li>
+            
+          </ul>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Blockchain Bep3 Atomic Swap From Ethereum to Binance Chain</h1>
+
+  
+
+  
+    
+
+
+
+<meta content="2019-10-31 15:21:44 &#43;0800 CST" itemprop="datePublished">
+<meta content="2019-10-31 18:54:01 &#43;0800 CST" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Oct 31, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/&amp;text=Blockchain%20Bep3%20Atomic%20Swap%20From%20Ethereum%20to%20Binance%20Chain" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/&amp;t=Blockchain%20Bep3%20Atomic%20Swap%20From%20Ethereum%20to%20Binance%20Chain" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Blockchain%20Bep3%20Atomic%20Swap%20From%20Ethereum%20to%20Binance%20Chain&amp;body=https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/&amp;title=Blockchain%20Bep3%20Atomic%20Swap%20From%20Ethereum%20to%20Binance%20Chain" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Blockchain%20Bep3%20Atomic%20Swap%20From%20Ethereum%20to%20Binance%20Chain%20https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/&amp;title=Blockchain%20Bep3%20Atomic%20Swap%20From%20Ethereum%20to%20Binance%20Chain" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<h3 id="bep3-atomic-swap-2-從-ethereum-swap-到-binance-chain">BEP3 Atomic Swap 2 - 從 Ethereum swap 到 Binance Chain</h3>
+
+<ul>
+<li><a href="https://chechiachang.github.io/post/blockchain-bep3-atomic-swap/" target="_blank">在 Binance Chain 上互換兩個 address 的 binance asset</a></li>
+<li><a href="https://chechiachang.github.io/post/blockchain-bep3-atomic-swap-from-ethereum-to-binance-chain/" target="_blank">將 asset 從 ethereum token 與 binance asset 做交換</a></li>
+</ul>
+
+<hr />
+
+<h1 id="從-ethereum-swap-到-binance-chain">從 Ethereum swap 到 Binance Chain</h1>
+
+<p>這邊我們要從 ethereum 上，將 ERC-20 token 與 binance chain 上的 BNB 做交換，先準備需要用到的東西</p>
+
+<h3 id="binance-testnet">binance testnet</h3>
+
+<ul>
+<li>準備好 address 與 BNB，這邊沿用我們上篇使用的 address <a href="https://testnet-explorer.binance.org/address/tbnb1hq6v49an3wwhrd8ny7qj3exgfmvpvuelkcaj9p" target="_blank">tbnb1hq6v49an3wwhrd8ny7qj3exgfmvpvuelkcaj9p</a></li>
+</ul>
+
+<h3 id="ethereum-testnet-ropsten">ethereum testnet (ropsten)</h3>
+
+<ul>
+<li>Admin Address <a href="https://ropsten.etherscan.io/address/0x938a452d293c23c2cdeae0bf01760d8ecc4f826b" target="_blank">[ropsten etherscan]</a></li>
+<li>部署 ERC20 token <a href="https://ropsten.etherscan.io/address/0xDec348688B060fB44144971461b3BAaC8BD1e571" target="_blank">[ropsten etherscan]</a>，我自己發行的 <a href="https://ropsten.etherscan.io/token/0xDec348688B060fB44144971461b3BAaC8BD1e571" target="_blank">Party Parrot Token (PPT)</a> <img src="https://cultofthepartyparrot.com/parrots/hd/parrot.gif" alt="" /></li>
+<li>部署 ERC20 Atomic Swapper 智能合約
+
+<ul>
+<li><a href="https://github.com/chechiachang/bep3-smartcontracts" target="_blank">binance-chain/bep3-smartcontract</a> 提供</li>
+</ul></li>
+</ul>
+
+<h3 id="node-vm">Node/VM</h3>
+
+<ul>
+<li>用來執行 bep3 deputy process
+
+<ul>
+<li><a href="https://github.com/binance-chain/bep3-deputy" target="_blank">https://github.com/binance-chain/bep3-deputy</a> 提供</li>
+</ul></li>
+</ul>
+
+<h3 id="workflow">workflow</h3>
+
+<p>我們看一下官方提供的這張圖</p>
+
+<p><img src="https://docs.binance.org/assets/eth2bnc.png" alt="" /></p>
+
+<ol>
+<li>Wallet Address 在 ERC20 Token (PPToken) approve() Swap Contract 一部分 Token</li>
+<li>初始化 Swap Transaction(tx)</li>
+<li>Deputy 監測到 Ethereum 鏈上的 swap tx，向 Binance Chain 發起一個對應的 HTLT tx，等待 Binance 上的 claim tx</li>
+<li>Wallet Address 向 Binance Chain 執行 HTLT claim()</li>
+<li>Deputy 監測到 Binance Chain 上的 claim tx 與 swap complete，代為向 Ethereum claim ERC-20</li>
+</ol>
+
+<h3 id="執行-deputy">執行 deputy</h3>
+
+<p>我們可以先將 deputy 程序跑起來，這邊使用的是 <a href="https://github.com/binance-chain/bep3-deputy" target="_blank">Binance Chaing/bep3-deputy</a></p>
+
+<pre><code class="language-bash">go get github.com/binance-chain/bep3-deputy
+cd ${GOPATH}/src/github.com/binance-chain/bep3-deputy
+
+$ go mod download
+$ make build
+go build  -o build/deputy main.go
+</code></pre>
+
+<p>啟動本地 MySQL，這邊直接用 docker 起一個無密碼的</p>
+
+<pre><code>$ docker run \
+  --name some-mysql \
+  -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+  -e MYSQL_DATABASE=deputy \
+  -d \
+  mysql:5.7.27
+</code></pre>
+
+<p>設定 config/confg.json</p>
+
+<pre><code class="language-json">{
+  &quot;db_config&quot;: {
+    &quot;dialect&quot;: &quot;mysql&quot;,
+    &quot;db_path&quot;: &quot;root:@(localhost:3306)/deputy?charset=utf8&amp;parseTime=True&amp;loc=Local&quot;,
+  },
+  &quot;chain_config&quot;: {
+    &quot;bnb_start_height&quot;: 42516056,
+
+    &quot;other_chain&quot;: &quot;ETH&quot;,
+    &quot;other_chain_start_height&quot;: 6495598
+  },
+  &quot;admin_config&quot;: {
+    &quot;listen_addr&quot;: &quot;127.0.0.1:8080&quot;
+  },
+  &quot;bnb_config&quot;: {
+    &quot;key_type&quot;: &quot;mnemonic&quot;,
+    &quot;mnemonic&quot;: &quot;&lt;my-mnemonic&gt;&quot;,
+    &quot;rpc_addr&quot;: &quot;tcp://data-seed-pre-0-s1.binance.org:80&quot;,
+    &quot;symbol&quot;: &quot;BNB&quot;,
+    &quot;deputy_addr&quot;: &quot;tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce&quot;,
+    &quot;fetch_interval&quot;: 2,
+  },
+  &quot;eth_config&quot;: {
+    &quot;swap_type&quot;: &quot;erc20_swap&quot;,
+    &quot;key_type&quot;: &quot;private_key&quot;,
+    &quot;private_key&quot;: &quot;&lt;my-private-key&gt;&quot;,
+    &quot;provider&quot;: &quot;https://ropsten.infura.io/v3/cd9643b1870b489b93477921cb767882&quot;,
+    &quot;swap_contract_addr&quot;: &quot;0xA08E0F38462eCd107adE62Ee3004850f2448f3d6&quot;,
+    &quot;token_contract_addr&quot;: &quot;0xDec348688B060fB44144971461b3BAaC8BD1e571&quot;,
+    &quot;deputy_addr&quot;: &quot;0x938a452d293c23C2CDEae0Bf01760D8ECC4F826b&quot;,
+    &quot;gas_limit&quot;: 300000,
+    &quot;gas_price&quot;: 20000000000,
+  }
+}
+</code></pre>
+
+<p>這樣注意幾個地方</p>
+
+<ul>
+<li>db_config 填上 mysql url，有設密碼的話一併帶入</li>
+<li>chain_config.bnb_start_height 可以先追到目前的 block height，畢竟我們的 swap tx 都在 deputy 起來之後才會產生，可以跳過啟動時 sync block 的時間。如果是要追過去的 tx，就要調整 block 的高度，並且給予足夠的時間上 deputy 去 sync block。可以到 <a href="https://testnet-explorer.binance.org/" target="_blank">testnet-explorer</a> 查目前的 block height。</li>
+<li>chain_config.other_chain_start_height 也追到最新的 eth block height，可以到 <a href="https://ropsten.etherscan.io/" target="_blank">Etherscan</a> 查目前的 block height</li>
+<li>bnb_config 填上 bnb addr 與助記祠</li>
+<li>eth_config 填上 eth addr 與 private key</li>
+<li>eth_config.deupty_addr 使用 Admin addr，並填上 private key</li>
+</ul>
+
+<p>把 deputy 以 testnet 為目標執行起來</p>
+
+<pre><code class="language-bash">./build/deputy --help
+
+./build/deputy \
+  --bnb-network 0 \
+  --config-type local \
+  --config-path config/config.json
+
+2019-10-25 17:16:48 DEBUG Debug sent a request
+2019-10-25 17:16:48 INFO fetch ETH cur height: 6641795
+2019-10-25 17:16:48 DEBUG Debug sent a request
+2019-10-25 17:16:48 DEBUG Debug sent a request
+2019-10-25 17:16:48 INFO fetch BNB cur height: 46215517
+2019-10-25 17:16:48 DEBUG Debug sent a request
+2019-10-25 17:16:48 INFO fetch try to get ahead block, chain=BNB, height=46215518
+</code></pre>
+
+<p>deputy 啟動後，就會依據 db 中的 block 資料，開始一路追 block，發現是相關的 addr 就把 tx 拉下來處理。</p>
+
+<p>由於我們這邊是新 db，我們又直接跳到最新的 block，應該不會需要太多時間就能追上。</p>
+
+<p>deputy 有 admin api 可以使用</p>
+
+<pre><code class="language-bash">curl http://localhost:8080
+
+curl http://localhost:8080/failed_swaps/1
+the number of total failed swaps is 0, the offset of query is 0
+
+curl http://localhost:8080/status
+</code></pre>
+
+<pre><code class="language-json">{
+    &quot;mode&quot;: &quot;NormalMode&quot;,
+    &quot;bnb_chain_height&quot;: 46215719,
+    &quot;bnb_sync_height&quot;: 46215718,
+    &quot;other_chain_height&quot;: 6641804,
+    &quot;other_chain_sync_height&quot;: 6641804,
+    &quot;bnb_chain_last_block_fetched_at&quot;: &quot;2019-10-25T17:18:52+08:00&quot;,
+    &quot;other_chain_last_block_fetched_at&quot;: &quot;2019-10-25T17:18:40+08:00&quot;,
+    &quot;bnb_status&quot;: {
+        &quot;balance&quot;: [
+            {
+                &quot;symbol&quot;: &quot;BNB&quot;,
+                &quot;free&quot;: &quot;18.99812504&quot;,
+                &quot;locked&quot;: &quot;0.00000000&quot;,
+                &quot;frozen&quot;: &quot;0.00000000&quot;
+            }
+        ]
+    },
+    &quot;other_chain_status&quot;: {
+        &quot;allowance&quot;: &quot;9.8e+13&quot;,
+        &quot;erc20_balance&quot;: &quot;9.999999969e+20&quot;,
+        &quot;eth_balance&quot;: &quot;6.982922764&quot;
+    }
+}
+</code></pre>
+
+<p>可以看到 deputy 上設定的 bnb_addr, eth_addr 的狀態</p>
+
+<ul>
+<li>other_chain_status.allowance: 9.8e+13</li>
+</ul>
+
+<hr />
+
+<h1 id="開始-swap">開始 Swap</h1>
+
+<p>複習一下流程</p>
+
+<p><img src="https://docs.binance.org/assets/eth2bnc.png" alt="" /></p>
+
+<ol>
+<li>部署好 swap contract &amp; deputy，啟動 deputy process</li>
+<li>Wallet Address 在 ERC20 Token (PPToken) approve()，給 Swap Contract 一部分 Token</li>
+<li>初始化 Swap Transaction(tx)</li>
+<li>Deputy 監測到 Ethereum 鏈上的 swap tx，向 Binance Chain 發起一個對應的 HTLT tx，等待 Binance 上的 claim tx</li>
+<li>Wallet Address 向 Binance Chain 執行 HTLT claim()</li>
+<li>Deputy 監測到 Binance Chain 上的 claim tx 與 swap complete，代為向 Ethereum claim ERC-20</li>
+</ol>
+
+<h3 id="erc20-contract-approve">ERC20 contract Approve()</h3>
+
+<p>到 ERC20 contract 的頁面，選擇 approve</p>
+
+<p>spender: swap contract address
+value: 10000 PPToken (乘上 10^18)</p>
+
+<p><a href="https://ropsten.etherscan.io/address/0xdec348688b060fb44144971461b3baac8bd1e571#events" target="_blank">到 etherscan 上查看</a></p>
+
+<h3 id="call-htlt-function">Call HTLT function</h3>
+
+<p>Go to swap contract，call  htlt()</p>
+
+<p>用 etherscan 送上去，然後就壞掉了，<a href="https://ropsten.etherscan.io/tx/0xbd0c829ad2466fcd6e49a12bbac1849827fb9e7a251271816401ed4c9bfe2fa8" target="_blank">Etherscan 上壞掉的 tx</a> 不知為什麼 QAQ</p>
+
+<p>
+
+
+  
+
+
+
+
+<figure>
+
+<img src="/img/bep3-atomic-swap-failure-01.png" width="70%" height="70%" >
+
+
+</figure>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+<img src="/img/bep3-atomic-swap-failure-02.png" width="70%" height="70%" >
+
+
+</figure>
+</p>
+
+<p>開 remix IDE，重新嘗試參數</p>
+
+<ul>
+<li>randomNumberHash:
+
+<ul>
+<li>SHA256(randomNumber||timestamp), randomNumber is 32-length random byte array.</li>
+<li>0x0000000000000000000000000000000000000000000000000000000000000000</li>
+</ul></li>
+<li>timestamp:
+
+<ul>
+<li>it should be about 10 mins span around current timestamp. <a href="https://www.unixtimestamp.com/" target="_blank">unix timestamp</a></li>
+<li>1572250902 (now + 60 sec * 10 min)</li>
+</ul></li>
+<li>heightSpan:
+
+<ul>
+<li>it&rsquo;s a customized filed for deputy operator. it should be more than 200 for this deputy.</li>
+<li>10000</li>
+</ul></li>
+<li>recipientAddr:
+
+<ul>
+<li>deputy address on Ethereum.</li>
+<li>0x938a452d293c23C2CDEae0Bf01760D8ECC4F826b</li>
+</ul></li>
+<li>bep2SenderAddr:
+
+<ul>
+<li>omit this field with 0x0</li>
+<li>0x0000000000000000000000000000000000000000</li>
+</ul></li>
+<li>bep2RecipientAddr:
+
+<ul>
+<li>Decode your testnet address from bech32 encoded to hex</li>
+<li>0xee82ca237387495e9603f4d8d7efed128bdd59a6</li>
+</ul></li>
+<li>outAmount:
+
+<ul>
+<li>approved amount, should be bumped by e^10.</li>
+<li>10 0000000000</li>
+</ul></li>
+<li>bep2Amount:
+
+<ul>
+<li>outAmount * exchange rate, the default rate is 1.</li>
+<li>10 0000000000</li>
+</ul></li>
+</ul>
+
+<h3 id="deputy-call-htlt-on-binance-chain">Deputy Call HTLT on Binance Chain</h3>
+
+<p>Deputy 監測 Ethereum 上的 block 狀態，特別是會取得 Swap contract address 的 swap tx，並在 Binance Chain 上產生對應的 HTLT。</p>
+
+<h3 id="claim-htlt-on-binance-chain">Claim HTLT on Binance Chain</h3>
+
+<p>Binance Chain 上產生 HTLT 後，客戶端這邊可以使用 tbnb 以 recipient addr 查詢 Binance Chain 上的 Swap ID</p>
+
+<pre><code class="language-bash">tbnbcli token query-swapIDs-by-recipient  \
+  --recipient-addr tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce \
+  --chain-id Binance-Chain-Nile \
+  --trust-node \
+  --node http://data-seed-pre-0-s3.binance.org:80
+</code></pre>
+
+<p>獲得過去產生的 swap list</p>
+
+<pre><code class="language-json">[
+  &quot;c2be98ac3b9ee7153e5ba84edfefca1917b6e2ec72d2576bf6cce584cbd6095e&quot;,
+  &quot;18c938b994c62bcce9e8cedcb426a603863d95565a246c323a1df89d5c4226c1&quot;,
+  &quot;5c4fdd60ce44fa4be6de70e65df3f8295df88178fd381b4242a8c2d047663a1b&quot;,
+  &quot;a47c89dfca910cbb34dec92acebebb59d2c62e7f90bf216a87c2c23c84e48d4f&quot;
+]
+</code></pre>
+
+<p>都是過去使用的 swap id，如果都沒有新的 swap 出來，可能是 height span 太高，導致一直都爬不到</p>
+
+<pre><code>SWAP_ID=c2be98ac3b9ee7153e5ba84edfefca1917b6e2ec72d2576bf6cce584cbd6095e
+tbnbcli token query-swap \
+  --swap-id ${SWAP_ID} \
+  --chain-id Binance-Chain-Nile \
+  --trust-node \
+  --node http://data-seed-pre-0-s3.binance.org:80
+</code></pre>
+
+<p>這邊要對一下 random number, to wallet addr, out amount 等參數，如果 HTLT 符合，客戶就可以執行 Claim HTLT</p>
+
+<pre><code>tbnbcli token claim \
+  --swap-id ${SWAP_ID} \
+  --random-number ${RANDOM_NUMBER} \
+  --from ${FROM_KEY} \
+  --chain-id Binance-Chain-Nile \
+  --trust-node \
+  --node http://data-seed-pre-0-s3.binance.org:80
+</code></pre>
+
+<h3 id="deputy-claim-erc20-token">Deputy Claim ERC20 Token</h3>
+
+<p>客戶端在 Binance Chain 上 Claim HTLT，Deputy 在 Ethereuem 上 Claim HTLT，至此完成 Atomic Swap 兩邊的流程。客戶端從 Binance Chain Claim，Deputy 從 Ethereuem 上 Claim。完整流程
+如下：</p>
+
+<ul>
+<li>Client Call HTLT on Ethereum -&gt; Deputy Call HTLT on Binance Chain</li>
+<li>Client Check HTLT Status on Binance Chain</li>
+<li>Client Call Claim HTLT on Binance Chain -&gt; Deputy Call Claim HTLT on Ethereum</li>
+</ul>
+
+<h3 id="client-app-javascript-demo">Client APP javascript Demo</h3>
+
+<p><a href="https://docs.binance.org/atomic-swap.html#6-demo-for-client-app-swap-erc20-to-bep2" target="_blank">希望直接寫成 javascript app 可以參考這篇</a></p>
+
+<hr />
+
+<h1 id="swap-tokens-from-binance-chain-to-ethereum">Swap Tokens from Binance Chain to Ethereum</h1>
+
+<p>這邊進行反向操作，客戶發起從 Binance Chain 換到 Ethereum 上的請求，Deputy 做對應的處理，把 Token Swap 到 Ethereum。我們依樣依照<a href="https://docs.binance.org/atomic-swap.html#swap-tokens-from-binance-chain-to-ethereum" target="_blank">這份文件</a>操作。</p>
+
+<ol>
+<li>客戶端在 Binance Chain 上 Call HTLT()</li>
+<li>Deputy 在 Ethereum 上 Init Swap tx</li>
+<li>Deputy Call Approve() 到 ethereum swap contract</li>
+<li>客戶端取得 swap 資訊</li>
+<li>客戶端在 Ethereum 上 Call Claim()，取得 ERC-20 Token</li>
+<li>Deputy 在 Binance 上 Call Claim()，取得 Binance Chain Token</li>
+</ol>
+
+<h3 id="在-binance-chain-上-htlt">在 Binance Chain 上 HTLT</h3>
+
+<p>客戶端發起 HTLT 請求，需要從客戶端 Wallet 送出（但因為我們這邊只使用一個 Binance Address，所以發起的 Addr 跟 Deputy Binance addr 是一樣的。</p>
+
+<p>這邊鎖進 10:BNB，等待 100:PPT 從 ethereum 近來</p>
+
+<pre><code>DEPUTY_BNB_WALLET_ADDR=tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce
+CLIENT_BNB_WALLET_ADDR=${DEPUTY_BNB_WALLET_ADDR}
+CLIENT_ETHEREUM_ADDR=0x938a452d293c23C2CDEae0Bf01760D8ECC4F826b
+
+tbnbcli token HTLT \
+  --from ${CLIENT_BNB_WALLET_ADDR} \
+  --recipient-addr ${DEPUTY_BNB_WALLET_ADDR}  \
+  --chain-id Binance-Chain-Nile  \
+  --height-span 500 \
+  --amount  10:BNB  \
+  --expected-income 100:PPT  \
+  --recipient-other-chain ${CLIENT_ETHEREUM_ADDR}  \
+  --cross-chain \
+  --trust-node \
+  --node http://data-seed-pre-0-s3.binance.org:80
+</code></pre>
+
+<p>HTLT 回復的結果如下，可以在<a href="https://testnet-explorer.binance.org/tx/D653FC7B5D2048A2A165F49426CDCAD733703CF534367133819091892E3A1F14" target="_blank">Binance Testnet Explorer</a></p>
+
+<pre><code>Random number: 75267ba4cc4f2d9ddbf9f90dc1ea813ae2a4d2114eb2ef2cb7ff0a5d285c7396
+Timestamp: 1572337686
+Random number hash: dabd990af86582969d47218012ecdb09899b9ad2b069c05be94ef82bea889a1b
+Password to sign with 'tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce':
+Committed at block 46889130 (tx hash: D653FC7B5D2048A2A165F49426CDCAD733703CF534367133819091892E3A1F14, response: {Code:0 Data:[119 24 196 176 181 1 29 177 60 107 100 166 55 16 253 136 159 3 204 56 109 46 63 87 93 9 239 158 138 172 21 129] Log:Msg 0: swapID: 7718c4b0b5011db13c6b64a63710fd889f03cc386d2e3f575d09ef9e8aac1581 Info: GasWanted:0 GasUsed:0 Tags:[{Key:[115 101 110 100 101 114] Value:[116 98 110 98 49 97 54 112 118 53 103 109 110 115 97 121 52 97 57 115 114 55 110 118 100 48 109 108 100 122 50 57 97 54 107 100 120 121 101 51 55 99 101] XXX_NoUnkeyedLiteral:{} XXX_unrecognized:[] XXX_sizecache:0} {Key:[114 101 99 105 112 105 101 110 116] Value:[116 98 110 98 49 119 120 101 112 108 121 119 55 120 56 97 97 104 121 57 51 119 57 54 121 104 119 109 55 120 99 113 51 107 101 52 102 102 97 115 112 51 100] XXX_NoUnkeyedLiteral:{} XXX_unrecognized:[] XXX_sizecache:0} {Key:[97 99 116 105 111 110] Value:[72 84 76 84] XXX_NoUnkeyedLiteral:{} XXX_unrecognized:[] XXX_sizecache:0}] Codespace: XXX_NoUnkeyedLiteral:{} XXX_unrecognized:[] XXX_sizecache:0})
+</code></pre>
+
+<p>取得 swap id 與 random number，使用 swap ip 查詢</p>
+
+<pre><code>SWAP_ID=7718c4b0b5011db13c6b64a63710fd889f03cc386d2e3f575d09ef9e8aac1581
+tbnbcli token query-swap \
+  --swap-id ${SWAP_ID} \
+  --chain-id Binance-Chain-Nile \
+  --trust-node \
+  --node http://data-seed-pre-0-s3.binance.org:80
+</code></pre>
+
+<p>回復當前的狀態</p>
+
+<pre><code class="language-json">{
+   &quot;from&quot;:&quot;tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce&quot;,
+   &quot;to&quot;:&quot;tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce&quot;,
+   &quot;out_amount&quot;:[
+      {
+         &quot;denom&quot;:&quot;BNB&quot;,
+         &quot;amount&quot;:&quot;10&quot;
+      }
+   ],
+   &quot;in_amount&quot;:null,
+   &quot;expected_income&quot;:&quot;100:PPT&quot;,
+   &quot;recipient_other_chain&quot;:&quot;0x938a452d293c23C2CDEae0Bf01760D8ECC4F826b&quot;,
+   &quot;random_number_hash&quot;:&quot;dabd990af86582969d47218012ecdb09899b9ad2b069c05be94ef82bea889a1b&quot;,
+   &quot;random_number&quot;:&quot;&quot;,
+   &quot;timestamp&quot;:&quot;1572337686&quot;,
+   &quot;cross_chain&quot;:true,
+   &quot;expire_height&quot;:&quot;46889630&quot;,
+   &quot;index&quot;:&quot;2245&quot;,
+   &quot;closed_time&quot;:&quot;0&quot;,
+   &quot;status&quot;:&quot;Open&quot;
+}
+</code></pre>
+
+<h3 id="deputy-appove-token">Deputy Appove Token</h3>
+
+<p>Deputy 已經抓到 Binance Chain 上的 tx，會記錄在 Mysql 內</p>
+
+<pre><code>use deputy;
+
+select * from tx_log limit 10;
+
+| id | chain | swap_id                                                          | tx_type   | tx_hash                                                          | contract_addr | sender_addr                                 | receiver_addr                               | sender_other_chain                         | other_chain_addr                           | in_amount | out_amount | out_coin | random_number_hash                                               | expire_height | timestamp  | random_number | block_hash                                                       | height   | status    | confirmed_num | create_time | update_time |
+|  2 | BNB   | 7718c4b0b5011db13c6b64a63710fd889f03cc386d2e3f575d09ef9e8aac1581 | BEP2_HTLT | d653fc7b5d2048a2a165f49426cdcad733703cf534367133819091892e3a1f14 |               | tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce | tbnb1a6pv5gmnsay4a9sr7nvd0mldz29a6kdxye37ce |                                            | 0x938a452d293c23C2CDEae0Bf01760D8ECC4F826b | 100:PPT   | 10         | BNB      | dabd990af86582969d47218012ecdb09899b9ad2b069c05be94ef82bea889a1b |      46889630 | 1572337686 |               | 6948f34e4013da29c9922306b60b2c12f174925c63ff2a46d6b2fc3acd7a3774 | 46889130 | CONFIRMED |             6 |  1572337694 |  1572337695 |
+</code></pre>
+
+<h3 id="deputy-send-htlt-on-ethereum">Deputy Send HTLT on Ethereum</h3>
+
+<p>查詢 Ethereum 上的 HTLT</p>
+
+<h3 id="客戶端-call-claim-取得-erc-20-token">客戶端 Call Claim 取得 ERC-20 Token</h3>
+
+<p>客戶端取得 100:PPT</p>
+
+<h3 id="deputy-call-htlt-claim-取得-binance-token">Deputy Call HTLT Claim 取得 Binance Token</h3>
+
+<p>Deputy 取得 10:BNB</p>
+
+<hr />
+
+<h3 id="gce">GCE</h3>
+
+<pre><code>gcloud compute ssh dep3-deputy
+
+sudo apt-get update
+sudo apt-get install mysql-server
+sudo cat /etc/mysql/debian.cnf
+
+wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+tar -C /usr/local -xzf go1.13.3.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+
+go get github.com/binance-chain/bep3-deputy
+go mod tidy
+go build  -o build/deputy main.go
+</code></pre>
+
+<h3 id="references">References</h3>
+
+<ul>
+<li><a href="https://docs.binance.org/atomic-swap.html" target="_blank">Binace Chain Doc</a></li>
+<li><a href="https://github.com/binance-chain/BEPs/blob/master/BEP3.md" target="_blank">Binance BEP3 spec</a></li>
+</ul>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/blockchain/">blockchain</a>
+  
+  <a class="badge badge-light" href="/tags/bep3/">bep3</a>
+  
+  <a class="badge badge-light" href="/tags/binance/">binance</a>
+  
+  <a class="badge badge-light" href="/tags/ethereum/">ethereum</a>
+  
+  <a class="badge badge-light" href="/tags/erc-20/">erc-20</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2c43387b68a5b6b528d86c827c9ada90_16517_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://chechiachang.github.io/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Back-End / DevOps</h6>
+      <p class="card-text" itemprop="description">A software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/chechia.david.chang" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/chechiachang" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.meetup.com/golang-taipei-meetup/" target="_blank" rel="noopener">
+              <i class="fab fa-meetup"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/blockchain-bep3-atomic-swap/">Blockchain Bep3 Atomic Swap</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/blockchain-bep3-atomic-swap/" rel="prev">Blockchain Bep3 Atomic Swap</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    chechiachang &copy; 2016 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

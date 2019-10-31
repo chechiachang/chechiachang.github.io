@@ -7,10 +7,19 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Thu, 10 Oct 2019 16:12:10 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Oct 2019 20:50:50 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Deploy Kafka on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</link>
+      <pubDate>Thu, 17 Oct 2019 20:50:50 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Cert Manager Deployment on Kubernetes</title>

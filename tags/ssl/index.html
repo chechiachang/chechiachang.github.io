@@ -453,14 +453,7 @@
     <h2><a href="/post/cert-manager-deployment/">Cert Manager Deployment on Kubernetes</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
-以往我們使用 Let&rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
-cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情
+      2020 It邦幫忙鐵人賽 系列文章 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我
       
     </div>
   </div>
@@ -469,9 +462,7 @@ cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核�
     <h2><a href="/post/x.509-certificate/">X.509 certificate</a></h2>
     <div class="article-style">
       
-      簡單講一下 certificate  X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL) certificate 包含公鑰及識別資訊(hostname, organization, &hellip;等資訊) certificate 是由 certificate authority(CA) 簽署，或是自簽(Self-signed) 使用 browser 連入 https server時，會檢查 server 的 certificate 是否有效，確定這個 server 真的是合法的 site
- 在 elastic stack 上，如果有多個 elasticsearch server node 彼此連線，由於 node 彼此是 client 也是 server
- 使用 self-signed CA 產出來的 certificate，連入時會檢查使用的 certificate 是否由同一組 CA 簽署 server 使用 certificate，確定連入 server 的 client 都帶有正確的私鑰與 public certificate，是 authenticated user   附帶說明，X.509 有多種檔案格式
+      簡單講一下 certificate X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL) certificate 包含公鑰及識別資訊(hostname, organization, &hellip;
       
     </div>
   </div>

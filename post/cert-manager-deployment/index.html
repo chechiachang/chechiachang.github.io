@@ -28,14 +28,7 @@
   
     
   
-  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
-以往我們使用 Let&rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
-cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情">
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我">
 
   
   <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/cert-manager-deployment/">
@@ -133,14 +126,7 @@ cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核�
   <meta property="og:site_name" content="Che-Chia Chang">
   <meta property="og:url" content="https://chechiachang.github.io/post/cert-manager-deployment/">
   <meta property="og:title" content="Cert Manager Deployment on Kubernetes | Che-Chia Chang">
-  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
-以往我們使用 Let&rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
-cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-10-10T16:12:10&#43;08:00">

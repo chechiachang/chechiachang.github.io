@@ -131,7 +131,7 @@
   <meta property="og:description" content="Back-End / DevOps"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-10-10T16:12:10&#43;08:00">
+  <meta property="og:updated_time" content="2019-10-17T20:50:50&#43;08:00">
   
 
   
@@ -450,17 +450,17 @@
   
   
   <div>
+    <h2><a href="/talk/kubernetes-kafka-deployment/">Deploy Kafka on Kubernetes</a></h2>
+    <div class="article-style">
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/cert-manager-deployment/">Cert Manager Deployment on Kubernetes</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
-以往我們使用 Let&rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
-cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情
+      2020 It邦幫忙鐵人賽 系列文章 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我
       
     </div>
   </div>
@@ -469,13 +469,7 @@ cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核�
     <h2><a href="/post/kubernetes-nginx-ingress-controller/">Kubernetes Nginx Ingress Controller</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
-這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Jenkin-x on Kubernetes Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 nginx ingress controller  Nginx Introduction Nginx 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。
- 高效能的 web server，遠勝傳統 apache server 的資源與效能 大量的模組與擴充功能 有充足的安全性功能與設定 輕量 容易水平擴展  Ingress &amp; Ingress Controller 這邊簡單講一下 kubernetes ingress。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:
+      2020 It邦幫忙鐵人賽 系列文章 這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我
       
     </div>
   </div>
@@ -484,13 +478,7 @@ Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 
     <h2><a href="/post/kubernetes-nginx-ingress-config/">Kubernetes Nginx Ingress Controller Config</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Jenkin-x on Kubernetes Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Nginx Ingress Controller 運作原理 設定 Nginx Ingress Controller  運作原理 昨天講完 nginx ingress controller 部屬，今天來談談 controller 是如何運作的。
- Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx 針對 upstream (後端 app 的 endpoint) 變更，使用 lua-nginx-module 來更新。因為 kubernetes 上，service 後的服務常常會動態的變更，scaling，但 endpint ip list 又需要更新到 nginx，所以使用 lua 額外處理  在 kubernetes 上要如何做到上述兩件事呢?
+      2020 It邦幫忙鐵人賽 系列文章 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我
       
     </div>
   </div>
@@ -499,11 +487,7 @@ Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 
     <h2><a href="/post/prometheus-kube-state-metrics-exporter/">Prometheus &amp; Kubernetes State Metrics Exporter</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 redis-ha 的監測數據 Node Exporter 與 kube metrics exporter 輸出 kafka 的監測數據 自幹 exporter   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-如果要透過 prometheus 來監控集群的運行狀況，有兩個 exporter 是必裝的，一個是把 node 狀態 export 出來的 node exporter，一個是把 kubernetes 集群狀態 export 出來的 kube state metrics exporter。
+      2020 It邦幫忙鐵人賽 系列文章 Prometheus / Grafana (5) GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 redis-ha 的監測數據 Node Exporter 與 kube metrics exporter 輸出 kafka 的監測數據 自幹 exporter 由
       
     </div>
   </div>
@@ -512,11 +496,7 @@ Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 
     <h2><a href="/post/prometheus-exporter-library-redis-exporter/">Prometheus Exporter Library &amp; Redis Exporter</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 redis-ha 的監測數據 自幹 exporter 輸出 kafka 的監測數據 輸出 kubernetes 的監測數據   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Exporter 工作原理簡介 Prometheus exporter library  Exporter workflow 上次講到 exporter 可以從服務端把運行資料抽出來，並開成 http endpoint，讓 prometheus 來 scrape metrics。那 exporter 本身是如何取得服務內部的 metrics 呢?
+      2020 It邦幫忙鐵人賽 系列文章 Prometheus / Grafana (5) GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 redis-ha 的監測數據 自幹 exporter 輸出 kafka 的監測數據 輸出 kubernetes 的監測數
       
     </div>
   </div>
@@ -525,12 +505,7 @@ Nginx Ingress Controller  簡介 nginx &amp; Ingress Controller 部屬並設定 
     <h2><a href="/post/prometheus-deployment-on-kubernetes/">Prometheus Deployment on Kubernetes</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Prometheus Introduction Deploy Prometheus  Prometheus Introduction 生產環境與非生產環境，其中的一指標就是有沒有足夠完整的服務監測系統，這句話可以看出服務監測對於產品化是多麼重要。而監控資料 (metrics) 的收集與可視化工具其實非常多，例如上周介紹的 ELK Stack，這次我們要來介紹另外一個很多人使用的 prometheus。
-Promethues 在官網上提到 是一個 Monitoring system and time series database
+      2020 It邦幫忙鐵人賽 系列文章 Prometheus / Grafana (5) GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據 由於
       
     </div>
   </div>
@@ -539,12 +514,7 @@ Promethues 在官網上提到 是一個 Monitoring system and time series databa
     <h2><a href="/post/prometheus-deploy-grafana/">Prometheus Deploy Grafana</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Grafana Introduction Deploy Grafana  Grafana Introduction 上偏我們簡單介紹了 Prometheus，prometheus 的 Web Portol 已經附上簡單的 Query 與 Graph 工具，但一般我們在使用時，還是會搭配 Grafana 來使用。
-Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。
+      2020 It邦幫忙鐵人賽 系列文章 Prometheus / Grafana (5) GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據 由於
       
     </div>
   </div>
@@ -553,11 +523,7 @@ Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行
     <h2><a href="/post/prometheus-scrape/">Prometheus Deploy Grafana</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Prometheus / Grafana (5)  GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  Prometheus scrape scrape_configs Node exporter  Scrape Prometheus 收集 metrics 的方式，是從被監測的目標的 http endpoints 收集 (scrape) metrics，目標服務有提供 export metrics 的 endpoint 的話，稱作 exporter。例如 kafka-exporter 就會收集 kafka 運行的 metrics，變成 http endpoint instance，prometheus 從 instance 上面收集資料。
+      2020 It邦幫忙鐵人賽 系列文章 Prometheus / Grafana (5) GKE 上自架 Prometheus / Grafana GKE 上自架 Grafana 與設定 使用 exporter 監測 GKE 上的各項服務 輸出 kubernetes 的監測數據 輸出 redis-ha 的監測數據 輸出 kafka 的監測數據 由於
       
     </div>
   </div>
@@ -566,24 +532,7 @@ Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行
     <h2><a href="/post/monitoring-gke-with-elk/">Monitoring GKE With Elk</a></h2>
     <div class="article-style">
       
-      2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
-由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-這篇來要 Kubernetes 環境(GKE)裡面的 log 抓出來，送到 ELK 上。
-官方文件 ，寫得很簡易，如果已經很熟 kubernetes 的人可以直接腦補其他的部屬設定。
-這邊有幾個做法，依照 filebeat 部署的位置與收集目標簡單分為：
- node: 處理每一台 node 的 log ，包含 system log 與 node 監測資料(metrics) cluster: 處理 cluster 等級的 log, event 或是 metrics pod: 針對特定 pod 直接去掛一個 sidecar  上面的方法是可以混搭的，kubernetes 個個層級有log 處理流程，我們這邊把 log 送往第三方平台，也是需要依照原本的 log 流程，去收取我們想收集的 log。
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/x.509-certificate/">X.509 certificate</a></h2>
-    <div class="article-style">
-      
-      簡單講一下 certificate  X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL) certificate 包含公鑰及識別資訊(hostname, organization, &hellip;等資訊) certificate 是由 certificate authority(CA) 簽署，或是自簽(Self-signed) 使用 browser 連入 https server時，會檢查 server 的 certificate 是否有效，確定這個 server 真的是合法的 site
- 在 elastic stack 上，如果有多個 elasticsearch server node 彼此連線，由於 node 彼此是 client 也是 server
- 使用 self-signed CA 產出來的 certificate，連入時會檢查使用的 certificate 是否由同一組 CA 簽署 server 使用 certificate，確定連入 server 的 client 都帶有正確的私鑰與 public certificate，是 authenticated user   附帶說明，X.509 有多種檔案格式
+      2020 It邦幫忙鐵人賽 系列文章 Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，
       
     </div>
   </div>

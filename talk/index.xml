@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>Kafka on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/kafka-on-kubernetes/</link>
-      <pubDate>Thu, 03 Oct 2019 20:50:50 +0800</pubDate>
+      <title>Deploy Kafka on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</link>
+      <pubDate>Thu, 17 Oct 2019 20:50:50 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/kafka-on-kubernetes/</guid>
+      <guid>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</guid>
       <description></description>
     </item>
     

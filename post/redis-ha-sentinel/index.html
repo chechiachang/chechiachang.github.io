@@ -28,12 +28,7 @@
   
     
   
-  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  redis-sentinel  redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。
-redis-cli -h redis-redis-ha -p 26479  上篇我們的 redis-ha 安裝完變這樣">
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章 在 GKE 上部署 Redis HA 使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis 由於我比">
 
   
   <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/redis-ha-sentinel/">
@@ -131,12 +126,7 @@ redis-cli -h redis-redis-ha -p 26479  上篇我們的 redis-ha 安裝完變這�
   <meta property="og:site_name" content="Che-Chia Chang">
   <meta property="og:url" content="https://chechiachang.github.io/post/redis-ha-sentinel/">
   <meta property="og:title" content="Redis Ha Sentinel | Che-Chia Chang">
-  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis   由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-摘要  redis-sentinel  redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。
-redis-cli -h redis-redis-ha -p 26479  上篇我們的 redis-ha 安裝完變這樣"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章 在 GKE 上部署 Redis HA 使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis 由於我比"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-09-29T17:14:38&#43;08:00">
@@ -479,7 +469,7 @@ redis-cli -h redis-redis-ha -p 26479  上篇我們的 redis-ha 安裝完變這�
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    5 min read
   </span>
   
 

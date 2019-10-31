@@ -28,13 +28,7 @@
   
     
   
-  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-&ndash;
-上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
-官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
-總之為了啟用 authentication &amp; https，這篇要做的事情：
- enable x-pack &amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server   啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6.">
+  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章 Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，">
 
   
   <link rel="alternate" hreflang="en-us" href="https://chechiachang.github.io/post/secure-elk-stack/">
@@ -132,13 +126,7 @@
   <meta property="og:site_name" content="Che-Chia Chang">
   <meta property="og:url" content="https://chechiachang.github.io/post/secure-elk-stack/">
   <meta property="og:title" content="Secure Elk Stack | Che-Chia Chang">
-  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechiachang.github.io 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-&ndash;
-上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
-官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
-總之為了啟用 authentication &amp; https，這篇要做的事情：
- enable x-pack &amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server   啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6."><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
+  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章 Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，"><meta property="og:image" content="https://chechiachang.github.io/img/c.png">
   <meta property="twitter:image" content="https://chechiachang.github.io/img/c.png"><meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-09-15T23:00:33&#43;08:00">
