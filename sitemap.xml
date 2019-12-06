@@ -3,8 +3,73 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://chechiachang.github.io/tags/ar/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chechiachang.github.io/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/face-detection/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/face-recognition/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/github-api/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/golang/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/machine-learning/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/swift/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/unity/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</loc>
+    <lastmod>2019-12-07T00:47:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/post/blockchain-atomic-swap/</loc>
+    <lastmod>2019-11-08T08:24:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/atomic-swap/</loc>
+    <lastmod>2019-11-08T08:24:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/blockchain/</loc>
+    <lastmod>2019-11-08T08:24:40+08:00</lastmod>
   </url>
   
   <url>
@@ -19,37 +84,27 @@
   
   <url>
     <loc>https://chechiachang.github.io/tags/bep3/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
+    <lastmod>2019-11-04T12:57:30+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/binance/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/blockchain/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
+    <lastmod>2019-11-04T12:57:30+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/post/blockchain-bep3-atomic-swap/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
+    <lastmod>2019-11-04T12:57:30+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/erc-20/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
+    <lastmod>2019-11-04T12:57:30+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/tags/ethereum/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/</loc>
-    <lastmod>2019-10-31T18:54:01+08:00</lastmod>
+    <lastmod>2019-11-04T12:57:30+08:00</lastmod>
   </url>
   
   <url>
@@ -393,42 +448,7 @@
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/tags/ar/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/face-detection/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/face-recognition/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/github-api/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/golang/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechiachang.github.io/tags/ios/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/machine-learning/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/unity/</loc>
     <lastmod>2019-04-19T21:19:04+08:00</lastmod>
   </url>
   

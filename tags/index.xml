@@ -7,10 +7,100 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Tue, 22 Oct 2019 10:35:20 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 07 Dec 2019 00:47:35 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ar</title>
+      <link>https://chechiachang.github.io/tags/ar/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/ar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>face-detection</title>
+      <link>https://chechiachang.github.io/tags/face-detection/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/face-detection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>face-recognition</title>
+      <link>https://chechiachang.github.io/tags/face-recognition/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/face-recognition/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github-api</title>
+      <link>https://chechiachang.github.io/tags/github-api/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/github-api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://chechiachang.github.io/tags/golang/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine-learning</title>
+      <link>https://chechiachang.github.io/tags/machine-learning/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>swift</title>
+      <link>https://chechiachang.github.io/tags/swift/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/swift/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unity</title>
+      <link>https://chechiachang.github.io/tags/unity/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/unity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>atomic-swap</title>
+      <link>https://chechiachang.github.io/tags/atomic-swap/</link>
+      <pubDate>Fri, 08 Nov 2019 08:03:30 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/atomic-swap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blockchain</title>
+      <link>https://chechiachang.github.io/tags/blockchain/</link>
+      <pubDate>Fri, 08 Nov 2019 08:03:30 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/blockchain/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>bep3</title>
@@ -27,15 +117,6 @@
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/binance/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>blockchain</title>
-      <link>https://chechiachang.github.io/tags/blockchain/</link>
-      <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/blockchain/</guid>
       <description></description>
     </item>
     
@@ -301,74 +382,11 @@
     </item>
     
     <item>
-      <title>ar</title>
-      <link>https://chechiachang.github.io/tags/ar/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/ar/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>face-detection</title>
-      <link>https://chechiachang.github.io/tags/face-detection/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/face-detection/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>face-recognition</title>
-      <link>https://chechiachang.github.io/tags/face-recognition/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/face-recognition/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>github-api</title>
-      <link>https://chechiachang.github.io/tags/github-api/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/github-api/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>golang</title>
-      <link>https://chechiachang.github.io/tags/golang/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>ios</title>
       <link>https://chechiachang.github.io/tags/ios/</link>
       <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/ios/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine-learning</title>
-      <link>https://chechiachang.github.io/tags/machine-learning/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>unity</title>
-      <link>https://chechiachang.github.io/tags/unity/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/unity/</guid>
       <description></description>
     </item>
     

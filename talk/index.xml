@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
+      <link>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</link>
+      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Deploy Kafka on Kubernetes</title>
       <link>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</link>
       <pubDate>Thu, 17 Oct 2019 20:50:50 +0800</pubDate>
