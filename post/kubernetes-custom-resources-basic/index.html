@@ -593,103 +593,68 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <p>這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。</p>
-
 <ul>
 <li>Nginx Ingress Controller</li>
 <li>Cert-manager</li>
 <li>Kubernetes CRD &amp; Operator-sdk</li>
 </ul>
-
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>custom resources</li>
 <li>custom controllers</li>
 </ul>
-
-<h1 id="簡介-custom-resources">簡介 custom resources</h1>
-
-<p>Kubernetes 預先定義許多 resource ，這些 resource 是 <a href="https://kubernetes.io/docs/reference/using-api/api-overview/" target="_blank">kubernetes API</a> 預先設置的 <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/" target="_blank">API objects</a>，例如 kubernetes pods resource 包含許多 pods 物件。</p>
-
+<h1 id="-custom-resources">簡介 custom resources</h1>
+<p>Kubernetes 預先定義許多 resource ，這些 resource 是 <a href="https://kubernetes.io/docs/reference/using-api/api-overview/">kubernetes API</a> 預先設置的 <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/">API objects</a>，例如 kubernetes pods resource 包含許多 pods 物件。</p>
 <p>Custom resoure 則是透過擴充 kubernetes API ，讓自定義的物件也可以在 kubernetes 上使用。上篇 cert-manager 就使用了許多 custom resource，這些 resource 在一般安裝的 kubernetes 上沒有安裝，需要安裝 custom resource difinition，向 kubernetes cluster 定義新的 custom resource。例如 certificates.certmanager.k8s.io 就是 cert-manager 自定義的資源，用來代表產生 x509 certificate 的內容。</p>
-
 <p>越來越多的 kubernetes core 方法，如今也使用 custom resources 來定義，讓 kubernetes 核心元件更加模組化。</p>
-
 <p>custom resource 可以在運行中的 kubernetes 集群中註冊 (registration) ，也可以動態註銷，custom resource 並不會影響集群本身的運作。只要向 kubernetes 註冊完 custom resource，就可以透過 API 與 kubectl 控制 custom resource，就像操作 Pod resource 一樣。</p>
-
 <h1 id="custom-controllers">Custom controllers</h1>
-
 <p>custom resource 一但註冊，就可以依據 resource 的 CRD (custom resource definition) 來操作，因次可以儲存客製化的資料內容。然而在很多情形，我們並不只要 custom resource 來讀寫，而是希望 custom resource 能執行定義的工作，如同 Pod resource 可以在 kubernetes 集群上控制 Pod，在 Pod resource 上描述的 desired state kubernetes 會透過定義在 Pod API 中的 sync 邏輯，來達到 current state 與 desired state 的平衡。</p>
-
 <p>我們希望 custom resource 也能做到上述的功能，提供 declarative API，讓使用者不需編寫完整的程式邏輯，只要透過控制 custom resource，就可以透過 controller 內定義的邏輯，來實現 desired state。使用者只需要專注在控制 custom resource 上的 desired state，讓 controller 處理細節實作。</p>
-
-<p>例如：我們在 cert-manager 中設定 certificates.certmanager.k8s.io 資源，來描述我們希望取得 x509 certificate 的 desired state，但我們在 certificates.certmanager 上面沒有寫『透過 Let&rsquo;s Encrypt 取得 x509 certificate』的實現邏輯，仍然能透過 cert-manager 產生 x509 certiticate，因為 cert-manager 內部已經定義 certificates.certmanager.k8s.io 的 custom controller。</p>
-
+<p>例如：我們在 cert-manager 中設定 certificates.certmanager.k8s.io 資源，來描述我們希望取得 x509 certificate 的 desired state，但我們在 certificates.certmanager 上面沒有寫『透過 Let's Encrypt 取得 x509 certificate』的實現邏輯，仍然能透過 cert-manager 產生 x509 certiticate，因為 cert-manager 內部已經定義 certificates.certmanager.k8s.io 的 custom controller。</p>
 <p>基本的 custom resource 操作</p>
-
 <ul>
 <li>註冊 custom resource definition，讓 kubernetes API 看得懂 custom resource
-
 <ul>
-<li>不然 API 會回覆 error: the server doesn&rsquo;t have a resource type</li>
-</ul></li>
+<li>不然 API 會回覆 error: the server doesn't have a resource type</li>
+</ul>
+</li>
 <li>有 CRD 便可以 apply custom resource 到集群中</li>
-
-<li><p>部署 custom controller，監測 custom resource 的 desired state 內容，並實現達到 desired state 的業務邏輯</p>
-
+<li>部署 custom controller，監測 custom resource 的 desired state 內容，並實現達到 desired state 的業務邏輯
 <ul>
-<li><p>沒有 custom controller，custom resource 就只是可以 apply 與 update 的資料儲存結構，沒有 cert-manager 中 controller 的邏輯，也還是生不出 x509 certificate。</p>
-
+<li>沒有 custom controller，custom resource 就只是可以 apply 與 update 的資料儲存結構，沒有 cert-manager 中 controller 的邏輯，也還是生不出 x509 certificate。</li>
+</ul>
+</li>
+</ul>
 <pre><code>kubectl get chechiachang
 error: the server doesn't have a resource type &quot;chechiachang&quot;
-</code></pre></li>
-</ul></li>
-</ul>
-
-<p>custom controller 也可以跟其他的 kubernetes resource 互動，例如 cert-manager 在產生 certificate 的時候，會把產生的 certificate 檔案放在 secret 中，cert-manager 會依據 order 中定義的 lifecycle ，持續檢查 certificate 的有效性，如果接近過期，則會觸發新的一輪 order。</p>
-
+</code></pre><p>custom controller 也可以跟其他的 kubernetes resource 互動，例如 cert-manager 在產生 certificate 的時候，會把產生的 certificate 檔案放在 secret 中，cert-manager 會依據 order 中定義的 lifecycle ，持續檢查 certificate 的有效性，如果接近過期，則會觸發新的一輪 order。</p>
 <p>我們也可以寫一個操作 Configmap 與 Deployment Resource 的 custom controller，來進行 deploymnet 的 Image 更新。</p>
-
-<h1 id="我需要-custom-resource-嗎">我需要 custom resource 嗎</h1>
-
-<p>kubernetes 在<a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#should-i-add-a-custom-resource-to-my-kubernetes-cluster" target="_blank">should I add custom resource</a> 有列表分析該不該使用 custom resource ，將你的 API 邏輯整合到 kubernetes API 上。幾個判斷參考:</p>
-
+<h1 id="-custom-resource-">我需要 custom resource 嗎</h1>
+<p>kubernetes 在<a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#should-i-add-a-custom-resource-to-my-kubernetes-cluster">should I add custom resource</a> 有列表分析該不該使用 custom resource ，將你的 API 邏輯整合到 kubernetes API 上。幾個判斷參考:</p>
 <ul>
-<li>API 是 <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#declarative-apis" target="_blank">declarative model</a>，如果不是可能不適合跟 kubernetes API 整合，獨立成為一個自己運行的服務即可</li>
+<li>API 是 <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#declarative-apis">declarative model</a>，如果不是可能不適合跟 kubernetes API 整合，獨立成為一個自己運行的服務即可</li>
 <li>需要使用 kubernetes</li>
 <li>需要使用 kubectl 控制</li>
-<li>API 需要使用 <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#common-features" target="_blank">kubernetes 支援的功能</a></li>
+<li>API 需要使用 <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#common-features">kubernetes 支援的功能</a></li>
 <li>正哉開發全新功能，因為整合舊的服務到 kubernetes API 工程浩大</li>
 </ul>
-
-<h1 id="也許-configmap-secret-就可以解決">也許 configmap/secret 就可以解決</h1>
-
+<h1 id="-configmapsecret-">也許 configmap/secret 就可以解決</h1>
 <p>如果只是需要將資料儲存在 kubernetes 上，有一個 build-int 的 kubernetes resource 很適合，就是 configmap。可以瘀考以下條件，判斷是否 configmap 搭配能監看 configmap 的 controller 就可以達成需求。</p>
-
 <ul>
 <li>已經有完整的 config file，例如 mysql.cnf, nginx.conf&hellip;</li>
 <li>主要用途是把檔案掛載到 Pod 中的 process 使用</li>
 <li>使用時的格式，是整個檔案放在 Pod 中，或是使用環境變數塞到 Pod 裡面，而不是透過 kubernetes API 存取 (ex 使用 kubectl)</li>
 <li>更新 configmpa 時更新 Pod，會比更新 custom resource 時更新 Pod 容易</li>
 </ul>
-
 <p>如果使用 CRD 或 Aggregated kubernetes API，大多符合下列條件</p>
-
 <ul>
 <li>使用 kubernetes libraries 與客戶端 (ex kubectl) 操作 custom resource</li>
 <li>需要 top level 的 kubernetes 支援，例如可以 kubectl get cheachiachang</li>
@@ -697,23 +662,14 @@ error: the server doesn't have a resource type &quot;chechiachang&quot;
 <li>需要用到 .spec, .status, .metadata，這些比較 desired state 與 currenty state 的功能</li>
 <li>需要抽象類別來管理一群 controlled resource</li>
 </ul>
-
 <h1 id="custom-resource-definition">Custom Resource Definition</h1>
-
-<p><a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions" target="_blank">Custom Resoure Definition</a> 讓使用者可以定義 custom resource，定義 custom resource 的格式包括名稱與 data schema，然後交給 kubernetes API 去處理 custom resource 的儲存。</p>
-
+<p><a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions">Custom Resoure Definition</a> 讓使用者可以定義 custom resource，定義 custom resource 的格式包括名稱與 data schema，然後交給 kubernetes API 去處理 custom resource 的儲存。</p>
 <p>也就是說，透過 CRD 我們不用寫 custom resource 的 API，例如 cert-manager 不用寫 certificates.certmanager.k8s.io 的 API，而是向 kubernetes API server 註冊 CRD，讓 kubernetes API server 看得懂 custom source 的定義，並且直接使用 kubernetes API server，進行 custom resource 的 CRUD。</p>
-
 <p>我們可以透過 kubectl (API server) 操作 certificates.certmanager.k8s.io，這個請求也是送到 kubernetes API server。</p>
-
 <h1 id="api-server-aggregation">API server aggregation</h1>
-
 <p>能夠透過註冊 CRD ，就可以使用原來的 kubernetes API 來進行 CRUD ，是因為 kubernetes API 對於普通的 API 操作提供泛型 (generic) 介面，直接使用 CRUD 的邏輯。</p>
-
 <p>由於是 kubernetes Aggregated API ，所有 kubernetes 的 clients 都一起兼容新註冊的 custom resource，不用在 API 要定義，在冊戶端也要定義。註冊完的 custom resource definition，可以直接透過 kubectl 存取。</p>
-
-<h1 id="小結">小結</h1>
-
+<h1 id="heading-1">小結</h1>
 <ul>
 <li>custom resource 簡介</li>
 <li>custom resource 使用的情境與條件</li>
@@ -1001,7 +957,7 @@ error: the server doesn't have a resource type &quot;chechiachang&quot;
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

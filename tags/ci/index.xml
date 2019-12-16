@@ -18,40 +18,26 @@
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Nginx Ingress Controller&lt;/li&gt;
 &lt;li&gt;Cert-manager&lt;/li&gt;
 &lt;li&gt;Jenkin-x on Kubernetes&lt;/li&gt;
 &lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
 &lt;h1 id=&#34;nginx-ingress-controller&#34;&gt;Nginx Ingress Controller&lt;/h1&gt;
-
 &lt;ul&gt;
 &lt;li&gt;簡介 nginx &amp;amp; Ingress Controller&lt;/li&gt;
 &lt;li&gt;部屬並設定 nginx ingress controller&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;nginx-introduction&#34;&gt;Nginx Introduction&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://nginx.org/en/docs/&#34; target=&#34;_blank&#34;&gt;Nginx&lt;/a&gt; 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://nginx.org/en/docs/&#34;&gt;Nginx&lt;/a&gt; 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;高效能的 web server，遠勝傳統 apache server 的資源與效能&lt;/li&gt;
 &lt;li&gt;大量的模組與擴充功能&lt;/li&gt;
@@ -59,20 +45,15 @@
 &lt;li&gt;輕量&lt;/li&gt;
 &lt;li&gt;容易水平擴展&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;ingress-ingress-controller&#34;&gt;Ingress &amp;amp; Ingress Controller&lt;/h1&gt;
-
-&lt;p&gt;這邊簡單講一下 &lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress/&#34; target=&#34;_blank&#34;&gt;kubernetes ingress&lt;/a&gt;。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:&lt;/p&gt;
-
+&lt;h1 id=&#34;ingress--ingress-controller&#34;&gt;Ingress &amp;amp; Ingress Controller&lt;/h1&gt;
+&lt;p&gt;這邊簡單講一下 &lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress/&#34;&gt;kubernetes ingress&lt;/a&gt;。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;service 連接&lt;/li&gt;
 &lt;li&gt;load balance 設定&lt;/li&gt;
 &lt;li&gt;SSL/TLS 終端&lt;/li&gt;
 &lt;li&gt;虛擬主機設定&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;一個簡單的 ingress 大概長這樣&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -87,56 +68,32 @@ spec:
         backend:
           serviceName: test
           servicePort: 80
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;除了一般的 k8s 資源，nginx 主要的設定會落在 spec，以及依賴底下實作不同，額外設定的 annotation。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;除了一般的 k8s 資源，nginx 主要的設定會落在 spec，以及依賴底下實作不同，額外設定的 annotation。&lt;/p&gt;
 &lt;p&gt;這邊可以看到 spec.rule 定義了外部 http 流量，引導到 backend service 的路徑。&lt;/p&gt;
-
 &lt;p&gt;annotations 下已經標註的 nginx.ingress 的 annotation，來快速增加額外的設定。&lt;/p&gt;
-
-&lt;h1 id=&#34;ingress-ingress-controller-1&#34;&gt;Ingress &amp;amp; Ingress Controller&lt;/h1&gt;
-
+&lt;h1 id=&#34;ingress--ingress-controller-1&#34;&gt;Ingress &amp;amp; Ingress Controller&lt;/h1&gt;
 &lt;p&gt;雖然已經指定 nginx 的 annotation，但這邊要注意，ingress resource 本身是不指定底層的實現 (ingress controller)，也就是說，底下是 nginx 也好，traefik 也行，只要能夠實現 ingress 裏頭設定的 routing rules 就可以。&lt;/p&gt;
-
 &lt;p&gt;只設定好 ingress，集群上是不會有任何作用的，還需要在集群上安裝 ingress controller 的實作，實作安裝完了以後，會依據 ingress 的設定，在 controller 裏頭實現，不管是 routing、ssl/tls termination、load balancing 等等功能。如同許多 Kubernetes resource 的設計理念一樣，這邊也很優雅的用 ingress 與 ingress controller，拆分的需求設定與實作實現兩邊的職責。&lt;/p&gt;
-
 &lt;p&gt;例如以 nginx ingress controller，安裝完後會依據 ingress 的設定，在 nginx pod 裡設定對應的 routing rules，如果有 ssl/tls 設定，也一併載入。&lt;/p&gt;
-
-&lt;p&gt;Kubernetes 官方文件提供了&lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/#additional-controllers&#34; target=&#34;_blank&#34;&gt;許多不同的 controller&lt;/a&gt; 可以依照需求選擇。&lt;/p&gt;
-
+&lt;p&gt;Kubernetes 官方文件提供了&lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/#additional-controllers&#34;&gt;許多不同的 controller&lt;/a&gt; 可以依照需求選擇。&lt;/p&gt;
 &lt;p&gt;但如果不知道如何選擇，個人會推薦使用 nginx ingress controller，穩定、功能強大、設定又不至於太過複雜，基本的設定就能很好的支撐服務，不熟悉的大德們比較不容易被雷到。&lt;/p&gt;
-
 &lt;p&gt;底下我們就要來開始使用 nginx ingress controller。&lt;/p&gt;
-
 &lt;h1 id=&#34;deployment&#34;&gt;Deployment&lt;/h1&gt;
-
-&lt;p&gt;我們這邊使用的 &lt;a href=&#34;https://github.com/kubernetes/ingress-nginx&#34; target=&#34;_blank&#34;&gt;ingress-nginx&lt;/a&gt; 是 kubernetes org 內維護的專案，專案內容主要是再 k8s 上執行 nginx，抽象與實作的整合，並透過 configmap 來設定 nginx。針對 nginx ingress kubernetes 官方有提供&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/&#34; target=&#34;_blank&#34;&gt;非常詳細的說明文件&lt;/a&gt; ，剛接觸 nginx 的大德可以透過這份文件，快速的操作 nginx 的設定，而不用直接寫 nginx.conf 的設定檔案。&lt;/p&gt;
-
+&lt;p&gt;我們這邊使用的 &lt;a href=&#34;https://github.com/kubernetes/ingress-nginx&#34;&gt;ingress-nginx&lt;/a&gt; 是 kubernetes org 內維護的專案，專案內容主要是再 k8s 上執行 nginx，抽象與實作的整合，並透過 configmap 來設定 nginx。針對 nginx ingress kubernetes 官方有提供&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/&#34;&gt;非常詳細的說明文件&lt;/a&gt; ，剛接觸 nginx 的大德可以透過這份文件，快速的操作 nginx 的設定，而不用直接寫 nginx.conf 的設定檔案。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;repo 版本是 nginx-0.26.1&lt;/li&gt;
 &lt;li&gt;Image 版本是 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;helm&#34;&gt;Helm&lt;/h3&gt;
-
-&lt;p&gt;我們這邊用 helm 部屬，&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress&#34; target=&#34;_blank&#34;&gt;Nginx Ingress Controller Stable Chart&lt;/a&gt;，讓各位大德用最簡單的步驟，獲得一個功能完整的 nginx ingress controller。&lt;/p&gt;
-
+&lt;p&gt;我們這邊用 helm 部屬，&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress&#34;&gt;Nginx Ingress Controller Stable Chart&lt;/a&gt;，讓各位大德用最簡單的步驟，獲得一個功能完整的 nginx ingress controller。&lt;/p&gt;
 &lt;p&gt;與前面幾個 helm chart 一樣，我們可以先取得 default values.yaml 設定檔，再進行更改。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ wget https://raw.githubusercontent.com/helm/charts/master/stable/nginx-ingress/values.yaml
 $ vim values.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;安裝時也可以使用 &amp;ndash;set 來變更&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34; target=&#34;_blank&#34;&gt;安裝 chart 時的 parameters&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安裝時也可以使用 &amp;ndash;set 來變更&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34;&gt;安裝 chart 時的 parameters&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
 	-f values.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;安裝完後，resource 很快就起來。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安裝完後，resource 很快就起來。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kubectl get all --selector app=nginx-ingress
 NAME                                                 READY   STATUS    RESTARTS   AGE
 pod/nginx-ingress-controller-7bbcbdcf7f-tx69n        1/1     Running   0          216d
@@ -161,39 +118,26 @@ nginx-ingress-controller   2      216d
 kubectl get ingress
 NAME            HOSTS                  ADDRESS       PORTS     AGE
 ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;兩個 Pods&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;兩個 Pods&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx ingress controller 是主要的 nginx pod，裡面跑的是 nginx&lt;/li&gt;
 &lt;li&gt;Nginx default backend 跑的是 default backend，nginx 看不懂了 route request 都往這邊送。&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;Service&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;nginx-ingress-contrller 是我們在 GCP 上，在集群外部的 GCP 上的對外接口。如果在不同平台上，依據預設 service load balancer 有不同實作。&lt;/li&gt;
 &lt;li&gt;在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量&lt;/li&gt;
 &lt;li&gt;另外一個 service 就是 default backend 的 service&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;踩雷&#34;&gt;踩雷&lt;/h1&gt;
-
-&lt;p&gt;第一個雷點是 helm chart install 帶入的 &lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34; target=&#34;_blank&#34;&gt;parameters&lt;/a&gt;，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。&lt;/p&gt;
-
+&lt;h1 id=&#34;heading&#34;&gt;踩雷&lt;/h1&gt;
+&lt;p&gt;第一個雷點是 helm chart install 帶入的 &lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34;&gt;parameters&lt;/a&gt;，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
 	--set controller.service.externalTrafficPolicy=Local \
 	-f values.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;這邊開了 prometheus metrics exporter，以及 source IP preservation。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這邊開了 prometheus metrics exporter，以及 source IP preservation。&lt;/p&gt;
 &lt;h1 id=&#34;nginx-config&#34;&gt;Nginx Config&lt;/h1&gt;
-
 &lt;p&gt;再安裝完後，外部的 load balancer 啟用後，就可以透過 GCP 的 external ip 連入 nginx，nginx 依照設定的 rule 向後端服務做集群內的 load balancing 與 routing。&lt;/p&gt;
-
 &lt;p&gt;如果在使用過程中，有需要執行更改設定，或是 hot reload config，在 kubernetes 上要如何做呢? 我們下回分解。&lt;/p&gt;
 </description>
     </item>
@@ -204,83 +148,55 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Nginx Ingress Controller&lt;/li&gt;
 &lt;li&gt;Cert-manager&lt;/li&gt;
 &lt;li&gt;Jenkin-x on Kubernetes&lt;/li&gt;
 &lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx Ingress Controller 運作原理&lt;/li&gt;
 &lt;li&gt;設定 Nginx Ingress Controller&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;運作原理&#34;&gt;運作原理&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading-1&#34;&gt;運作原理&lt;/h1&gt;
 &lt;p&gt;昨天講完 nginx ingress controller 部屬，今天來談談 controller 是如何運作的。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx&lt;/li&gt;
 &lt;li&gt;針對 upstream (後端 app 的 endpoint) 變更，使用 lua-nginx-module 來更新。因為 kubernetes 上，service 後的服務常常會動態的變更，scaling，但 endpint ip list 又需要更新到 nginx，所以使用 lua 額外處理&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;在 kubernetes 上要如何做到上述兩件事呢?&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;一般 controller 都使用同步 loop 來檢查 current state 是否與 desired state&lt;/li&gt;
 &lt;li&gt;desired state 使用 k8s object 描述，例如 ingress, services, configmap 等等 object&lt;/li&gt;
-&lt;li&gt;Nginx ingress controller 這邊使用的是 client-go 中的 Kubernetes Informer 的 &lt;a href=&#34;https://godoc.org/k8s.io/client-go/informers#SharedInformerFactory&#34; target=&#34;_blank&#34;&gt;SharedInformer&lt;/a&gt;，可以根據 object 的更新執行 callback&lt;/li&gt;
+&lt;li&gt;Nginx ingress controller 這邊使用的是 client-go 中的 Kubernetes Informer 的 &lt;a href=&#34;https://godoc.org/k8s.io/client-go/informers#SharedInformerFactory&#34;&gt;SharedInformer&lt;/a&gt;，可以根據 object 的更新執行 callback&lt;/li&gt;
 &lt;li&gt;由於無法檢查每一次的 object 更動，是否對 config 產生影響，這邊直接每次更動都產生全新的 model&lt;/li&gt;
 &lt;li&gt;如果新產生的 model 與現有相同，就跳過 reload&lt;/li&gt;
 &lt;li&gt;如果 model 只影響 endpoint，使用 nginx 內部的 lua handler 產生新的 endpoint list，來避免因為 upstream 服務變更造成的頻繁 reload&lt;/li&gt;
 &lt;li&gt;如果新 Model 影響不只 endpoint，則取代現有 model，然後觸發 reload&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;具體會觸發 reload 的事件，&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/how-it-works/#when-a-reload-is-required&#34; target=&#34;_blank&#34;&gt;請見官方文件&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;除了監測 objects，build model，觸發 reload，之前 controller 還會將 ingress 送到 &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#validatingadmissionwebhook&#34; target=&#34;_blank&#34;&gt;kubernetes validating admission webhook server&lt;/a&gt; 做驗證，避免描述 desired state 的 ingress 有 syntax error，導致整個 controller 爆炸。&lt;/p&gt;
-
+&lt;p&gt;具體會觸發 reload 的事件，&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/how-it-works/#when-a-reload-is-required&#34;&gt;請見官方文件&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;除了監測 objects，build model，觸發 reload，之前 controller 還會將 ingress 送到 &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#validatingadmissionwebhook&#34;&gt;kubernetes validating admission webhook server&lt;/a&gt; 做驗證，避免描述 desired state 的 ingress 有 syntax error，導致整個 controller 爆炸。&lt;/p&gt;
 &lt;h1 id=&#34;configuration&#34;&gt;Configuration&lt;/h1&gt;
-
 &lt;p&gt;要透過 controller 更改 nginx 設定，有以下三種方式&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;更改 configmap，對全域的 controller 設定&lt;/li&gt;
 &lt;li&gt;更改 ingress 上的 annotation，這些 annotation 針對獨立 ingress 生效&lt;/li&gt;
-&lt;li&gt;有更深入的客製化，是上述兩者達不到或尚未實作，可以使用 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/custom-template/&#34; target=&#34;_blank&#34;&gt;Custom Template&lt;/a&gt; 來做到，把 nginx.tmpl mount 進 controller&lt;/li&gt;
+&lt;li&gt;有更深入的客製化，是上述兩者達不到或尚未實作，可以使用 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/custom-template/&#34;&gt;Custom Template&lt;/a&gt; 來做到，把 nginx.tmpl mount 進 controller&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;configmap&#34;&gt;Configmap&lt;/h1&gt;
-
-&lt;p&gt;由於把全域設定放到 configmap 上，nginx ingress controller 非常好調度與擴展，&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/&#34; target=&#34;_blank&#34;&gt;controller 官方說明文件&lt;/a&gt; 除了列出目前已經支援的設定外，也直接附上 nginx 官方的文件說明連結，讓使用者查詢時方便比對。&lt;/p&gt;
-
+&lt;p&gt;由於把全域設定放到 configmap 上，nginx ingress controller 非常好調度與擴展，&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/&#34;&gt;controller 官方說明文件&lt;/a&gt; 除了列出目前已經支援的設定外，也直接附上 nginx 官方的文件說明連結，讓使用者查詢時方便比對。&lt;/p&gt;
 &lt;p&gt;當需要更改需求，可以 google nginx 的關鍵字，找到 nginx 上設定的功能選項後，來 controller 的文件，找看看目前是否已經支援。有時候有需要對照 nginx 官方文件，來正確設定 controller。&lt;/p&gt;
-
 &lt;h1 id=&#34;annotation&#34;&gt;Annotation&lt;/h1&gt;
-
-&lt;p&gt;有很多 Nginx 的設定是根據 ingress 不同而有調整，例如針對這個 ingress 做白名單，設定 session，設定 ssl 等等，這些針對特定 ingress 所做的設定，可以直接寫在 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/&#34; target=&#34;_blank&#34;&gt;ingress annotation&lt;/a&gt; 裡面。&lt;/p&gt;
-
+&lt;p&gt;有很多 Nginx 的設定是根據 ingress 不同而有調整，例如針對這個 ingress 做白名單，設定 session，設定 ssl 等等，這些針對特定 ingress 所做的設定，可以直接寫在 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/&#34;&gt;ingress annotation&lt;/a&gt; 裡面。&lt;/p&gt;
 &lt;p&gt;例如下面這個 Ingress&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -303,26 +219,21 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-hash: &amp;quot;sha1&amp;quot;
     nginx.ingress.kubernetes.io/session-cookie-expires: &amp;quot;3600&amp;quot;
     nginx.ingress.kubernetes.io/session-cookie-max-age: &amp;quot;3600&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;nginx.ingress.kubernetes.io
-
 &lt;ul&gt;
 &lt;li&gt;whitelist-source-range: 只允許白名單 ip&lt;/li&gt;
-&lt;li&gt;load-balance: &amp;ldquo;ip_hash&amp;rdquo;: 更改預設 round_robin 的 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#load-balance&#34; target=&#34;_blank&#34;&gt;load balance&lt;/a&gt;，為了做 session cookie&lt;/li&gt;
-&lt;li&gt;affinity: &amp;ldquo;cookie&amp;rdquo;: 設定 upstream 的 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#session-affinity&#34; target=&#34;_blank&#34;&gt;session affinity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;load-balance: &amp;ldquo;ip_hash&amp;rdquo;: 更改預設 round_robin 的 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#load-balance&#34;&gt;load balance&lt;/a&gt;，為了做 session cookie&lt;/li&gt;
+&lt;li&gt;affinity: &amp;ldquo;cookie&amp;rdquo;: 設定 upstream 的 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#session-affinity&#34;&gt;session affinity&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;session-cookie-name: &amp;ldquo;route&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;session-cookie-hash: &amp;ldquo;sha1&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;session-cookie-expires: &amp;ldquo;3600&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;session-cookie-max-age: &amp;ldquo;3600&amp;rdquo;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;如果後端 server 有 session 需求，希望相同 source ip 來的 request 能持續到相同的 endpoint。才做了以上設定。&lt;/p&gt;
-
 &lt;h1 id=&#34;helm-configuration&#34;&gt;helm configuration&lt;/h1&gt;
-
 &lt;p&gt;helm 的 configuration 也是重要的設定，這裡在安裝時決定了 nginx ingress controller 的 topology、replicas、resource、k8s runtime 設定如 healthz &amp;amp; readiness、其實都會影響 nginx 具體的設定。這部分就會有很多考量。有機會我們再來分享。&lt;/p&gt;
 </description>
     </item>
@@ -333,90 +244,56 @@ metadata:
       <pubDate>Mon, 07 Oct 2019 08:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
 &lt;li&gt;Node Exporter 與 kube metrics exporter&lt;/li&gt;
 &lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
 &lt;li&gt;自幹 exporter&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
 &lt;p&gt;如果要透過 prometheus 來監控集群的運行狀況，有兩個 exporter 是必裝的，一個是把 node 狀態 export 出來的 node exporter，一個是把 kubernetes 集群狀態 export 出來的 kube state metrics exporter。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Node Exporter 簡介&lt;/li&gt;
 &lt;li&gt;kube metrics exporter 安裝與設定&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;node-exporter&#34;&gt;Node Exporter&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/prometheus/node_exporter&#34; target=&#34;_blank&#34;&gt;Node Exporter&lt;/a&gt; 是 prometheus 官方維護的一個子項目，主要在把類 unix 硬體 kernel 的 metrics 送出來。官方也支援 windows node 與 nvidia gpu metrics，可以說是功能強大。&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://github.com/prometheus/node_exporter&#34;&gt;Node Exporter&lt;/a&gt; 是 prometheus 官方維護的一個子項目，主要在把類 unix 硬體 kernel 的 metrics 送出來。官方也支援 windows node 與 nvidia gpu metrics，可以說是功能強大。&lt;/p&gt;
 &lt;p&gt;為了能夠監測 kubernetes node 的基礎設施狀態，通常都會使用 node exporter。&lt;/p&gt;
-
 &lt;p&gt;node exporter 安裝，我們在安裝 prometheus helm chart 時就一並安裝了。這邊看一下設定與運行。&lt;/p&gt;
-
 &lt;h1 id=&#34;collectors&#34;&gt;Collectors&lt;/h1&gt;
-
-&lt;p&gt;Node exporter 把不同位置收集到的不同類型的 metrics ，做成各自獨立的 colletor，使用者可以根據求需求來啟用或是不啟用 collector，&lt;a href=&#34;https://github.com/prometheus/node_exporter#enabled-by-default&#34; target=&#34;_blank&#34;&gt;完整的 collector 目錄&lt;/a&gt; 在這邊。&lt;/p&gt;
-
+&lt;p&gt;Node exporter 把不同位置收集到的不同類型的 metrics ，做成各自獨立的 colletor，使用者可以根據求需求來啟用或是不啟用 collector，&lt;a href=&#34;https://github.com/prometheus/node_exporter#enabled-by-default&#34;&gt;完整的 collector 目錄&lt;/a&gt; 在這邊。&lt;/p&gt;
 &lt;p&gt;如果有看我們第一部份的 ELK part，應該會覺得這裡的設定，跟 metricbeat 非常像，基本上這兩者做的事情是大同小異的，收集 metrics 來源都是同樣的類 unix 系統，只是往後送的目標不一樣 (雖然現在兩者都可以兼容混搭了)。如果有接觸過其他平台的 metrics collector，也會發現其實大家做的都差不多。&lt;/p&gt;
-
 &lt;h1 id=&#34;textfile-collector&#34;&gt;Textfile Collector&lt;/h1&gt;
-
-&lt;p&gt;Prometheus 除了有 scrape 機制，讓 prometheus 去 exporter 撈資料外，還有另外一個機制，叫做 &lt;a href=&#34;https://github.com/prometheus/pushgateway&#34; target=&#34;_blank&#34;&gt;Pushgateway&lt;/a&gt;，這個我們在部屬 prometheus 時也部屬了一個。這邊簡單說明一下。&lt;/p&gt;
-
+&lt;p&gt;Prometheus 除了有 scrape 機制，讓 prometheus 去 exporter 撈資料外，還有另外一個機制，叫做 &lt;a href=&#34;https://github.com/prometheus/pushgateway&#34;&gt;Pushgateway&lt;/a&gt;，這個我們在部屬 prometheus 時也部屬了一個。這邊簡單說明一下。&lt;/p&gt;
 &lt;p&gt;經常性執行的服務(redis, kafka,&amp;hellip;)會一直運行，prometheus 透過這些服務的 metrics 取得 runtime metrics，作為監控資料。可是有一些 job 是暫時性的任務，例如果一個 batch job，這些服務不會有一直運行的 runtime metrics，也不會有 exporter。但這時又希望監控這些 job 的狀態，就可以使用 Pushgateway。&lt;/p&gt;
-
 &lt;p&gt;Pushgateway 的作用機制，就是指定收集的目標資料夾，需要監測的 batch job，只要把希望監測的資料，寫到該資料夾。Pushgateway 會依據寫入的資料，轉成 time series metrics，並且 export 出來。&lt;/p&gt;
-
 &lt;p&gt;這種去 tail 指定目錄檔案，然後把 metrics 後送的機制，是否跟 filebeat 有一點類似? 只是 filebeat 一般取得資料後，會主動推送到 ELK 上，prometheus pushgateway 會暴露出 metrics 後，讓 prometheus server 來 scrape。&lt;/p&gt;
-
 &lt;p&gt;Pushgateway 也會在收集資料時打上需要的 label，方面後段處理資料。&lt;/p&gt;
-
 &lt;h1 id=&#34;kubernetes-state-metrics-exporter&#34;&gt;Kubernetes State Metrics (Exporter)&lt;/h1&gt;
-
 &lt;p&gt;Node Exporter 將 kubernetes 集群底下的 Node 的硬體狀態，例如 cpu, memory, storage,&amp;hellip; expose 出來，然而我們在維運 kubernetes 還需要從 api server 獲得集群內部的資料，例如說 pod state, container state, endpoints, service, &amp;hellip;等，這邊可以使用 kube-state-metrics 來處理。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics&#34; target=&#34;_blank&#34;&gt;kube-state-metrics&lt;/a&gt; 是 kubernetes 官方維護的專案，做的事情就是向 api server 詢問 kubernetes 的 state，例如 pod state, deployment state，然後跟 prometheus exporter 一，開放一個 http endpoint，讓需要的服務來 scrape metrics。&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics&#34;&gt;kube-state-metrics&lt;/a&gt; 是 kubernetes 官方維護的專案，做的事情就是向 api server 詢問 kubernetes 的 state，例如 pod state, deployment state，然後跟 prometheus exporter 一，開放一個 http endpoint，讓需要的服務來 scrape metrics。&lt;/p&gt;
 &lt;p&gt;工作雲裡也很單純，kubernetes api server 可以查詢 pod 當下的狀態，kube-state-metrics 則會把當下的狀態依照時間序，做成 time series 的 metrics，例如這個 pod 什麼時候是活著，什麼時候因為故障而 error。&lt;/p&gt;
-
 &lt;p&gt;kube-state-metrics 預設的輸出格式是 plaintext，直接符合 Prometheus client endpoint 的格式&lt;/p&gt;
-
 &lt;h1 id=&#34;deployment&#34;&gt;Deployment&lt;/h1&gt;
-
 &lt;p&gt;如果依照第一篇安裝 prometheus helm 的步驟，現在應該已經安裝完 kube-state-metrics 了。如果沒有安裝，也可以依照官方說明的基本範例安裝。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;git clone git@github.com:kubernetes/kube-state-metrics.git
 
 cd kube-state-metrics
 
 kubectl apply -f examples/standard/*.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;安裝完可以看到&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安裝完可以看到&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ kubectl get pods --selector &#39;app=prometheus,component=kube-state-metrics&#39;
 
 NAME                                             READY   STATUS    RESTARTS   AGE
@@ -426,10 +303,7 @@ $ kubectl get svc --selector &#39;app=prometheus,component=kube-state-metrics&#3
 
 NAME                            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 prometheus-kube-state-metrics   ClusterIP   None         &amp;lt;none&amp;gt;        80/TCP    201d
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我們可以透過 service 打到 pod 的 /metrics 來取得 metrics。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我們可以透過 service 打到 pod 的 /metrics 來取得 metrics。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kubectl exec -it busybox sh
 
 curl prometheus-kube-state-metrics:8080
@@ -457,23 +331,14 @@ curl prometheus-kube-state-metrics:8081
     &amp;lt;/ul&amp;gt;
     &amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;這邊有兩套 metrics，一個是 kube-state-metrics 自己自我監測的 metrics，在 8081，另外一個才是 kube metrics，在 8080，兩個都要收，記得不要收錯了。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這邊有兩套 metrics，一個是 kube-state-metrics 自己自我監測的 metrics，在 8081，另外一個才是 kube metrics，在 8080，兩個都要收，記得不要收錯了。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ curl prometheus-kube-state-metrics:8080/metrics
 
 打下去就可以看到超多 metrics 。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics/tree/master/docs&#34; target=&#34;_blank&#34;&gt;Metrics 的清單與說明文件&lt;/a&gt;，有用到的 metrics 使用前都可以來查一下定義解釋。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics/tree/master/docs&#34;&gt;Metrics 的清單與說明文件&lt;/a&gt;，有用到的 metrics 使用前都可以來查一下定義解釋。&lt;/p&gt;
 &lt;p&gt;理論上不用每個 metrics 都 expose 出來，有需要可以把不會用到的 metrics 關一關，可以節省 kube-state-metrics 的 cpu 消耗。&lt;/p&gt;
-
 &lt;h1 id=&#34;resource-recommendation&#34;&gt;Resource Recommendation&lt;/h1&gt;
-
-&lt;p&gt;kube-state-metrics 很貼心的還附上&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics#scaling-kube-state-metrics&#34; target=&#34;_blank&#34;&gt;建議的資源分配&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;kube-state-metrics 很貼心的還附上&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics#scaling-kube-state-metrics&#34;&gt;建議的資源分配&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;As a general rule, you should allocate
 
 200MiB memory
@@ -482,26 +347,17 @@ For clusters of more than 100 nodes, allocate at least
 
 2MiB memory per node
 0.001 cores per node
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;scaling&#34;&gt;Scaling&lt;/h1&gt;
-
-&lt;p&gt;kube-state-metrics 還有提供 horizontal scaling 的解決方案，如果你的集群很大，node 數量已經讓 kube-state-metrics 無法負荷，也可以使用 sharding 的機制，把 metrics 的工作散布到多個 kube-state-metrics，再讓 prometheus 去收集統整。這部分我覺得很有趣，但還沒實作過，我把&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics#horizontal-scaling-sharding&#34; target=&#34;_blank&#34;&gt;文件&lt;/a&gt; 放在這邊，有緣大德有時做過請來討論分享。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;scaling&#34;&gt;Scaling&lt;/h1&gt;
+&lt;p&gt;kube-state-metrics 還有提供 horizontal scaling 的解決方案，如果你的集群很大，node 數量已經讓 kube-state-metrics 無法負荷，也可以使用 sharding 的機制，把 metrics 的工作散布到多個 kube-state-metrics，再讓 prometheus 去收集統整。這部分我覺得很有趣，但還沒實作過，我把&lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics#horizontal-scaling-sharding&#34;&gt;文件&lt;/a&gt; 放在這邊，有緣大德有時做過請來討論分享。&lt;/p&gt;
 &lt;h1 id=&#34;dashboard&#34;&gt;Dashboard&lt;/h1&gt;
-
-&lt;p&gt;metrics 抓出來，當然要開一下 dashboard，這邊使用的是這個&lt;a href=&#34;https://grafana.com/grafana/dashboards/7249&#34; target=&#34;_blank&#34;&gt;kubernetes cluster&lt;/a&gt;，支援&lt;/p&gt;
-
+&lt;p&gt;metrics 抓出來，當然要開一下 dashboard，這邊使用的是這個&lt;a href=&#34;https://grafana.com/grafana/dashboards/7249&#34;&gt;kubernetes cluster&lt;/a&gt;，支援&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;node exporter&lt;/li&gt;
 &lt;li&gt;kube state metrics&lt;/li&gt;
 &lt;li&gt;nginx ingress controller&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;三個願望一次滿足~&lt;/p&gt;
-
-&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;跑 kubernetes 務必使用這兩個 exporter&lt;/li&gt;
 &lt;li&gt;kube-state-metrics 整理得很舒服，有時間可以多看看這個專案&lt;/li&gt;
@@ -515,53 +371,36 @@ For clusters of more than 100 nodes, allocate at least
       <pubDate>Sun, 06 Oct 2019 08:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
 &lt;li&gt;自幹 exporter&lt;/li&gt;
 &lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Exporter 工作原理簡介&lt;/li&gt;
 &lt;li&gt;Prometheus exporter library&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;exporter-workflow&#34;&gt;Exporter workflow&lt;/h1&gt;
-
 &lt;p&gt;上次講到 exporter 可以從服務端把運行資料抽出來，並開成 http endpoint，讓 prometheus 來 scrape metrics。那 exporter 本身是如何取得服務內部的 metrics 呢? 我們今天就稍微看一下。&lt;/p&gt;
-
 &lt;h1 id=&#34;redis-exporter&#34;&gt;Redis Exporter&lt;/h1&gt;
-
-&lt;p&gt;我們今天以 &lt;a href=&#34;https://github.com/oliver006/redis_exporter&#34; target=&#34;_blank&#34;&gt;Redis Exporter&lt;/a&gt; 為例，研究一下外部的 exporter 是如何取得 redis 內部的 metrcs。&lt;/p&gt;
-
+&lt;p&gt;我們今天以 &lt;a href=&#34;https://github.com/oliver006/redis_exporter&#34;&gt;Redis Exporter&lt;/a&gt; 為例，研究一下外部的 exporter 是如何取得 redis 內部的 metrcs。&lt;/p&gt;
 &lt;p&gt;Redis exporter 是用 golang 寫的一個小程式，總共算算才 1000 行，而且很多都是對 redis 內部 metrics 的清單，以及轉化成 prometheus metrics 的 tool functions，主要的邏輯非常簡單。我們簡單看一下源碼。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L386&#34; target=&#34;_blank&#34;&gt;Collect&lt;/a&gt; 是主要的收集邏輯，就是執行 scrapeRedisHost(ch) ，然後把收集到的資訊，使用 &lt;a href=&#34;https://github.com/prometheus/client_golang&#34; target=&#34;_blank&#34;&gt;Prometheus Go Client Library&lt;/a&gt; 的工具將資料註冊成 prometheus metrics&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L386&#34;&gt;Collect&lt;/a&gt; 是主要的收集邏輯，就是執行 scrapeRedisHost(ch) ，然後把收集到的資訊，使用 &lt;a href=&#34;https://github.com/prometheus/client_golang&#34;&gt;Prometheus Go Client Library&lt;/a&gt; 的工具將資料註冊成 prometheus metrics&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;func (e *Exporter) Collect(ch chan&amp;lt;- prometheus.Metric) {
 	e.Lock()
 	defer e.Unlock()
@@ -587,10 +426,7 @@ For clusters of more than 100 nodes, allocate at least
 	ch &amp;lt;- e.scrapeDuration
 	ch &amp;lt;- e.targetScrapeRequestErrors
 }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;scrapeRedisHost 內部的主要邏輯，又集中在&lt;a href=&#34;https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L1144&#34; target=&#34;_blank&#34;&gt;執行 Info&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;scrapeRedisHost 內部的主要邏輯，又集中在&lt;a href=&#34;https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L1144&#34;&gt;執行 Info&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  // 執行 info 
 	infoAll, err := redis.String(doRedisCmd(c, &amp;quot;INFO&amp;quot;, &amp;quot;ALL&amp;quot;))
 	if err != nil {
@@ -600,12 +436,8 @@ For clusters of more than 100 nodes, allocate at least
 			return err
 		}
 	}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;也就是說當我們在 redis-cli 連入 redis 時，可以執行 Info command，取得 redis 內部的資訊，包含節點設店與狀態，集群設定，資料的統計數據等等。然後 exporter 這邊維護持續去向 redis 更新 info ，並且把 info data 轉化成 time series 的 metrcs，再透過 &lt;a href=&#34;https://github.com/prometheus/client_golang/tree/master/prometheus/promhttp&#34; target=&#34;_blank&#34;&gt;Prometheus Client promhttp&lt;/a&gt; 提供的 http endpoint library，變成 http endpoint。&lt;/p&gt;
-
-&lt;p&gt;首先看一下 &lt;a href=&#34;https://redis.io/commands/info&#34; target=&#34;_blank&#34;&gt;redis info command 的文件&lt;/a&gt;，這邊有說明 info 的 option ，以及 option 各自提供的資料，包括 server 狀態，賀戶端連線狀況，系統資源，複本狀態等等。我們也可以自己透過 info 取得資料。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也就是說當我們在 redis-cli 連入 redis 時，可以執行 Info command，取得 redis 內部的資訊，包含節點設店與狀態，集群設定，資料的統計數據等等。然後 exporter 這邊維護持續去向 redis 更新 info ，並且把 info data 轉化成 time series 的 metrcs，再透過 &lt;a href=&#34;https://github.com/prometheus/client_golang/tree/master/prometheus/promhttp&#34;&gt;Prometheus Client promhttp&lt;/a&gt; 提供的 http endpoint library，變成 http endpoint。&lt;/p&gt;
+&lt;p&gt;首先看一下 &lt;a href=&#34;https://redis.io/commands/info&#34;&gt;redis info command 的文件&lt;/a&gt;，這邊有說明 info 的 option ，以及 option 各自提供的資料，包括 server 狀態，賀戶端連線狀況，系統資源，複本狀態等等。我們也可以自己透過 info 取得資料。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ kubectl get po | grep redis
 
 redis-2-redis-ha-server-0                                3/3     Running     0          11d
@@ -641,29 +473,19 @@ connected_clients:100
 client_recent_max_input_buffer:2
 client_recent_max_output_buffer:0
 blocked_clients:1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Redis exporter 收集這些數據，透過 prometheus client library 把資料轉成 time series prometheus metrics。然後透過 library 放在 http enpoint 上。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Redis exporter 收集這些數據，透過 prometheus client library 把資料轉成 time series prometheus metrics。然後透過 library 放在 http enpoint 上。&lt;/p&gt;
 &lt;p&gt;配合上次說過的 redis overview dashboard，可以直接在 Grafana 上使用&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://cloud.githubusercontent.com/assets/1222339/19412031/897549c6-92da-11e6-84a0-b091f9deb81d.png&#34; alt=&#34;Redis Overvies library&#34; /&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://cloud.githubusercontent.com/assets/1222339/19412031/897549c6-92da-11e6-84a0-b091f9deb81d.png&#34; alt=&#34;Redis Overvies library&#34;&gt;&lt;/p&gt;
 &lt;p&gt;這邊 dashboard 顯示幾個重要的 metrics&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Uptime&lt;/li&gt;
 &lt;li&gt;Memory Usage，要設定用量太高自動報警&lt;/li&gt;
 &lt;li&gt;Command 的執行狀況，回應時間&lt;/li&gt;
 &lt;li&gt;訊息的流量，以及超出 time-to-live 的資料清除。&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;都是需要好好加上 alert 的核心 metrics&lt;/p&gt;
-
-&lt;h1 id=&#34;貢獻-exporter&#34;&gt;貢獻 exporter&lt;/h1&gt;
-
+&lt;h1 id=&#34;-exporter&#34;&gt;貢獻 exporter&lt;/h1&gt;
 &lt;p&gt;其他服務的 exporter 工作原理也相似，如果服務本身有內部的 metrics，可以透過 client command 或是 API 取得，exporter 的工作就只是轉成 time series data。&lt;/p&gt;
-
 &lt;p&gt;如果有比較特殊的 metrics 沒有匯出，例如說自家的 metrics ，但又希望能放到 prometheus 上監測，例如每秒收到多少 request count，回應速度，錯誤訊息的統計&amp;hellip;&amp;hellip;等，這點也可以使用 client library 自幹 exporter 然後 expose http endpoint，這樣在 prometheus 上也可以看到自家產品的 metrics，非常好用。有機會我們來聊自幹 exporter。&lt;/p&gt;
 </description>
     </item>
@@ -674,46 +496,32 @@ blocked_clients:1
       <pubDate>Fri, 04 Oct 2019 16:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deploy-grafana/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Grafana 與設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deploy-grafana/&#34;&gt;GKE 上自架 Grafana 與設定&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus Introduction&lt;/li&gt;
 &lt;li&gt;Deploy Prometheus&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;prometheus-introduction&#34;&gt;Prometheus Introduction&lt;/h1&gt;
-
 &lt;p&gt;生產環境與非生產環境，其中的一指標就是有沒有足夠完整的服務監測系統，這句話可以看出服務監測對於產品化是多麼重要。而監控資料 (metrics) 的收集與可視化工具其實非常多，例如上周介紹的 ELK Stack，這次我們要來介紹另外一個很多人使用的 prometheus。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://prometheus.io/&#34; target=&#34;_blank&#34;&gt;Promethues 在官網上提到&lt;/a&gt; 是一個 Monitoring system and time series database&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://prometheus.io/&#34;&gt;Promethues 在官網上提到&lt;/a&gt; 是一個 Monitoring system and time series database&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;可以收集高維度的資料&lt;/li&gt;
 &lt;li&gt;使用自己的 PromQL 做有效且精簡的資料查詢&lt;/li&gt;
@@ -722,20 +530,14 @@ blocked_clients:1
 &lt;li&gt;有許多隨插即用的整合 exporter，例如 redis-exporter, kafka-exporter，kubernetes-exporter ，都可以直接取得資料&lt;/li&gt;
 &lt;li&gt;支援 alert，使用 PromQL 以及多功能的告警，可以設定精準的告警條件&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;與-elk-做比較&#34;&gt;與 ELK 做比較&lt;/h1&gt;
-
+&lt;h1 id=&#34;-elk-&#34;&gt;與 ELK 做比較&lt;/h1&gt;
 &lt;p&gt;基本上 Prometheus 跟 ELK 比，其實是很奇怪的一件事，但這也是最常被問的一個問題。兩者在本質上是完全不同的系統。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Prometheus 是 based on time series database 的資料收集系統&lt;/li&gt;
 &lt;li&gt;ELK 是基於全文搜索引擎的資料查詢系統&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;是的，他們都能做 metrics 收集，在有限的尺度下，能達到一樣的效果。但這樣說的意思就等於是在說 mesos DC/OS 與 kubenetes 都能跑 container cluster 一樣，底下是完全不一樣的東西。&lt;/p&gt;
-
 &lt;p&gt;兩者的差異使用上差非常多&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;metrics 結構: ELK 借助全文搜索引擎，基本上送什麼資料近來都可以查找。Prometheus metrics 拉進來是 time series 的 key-value pairs。&lt;/li&gt;
 &lt;li&gt;維護同樣的 metrics，prometheus 的使用的儲存空間遠小於 elasticsearch&lt;/li&gt;
@@ -744,21 +546,13 @@ blocked_clients:1
 &lt;li&gt;Elasticsearch 資源上很貴，是因為在處理大量 text log 的時候，他能夠用後段的 pipeline 處理內容，再進行交叉比對，可以從 text 裡面提取很多未事先定義的資料&lt;/li&gt;
 &lt;li&gt;Elasticsearch 的維護工作也比較複雜困難&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;如果要收集服務運行資料，可以直接選 prometheus。如果有收集 log 進行交叉比對，可以考慮 elk。&lt;/p&gt;
-
 &lt;h3 id=&#34;helm&#34;&gt;Helm&lt;/h3&gt;
-
 &lt;p&gt;我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 prometheus。所以我們先用。&lt;/p&gt;
-
-&lt;p&gt;沒用過 helm 的大德可以參考 &lt;a href=&#34;https://helm.sh/docs/using_helm/#quickstart&#34; target=&#34;_blank&#34;&gt;Helm Quickstart&lt;/a&gt;，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好&lt;/p&gt;
-
+&lt;p&gt;沒用過 helm 的大德可以參考 &lt;a href=&#34;https://helm.sh/docs/using_helm/#quickstart&#34;&gt;Helm Quickstart&lt;/a&gt;，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好&lt;/p&gt;
 &lt;h1 id=&#34;deploy-prometheus&#34;&gt;Deploy Prometheus&lt;/h1&gt;
-
-&lt;p&gt;我把我的寶藏都放在這了&lt;a href=&#34;https://github.com/chechiachang/prometheus-kubernetes&#34; target=&#34;_blank&#34;&gt;https://github.com/chechiachang/prometheus-kubernetes&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;我把我的寶藏都放在這了&lt;a href=&#34;https://github.com/chechiachang/prometheus-kubernetes&#34;&gt;https://github.com/chechiachang/prometheus-kubernetes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下載下來的 .sh ，跑之前養成習慣貓一下&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;cat install.sh
 
 #!/bin/bash
@@ -767,15 +561,10 @@ HELM_NAME=prometheus-1
 helm upgrade --install ${HELM_NAME} stable/prometheus \
   --namespace default \
   --values values-staging.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/prometheus&#34; target=&#34;_blank&#34;&gt;Prometheus Stable Chart&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/prometheus&#34;&gt;Prometheus Stable Chart&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;values.yaml 很長，但其實各個元件設定是重複的,設定好各自的 image,
 replicas, service, topology 等等&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;alertmanager:
   enabled: true
 
@@ -790,70 +579,62 @@ server:
 
 pushgateway:
   enabled: true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;底下有更多 runtime 的設定檔&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;底下有更多 runtime 的設定檔&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;定義好 global 的 scrape 間距，越短 metrics 維度就越精準&lt;/li&gt;
 &lt;li&gt;PersistenVolume 強謝建議開起來，維持歷史的資料
-
 &lt;ul&gt;
 &lt;li&gt;加上 storage usage 的 self monitoring（之後會講) 才不會滿出來 server 掛掉&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;server 的 scrapeConfigs 是 server 去收集的 job 設定。稍後再來細講。&lt;/p&gt;
-
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;server 的 scrapeConfigs 是 server 去收集的 job 設定。稍後再來細講。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;server:
-global:
-## How frequently to scrape targets by default
-##
-scrape_interval: 10s
-## How long until a scrape request times out
-##
-scrape_timeout: 10s
-## How frequently to evaluate rules
-##
-evaluation_interval: 10s
-persistentVolume:
-## If true, Prometheus server will create/use a Persistent Volume Claim
-## If false, use emptyDir
-##
-enabled: true
+  global:
+    ## How frequently to scrape targets by default
+    ##
+    scrape_interval: 10s
+    ## How long until a scrape request times out
+    ##
+    scrape_timeout: 10s
+    ## How frequently to evaluate rules
+    ##
+    evaluation_interval: 10s
+  persistentVolume:
+    ## If true, Prometheus server will create/use a Persistent Volume Claim
+    ## If false, use emptyDir
+    ##
+    enabled: true
 
-## Prometheus server data Persistent Volume access modes
-## Must match those of existing PV or dynamic provisioner
-## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-##
-accessModes:
-  - ReadWriteOnce
+    ## Prometheus server data Persistent Volume access modes
+    ## Must match those of existing PV or dynamic provisioner
+    ## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+    ##
+    accessModes:
+      - ReadWriteOnce
 
-## Prometheus server data Persistent Volume annotations
-##
-annotations: {}
+    ## Prometheus server data Persistent Volume annotations
+    ##
+    annotations: {}
 
-## Prometheus server data Persistent Volume existing claim name
-## Requires server.persistentVolume.enabled: true
-## If defined, PVC must be created manually before volume will be bound
-existingClaim: &amp;quot;&amp;quot;
+    ## Prometheus server data Persistent Volume existing claim name
+    ## Requires server.persistentVolume.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    existingClaim: &amp;quot;&amp;quot;
 
-## Prometheus server data Persistent Volume mount root path
-##
-mountPath: /data
+    ## Prometheus server data Persistent Volume mount root path
+    ##
+    mountPath: /data
 
-## Prometheus server data Persistent Volume size
-##
-size: 80Gi
+    ## Prometheus server data Persistent Volume size
+    ##
+    size: 80Gi
 
 alertmanagerFiles:
 
 serverFiles:
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;部屬完看一下&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;部屬完看一下&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kubectl get pods --selector=&#39;app=prometheus&#39;
 
 NAME                                             READY   STATUS    RESTARTS   AGE
@@ -882,10 +663,7 @@ prometheus-kube-state-metrics   10.12.6.222:8080                                
 prometheus-node-exporter        10.140.0.30:9100,10.140.0.9:9100,10.140.15.212:9100   197d
 prometheus-pushgateway          10.12.6.211:9091                                      197d
 prometheus-server               10.12.3.14:9090                                       197d
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;簡單說明一下&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;簡單說明一下&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;prometheus-server 是主要的 api-server 以及 time series database&lt;/li&gt;
 &lt;li&gt;alertmanager 負責告警工作&lt;/li&gt;
@@ -893,38 +671,24 @@ prometheus-server               10.12.3.14:9090                                 
 &lt;li&gt;kube-state-metrics 是開來收集 cluster wide 的 metrics, 像是 pods running counts, deployment ready count, total pods number 等等 metrics&lt;/li&gt;
 &lt;li&gt;node-exporter 是 daemonsets, 把每一個 node 的 metrics, 像是 memory, cpu, disk&amp;hellip;等資料,收集出來&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;主要服務存取就是透過 prometheus-server&lt;/p&gt;
-
 &lt;h1 id=&#34;access-prometheus-server&#34;&gt;Access Prometheus server&lt;/h1&gt;
-
 &lt;p&gt;除了直接 exec -it 進去 prometheus-server 以外，由於 prometheus 本身有提供 web portal, 所以我們這邊透過 port forwarding 打到本機上&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;PROMETHEUS_POD_NAME=$(kc get po -n default --selector=&#39;app=prometheus,component=server&#39; -o=jsonpath=&#39;{.items[0].metadata.name}&#39;)
 
 kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;透過 browser 就可以連入操作&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;透過 browser 就可以連入操作&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;http://localhost:9090
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;也可以透過 &lt;a href=&#34;https://prometheus.io/docs/prometheus/latest/querying/api/&#34; target=&#34;_blank&#34;&gt;HTTP API&lt;/a&gt; 用程式接入控制&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也可以透過 &lt;a href=&#34;https://prometheus.io/docs/prometheus/latest/querying/api/&#34;&gt;HTTP API&lt;/a&gt; 用程式接入控制&lt;/p&gt;
 &lt;h1 id=&#34;prometheus-web&#34;&gt;Prometheus Web&lt;/h1&gt;
-
 &lt;p&gt;Prometheus 本慎提供的 UI 其實功能就很強大&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;可以查到 (已經匯入存在) 的 metrics&lt;/li&gt;
 &lt;li&gt;可以在上面執行 PromQL 查詢語法&lt;/li&gt;
 &lt;li&gt;查詢運行的 status&lt;/li&gt;
 &lt;li&gt;查詢目前所有收集的 targets 的狀態,有收集器掛了也可以在這邊看到&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading-1&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;輕鬆自架 prometheus&lt;/li&gt;
 &lt;li&gt;Prometheus 頁面有精簡，但是功能完整的 graph 製圖&lt;/li&gt;
@@ -939,89 +703,65 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
       <pubDate>Fri, 04 Oct 2019 08:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/prometheus-deploy-grafana/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Grafana Introduction&lt;/li&gt;
 &lt;li&gt;Deploy Grafana&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;grafana-introduction&#34;&gt;Grafana Introduction&lt;/h1&gt;
-
 &lt;p&gt;上偏我們簡單介紹了 Prometheus，prometheus 的 Web Portol 已經附上簡單的 Query 與 Graph 工具，但一般我們在使用時，還是會搭配 Grafana 來使用。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://grafana.com/grafana/&#34; target=&#34;_blank&#34;&gt;Grafana 在官網上提到&lt;/a&gt; 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://grafana.com/grafana/&#34;&gt;Grafana 在官網上提到&lt;/a&gt; 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;支援許多圖表，直線圖，長條圖，區域分析，基本上需要的都有&lt;/li&gt;
 &lt;li&gt;在圖表上定義 alter，並且主動告警，整合其他通訊軟體&lt;/li&gt;
 &lt;li&gt;對後端 data source 的整合，可以同時使用 ELK, prometheus, influxdb 等 30 多種的資料來源&lt;/li&gt;
 &lt;li&gt;有許多公開的 plugin 與 dashboard 可以匯入使用&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;總之功能強大，至於用起來的感覺，個人是非常推薦。如果有大得想要試玩看看，可以直接到 &lt;a href=&#34;https://play.grafana.org/d/000000029/prometheus-demo-dashboard?orgId=1&amp;amp;refresh=5m&#34; target=&#34;_blank&#34;&gt;Grafana Live Demo&lt;/a&gt; 上面試玩&lt;/p&gt;
-
+&lt;p&gt;總之功能強大，至於用起來的感覺，個人是非常推薦。如果有大得想要試玩看看，可以直接到 &lt;a href=&#34;https://play.grafana.org/d/000000029/prometheus-demo-dashboard?orgId=1&amp;amp;refresh=5m&#34;&gt;Grafana Live Demo&lt;/a&gt; 上面試玩&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;一般使用都會圍繞 dashboard 為核心，透過單一畫面，一覽目前使用者需要讀取的資料&lt;/li&gt;
 &lt;li&gt;左上角的下拉選單，可以選擇不同的 dashboards&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;與-kibana-做比較&#34;&gt;與 Kibana 做比較&lt;/h1&gt;
-
+&lt;h1 id=&#34;-kibana-&#34;&gt;與 Kibana 做比較&lt;/h1&gt;
 &lt;p&gt;雖然大部分使用上，我們都會使用 ELK 一套，而 Prometheus + Grafana 另一套。但其實兩邊的 data source 都可以互接。例如 grafana 可以吃 elasticsearch 的 data source，而 kibana 有 prometheus module。&lt;/p&gt;
-
 &lt;p&gt;我們這邊基於兩款前端分析工具，稍微做個比較，底層的 data source 差異這邊先不提。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;都是開源: 兩者的開源社群都非常強大&lt;/li&gt;
 &lt;li&gt;兩者內建的 dashboard 都非常完整，而且不斷推出新功能&lt;/li&gt;
 &lt;li&gt;Log vs Metrics:
-
 &lt;ul&gt;
 &lt;li&gt;Kibana 的 metrics 也是像 log 一樣的 key value pairs，能夠 explore 未定義的 log&lt;/li&gt;
 &lt;li&gt;Grafana 的 UI 專注於呈現 time series 的 metrics，並沒有提供 data 的欄位搜尋，而是使用語法 Query 來取得數據&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Data source:
-
 &lt;ul&gt;
 &lt;li&gt;Grafana 可以收集各種不同的後端資料來源&lt;/li&gt;
 &lt;li&gt;ELK 主要核心還是 ELK stack，用其他 Module 輔助其他資料源&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&#34;deploy-grafana&#34;&gt;Deploy Grafana&lt;/h1&gt;
-
-&lt;p&gt;我把我的寶藏都放在這了&lt;a href=&#34;https://github.com/chechiachang/prometheus-kubernetes&#34; target=&#34;_blank&#34;&gt;https://github.com/chechiachang/prometheus-kubernetes&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;我把我的寶藏都放在這了&lt;a href=&#34;https://github.com/chechiachang/prometheus-kubernetes&#34;&gt;https://github.com/chechiachang/prometheus-kubernetes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下載下來的 .sh ，跑之前養成習慣貓一下&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;cd grafana
 
 cat install.sh
@@ -1032,25 +772,16 @@ HELM_NAME=grafana-1
 helm upgrade --install grafana stable/grafana \
   --namespace default \
   --values values-staging.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;helm&#34;&gt;Helm&lt;/h3&gt;
-
-&lt;p&gt;我們這邊用 helm 部屬，&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/grafana&#34; target=&#34;_blank&#34;&gt;Grafana Stable Chart&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;helm&#34;&gt;Helm&lt;/h3&gt;
+&lt;p&gt;我們這邊用 helm 部屬，&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/grafana&#34;&gt;Grafana Stable Chart&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
-
 &lt;p&gt;簡單看一下設定檔&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;vim values-staging.yaml
 
 replicas: 1
 
 deploymentStrategy: RollingUpdate
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Grafana 是支援 &lt;a href=&#34;https://grafana.com/docs/tutorials/ha_setup/&#34; target=&#34;_blank&#34;&gt;Grafana HA&lt;/a&gt; ，其實也非常簡單，就是把 grafana 本身的 dashboard database 從每個 grafana 一台 SQLite，變成外部統一的 MySQL，統一讀取後端資料，前端就可水平擴展。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Grafana 是支援 &lt;a href=&#34;https://grafana.com/docs/tutorials/ha_setup/&#34;&gt;Grafana HA&lt;/a&gt; ，其實也非常簡單，就是把 grafana 本身的 dashboard database 從每個 grafana 一台 SQLite，變成外部統一的 MySQL，統一讀取後端資料，前端就可水平擴展。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;readinessProbe:
   httpGet:
     path: /api/health
@@ -1075,10 +806,7 @@ image:
   ##
   # pullSecrets:
   #   - myRegistrKeySecretName
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;一些 Pod 的基本配置， health check 使用內建的 api，有需要也可以直接打 api&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一些 Pod 的基本配置， health check 使用內建的 api，有需要也可以直接打 api&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;securityContext:
   runAsUser: 472
   fsGroup: 472
@@ -1089,10 +817,7 @@ extraConfigmapMounts: []
   #   mountPath: /etc/grafana/ssl/
   #   configMap: certs-configmap
   #   readOnly: true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有要開外部 ingress，需要 ssl 的話可以從這邊掛進去&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有要開外部 ingress，需要 ssl 的話可以從這邊掛進去&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
@@ -1118,10 +843,7 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;這邊可以開 service load balancer, 以及 ingress，看實際使用的需求&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這邊可以開 service load balancer, 以及 ingress，看實際使用的需求&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;persistence:
   enabled: true
   initChownData: true
@@ -1132,10 +854,7 @@ ingress:
   # annotations: {}
   # subPath: &amp;quot;&amp;quot;
   # existingClaim:
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Persistent Volume 作為本地儲存建議都開起來，&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Persistent Volume 作為本地儲存建議都開起來，&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# Administrator credentials when not using an existing secret (see below)
 adminUser: admin
 # adminPassword: strongpassword
@@ -1145,10 +864,7 @@ admin:
   existingSecret: &amp;quot;&amp;quot;
   userKey: admin-user
   passwordKey: admin-password
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;帳號密碼建議使用 secret 掛進去&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;帳號密碼建議使用 secret 掛進去&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;datasources: {}
 #  datasources.yaml:
 #    apiVersion: 1
@@ -1199,10 +915,7 @@ dashboards: {}
   #   local-dashboard-base64:
   #     url: https://example.com/repository/test-b64.json
   #     b64content: true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Data source, Dashboard 想要直接載入，可以在這邊設定，或是 grafana 起來後，透過 Web UI 進去新增也可以&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Data source, Dashboard 想要直接載入，可以在這邊設定，或是 grafana 起來後，透過 Web UI 進去新增也可以&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## Grafana&#39;s primary configuration
 ## NOTE: values in map will be converted to ini format
 ## ref: http://docs.grafana.org/installation/configuration/
@@ -1219,90 +932,64 @@ grafana.ini:
     mode: console
   grafana_net:
     url: https://grafana.net
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然後是 grafana.ini 核心 runtime 設定，更多設定可以參考&lt;a href=&#34;http://docs.grafana.org/installation/configuration/&#34; target=&#34;_blank&#34;&gt;官方文件&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然後是 grafana.ini 核心 runtime 設定，更多設定可以參考&lt;a href=&#34;http://docs.grafana.org/installation/configuration/&#34;&gt;官方文件&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;deployment&#34;&gt;Deployment&lt;/h1&gt;
-
 &lt;p&gt;部屬完看一下&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;kubectl get po --selector=&#39;app=grafana&#39;
 
 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;access&#34;&gt;Access&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;access&#34;&gt;Access&lt;/h1&gt;
 &lt;p&gt;如果沒有透過 service load balancer 打出來，一樣可以使用 kubectl 做 port forwarding，權限就是 context 的權限，沒有 cluster context 的使用者就會進步來&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;GRAFANA_POD_NAME=$(kc get po -n default --selector=&#39;app=grafana&#39; -o=jsonpath=&#39;{.items[0].metadata.name}&#39;)
 kubectl --namespace default port-forward ${GRAFANA_POD_NAME} 3000
 
 http://localhost:3000
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;由於我們透過 service load balancer，gcp 會在外部幫忙架一個 load balancer，
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;由於我們透過 service load balancer，gcp 會在外部幫忙架一個 load balancer，
 可以直接透過 load balancer ip 存取，如果想設定 dns，指向這個 ip 後記得去調整 grafana 的 server hostname。&lt;/p&gt;
-
 &lt;p&gt;使用 secret 的密碼登入，username: grafana，這個是系統管理員&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;kubectl get secret --namespace default grafana -o jsonpath=&amp;quot;{.data.admin-password}&amp;quot; | base64 --decode ; echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;configuration-1&#34;&gt;Configuration&lt;/h1&gt;
-
-&lt;p&gt;近來畫面後先到左邊的&lt;a href=&#34;https://play.grafana.org/plugins&#34; target=&#34;_blank&#34;&gt;Configuration&lt;/a&gt; 調整&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;configuration-1&#34;&gt;Configuration&lt;/h1&gt;
+&lt;p&gt;近來畫面後先到左邊的&lt;a href=&#34;https://play.grafana.org/plugins&#34;&gt;Configuration&lt;/a&gt; 調整&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;產生新的 user org 與 user，把 admin 權限控制在需要的人手上&lt;/li&gt;
 &lt;li&gt;把 prometheus data source 加進來，就可以直接看到 prometheus 裡面的資料。&lt;/li&gt;
 &lt;li&gt;切換到非管理員的 user 繼續操作&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;import-dashboard&#34;&gt;Import Dashboard&lt;/h3&gt;
-
-&lt;p&gt;Grafana 網站上已經有&lt;a href=&#34;https://grafana.com/grafana/dashboards&#34; target=&#34;_blank&#34;&gt;超多設置好的 Dashboard&lt;/a&gt; 可以直接 import，大部分的服務都已經有別人幫我們把視覺畫圖表拉好，使用社群主流的 exporter 的話，參數直接接好。我們匯入後再進行簡單的客製化調整即可。&lt;/p&gt;
-
+&lt;p&gt;Grafana 網站上已經有&lt;a href=&#34;https://grafana.com/grafana/dashboards&#34;&gt;超多設置好的 Dashboard&lt;/a&gt; 可以直接 import，大部分的服務都已經有別人幫我們把視覺畫圖表拉好，使用社群主流的 exporter 的話，參數直接接好。我們匯入後再進行簡單的客製化調整即可。&lt;/p&gt;
 &lt;p&gt;我們鐵人賽有用到的服務，都已經有 dashboard&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;kubernetes Cluster: 6417
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/6417&#34; target=&#34;_blank&#34;&gt;https://grafana.com/dashboards/6417&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/6417&#34;&gt;https://grafana.com/dashboards/6417&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Kafka Exporter Overview: 7589
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/7589&#34; target=&#34;_blank&#34;&gt;https://grafana.com/dashboards/7589&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/7589&#34;&gt;https://grafana.com/dashboards/7589&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Prometheus Redis: 763
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/763&#34; target=&#34;_blank&#34;&gt;https://grafana.com/dashboards/763&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/763&#34;&gt;https://grafana.com/dashboards/763&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Kubernetes Deployment Statefulset Daemonset metrics: 8588
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/8588&#34; target=&#34;_blank&#34;&gt;https://grafana.com/dashboards/8588&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/8588&#34;&gt;https://grafana.com/dashboards/8588&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Haproxy Metrics Servers: 367
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/367&#34; target=&#34;_blank&#34;&gt;https://grafana.com/dashboards/367&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://grafana.com/dashboards/367&#34;&gt;https://grafana.com/dashboards/367&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Go to grafana lab to find more dashboards&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;export-dashboard&#34;&gt;Export Dashboard&lt;/h3&gt;
-
 &lt;p&gt;dashboard 會依照登入使用者的需求做調整，每個腳色需要看到的圖表都不同，基本上讓各個腳色都能一眼看到所需的表格即可&lt;/p&gt;
-
 &lt;p&gt;自己的調整過的 dashboard 也可以匯出分享&lt;/p&gt;
-
-&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading-1&#34;&gt;小結&lt;/h1&gt;
 &lt;p&gt;到這邊就可以正常使用 grafana了，資料來源的 exporter 我們會搭配前幾周分享過的服務，一起來講&lt;/p&gt;
 </description>
     </item>
@@ -1313,47 +1000,33 @@ http://localhost:3000
       <pubDate>Fri, 04 Oct 2019 08:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/prometheus-scrape/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34; target=&#34;_blank&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 kafka 的監測數據&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus scrape&lt;/li&gt;
 &lt;li&gt;scrape_configs&lt;/li&gt;
 &lt;li&gt;Node exporter&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;scrape&#34;&gt;Scrape&lt;/h1&gt;
-
 &lt;p&gt;Prometheus 收集 metrics 的方式，是從被監測的目標的 http endpoints 收集 (scrape) metrics，目標服務有提供 export metrics 的 endpoint 的話，稱作 exporter。例如 kafka-exporter 就會收集 kafka 運行的 metrics，變成 http endpoint instance，prometheus 從 instance 上面收集資料。&lt;/p&gt;
-
-&lt;p&gt;Promethesu 自己也是也提供 metrics endpoint，並且自己透過 scrape 自己的 metrics endpoint 來取得 self-monitoring 的 metrics。把自己當作外部服務監測。下面的設定就是直接透過 &lt;a href=&#34;http://localhost:9090/metrics&#34; target=&#34;_blank&#34;&gt;http://localhost:9090/metrics&lt;/a&gt; 取得。&lt;/p&gt;
-
+&lt;p&gt;Promethesu 自己也是也提供 metrics endpoint，並且自己透過 scrape 自己的 metrics endpoint 來取得 self-monitoring 的 metrics。把自己當作外部服務監測。下面的設定就是直接透過 http://localhost:9090/metrics 取得。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;global:
   scrape_interval:     15s # By default, scrape targets every 15 seconds.
 
@@ -1373,38 +1046,21 @@ scrape_configs:
 
     static_configs:
       - targets: [&#39;localhost:9090&#39;]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;透過 Grafana -&amp;gt; explore 就可以看到 Prometheus 的 metrics&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;static/img/prometheus-self-metrics.png&#34; alt=&#34;Prometheus Self Metrics&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;而使用 metrics 時最好先查到說明文件，確定 metrics 的定義與計算方法，才可以有效的製圖。關於 &lt;a href=&#34;https://wiki.lnd.bz/display/LFTC/Prometheus&#34; target=&#34;_blank&#34;&gt;Prometheus Exporter 的 metrics 說明&lt;/a&gt; 可以到這裡來找。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;透過 Grafana -&amp;gt; explore 就可以看到 Prometheus 的 metrics&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;static/img/prometheus-self-metrics.png&#34; alt=&#34;Prometheus Self Metrics&#34;&gt;&lt;/p&gt;
+&lt;p&gt;而使用 metrics 時最好先查到說明文件，確定 metrics 的定義與計算方法，才可以有效的製圖。關於 &lt;a href=&#34;https://wiki.lnd.bz/display/LFTC/Prometheus&#34;&gt;Prometheus Exporter 的 metrics 說明&lt;/a&gt; 可以到這裡來找。&lt;/p&gt;
 &lt;h1 id=&#34;dashboard&#34;&gt;Dashboard&lt;/h1&gt;
-
 &lt;p&gt;收集到 metrics 之後就可以在 prometheus 中 query，但一般使用不會一直跑進來下 query，而是會直接搭配 dashboard 製圖呈現，讓資料一覽無遺。&lt;/p&gt;
-
-&lt;p&gt;例如 prometheus 自身的 metrics 也已經有搭配好的 &lt;a href=&#34;https://grafana.com/grafana/dashboards/3662&#34; target=&#34;_blank&#34;&gt;Prometheus overview dashboard&lt;/a&gt; 可以使用。&lt;/p&gt;
-
+&lt;p&gt;例如 prometheus 自身的 metrics 也已經有搭配好的 &lt;a href=&#34;https://grafana.com/grafana/dashboards/3662&#34;&gt;Prometheus overview dashboard&lt;/a&gt; 可以使用。&lt;/p&gt;
 &lt;p&gt;使用方法非常簡單，直接透過 Grafana import dashboard，裡面就把重要的 prometheus metrics 都放在 dashboard 上了。不能更方便了。&lt;/p&gt;
-
 &lt;h1 id=&#34;exporters&#34;&gt;Exporters&lt;/h1&gt;
-
-&lt;p&gt;Prometheus 支援超級多 exporter，包含 prometheus 自身直接維護的 exporter，還有非常多外部服務友也開源的 exporter 可以使用，&lt;a href=&#34;https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations&#34; target=&#34;_blank&#34;&gt;清單可以到這裡看&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;Prometheus 支援超級多 exporter，包含 prometheus 自身直接維護的 exporter，還有非常多外部服務友也開源的 exporter 可以使用，&lt;a href=&#34;https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations&#34;&gt;清單可以到這裡看&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;有希望自己公司的服務，也使用 prometheus&lt;/p&gt;
-
 &lt;h1 id=&#34;node-exporter&#34;&gt;Node Exporter&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/prometheus/node_exporter&#34; target=&#34;_blank&#34;&gt;prometheus/node_exporter&lt;/a&gt; 是 Prometheus 直接維護的 project，主要用途就是將 node / vm 的運行 metrics export 出來。有點類似 ELK 的 metricbeat。&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://github.com/prometheus/node_exporter&#34;&gt;prometheus/node_exporter&lt;/a&gt; 是 Prometheus 直接維護的 project，主要用途就是將 node / vm 的運行 metrics export 出來。有點類似 ELK 的 metricbeat。&lt;/p&gt;
 &lt;p&gt;我們這邊是在 kubernetes 上執行，所以直接做成 daemonsets 在 k8s 上跑，部屬方面在 deploy prometheus-server 的 helm chart 中，就已經附帶整合，部屬到每一台 node 上。&lt;/p&gt;
-
-&lt;p&gt;如果是在 kubernetes 外的環境，例如說 on premise server，或是 gcp instance，希望自己部屬 node exporter 的話，可以參考&lt;a href=&#34;https://prometheus.io/docs/guides/node-exporter/&#34; target=&#34;_blank&#34;&gt;這篇教學文章&lt;/a&gt;。&lt;/p&gt;
-
+&lt;p&gt;如果是在 kubernetes 外的環境，例如說 on premise server，或是 gcp instance，希望自己部屬 node exporter 的話，可以參考&lt;a href=&#34;https://prometheus.io/docs/guides/node-exporter/&#34;&gt;這篇教學文章&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;我們這邊可以看一下 config，以及 job 定義。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;vim values-staging.yaml
 
   # Enable nodeExporter
@@ -1454,12 +1110,8 @@ scrape_configs:
             regex: (.+)
             target_label: __metrics_path__
             replacement: /api/v1/nodes/$1/proxy/metrics
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;kubernetes_sd_config: 可以透過 kubernetes API 來取得 scrape target，以這邊的設定，是使用 node role 去集群取得 node，並且每一台 node 都當成一個 target，這樣就不用把所有 node 都手動加到 job 的 instance list 裡面。&lt;/p&gt;
-
-&lt;p&gt;從 node role 取得的 instance 會使用 ip 標註或是 hostname 標註。node role 有提供 node 範圍的 meta labels，例如 __meta_kubernetes_node_name, __meta_kubernetes_node&lt;em&gt;address&lt;/em&gt; 等等，方便查找整理資料。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;kubernetes_sd_config: 可以透過 kubernetes API 來取得 scrape target，以這邊的設定，是使用 node role 去集群取得 node，並且每一台 node 都當成一個 target，這樣就不用把所有 node 都手動加到 job 的 instance list 裡面。&lt;/p&gt;
+&lt;p&gt;從 node role 取得的 instance 會使用 ip 標註或是 hostname 標註。node role 有提供 node 範圍的 meta labels，例如 __meta_kubernetes_node_name, _&lt;em&gt;meta_kubernetes_node_address&lt;/em&gt; 等等，方便查找整理資料。&lt;/p&gt;
 &lt;p&gt;relabel_configs: 針對資料做額外標記，方便之後在 grafana 上面依據需求 query。&lt;/p&gt;
 </description>
     </item>
@@ -1470,42 +1122,30 @@ scrape_configs:
       <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/redis-ha-topology/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在 GKE 上部署 Redis HA
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34; target=&#34;_blank&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Redis HA with sentinel&lt;/li&gt;
 &lt;li&gt;Redis sentinel topology&lt;/li&gt;
 &lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
 &lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
 &lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
 &lt;li&gt;在 GKE 上維運 redis&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Redis Sentinel Topology&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;topology&#34;&gt;Topology&lt;/h1&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Masters: M1, M2, M3, &amp;hellip;, Mn.&lt;/li&gt;
 &lt;li&gt;Slaves: R1, R2, R3, &amp;hellip;, Rn (R stands for replica).&lt;/li&gt;
@@ -1513,23 +1153,16 @@ scrape_configs:
 &lt;li&gt;Clients: C1, C2, C3, &amp;hellip;, Cn.&lt;/li&gt;
 &lt;li&gt;每個方格代表一台機器或是 VM&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h3 id=&#34;2-sentinels&#34;&gt;2 Sentinels&lt;/h3&gt;
-
-&lt;p&gt;DON&amp;rsquo;T DO THIS&lt;/p&gt;
-
+&lt;p&gt;DON&#39;T DO THIS&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;+----+         +----+
 | M1 |---------| R1 |
 | S1 |         | S2 |
 +----+         +----+
 
 Configuration: quorum = 1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;這個設定下，如果 M1 掛了需要 failover，很有可能 S1 跟著機器一起掛了，S2 會沒有辦法取得多數來執行 failover，整個系統掛掉&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這個設定下，如果 M1 掛了需要 failover，很有可能 S1 跟著機器一起掛了，S2 會沒有辦法取得多數來執行 failover，整個系統掛掉&lt;/p&gt;
 &lt;h3 id=&#34;3-vm&#34;&gt;3 VM&lt;/h3&gt;
-
 &lt;pre&gt;&lt;code&gt;       +----+
        | M1 |
        | S1 |
@@ -1541,14 +1174,9 @@ Configuration: quorum = 1
 +----+         +----+
 
 Configuration: quorum = 2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;這是最基本的蛋又兼顧安全設定的設置&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這是最基本的蛋又兼顧安全設定的設置&lt;/p&gt;
 &lt;p&gt;如果 M1 死了 S1 跟著機器故障，S2 與 S3 還可以取得多數，順利 failover 到 R2 或是 R3。&lt;/p&gt;
-
-&lt;h3 id=&#34;寫入資料遺失&#34;&gt;寫入資料遺失&lt;/h3&gt;
-
+&lt;h3 id=&#34;heading-1&#34;&gt;寫入資料遺失&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;         +----+
          | M1 |
          | S1 | &amp;lt;- C1 (writes will be lost)
@@ -1560,25 +1188,18 @@ Configuration: quorum = 2
 | [M2] |----+----| R3 |
 | S2   |         | S3 |
 +------+         +----+
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;failover 之前，M1 是 master，Client 的寫入往 M1 寫&lt;/li&gt;
 &lt;li&gt;M1 網路故障，M2 failover 後成為新的 master，可是 Client 往 M1 寫入的資料並無法 sync 回 M2&lt;/li&gt;
 &lt;li&gt;等網路修復後，M1 回覆後會變成 R1 變成 slave，由 M2 去 sync R1，變成 R1 在 master 時收到的寫入資料遺失&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;為了避免這種情形，做額外的設定&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;min-slaves-to-write 1&lt;/li&gt;
 &lt;li&gt;min-slaves-max-lag 10&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;當 master 發現自己再也無法 sync 到足夠的 slave，表示 master 可能被孤立，這時主動拒絕客戶端的寫入請求。客戶端被拒絕後，會再向 sentinel 取得有效的 master，重新執行寫入請求，確保資料寫到有效的 master 上。&lt;/p&gt;
-
-&lt;h3 id=&#34;sentinel-放在-client-端&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
-
+&lt;h3 id=&#34;sentinel--client-&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;            +----+         +----+
             | M1 |----+----| R1 |
             |    |    |    |    |
@@ -1591,18 +1212,13 @@ Configuration: quorum = 2
       | C1 |        | C2 |      | C3 |
       | S1 |        | S2 |      | S3 |
       +----+        +----+      +----+
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有些情形，redis 這端只有兩台可用機器，這種情形可以考慮把 sentinel 放在客戶端的機器上&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有些情形，redis 這端只有兩台可用機器，這種情形可以考慮把 sentinel 放在客戶端的機器上&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;仍然維持了獨立的 3 sentinels 的穩定&lt;/li&gt;
 &lt;li&gt;sentinel 與 client 所觀察到的 redis 狀態是相同的&lt;/li&gt;
 &lt;li&gt;如果 M1 死了，要 failover ，客戶端的 3 sentinel 可以正確地執行 failover，不受故障影響&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h3 id=&#34;客戶端又不足-3-個&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
-
+&lt;h3 id=&#34;-3-&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;            +----+         +----+
             | M1 |----+----| R1 |
             | S1 |    |    | S2 |
@@ -1631,9 +1247,7 @@ Configuration: quorum = 2
                    +----+      
 
       Configuration: quorum = 2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;跟上個例子類似，但又額外確保 3 sentinels&lt;/li&gt;
 &lt;li&gt;如果 M1 死了，剩下的 sentinel 可以正確 failover&lt;/li&gt;
 &lt;/ul&gt;
@@ -1646,29 +1260,19 @@ Configuration: quorum = 2
       <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://jenkins.io/&#34; target=&#34;_blank&#34;&gt;Jenkins&lt;/a&gt; is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://jenkins-x.io/&#34; target=&#34;_blank&#34;&gt;Jenkins X&lt;/a&gt;, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://jenkins.io/&#34;&gt;Jenkins&lt;/a&gt; is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://jenkins-x.io/&#34;&gt;Jenkins X&lt;/a&gt;, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.&lt;/p&gt;
 &lt;p&gt;Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#architecture&#34;&gt;Architecture of Jenkins X&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#install&#34;&gt;Install Jenkins with jx&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#pipeline&#34;&gt;Create a Pipeline with jx&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#client&#34;&gt;Develope with jx client&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;For more information about jx itself, check &lt;a href=&#34;https://github.com/jenkins-x/jx&#34; target=&#34;_blank&#34;&gt;Jenkins-X Github Repo&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&#34;architecture&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;For more information about jx itself, check &lt;a href=&#34;https://github.com/jenkins-x/jx&#34;&gt;Jenkins-X Github Repo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h1 id=&#34;architecture&#34;&gt;Architecture&lt;/h1&gt;
-
 &lt;p&gt;Check this beautiful diagram.&lt;/p&gt;
-
 
 
 
@@ -1684,26 +1288,19 @@ Configuration: quorum = 2
 
 
 &lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; &gt;
-  &lt;h4&gt;&lt;a href=&#34;https://jenkins-x.io/architecture/diagram/&#34; target=&#34;_blank&#34;&gt;https://jenkins-x.io/architecture/diagram/&lt;/a&gt;&lt;/h4&gt;
+  &lt;h4&gt;&lt;a href=&#34;https://jenkins-x.io/architecture/diagram/&#34;&gt;https://jenkins-x.io/architecture/diagram/&lt;/a&gt;&lt;/h4&gt;
   
 &lt;/figcaption&gt;
 
 &lt;/figure&gt;
 
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a name=&#34;install&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
+&lt;hr&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h1 id=&#34;install&#34;&gt;Install&lt;/h1&gt;
-
-&lt;h3 id=&#34;create-gke-cluster-get-credentials&#34;&gt;Create GKE cluster &amp;amp; Get Credentials&lt;/h3&gt;
-
+&lt;h3 id=&#34;create-gke-cluster--get-credentials&#34;&gt;Create GKE cluster &amp;amp; Get Credentials&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;gcloud init
 gcloud components update
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;CLUSTER_NAME=jenkins-server
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;CLUSTER_NAME=jenkins-server
 #CLUSTER_NAME=jenkins-serverless
 
 gcloud container clusters create ${CLUSTER_NAME} \
@@ -1720,12 +1317,8 @@ gcloud container clusters get-credentials ${CLUSTER_NAME}
 
 # Check cluster stats.
 kubectl get nodes
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;install-jx-on-local-machine&#34;&gt;Install jx on Local Machine&lt;/h3&gt;
-
-&lt;p&gt;[Jenkins X Release](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases&#34; target=&#34;_blank&#34;&gt;https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases&lt;/a&gt;)&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;install-jx-on-local-machine&#34;&gt;Install jx on Local Machine&lt;/h3&gt;
+&lt;p&gt;[Jenkins X Release](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases&#34;&gt;https://github.com/jenkins-x/jx/releases&lt;/a&gt;](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases&#34;&gt;https://github.com/jenkins-x/jx/releases&lt;/a&gt;)&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;JX_VERSION=v2.0.2
 OS_ARCH=darwin-amd64
 #OS_ARCH=linux-amd64
@@ -1741,40 +1334,34 @@ helm client        v2.11.0+g2e55dbe
 helm server        v2.11.0+g2e55dbe
 git                git version 2.20.1
 Operating System   Mac OS X 10.14.4 build 18E226
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;option-1-install-serverless-jenkins-pipeline&#34;&gt;(Option 1) Install Serverless Jenkins Pipeline&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;option-1-install-serverless-jenkins-pipeline&#34;&gt;(Option 1) Install Serverless Jenkins Pipeline&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;DEFAULT_PASSWORD=mySecretPassWord123
 jx install \
   --default-admin-password=${DEFAULT_PASSWORD} \
   --provider=&#39;gke&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Options:&lt;/p&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Options:&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;Enter Github user name&lt;/li&gt;
 &lt;li&gt;Enter Github personal api token for CI/CD&lt;/li&gt;
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; Static Master Jenkins&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Pick default workload build pack
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; Library Workloads: CI+Release but no CD&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Select the organization where you want to create the environment repository:&lt;/p&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;chechiachang&lt;/p&gt;
-
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pick default workload build pack
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Select the organization where you want to create the environment repository:
+&lt;ul&gt;
+&lt;li&gt;chechiachang&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;Your Kubernetes context is now set to the namespace: jx
 INFO[0231] To switch back to your original namespace use: jx namespace jx
 INFO[0231] Or to use this context/namespace in just one terminal use: jx shell
@@ -1782,43 +1369,35 @@ INFO[0231] For help on switching contexts see: https://jenkins-x.io/developing/k
 INFO[0231] To import existing projects into Jenkins:       jx import
 INFO[0231] To create a new Spring Boot microservice:       jx create spring -d web -d actuator
 INFO[0231] To create a new microservice from a quickstart: jx create quickstart
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;option-2-install-static-jenkins-server&#34;&gt;(Option 2) Install Static Jenkins Server&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;option-2-install-static-jenkins-server&#34;&gt;(Option 2) Install Static Jenkins Server&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;DEFAULT_PASSWORD=mySecretPassWord123
 
 jx install \
   --default-admin-password=${DEFAULT_PASSWORD} \
   --provider=&#39;gke&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Options:&lt;/p&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Options:&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;Enter Github user name&lt;/li&gt;
 &lt;li&gt;Enter Github personal api token for CI/CD&lt;/li&gt;
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; Static Master Jenkins&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Pick default workload build pack
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; Library Workloads: CI+Release but no CD&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Select the organization where you want to create the environment repository:&lt;/p&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;chechiachang&lt;/p&gt;
-
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pick default workload build pack
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Select the organization where you want to create the environment repository:
+&lt;ul&gt;
+&lt;li&gt;chechiachang&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;INFO[0465]Your Kubernetes context is now set to the namespace: jx
 INFO[0465] To switch back to your original namespace use: jx namespace default
 INFO[0465] Or to use this context/namespace in just one terminal use: jx shell
@@ -1826,49 +1405,33 @@ INFO[0465] For help on switching contexts see: https://jenkins-x.io/developing/k
 INFO[0465] To import existing projects into Jenkins:       jx import
 INFO[0465] To create a new Spring Boot microservice:       jx create spring -d web -d actuator
 INFO[0465] To create a new microservice from a quickstart: jx create quickstart
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Access Static Jenkins Server through Domain with username and password
-Domain &lt;a href=&#34;http://jenkins.jx.11.22.33.44.nip.io/&#34; target=&#34;_blank&#34;&gt;http://jenkins.jx.11.22.33.44.nip.io/&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Access Static Jenkins Server through Domain with username and password
+Domain &lt;a href=&#34;http://jenkins.jx.11.22.33.44.nip.io/&#34;&gt;http://jenkins.jx.11.22.33.44.nip.io/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;uninstall&#34;&gt;Uninstall&lt;/h3&gt;
-
 &lt;pre&gt;&lt;code&gt;jx uninstall
 # rm -rf ~/.jx
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a name=&#34;pipeline&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;setup-ci-cd-pipeline&#34;&gt;Setup CI/CD Pipeline&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h1 id=&#34;setup-cicd-pipeline&#34;&gt;Setup CI/CD Pipeline&lt;/h1&gt;
 &lt;h3 id=&#34;create-quickstart-repository&#34;&gt;Create Quickstart Repository&lt;/h3&gt;
-
 &lt;pre&gt;&lt;code&gt;kubectl get pods --namespace jx --watch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;# cd workspace
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# cd workspace
 jx create quickstart
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Options:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Options:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Which organisation do you want to use? chechiachang&lt;/li&gt;
 &lt;li&gt;Enter the new repository name:  serverless-jenkins-quickstart&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;select the quickstart you wish to create  [Use arrows to move, type to filter]
+&lt;li&gt;select the quickstart you wish to create  [Use arrows to move, type to filter]
 angular-io-quickstart
 aspnet-app
-dlang-http
-&amp;gt; golang-http
+dlang-http&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;golang-http
 jenkins-cwp-quickstart
 jenkins-quickstart
 node-http&lt;/p&gt;
-
+&lt;/blockquote&gt;
 &lt;pre&gt;&lt;code&gt;INFO[0121] Watch pipeline activity via:    jx get activity -f serverless-jenkins-quickstart -w
 INFO[0121] Browse the pipeline log via:    jx get build logs chechiachang/serverless-jenkins-quickstart/master
 INFO[0121] Open the Jenkins console via    jx console
@@ -1876,86 +1439,44 @@ INFO[0121] You can list the pipelines via: jx get pipelines
 INFO[0121] Open the Jenkins console via    jx console
 INFO[0121] You can list the pipelines via: jx get pipelines
 INFO[0121] When the pipeline is complete:  jx get applications
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;check-log-of-the-first-run&#34;&gt;Check log of the first run&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;check-log-of-the-first-run&#34;&gt;Check log of the first run&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;jx logs pipeline
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;add-step-to-pipeline&#34;&gt;Add Step to Pipeline&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;add-step-to-pipeline&#34;&gt;Add Step to Pipeline&lt;/h3&gt;
 &lt;p&gt;Add a setup step for pullrequest&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;cd serverless-jenkins-quickstart
 jx create step --pipeline pullrequest \
   --lifecycle setup \
   --mode replace \
   --sh &amp;quot;echo hello world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Validate pipeline step for each modification&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Validate pipeline step for each modification&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;jx step validate
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A build-pack pod started after git push. Watch pod status with kubectl.&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;A build-pack pod started after git push. Watch pod status with kubectl.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kubectl get pods --namespace jx --watch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;check-build-status-on-prow-serverless&#34;&gt;Check Build Status on Prow (Serverless)&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://deck.jx.130.211.245.13.nip.io/&#34; target=&#34;_blank&#34;&gt;http://deck.jx.130.211.245.13.nip.io/&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;check-build-status-on-prow-serverless&#34;&gt;Check Build Status on Prow (Serverless)&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://deck.jx.130.211.245.13.nip.io/&#34;&gt;http://deck.jx.130.211.245.13.nip.io/&lt;/a&gt;
 Login with username and password&lt;/p&gt;
-
 &lt;h3 id=&#34;import-existing-repository&#34;&gt;Import Existing Repository&lt;/h3&gt;
-
 &lt;p&gt;In source code repository:&lt;/p&gt;
-
 &lt;p&gt;Import jx to remote jenkins-server. This will apply a Jenkinsfile to repository by default&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;jx import --url git@github.com:chechiachang/serverless-jenkins-quickstart.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Update jenkins-x.yml&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Update jenkins-x.yml&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;jx create step
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;git commit &amp;amp; push&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;git commit &amp;amp; push&lt;/p&gt;
 &lt;h3 id=&#34;trouble-shooting&#34;&gt;Trouble Shooting&lt;/h3&gt;
-
 &lt;p&gt;Failed to get jx resources&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;jx get pipelines
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Make sure your jx (or kubectl) context is with the correct GKE and namespace&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Make sure your jx (or kubectl) context is with the correct GKE and namespace&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kc config set-context gke_my-project_asia-east1-b_jenkins \
   --namespace=jx
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;why-not-use-helm-chart&#34;&gt;Why not use helm chart?&lt;/h3&gt;
-
-&lt;p&gt;It&amp;rsquo;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/jenkins&#34; target=&#34;_blank&#34;&gt;Jenkins Helm Chart&lt;/a&gt; create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;why-not-use-helm-chart&#34;&gt;Why not use helm chart?&lt;/h3&gt;
+&lt;p&gt;It&#39;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/jenkins&#34;&gt;Jenkins Helm Chart&lt;/a&gt; create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
 Jenkin Platform with jx is Jenkins Platform native to Kubernetes. It comes with powerful cloud native components like Prow automation, Nexus, Docker Registry, Tekton Pipeline, &amp;hellip;&lt;/p&gt;
-
 &lt;h3 id=&#34;check-jenkins-x-examples&#34;&gt;Check jenkins-x examples&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs&#34; target=&#34;_blank&#34;&gt;https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a name=&#34;client&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs&#34;&gt;https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
 &lt;h1 id=&#34;client&#34;&gt;Client&lt;/h1&gt;
-
 &lt;pre&gt;&lt;code&gt;jx get urls
 Name                      URL
 jenkins                   http://jenkins.jx.11.22.33.44.nip.io
@@ -1964,21 +1485,12 @@ jenkins-x-docker-registry http://docker-registry.jx.11.22.33.44.nip.io
 jenkins-x-monocular-api   http://monocular.jx.11.22.33.44.nip.io
 jenkins-x-monocular-ui    http://monocular.jx.11.22.33.44.nip.io
 nexus                     http://nexus.jx.11.22.33.44.nip.io
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;get-cluster-status&#34;&gt;Get Cluster Status&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;get-cluster-status&#34;&gt;Get Cluster Status&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;jx diagnose
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;get-applications-pipelines&#34;&gt;Get Applications &amp;amp; Pipelines&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;get-applications--pipelines&#34;&gt;Get Applications &amp;amp; Pipelines&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;jx get applications
 jx get pipelines
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;get-ci-activities-build-log&#34;&gt;Get CI Activities &amp;amp; build log&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;get-ci-activities--build-log&#34;&gt;Get CI Activities &amp;amp; build log&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;jx get activities
 jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
 
@@ -1986,21 +1498,14 @@ jx get build log
 
 INFO[0003] view the log at: http://jenkins.jx.11.22.33.44.nip.io/job/chechiachang/job/jenkins-x-on-kubernetes/job/feature-add-test/3/console
 ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;trigger-build-check-activity&#34;&gt;Trigger Build &amp;amp; Check Activity&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;trigger-build--check-activity&#34;&gt;Trigger Build &amp;amp; Check Activity&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;jx start pipeline
 jx start pipeline --filter=&#39;jenkins-x-on-kubernetes/feature-add-test&#39;
 
 jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;create-pull-request&#34;&gt;Create Pull Request&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;create-pull-request&#34;&gt;Create Pull Request&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;jx create pullrequest
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>

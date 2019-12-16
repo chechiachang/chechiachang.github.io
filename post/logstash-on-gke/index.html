@@ -593,107 +593,82 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/" target="_blank">監測 Google Kubernetes Engine 的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/" target="_blank">是否選擇 ELK 作為解決方案</a></li>
-<li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
+<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechiachang.github.io/post/secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechiachang.github.io/post/logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
 </ul>
-
 <p>作為範例的 ELK 的版本是當前的 stable release 7.3.1。</p>
-
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>簡介 logstash</li>
 <li>將 logstash 部屬到 kubernetes 上</li>
 <li>設定 logstash pipeline 處理 nginx access log</li>
 </ul>
-
-<h1 id="介紹-logstash">介紹 Logstash</h1>
-
+<h1 id="-logstash">介紹 Logstash</h1>
 <p>Logstash 是開元的資料處理引擎，可以動態的將輸入的資料做大量的處裡。原先的目的是處理 log ，但目前以不限於處理 log ，各種 ELK beat 或是其他來源的不同監測數據，都能處理。</p>
-
 <p>Logastash 內部的功能也大多模組化，因此可以組裝不同的 plugin，來快速處理不同來源資料。</p>
-
-<p>基本上常見的資料來源，logstash 都能夠處理，並且有寫好的 plugin 可以直接使用，細節請見<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html" target="_blank">logstash 官方文件</a></p>
-
-<p><img src="https://www.elastic.co/guide/en/logstash/current/static/images/logstash.png" alt="官方架構圖" /></p>
-
-<h1 id="後送資料庫與最終儲存庫">後送資料庫與最終儲存庫</h1>
-
-<p>在開始架設 logstash 要先考慮 pipeline 處理過後送的資料庫，<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html#_choose_your_stash" target="_blank">可使用的資料庫非常多</a>，這邊會展示的有：</p>
-
+<p>基本上常見的資料來源，logstash 都能夠處理，並且有寫好的 plugin 可以直接使用，細節請見<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html">logstash 官方文件</a></p>
+<p><img src="https://www.elastic.co/guide/en/logstash/current/static/images/logstash.png" alt="官方架構圖"></p>
+<h1 id="heading-1">後送資料庫與最終儲存庫</h1>
+<p>在開始架設 logstash 要先考慮 pipeline 處理過後送的資料庫，<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html#_choose_your_stash">可使用的資料庫非常多</a>，這邊會展示的有：</p>
 <ul>
 <li>ELK Stack 標準配備送到 Elasticsearch
-
 <ul>
 <li>存放會時常查詢的熱資料，只存放一段時間前的資料</li>
 <li>太舊的資料自動 Rollout</li>
-</ul></li>
+</ul>
+</li>
 <li>最終 archieving 的資料庫，這邊使用 GCP 的 Big Query
-
 <ul>
 <li>存放查找次數少，但非常大量的歷史紀錄。</li>
-</ul></li>
 </ul>
-
-<p>Elasticsearch 在前幾篇已經架設好，<a href="https://cloud.google.com/bigquery/docs/?hl=zh-tw" target="_blank">GCP Big Query</a> 的設定也事先開好。</p>
-
-<h1 id="部屬-logstash">部屬 Logstash</h1>
-
-<p>kubernetes resource 的 yaml 請參考 <a href="https://github.com/chechiachang/elk-kubernetes/tree/master/logstash" target="_blank">我的 github elk-kubernetes</a></p>
-
+</li>
+</ul>
+<p>Elasticsearch 在前幾篇已經架設好，<a href="https://cloud.google.com/bigquery/docs/?hl=zh-tw">GCP Big Query</a> 的設定也事先開好。</p>
+<h1 id="-logstash-1">部屬 Logstash</h1>
+<p>kubernetes resource 的 yaml 請參考 <a href="https://github.com/chechiachang/elk-kubernetes/tree/master/logstash">我的 github elk-kubernetes</a></p>
 <pre><code>kubectl apply -f config-configmap.yaml
 kubectl apply -f pipelines-configmap.yam
 
 kubectl apply -f deployment.yaml
 
 kubectl apply -f service.yaml
-</code></pre>
-
-<p>放上去的 resource</p>
-
+</code></pre><p>放上去的 resource</p>
 <ul>
 <li>config-configmap:
-
 <ul>
 <li>Logstash 服務本身啟動的設定參數</li>
-</ul></li>
+</ul>
+</li>
 <li>pipelines-configmap:
-
 <ul>
 <li>Logstash 的 pipelines 設定檔案</li>
-</ul></li>
+</ul>
+</li>
 <li>Lostagh Deployment
-
 <ul>
 <li>Logastash 的服務 instance</li>
 <li>可以動態 scaling，也就是會有複數 Logstash instance 做負載均衡</li>
-</ul></li>
+</ul>
+</li>
 <li>Logstash service
-
 <ul>
 <li>可透過 kubernetes 內部的 kube-dns 服務</li>
 <li>集群內的 filebeat 可以直接透過 logstash.default.svc.chechiachang-cluster.local 的 dns 連線 logstash</li>
 <li>集群內的網路，直接使用 http（當然使用 https 也是可以，相關步驟請見前幾篇文章）</li>
-</ul></li>
 </ul>
-
-<p>簡單講一下 kubernetes service 的負載均衡，關於 <a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank">kubernetes service 細節這篇附上文件</a></p>
-
+</li>
+</ul>
+<p>簡單講一下 kubernetes service 的負載均衡，關於 <a href="https://kubernetes.io/docs/concepts/services-networking/service/">kubernetes service 細節這篇附上文件</a></p>
 <pre><code>$ kubectl get services
 
 NAME              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)    AGE
@@ -703,18 +678,13 @@ $ kubectl get endpoints
 
 NAME              ENDPOINTS                                                          AGE
 logstash          10.12.0.132:5044,10.12.10.162:5044,10.12.9.167:5044 + 12 more...   182d
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>在 Kubernetes 內部每個 Pod 都能看到 logstash, logstash.default.svc.chechiachang-cluster.local 這兩個 dns</li>
 <li>DNS 直接指向複數的 logstash endpoints， 每一個 ip 都是 kubernetes 內部配置的一個 Pod 的 IP，開啟 5044 的 logstash port</li>
-<li>Service 的 load balance 機制視 service 設定，細節可以看<a href="https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies" target="_blank">這邊</a></li>
+<li>Service 的 load balance 機制視 service 設定，細節可以看<a href="https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies">這邊</a></li>
 </ul>
-
-<p>講到最白，就是 filebeat LOGSTASH URL 設定為 <a href="http://logstash" target="_blank">http://logstash</a> 就會打到其中一台 logstash</p>
-
+<p>講到最白，就是 filebeat LOGSTASH URL 設定為 http://logstash 就會打到其中一台 logstash</p>
 <p>更改 filebeat configmap</p>
-
 <pre><code>$ kubectl edit configmap filebeat-configmap
 
 # Disable output to elasticsearch
@@ -728,18 +698,11 @@ output.logstash:
   username: &quot;elastic&quot;
   password: 
 
-</code></pre>
-
-<h1 id="設定-logstash">設定 logstash</h1>
-
-<p>這邊要先說，logstash 也支援 <a href="https://www.elastic.co/guide/en/logstash/7.3/configuring-centralized-pipelines.html" target="_blank">centralized configuration</a>，如果你的 logstash 不是跑在 Kubernetes 上，沒辦法配置一套 configmap 就應用到全部的 instance，記的一定要使用。</p>
-
+</code></pre><h1 id="-logstash-2">設定 logstash</h1>
+<p>這邊要先說，logstash 也支援 <a href="https://www.elastic.co/guide/en/logstash/7.3/configuring-centralized-pipelines.html">centralized configuration</a>，如果你的 logstash 不是跑在 Kubernetes 上，沒辦法配置一套 configmap 就應用到全部的 instance，記的一定要使用。</p>
 <p>Logastash 的運行設定 logstash.yml，這邊我們沒有做設定，都是預設值，有需求可以自行更改</p>
-
 <p>當然之後要調整 batch size 或是 queue, cache 等等效能調校，也是來這邊改，改完 configmap ，rolling update logstash 就可以。</p>
-
 <p>這邊主要是來講 pipeline 設定。</p>
-
 <pre><code>$ kubectl describe configmap pipelines-configmap
 
 apiVersion: v1
@@ -754,12 +717,8 @@ data:
   # https://www.elastic.co/guide/en/logstash/7.3/logstash-config-for-filebeat-modules.html#parsing-nginx
   nginx.conf: |
   ...
-</code></pre>
-
-<p>Configmap 裡面只有一個 pipeline，就是 <code>nginx.conf</code>，我們這邊就只有一條，這邊一段一段看</p>
-
+</code></pre><p>Configmap 裡面只有一個 pipeline，就是 <code>nginx.conf</code>，我們這邊就只有一條，這邊一段一段看</p>
 <h3 id="input">Input</h3>
-
 <pre><code>input {
   beats {
     # The lisening port of logstash
@@ -767,14 +726,9 @@ data:
     host =&gt; &quot;0.0.0.0&quot;
   }
 }
-</code></pre>
-
-<p>設定 Input 來源，是 beat 從 5044 進來</p>
-
+</code></pre><p>設定 Input 來源，是 beat 從 5044 進來</p>
 <h3 id="filter">Filter</h3>
-
-<p>接下來一大段是 filter，每個 filter 中間的 block 都是一個 plugin，logstash 支援非常多有趣的 plugin ，處理不同來源的工作，<a href="https://www.elastic.co/guide/en/logstash/7.3/filter-plugins.html" target="_blank">細節請看這篇</a></p>
-
+<p>接下來一大段是 filter，每個 filter 中間的 block 都是一個 plugin，logstash 支援非常多有趣的 plugin ，處理不同來源的工作，<a href="https://www.elastic.co/guide/en/logstash/7.3/filter-plugins.html">細節請看這篇</a></p>
 <pre><code>filter {
 
   # Ignore data from other source in case filebeat input is incorrectly configured.
@@ -848,38 +802,22 @@ data:
   } # nginx-ingress-controller
 
 } # filter
-</code></pre>
-
-<h3 id="grok">Grok</h3>
-
-<p><a href="https://www.elastic.co/guide/en/logstash/7.3/plugins-filters-grok.html" target="_blank">Grok 本身的文件</a>又是一大段，個人建議各路大德，如果要使用，請直接搜尋人家配置好的設定，不要自己寫</p>
-
+</code></pre><h3 id="grok">Grok</h3>
+<p><a href="https://www.elastic.co/guide/en/logstash/7.3/plugins-filters-grok.html">Grok 本身的文件</a>又是一大段，個人建議各路大德，如果要使用，請直接搜尋人家配置好的設定，不要自己寫</p>
 <p>真的要寫的話要善用工具</p>
-
 <ul>
 <li>Kibana Grok Debugger <code>YOUR_KIBANA_HOST/app/kibana#/dev_tools/grokdebugger</code></li>
-
-<li><p>或是不知名大德貢獻<a href="https://grokdebug.herokuapp.com/" target="_blank">線上 Debugger</a></p>
-
-<pre><code>grok {
-match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&quot;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&quot; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&quot;%{DATA:[nginx][access][referrer]}\&quot; \&quot;%{DATA:[nginx][access][agent]}\&quot; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&quot; }
-}
-</code></pre></li>
+<li>或是不知名大德貢獻<a href="https://grokdebug.herokuapp.com/">線上 Debugger</a></li>
 </ul>
-
-<p>其實就是 nginx 的 access log</p>
-
+<pre><code>grok {
+  match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&quot;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&quot; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&quot;%{DATA:[nginx][access][referrer]}\&quot; \&quot;%{DATA:[nginx][access][agent]}\&quot; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&quot; }
+}
+</code></pre><p>其實就是 nginx 的 access log</p>
 <pre><code>1.2.3.4 - [1.2.3.4] - - [21/Sep/2019:07:21:21 +0000] &quot;GET /v1/core/api/list?type=queued&amp;timestamp=1569050481&amp;nonce=d1e80e00381e0ba6e42d4601912befcf03fbf291748e77b178230c19cd1fdbe2 HTTP/1.1&quot; 200 3 &quot;-&quot; &quot;python-requests/2.18.4&quot; 425 0.031 [default-chechiachang-server-80] 10.12.10.124:8003 3 0.031 200 f43db228afe66da67b2c7417d0ad2c04
-</code></pre>
-
-<p>預設的 log 送件來，格式是 text，經過 pattern matching 後變成 json-like format，也就是可以從資料結構取得 <code>.nginx.access.remote_ip</code> 這樣的欄位，讓原本的 access log 從 text 變成可以查找的內容。</p>
-
+</code></pre><p>預設的 log 送件來，格式是 text，經過 pattern matching 後變成 json-like format，也就是可以從資料結構取得 <code>.nginx.access.remote_ip</code> 這樣的欄位，讓原本的 access log 從 text 變成可以查找的內容。</p>
 <p>原本的 text 送進 elasticsearch 當然也可以查找，但就會在 text 裡面做全文檢索，功能很侷限，效率很差。</p>
-
 <h3 id="output">Output</h3>
-
-<p>logstash 支援的 output 以及設定<a href="https://www.elastic.co/guide/en/logstash/7.3/output-plugins.html" target="_blank">在這邊</a></p>
-
+<p>logstash 支援的 output 以及設定<a href="https://www.elastic.co/guide/en/logstash/7.3/output-plugins.html">在這邊</a></p>
 <pre><code>output {
   elasticsearch {
     hosts =&gt; [&quot;https://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}&quot;]
@@ -889,10 +827,7 @@ match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_
     manage_template =&gt; false
   }
 }
-</code></pre>
-
-<p>Elasticsearch 的配置很單純</p>
-
+</code></pre><p>Elasticsearch 的配置很單純</p>
 <pre><code>output {
   google_bigquery {
     project_id =&gt; ${GCP_PROJECT_ID}
@@ -904,15 +839,10 @@ match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_
     flush_interval_secs =&gt; 30
   }
 }
-</code></pre>
-
-<p>其中的變數，我們全都用環境變數，在 deployment.yaml 配置，啟動 logstash pods 時代入</p>
-
+</code></pre><p>其中的變數，我們全都用環境變數，在 deployment.yaml 配置，啟動 logstash pods 時代入</p>
 <p><code>GCP_JSON_KEY_FILE_PATH</code> 這邊要配置一隻 GCP 的服務帳號金鑰，一個有 Big Query 寫入權限的 service account，把 json 使用 kubernetes secret 放到集群上，然後在 pod 上使用 volume from secret 掛載進來。
 <code>csv_schema =&gt; &quot;path:STRING,status:INTEGER,score:FLOAT&quot;</code> 這邊要配置之後會存入 Big Query 的 csv 結構</p>
-
-<h1 id="小結">小結</h1>
-
+<h1 id="heading-2">小結</h1>
 <ul>
 <li>部屬 Logstash deployment 到 kubernetes 上</li>
 <li>設定 pipeline，超多 plugin，族繁不及備載</li>
@@ -1201,7 +1131,7 @@ match =&gt; { &quot;message&quot; =&gt; &quot;%{IPORHOST:[nginx][access][remote_
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

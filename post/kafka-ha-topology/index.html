@@ -593,67 +593,49 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>ELK Stack
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/" target="_blank">監測 Google Kubernetes Engine 的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/" target="_blank">是否選擇 ELK 作為解決方案</a></li>
-<li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
+<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechiachang.github.io/post/secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechiachang.github.io/post/logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
-</ul></li>
-<li>Kafka HA on Kubernetes
-
-<ul>
-<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
-<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
-<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
-<li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-topology&quot; }}" target="_blank">集群內部的 HA topology</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-continuerd&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
-<li>Prometheus Metrics Exporter 很重要</li>
-<li>效能調校
-<br /></li>
-</ul></li>
 </ul>
-
+</li>
+<li>Kafka HA on Kubernetes
+<ul>
+<li>[Deploy kafka-ha]({{ ref &ldquo;/post/kafka-deployment-on-kubernetes&rdquo; }})</li>
+<li>[Kafka Introduction]({{ ref &ldquo;/post/kafka-introduction&rdquo; }})</li>
+<li>[kafka 基本使用]({{ ref &ldquo;/post/kafka-basic-usage&rdquo; }})</li>
+<li>[kafka operation scripts]({{ ref &ldquo;/post/kafka-operation-script&rdquo;}})</li>
+<li>[集群內部的 HA topology]({{ ref &ldquo;/post/kafka-ha-topology&rdquo; }})</li>
+<li>[集群內部的 HA 細節]({{ ref &ldquo;/post/kafka-ha-continuerd&rdquo; }})</li>
+<li>Prometheus Metrics Exporter 很重要</li>
+<li>效能調校</li>
+</ul>
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>Zookeeper Multi-server setup</li>
 <li>Kafka Multi-broker setup</li>
 </ul>
-
 <h1 id="zookeeper-multi-server">Zookeeper Multi-Server</h1>
-
-<p>為了維持 zookeeper 有效運作，cluster 必須維持 majority (多數)，也就是至少一半的機器在線。如果總共 3 台，便可以忍受 1 台故障仍保有 majority。如果是 5 台就可以容忍 2 台故障。一般來說都建議使用基數數量。<a href="https://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html#sc_zkMulitServerSetup" target="_blank">Zookeeper Multi Server Setup</a></p>
-
+<p>為了維持 zookeeper 有效運作，cluster 必須維持 majority (多數)，也就是至少一半的機器在線。如果總共 3 台，便可以忍受 1 台故障仍保有 majority。如果是 5 台就可以容忍 2 台故障。一般來說都建議使用基數數量。<a href="https://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html#sc_zkMulitServerSetup">Zookeeper Multi Server Setup</a></p>
 <p>普遍情況，3 台 zookeeper 已經是 production ready 的狀態，但如果為了更高的可用性，以方便進行單節點停機維護，可以增加節點數量。</p>
-
 <h3 id="topology">Topology</h3>
-
 <p>需要將 zookeeper 放在不同的機器上，不同的網路環境，甚至是不同的雲平台區域上，以承受不同程度的故障。例如單台機器故障，或是區域性的網路故障。</p>
-
 <p>我們這邊會使用 Kubernetes PodAntiAffinity，要求 scheduler 在部屬時，必須將 zookeeper 分散到不同的機器上。設定如下：</p>
-
 <pre><code>vim values-staging.yaml
 
 zookeeper:
@@ -683,38 +665,28 @@ zookeeper:
          labelSelector:
            matchLabels:
              release: zookeeper
-</code></pre>
-
-<p>使用 podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution，如果 topologyKey 已經有指定 label 的 pod 存在，則無法部署，需要數到其他台機器。</p>
-
+</code></pre><p>使用 podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution，如果 topologyKey 已經有指定 label 的 pod 存在，則無法部署，需要數到其他台機器。</p>
 <pre><code>kubectl get pods --output wide | grep zookeeper
 
 NAME                  READY   STATUS      RESTARTS   AGE     IP              NODE                                    
 kafka-0-zookeeper-0   1/1     Running     0          42d     10.8.12.4       gke-chechiachang-pool-1-e06e6d00-pc98   
 kafka-0-zookeeper-1   1/1     Running     0          42d     10.8.4.4        gke-chechiachang-pool-1-e06e6d00-c29q   
 kafka-0-zookeeper-2   1/1     Running     0          42d     10.8.3.6        gke-chechiachang-pool-1-e06e6d00-krwc   
-</code></pre>
-
-<p>效果是 zookeeper 都分配到不同的機器上。</p>
-
+</code></pre><p>效果是 zookeeper 都分配到不同的機器上。</p>
 <h3 id="guarantees">Guarantees</h3>
-
-<p>Zookeeper 對於資料一致性，有這些保障 <a href="https://zookeeper.apache.org/doc/r3.5.5/zookeeperProgrammers.html#ch_zkGuarantees" target="_blank">Consistency Guarantees</a></p>
-
+<p>Zookeeper 對於資料一致性，有這些保障 <a href="https://zookeeper.apache.org/doc/r3.5.5/zookeeperProgrammers.html#ch_zkGuarantees">Consistency Guarantees</a></p>
 <ul>
 <li>順序一致性：資料更新的順序，與發送的順序一致</li>
 <li>原子性：資料更新只有成功或失敗，沒有部份效果</li>
 <li>系統一致性：可戶端連到 server 看到的東西都是一樣，無關連入哪個 server</li>
 <li>可靠性：
-
 <ul>
 <li>客戶端的更新請求，一但收到 server 回覆更新成功，便會持續保存狀態。某些錯誤會造成客戶端收不到回覆， 可能是網路問題，或是 server 內部問題，這邊就無法確定 server 上的狀態，是否被更新了，或是請求已經遺失了。</li>
 <li>從客戶讀取到的資料都是以確認的資料，不會因為 server 故障回滾(Roll back)而回到舊的狀態</li>
-</ul></li>
 </ul>
-
-<h1 id="kafka-的設定">Kafka 的設定</h1>
-
+</li>
+</ul>
+<h1 id="kafka-">Kafka 的設定</h1>
 <pre><code>## The StatefulSet installs 3 pods by default
 replicas: 3
 
@@ -726,10 +698,7 @@ resources:
      cpu: 100m
      memory: 1024Mi
 kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
-</code></pre>
-
-<p>設定 broker 的數量，以及 Pod 提供的 resource，並且透過 heapOption 把記憶體設定塞進 JVM</p>
-
+</code></pre><p>設定 broker 的數量，以及 Pod 提供的 resource，並且透過 heapOption 把記憶體設定塞進 JVM</p>
 <pre><code>affinity:
  affinity:
    podAntiAffinity:
@@ -751,19 +720,13 @@ kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
               operator: In
               values:
                 - zookeeper
-</code></pre>
-
-<p>這邊下了兩個 affinity</p>
-
+</code></pre><p>這邊下了兩個 affinity</p>
 <ul>
 <li>podAntiAffinity 盡量讓 kafka-broker 分散到不同機器上</li>
 <li>podAffinity 讓 broker prefer 跟 zookeeper 放在一起</li>
 </ul>
-
 <p>分散的理由同上，不希望一台機器死了，就讓多個 broker 跟著死</p>
-
 <p>要和 zookeeper 放在一起，就要看需求與實際環境調整</p>
-
 <pre><code>configurationOverrides:
   &quot;default.replication.factor&quot;: 3
   &quot;offsets.topic.replication.factor&quot;: 2 # Increased from 1 to 2 for higher output
@@ -772,69 +735,47 @@ kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
   &quot;auto.leader.rebalance.enable&quot;: true
   &quot;auto.create.topics.enable&quot;: true
   &quot;message.max.bytes&quot;: &quot;16000000&quot; # Extend global topic max message bytes to 16 Mb
-</code></pre>
-
-<p>這邊再把 broker 運行的設定參數塞進去，參數的用途大多與複本與高可用機制有關下面都會提到。</p>
-
-<h1 id="kafka-的複本機制">Kafka 的複本機制</h1>
-
-<p><a href="https://kafka.apache.org/documentation/#replication" target="_blank">kafka 的副本機制</a> 預設將各個 topic partition 的 log 分散到 server 上，如果其中一台 server 故障，資料仍然可用。</p>
-
+</code></pre><p>這邊再把 broker 運行的設定參數塞進去，參數的用途大多與複本與高可用機制有關下面都會提到。</p>
+<h1 id="kafka--1">Kafka 的複本機制</h1>
+<p><a href="https://kafka.apache.org/documentation/#replication">kafka 的副本機制</a> 預設將各個 topic partition 的 log 分散到 server 上，如果其中一台 server 故障，資料仍然可用。</p>
 <p>兩個重要的設定</p>
-
 <ul>
 <li>num.partitions=N</li>
 <li>default.replication.factor=M</li>
 </ul>
-
 <p>kafka 預設使用複本，所有機制與設計都圍繞著複本。如果（因為某些原因）不希望使用複本，可將 replication factor 設為 1。</p>
-
 <p>replication 的單位是 topic partition，正常狀況下</p>
-
 <ul>
 <li>一個 partition 會有一個 leader，以及零個或以上個 follower</li>
 <li>leader + follower 總數是 replication factor</li>
 <li>所有讀寫都是對 leader 讀寫</li>
 <li>leader 的 log 會同步到 follower 上，leader 與 follower 狀態是一樣的</li>
 </ul>
-
-<h3 id="election-load-balance">Election &amp; Load balance</h3>
-
+<h3 id="election--load-balance">Election &amp; Load balance</h3>
 <p>通常一個 topic 會有多個 partition，也就是說，每個 topic 會有多個 partition leader，分散負載</p>
-
 <p>通常 topic partition 的總數會比 broker 的數量多</p>
-
 <ul>
 <li>以上一篇範例，我們有三個 kafka-0-broker 各自是一個 Pod</li>
 <li>有 topic: ticker 跟預設的 <code>__consumer_offset__</code>，乘上 partition number 的設定值(N)，會有 2N 個 partitions</li>
 <li>partitiion 會有各自的複本，kafka 會盡量將相同 topic 的複本分散到不同 broker 上</li>
-<li>kafka 也會盡量維持 partition 的 leader 分散在不同的 broker 上，這個部分 kafka 會透過算法做 leader election，也可手動使用腳本做 <a href="https://kafka.apache.org/documentation/#basic_ops_leader_balancing" target="_blank">Balancing leadership</a></li>
+<li>kafka 也會盡量維持 partition 的 leader 分散在不同的 broker 上，這個部分 kafka 會透過算法做 leader election，也可手動使用腳本做 <a href="https://kafka.apache.org/documentation/#basic_ops_leader_balancing">Balancing leadership</a></li>
 </ul>
-
 <p>總之，topic 的 partition 與 leader 會分散到 broker 上，維持 partition 的可用性。</p>
-
 <h3 id="sync">sync</h3>
-
 <ul>
 <li>node 要能夠維持 zookeeper 的 session (zookeeper 有 heartbeat 機制)</li>
 <li>follower 不能落後 leader 太多</li>
 </ul>
-
 <p>kafka 能保障資料不會遺失，只要至少一個 node 是在 sync 的狀態。例如本來有三個 partition，其中兩個 partition 不同步，只要其中一個 partition 是同步，便能作為 leader 持續提供正確的 message。</p>
-
 <h1 id="replicated-logs">Replicated Logs</h1>
-
-<p>kafka 透過 <a href="https://kafka.apache.org/documentation/#design_replicatedlog" target="_blank">replicated log</a> 維持分散式的 partition</p>
-
+<p>kafka 透過 <a href="https://kafka.apache.org/documentation/#design_replicatedlog">replicated log</a> 維持分散式的 partition</p>
 <p>複本間要維持共識(consensus)的最簡單機制，就是單一 leader 決定，其他 follower 跟隨。然而萬一 leader 死了，選出的新 leader 卻還沒跟上原先 leader 的資料。這時便使用 replicated log，來確保新的 leader 就算原先沒跟上，也能透過 replicated log 隨後跟上且不遺失資料。維持 log 一直都同步的前提，就是 leader 要一直確認 followers 的 log 都有跟上，這個其實就是變相的多 leader，效能消耗較大。</p>
-
 <p>另一個維持 log 機制，如果希望 follower 彼此的 log 應該先進行比對，讓資料交接過程有 overlap，這個過程稱為 Quorum。一個常用的方式是多數決(majority)</p>
-
 <ul>
 <li>如果總共有 2n+1 的 node，leader 要向 n+1 個 follower 取得共識，才確定這個 log 已經 commit 了</li>
 <li>leader 總是維持 n+1 follower 的 log 有跟上，因此可以容忍最多 n 個 node 死了，集群整體能有 n+1 的 node 維持著正確的 commited log</li>
 <li>不用向所有 node 確認才 commit ，節省了一半的 ack</li>
-<li>majarity 的另一個好處是，n+1 共識的速度是由前 <sup>1</sup>&frasl;<sub>2</sub> 快的 node 決定的。由於只要先取得 n+1 就可以 commit，速度快的 node 會先回應，讓整體速度提升。</li>
+<li>majarity 的另一個好處是，n+1 共識的速度是由前 1/2 快的 node 決定的。由於只要先取得 n+1 就可以 commit，速度快的 node 會先回應，讓整體速度提升。</li>
 </ul>
 
     </div>
@@ -1118,7 +1059,7 @@ kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

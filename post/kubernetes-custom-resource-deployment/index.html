@@ -593,42 +593,27 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <p>這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。</p>
-
 <ul>
 <li>Nginx Ingress Controller</li>
 <li>Cert-manager</li>
 <li>Kubernetes CRD &amp; Operator-sdk</li>
 </ul>
-
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>CRD 內容</li>
 <li>Deploy CRD</li>
 <li>Use custom resource</li>
 </ul>
-
 <h1 id="recap">Recap</h1>
-
 <p>在上次的 cert-manager 內容中我們走過 cert-manager 的安裝步驟，其中有一個步驟是 apply cert-manager 的 manigests 檔案 <code>*.yaml</code>)</p>
-
-<p><a href="https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests" target="_blank">https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests</a></p>
-
+<p><a href="https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests">https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests</a></p>
 <pre><code>$ git clone https://github.com/jetstack/cert-manager
 $ git checkout release-0.11
 $ ls deploy/manifest
@@ -638,139 +623,122 @@ $ ls deploy/manifest
 BUILD.bazel	
 README.md	
 helm-values.yaml
-</code></pre>
-
-<p>我們快速看一下這個 00-crds.yaml，這個 yaml 非常長，直接<a href="https://github.com/jetstack/cert-manager/blob/release-0.11/deploy/manifests/00-crds.yaml#L1786" target="_blank">跳到 certificates.certmanager.k8s.io</a></p>
-
-<p>希望看 golang 源碼文件的話，可以搭配<a href="https://godoc.org/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions#CustomResourceDefinitionSpec" target="_blank">godoc.org/k8s.io/apiextensions</a> 來閱讀，更能理解 definition。</p>
-
+</code></pre><p>我們快速看一下這個 00-crds.yaml，這個 yaml 非常長，直接<a href="https://github.com/jetstack/cert-manager/blob/release-0.11/deploy/manifests/00-crds.yaml#L1786">跳到 certificates.certmanager.k8s.io</a></p>
+<p>希望看 golang 源碼文件的話，可以搭配<a href="https://godoc.org/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions#CustomResourceDefinitionSpec">godoc.org/k8s.io/apiextensions</a> 來閱讀，更能理解 definition。</p>
 <p>在看之前先注意幾件事，CRD 內除了 schema 外，還定義了許多不同情境的使用資料。</p>
-
 <ul>
 <li>CRD 內定義了 custom resource 的資料儲存 .spec.validation.openAPIV3Schema，使用 custom resource 會透過 validator 驗證</li>
 <li>.openAPIV3Schema 內定義了 .spec，以及 rumtime 中紀錄 .status 的資料
-
 <ul>
 <li>controller 可以把狀態 sync 到 custom resource 的 .status 中紀錄</li>
 <li>controller 可以比對 .spec 與 .status 來決定是否要 sync 以及如何 sync</li>
-</ul></li>
-
-<li><p>CRD 內定義了與 server 以及 client 互動的方式，</p>
-
+</ul>
+</li>
+<li>CRD 內定義了與 server 以及 client 互動的方式，
 <ul>
 <li>names 中定義各種使用情境的 custom resource 名稱</li>
-
-<li><p>additionalPrinterColumns 中添加 kubectl 中的顯示內容</p>
-
+<li>additionalPrinterColumns 中添加 kubectl 中的顯示內容</li>
+</ul>
+</li>
+</ul>
 <pre><code>// 這邊使用的是 v1beta1 的 API (deprecated at v1.16) ，新版開發建議使用 apiextension.k8s.io/v1 的 api
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-creationTimestamp: null
-name: certificates.cert-manager.io
+  creationTimestamp: null
+  name: certificates.cert-manager.io
 spec:
-// 使用 kubectl 會額外顯示的資訊內容，透過 jsonpath 去 parse 顯示
-additionalPrinterColumns:
-- JSONPath: .status.conditions[?(@.type==&quot;Ready&quot;)].status
-name: Ready
-type: string
-- JSONPath: .spec.secretName
-name: Secret
-type: string
-- JSONPath: .spec.issuerRef.name
-name: Issuer
-priority: 1
-type: string
-- JSONPath: .status.conditions[?(@.type==&quot;Ready&quot;)].message
-name: Status
-priority: 1
-type: string
-- JSONPath: .metadata.creationTimestamp
-description: CreationTimestamp is a timestamp representing the server time when
-this object was created. It is not guaranteed to be set in happens-before order
-across separate operations. Clients may not set this value. It is represented
-in RFC3339 form and is in UTC.
-name: Age
-type: date
-group: cert-manager.io
-// 定義 CRD 在不同情境下使用的名稱
-names:
-kind: Certificate
-listKind: CertificateList
-plural: certificates
-shortNames:
-- cert
-- certs
-singular: certificate
-scope: Namespaced
-subresources:
-status: {}
-validation:
-// openAPIV3Schema 中是 custom resource 實際操作會使用的內容
-// properties 使用 . .description .type ，分別定義名稱，描述，檢查型別
-openAPIV3Schema:
-description: Certificate is a type to represent a Certificate from ACME
-properties:
-apiVersion:
-  description: 'APIVersion defines the versioned schema of this representation
-    of an object. Servers should convert recognized schemas to the latest
-    internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-  type: string
-kind:
-  description: 'Kind is a string value representing the REST resource this
-    object represents. Servers may infer this from the endpoint the client
-    submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-  type: string
-// custom resource runtime 中的 metadata
-metadata:
-  type: object
-// custom resource 使用時的 spec，定義 custom resoure 的 desired status
-spec:
-  ...
-// custom controller 監測 custom resource 的 current status，這邊的資料完全視 controller 實作來產生，如果沒有實作 sync status，也可以沒有資料
-status:
-  ...
-type: object
-// 這個是 CRD 物件的 version，可以定義多個不同 version 的 CRD，調用時需要註明版本
-version: v1alpha2
-versions:
-- name: v1alpha2
-served: true
-storage: true
+  // 使用 kubectl 會額外顯示的資訊內容，透過 jsonpath 去 parse 顯示
+  additionalPrinterColumns:
+  - JSONPath: .status.conditions[?(@.type==&quot;Ready&quot;)].status
+    name: Ready
+    type: string
+  - JSONPath: .spec.secretName
+    name: Secret
+    type: string
+  - JSONPath: .spec.issuerRef.name
+    name: Issuer
+    priority: 1
+    type: string
+  - JSONPath: .status.conditions[?(@.type==&quot;Ready&quot;)].message
+    name: Status
+    priority: 1
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC.
+    name: Age
+    type: date
+  group: cert-manager.io
+  // 定義 CRD 在不同情境下使用的名稱
+  names:
+    kind: Certificate
+    listKind: CertificateList
+    plural: certificates
+    shortNames:
+    - cert
+    - certs
+    singular: certificate
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    // openAPIV3Schema 中是 custom resource 實際操作會使用的內容
+    // properties 使用 . .description .type ，分別定義名稱，描述，檢查型別
+    openAPIV3Schema:
+      description: Certificate is a type to represent a Certificate from ACME
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        // custom resource runtime 中的 metadata
+        metadata:
+          type: object
+        // custom resource 使用時的 spec，定義 custom resoure 的 desired status
+        spec:
+          ...
+        // custom controller 監測 custom resource 的 current status，這邊的資料完全視 controller 實作來產生，如果沒有實作 sync status，也可以沒有資料
+        status:
+          ...
+      type: object
+  // 這個是 CRD 物件的 version，可以定義多個不同 version 的 CRD，調用時需要註明版本
+  version: v1alpha2
+  versions:
+  - name: v1alpha2
+    served: true
+    storage: true
 // 這個是 CRD 物件的 status，描述 CRD 部署到 API server 的狀態，例如 CRD 儲存適用 configmap 的儲存空間，這邊顯示在 API server 上的儲存狀態。不要跟 custom resource 的 status 弄混了
 status:
-acceptedNames:
-kind: &quot;&quot;
-plural: &quot;&quot;
-conditions: []
-storedVersions: []
-</code></pre></li>
-</ul></li>
-</ul>
-
-<p>helm-values.yaml 與 01-namespace.yaml 很單純，前者是使用 helm 部署的可設定參數，預設只有 kubernetes resources，後者則是為之後的 cert-manager 元件新增一個 kubernetes namespace。</p>
-
-<h1 id="小結-crd-內容-apiextensions-v1beta1">小結 CRD 內容 (apiextensions/v1beta1)</h1>
-
+  acceptedNames:
+    kind: &quot;&quot;
+    plural: &quot;&quot;
+  conditions: []
+  storedVersions: []
+</code></pre><p>helm-values.yaml 與 01-namespace.yaml 很單純，前者是使用 helm 部署的可設定參數，預設只有 kubernetes resources，後者則是為之後的 cert-manager 元件新增一個 kubernetes namespace。</p>
+<h1 id="-crd--apiextensionsv1beta1">小結 CRD 內容 (apiextensions/v1beta1)</h1>
 <ul>
 <li>CRD 顯示名稱，內容</li>
 <li>CRD spec 驗證
-
 <ul>
 <li>custom resource</li>
 <li>custom resource schema</li>
-</ul></li>
+</ul>
+</li>
 <li>CRD 自身部署狀態</li>
 </ul>
-
-<h1 id="部署">部署</h1>
-
+<h1 id="heading-1">部署</h1>
 <p>部署相較定義本身就非常簡單，直接 kubectl apply 到 kubernetes 上</p>
-
-<h1 id="使用-custom-resource">使用 custom resource</h1>
-
+<h1 id="-custom-resource">使用 custom resource</h1>
 <p>有了 CRD，我們便可以使用 CRUD API，互動模式與其他 build-in kubernetes resources 相同，只是內容會照 CRD 上的定義調整</p>
-
 <pre><code>kubectl get certificates.certmanager.k8s.io
 kubectl get certificates
 kubectl get certs --all-namespaces
@@ -778,14 +746,9 @@ kubectl get cert -n cert-manager
 
 NAMESPACE          NAME                READY   SECRET              AGE
 cert-manager       ingress-nginx-tls   True    ingress-nginx-tls   221d
-</code></pre>
-
-<p>這邊看到的內容可能會有些落差，因為我當初用的版本比較舊，但內容大同小異。</p>
-
+</code></pre><p>這邊看到的內容可能會有些落差，因為我當初用的版本比較舊，但內容大同小異。</p>
 <p>底下的 describe 內容已經跟上面的 CRD 版本差太多，對不起來了。但我也懶得再佈一組，還要重做 dnsName 與 authotization challenge</p>
-
 <p>直接讓大家感受一下舊版的內容XD</p>
-
 <pre><code>$ kubectl describe cert ingress-nginx-tls
 
 Name:         ingress-nginx-tls
@@ -834,19 +797,11 @@ Status:
     Status:                False
     Type:                  ValidateFailed
 Events:                    &lt;none&gt;
-</code></pre>
-
-<p>想要新增，可以回去看 <a href="https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html#verifying-the-installation" target="_blank">cert-manager tutorial</a>，這個是新版的文件</p>
-
+</code></pre><p>想要新增，可以回去看 <a href="https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html#verifying-the-installation">cert-manager tutorial</a>，這個是新版的文件</p>
 <p>當然，不爽這個 cert resource 也可以幹掉</p>
-
 <pre><code>$ kubectl delete cert ingress-nginx-tls -n cert-manager
-</code></pre>
-
-<p>以上</p>
-
-<h1 id="小結">小結</h1>
-
+</code></pre><p>以上</p>
+<h1 id="heading-2">小結</h1>
 <ul>
 <li>簡介 CRD 與 CRD 內容</li>
 <li>操作 custom resource</li>
@@ -1133,7 +1088,7 @@ Events:                    &lt;none&gt;
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

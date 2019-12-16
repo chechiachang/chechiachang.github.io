@@ -593,60 +593,46 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>ELK Stack
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/" target="_blank">監測 Google Kubernetes Engine 的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/" target="_blank">是否選擇 ELK 作為解決方案</a></li>
-<li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
+<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechiachang.github.io/post/secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechiachang.github.io/post/logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
-</ul></li>
+</ul>
+</li>
 <li>Kafka HA on Kubernetes
-
 <ul>
-<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
-<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
-<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
+<li>[Deploy kafka-ha]({{ ref &ldquo;/post/kafka-deployment-on-kubernetes&rdquo; }})</li>
+<li>[Kafka Introduction]({{ ref &ldquo;/post/kafka-introduction&rdquo; }})</li>
+<li>[kafka 基本使用]({{ ref &ldquo;/post/kafka-basic-usage&rdquo; }})</li>
 <li>kafka utility scripts, topic operation, kafka benchmark</li>
 <li>集群內部的 HA topology</li>
 <li>集群內部的 HA 設定，網路設定</li>
 <li>Prometheus Metrics Exporter 很重要</li>
-<li>效能調校
-<br /></li>
-</ul></li>
+<li>效能調校</li>
 </ul>
-
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>在 Kubernetes 中連線 kafka</li>
 <li>使用 golang library 連線到 Kafka</li>
 <li>透過 kafka script 操作 kafka</li>
 </ul>
-
-<h1 id="kubernetes-中連線-kafka">kubernetes 中連線 kafka</h1>
-
+<h1 id="kubernetes--kafka">kubernetes 中連線 kafka</h1>
 <p>先看一看 kafka pods</p>
-
 <pre><code>$ kubectl get pods --selector='app=kafka'
 
 NAME        READY   STATUS    RESTARTS   AGE
@@ -665,9 +651,7 @@ $ kubectl get pods -l 'app=kafka-exporter'
 
 NAME                               READY   STATUS    RESTARTS   AGE
 kafka-1-exporter-88786d84b-z954z   1/1     Running   5          26d
-</code></pre>
-
-<pre><code>kubectl describe pods kafka-1-0
+</code></pre><pre><code>kubectl describe pods kafka-1-0
 
 Name:           kafka-1-0
 Namespace:      default
@@ -723,54 +707,37 @@ Volumes:
     Type:        Secret (a volume populated by a Secret)
     SecretName:  default-token-2tm8c
     Optional:    false
-</code></pre>
-
-<p>講幾個重點：</p>
-
+</code></pre><p>講幾個重點：</p>
 <ul>
 <li>這邊跑起來的是 kafka-broker，接收 producer 與 consumer 來的 request</li>
 <li>這邊用的是 statefulsets，不是完全無狀態的 kafka broker，而把 message 記在 datadir 上，降低故障重啟時可能遺失資料的風險。</li>
 <li>啟動時，把 kubernetes 指定的 pod name 塞進環境變數，然後作為當前 broker 的 ID</li>
 <li>沒有設定 Pod antiAffinity，所以有可能會啟三個 kafka 結果三個跑在同一台 node 上，這樣 node 故障就全死，沒有HA</li>
 </ul>
-
-<h3 id="service-endpoints">Service &amp; Endpoints</h3>
-
+<h3 id="service--endpoints">Service &amp; Endpoints</h3>
 <p>看一下 service 與 endpoints
 zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與服務監測時，再來討論。</p>
-
 <pre><code>$ kubectl get service -l 'app=kafka'
 
 NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 kafka-1            ClusterIP   10.15.242.178   &lt;none&gt;        9092/TCP   26d
 kafka-1-headless   ClusterIP   None            &lt;none&gt;        9092/TCP   26d
 
-</code></pre>
-
-<p>兩個 services</p>
-
+</code></pre><p>兩個 services</p>
 <ul>
 <li>一個是 cluster-ip service，有 single cluster IP 與 load-balance，DNS 會過 kube-proxy。</li>
 <li>一個是 headless service，DNS 沒有過 kube-proxy，而是由 endpoint controller 直接 address record，指向把符合 service selector 的 pod。適合做 service discovery，不會依賴於 kubernetes 的實現。</li>
 </ul>
-
-<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services" target="_blank">詳細說明在官方文件</a></p>
-
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">詳細說明在官方文件</a></p>
 <p>簡單來說，kafka broker 會做 auto service discovery，我們可以使用 headless service。</p>
-
 <p>客戶端(consumer &amp; producer) 連入時，則使用 cluster-ip service，做 load balancing。</p>
-
 <pre><code>$ kubectl get endpoints -l 'app=kafka'
 
 NAME                            ENDPOINTS                                                          AGE
 kafka-1                         10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
 kafka-1-headless                10.12.1.14:9092,10.12.5.133:9092,10.12.6.178:9092                  26d
-</code></pre>
-
-<h1 id="golang-example">Golang Example</h1>
-
-<p>附上簡單的 Golang 客戶端，<a href="https://github.com/chechiachang/kafka-on-kubernetes" target="_blank">完整 Github Repository 在這邊</a></p>
-
+</code></pre><h1 id="golang-example">Golang Example</h1>
+<p>附上簡單的 Golang 客戶端，<a href="https://github.com/chechiachang/kafka-on-kubernetes">完整 Github Repository 在這邊</a></p>
 <pre><code>package main
 
 import (
@@ -826,20 +793,13 @@ func main() {
 	}
 
 }
-</code></pre>
-
-<p>這邊可以使用 Dockerfile 包成一個 container image，然後丟上 kubernetes</p>
-
+</code></pre><p>這邊可以使用 Dockerfile 包成一個 container image，然後丟上 kubernetes</p>
 <p>我稍晚補一下 docker image 跟 deployment 方便大家操作好了。</p>
-
 <p>或是攋人測試，直接 kubectl run 一個 golang base image 讓它 sleep，然後在連進去</p>
-
 <pre><code>kubectl run DEPLOYMENT_NAME --image=golang:1.13.0-alpine3.10 sleep 3600
 
 kubectl exec -it POD_NAME sh
-</code></pre>
-
-<pre><code># 裡面沒有 Git 跟 vim 裝一下
+</code></pre><pre><code># 裡面沒有 Git 跟 vim 裝一下
 apk add git vim
 
 go get github.com/chechiachang/kafka-on-kubernetes
@@ -858,21 +818,12 @@ go build .
 2019-09-24 14:20:51.872588823 +0000 UTC m=+9.154146892 message at offset 6:  = 51
 2019-09-24 14:20:52.872594672 +0000 UTC m=+9.154152748 message at offset 7:  = 52
 2019-09-24 14:20:53.872599986 +0000 UTC m=+9.154158060 message at offset 8:  = 53
-</code></pre>
-
-<p>這樣就連上了，完成一個最簡單的使用範例。</p>
-
+</code></pre><p>這樣就連上了，完成一個最簡單的使用範例。</p>
 <p>這個例子太過簡單，上一篇講的 consumer group, partitions, offset 什麼設定全都沒用上。實務上這些都需要好好思考，並且依據需求做調整設定。</p>
-
 <h3 id="clean-up">Clean up</h3>
-
 <p>把測試用的 deployment 幹掉</p>
-
 <pre><code>kubectl delete deployment DEPLOYMENT_NAME
-</code></pre>
-
-<h1 id="小結">小結</h1>
-
+</code></pre><h1 id="heading-1">小結</h1>
 <ul>
 <li>簡述 kafka 在 kubernetes 上運行的狀況，連線方法</li>
 <li>Demo 一個小程式</li>
@@ -1159,7 +1110,7 @@ go build .
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

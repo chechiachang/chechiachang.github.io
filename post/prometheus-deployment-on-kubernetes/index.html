@@ -593,46 +593,32 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>Prometheus / Grafana (5)
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/" target="_blank">GKE 上自架 Prometheus / Grafana</a></li>
-<li><a href="https://chechiachang.github.io/post/prometheus-deploy-grafana/" target="_blank">GKE 上自架 Grafana 與設定</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/">GKE 上自架 Prometheus / Grafana</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deploy-grafana/">GKE 上自架 Grafana 與設定</a></li>
 <li>使用 exporter 監測 GKE 上的各項服務</li>
 <li>輸出 kubernetes 的監測數據</li>
 <li>輸出 redis-ha 的監測數據</li>
 <li>輸出 kafka 的監測數據</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>Prometheus Introduction</li>
 <li>Deploy Prometheus</li>
 </ul>
-
 <h1 id="prometheus-introduction">Prometheus Introduction</h1>
-
 <p>生產環境與非生產環境，其中的一指標就是有沒有足夠完整的服務監測系統，這句話可以看出服務監測對於產品化是多麼重要。而監控資料 (metrics) 的收集與可視化工具其實非常多，例如上周介紹的 ELK Stack，這次我們要來介紹另外一個很多人使用的 prometheus。</p>
-
-<p><a href="https://prometheus.io/" target="_blank">Promethues 在官網上提到</a> 是一個 Monitoring system and time series database</p>
-
+<p><a href="https://prometheus.io/">Promethues 在官網上提到</a> 是一個 Monitoring system and time series database</p>
 <ul>
 <li>可以收集高維度的資料</li>
 <li>使用自己的 PromQL 做有效且精簡的資料查詢</li>
@@ -641,20 +627,14 @@
 <li>有許多隨插即用的整合 exporter，例如 redis-exporter, kafka-exporter，kubernetes-exporter ，都可以直接取得資料</li>
 <li>支援 alert，使用 PromQL 以及多功能的告警，可以設定精準的告警條件</li>
 </ul>
-
-<h1 id="與-elk-做比較">與 ELK 做比較</h1>
-
+<h1 id="-elk-">與 ELK 做比較</h1>
 <p>基本上 Prometheus 跟 ELK 比，其實是很奇怪的一件事，但這也是最常被問的一個問題。兩者在本質上是完全不同的系統。</p>
-
 <ul>
 <li>Prometheus 是 based on time series database 的資料收集系統</li>
 <li>ELK 是基於全文搜索引擎的資料查詢系統</li>
 </ul>
-
 <p>是的，他們都能做 metrics 收集，在有限的尺度下，能達到一樣的效果。但這樣說的意思就等於是在說 mesos DC/OS 與 kubenetes 都能跑 container cluster 一樣，底下是完全不一樣的東西。</p>
-
 <p>兩者的差異使用上差非常多</p>
-
 <ul>
 <li>metrics 結構: ELK 借助全文搜索引擎，基本上送什麼資料近來都可以查找。Prometheus metrics 拉進來是 time series 的 key-value pairs。</li>
 <li>維護同樣的 metrics，prometheus 的使用的儲存空間遠小於 elasticsearch</li>
@@ -663,21 +643,13 @@
 <li>Elasticsearch 資源上很貴，是因為在處理大量 text log 的時候，他能夠用後段的 pipeline 處理內容，再進行交叉比對，可以從 text 裡面提取很多未事先定義的資料</li>
 <li>Elasticsearch 的維護工作也比較複雜困難</li>
 </ul>
-
 <p>如果要收集服務運行資料，可以直接選 prometheus。如果有收集 log 進行交叉比對，可以考慮 elk。</p>
-
 <h3 id="helm">Helm</h3>
-
 <p>我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 prometheus。所以我們先用。</p>
-
-<p>沒用過 helm 的大德可以參考 <a href="https://helm.sh/docs/using_helm/#quickstart" target="_blank">Helm Quickstart</a>，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好</p>
-
+<p>沒用過 helm 的大德可以參考 <a href="https://helm.sh/docs/using_helm/#quickstart">Helm Quickstart</a>，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好</p>
 <h1 id="deploy-prometheus">Deploy Prometheus</h1>
-
-<p>我把我的寶藏都放在這了<a href="https://github.com/chechiachang/prometheus-kubernetes" target="_blank">https://github.com/chechiachang/prometheus-kubernetes</a></p>
-
+<p>我把我的寶藏都放在這了<a href="https://github.com/chechiachang/prometheus-kubernetes">https://github.com/chechiachang/prometheus-kubernetes</a></p>
 <p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
-
 <pre><code>cat install.sh
 
 #!/bin/bash
@@ -686,15 +658,10 @@ HELM_NAME=prometheus-1
 helm upgrade --install ${HELM_NAME} stable/prometheus \
   --namespace default \
   --values values-staging.yaml
-</code></pre>
-
-<h3 id="configuration">Configuration</h3>
-
-<p><a href="https://github.com/helm/charts/tree/master/stable/prometheus" target="_blank">Prometheus Stable Chart</a></p>
-
+</code></pre><h3 id="configuration">Configuration</h3>
+<p><a href="https://github.com/helm/charts/tree/master/stable/prometheus">Prometheus Stable Chart</a></p>
 <p>values.yaml 很長，但其實各個元件設定是重複的,設定好各自的 image,
 replicas, service, topology 等等</p>
-
 <pre><code>alertmanager:
   enabled: true
 
@@ -709,70 +676,62 @@ server:
 
 pushgateway:
   enabled: true
-</code></pre>
-
-<p>底下有更多 runtime 的設定檔</p>
-
+</code></pre><p>底下有更多 runtime 的設定檔</p>
 <ul>
 <li>定義好 global 的 scrape 間距，越短 metrics 維度就越精準</li>
 <li>PersistenVolume 強謝建議開起來，維持歷史的資料
-
 <ul>
 <li>加上 storage usage 的 self monitoring（之後會講) 才不會滿出來 server 掛掉</li>
-</ul></li>
-
-<li><p>server 的 scrapeConfigs 是 server 去收集的 job 設定。稍後再來細講。</p>
-
+</ul>
+</li>
+<li>server 的 scrapeConfigs 是 server 去收集的 job 設定。稍後再來細講。</li>
+</ul>
 <pre><code>server:
-global:
-## How frequently to scrape targets by default
-##
-scrape_interval: 10s
-## How long until a scrape request times out
-##
-scrape_timeout: 10s
-## How frequently to evaluate rules
-##
-evaluation_interval: 10s
-persistentVolume:
-## If true, Prometheus server will create/use a Persistent Volume Claim
-## If false, use emptyDir
-##
-enabled: true
+  global:
+    ## How frequently to scrape targets by default
+    ##
+    scrape_interval: 10s
+    ## How long until a scrape request times out
+    ##
+    scrape_timeout: 10s
+    ## How frequently to evaluate rules
+    ##
+    evaluation_interval: 10s
+  persistentVolume:
+    ## If true, Prometheus server will create/use a Persistent Volume Claim
+    ## If false, use emptyDir
+    ##
+    enabled: true
 
-## Prometheus server data Persistent Volume access modes
-## Must match those of existing PV or dynamic provisioner
-## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-##
-accessModes:
-  - ReadWriteOnce
+    ## Prometheus server data Persistent Volume access modes
+    ## Must match those of existing PV or dynamic provisioner
+    ## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+    ##
+    accessModes:
+      - ReadWriteOnce
 
-## Prometheus server data Persistent Volume annotations
-##
-annotations: {}
+    ## Prometheus server data Persistent Volume annotations
+    ##
+    annotations: {}
 
-## Prometheus server data Persistent Volume existing claim name
-## Requires server.persistentVolume.enabled: true
-## If defined, PVC must be created manually before volume will be bound
-existingClaim: &quot;&quot;
+    ## Prometheus server data Persistent Volume existing claim name
+    ## Requires server.persistentVolume.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    existingClaim: &quot;&quot;
 
-## Prometheus server data Persistent Volume mount root path
-##
-mountPath: /data
+    ## Prometheus server data Persistent Volume mount root path
+    ##
+    mountPath: /data
 
-## Prometheus server data Persistent Volume size
-##
-size: 80Gi
+    ## Prometheus server data Persistent Volume size
+    ##
+    size: 80Gi
 
 alertmanagerFiles:
 
 serverFiles:
 
-</code></pre></li>
-</ul>
-
-<p>部屬完看一下</p>
-
+</code></pre><p>部屬完看一下</p>
 <pre><code>kubectl get pods --selector='app=prometheus'
 
 NAME                                             READY   STATUS    RESTARTS   AGE
@@ -801,10 +760,7 @@ prometheus-kube-state-metrics   10.12.6.222:8080                                
 prometheus-node-exporter        10.140.0.30:9100,10.140.0.9:9100,10.140.15.212:9100   197d
 prometheus-pushgateway          10.12.6.211:9091                                      197d
 prometheus-server               10.12.3.14:9090                                       197d
-</code></pre>
-
-<p>簡單說明一下</p>
-
+</code></pre><p>簡單說明一下</p>
 <ul>
 <li>prometheus-server 是主要的 api-server 以及 time series database</li>
 <li>alertmanager 負責告警工作</li>
@@ -812,38 +768,24 @@ prometheus-server               10.12.3.14:9090                                 
 <li>kube-state-metrics 是開來收集 cluster wide 的 metrics, 像是 pods running counts, deployment ready count, total pods number 等等 metrics</li>
 <li>node-exporter 是 daemonsets, 把每一個 node 的 metrics, 像是 memory, cpu, disk&hellip;等資料,收集出來</li>
 </ul>
-
 <p>主要服務存取就是透過 prometheus-server</p>
-
 <h1 id="access-prometheus-server">Access Prometheus server</h1>
-
 <p>除了直接 exec -it 進去 prometheus-server 以外，由於 prometheus 本身有提供 web portal, 所以我們這邊透過 port forwarding 打到本機上</p>
-
 <pre><code>PROMETHEUS_POD_NAME=$(kc get po -n default --selector='app=prometheus,component=server' -o=jsonpath='{.items[0].metadata.name}')
 
 kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
-</code></pre>
-
-<p>透過 browser 就可以連入操作</p>
-
+</code></pre><p>透過 browser 就可以連入操作</p>
 <pre><code>http://localhost:9090
-</code></pre>
-
-<p>也可以透過 <a href="https://prometheus.io/docs/prometheus/latest/querying/api/" target="_blank">HTTP API</a> 用程式接入控制</p>
-
+</code></pre><p>也可以透過 <a href="https://prometheus.io/docs/prometheus/latest/querying/api/">HTTP API</a> 用程式接入控制</p>
 <h1 id="prometheus-web">Prometheus Web</h1>
-
 <p>Prometheus 本慎提供的 UI 其實功能就很強大</p>
-
 <ul>
 <li>可以查到 (已經匯入存在) 的 metrics</li>
 <li>可以在上面執行 PromQL 查詢語法</li>
 <li>查詢運行的 status</li>
 <li>查詢目前所有收集的 targets 的狀態,有收集器掛了也可以在這邊看到</li>
 </ul>
-
-<h1 id="小結">小結</h1>
-
+<h1 id="heading-1">小結</h1>
 <ul>
 <li>輕鬆自架 prometheus</li>
 <li>Prometheus 頁面有精簡，但是功能完整的 graph 製圖</li>
@@ -1161,7 +1103,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

@@ -54,12 +54,8 @@
     
     <section>
     
-      
-
-<h3 id="kubernetes-是啥能吃嗎">Kubernetes 是啥能吃嗎</h3>
-
+      <h3 id="kubernetes-">Kubernetes 是啥能吃嗎</h3>
 <p>給非工程師的 Kubernetes 簡介</p>
-
 
 
 
@@ -73,54 +69,18 @@
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="大綱">大綱</h3>
-
+<hr>
+<h3 id="heading">大綱</h3>
 <ul>
-<li>kubernetes 是一個工具，<a href="https://trends.google.com.tw/trends/explore?date=today%205-y&amp;q=docker,kubernetes,blockchain" target="_blank">越來越夯</a></li>
+<li>kubernetes 是一個工具，<a href="https://trends.google.com.tw/trends/explore?date=today%205-y&amp;q=docker,kubernetes,blockchain">越來越夯</a></li>
 <li>這個工具想解決的問題</li>
 <li>最後才說 Kubernetes 是啥能吃嗎</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="寫完-app-到上線要走的路">寫完 app 到上線要走的路</h3>
-
+<hr>
+<h3 id="-app-">寫完 app 到上線要走的路</h3>
 <p>工程團隊產出完美的程式碼後，大家從此過著幸福快樂的日子?</p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="寫完-app-到上線要走的路-1">寫完 app 到上線要走的路</h3>
-
+<hr>
+<h3 id="-app--1">寫完 app 到上線要走的路</h3>
 
 
 
@@ -134,65 +94,28 @@
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="常見問題">常見問題</h3>
-
+<hr>
+<h3 id="heading-1">常見問題</h3>
 <ul>
 <li>&ldquo;It works on MY PC !&rdquo;</li>
 <li>一個 app 不夠力，有沒有試過兩個 app ？</li>
 <li>staging 跟 production 的差別 = 把使用者當QA ？</li>
 <li>Valar Morghulis. Valar Dohaeris.</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="1-it-works-on-my-pc">1. It works on my PC !</h3>
-
+<hr>
+<h3 id="1-it-works-on-my-pc-">1. It works on my PC !</h3>
 <ul>
 <li>app 是好的，server 是好的，app 放上 server 就壞了。why?</li>
 <li>server 跟 mac 不一樣。mac 有的東西 server 不一定有</li>
 <li>跑程式之前要先裝某某東西
-
 <ul>
 <li>系統依賴性(dependency)</li>
-</ul></li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="1-容器-container">1. 容器 (Container)</h3>
-
+</li>
+</ul>
+<hr>
+<h3 id="1--container">1. 容器 (Container)</h3>
 <p>使用容器來解決 It works on my PC ! 的問題</p>
-
 
 
 
@@ -206,49 +129,24 @@
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="1-容器-container-1">1. 容器 (Container)</h3>
-
+<hr>
+<h3 id="1--container-1">1. 容器 (Container)</h3>
 <ul>
 <li>怕缺東西，整包包好放上去跑
-
 <ul>
 <li>app</li>
 <li>app 的程式庫(library)</li>
 <li>作業系統 Linux 的一部分，補足不同 server 上缺的東西</li>
 <li>App + 程式庫 + 作業系統的一部分 = container</li>
-</ul></li>
+</ul>
+</li>
 <li>開發 -&gt; 打包 -&gt; 部署</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="1-容器-container-2">1. 容器 (Container)</h3>
-
+<hr>
+<h3 id="1--container-2">1. 容器 (Container)</h3>
 <ul>
-<li>keywords: 容器，容器化，container, <a href="https://www.docker.com/" target="_blank">docker</a></li>
+<li>keywords: 容器，容器化，container, <a href="https://www.docker.com/">docker</a></li>
 </ul>
-
 
 
 
@@ -262,44 +160,18 @@
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="2-一個-app-不夠力-有沒有試過兩個-app">2. 一個 app 不夠力，有沒有試過兩個 app ？</h3>
-
+<hr>
+<h3 id="2--app--app-">2. 一個 app 不夠力，有沒有試過兩個 app ？</h3>
 <p>1 app = 100 使用者使用，1,000 使用者要怎麼辦?</p>
-
 <ol>
 <li>把 app 放到 10 倍大的 server</li>
 <li>把 10 個 app 放到 10 台 server</li>
 </ol>
-
 <ul>
 <li>垂直擴展(vertical scaling), 水平擴展(horizontal scaling)</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="2-水平擴展與效能提升">2. 水平擴展與效能提升</h3>
-
+<hr>
+<h3 id="2-">2. 水平擴展與效能提升</h3>
 
 
 
@@ -313,145 +185,60 @@
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="3-staging-跟-production-的差別">3. staging 跟 production 的差別</h3>
-
+<hr>
+<h3 id="3-staging--production-">3. staging 跟 production 的差別</h3>
 <ul>
 <li>staging 有一個 QA</li>
 <li>production 有很多 QA</li>
 <li>壞了被使用者發現，把使用者當 QA ，會遭到報應的</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="3-staging-跟-production-的差別-1">3. staging 跟 production 的差別</h3>
-
+<hr>
+<h3 id="3-staging--production--1">3. staging 跟 production 的差別</h3>
 <ul>
 <li>production 穩定嗎？有多穩？</li>
 <li>production 速度快嗎？有多快？</li>
 <li>程式不只要跑的對，還要跑的又快又好</li>
 <li>服務監測(monitoring)</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="3-staging-跟-production-的差別-2">3. staging 跟 production 的差別</h3>
-
+<hr>
+<h3 id="3-staging--production--2">3. staging 跟 production 的差別</h3>
 <ul>
 <li>壞了才發現壞掉</li>
 <li>壞之前發現即將要壞掉</li>
 <li>即時告警(alerting)</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="4-valar-morghulis-valar-dohaeris">4. Valar Morghulis. Valar Dohaeris.</h3>
-
 <ul>
 <li>app 終有一死</li>
-<li>Google 每個月都在死 <a href="https://status.cloud.google.com/summary" target="_blank">status.cloud.google.com</a></li>
+<li>Google 每個月都在死 <a href="https://status.cloud.google.com/summary">status.cloud.google.com</a></li>
 <li>上版就壞掉，v1.20.1-hotfix-hotfix-hotfix</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="4-valar-morghulis-valar-dohaeris-1">4. Valar Morghulis. Valar Dohaeris.</h3>
-
 <ul>
 <li>確保寫好 app 的同時，也要思考死了怎麼辦</li>
 <li>預設 app 就是會死
-
 <ul>
 <li>測試活著還是死了(Health check)</li>
 <li>讓他自動站起來(auto recovery)</li>
-</ul></li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="複習一下">複習一下</h3>
-
+</li>
+</ul>
+<hr>
+<h3 id="heading-2">複習一下</h3>
 <ol>
 <li>&ldquo;It works on MY PC !&rdquo;</li>
 <li>一個 app 變成兩個 app</li>
 <li>staging 跟 production 的差別</li>
 <li>Valar Morghulis. Valar Dohaeris.</li>
 </ol>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="kubernetes-是啥能吃嗎-1">Kubernetes 是啥能吃嗎</h3>
-
+<hr>
+<h3 id="kubernetes--1">Kubernetes 是啥能吃嗎</h3>
 <ul>
 <li>Kubernetes (K8s) is an open-source system for automating deployment, scaling, and management of containerized applications.</li>
-<li><a href="https://kubernetes.io/" target="_blank">https://kubernetes.io/</a></li>
+<li><a href="https://kubernetes.io/">https://kubernetes.io/</a></li>
 </ul>
-
 
 
 
@@ -465,40 +252,16 @@
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="kubernetes-是啥能吃嗎-2">Kubernetes 是啥能吃嗎</h3>
-
+<hr>
+<h3 id="kubernetes--2">Kubernetes 是啥能吃嗎</h3>
 <ol>
 <li>Containerized: &ldquo;It works on every PC&rdquo;</li>
 <li>Scaling: 1 app -&gt; 10 apps</li>
 <li>Monitoring, Alerting: staging -&gt; production</li>
 <li>Health Check, Auto Recovery</li>
 </ol>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="我們用-kubernetes-做到的事">我們用 Kubernetes 做到的事</h3>
-
+<hr>
+<h3 id="-kubernetes-">我們用 Kubernetes 做到的事</h3>
 <ul>
 <li>一鍵部署上線</li>
 <li>自動監測</li>
@@ -506,20 +269,8 @@
 <li>水平擴展</li>
 <li>自動復原</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="keywords">keywords</h3>
-
 <ul>
 <li>app, library, os dependency, docker</li>
 <li>horizontal scaling</li>

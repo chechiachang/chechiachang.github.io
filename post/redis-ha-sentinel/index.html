@@ -593,91 +593,62 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>在 GKE 上部署 Redis HA
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/redis-ha-deployment/" target="_blank">使用 helm 部署 redis-ha</a></li>
-<li><a href="https://chechiachang.github.io/post/redis-ha-sentinel/" target="_blank">Redis HA with sentinel</a></li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-deployment/">使用 helm 部署 redis-ha</a></li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-sentinel/">Redis HA with sentinel</a></li>
 <li>Redis HA with HAproxy</li>
 <li>集群內部的 HA 設定，網路設定</li>
 <li>應用端的基本範例，效能調校</li>
 <li>在 GKE 上維運 redis</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>redis-sentinel</li>
 </ul>
-
 <p>redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。</p>
-
 <pre><code>redis-cli -h redis-redis-ha -p 26479
-</code></pre>
-
-<p>上篇我們的 redis-ha 安裝完變這樣</p>
-
+</code></pre><p>上篇我們的 redis-ha 安裝完變這樣</p>
 <pre><code>$ kubectl get po | grep redis
 
 NAME                                                     READY   STATUS      RESTARTS   AGE
 redis-1-redis-ha-server-0                                3/3     Running     0          3d4h
 redis-1-redis-ha-server-1                                3/3     Running     0          3d5h
 redis-1-redis-ha-server-2                                3/3     Running     0          3d4h
-</code></pre>
-
-<p>有三個 Pod，裡面都是一個 redis, sentinel, 跟 exporter，這篇文章會專注講 sentinel 的功能與機制</p>
-
+</code></pre><p>有三個 Pod，裡面都是一個 redis, sentinel, 跟 exporter，這篇文章會專注講 sentinel 的功能與機制</p>
 <h1 id="redis-sentinel">Redis Sentinel</h1>
-
-<p><a href="https://redis.io/topics/sentinel" target="_blank">redis-sentinel</a> 為 Redis 提供高可用服務，實務上可以透過 sentinel 在錯誤發生時，自動進行 failover。除此之外 sentinel 也提供監測，通知，與 redis 的設定。</p>
-
+<p><a href="https://redis.io/topics/sentinel">redis-sentinel</a> 為 Redis 提供高可用服務，實務上可以透過 sentinel 在錯誤發生時，自動進行 failover。除此之外 sentinel 也提供監測，通知，與 redis 的設定。</p>
 <ul>
 <li>Monitoring: 持續檢測 master 與 slave instances 的狀態</li>
 <li>Notification: 有事件發生可以發出通知</li>
 <li>Automatic failover: 如果 master 失效自動啟動 failover 程序，將一個 slave 指排為 master，並設定其他 slave 使用新的 master</li>
 <li>Configuration provider: 為客戶端提供 service discovery，客戶可以通過 sentinel 取得 master 的連線資料。</li>
 </ul>
-
 <h1 id="distributed">Distributed</h1>
-
 <p>Sentinel 本身是一個分散式系統，如我們的範例所示，三個 Pod 立面個含有一個 sentinel，組成 3 個 instace 的 sentinel cluster。</p>
-
 <ul>
 <li>錯誤檢測是由多個 sentinel 判定，要有多個 sentinel 都接收 master 已失效的訊息，才會判定成失效。這樣可以降低 false positive 的機率。</li>
 <li>分散讓 sentinel 本身也具備高可用性，可以承受一定程度的錯誤。用來 fail over 的系統，不能因為自身的單點錯誤(single point failure) 而倒是整個 redis 失效。</li>
 </ul>
-
 <h1 id="fundamental">Fundamental</h1>
-
 <ul>
 <li>一個耐用的 sentinel 需要至少三個 instance</li>
 <li>最好把 instance 分散在多個獨立的隔離區域，意思是說，三個不會放在同一台機器上，或是放在同一個區域內，因為一個區域網路故障就全死。</li>
 <li>app 使用 sentinel 的話，客戶端要支援</li>
 <li>有時常測試的 HA 環境，才是有效的 HA</li>
 </ul>
-
 <h1 id="configuration">Configuration</h1>
-
 <h2 id="sentinel-specific-configuration-options">Sentinel specific configuration options</h2>
-
 <p>在上篇我們跳過 sentinel 的設定，這邊說明一下</p>
-
 <pre><code>sentinel:
   port: 26379
   quorum: 2
@@ -702,45 +673,30 @@ redis-1-redis-ha-server-2                                3/3     Running     0  
   #    cpu: 100m
   #  limits:
   #    memory: 200Mi
-</code></pre>
-
-<h3 id="quorum">Quorum</h3>
-
+</code></pre><h3 id="quorum">Quorum</h3>
 <ul>
 <li>quorum 是每次確定 master 失效時，需要達成共識的 sentinel 數量。</li>
 <li>Quorum 使用在錯誤檢測，確定錯誤真的發生後，sentinel 會以多數決(majority) 的方式選出 sentinel leader，讓 leader 處理 failover。</li>
 </ul>
-
 <p>以我們的例子為例，總共三個，確認 master 死掉只要兩個 sentinel 達成共識即可啟動 failover 程序。可以直接測試一下。</p>
-
 <pre><code>kubectl logs -f redis-1-redis-ha-server-0
 
 kubectl delete po redis-1-redis-ha-server-1
-</code></pre>
-
-<p>log 一個 Pod ，然後直接把另一個 Pod 幹掉 這樣會有 <sup>1</sup>&frasl;<sub>3</sub> 的機率砍到 master，砍中的話可以看到 redis failover ，選出新的 master 的過程。</p>
-
+</code></pre><p>log 一個 Pod ，然後直接把另一個 Pod 幹掉 這樣會有 1/3 的機率砍到 master，砍中的話可以看到 redis failover ，選出新的 master 的過程。</p>
 <p>這邊要注意，由於我們的 sentinel 與 redis 是放在同樣一個 Pod，幹掉的同時也殺了一個 sentinel，只剩 2 個，剛好達成共識。如果 quorum 是三，就要等第三個 sentinel 回來才能取得 quorum。</p>
-
 <p>sentinel 與 redis 的配置位置，之後的 topology 會討論。</p>
-
 <h3 id="configurations">Configurations</h3>
-
 <ul>
 <li>down-after-milliseconds: 超過多少時間沒回應 ping 或正確回應，才覺得 master 壞了</li>
 <li>parallel-syncs: failover 時，要重新與新 master sync 的 slave 數量。數量越多 sync 時間就越久，數量少就有較多 slave 沒 sync 資料，可能會讓 client read 到舊的資料
-
 <ul>
 <li>雖然 sync 是 non-blocking ，但在 sync 大筆資料時，slave 可能會沒有回應。設定為 1 的話，最多只會有一個 slave 下線 sync。</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>這些參數也可以透過 redis-cli 直接連入更改，但我們是在 kubernetes 上跑，臨時的更改不易保存，所以盡可能把這些configurations 放在 configmap 裡面。</p>
-
 <h1 id="sentinel-command">Sentinel command</h1>
-
 <p>6379 port 連入 redis，26379 連入 redis sentinel。都是使用 redis-cli，兩者兼容的 protocol。</p>
-
 <pre><code># 使用 kubectl 連入，多個 container 要明確指出連入的 container
 kubectl exec -it redis-1-redis-ha-server-0 --container redis sh
 
@@ -810,12 +766,8 @@ OK 3 usable Sentinels. Quorum and failover authorization can be reached
 
 # 強迫觸發一次 failover
 sentinel failover mymaster
-</code></pre>
-
-<h1 id="sentinel-connection">Sentinel Connection</h1>
-
-<p>有支援的客戶端設定，以<a href="https://github.com/FZambia/sentinel/blob/master/sentinel.go" target="_blank">Golang FZambia/sentinel</a> 為例，透過 sentinel 取得 redis-pool。</p>
-
+</code></pre><h1 id="sentinel-connection">Sentinel Connection</h1>
+<p>有支援的客戶端設定，以<a href="https://github.com/FZambia/sentinel/blob/master/sentinel.go">Golang FZambia/sentinel</a> 為例，透過 sentinel 取得 redis-pool。</p>
 <pre><code># 使用獨立的 pod service 連入 sentinel，協助彼此識別
 sntnl := &amp;sentinel.Sentinel{
 	Addrs:      []string{&quot;redis-2-redis-ha-announce-0:26379&quot;, &quot;redis-2-redis-ha-announce-0:26379&quot;, &quot;redis-2-redis-ha-announce-0:26379&quot;},
@@ -857,28 +809,20 @@ return &amp;redis.Pool{
 		}
 	},
 }
-</code></pre>
-
-<p>這邊要注意，客戶端 (golang) 處理 connection 的 exception，要記得重新執行 sntnl.MasterAddr() 來取得 failover 後新指派的 master。</p>
-
-<h1 id="client-測試">Client 測試</h1>
-
-<p>寫一個 golang redis 的 client 跑起來。這個部分我們在 <a href="https://chechiachang.github.io/post/kafka-basic-usage/" target="_blank">kafka的章節</a>做過類似的事情，可以簡單湊一個玩玩。</p>
-
-<h1 id="延伸問題">延伸問題</h1>
-
+</code></pre><p>這邊要注意，客戶端 (golang) 處理 connection 的 exception，要記得重新執行 sntnl.MasterAddr() 來取得 failover 後新指派的 master。</p>
+<h1 id="client-">Client 測試</h1>
+<p>寫一個 golang redis 的 client 跑起來。這個部分我們在 <a href="https://chechiachang.github.io/post/kafka-basic-usage/">kafka的章節</a>做過類似的事情，可以簡單湊一個玩玩。</p>
+<h1 id="heading-1">延伸問題</h1>
 <p>使用上面的 golang 範例，確實是能透過 sentinel 取得 master，再向 master 取得連線。但這邊有兩個問題</p>
-
 <ul>
 <li>客戶端需要支援 sentinel</li>
 <li>客戶端要感知 sentinel 的位址連線，才能知道所有 sentinel 的位置，設定又產生耦合
-
 <ul>
 <li>不能彈性的調度 sentinel，如果需要增加或是減少 sentinel，客戶端需要重新設定</li>
 <li>雖然 sentinel 有 HA，可是客戶端對 sentinel 的設定沒有 HA，萬一已知的所有 sentinel 掛了就全掛</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>有沒有更優雅的方式使用 sentinel，我們下篇會討論使用 HAProxy 來完成</p>
 
     </div>
@@ -1162,7 +1106,7 @@ return &amp;redis.Pool{
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

@@ -18,73 +18,44 @@
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/monitoring-gke-with-elk/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;作為範例的 ELK 的版本是當前的 stable release 7.3.1。&lt;/p&gt;
-
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
-&lt;hr /&gt;
-
+&lt;hr&gt;
 &lt;p&gt;這篇來要 Kubernetes 環境(GKE)裡面的 log 抓出來，送到 ELK 上。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/running-on-kubernetes.html&#34; target=&#34;_blank&#34;&gt;官方文件&lt;/a&gt; ，寫得很簡易，如果已經很熟 kubernetes 的人可以直接腦補其他的部屬設定。&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/running-on-kubernetes.html&#34;&gt;官方文件&lt;/a&gt; ，寫得很簡易，如果已經很熟 kubernetes 的人可以直接腦補其他的部屬設定。&lt;/p&gt;
 &lt;p&gt;這邊有幾個做法，依照 filebeat 部署的位置與收集目標簡單分為：&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;node: 處理每一台 node 的 log ，包含 system log 與 node 監測資料(metrics)&lt;/li&gt;
 &lt;li&gt;cluster: 處理 cluster 等級的 log,  event 或是 metrics&lt;/li&gt;
 &lt;li&gt;pod: 針對特定 pod 直接去掛一個 sidecar&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;上面的方法是可以混搭的，kubernetes 個個層級有&lt;a href=&#34;https://kubernetes.io/docs/concepts/cluster-administration/logging/&#34; target=&#34;_blank&#34;&gt;log 處理流程&lt;/a&gt;，我們這邊把 log 送往第三方平台，也是需要依照原本的 log 流程，去收取我們想收集的 log。&lt;/p&gt;
-
+&lt;p&gt;上面的方法是可以混搭的，kubernetes 個個層級有&lt;a href=&#34;https://kubernetes.io/docs/concepts/cluster-administration/logging/&#34;&gt;log 處理流程&lt;/a&gt;，我們這邊把 log 送往第三方平台，也是需要依照原本的 log 流程，去收取我們想收集的 log。&lt;/p&gt;
 &lt;p&gt;簡單來說，是去對的地方找對的 log。在架構上要注意 scalability 與 resource 分配，不要影響本身提供服務的 GKE ，但又能獲得盡量即時的 log。&lt;/p&gt;
-
 &lt;p&gt;我們這邊直接進入 kubernetes resource 的設定，底下會附上在 GKE 找 log 的過程。&lt;/p&gt;
-
 &lt;h1 id=&#34;node-level-log-harvest&#34;&gt;Node level log harvest&lt;/h1&gt;
-
 &lt;p&gt;為每一個 node 配置 filebeat，然後在 node 上面尋找 log，然後如我們上篇所敘述加到 input ，就可以把 log 倒出來。&lt;/p&gt;
-
 &lt;p&gt;直覺想到就是透過 daemonsets 為每個 node 部署一個 filebeat pod，然後 mount node 的 log 資料夾，在設置 input。&lt;/p&gt;
-
 &lt;h1 id=&#34;deploy-daemonsets&#34;&gt;Deploy daemonsets&lt;/h1&gt;
-
-&lt;p&gt;kubernetes resource 的 yaml 請參考 &lt;a href=&#34;https://github.com/chechiachang/elk-kubernetes/tree/master/filebeat/7.3.1&#34; target=&#34;_blank&#34;&gt;我的 github elk-kubernetes&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;kubernetes resource 的 yaml 請參考 &lt;a href=&#34;https://github.com/chechiachang/elk-kubernetes/tree/master/filebeat/7.3.1&#34;&gt;我的 github elk-kubernetes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;給予足夠的 clusterrolebinding 到 elk&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;kubectl apply -f filebeat/7.3.1/clusterrolebinding.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;先更改 filebeat 的設定，如何設定 elasticsearch 與 kibana，請參考上篇。至於 input 的部份已經配置好了。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;先更改 filebeat 的設定，如何設定 elasticsearch 與 kibana，請參考上篇。至於 input 的部份已經配置好了。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;vim filebeat/7.3.1/daemonsets-config-configmap.yaml
 
 kubectl apply -f filebeat/7.3.1/daemonsets-config-configmap.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;部屬 filebeat daemonsets，會每一個 node 部屬一個 filebeat&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;部屬 filebeat daemonsets，會每一個 node 部屬一個 filebeat&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kubectl apply -f filebeat/7.3.1/daemonsets.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;取得 daemonsets 的狀態&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;取得 daemonsets 的狀態&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kubectl --namespcae elk get pods
 
 NAME             READY   STATUS    RESTARTS   AGE
@@ -92,96 +63,66 @@ filebeat-bjfp9   1/1     Running   0          6m56s
 filebeat-fzr9n   1/1     Running   0          6m56s
 filebeat-vpkm7   1/1     Running   0          6m56s
 ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有設定成功的話，kibana 這邊就會收到 kubernetes 上面 pod 的 log&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有設定成功的話，kibana 這邊就會收到 kubernetes 上面 pod 的 log&lt;/p&gt;
 &lt;h1 id=&#34;log-havest-for-specific-pods&#34;&gt;log havest for specific pods&lt;/h1&gt;
-
 &lt;p&gt;由於 kubernetes 上我們可以便利的調度 filebeat 的部屬方式，這邊也可以也可以使用 deployment ，配合 pod affinity，把 filebeat 放到某個想要監測的 pod，這邊的例子是 nginx-ingress-controller。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 上有一個或多個 nginx ingress controller&lt;/li&gt;
 &lt;li&gt;部屬一個或多個 filebeat 到有 nginx 的 node 上&lt;/li&gt;
 &lt;li&gt;filebeat 去抓取 nginx 的 input， 並使用 filebeat 的 nginx module 做預處理
-
 &lt;ul&gt;
 &lt;li&gt;nginx module 預設路徑需要調整，這邊使用 filebeat autodiscover 來處理&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;一樣 apply 前記得先檢查跟設定&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;vim filebeat/7.3.1/nginx-config-configmap.yaml
 
 kubectl apply -f filebeat/7.3.1/nginx-config-configmap.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;部屬 filebeat deployment
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;部屬 filebeat deployment
 由於有設定 pod affinity ，這個 filebeat 只會被放到有 nginx ingress controller 的這個節點上，並且依照 autodiscover 設定的條件去蒐集 nginx 的 log&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;kubectl apply -f filebeat/7.3.1/nginx-deployment.yaml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有設定成功的話，kibana 這邊就會收到 kubernetes 上面 pod 的 log&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有設定成功的話，kibana 這邊就會收到 kubernetes 上面 pod 的 log&lt;/p&gt;
 &lt;p&gt;另外，由於有啟動 nginx module，logstash 收到的內容已經是處理過得內容。&lt;/p&gt;
-
-&lt;hr /&gt;
-
+&lt;hr&gt;
 &lt;h1 id=&#34;gcp-fluentd&#34;&gt;GCP fluentd&lt;/h1&gt;
-
 &lt;p&gt;如果是使用 GKE 的朋友，可以投過開啟 stackdriver logging 的功能，把集群中服務的 log 倒到 stackdriver，基本上就是 node -&amp;gt; (daemonsets) fluentd -&amp;gt; stackdriver。&lt;/p&gt;
-
 &lt;p&gt;這個 fluentd 是 GCP 如果有啟動 Stackdriver Logging 的話，自動幫你維護的 daemonsets，設定不可改，改了會被 overwrite 會去，所以不太方便從這邊動手腳。&lt;/p&gt;
-
 &lt;p&gt;Btw stackdriver 最近好像改版，目前做 example 的版本已經變成 lagency （淚&lt;/p&gt;
-
 &lt;p&gt;但我們先假設我們對這個 pod 的 log 很有興趣，然後把這邊的 log 透過 filebeat 送到 ELK 上XD&lt;/p&gt;
-
 &lt;p&gt;因為 GKE 透過 fluentd 把 GKE 上面的 log 倒到 stackdriver，而我們是想把 log 倒到 ELK，既然這樣我們的 input 來源是相同的，而且很多處理步驟都可以在 ELK 上面互通，真的可以偷看一下 fluentd 是去哪收集 log ，怎麼處理 log pipeline，我們只要做相應設定就好。&lt;/p&gt;
-
 &lt;p&gt;畢竟 google 都幫我們弄得妥妥的，不參考一下他的流程太可惜。&lt;/p&gt;
-
-&lt;p&gt;偷看一下 GKE 上 fluentd 是去哪找 log ，這個是 &lt;a href=&#34;https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/fluentd-gcp/fluentd-gcp-configmap.yaml&#34; target=&#34;_blank&#34;&gt;fluentd gcp configmap&lt;/a&gt;，雖然看到這邊感覺扯遠了，但因為很有趣所有我就繼續看下去，各位大德可以跳過XD&lt;/p&gt;
-
+&lt;p&gt;偷看一下 GKE 上 fluentd 是去哪找 log ，這個是 &lt;a href=&#34;https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/fluentd-gcp/fluentd-gcp-configmap.yaml&#34;&gt;fluentd gcp configmap&lt;/a&gt;，雖然看到這邊感覺扯遠了，但因為很有趣所有我就繼續看下去，各位大德可以跳過XD&lt;/p&gt;
 &lt;p&gt;configmap 中的這個 input 設定檔，其中一個 source 就是一個資料來源，相當於 filebeat 的 input。這邊這個 source 就是去 &lt;code&gt;/var/log/containers/*.log&lt;/code&gt;  收 log&lt;/p&gt;
-
 &lt;p&gt;這邊還做了幾件事：&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;打上 &lt;code&gt;reform.*&lt;/code&gt; tag，讓下個 match 可以 收進去 pipeline 處理&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;附帶 parse 出 time&lt;/p&gt;
-
+&lt;li&gt;附帶 parse 出 time&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;containers.input.conf
 
 &amp;lt;source&amp;gt;
-@type tail
-path /var/log/containers/*.log
-pos_file /var/log/gcp-containers.log.pos
-# Tags at this point are in the format of:
-# reform.var.log.containers.&amp;lt;POD_NAME&amp;gt;_&amp;lt;NAMESPACE_NAME&amp;gt;_&amp;lt;CONTAINER_NAME&amp;gt;-&amp;lt;CONTAINER_ID&amp;gt;.log
-tag reform.*
-read_from_head true
-&amp;lt;parse&amp;gt;
-@type multi_format
-&amp;lt;pattern&amp;gt;
-  format json
-  time_key time
-  time_format %Y-%m-%dT%H:%M:%S.%NZ
-&amp;lt;/pattern&amp;gt;
-&amp;lt;pattern&amp;gt;
-  format /^(?&amp;lt;time&amp;gt;.+) (?&amp;lt;stream&amp;gt;stdout|stderr) [^ ]* (?&amp;lt;log&amp;gt;.*)$/
-  time_format %Y-%m-%dT%H:%M:%S.%N%:z
-&amp;lt;/pattern&amp;gt;
-&amp;lt;/parse&amp;gt;
+  @type tail
+  path /var/log/containers/*.log
+  pos_file /var/log/gcp-containers.log.pos
+  # Tags at this point are in the format of:
+  # reform.var.log.containers.&amp;lt;POD_NAME&amp;gt;_&amp;lt;NAMESPACE_NAME&amp;gt;_&amp;lt;CONTAINER_NAME&amp;gt;-&amp;lt;CONTAINER_ID&amp;gt;.log
+  tag reform.*
+  read_from_head true
+  &amp;lt;parse&amp;gt;
+    @type multi_format
+    &amp;lt;pattern&amp;gt;
+      format json
+      time_key time
+      time_format %Y-%m-%dT%H:%M:%S.%NZ
+    &amp;lt;/pattern&amp;gt;
+    &amp;lt;pattern&amp;gt;
+      format /^(?&amp;lt;time&amp;gt;.+) (?&amp;lt;stream&amp;gt;stdout|stderr) [^ ]* (?&amp;lt;log&amp;gt;.*)$/
+      time_format %Y-%m-%dT%H:%M:%S.%N%:z
+    &amp;lt;/pattern&amp;gt;
+  &amp;lt;/parse&amp;gt;
 &amp;lt;/source&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;他這邊做一些 error handling，然後用 ruby (!) parse，這邊就真的太遠，細節大家可以 google ＸＤ。不過這邊使用的 pattern matching 我們後幾篇在 logstash pipeline 上，也會有機會提到，機制是類似的。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;他這邊做一些 error handling，然後用 ruby (!) parse，這邊就真的太遠，細節大家可以 google ＸＤ。不過這邊使用的 pattern matching 我們後幾篇在 logstash pipeline 上，也會有機會提到，機制是類似的。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;filter reform.**&amp;gt;
   @type parser
   format /^(?&amp;lt;severity&amp;gt;\w)(?&amp;lt;time&amp;gt;\d{4} [^\s]*)\s+(?&amp;lt;pid&amp;gt;\d+)\s+(?&amp;lt;source&amp;gt;[^ \]]+)\] (?&amp;lt;log&amp;gt;.*)/
@@ -210,14 +151,9 @@ read_from_head true
   tag ${if record[&#39;stream&#39;] == &#39;stderr&#39; then &#39;raw.stderr&#39; else &#39;raw.stdout&#39; end}
   remove_keys stream,log
 &amp;lt;/match&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;ssh-進去逛&#34;&gt;ssh 進去逛&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ssh-&#34;&gt;ssh 進去逛&lt;/h3&gt;
 &lt;p&gt;想看機器上實際的 log 狀況，我們也可以直接 ssh 進去&lt;/p&gt;
-
 &lt;p&gt;先透過 kubectl 看一下 pod&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ kubectl get daemonsets --namespace kube-system
 
 NAME                       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                                  AGE
@@ -231,10 +167,7 @@ fluentd-gcp-v3.2.0-44tl7                  2/2     Running   0          37d   10.
 fluentd-gcp-v3.2.0-5vc6l                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-tp05   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
 fluentd-gcp-v3.2.0-6rqvc                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-5gqn   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
 fluentd-gcp-v3.2.0-mmwk4                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-vxld   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;先透過 kubectl 看一下 node&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;先透過 kubectl 看一下 node&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ kubectl get node
 
 NAME                                     STATUS   ROLES    AGE   VERSION
@@ -244,16 +177,10 @@ gke-chechaichang-pool-1-123456789-8n8z   Ready    &amp;lt;none&amp;gt;   37d   v
 ...
 
 gcloud compute ssh gke-chechaichang-pool-1-123456789-3bzp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如使用其他雲平台的 kubernetes service，或是 bare metal 的集群，請依照各自系統的方式連進去看看。&lt;/p&gt;
-
-&lt;h1 id=&#34;ssh-node-找-log&#34;&gt;ssh node 找 log&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如使用其他雲平台的 kubernetes service，或是 bare metal 的集群，請依照各自系統的方式連進去看看。&lt;/p&gt;
+&lt;h1 id=&#34;ssh-node--log&#34;&gt;ssh node 找 log&lt;/h1&gt;
 &lt;p&gt;ssh 進去後就可以到處來探險，順便看看 GKE 跑在機器上到底做了什麼事情。&lt;/p&gt;
-
 &lt;p&gt;如果官方有出文件，可能可以不用進來看。各位大德有發現文件請留言跟我說。我個人很喜歡自己架集群起來連就去看，面對照官方文件上寫的東西，當然大部份時候都是文件沒有帶到，有很多發現。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ ls /var/log
 
 gcp-*-log.pos
@@ -263,17 +190,11 @@ metrics/
 pods/
 ...
 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;/var/log/containers 看一下，格式是 &lt;code&gt;pod_namespace_container&lt;/code&gt; 這邊是 link 到 /var/log/pods/&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/var/log/containers 看一下，格式是 &lt;code&gt;pod_namespace_container&lt;/code&gt; 這邊是 link 到 /var/log/pods/&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ ls -al /var/log/containers
 
 lrwxrwxrwx 1 root root   105 Aug 12 07:42 fluentd-gcp-v3.2.0-st6cl_kube-system_fluentd-gcp-5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac.log -&amp;gt; /var/log/pods/kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008/fluentd-gcp/0.log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;看到 pods 就覺得是你了，裡面有 pod 資料夾，格式是 &lt;code&gt;namespace_pod_uuid&lt;/code&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看到 pods 就覺得是你了，裡面有 pod 資料夾，格式是 &lt;code&gt;namespace_pod_uuid&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ls /var/log/pods
 
 default_pod-1-1234567890-fxxhp_uuid
@@ -282,17 +203,11 @@ kube-system_heapster-v1.6.0-beta.1-
 kube-system_kube-proxy-gke-
 kube-system_l7-default-backend-
 kube-system_prometheus-to-sd-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;再進去有 container log，格式是 &lt;code&gt;pod_namespace_container.log&lt;/code&gt;，也是 link&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;再進去有 container log，格式是 &lt;code&gt;pod_namespace_container.log&lt;/code&gt;，也是 link&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ls -al /var/log/pods/kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008/fluentd-gcp/
 
 lrwxrwxrwx 1 root root  165 Aug 12 07:42 0.log -&amp;gt; /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最終 link 到&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最終 link 到&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo su
 
 $ ls -alh /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/
@@ -304,18 +219,11 @@ drwx------  2 root root 4.0K Aug 12 07:42 checkpoints
 -rw-------  1 root root 7.8K Aug 12 07:42 config.v2.json
 -rw-r--r--  1 root root 2.3K Aug 12 07:42 hostconfig.json
 drwx------  2 root root 4.0K Aug 12 07:42 mounts
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;頭尾偷喵一下，確定是我們在找的東西&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;頭尾偷喵一下，確定是我們在找的東西&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;head /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;這樣就找到我們的 log 了&lt;/p&gt;
-
-&lt;h1 id=&#34;小節&#34;&gt;小節&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這樣就找到我們的 log 了&lt;/p&gt;
+&lt;h1 id=&#34;heading&#34;&gt;小節&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 filebeat 去查找&lt;/li&gt;
 &lt;li&gt;透過 kubernetes daemonsets 可以快速佈置一份 filebeat 到所有 node，且設定都是一起更新&lt;/li&gt;
@@ -332,27 +240,29 @@ tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca
       <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/x.509-certificate/</guid>
-      <description>
-
-&lt;h1 id=&#34;簡單講一下-certificate&#34;&gt;簡單講一下 certificate&lt;/h1&gt;
-
+      <description>&lt;h1 id=&#34;-certificate&#34;&gt;簡單講一下 certificate&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL)&lt;/li&gt;
-&lt;li&gt;certificate 包含公鑰及識別資訊(hostname, organization, &amp;hellip;等資訊)&lt;/li&gt;
-&lt;li&gt;certificate 是由 certificate authority(CA) 簽署，或是自簽(Self-signed)&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;使用 browser 連入 https server時，會檢查 server 的 certificate 是否有效，確定這個 server 真的是合法的 site&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在 elastic stack 上，如果有多個 elasticsearch server node 彼此連線，由於 node 彼此是 client 也是 server&lt;/p&gt;
-
+&lt;li&gt;
+&lt;p&gt;X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;certificate 包含公鑰及識別資訊(hostname, organization, &amp;hellip;等資訊)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;certificate 是由 certificate authority(CA) 簽署，或是自簽(Self-signed)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 browser 連入 https server時，會檢查 server 的 certificate 是否有效，確定這個 server 真的是合法的 site&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 elastic stack 上，如果有多個 elasticsearch server node 彼此連線，由於 node 彼此是 client 也是 server&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 self-signed CA 產出來的 certificate，連入時會檢查使用的 certificate 是否由同一組 CA 簽署&lt;/li&gt;
 &lt;li&gt;server 使用 certificate，確定連入 server 的 client 都帶有正確的私鑰與 public certificate，是 authenticated user&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;附帶說明，X.509 有多種檔案格式&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;.pem&lt;/li&gt;
 &lt;li&gt;.cer, .crt, .der&lt;/li&gt;
@@ -360,11 +270,8 @@ tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca
 &lt;li&gt;.p7b, .p7c&lt;/li&gt;
 &lt;li&gt;&amp;hellip;&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;另外檔案格式可以有其他用途，也就是說裡面裝的不一定是 X.509 憑證&lt;/p&gt;
-
 &lt;h1 id=&#34;ca&#34;&gt;CA&lt;/h1&gt;
-
 &lt;pre&gt;&lt;code&gt;$ openssl pkcs12 -in /etc/elasticsearch/config/elastic-stack-ca.p12 -info -nokeys
 
 MAC: sha1, Iteration 100000
@@ -382,27 +289,17 @@ issuer=CN = Elastic Certificate Tool Autogenerated CA
 
 -----BEGIN CERTIFICATE-----
 -----END CERTIFICATE-----
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;issuer command name 為 Elastic autogen CA
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;issuer command name 為 Elastic autogen CA
 subject command name 為 Elastic autogen CA&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://shazi.info/openssl-%E6%AA%A2%E6%B8%AC-ssl-%E7%9A%84%E6%86%91%E8%AD%89%E4%B8%B2%E9%8D%8A-certificate-chain/&#34; target=&#34;_blank&#34;&gt;https://shazi.info/openssl-%E6%AA%A2%E6%B8%AC-ssl-%E7%9A%84%E6%86%91%E8%AD%89%E4%B8%B2%E9%8D%8A-certificate-chain/&lt;/a&gt;&lt;/p&gt;
-
+&lt;h1 id=&#34;heading&#34;&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://shazi.info/openssl-%E6%AA%A2%E6%B8%AC-ssl-%E7%9A%84%E6%86%91%E8%AD%89%E4%B8%B2%E9%8D%8A-certificate-chain/&#34;&gt;https://shazi.info/openssl-%E6%AA%A2%E6%B8%AC-ssl-%E7%9A%84%E6%86%91%E8%AD%89%E4%B8%B2%E9%8D%8A-certificate-chain/&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;openssl s_client -connect google.com
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://medium.com/@superseb/get-your-certificate-chain-right-4b117a9c0fce&#34; target=&#34;_blank&#34;&gt;https://medium.com/@superseb/get-your-certificate-chain-right-4b117a9c0fce&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&#34;https://medium.com/@superseb/get-your-certificate-chain-right-4b117a9c0fce&#34;&gt;https://medium.com/@superseb/get-your-certificate-chain-right-4b117a9c0fce&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;openssl verify -CAfile client-ca.cer client.cer
 
 openssl verify -show_chain -CAfile client-ca.cer client.cer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;certificate&#34;&gt;Certificate&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;certificate&#34;&gt;Certificate&lt;/h1&gt;
 &lt;p&gt;用 openssl 工具看一下內容，如果有密碼這邊要用密碼解鎖&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ openssl pkcs12 -in /etc/elasticsearch/config/elastic-certificates.p12 -info -nokeys
 
 MAC: sha1, Iteration 100000
@@ -431,8 +328,7 @@ issuer=CN = Elastic Certificate Tool Autogenerated CA
 -----BEGIN CERTIFICATE-----
 -----END CERTIFICATE-----
 
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -441,53 +337,37 @@ issuer=CN = Elastic Certificate Tool Autogenerated CA
       <pubDate>Sun, 15 Sep 2019 23:00:33 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/secure-elk-stack/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;監測 Google Compute Engine 上服務的各項數據&lt;/li&gt;
 &lt;li&gt;監測 Google Kubernetes Engine 的各項數據&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&amp;ndash;&lt;/p&gt;
-
-&lt;p&gt;上篇&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt; 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html&#34; target=&#34;_blank&#34;&gt;官方的文件在這裡&lt;/a&gt;，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/security-getting-started.html&#34; target=&#34;_blank&#34;&gt;Tutorial: Getting started with security&lt;/a&gt; 開始，過程比較不會這麼血尿。&lt;/p&gt;
-
+&lt;p&gt;上篇&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt; 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html&#34;&gt;官方的文件在這裡&lt;/a&gt;，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/security-getting-started.html&#34;&gt;Tutorial: Getting started with security&lt;/a&gt; 開始，過程比較不會這麼血尿。&lt;/p&gt;
 &lt;p&gt;總之為了啟用 authentication &amp;amp; https，這篇要做的事情：&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;enable x-pack &amp;amp; activate basic license&lt;/li&gt;
 &lt;li&gt;Generate self-signed ca, server certificate, client certificate&lt;/li&gt;
 &lt;li&gt;Configure Elasticsearch, Kibana, &amp;amp; other components to
-
 &lt;ul&gt;
 &lt;li&gt;use server certificate when act as server&lt;/li&gt;
 &lt;li&gt;use client certificate when connect to an ELK server&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;啟用-x-pack&#34;&gt;啟用 X-pack&lt;/h1&gt;
-
-&lt;p&gt;Elasticsearch 的安全性模組由 x-pack extension 提供，在 &lt;a href=&#34;https://www.elastic.co/what-is/open-x-pack&#34; target=&#34;_blank&#34;&gt;6.3.0 之後的版本&lt;/a&gt;，安裝 elasticsearch 的過程中就預設安裝 x-pack。&lt;/p&gt;
-
-&lt;p&gt;附上&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/get-started-enable-security.html&#34; target=&#34;_blank&#34;&gt;啟用的官方文件&lt;/a&gt;&lt;/p&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;-x-pack&#34;&gt;啟用 X-pack&lt;/h1&gt;
+&lt;p&gt;Elasticsearch 的安全性模組由 x-pack extension 提供，在 &lt;a href=&#34;https://www.elastic.co/what-is/open-x-pack&#34;&gt;6.3.0 之後的版本&lt;/a&gt;，安裝 elasticsearch 的過程中就預設安裝 x-pack。&lt;/p&gt;
+&lt;p&gt;附上&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/get-started-enable-security.html&#34;&gt;啟用的官方文件&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;然而，由於舊版的 x-pack 是付費內容，目前的 elasticsearch 安裝完後，elasticsearch.yml 設定預設不啟用 x-pack，也就是說沒看到這篇官方文件的話，很容易就獲得沒有任何 security 功能的 ELK。&lt;/p&gt;
-
 &lt;p&gt;雖然目前已經可以使用免費的 basic license 使用 security 功能，還是希望官方可以 default 啟用 security。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ sudo vim /etc/elasticsearch/elasticsearch.yml
 
 xpack.security.enabled: true
@@ -495,14 +375,9 @@ xpack.security.enabled: true
 xpack.license.self_generated.type: basic
 
 discovery.type: single-node
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我們這邊啟用 xpack.security，同時將 self-generated license 生出來，我們這邊只使用基本的 basic subscription。若希望啟用更多功能，可以看&lt;a href=&#34;https://www.elastic.co/cn/subscriptions&#34; target=&#34;_blank&#34;&gt;官方subcription 方案介紹&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我們這邊啟用 xpack.security，同時將 self-generated license 生出來，我們這邊只使用基本的 basic subscription。若希望啟用更多功能，可以看&lt;a href=&#34;https://www.elastic.co/cn/subscriptions&#34;&gt;官方subcription 方案介紹&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;另外，如果不同時設定為 single-node 的話，預設會尋找其他elasticsearch node 來組成 cluster，而我們就必須要在所有 node 上啟用 security，這篇只帶大家做一個 single node cluster，簡化步驟。&lt;/p&gt;
-
 &lt;p&gt;重啟 elasticsearch ，檢查 log，看啟動時有沒有載入 x-pack&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo systemctl restart elasticsearch
 
 $ tail -f /var/log/elasticsearch/elasticsearch.log
@@ -535,29 +410,18 @@ $ tail -f /var/log/elasticsearch/elasticsearch.log
 [2019-09-16T07:40:18,455][INFO ][o.e.c.s.ClusterSettings  ] [elk] updating [xpack.monitoring.collection.enabled] from [false] to [true]
 [2019-09-16T07:40:22,555][INFO ][o.e.l.LicenseService     ] [elk] license [************************************] mode [basic] - valid
 [2019-09-16T07:40:22,557][INFO ][o.e.x.s.s.SecurityStatusChangeListener] [elk] Active license is now [BASIC]; Security is enabled
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;enable-user-authentication&#34;&gt;Enable user authentication&lt;/h1&gt;
-
-&lt;p&gt;啟用 security 之前，我們直接連入 Kibana &lt;a href=&#34;http://10.140.0.10:5601&#34; target=&#34;_blank&#34;&gt;http://10.140.0.10:5601&lt;/a&gt; ，不用任何使用者登入，便可以完整使用 Kibana 功能（包含 admin 管理介面）。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;enable-user-authentication&#34;&gt;Enable user authentication&lt;/h1&gt;
+&lt;p&gt;啟用 security 之前，我們直接連入 Kibana http://10.140.0.10:5601 ，不用任何使用者登入，便可以完整使用 Kibana 功能（包含 admin 管理介面）。&lt;/p&gt;
 &lt;p&gt;啟用 security 後，便需要使用帳號密碼登入。在這邊先用工具把使用者密碼產生出來。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;# 互動式
 /usr/share/elasticsearch/bin/elasticsearch-setup-passwords interactive
 
 # 自動產生
 /usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;密碼生出來後，就把帳號密碼收好，等等會用到。之後初次登入也是使用這些密碼。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;密碼生出來後，就把帳號密碼收好，等等會用到。之後初次登入也是使用這些密碼。&lt;/p&gt;
 &lt;h1 id=&#34;configure-passwords-on-client-side&#34;&gt;Configure passwords on client-side&lt;/h1&gt;
-
 &lt;p&gt;由於已經啟用 authentication，其他 ELK 元件 (Kibana, logstash, filebeat, apm-server,&amp;hellip;) 連入 Elasticsearch 也都會需要各自的帳號密碼驗證。&lt;/p&gt;
-
 &lt;p&gt;以 Kibana 為例，可以直接在 kibana.yml 中直接設定帳號密碼&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ sudo vim /etc/kibana/kibana.yml
 
 elasticsearch.hosts: [&amp;quot;http://localhost:9200&amp;quot;]
@@ -565,107 +429,71 @@ xpack.security.enabled: true
 
 elasticsearch.username: &amp;quot;kibana&amp;quot;
 elasticsearch.password: &amp;quot;***********&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;當然，這邊就是明碼的，看了不太安全。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;當然，這邊就是明碼的，看了不太安全。&lt;/p&gt;
 &lt;p&gt;或是使用 keystore 把 built-in user 的密碼加密，存在 kibana 的 keystore 裡面，重啟 kibana 時便會載入。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;/usr/share/kibana/bin/kibana-keystore create
 /usr/share/kibana/bin/kibana-keystore add elasticsearch.username
 /usr/share/kibana/bin/kibana-keystore add elasticsearch.password
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果有啟用 Filebeat 功能，beat 元件連入 elasticsearch 一樣需要設定&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果有啟用 Filebeat 功能，beat 元件連入 elasticsearch 一樣需要設定&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/usr/share/apm-server/bin/filebeat keystore create
 /usr/share/apm-server/bin/filebeat add elasticsearch.username
 /usr/share/apm-server/bin/filebeat add elasticsearch.password
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果有啟用 application performance monitoring(APM) 功能，apm-server 元件連入 elasticsearch 一樣需要設定&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果有啟用 application performance monitoring(APM) 功能，apm-server 元件連入 elasticsearch 一樣需要設定&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/usr/share/apm-server/bin/apm-server keystore create
 /usr/share/apm-server/bin/apm-server add elasticsearch.username
 /usr/share/apm-server/bin/apm-server add elasticsearch.password
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
 &lt;h1 id=&#34;encrypting-communications&#34;&gt;Encrypting Communications&lt;/h1&gt;
-
 &lt;p&gt;上面加了 username/password authentication，但如果沒 https/tls 基本上還是裸奔。接下來要處理連線加密。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/encrypting-internode-communications.html&#34; target=&#34;_blank&#34;&gt;官方 tutorial&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/encrypting-internode-communications.html&#34;&gt;官方 tutorial&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;一堆官方文件，我們先跳過XD&lt;/p&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html&#34; target=&#34;_blank&#34;&gt;elasticsearch security&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/ssl-tls.html&#34; target=&#34;_blank&#34;&gt;elastic stack ssl tls&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/configuring-tls.html#configuring-tls&#34; target=&#34;_blank&#34;&gt;elasticsearch configuring tls&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/certutil.html&#34; target=&#34;_blank&#34;&gt;certutil&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html&#34;&gt;elasticsearch security&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/ssl-tls.html&#34;&gt;elastic stack ssl tls&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/configuring-tls.html#configuring-tls&#34;&gt;elasticsearch configuring tls&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/certutil.html&#34;&gt;certutil&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;分析一下需求跟規格&#34;&gt;分析一下需求跟規格&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading&#34;&gt;分析一下需求跟規格&lt;/h1&gt;
 &lt;p&gt;我們需要為每一個 node 生一組 node certificate，使用 node certificate 產生 client certificates 提供給其他 client，連入時會驗證 client 是否為 authenticated user。&lt;/p&gt;
-
 &lt;p&gt;針對目前這個 single-node ELK stack，我們可能有幾種選擇&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;簽署一個 localhost，當然這個只能在 localhost 上的客戶端元件使用，別的 node 無法用這個連入&lt;/li&gt;
 &lt;li&gt;簽署一個 public DNS elk.chechiachang.com，可以在公開網路上使用，別人也可以使用這個DNS嘗試連入&lt;/li&gt;
-&lt;li&gt;簽署一個私有網域的 DNS，例如在 GCP 上可以使用&lt;a href=&#34;https://cloud.google.com/compute/docs/internal-dns?hl=zh-tw&#34; target=&#34;_blank&#34;&gt;內部dns服務&lt;/a&gt;
-
+&lt;li&gt;簽署一個私有網域的 DNS，例如在 GCP 上可以使用&lt;a href=&#34;https://cloud.google.com/compute/docs/internal-dns?hl=zh-tw&#34;&gt;內部dns服務&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;長這樣 elk.asia-east1-b.c.chechiachang.internal&lt;/li&gt;
 &lt;li&gt;[INSTANCE_NAME].[ZONE].c.[PROJECT_ID].internal&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;有需要也可以一份 server certificate 中簽署複數個 site&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;我們這邊選擇使用內部 dns，elk.asia-east1-b-c-chechaichang.internal，讓這個 single-node elk 只能透過內部網路存取。&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;elasticsearch: elk.asia-east1-b.c.chechaichang.internal:9200&lt;/li&gt;
 &lt;li&gt;kibana: elk.asia-east1-b.c.chechaichang.internal:5601&lt;/li&gt;
 &lt;li&gt;外部要連近來 kibana，我們使用 vpn 服務連進私有網路&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;如果想使用外部 dns，讓 elk stack 在公開網路可以使用，ex. elk.chechiachang.com，可以&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;GCP 的 load balancer掛進來，用 GCP 的 certificate manager 自動管理 certificate&lt;/li&gt;
 &lt;li&gt;或是在 node 上開一個 nginx server，再把 certificate 用 certbot 生出來&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h1 id=&#34;generate-certificates&#34;&gt;Generate certificates&lt;/h1&gt;
-
 &lt;p&gt;先把 X.509 digital certificate 的 certificate authority(CA) 生出來。我們可以設定密碼保護這個檔案&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;mkdir -p /etc/elasticsearch/config
 
 # CA generated with Elastic tool
 /usr/share/elasticsearch/bin/elasticsearch-certutil ca \
   -out /etc/elasticsearch/config/elastic-stack-ca.p12
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;生出來是 PKCS#12 格式的 keystore，包含：&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;生出來是 PKCS#12 格式的 keystore，包含：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;CA 的 public certificate&lt;/li&gt;
 &lt;li&gt;CA 的基本資訊&lt;/li&gt;
 &lt;li&gt;簽署其他 node certificates 使用的私鑰(private key)&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;用 openssl 工具看一下內容，如果有密碼這邊要用密碼解鎖&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ openssl pkcs12 -in /etc/elasticsearch/config/elastic-stack-ca.p12 -info -nokeys
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;附帶說明，X.509 有多種檔案格式&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;附帶說明，X.509 有多種檔案格式&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;.pem&lt;/li&gt;
 &lt;li&gt;.cer, .crt, .der&lt;/li&gt;
@@ -673,41 +501,27 @@ elasticsearch.password: &amp;quot;***********&amp;quot;
 &lt;li&gt;.p7b, .p7c&lt;/li&gt;
 &lt;li&gt;&amp;hellip;&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;另外檔案格式可以有其他用途，也就是說裡面裝的不一定是 X.509 憑證。裡面的內容也不同。&lt;/p&gt;
-
 &lt;p&gt;ELK 設定的過程中，由於不是所有的 ELK component 都支援使用 .p12 檔案，我們在設定過程中會互相專換，或是混用多種檔案格式。&lt;/p&gt;
-
 &lt;h1 id=&#34;generate-certificate&#34;&gt;Generate certificate&lt;/h1&gt;
-
-&lt;p&gt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD&lt;/p&gt;
-
+&lt;p&gt;&amp;laquo;&amp;laquo;&amp;laquo;&amp;lt; HEAD&lt;/p&gt;
 &lt;p&gt;我們用 elastic-stack-ca.p12 這組 keystore裡面的 CA 與 private key，為 elk.asia-east1-b.c.chechiachang.internal 簽一個 p12 keystore，裡面有&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;node certificate&lt;/li&gt;
 &lt;li&gt;node key&lt;/li&gt;
 &lt;li&gt;CA certificate&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;這邊只產生一組 server certificate 給 single-node cluster 的 node-1&lt;/p&gt;
-
 &lt;p&gt;=======&lt;/p&gt;
-
 &lt;p&gt;我們用 elastic-stack-ca.p12 這組 keystore裡面的 CA 與 private key，為 elk.asia-east1-b.c.chechiachang.internal 簽一個 p12 keystore，裡面有&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;node certificate&lt;/li&gt;
 &lt;li&gt;node key&lt;/li&gt;
 &lt;li&gt;CA certificate&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;這邊只產生一組 server certificate 給 single-node cluster 的 node-1&lt;/p&gt;
-
 &lt;p&gt;如果 cluster 中有多個 elasticsearch，為每個 node 產生 certificate 時都要使用同樣 CA 來簽署，讓 server 信任這組 CA。&lt;/p&gt;
-
 &lt;p&gt;使用 elasticsearch-certutil 簡化簽署過程，從產生 CA ，到使用 CA 簽署 certificate。另外，再產生 certificate 中使用 Subject Alternative Name(SAN)，並輸入 ip 與 dns。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;# certificate for site: private dns with Elastic CA
 /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
   --ca /etc/elasticsearch/config/elastic-stack-ca.p12 \
@@ -715,17 +529,10 @@ elasticsearch.password: &amp;quot;***********&amp;quot;
   --dns elk.asia-east1-b.c.chechaichang.internal \
   --ip 10.140.0.10 \
   -out /etc/elasticsearch/config/node-1.p12
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;用 openssl 看一下內容，如果有密碼這邊要用密碼解鎖&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;用 openssl 看一下內容，如果有密碼這邊要用密碼解鎖&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -info -nokeys
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;server 用這個 certificate ，啟用 ssl。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;server 用這個 certificate ，啟用 ssl。&lt;/p&gt;
 &lt;p&gt;client 使用這個 certificate 產生出來的 client.cer 與 client.key 與 server 連線，server 才接受客戶端是安全的。&lt;/p&gt;
-
 &lt;blockquote&gt;
 &lt;blockquote&gt;
 &lt;blockquote&gt;
@@ -742,23 +549,14 @@ elasticsearch.password: &amp;quot;***********&amp;quot;
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
-
 &lt;pre&gt;&lt;code&gt;# Change owner to fix read permission
 chown -R elasticsearch:elasticsearch /etc/elasticsearch/config
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有密碼記得也要用 keystore 把密碼加密後喂給 elasticsearch&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有密碼記得也要用 keystore 把密碼加密後喂給 elasticsearch&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
 /usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;關於 X.509 Certifcate 之後有空我們來聊一下&lt;/p&gt;
-
-&lt;h1 id=&#34;更新-elasticsearch-設定&#34;&gt;更新 elasticsearch 設定&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;關於 X.509 Certifcate 之後有空我們來聊一下&lt;/p&gt;
+&lt;h1 id=&#34;-elasticsearch-&#34;&gt;更新 elasticsearch 設定&lt;/h1&gt;
 &lt;p&gt;Certificates 都生完了，接下來更改 elasticsearch 的參數，在 transport layer 啟用 ssl。啟用 security 後，在 transport layer 啟動 ssl 是必須的。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ sudo vim /etc/elasticsearch/elasticsearch.yml
 
 xpack.security.enabled: true
@@ -767,20 +565,14 @@ xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate
 xpack.security.transport.ssl.keystore.path: /etc/elasticsearch/config/node-1.p12
 xpack.security.transport.ssl.truststore.path: /etc/elasticsearch/config/node-1.p12
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;啟用 security 與 transport layer 的 ssl，然後指定 keystore路徑，讓 server 執行 client authentication
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;啟用 security 與 transport layer 的 ssl，然後指定 keystore路徑，讓 server 執行 client authentication
 由於這筆 p12 帶有 CA certificate 作為 trusted certificate entry，所以也可以順便當作 trustore，讓 client 信任這個 CA&lt;/p&gt;
-
-&lt;p&gt;security 這邊提供了 server side (elasticsearch) 在檢查客戶端連線時的檢查模式(vertification mode)，&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html#ssl-tls-settings&#34; target=&#34;_blank&#34;&gt;文件有說明&lt;/a&gt;，可以設定&lt;/p&gt;
-
+&lt;p&gt;security 這邊提供了 server side (elasticsearch) 在檢查客戶端連線時的檢查模式(vertification mode)，&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html#ssl-tls-settings&#34;&gt;文件有說明&lt;/a&gt;，可以設定&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;certificate: 檢查 certificate 加密是否有效&lt;/li&gt;
 &lt;li&gt;full: 簽 node certificate 時可以指定 ip dns，啟用會檢查來源 node ip dns 是否也正確&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;(Optional) HTTP layer 啟動 ssl&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;vim /etc/elasticsearch/elasticsearch.yml
 
 xpack.security.http.ssl.enabled: true
@@ -789,27 +581,17 @@ xpack.security.http.ssl.truststore.path: /etc/elasticsearch/config/node-1.p12
 
 /usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password
 /usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;重啟 elasticsearch，看一下 log&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重啟 elasticsearch，看一下 log&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo systemctl restart elasticsearch
 tail -f /var/log/elasticsearch/elasticsearch.log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然後你就發現，原來 kibana 連入 的 http 連線，不斷被 server 這端拒絕。所以以下要來設定 kibana&lt;/p&gt;
-
-&lt;hr /&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然後你就發現，原來 kibana 連入 的 http 連線，不斷被 server 這端拒絕。所以以下要來設定 kibana&lt;/p&gt;
+&lt;hr&gt;
 &lt;h1 id=&#34;kibana&#34;&gt;Kibana&lt;/h1&gt;
-
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/kibana/7.3/using-kibana-with-security.html&#34; target=&#34;_blank&#34;&gt;using kibana with security&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/kibana/7.3/configuring-tls.html&#34; target=&#34;_blank&#34;&gt;kibana configuring tls&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/kibana/7.3/using-kibana-with-security.html&#34;&gt;using kibana with security&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/kibana/7.3/configuring-tls.html&#34;&gt;kibana configuring tls&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;使用剛剛簽的 server certificate，從裡面 parse 出 client-ca.cer，還有 client.cer 與 client.key&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;mkdir -p /etc/kibana/config
 
 $ openssl pkcs12 --help
@@ -830,10 +612,7 @@ openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -clcerts -nokeys &amp;gt
 openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain &amp;gt; /etc/kibana/config/client-ca.cer
 
 sudo chown -R kibana:kibana /etc/kibana/config/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;更改 kibana 連入 elasticsearch 的連線設定&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;更改 kibana 連入 elasticsearch 的連線設定&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo vim /etc/kigana/kibana.yml
 
 elasticsearch.hosts: [&amp;quot;https://elk.asia-east1-b.c.chechaichang.internal:9200&amp;quot;]
@@ -842,97 +621,63 @@ elasticsearch.ssl.certificate: /etc/kibana/config/client.cer
 elasticsearch.ssl.key: /etc/kibana/config/client.key
 elasticsearch.ssl.certificateAuthorities: [ &amp;quot;/etc/kibana/config/client-ca.cer&amp;quot; ]
 elasticsearch.ssl.verificationMode: full
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;指定 ssl.certificate, ssl.key 做連線 elasticsearch server 時的 user authentication&lt;/li&gt;
 &lt;li&gt;由於我們是 self-signed CA，所以需要讓客戶端信任這個我們自簽的 CA&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;注意這邊 elasticsearch.hosts 我們已經從 &lt;a href=&#34;http://localhost&#34; target=&#34;_blank&#34;&gt;http://localhost&lt;/a&gt; 換成 https 的內部 dns，原有的 localhost 已經無法使用（如果 elasicsearch 有 enforce https 的話）&lt;/p&gt;
-
+&lt;p&gt;注意這邊 elasticsearch.hosts 我們已經從 http://localhost 換成 https 的內部 dns，原有的 localhost 已經無法使用（如果 elasicsearch 有 enforce https 的話）&lt;/p&gt;
 &lt;p&gt;重啟 Kibana，看一下 log&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo systemctl restart kibana
 journalctl -fu kibana
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果沒有一直噴 ssl certificate error 的話，恭喜你成功了&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果沒有一直噴 ssl certificate error 的話，恭喜你成功了&lt;/p&gt;
 &lt;p&gt;然而，除了 kibana 以外，我們還有其他的 client 需要連入 elasticsearch&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;把上述步驟在 apm-server, filebeat, 其他的 beat 上也設定&lt;/li&gt;
 &lt;li&gt;如果在 k8s 上，要把 cer, key 等檔案用 volume 掛進去
-&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD&lt;/li&gt;
+&amp;laquo;&amp;laquo;&amp;laquo;&amp;lt; HEAD&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;Kibana 本身也有 server 的功能，讓其他 client 連入。例如讓 filebeat 自動將 document tempalte 匯入 kibana，我們也需要設定&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;kibana server certificate&lt;/li&gt;
 &lt;li&gt;filebeat client to kibana server&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;=======&lt;/p&gt;
-
 &lt;p&gt;Kibana 本身也有 server 的功能，讓其他 client 連入。例如讓 filebeat 自動將 document tempalte 匯入 kibana，我們也需要設定&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;kibana server certificate&lt;/li&gt;
 &lt;li&gt;filebeat client to kibana server&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;就是他們彼此互打，都要有 ca, key, cert&lt;/p&gt;
-
-&lt;h3 id=&#34;但基本上的設定都一樣-下面可以不用看下去了xd&#34;&gt;但基本上的設定都一樣，下面可以不用看下去了XD&lt;/h3&gt;
-
+&lt;h3 id=&#34;xd&#34;&gt;但基本上的設定都一樣，下面可以不用看下去了XD&lt;/h3&gt;
 &lt;p&gt;如果有用到再查文件就好，這邊直接小結&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;設定 security 前要先想號自己的需求，如何連入，安全性設定到哪邊&lt;/li&gt;
 &lt;li&gt;使用 utility 自簽 CA，然後產生 server certificate&lt;/li&gt;
 &lt;li&gt;使用 server certificate 再 parse 出 ca-certificate, client cers, key&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;kibana-作為-server&#34;&gt;kibana 作為 server&lt;/h1&gt;
-
+&lt;hr&gt;
+&lt;h1 id=&#34;kibana--server&#34;&gt;kibana 作為 server&lt;/h1&gt;
 &lt;p&gt;工作路徑可能是這樣： app(apm-client library) -&amp;gt; apm-server -&amp;gt; kibana -&amp;gt; elasticsearch&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;kibana 連入 elasticsearch時， kibana 是 client 吃 elasticsearch 的憑證&lt;/li&gt;
 &lt;li&gt;apm-server 連入 kibana時，kibana 是 server，apm-server 吃 kibana 的憑證&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;首先更改 kibana 設定&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ sudo vim /etc/kibana/kibana.yml
 
 server.ssl.enabled: true
 server.ssl.certificate: /etc/kibana/config/client.cer
 server.ssl.key: /etc/kibana/config/client.key
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;重啟 kibana&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重啟 kibana&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;journalctl -fu kibana
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;apm-server&#34;&gt;Apm-server&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/apm/server/7.3/securing-apm-server.html&#34; target=&#34;_blank&#34;&gt;https://www.elastic.co/guide/en/apm/server/7.3/securing-apm-server.html&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;apm-server&#34;&gt;Apm-server&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/apm/server/7.3/securing-apm-server.html&#34;&gt;https://www.elastic.co/guide/en/apm/server/7.3/securing-apm-server.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;應用端的 apm-client (ex. apm-python-client)，連入 apm-server&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;在 http 的狀況下，雖然有使用 secret-token，但還是裸奔&lt;/li&gt;
 &lt;li&gt;在 https 的狀況下，要把 certificates，然後餵給應用端的client library&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;更改 apm-server 的設定&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo vim /etc/apm-server/apm-server.yml
 
 host: &amp;quot;0.0.0.0:8200&amp;quot;
@@ -959,49 +704,28 @@ monitoring.elasticsearch:
   ssl.certificate_authorities: [&amp;quot;/etc/apm-server/config/client-ca.cer&amp;quot;]
   ssl.certificate: &amp;quot;/etc/apm-server/config/client.cer&amp;quot;
   ssl.key: &amp;quot;/etc/apm-server/config/client.key&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;重啟 apm-server&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重啟 apm-server&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;systemctl restart apm-server
 journalctl -fu apm-server
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;apm-library&#34;&gt;APM library&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;apm-library&#34;&gt;APM library&lt;/h1&gt;
 &lt;p&gt;應用端的設定就需要依據 library 的實做設定，例如 flask-apmagent-python&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;ELASTIC_APM_SERVER_CERT=/etc/elk/certificates/client.cer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/apm/agent/python/current/configuration.html#config-server-cert&#34; target=&#34;_blank&#34;&gt;apm agent python config server cert&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/apm/agent/python/current/configuration.html#config-server-cert&#34;&gt;apm agent python config server cert&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;filebeat&#34;&gt;filebeat&lt;/h1&gt;
-
 &lt;p&gt;記得我們在 node 上有安裝 Self-monitoring filebeat，elasticsearch 改成 ssl 這邊當然也連不盡去了，再做同樣操作&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&#34; target=&#34;_blank&#34;&gt;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&#34;&gt;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get install filebeat
 
 mkdir -p /etc/filebeat/config
 openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -nocerts -nodes &amp;gt; /etc/filebeat/config/client.key
 openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -clcerts -nokeys &amp;gt; /etc/filebeat/config/client.cer
 openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain &amp;gt; /etc/filebeat/config/client-ca.cer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Restart filebeat&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Restart filebeat&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;systemctl restart filebeat
 journalctl -fu filebeat
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;如果你的應用在-kubernetes-上&#34;&gt;如果你的應用在 kubernetes 上&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h1 id=&#34;-kubernetes-&#34;&gt;如果你的應用在 kubernetes 上&lt;/h1&gt;
 &lt;p&gt;可以使用下面方法拿到 client.cer ，然後用 secret 塞進 k8s，在用 volume from secrets，掛給監測應用的 filebeat&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;
 mkdir -p /etc/beats/config
 openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -nocerts -nodes &amp;gt; /etc/beats/config/client.key
@@ -1019,8 +743,7 @@ kubectl -n elk create secret generic elk-client-certificates \
   --from-file=client.key=client.key
 
 kubectl apply -f elk/gke/filebeat/
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -1029,45 +752,31 @@ kubectl apply -f elk/gke/filebeat/
       <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34; target=&#34;_blank&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34; target=&#34;_blank&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34; target=&#34;_blank&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;作為範例的 ELK 的版本是當前的 stable release 7.3.1。&lt;/p&gt;
-
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34; target=&#34;_blank&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&amp;ndash;&lt;/p&gt;
-
-&lt;h1 id=&#34;簡介-elk-stack&#34;&gt;簡介 ELK stack&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/index.html&#34; target=&#34;_blank&#34;&gt;官方說明文件&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;elk-的元件&#34;&gt;ELK 的元件&lt;/h3&gt;
-
+&lt;h1 id=&#34;-elk-stack&#34;&gt;簡介 ELK stack&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/index.html&#34;&gt;官方說明文件&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;elk-&#34;&gt;ELK 的元件&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Elasticsearch: 基於 Lucene 的分散式全文搜索引擎&lt;/li&gt;
 &lt;li&gt;Logstash: 數據處理 pipeline&lt;/li&gt;
 &lt;li&gt;Kibana: ELK stack 的管理後台與數據視覺化工具&lt;/li&gt;
 &lt;li&gt;Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h3 id=&#34;elk-的工作流程&#34;&gt;ELK 的工作流程&lt;/h3&gt;
-
+&lt;h3 id=&#34;elk--1&#34;&gt;ELK 的工作流程&lt;/h3&gt;
 &lt;p&gt;beats -&amp;gt; (logstash) -&amp;gt; elasticsearch -&amp;gt; kibana&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;將 beats 放在應用端的主機上，或是在容器化環境種作為 sidecar，跟應用放在一起&lt;/li&gt;
 &lt;li&gt;設定 beats 從指定的路徑收集 log 與 metrics&lt;/li&gt;
@@ -1076,89 +785,63 @@ kubectl apply -f elk/gke/filebeat/
 &lt;li&gt;beats 向後輸出到 elasticsearch，儲存數據文件(document)，並依照樣式(template)與索引(index)儲存，便可在 elasticsearch 上全文搜索數據&lt;/li&gt;
 &lt;li&gt;透過 Kibana，將 elasticsearch 上的 log 顯示&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;h1 id=&#34;官方不是有出文件嗎&#34;&gt;官方不是有出文件嗎&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading&#34;&gt;官方不是有出文件嗎&lt;/h1&gt;
 &lt;p&gt;Elastic 官方準備了大量的文件，理論上要跟著文件一步一步架設這整套工具應該是十分容易。然而實際照著做卻遇上很多困難。由於缺乏 get-started 的範例文件，不熟悉 ELK 設定的使用者，常常需要停下來除錯，甚至因為漏掉某個步驟，而需要回頭重做一遍。&lt;/p&gt;
-
 &lt;p&gt;說穿了本篇的技術含量不高，就只是一個踩雷過程。&lt;/p&gt;
-
 &lt;p&gt;Lets get our hands dirty.&lt;/p&gt;
-
 &lt;h1 id=&#34;warning&#34;&gt;WARNING&lt;/h1&gt;
-
-&lt;p&gt;這篇安裝過程沒有做安全性設定，由於 ELK stack 的安全性功能模組，在&lt;a href=&#34;https://www.elastic.co/what-is/open-x-pack&#34; target=&#34;_blank&#34;&gt;v6.3.0 以前的版本是不包含安全性模組的&lt;/a&gt;，官方的安裝說明文件將安全性設定另成一篇。我第一次安裝，全部安裝完後，才發現裏頭沒有任何安全性設定，包含帳號密碼登入、api secret token、https/tls 通通沒有，整組 elk 裸奔。&lt;/p&gt;
-
-&lt;p&gt;我這邊分開的目的，不是讓大家都跟我一樣被雷(XD)，而是因為
-- 另起一篇對安全性設定多加說明
-- 在安全的內網中，沒有安全性設定，可以大幅加速開發與除錯&lt;/p&gt;
-
+&lt;p&gt;這篇安裝過程沒有做安全性設定，由於 ELK stack 的安全性功能模組，在&lt;a href=&#34;https://www.elastic.co/what-is/open-x-pack&#34;&gt;v6.3.0 以前的版本是不包含安全性模組的&lt;/a&gt;，官方的安裝說明文件將安全性設定另成一篇。我第一次安裝，全部安裝完後，才發現裏頭沒有任何安全性設定，包含帳號密碼登入、api secret token、https/tls 通通沒有，整組 elk 裸奔。&lt;/p&gt;
+&lt;p&gt;我這邊分開的目的，不是讓大家都跟我一樣被雷(XD)，而是因為&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;另起一篇對安全性設定多加說明&lt;/li&gt;
+&lt;li&gt;在安全的內網中，沒有安全性設定，可以大幅加速開發與除錯&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;雖然沒有安全性設定，但仍然有完整的功能，如果只是在測試環境，或是想要評估試用 self-hosted ELK，這篇的說明已足夠。但千萬不要用這篇上 public network 或是用在 production 環境喔。&lt;/p&gt;
-
 &lt;p&gt;如果希望第一次安裝就有完整的 security 設定，請等待下篇 &lt;a href=&#34;#secure-elk-stack&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;討論需求與規格&#34;&gt;討論需求與規格&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading-1&#34;&gt;討論需求與規格&lt;/h1&gt;
 &lt;p&gt;這邊只是帶大家過一下基礎安裝流程，我們在私有網路中搭建一台 standalone 的 ELK stack，通通放在一台節點(node)上。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;elk-node-standalone 10.140.0.10
 app-node-1          10.140.0.11
 ...                 ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;本機的 ELK stack 元件，彼此透過 localhost 連線&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;本機的 ELK stack 元件，彼此透過 localhost 連線&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Elasticsearch:  localhost:9200&lt;/li&gt;
 &lt;li&gt;Kibana:         localhost:5601&lt;/li&gt;
 &lt;li&gt;Apm-server:     localhost:8200&lt;/li&gt;
 &lt;li&gt;Self Monitoring Services&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;私有網路中的外部服務透過 10.140.0.10&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;beats 從其他 node 輸出到 Elasticsearch: 10.140.0.10:9200&lt;/li&gt;
 &lt;li&gt;beats 從其他 node 輸出到 Apm-server:    10.140.0.10:8200&lt;/li&gt;
 &lt;li&gt;在內部網路中 透過 browser 存取 Kibana:  10.140.0.10:5601&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;standalone 的好處:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;方便 (再次強調這篇只是示範，實務上不要貪一時方便，維運崩潰)&lt;/li&gt;
 &lt;li&gt;最簡化設定，ELK 有非常大量的設定可以調整，這篇簡化了大部分&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;Standalone可能造成的問題:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;No High Availablity: 沒有任何容錯備援可以 failover，這台掛就全掛&lt;/li&gt;
 &lt;li&gt;外部服務多的話，很容易就超過 node 上對於網路存取的限制，造成 tcp drop 或 delay。需要調整 ulimit 來增加網路，當然這在雲端上會給維運帶來更多麻煩，不是一個好解法。&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;如果要有 production ready 的 ELK&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;HA 開起來&lt;/li&gt;
 &lt;li&gt;把服務分散到不同 node 上, 方便之後 scale out 多開幾台
-
 &lt;ul&gt;
 &lt;li&gt;elasticsearch-1, elasticsearch-2, elasticsearch-3&amp;hellip;&lt;/li&gt;
 &lt;li&gt;kibana-1&lt;/li&gt;
 &lt;li&gt;apm-server-1, apm-server-2, &amp;hellip;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;如果應用在已經容器化, 這些服務元件也可以上 Kubernetes 做容器自動化，這個部份蠻好玩，如果有時間我們來聊這篇&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h1 id=&#34;主機設定&#34;&gt;主機設定&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading-2&#34;&gt;主機設定&lt;/h1&gt;
 &lt;p&gt;Elasticsearch 儲存數據會佔用不少硬碟空間，我個人的習慣是只要有額外占用儲存空間，都要另外掛載硬碟，不要占用 root，所以這邊會需要另外掛載硬碟。&lt;/p&gt;
-
-&lt;p&gt;GCP 上使用 Google Compote Engine 的朋友，可以照 &lt;a href=&#34;https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=zh-tw&#34; target=&#34;_blank&#34;&gt;Google 官方操作步驟操作&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;GCP 上使用 Google Compote Engine 的朋友，可以照 &lt;a href=&#34;https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=zh-tw&#34;&gt;Google 官方操作步驟操作&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;完成後接近這樣&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ df -h
 $ df --human-readable
 
@@ -1171,38 +854,27 @@ $ ls /mnt/disks/elk
 /mnt/disks/elk/elasticsearch
 /mnt/disks/elk/apm-server
 /mnt/disks/elk/kibana
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;至於需要多少容量，取決收集數據的數量，落差非常大，可以先上個 100Gb ，試跑一段時間，再視情況 scale storage disk。&lt;/p&gt;
-
-&lt;h1 id=&#34;開防火牆&#34;&gt;開防火牆&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至於需要多少容量，取決收集數據的數量，落差非常大，可以先上個 100Gb ，試跑一段時間，再視情況 scale storage disk。&lt;/p&gt;
+&lt;h1 id=&#34;heading-3&#34;&gt;開防火牆&lt;/h1&gt;
 &lt;p&gt;需要開放 10.140.0.10 這台機器的幾個 port&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;elasticsearch           :9200   來源只開放私有網路其他 ip 10.140.0.0/9&lt;/li&gt;
 &lt;li&gt;apm-server              :8200   (同上)&lt;/li&gt;
 &lt;li&gt;kibana                  :5601   (同上)，如果想從外部透過 browser開，需要 whitelist ip&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;GCP 上有 default 的防火牆允許規則，私有網路可以彼此連線
-- default-allow-internal: :all    :10.140.0.0/9   tcp:0-65535&lt;/p&gt;
-
+&lt;p&gt;GCP 上有 default 的防火牆允許規則，私有網路可以彼此連線&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;default-allow-internal: :all    :10.140.0.0/9   tcp:0-65535&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&#34;install-elasticsearch&#34;&gt;Install Elasticsearch&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/install-elasticsearch.html&#34; target=&#34;_blank&#34;&gt;Install Elasticsearch 官方文件 7.3&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/install-elasticsearch.html&#34;&gt;Install Elasticsearch 官方文件 7.3&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我們這邊直接在 ubuntu 18.04 上使用 apt 作為安裝&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo apt-get install apt-transport-https
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 add-apt-repository &amp;quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&amp;quot;
 sudo apt-get update
 sudo apt-get install elasticsearch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;安裝完後路徑長這樣&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安裝完後路徑長這樣&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/etc/elasticsearch
 /etc/elasticsearch/elasticsearch.yml
 /etc/elasticsearch/jvm.options
@@ -1212,25 +884,15 @@ sudo apt-get install elasticsearch
 
 # Log
 /var/log/elasticsearch/elasticsearch.log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;有需要也可以複寫設定檔，把 log 也移到 /mnt/disks/elk/elasticsearch/logs&lt;/p&gt;
-
-&lt;h3 id=&#34;服務控制&#34;&gt;服務控制&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有需要也可以複寫設定檔，把 log 也移到 /mnt/disks/elk/elasticsearch/logs&lt;/p&gt;
+&lt;h3 id=&#34;heading-4&#34;&gt;服務控制&lt;/h3&gt;
 &lt;p&gt;透過 systemd 管理，我們可以用 systemctl 控制，
 用戶 elasticsearch:elasticsearch，操作時會需要 sudo 權限。&lt;/p&gt;
-
 &lt;p&gt;但在啟動前要先調整數據儲存路徑，並把權限移轉給使用者。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;mkdir -p /mnt/disks/elk/elasticsearch
 chown elasticsearch:elasticsearch /mnt/disks/elk/elasticsearch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;設定檔案&#34;&gt;設定檔案&lt;/h3&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;heading-5&#34;&gt;設定檔案&lt;/h3&gt;
 &lt;p&gt;ELK 提供了許多可設定調整的設定,但龐大的設定檔案也十分難上手。我們這邊先簡單更改以下設定檔案&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo vim /etc/elasticsearch/elasticsearch.yml
 
 # Change Network
@@ -1249,31 +911,18 @@ discovery.type: &amp;quot;single-node&amp;quot;
 xpack.security.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.license.self_generated.type: basic
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;6.3.0 後的版本已經附上安全性模組 xpack，這邊順便開起來。關於 xpack 的安全性設定，這邊先略過不提。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;6.3.0 後的版本已經附上安全性模組 xpack，這邊順便開起來。關於 xpack 的安全性設定，這邊先略過不提。&lt;/p&gt;
 &lt;p&gt;有啟用 xpack ，可以讓我們透過 elasticsearch 附帶的工具，產生使用者與帳號密碼。&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;/usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto
 
 # Keep your passwords safe
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然後把啟動 Elasticsearch&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然後把啟動 Elasticsearch&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo systemctl enable elasticsearch.service
 sudo systemctl start elasticsearch.service
 sudo systemctl status elasticsearch.service
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;看一下 log，確定服務有在正常工作&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看一下 log，確定服務有在正常工作&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;tail -f /var/log/elasticsearch/elasticsearch.log
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在 node 上試打 Elasticsearch API&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在 node 上試打 Elasticsearch API&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ curl localhost:9200
 
 {
@@ -1293,18 +942,11 @@ sudo systemctl status elasticsearch.service
   },
   &amp;quot;tagline&amp;quot; : &amp;quot;You Know, for Search&amp;quot;
 }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;kibana&#34;&gt;Kibana&lt;/h1&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;kibana&#34;&gt;Kibana&lt;/h1&gt;
 &lt;p&gt;有了正常工作的 Elasticsearch，接下來要安裝 kibana，由於 apt repository 已經匯入，這邊直接&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;sudo apt-get update
 sudo apt-get install kibana
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;一樣快速設定一下&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一樣快速設定一下&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ vim /etc/kibana/kinana.yml
 
 # change server.host from localhost to 0.0.0.0 to allow outside requests
@@ -1317,42 +959,25 @@ elasticsearch.password:
 sudo systemctl enable kibana.service
 sudo systemctl start kibana.service
 sudo systemctl status kibana.service
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;檢查 log 並試打一下&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;檢查 log 並試打一下&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo systemctl status kibana
 
 $ curl localhost:5601
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;透過內網 ip 也可以用 browser 存取
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;透過內網 ip 也可以用 browser 存取
 使用 elastic 這組帳號密碼登入，可以有管理員權限
 可以檢視一下 kibana 的頁面，看一下是否系統功能都上常上線
-&lt;a href=&#34;http://10.140.0.10/app/monitoring#&#34; target=&#34;_blank&#34;&gt;http://10.140.0.10/app/monitoring#&lt;/a&gt;&lt;/p&gt;
-
+http://10.140.0.10/app/monitoring#&lt;/p&gt;
 &lt;h1 id=&#34;filebeat&#34;&gt;Filebeat&lt;/h1&gt;
-
 &lt;p&gt;以上是 ELK 最基本架構: elasticsearch 引擎與前端視覺化管理工具 Kibana。當然現在進去 kibana 是沒有數據的，所以我們現在來安裝第一個 beat，收集第一筆數據。&lt;/p&gt;
-
 &lt;p&gt;你可能會覺得奇怪: 我現在沒有任何需要監控的應用，去哪收集數據?&lt;/p&gt;
-
 &lt;p&gt;ELK 提供的自我監測 (self-monitoring) 的功能，也就是在 node 上部屬 filebeat 並啟用 modules，便可以把這台 node 上的 elasticsearch 運行的狀況，包含cpu 狀況、記憶體用量、儲存空間用量、安全性告警、&amp;hellip;都做為數據，傳到 elasticsearch 中，並在 Kibana monitoring 頁面製圖顯示。&lt;/p&gt;
-
 &lt;p&gt;這邊也剛好做為我們 ELK stack 的第一筆數據收集。&lt;/p&gt;
-
 &lt;p&gt;WARNING: 這邊一樣要提醒， production 環境多半會使用另外一組的 elasticsearch 來監控主要的這組 elastic stack，以維持 elk stack 的穩定性，才不會自己 monitoring 自己，結果 elastic 掛了，metrics 跟錯誤訊息都看不到。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-installation.html&#34; target=&#34;_blank&#34;&gt;官方安裝文件&lt;/a&gt;&lt;/p&gt;
-
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-installation.html&#34;&gt;官方安裝文件&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get update
 sudo apt-get install filebeat
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;預設的 filebeat.yml 設定檔案不是完整的，請到官網下載完整版，但官網沒給檔案連結(慘)，只有網頁版 &lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&#34; target=&#34;_blank&#34;&gt;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;預設的 filebeat.yml 設定檔案不是完整的，請到官網下載完整版，但官網沒給檔案連結(慘)，只有網頁版 &lt;a href=&#34;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&#34;&gt;https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我們上 github 把她載下來&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;$ wget https://raw.githubusercontent.com/elastic/beats/v7.3.1/filebeat/filebeat.reference.yml
 $ sudo mv filebeat-reference-y
 $ sudo vim /etc/filebeat/filebeat.yml
@@ -1392,26 +1017,15 @@ setup.kibana:
   protocol: &amp;quot;http&amp;quot;
   username: &amp;quot;elastic&amp;quot;
   password: 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;啟動 filebeat&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;啟動 filebeat&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo systemctl start filebeat
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;看一下 log，filebeat 會開始收集 elasticsearch 的 log 與 metrics，可以在 log 上看到收集的狀況。&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看一下 log，filebeat 會開始收集 elasticsearch 的 log 與 metrics，可以在 log 上看到收集的狀況。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ sudo journalctl -fu filebeat
 
 Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {&amp;quot;monitoring&amp;quot;: {&amp;quot;metrics&amp;quot;: {&amp;quot;beat&amp;quot;:{&amp;quot;cpu&amp;quot;:{&amp;quot;system&amp;quot;:{&amp;quot;ticks&amp;quot;:1670860,&amp;quot;time&amp;quot;:{&amp;quot;ms&amp;quot;:66}},&amp;quot;total&amp;quot;:{&amp;quot;ticks&amp;quot;:6964660,&amp;quot;time&amp;quot;:{&amp;quot;ms&amp;quot;:336},&amp;quot;value&amp;quot;:6964660},&amp;quot;user&amp;quot;:{&amp;quot;ticks&amp;quot;:5293800,&amp;quot;time&amp;quot;:{&amp;quot;ms&amp;quot;:270}}},&amp;quot;handles&amp;quot;:{&amp;quot;limit&amp;quot;:{&amp;quot;hard&amp;quot;:4096,&amp;quot;soft&amp;quot;:1024},&amp;quot;open&amp;quot;:11},&amp;quot;info&amp;quot;:{&amp;quot;ephemeral_id&amp;quot;:&amp;quot;62fd4bfa-1949-4356-9615-338ca6a95075&amp;quot;,&amp;quot;uptime&amp;quot;:{&amp;quot;ms&amp;quot;:786150373}},&amp;quot;memstats&amp;quot;:{&amp;quot;gc_next&amp;quot;:7681520,&amp;quot;memory_alloc&amp;quot;:4672576,&amp;quot;memory_total&amp;quot;:457564560376,&amp;quot;rss&amp;quot;:-32768},&amp;quot;runtime&amp;quot;:{&amp;quot;goroutines&amp;quot;:98}},&amp;quot;filebeat&amp;quot;:{&amp;quot;events&amp;quot;:{&amp;quot;active&amp;quot;:-29,&amp;quot;added&amp;quot;:1026,&amp;quot;done&amp;quot;:1055},&amp;quot;harvester&amp;quot;:{&amp;quot;open_files&amp;quot;:4,&amp;quot;running&amp;quot;:4}},&amp;quot;libbeat&amp;quot;:{&amp;quot;config&amp;quot;:{&amp;quot;module&amp;quot;:{&amp;quot;running&amp;quot;:0}},&amp;quot;output&amp;quot;:{&amp;quot;events&amp;quot;:{&amp;quot;acked&amp;quot;:1055,&amp;quot;active&amp;quot;:-50,&amp;quot;batches&amp;quot;:34,&amp;quot;total&amp;quot;:1005},&amp;quot;read&amp;quot;:{&amp;quot;bytes&amp;quot;:248606},&amp;quot;write&amp;quot;:{&amp;quot;bytes&amp;quot;:945393}},&amp;quot;pipeline&amp;quot;:{&amp;quot;clients&amp;quot;:9,&amp;quot;events&amp;quot;:{&amp;quot;active&amp;quot;:32,&amp;quot;published&amp;quot;:1026,&amp;quot;total&amp;quot;:1026},&amp;quot;queue&amp;quot;:{&amp;quot;acked&amp;quot;:1055}}},&amp;quot;registrar&amp;quot;:{&amp;quot;states&amp;quot;:{&amp;quot;current&amp;quot;:34,&amp;quot;update&amp;quot;:1055},&amp;quot;writes&amp;quot;:{&amp;quot;success&amp;quot;:35,&amp;quot;total&amp;quot;:35}},&amp;quot;system&amp;quot;:{&amp;quot;load&amp;quot;:{&amp;quot;1&amp;quot;:1.49,&amp;quot;15&amp;quot;:0.94,&amp;quot;5&amp;quot;:1.15,&amp;quot;norm&amp;quot;:{&amp;quot;1&amp;quot;:0.745,&amp;quot;15&amp;quot;:0.47,&amp;quot;5&amp;quot;:0.575}}}}}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果數據都有送出，就可以回到 kibana 的頁面，看一下目前這個 elasticsearch 集群，有開啟 monitoring 功能的元件們，是否都有正常工作。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://10.140.0.10/app/monitoring#&#34; target=&#34;_blank&#34;&gt;http://10.140.0.10/app/monitoring#&lt;/a&gt;&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果數據都有送出，就可以回到 kibana 的頁面，看一下目前這個 elasticsearch 集群，有開啟 monitoring 功能的元件們，是否都有正常工作。&lt;/p&gt;
+&lt;p&gt;http://10.140.0.10/app/monitoring#&lt;/p&gt;
 &lt;p&gt;頁面長得像這樣&lt;/p&gt;
-
 
 
 
@@ -1427,20 +1041,15 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 
 &lt;/figure&gt;
 
-
 &lt;p&gt;Standalone cluster 中的 filebeat，是還未跟 elasticsearch 配對完成的數據，會顯示在另外一個集群中，配對完後會歸到 elk cluster 中，就是我們的主要 cluster。&lt;/p&gt;
-
 &lt;p&gt;點進去可以看各個元件的服務情形。&lt;/p&gt;
-
-&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
-
+&lt;h1 id=&#34;heading-6&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;簡單思考 self-host ELK stack 搭建的架構&lt;/li&gt;
 &lt;li&gt;在單一 node 上安裝最簡易的 elastic stack&lt;/li&gt;
 &lt;li&gt;設定元件的 output 位置&lt;/li&gt;
 &lt;li&gt;設定 self-monitoring&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;恭喜各位獲得一個裸奔但是功能完整的 ELK, 我們下篇再向安全性邁進。&lt;/p&gt;
 </description>
     </item>

@@ -636,29 +636,19 @@ Here we talk about some basic concepts about Jenkins X and provide a hand-to-han
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://jenkins.io/" target="_blank">Jenkins</a> is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.</p>
-
-<p><a href="https://jenkins-x.io/" target="_blank">Jenkins X</a>, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.</p>
-
+      <p><a href="https://jenkins.io/">Jenkins</a> is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.</p>
+<p><a href="https://jenkins-x.io/">Jenkins X</a>, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.</p>
 <p>Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.</p>
-
 <ul>
 <li><a href="#architecture">Architecture of Jenkins X</a></li>
 <li><a href="#install">Install Jenkins with jx</a></li>
 <li><a href="#pipeline">Create a Pipeline with jx</a></li>
 <li><a href="#client">Develope with jx client</a></li>
 </ul>
-
-<p>For more information about jx itself, check <a href="https://github.com/jenkins-x/jx" target="_blank">Jenkins-X Github Repo</a></p>
-
-<p><a name="architecture"></a></p>
-
+<p>For more information about jx itself, check <a href="https://github.com/jenkins-x/jx">Jenkins-X Github Repo</a></p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <h1 id="architecture">Architecture</h1>
-
 <p>Check this beautiful diagram.</p>
-
 
 
 
@@ -674,26 +664,19 @@ Here we talk about some basic concepts about Jenkins X and provide a hand-to-han
 
 
 <figcaption data-pre="Figure " data-post=":" >
-  <h4><a href="https://jenkins-x.io/architecture/diagram/" target="_blank">https://jenkins-x.io/architecture/diagram/</a></h4>
+  <h4><a href="https://jenkins-x.io/architecture/diagram/">https://jenkins-x.io/architecture/diagram/</a></h4>
   
 </figcaption>
 
 </figure>
 
-
-<hr />
-
-<p><a name="install"></a></p>
-
+<hr>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <h1 id="install">Install</h1>
-
-<h3 id="create-gke-cluster-get-credentials">Create GKE cluster &amp; Get Credentials</h3>
-
+<h3 id="create-gke-cluster--get-credentials">Create GKE cluster &amp; Get Credentials</h3>
 <pre><code>gcloud init
 gcloud components update
-</code></pre>
-
-<pre><code>CLUSTER_NAME=jenkins-server
+</code></pre><pre><code>CLUSTER_NAME=jenkins-server
 #CLUSTER_NAME=jenkins-serverless
 
 gcloud container clusters create ${CLUSTER_NAME} \
@@ -710,12 +693,8 @@ gcloud container clusters get-credentials ${CLUSTER_NAME}
 
 # Check cluster stats.
 kubectl get nodes
-</code></pre>
-
-<h3 id="install-jx-on-local-machine">Install jx on Local Machine</h3>
-
-<p>[Jenkins X Release](<a href="https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases" target="_blank">https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases</a>)</p>
-
+</code></pre><h3 id="install-jx-on-local-machine">Install jx on Local Machine</h3>
+<p>[Jenkins X Release](<a href="https://github.com/jenkins-x/jx/releases">https://github.com/jenkins-x/jx/releases</a>](<a href="https://github.com/jenkins-x/jx/releases">https://github.com/jenkins-x/jx/releases</a>)</p>
 <pre><code>JX_VERSION=v2.0.2
 OS_ARCH=darwin-amd64
 #OS_ARCH=linux-amd64
@@ -731,40 +710,34 @@ helm client        v2.11.0+g2e55dbe
 helm server        v2.11.0+g2e55dbe
 git                git version 2.20.1
 Operating System   Mac OS X 10.14.4 build 18E226
-</code></pre>
-
-<h3 id="option-1-install-serverless-jenkins-pipeline">(Option 1) Install Serverless Jenkins Pipeline</h3>
-
+</code></pre><h3 id="option-1-install-serverless-jenkins-pipeline">(Option 1) Install Serverless Jenkins Pipeline</h3>
 <pre><code>DEFAULT_PASSWORD=mySecretPassWord123
 jx install \
   --default-admin-password=${DEFAULT_PASSWORD} \
   --provider='gke'
-</code></pre>
-
-<p>Options:</p>
-
-<ul class="task-list">
+</code></pre><p>Options:</p>
+<ul>
 <li>Enter Github user name</li>
 <li>Enter Github personal api token for CI/CD</li>
 <li>Enable Github as Git pipeline server</li>
 <li>Select Jenkins installation type:
-
-<ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Serverless Jenkins X Pipelines with Tekon</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Static Master Jenkins</label></li>
-</ul></li>
-<li>Pick default workload build pack
-
-<ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Kubernetes Workloads: Automated CI+CD with GitOps Promotion</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Library Workloads: CI+Release but no CD</label></li>
-</ul></li>
-
-<li><p>Select the organization where you want to create the environment repository:</p>
-
 <ul>
-<li><p>chechiachang</p>
-
+<li><input checked="" disabled="" type="checkbox">Serverless Jenkins X Pipelines with Tekon</li>
+<li><input disabled="" type="checkbox">Static Master Jenkins</li>
+</ul>
+</li>
+<li>Pick default workload build pack
+<ul>
+<li><input checked="" disabled="" type="checkbox">Kubernetes Workloads: Automated CI+CD with GitOps Promotion</li>
+<li><input disabled="" type="checkbox">Library Workloads: CI+Release but no CD</li>
+</ul>
+</li>
+<li>Select the organization where you want to create the environment repository:
+<ul>
+<li>chechiachang</li>
+</ul>
+</li>
+</ul>
 <pre><code>Your Kubernetes context is now set to the namespace: jx
 INFO[0231] To switch back to your original namespace use: jx namespace jx
 INFO[0231] Or to use this context/namespace in just one terminal use: jx shell
@@ -772,43 +745,35 @@ INFO[0231] For help on switching contexts see: https://jenkins-x.io/developing/k
 INFO[0231] To import existing projects into Jenkins:       jx import
 INFO[0231] To create a new Spring Boot microservice:       jx create spring -d web -d actuator
 INFO[0231] To create a new microservice from a quickstart: jx create quickstart
-</code></pre></li>
-</ul></li>
-</ul>
-
-<h3 id="option-2-install-static-jenkins-server">(Option 2) Install Static Jenkins Server</h3>
-
+</code></pre><h3 id="option-2-install-static-jenkins-server">(Option 2) Install Static Jenkins Server</h3>
 <pre><code>DEFAULT_PASSWORD=mySecretPassWord123
 
 jx install \
   --default-admin-password=${DEFAULT_PASSWORD} \
   --provider='gke'
-</code></pre>
-
-<p>Options:</p>
-
-<ul class="task-list">
+</code></pre><p>Options:</p>
+<ul>
 <li>Enter Github user name</li>
 <li>Enter Github personal api token for CI/CD</li>
 <li>Enable Github as Git pipeline server</li>
 <li>Select Jenkins installation type:
-
-<ul class="task-list">
-<li><label><input type="checkbox" disabled class="task-list-item"> Serverless Jenkins X Pipelines with Tekon</label></li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Static Master Jenkins</label></li>
-</ul></li>
-<li>Pick default workload build pack
-
-<ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Kubernetes Workloads: Automated CI+CD with GitOps Promotion</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Library Workloads: CI+Release but no CD</label></li>
-</ul></li>
-
-<li><p>Select the organization where you want to create the environment repository:</p>
-
 <ul>
-<li><p>chechiachang</p>
-
+<li><input disabled="" type="checkbox">Serverless Jenkins X Pipelines with Tekon</li>
+<li><input checked="" disabled="" type="checkbox">Static Master Jenkins</li>
+</ul>
+</li>
+<li>Pick default workload build pack
+<ul>
+<li><input checked="" disabled="" type="checkbox">Kubernetes Workloads: Automated CI+CD with GitOps Promotion</li>
+<li><input disabled="" type="checkbox">Library Workloads: CI+Release but no CD</li>
+</ul>
+</li>
+<li>Select the organization where you want to create the environment repository:
+<ul>
+<li>chechiachang</li>
+</ul>
+</li>
+</ul>
 <pre><code>INFO[0465]Your Kubernetes context is now set to the namespace: jx
 INFO[0465] To switch back to your original namespace use: jx namespace default
 INFO[0465] Or to use this context/namespace in just one terminal use: jx shell
@@ -816,49 +781,33 @@ INFO[0465] For help on switching contexts see: https://jenkins-x.io/developing/k
 INFO[0465] To import existing projects into Jenkins:       jx import
 INFO[0465] To create a new Spring Boot microservice:       jx create spring -d web -d actuator
 INFO[0465] To create a new microservice from a quickstart: jx create quickstart
-</code></pre></li>
-</ul></li>
-</ul>
-
-<p>Access Static Jenkins Server through Domain with username and password
-Domain <a href="http://jenkins.jx.11.22.33.44.nip.io/" target="_blank">http://jenkins.jx.11.22.33.44.nip.io/</a></p>
-
+</code></pre><p>Access Static Jenkins Server through Domain with username and password
+Domain <a href="http://jenkins.jx.11.22.33.44.nip.io/">http://jenkins.jx.11.22.33.44.nip.io/</a></p>
 <h3 id="uninstall">Uninstall</h3>
-
 <pre><code>jx uninstall
 # rm -rf ~/.jx
-</code></pre>
-
-<hr />
-
-<p><a name="pipeline"></a></p>
-
-<h1 id="setup-ci-cd-pipeline">Setup CI/CD Pipeline</h1>
-
+</code></pre><hr>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h1 id="setup-cicd-pipeline">Setup CI/CD Pipeline</h1>
 <h3 id="create-quickstart-repository">Create Quickstart Repository</h3>
-
 <pre><code>kubectl get pods --namespace jx --watch
-</code></pre>
-
-<pre><code># cd workspace
+</code></pre><pre><code># cd workspace
 jx create quickstart
-</code></pre>
-
-<p>Options:</p>
-
+</code></pre><p>Options:</p>
 <ul>
 <li>Which organisation do you want to use? chechiachang</li>
 <li>Enter the new repository name:  serverless-jenkins-quickstart</li>
-
-<li><p>select the quickstart you wish to create  [Use arrows to move, type to filter]
+<li>select the quickstart you wish to create  [Use arrows to move, type to filter]
 angular-io-quickstart
 aspnet-app
-dlang-http
-&gt; golang-http
+dlang-http</li>
+</ul>
+<blockquote>
+<p>golang-http
 jenkins-cwp-quickstart
 jenkins-quickstart
 node-http</p>
-
+</blockquote>
 <pre><code>INFO[0121] Watch pipeline activity via:    jx get activity -f serverless-jenkins-quickstart -w
 INFO[0121] Browse the pipeline log via:    jx get build logs chechiachang/serverless-jenkins-quickstart/master
 INFO[0121] Open the Jenkins console via    jx console
@@ -866,86 +815,44 @@ INFO[0121] You can list the pipelines via: jx get pipelines
 INFO[0121] Open the Jenkins console via    jx console
 INFO[0121] You can list the pipelines via: jx get pipelines
 INFO[0121] When the pipeline is complete:  jx get applications
-</code></pre></li>
-</ul>
-
-<h3 id="check-log-of-the-first-run">Check log of the first run</h3>
-
+</code></pre><h3 id="check-log-of-the-first-run">Check log of the first run</h3>
 <pre><code>jx logs pipeline
-</code></pre>
-
-<h3 id="add-step-to-pipeline">Add Step to Pipeline</h3>
-
+</code></pre><h3 id="add-step-to-pipeline">Add Step to Pipeline</h3>
 <p>Add a setup step for pullrequest</p>
-
 <pre><code>cd serverless-jenkins-quickstart
 jx create step --pipeline pullrequest \
   --lifecycle setup \
   --mode replace \
   --sh &quot;echo hello world&quot;
-</code></pre>
-
-<p>Validate pipeline step for each modification</p>
-
+</code></pre><p>Validate pipeline step for each modification</p>
 <pre><code>jx step validate
-</code></pre>
-
-<p>A build-pack pod started after git push. Watch pod status with kubectl.</p>
-
+</code></pre><p>A build-pack pod started after git push. Watch pod status with kubectl.</p>
 <pre><code>kubectl get pods --namespace jx --watch
-</code></pre>
-
-<h3 id="check-build-status-on-prow-serverless">Check Build Status on Prow (Serverless)</h3>
-
-<p><a href="http://deck.jx.130.211.245.13.nip.io/" target="_blank">http://deck.jx.130.211.245.13.nip.io/</a>
+</code></pre><h3 id="check-build-status-on-prow-serverless">Check Build Status on Prow (Serverless)</h3>
+<p><a href="http://deck.jx.130.211.245.13.nip.io/">http://deck.jx.130.211.245.13.nip.io/</a>
 Login with username and password</p>
-
 <h3 id="import-existing-repository">Import Existing Repository</h3>
-
 <p>In source code repository:</p>
-
 <p>Import jx to remote jenkins-server. This will apply a Jenkinsfile to repository by default</p>
-
 <pre><code>jx import --url git@github.com:chechiachang/serverless-jenkins-quickstart.git
-</code></pre>
-
-<p>Update jenkins-x.yml</p>
-
+</code></pre><p>Update jenkins-x.yml</p>
 <pre><code>jx create step
-</code></pre>
-
-<p>git commit &amp; push</p>
-
+</code></pre><p>git commit &amp; push</p>
 <h3 id="trouble-shooting">Trouble Shooting</h3>
-
 <p>Failed to get jx resources</p>
-
 <pre><code>jx get pipelines
-</code></pre>
-
-<p>Make sure your jx (or kubectl) context is with the correct GKE and namespace</p>
-
+</code></pre><p>Make sure your jx (or kubectl) context is with the correct GKE and namespace</p>
 <pre><code>kc config set-context gke_my-project_asia-east1-b_jenkins \
   --namespace=jx
-</code></pre>
-
-<h3 id="why-not-use-helm-chart">Why not use helm chart?</h3>
-
-<p>It&rsquo;s readlly depend on what we need in CI/CD automation.</p>
-
-<p><a href="https://github.com/helm/charts/tree/master/stable/jenkins" target="_blank">Jenkins Helm Chart</a> create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
+</code></pre><h3 id="why-not-use-helm-chart">Why not use helm chart?</h3>
+<p>It's readlly depend on what we need in CI/CD automation.</p>
+<p><a href="https://github.com/helm/charts/tree/master/stable/jenkins">Jenkins Helm Chart</a> create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
 Jenkin Platform with jx is Jenkins Platform native to Kubernetes. It comes with powerful cloud native components like Prow automation, Nexus, Docker Registry, Tekton Pipeline, &hellip;</p>
-
 <h3 id="check-jenkins-x-examples">Check jenkins-x examples</h3>
-
-<p><a href="https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs" target="_blank">https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs</a></p>
-
-<hr />
-
-<p><a name="client"></a></p>
-
+<p><a href="https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs">https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs</a></p>
+<hr>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <h1 id="client">Client</h1>
-
 <pre><code>jx get urls
 Name                      URL
 jenkins                   http://jenkins.jx.11.22.33.44.nip.io
@@ -954,21 +861,12 @@ jenkins-x-docker-registry http://docker-registry.jx.11.22.33.44.nip.io
 jenkins-x-monocular-api   http://monocular.jx.11.22.33.44.nip.io
 jenkins-x-monocular-ui    http://monocular.jx.11.22.33.44.nip.io
 nexus                     http://nexus.jx.11.22.33.44.nip.io
-</code></pre>
-
-<h3 id="get-cluster-status">Get Cluster Status</h3>
-
+</code></pre><h3 id="get-cluster-status">Get Cluster Status</h3>
 <pre><code>jx diagnose
-</code></pre>
-
-<h3 id="get-applications-pipelines">Get Applications &amp; Pipelines</h3>
-
+</code></pre><h3 id="get-applications--pipelines">Get Applications &amp; Pipelines</h3>
 <pre><code>jx get applications
 jx get pipelines
-</code></pre>
-
-<h3 id="get-ci-activities-build-log">Get CI Activities &amp; build log</h3>
-
+</code></pre><h3 id="get-ci-activities--build-log">Get CI Activities &amp; build log</h3>
 <pre><code>jx get activities
 jx get activities --filter='jenkins-x-on-kubernetes'
 
@@ -976,21 +874,14 @@ jx get build log
 
 INFO[0003] view the log at: http://jenkins.jx.11.22.33.44.nip.io/job/chechiachang/job/jenkins-x-on-kubernetes/job/feature-add-test/3/console
 ...
-</code></pre>
-
-<h3 id="trigger-build-check-activity">Trigger Build &amp; Check Activity</h3>
-
+</code></pre><h3 id="trigger-build--check-activity">Trigger Build &amp; Check Activity</h3>
 <pre><code>jx start pipeline
 jx start pipeline --filter='jenkins-x-on-kubernetes/feature-add-test'
 
 jx get activities --filter='jenkins-x-on-kubernetes'
-</code></pre>
-
-<h3 id="create-pull-request">Create Pull Request</h3>
-
+</code></pre><h3 id="create-pull-request">Create Pull Request</h3>
 <pre><code>jx create pullrequest
 </code></pre>
-
     </div>
 
     
@@ -1302,7 +1193,7 @@ jx get activities --filter='jenkins-x-on-kubernetes'
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

@@ -593,105 +593,97 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p>各位好，我是Che-Chia Chang，社群上常用的名子是 David Chang。是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 <a href="https://www.meetup.com/golang-taipei-meetup/" target="_blank">Golang Taiwan Meetup</a> 的 organizer。</p>
-
-<p>受到<a href="https://ithelp.ithome.com.tw/2020ironman/signup/team/63" target="_blank">友人們</a>邀請（推坑）參加了<a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a>，挑戰在30天內，每天發一篇技術分享文章。一方面將工作上遇到的問題與解法分享給社群，另一方面也是給自己一點成長的壓力，把這段時間的心得沈澱下來，因此也了這系列文章。</p>
-
+      <p>各位好，我是Che-Chia Chang，社群上常用的名子是 David Chang。是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 <a href="https://www.meetup.com/golang-taipei-meetup/">Golang Taiwan Meetup</a> 的 organizer。</p>
+<p>受到<a href="https://ithelp.ithome.com.tw/2020ironman/signup/team/63">友人們</a>邀請（推坑）參加了<a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a>，挑戰在30天內，每天發一篇技術分享文章。一方面將工作上遇到的問題與解法分享給社群，另一方面也是給自己一點成長的壓力，把這段時間的心得沈澱下來，因此也了這系列文章。</p>
 <p>本系列文章重點有三：</p>
-
 <ol>
-<li><p>提供的解決方案，附上一步步的操作步驟。希望讓讀者可以重現完整操作步驟，直接使用，或是加以修改</p></li>
-
-<li><p>著重 Google Cloud Platform，特別是Google Compute Engine (GCE) 與Google Kubernetes Engine (GKE) 兩大服務。這也是我最熟悉的平台，順便推廣，並分享一些雷點。</p></li>
-
-<li><p>從維運的角度除錯，分析問題，提升穩定性。</p></li>
+<li>
+<p>提供的解決方案，附上一步步的操作步驟。希望讓讀者可以重現完整操作步驟，直接使用，或是加以修改</p>
+</li>
+<li>
+<p>著重 Google Cloud Platform，特別是Google Compute Engine (GCE) 與Google Kubernetes Engine (GKE) 兩大服務。這也是我最熟悉的平台，順便推廣，並分享一些雷點。</p>
+</li>
+<li>
+<p>從維運的角度除錯，分析問題，提升穩定性。</p>
+</li>
 </ol>
-
 <p>預定的主題如下（可能會依照實際撰寫狀況微調）</p>
-
 <ul>
 <li>ELK Stask on GCP (8)
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/" target="_blank">監測 Google Kubernetes Engine 的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/" target="_blank">是否選擇 ELK 作為解決方案</a></li>
-<li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
+<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechiachang.github.io/post/secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechiachang.github.io/post/logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
-</ul></li>
+</ul>
+</li>
 <li>Kafka HA on Kubernetes(6)
-
 <ul>
-<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
-<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
-<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
-<li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-topology&quot; }}" target="_blank">集群內部的 HA topology</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-continued&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
+<li>[Deploy kafka-ha]({{ ref &ldquo;/post/kafka-deployment-on-kubernetes&rdquo; }})</li>
+<li>[Kafka Introduction]({{ ref &ldquo;/post/kafka-introduction&rdquo; }})</li>
+<li>[kafka 基本使用]({{ ref &ldquo;/post/kafka-basic-usage&rdquo; }})</li>
+<li>[kafka operation scripts]({{ ref &ldquo;/post/kafka-operation-script&rdquo;}})</li>
+<li>[集群內部的 HA topology]({{ ref &ldquo;/post/kafka-ha-topology&rdquo; }})</li>
+<li>[集群內部的 HA 細節]({{ ref &ldquo;/post/kafka-ha-continued&rdquo; }})</li>
 <li>Prometheus Metrics Exporter 很重要</li>
 <li>效能調校</li>
-</ul></li>
-<li>在 GKE 上部署 Redis HA (5)
-
-<ul>
-<li><a href="https://chechiachang.github.io/post/redis-ha-deployment/" target="_blank">使用 helm 部署 redis-ha</a></li>
-<li><a href="https://chechiachang.github.io/post/redis-ha-sentinel/" target="_blank">Redis HA with sentinel</a></li>
-<li><a href="https://chechiachang.github.io/post/redis-ha-topology/" target="_blank">Redis sentinel topology</a></li>
-<li><a href="{{ ref &quot;/post/redis-ha-on-haproxy&quot; }}" target="_blank">Redis HA with HAproxy</a></li>
-<li><a href="{{ ref &quot;/post/redis-ha-failure-recovery&quot; }}" target="_blank">Redis HA Failure Recovery</a></li>
-<li>Prometheus Metrics Exporter</li>
-</ul></li>
-<li>Prometheus / Grafana (5)
-
-<ul>
-<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/" target="_blank">GKE 上自架 Prometheus</a></li>
-<li><a href="https://chechiachang.github.io/post/prometheus-deploy-grafana/" target="_blank">GKE 上自架 Grafana</a></li>
-<li><a href="https://chechiachang.github.io/post/prometheus-scrape/" target="_blank">scrape config &amp; exporter</a></li>
-<li><a href="https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/" target="_blank">Dive into Redis Exporter</a></li>
-<li><a href="https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/" target="_blank">輸出 kube-state 的監測數據</a></li>
-</ul></li>
-<li>Nginx Ingress (3)
-
-<ul>
-<li><a href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/" target="_blank">Deploy Nginx Ingress Controller</a></li>
-<li><a href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/" target="_blank">Configure Nginx Ingress</a></li>
-</ul></li>
-<li>Cert-manager (3)
-
-<ul>
-<li><a href="https://chechiachang.github.io/post/cert-manager-deployment/" target="_blank">Deploy cert-manager</a></li>
-<li><a href="https://chechiachang.github.io/post/cert-manager-how-it-work/" target="_blank">How cert-manager work</a></li>
-<li><a href="https://chechiachang.github.io/post/cert-manager-complete-workflow/" target="_blank">Cert-manager complete workflow</a></li>
-</ul></li>
-<li>Kubernetes CRD &amp; Operator-sdk (3)
-
-<ul>
-<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resources-basic/" target="_blank">Introduction about custom resource</a></li>
-<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resources-basic/" target="_blank">Deployment &amp; Usage</a></li>
-<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/" target="_blank">Deployment &amp; Usage</a></li>
-</ul></li>
 </ul>
-
-<p>文章發表於<a href="https://ithelp.ithome.com.tw/users/20120327/ironman/2444" target="_blank">鐵人挑戰頁面</a>，同時發布與本站備份。有任何謬誤，還煩請各方大德&lt;3透過底下的聯絡方式聯絡我，感激不盡。</p>
-
-<hr />
-
+</li>
+<li>在 GKE 上部署 Redis HA (5)
+<ul>
+<li><a href="https://chechiachang.github.io/post/redis-ha-deployment/">使用 helm 部署 redis-ha</a></li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-sentinel/">Redis HA with sentinel</a></li>
+<li><a href="https://chechiachang.github.io/post/redis-ha-topology/">Redis sentinel topology</a></li>
+<li>[Redis HA with HAproxy]({{ ref &ldquo;/post/redis-ha-on-haproxy&rdquo; }})</li>
+<li>[Redis HA Failure Recovery]({{ ref &ldquo;/post/redis-ha-failure-recovery&rdquo; }})</li>
+<li>Prometheus Metrics Exporter</li>
+</ul>
+</li>
+<li>Prometheus / Grafana (5)
+<ul>
+<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/">GKE 上自架 Prometheus</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deploy-grafana/">GKE 上自架 Grafana</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-scrape/">scrape config &amp; exporter</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/">Dive into Redis Exporter</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/">輸出 kube-state 的監測數據</a></li>
+</ul>
+</li>
+<li>Nginx Ingress (3)
+<ul>
+<li><a href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/">Deploy Nginx Ingress Controller</a></li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/">Configure Nginx Ingress</a></li>
+</ul>
+</li>
+<li>Cert-manager (3)
+<ul>
+<li><a href="https://chechiachang.github.io/post/cert-manager-deployment/">Deploy cert-manager</a></li>
+<li><a href="https://chechiachang.github.io/post/cert-manager-how-it-work/">How cert-manager work</a></li>
+<li><a href="https://chechiachang.github.io/post/cert-manager-complete-workflow/">Cert-manager complete workflow</a></li>
+</ul>
+</li>
+<li>Kubernetes CRD &amp; Operator-sdk (3)
+<ul>
+<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resources-basic/">Introduction about custom resource</a></li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resources-basic/">Deployment &amp; Usage</a></li>
+<li><a href="https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/">Deployment &amp; Usage</a></li>
+</ul>
+</li>
+</ul>
+<p>文章發表於<a href="https://ithelp.ithome.com.tw/users/20120327/ironman/2444">鐵人挑戰頁面</a>，同時發布與本站備份。有任何謬誤，還煩請各方大德&lt;3透過底下的聯絡方式聯絡我，感激不盡。</p>
+<hr>
 <p>Features</p>
-
 <ul>
 <li>step-by-step guide for deployment: guarentee a running deployment on GCP</li>
 <li>basic configuration, usage, monitoring, networking on GKE</li>
 <li>debugging, stability analysis in an aspect of devop</li>
 </ul>
-
 <p>Topics</p>
-
-<ul class="task-list">
+<ul>
 <li>ELK stack(8)
-
 <ul>
 <li>Deploy self-hosted ELK stack on GCE instance</li>
 <li>Secure ELK stack with SSL and role-based authentication</li>
@@ -701,47 +693,51 @@
 <li>Elasticsearch operations: house-cleaning, tuning, pernament storage</li>
 <li>Elasticsearch maitainence, trouble shooting</li>
 <li>Get-Started with Elastic Cloud SASS</li>
-</ul></li>
+</ul>
+</li>
 <li>General operations on Kubernetes(4)
-
 <ul>
 <li>Kubernetes Debug SOP</li>
 <li>Kubectl cheat sheet</li>
 <li>Secure services with SSL by cert-manager</li>
-<li>Speed up container updating with operator</li>
+<li>Speed up container updating with operator
+<ul>
 <li>My operator example</li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Deploy Kafka HA on Kubernetes(4)
-
 <ul>
 <li>deploy kafka-ha on Kubernertes with helm</li>
 <li>in-cluster networking configuration for high availability</li>
 <li>basic app-side usage, performance tuning</li>
 <li>Operate Kafka: update config, upgrade version, migrate data</li>
-</ul></li>
+</ul>
+</li>
 <li>Promethus / grafana(5)
-
 <ul>
 <li>Deploy Prometheus / Grafana stack on GCE instance</li>
 <li>Monitoring services on Kubernetes with exporters</li>
 <li>Export Kubernetes metrics to Prometheus</li>
 <li>Export Redis-ha metrics to Prometheus</li>
 <li>Export Kafka metrics to Prometheus</li>
-</ul></li>
+</ul>
+</li>
 <li>GCP networking(4)
-
 <ul>
 <li>Firewall basic concept for private network with GCE instances &amp; Kubernetes</li>
 <li>Load balancer for Kubernetes service &amp; ingress</li>
 <li>DNS on GCP from Kube-dns to GCP DNS service</li>
-</ul></li>
+</ul>
+</li>
 <li>GCP log management(3)
-
-<ul class="task-list">
+<ul>
 <li>Basic usage about GCP logging &amp; GCP Error Report</li>
 <li>Stackdriver, metrics, alerts</li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> Logging on GKE from gcp-fluentd to stackdriver</label></li>
-</ul></li>
+<li><input checked="" disabled="" type="checkbox">Logging on GKE from gcp-fluentd to stackdriver</li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -1025,7 +1021,7 @@
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

@@ -593,53 +593,36 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>Prometheus / Grafana (5)
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/" target="_blank">GKE 上自架 Prometheus / Grafana</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/">GKE 上自架 Prometheus / Grafana</a></li>
 <li>GKE 上自架 Grafana 與設定</li>
 <li>使用 exporter 監測 GKE 上的各項服務</li>
 <li>輸出 redis-ha 的監測數據</li>
 <li>自幹 exporter</li>
 <li>輸出 kafka 的監測數據</li>
 <li>輸出 kubernetes 的監測數據</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>Exporter 工作原理簡介</li>
 <li>Prometheus exporter library</li>
 </ul>
-
 <h1 id="exporter-workflow">Exporter workflow</h1>
-
 <p>上次講到 exporter 可以從服務端把運行資料抽出來，並開成 http endpoint，讓 prometheus 來 scrape metrics。那 exporter 本身是如何取得服務內部的 metrics 呢? 我們今天就稍微看一下。</p>
-
 <h1 id="redis-exporter">Redis Exporter</h1>
-
-<p>我們今天以 <a href="https://github.com/oliver006/redis_exporter" target="_blank">Redis Exporter</a> 為例，研究一下外部的 exporter 是如何取得 redis 內部的 metrcs。</p>
-
+<p>我們今天以 <a href="https://github.com/oliver006/redis_exporter">Redis Exporter</a> 為例，研究一下外部的 exporter 是如何取得 redis 內部的 metrcs。</p>
 <p>Redis exporter 是用 golang 寫的一個小程式，總共算算才 1000 行，而且很多都是對 redis 內部 metrics 的清單，以及轉化成 prometheus metrics 的 tool functions，主要的邏輯非常簡單。我們簡單看一下源碼。</p>
-
-<p><a href="https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L386" target="_blank">Collect</a> 是主要的收集邏輯，就是執行 scrapeRedisHost(ch) ，然後把收集到的資訊，使用 <a href="https://github.com/prometheus/client_golang" target="_blank">Prometheus Go Client Library</a> 的工具將資料註冊成 prometheus metrics</p>
-
+<p><a href="https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L386">Collect</a> 是主要的收集邏輯，就是執行 scrapeRedisHost(ch) ，然後把收集到的資訊，使用 <a href="https://github.com/prometheus/client_golang">Prometheus Go Client Library</a> 的工具將資料註冊成 prometheus metrics</p>
 <pre><code>func (e *Exporter) Collect(ch chan&lt;- prometheus.Metric) {
 	e.Lock()
 	defer e.Unlock()
@@ -665,10 +648,7 @@
 	ch &lt;- e.scrapeDuration
 	ch &lt;- e.targetScrapeRequestErrors
 }
-</code></pre>
-
-<p>scrapeRedisHost 內部的主要邏輯，又集中在<a href="https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L1144" target="_blank">執行 Info</a></p>
-
+</code></pre><p>scrapeRedisHost 內部的主要邏輯，又集中在<a href="https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L1144">執行 Info</a></p>
 <pre><code>  // 執行 info 
 	infoAll, err := redis.String(doRedisCmd(c, &quot;INFO&quot;, &quot;ALL&quot;))
 	if err != nil {
@@ -678,12 +658,8 @@
 			return err
 		}
 	}
-</code></pre>
-
-<p>也就是說當我們在 redis-cli 連入 redis 時，可以執行 Info command，取得 redis 內部的資訊，包含節點設店與狀態，集群設定，資料的統計數據等等。然後 exporter 這邊維護持續去向 redis 更新 info ，並且把 info data 轉化成 time series 的 metrcs，再透過 <a href="https://github.com/prometheus/client_golang/tree/master/prometheus/promhttp" target="_blank">Prometheus Client promhttp</a> 提供的 http endpoint library，變成 http endpoint。</p>
-
-<p>首先看一下 <a href="https://redis.io/commands/info" target="_blank">redis info command 的文件</a>，這邊有說明 info 的 option ，以及 option 各自提供的資料，包括 server 狀態，賀戶端連線狀況，系統資源，複本狀態等等。我們也可以自己透過 info 取得資料。</p>
-
+</code></pre><p>也就是說當我們在 redis-cli 連入 redis 時，可以執行 Info command，取得 redis 內部的資訊，包含節點設店與狀態，集群設定，資料的統計數據等等。然後 exporter 這邊維護持續去向 redis 更新 info ，並且把 info data 轉化成 time series 的 metrcs，再透過 <a href="https://github.com/prometheus/client_golang/tree/master/prometheus/promhttp">Prometheus Client promhttp</a> 提供的 http endpoint library，變成 http endpoint。</p>
+<p>首先看一下 <a href="https://redis.io/commands/info">redis info command 的文件</a>，這邊有說明 info 的 option ，以及 option 各自提供的資料，包括 server 狀態，賀戶端連線狀況，系統資源，複本狀態等等。我們也可以自己透過 info 取得資料。</p>
 <pre><code>$ kubectl get po | grep redis
 
 redis-2-redis-ha-server-0                                3/3     Running     0          11d
@@ -719,29 +695,19 @@ connected_clients:100
 client_recent_max_input_buffer:2
 client_recent_max_output_buffer:0
 blocked_clients:1
-</code></pre>
-
-<p>Redis exporter 收集這些數據，透過 prometheus client library 把資料轉成 time series prometheus metrics。然後透過 library 放在 http enpoint 上。</p>
-
+</code></pre><p>Redis exporter 收集這些數據，透過 prometheus client library 把資料轉成 time series prometheus metrics。然後透過 library 放在 http enpoint 上。</p>
 <p>配合上次說過的 redis overview dashboard，可以直接在 Grafana 上使用</p>
-
-<p><img src="https://cloud.githubusercontent.com/assets/1222339/19412031/897549c6-92da-11e6-84a0-b091f9deb81d.png" alt="Redis Overvies library" /></p>
-
+<p><img src="https://cloud.githubusercontent.com/assets/1222339/19412031/897549c6-92da-11e6-84a0-b091f9deb81d.png" alt="Redis Overvies library"></p>
 <p>這邊 dashboard 顯示幾個重要的 metrics</p>
-
 <ul>
 <li>Uptime</li>
 <li>Memory Usage，要設定用量太高自動報警</li>
 <li>Command 的執行狀況，回應時間</li>
 <li>訊息的流量，以及超出 time-to-live 的資料清除。</li>
 </ul>
-
 <p>都是需要好好加上 alert 的核心 metrics</p>
-
-<h1 id="貢獻-exporter">貢獻 exporter</h1>
-
+<h1 id="-exporter">貢獻 exporter</h1>
 <p>其他服務的 exporter 工作原理也相似，如果服務本身有內部的 metrics，可以透過 client command 或是 API 取得，exporter 的工作就只是轉成 time series data。</p>
-
 <p>如果有比較特殊的 metrics 沒有匯出，例如說自家的 metrics ，但又希望能放到 prometheus 上監測，例如每秒收到多少 request count，回應速度，錯誤訊息的統計&hellip;&hellip;等，這點也可以使用 client library 自幹 exporter 然後 expose http endpoint，這樣在 prometheus 上也可以看到自家產品的 metrics，非常好用。有機會我們來聊自幹 exporter。</p>
 
     </div>
@@ -1055,7 +1021,7 @@ blocked_clients:1
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

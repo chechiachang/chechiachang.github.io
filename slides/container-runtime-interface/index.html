@@ -54,27 +54,12 @@
     
     <section>
     
-      
-
-<p>footer: Che-Chia David Chang, 2018,  <a href="https://github.com/chechiachang" target="_blank">https://github.com/chechiachang</a>
+      <p>footer: Che-Chia David Chang, 2018,  <a href="https://github.com/chechiachang">https://github.com/chechiachang</a>
 slidenumbers: true</p>
-
 <h1 id="cri-oci-cri-o">CRI, OCI, CRI-O</h1>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <p>David Chang DevOps @ Mithril
 Back-End Developer, Kuberentes admin, DevOps</p>
-
 <p>
 
 
@@ -105,27 +90,14 @@ Back-End Developer, Kuberentes admin, DevOps</p>
 
 </figure>
 </p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="outline">Outline</h3>
-
 <ol>
 <li>Container Runtime Interface (CRI)</li>
 <li>Open Container Initiative (OCI)</li>
 <li>CRI-O</li>
 <li>Kubernetes on CRI-O</li>
 </ol>
-
 <p>
 
 
@@ -156,71 +128,47 @@ Back-End Developer, Kuberentes admin, DevOps</p>
 
 </figure>
 </p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="trend-kubernetes">Trend Kubernetes</h3>
-
 <ul>
-<li>Kubernetes 1.3 introduced rktnetes</li>
-<li>Kubernetes 1.5 introduced CRI</li>
-<li>Kubernetes 1.7 removed pre-CRI Docker / rkt integration</li>
-
-<li><p>Currently works Kubelet to use CRI</p></li>
-
-<li><p>CRI-O: released 1.0.x to match Kubernetes 1.7</p></li>
+<li>
+<p>Kubernetes 1.3 introduced rktnetes</p>
+</li>
+<li>
+<p>Kubernetes 1.5 introduced CRI</p>
+</li>
+<li>
+<p>Kubernetes 1.7 removed pre-CRI Docker / rkt integration</p>
+</li>
+<li>
+<p>Currently works Kubelet to use CRI</p>
+</li>
+<li>
+<p>CRI-O: released 1.0.x to match Kubernetes 1.7</p>
+</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="nomination">Nomination</h3>
-
-<p>CRI-O
-- OCI-based implementation of Kubernetes Container Runtime Interface</p>
-
-<p>CRI
-- Kubernetes Container Runtime Interface</p>
-
-<p>OCI
-- Open Container initiative</p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<p>CRI-O</p>
+<ul>
+<li>OCI-based implementation of Kubernetes Container Runtime Interface</li>
+</ul>
+<p>CRI</p>
+<ul>
+<li>Kubernetes Container Runtime Interface</li>
+</ul>
+<p>OCI</p>
+<ul>
+<li>Open Container initiative</li>
+</ul>
+<hr>
 <h3 id="projects-with-container-runtime">Projects with Container Runtime</h3>
-
 <p>docker, rkt, LXC/LXD, runC, containerd, OpenVZ, systemd-nspawn, machinectl, qemu-kvm, lkvm&hellip;</p>
-
-<p>Kubernetes (before 1.6) native supports
-- Docker
-- rkt</p>
-
+<p>Kubernetes (before 1.6) native supports</p>
+<ul>
+<li>Docker</li>
+<li>rkt</li>
+</ul>
 <p>
 
 
@@ -251,44 +199,20 @@ Back-End Developer, Kuberentes admin, DevOps</p>
 
 </figure>
 </p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="container-runtime-interface-cri">Container Runtime Interface(CRI)</h3>
-
+<hr>
+<h3 id="container-runtime-interfacecri">Container Runtime Interface(CRI)</h3>
 <ul>
 <li>Enable Kubernetes to support more runtimes</li>
 <li>Free kubernetes to focus on orchestration from runtime integration</li>
 <li>Consists
-
 <ul>
 <li>a protocol buffers and gRPC API</li>
 <li>libraries, additional specifications and tools</li>
-</ul></li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="container-runtime-interface-cri-1">Container Runtime Interface(CRI)</h3>
-
+</li>
+</ul>
+<hr>
+<h3 id="container-runtime-interfacecri-1">Container Runtime Interface(CRI)</h3>
 
 
 
@@ -304,103 +228,47 @@ Back-End Developer, Kuberentes admin, DevOps</p>
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="cri-api-in-kubernetes">CRI api in kubernetes</h3>
-
-<p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/apis/cri/runtime/v1alpha2/api.proto" target="_blank">https://github.com/kubernetes/kubernetes/
+<p><a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/apis/cri/runtime/v1alpha2/api.proto">https://github.com/kubernetes/kubernetes/
 blob/master/pkg/kubelet/apis/
 cri/runtime/v1alpha2/api.proto</a></p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="cri-runtimes">CRI runtimes</h3>
-
 <ul>
 <li>Docker CRI shim (cri-containerd)</li>
-<li>CoreOS <a href="https://github.com/kubernetes-incubator/rktlet" target="_blank">rktlet</a></li>
-<li><a href="https://github.com/kubernetes/frakti" target="_blank">frakti</a>: hypervisor-based container runtimes</li>
-<li>Intel <a href="https://github.com/clearcontainers/runtime" target="_blank">Clear container</a></li>
-<li>OpenStack <a href="https://github.com/kata-containers/runtime" target="_blank">kata runtime</a></li>
-<li><a href="http://cri-o.io/" target="_blank">cri-o</a></li>
+<li>CoreOS <a href="https://github.com/kubernetes-incubator/rktlet">rktlet</a></li>
+<li><a href="https://github.com/kubernetes/frakti">frakti</a>: hypervisor-based container runtimes</li>
+<li>Intel <a href="https://github.com/clearcontainers/runtime">Clear container</a></li>
+<li>OpenStack <a href="https://github.com/kata-containers/runtime">kata runtime</a></li>
+<li><a href="http://cri-o.io/">cri-o</a></li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="open-container-inititive-oci">Open Container Inititive (OCI)</h3>
-
 <ul>
-<li>open governance structure</li>
-
-<li><p>container industry standards</p></li>
-
-<li><p><a href="https://github.com/opencontainers/runtime-spec/blob/master/spec.md" target="_blank">runtime spec</a> defines configuration, execution environment, and lifecycle of a container</p></li>
-
-<li><p><a href="https://github.com/opencontainers/image-spec/blob/master/spec.md" target="_blank">image spec</a> spec on archetecture and OS, filesystem layers and configuration</p></li>
+<li>
+<p>open governance structure</p>
+</li>
+<li>
+<p>container industry standards</p>
+</li>
+<li>
+<p><a href="https://github.com/opencontainers/runtime-spec/blob/master/spec.md">runtime spec</a> defines configuration, execution environment, and lifecycle of a container</p>
+</li>
+<li>
+<p><a href="https://github.com/opencontainers/image-spec/blob/master/spec.md">image spec</a> spec on archetecture and OS, filesystem layers and configuration</p>
+</li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<hr>
 <h3 id="oci-from-aspect-of-user">OCI from aspect of user</h3>
-
 <ul>
 <li>Use all OCI-conplimant container runtime</li>
 <li>Use all OCI-complimant images registries</li>
 <li>Similar UX</li>
 </ul>
-
-<p><a href="https://www.opencontainers.org/blog/2018/06/20/cri-o-how-standards-power-a-container-runtime" target="_blank">https://www.opencontainers.org/blog/2018/06/20/cri-o-how-standards-power-a-container-runtime</a></p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<p><a href="https://www.opencontainers.org/blog/2018/06/20/cri-o-how-standards-power-a-container-runtime">https://www.opencontainers.org/blog/2018/06/20/cri-o-how-standards-power-a-container-runtime</a></p>
+<hr>
 <h3 id="cri-o">CRI-O</h3>
-
 <ul>
 <li>OCI-based implementation of Kubernetes Container Runtime Interface</li>
 <li>Kubernetes incubator project also part of the CNCF</li>
@@ -408,47 +276,22 @@ cri/runtime/v1alpha2/api.proto</a></p>
 <li>Enable CRI-O plugin to other runtimes</li>
 <li>Available on RHEL, Fedora, Centos, Ubuntu&hellip;</li>
 </ul>
-
-<p><a href="http://cri-o.io/" target="_blank">http://cri-o.io/</a></p>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+<p><a href="http://cri-o.io/">http://cri-o.io/</a></p>
+<hr>
 <h3 id="cri-o-vs-docker-containerd">CRI-O vs Docker (containerd)</h3>
-
 <p>kubelet -&gt; cri-containerd (shim) -&gt; containerd -&gt; runC -&gt; container
 kubelet -&gt; cri-o -&gt; runC -&gt; container</p>
-
 <ul>
 <li>Lightweight</li>
 <li>Stability
-
 <ul>
 <li>built for Kubernetes</li>
 <li>No cli, image utilities, &hellip;</li>
 <li>No swarm, mesosphere integration, &hellip;</li>
-</ul></li>
 </ul>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+</li>
+</ul>
+<hr>
 
 
 
@@ -464,101 +307,44 @@ kubelet -&gt; cri-o -&gt; runC -&gt; container</p>
 
 </figure>
 
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<h3 id="let-s-use-cri-o">Let&rsquo;s use CRI-O</h3>
-
+<hr>
+<h3 id="lets-use-cri-o">Let's use CRI-O</h3>
 <ul>
-<li><a href="https://github.com/kubernetes-sigs/cri-o" target="_blank">Install cri-o</a> and dependencies, runC and CNI</li>
-
-<li><p>Install <a href="https://github.com/containers/libpod" target="_blank">Podman</a></p>
-
+<li><a href="https://github.com/kubernetes-sigs/cri-o">Install cri-o</a> and dependencies, runC and CNI</li>
+<li>Install <a href="https://github.com/containers/libpod">Podman</a>
 <ul>
-<li><p>Podman to cri-o as Docker-cli to Docker daemon</p>
-
-<pre><code>sudo podman run --name my-golang golang:alpine bash
-</code></pre></li>
-</ul></li>
+<li>Podman to cri-o as Docker-cli to Docker daemon</li>
 </ul>
+</li>
+</ul>
+<pre><code>sudo podman run --name my-golang golang:alpine bash
+</code></pre><hr>
+<p><a href="https://github.com/kubernetes/minikube/blob/master/docs/alternative_runtimes.md#using-cri-o">Minikube</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">minikube start <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --network-plugin<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --container-runtime<span style="color:#f92672">=</span>cri-o
 
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
-<p><a href="https://github.com/kubernetes/minikube/blob/master/docs/alternative_runtimes.md#using-cri-o" target="_blank">Minikube</a></p>
-
-<pre><code class="language-bash">minikube start \
-  --network-plugin=cni \
-  --container-runtime=cri-o
-
-minikube start \
-  --network-plugin=cni \
-  --extra-config=kubelet.container-runtime=remote \
-  --extra-config=kubelet.container-runtime-endpoint=/var/run/crio/crio.sock \
-  --extra-config=kubelet.image-service-endpoint=/var/run/crio/crio.sock
-</code></pre>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+minikube start <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --network-plugin<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --extra-config<span style="color:#f92672">=</span>kubelet.container-runtime<span style="color:#f92672">=</span>remote <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --extra-config<span style="color:#f92672">=</span>kubelet.container-runtime-endpoint<span style="color:#f92672">=</span>/var/run/crio/crio.sock <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --extra-config<span style="color:#f92672">=</span>kubelet.image-service-endpoint<span style="color:#f92672">=</span>/var/run/crio/crio.sock
+</code></pre></div><hr>
 <h3 id="run-kubernetes-on-cri-o">Run Kubernetes on CRI-O</h3>
-
-<p><a href="https://github.com/kubernetes-incubator/kubespray/blob/master/docs/cri-o.md" target="_blank">Kubespray</a></p>
-
+<p><a href="https://github.com/kubernetes-incubator/kubespray/blob/master/docs/cri-o.md">Kubespray</a></p>
 <pre><code>kubeadm_enabled: true
 ...
 container_manager: crio
-</code></pre>
-
-<p><a href="https://github.com/kubernetes-sigs/cri-o/blob/master/kubernetes.md" target="_blank">Full cluster</a></p>
-
+</code></pre><p><a href="https://github.com/kubernetes-sigs/cri-o/blob/master/kubernetes.md">Full cluster</a></p>
 <pre><code>kubelet --container-runtime-endpoint=unix:///var/run/crio/crio.sock
 ...
-</code></pre>
-
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-
+</code></pre><hr>
 <h3 id="references">References</h3>
-
-<p><a href="https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/" target="_blank">https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/</a>
-<a href="https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/" target="_blank">https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/</a>
+<p><a href="https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/">https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/</a>
+<a href="https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/">https://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/</a>
 Rttps://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernetes/
-<a href="https://xuxinkun.github.io/2017/12/12/docker-oci-runc-and-kubernetes/" target="_blank">https://xuxinkun.github.io/2017/12/12/docker-oci-runc-and-kubernetes/</a>
-<a href="https://www.kubernetes.org.cn/1079.html" target="_blank">https://www.kubernetes.org.cn/1079.html</a></p>
+<a href="https://xuxinkun.github.io/2017/12/12/docker-oci-runc-and-kubernetes/">https://xuxinkun.github.io/2017/12/12/docker-oci-runc-and-kubernetes/</a>
+<a href="https://www.kubernetes.org.cn/1079.html">https://www.kubernetes.org.cn/1079.html</a></p>
 
     </section>
     

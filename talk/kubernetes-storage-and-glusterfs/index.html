@@ -670,171 +670,158 @@
     <div class="space-below"></div>
 
     <div class="article-style">
-      
-
-<h3 id="outlines">Outlines</h3>
-
+      <h3 id="outlines">Outlines</h3>
 <ol>
-<li>Docker Storage</li>
-
-<li><p>Kubernetes Storage</p></li>
-
-<li><p>GlusterFS for K8s</p></li>
+<li>
+<p>Docker Storage</p>
+</li>
+<li>
+<p>Kubernetes Storage</p>
+</li>
+<li>
+<p>GlusterFS for K8s</p>
+</li>
 </ol>
-
 <h3 id="docker-storage">Docker Storage</h3>
-
-<p><a href="https://docs.docker.com/storage/" target="_blank">Doc</a></p>
-
+<p><a href="https://docs.docker.com/storage/">Doc</a></p>
 <ol>
-<li><p>within container: inside writable layer of a container</p>
-
+<li>within container: inside writable layer of a container</li>
+</ol>
 <ul>
 <li>deleted with container</li>
 <li>couple with host machine</li>
-
-<li><p>require storage driver</p>
-
+<li>require storage driver</li>
+</ul>
 <pre><code>docker ps -s
 docker inspect ubuntu
 dd if=/dev/zero of=1Mfile bs=1k count=1000
-</code></pre></li>
-</ul></li>
-
-<li><p>Docker volume</p>
-
+</code></pre><ol start="2">
+<li>Docker volume</li>
+</ol>
 <ul>
 <li>a directory on host</li>
 <li>prepare: provision on host</li>
 <li>usage: set volume on docker run</li>
-</ul></li>
-</ol>
-
+</ul>
 <h3 id="kubernetes-storage">Kubernetes Storage</h3>
-
-<p><a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank">https://kubernetes.io/docs/concepts/storage/volumes/</a></p>
-
+<p><a href="https://kubernetes.io/docs/concepts/storage/volumes/">https://kubernetes.io/docs/concepts/storage/volumes/</a></p>
 <ol>
-<li><p>On-disk files:</p>
-
+<li>On-disk files:</li>
+</ol>
 <ul>
 <li>Deleted on container restart</li>
 <li>File sharing in Pod</li>
-</ul></li>
-
-<li><p>Kubernetes Volume:</p>
-
+</ul>
+<ol start="2">
+<li>Kubernetes Volume:</li>
+</ol>
 <ul>
 <li>a directory</li>
 <li>Coexist with Pod</li>
 <li>Data preserved across container restarts</li>
 <li>Pod can use many volumes of different types</li>
-</ul></li>
-</ol>
-
-<p>(Some of) Types of volumes :
-  * emptyDir
-    - first created volume
-    - prepare: none
-    - usage: always</p>
-
+</ul>
+<p>(Some of) Types of volumes :</p>
 <ul>
-<li><p>gcePersistentDisk</p>
-
+<li>
+<p>emptyDir</p>
+<ul>
+<li>first created volume</li>
+<li>prepare: none</li>
+<li>usage: always</li>
+</ul>
+</li>
+<li>
+<p>gcePersistentDisk</p>
 <ul>
 <li>independent to pod</li>
 <li>prepare: gcp</li>
-
-<li><p>usage: claim by name</p>
-
+<li>usage: claim by name</li>
+</ul>
 <pre><code>gcloud compute disks create --size=500GB --zone=us-central1-a my-data-disk
 </code></pre></li>
-</ul></li>
-
-<li><p>PersistentVolumeClaim</p>
-
+<li>
+<p>PersistentVolumeClaim</p>
 <ul>
 <li>prepare: provision by admin</li>
 <li>usage: add PVC request</li>
-</ul></li>
 </ul>
-
-<p><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/" target="_blank">Example</a></p>
-
+</li>
+</ul>
+<p><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/">Example</a></p>
 <h3 id="persistentvolume">PersistentVolume</h3>
-
-<p><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/" target="_blank">Doc</a>
-  * Persistent Volume
-    - a piece of provisioned storage
-    - Independent lifecycle
-    - abstract with k8s object API
-    - many implementations: ex. GCEPersistentDisk, NFS, GlusterFS&hellip;</p>
-
+<p><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Doc</a></p>
 <ul>
-<li><p>Why PersistentVolume</p>
-
+<li>
+<p>Persistent Volume</p>
+<ul>
+<li>a piece of provisioned storage</li>
+<li>Independent lifecycle</li>
+<li>abstract with k8s object API</li>
+<li>many implementations: ex. GCEPersistentDisk, NFS, GlusterFS&hellip;</li>
+</ul>
+</li>
+<li>
+<p>Why PersistentVolume</p>
 <ul>
 <li>one APIs, many PV implementations</li>
 <li>Separates providers (admin) and consumers (users)</li>
 <li>PV subsystem API handles details of implementation</li>
 <li>Handle different need like size, access mode, performance&hellip;</li>
-</ul></li>
-
-<li><p>PersistentVolumeClaim</p>
-
+</ul>
+</li>
+<li>
+<p>PersistentVolumeClaim</p>
 <ul>
 <li>PV: a resource</li>
 <li>PVC: a request for storage</li>
 <li>Pods consume Node resources and PVCs consume PV resources</li>
-</ul></li>
-
-<li><p>PVC lifecycle</p>
-
+</ul>
+</li>
+<li>
+<p>PVC lifecycle</p>
 <ul>
 <li>Povisioning</li>
 <li>Binding</li>
 <li>Using</li>
 <li>Reclaiming</li>
 <li>Deleting</li>
-</ul></li>
-
-<li><p>PV Access Modes</p>
-
+</ul>
+</li>
+<li>
+<p>PV Access Modes</p>
 <ul>
 <li>ReadWriteOnce: 1 node R/W</li>
 <li>ReadOnlyMany: n node R, 1 node W</li>
 <li>ReadWriteMany: n node R/W</li>
-</ul></li>
-
-<li><p>StorageClass</p>
-
+</ul>
+</li>
+<li>
+<p>StorageClass</p>
 <ul>
 <li>usage:PV.storageClassName</li>
-</ul></li>
 </ul>
-
-<p><a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" target="_blank">Doc</a></p>
-
+</li>
+</ul>
+<p><a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">Doc</a></p>
 <h3 id="glusterfs">GlusterFS</h3>
-
-<p><a href="http://docs.gluster.org/en/latest/Administrator%20Guide/GlusterFS%20Introduction/" target="_blank">Doc</a></p>
-
+<p><a href="http://docs.gluster.org/en/latest/Administrator%20Guide/GlusterFS%20Introduction/">Doc</a></p>
 <ul>
-<li><p>Why glusterFS</p>
-
+<li>
+<p>Why glusterFS</p>
 <ul>
 <li>Network FS</li>
 <li>Distributed FS
-
 <ul>
 <li>High Availability</li>
 <li>Scalability</li>
-</ul></li>
+</ul>
+</li>
 <li>High performance</li>
-</ul></li>
-
-<li><p>Architecture: Types of Volumes</p>
-
+</ul>
+</li>
+<li>
+<p>Architecture: Types of Volumes</p>
 <ul>
 <li>Distributed</li>
 <li>Replicated</li>
@@ -842,39 +829,36 @@ dd if=/dev/zero of=1Mfile bs=1k count=1000
 <li>Striped: file</li>
 <li>Distributed Striped</li>
 </ul>
-
-<p>note: glusterFS Volume vs Kubernetes PV</p></li>
+<p>note: glusterFS Volume vs Kubernetes PV</p>
+</li>
 </ul>
-
 <h3 id="glusterfs-for-k8s">GlusterFS for k8s</h3>
-
 <ul>
-<li><p>Heketi</p>
-
+<li>
+<p>Heketi</p>
 <ul>
 <li>REST storage management API</li>
 <li>Receive requests from k8s storage driver</li>
 <li>use secret to control glusterFS</li>
-</ul></li>
-
-<li><p>Usage</p>
-
+</ul>
+</li>
+<li>
+<p>Usage</p>
 <ul>
 <li>has a glusterFS</li>
 <li>apply storage class and secret to k8s</li>
 <li>Create PV</li>
 <li>Request PVC with Pods</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="demo">Demo</h3>
-
 <ul>
 <li>Env
-
 <ul>
 <li>Kubernetes 1.9.2</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -1156,7 +1140,7 @@ dd if=/dev/zero of=1Mfile bs=1k count=1000
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

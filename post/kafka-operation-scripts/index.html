@@ -593,62 +593,47 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>ELK Stack
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/" target="_blank">Self-host ELK stack on GCP</a></li>
-<li><a href="https://chechiachang.github.io/post/secure-elk-stack/" target="_blank">Secure ELK Stask</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/" target="_blank">監測 Google Compute Engine 上服務的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/" target="_blank">監測 Google Kubernetes Engine 的各項數據</a></li>
-<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/" target="_blank">是否選擇 ELK 作為解決方案</a></li>
-<li><a href="https://chechiachang.github.io/post/logstash-on-gke/" target="_blank">使用 logstash pipeline 做數據前處理</a></li>
+<li><a href="https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechiachang.github.io/post/secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechiachang.github.io/post/elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechiachang.github.io/post/logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
 <li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
 <li>Debug ELK stack on GCP</li>
-</ul></li>
-<li>Kafka HA on Kubernetes
-
-<ul>
-<li><a href="{{ ref &quot;/post/kafka-deployment-on-kubernetes&quot; }}" target="_blank">Deploy kafka-ha</a></li>
-<li><a href="{{ ref &quot;/post/kafka-introduction&quot; }}" target="_blank">Kafka Introduction</a></li>
-<li><a href="{{ ref &quot;/post/kafka-basic-usage&quot; }}" target="_blank">kafka 基本使用</a></li>
-<li><a href="{{ ref &quot;/post/kafka-operation-script&quot;}}" target="_blank">kafka operation scripts</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-topology&quot; }}" target="_blank">集群內部的 HA topology</a></li>
-<li><a href="{{ ref &quot;/post/kafka-ha-continuerd&quot; }}" target="_blank">集群內部的 HA 細節</a></li>
-<li>Prometheus Metrics Exporter 很重要</li>
-<li>效能調校
-<br /></li>
-</ul></li>
 </ul>
-
+</li>
+<li>Kafka HA on Kubernetes
+<ul>
+<li>[Deploy kafka-ha]({{ ref &ldquo;/post/kafka-deployment-on-kubernetes&rdquo; }})</li>
+<li>[Kafka Introduction]({{ ref &ldquo;/post/kafka-introduction&rdquo; }})</li>
+<li>[kafka 基本使用]({{ ref &ldquo;/post/kafka-basic-usage&rdquo; }})</li>
+<li>[kafka operation scripts]({{ ref &ldquo;/post/kafka-operation-script&rdquo;}})</li>
+<li>[集群內部的 HA topology]({{ ref &ldquo;/post/kafka-ha-topology&rdquo; }})</li>
+<li>[集群內部的 HA 細節]({{ ref &ldquo;/post/kafka-ha-continuerd&rdquo; }})</li>
+<li>Prometheus Metrics Exporter 很重要</li>
+<li>效能調校</li>
+</ul>
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>從 Zookeeper 獲取資訊</li>
 <li>取得並處理 topic</li>
 <li>benchmark kafka</li>
 </ul>
-
 <h1 id="zookeeper">zookeeper</h1>
-
-<p>zookeeper 是 kafka 的分散式協調系統，在 kafka 上多個節點間需要協調的內容，例如：彼此節點的ID，位置與當前狀態，或是跨節點 topic 的設定與狀態。取名叫做 zookeeper 就是在協調混亂的分散式系統，,裡面各種不同種類的服務都要協調，象個動物園管理員。<a href="https://zookeeper.apache.org/doc/r3.3.3/zookeeperAdmin.html" target="_blank">Zookeeper 的官方文件</a> 有更詳細的說明。</p>
-
+<p>zookeeper 是 kafka 的分散式協調系統，在 kafka 上多個節點間需要協調的內容，例如：彼此節點的ID，位置與當前狀態，或是跨節點 topic 的設定與狀態。取名叫做 zookeeper 就是在協調混亂的分散式系統，,裡面各種不同種類的服務都要協調，象個動物園管理員。<a href="https://zookeeper.apache.org/doc/r3.3.3/zookeeperAdmin.html">Zookeeper 的官方文件</a> 有更詳細的說明。</p>
 <p>Kafka 的節點資訊，與當前狀態，是放在 zookeeper 上，我們可以透過以下指令取得</p>
-
 <pre><code># 首先先取得 zkCli 的 cli，這個只有連進任何一台 zookeeper 內部都有
 kubectl exec -it kafka-0-zookeeper-0 --container kafka-broker bash
 
@@ -682,10 +667,7 @@ WATCHER::
 
 WatchedEvent state:SyncConnected type:None path:null
 [zk: localhost:2181(CONNECTED) 0]
-</code></pre>
-
-<p>取得 kafka broker 資料</p>
-
+</code></pre><p>取得 kafka broker 資料</p>
 <pre><code># List root Nodes
 $ ls /
 
@@ -702,26 +684,16 @@ $ ls /brokers/ids
 # 列出所有 topic 名稱
 ls /brokers/topics
 [ticker]
-</code></pre>
-
-<p>ticker 是上篇範利用到的 topic</p>
-
+</code></pre><p>ticker 是上篇範利用到的 topic</p>
 <p>簡單來說，zookeeper 存放這些狀態與 topic 的 metadata</p>
-
 <ul>
 <li>儲存核心的狀態與資料，特別是 broker 萬一掛掉，也還需要維持的資料</li>
-
-<li><p>協調工作，例如協助 broker 處理 quorum，紀錄 partition master 等</p>
-
+<li>協調工作，例如協助 broker 處理 quorum，紀錄 partition master 等</li>
+</ul>
 <pre><code># 離開 zkCli
 quit
-</code></pre></li>
-</ul>
-
-<h1 id="kafka">Kafka</h1>
-
+</code></pre><h1 id="kafka">Kafka</h1>
 <p>這邊一樣先連線進去一台 broker，取得 kafka binary</p>
-
 <pre><code>kubectl exec -it kafka-0-0 --container kafka-broker bash
 
  ls /usr/bin/ | grep kafka
@@ -748,36 +720,23 @@ kafka-streams-application-reset
 kafka-topics
 kafka-verifiable-consumer
 kafka-verifiable-producer
-</code></pre>
-
-<p>很多工具，我們這邊只會看其中幾個</p>
-
-<h3 id="topic-資訊">topic 資訊</h3>
-
+</code></pre><p>很多工具，我們這邊只會看其中幾個</p>
+<h3 id="topic-">topic 資訊</h3>
 <p>Topic 的資訊，跟 zookeeper 要</p>
-
 <pre><code># List topics
 /usr/bin/kafka-topics --list --zookeeper kafka-0-zookeeper
 
 ticker
-</code></pre>
-
-<h3 id="操作-message">操作 message</h3>
-
+</code></pre><h3 id="-message">操作 message</h3>
 <p>從 topic 取得 message</p>
-
 <pre><code># This will create a new console-consumer and start consuming message to stdout
 /usr/bin/kafka-console-consumer \
 --bootstrap-server localhost:9092 \
 --topic engine_topic_soundwave_USD \
 --timeout 0 \
 --from-beginning
-</code></pre>
-
-<p>如果 ticker 那個 example pod 還在執行，這邊就會收到 ticker 的每秒 message</p>
-
+</code></pre><p>如果 ticker 那個 example pod 還在執行，這邊就會收到 ticker 的每秒 message</p>
 <p>如果沒有，也可以開啟另一個 broker 的連線</p>
-
 <pre><code>kubectl exec -it kafka-0-1 --container kafka-broker bash
 
 # 使用 producer 的 console 連入，topic 把 message 塞進去
@@ -787,25 +746,16 @@ ticker
 
 tick [enter]
 tick [enter]
-</code></pre>
-
-<p>kafka-console-consumer 那個 terminal 就會收到 message</p>
-
+</code></pre><p>kafka-console-consumer 那個 terminal 就會收到 message</p>
 <pre><code>tick
 tick
-</code></pre>
-
-<p>當然也可以使用 consumer group</p>
-
+</code></pre><p>當然也可以使用 consumer group</p>
 <pre><code># Use consumer to check ticker topics
 /usr/bin/kafka-console-consumer \
 --bootstrap-server localhost:9092 \
 --topic ticker \
 --group test
-</code></pre>
-
-<p>有做過上面的操作產生 consumer group，就可以透過 consumer API，取得 consumer group 狀態</p>
-
+</code></pre><p>有做過上面的操作產生 consumer group，就可以透過 consumer API，取得 consumer group 狀態</p>
 <pre><code># Check consumer group
 /usr/bin/kafka-consumer-groups \
 --bootstrap-server localhost:9092 \
@@ -816,28 +766,17 @@ Consumer group 'test' has no active members.
 
 TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
 ticker          0          23              23              0               -               -               -
-</code></pre>
-
-<h1 id="topic-設定操作">Topic 設定操作</h1>
-
-<p><a href="https://kafka.apache.org/documentation/#topicconfigs" target="_blank">Topic 設定文件</a> 在此</p>
-
+</code></pre><h1 id="topic--1">Topic 設定操作</h1>
+<p><a href="https://kafka.apache.org/documentation/#topicconfigs">Topic 設定文件</a> 在此</p>
 <p>這邊透過 kafka-configs 從 zookeeper 取得 topic 設定，這邊的 max.message.bytes，是這個 topic 每個 message 的最大上限。</p>
-
 <pre><code>/usr/bin/kafka-configs --zookeeper kafka-0-zookeeper:2181 --describe max.message.bytes --entity-type topics
 
 Configs for topic '__consumer_offsets' are segment.bytes=104857600,cleanup.policy=compact,compression.type=producer
 Configs for topic 'ticker' are
-</code></pre>
-
-<p><code>__consumer__offsets</code> 是系統的 topic ，紀錄目前 consumer 讀取的位置。</p>
-
+</code></pre><p><code>__consumer__offsets</code> 是系統的 topic ，紀錄目前 consumer 讀取的位置。</p>
 <p>ticker 沒有設定，就是 producer 當初產生 topic 時沒有指定，使用 default 值</p>
-
 <p>由於我們公司的使用情境常常會超過，所以可以檢查 producer app 那端送出的 message 大小，在比較這邊的設定。當然現在 ticker 的範例，只有一個 0-60 的數值，並不會超過。這個可以在 helm install 的時候，使用 value.yaml 傳入時更改。</p>
-
 <p>不喜歡這個值，可以更改，這邊增加到 16MB</p>
-
 <pre><code>TOPIC=ticker
 
 /usr/bin/kafka-configs \
@@ -847,14 +786,9 @@ Configs for topic 'ticker' are
   --entity-name ${TOPIC} \
   --add-config max.message.bytes=16000000
 
-</code></pre>
-
-<h1 id="benchmark">Benchmark</h1>
-
+</code></pre><h1 id="benchmark">Benchmark</h1>
 <p>使用內建工具跑 benchmark</p>
-
 <p>Producer</p>
-
 <pre><code>/usr/bin/kafka-producer-perf-test \
   --num-records 100 \
   --record-size 100 \
@@ -863,10 +797,7 @@ Configs for topic 'ticker' are
   --producer-props bootstrap.servers=kafka:9092 max.in.flight.requests.per.connection=5 batch.size=100 compression.type=none
 
 100 records sent, 99.108028 records/sec (0.01 MB/sec), 26.09 ms avg latency, 334.00 ms max latency, 5 ms 50th, 70 ms 95th, 334 ms 99th, 334 ms 99.9th.
-</code></pre>
-
-<p>Consumer</p>
-
+</code></pre><p>Consumer</p>
 <pre><code>/usr/bin/kafka-consumer-perf-test \
   --messages 100 \
   --broker-list=kafka:9092 \
@@ -874,7 +805,6 @@ Configs for topic 'ticker' are
   --group performance-test \
   --num-fetch-threads 1
 </code></pre>
-
     </div>
 
     
@@ -1156,7 +1086,7 @@ Configs for topic 'ticker' are
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

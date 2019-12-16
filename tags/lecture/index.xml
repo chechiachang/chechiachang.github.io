@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lecture on Che-Chia Chang</title>
+    <link>https://chechiachang.github.io/tags/lecture/</link>
+    <description>Recent content in lecture on Che-Chia Chang</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
+    <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
+    <lastBuildDate>Mon, 16 Dec 2019 23:46:46 +0800</lastBuildDate>
+    
+	    <atom:link href="https://chechiachang.github.io/tags/lecture/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MIT 6.824 Distributed System Learning Note</title>
+      <link>https://chechiachang.github.io/post/mit-6.824-distributed-system/</link>
+      <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/mit-6.824-distributed-system/</guid>
+      <description>&lt;p&gt;跟著 MIT 6.824 學習分散式系統&lt;/p&gt;
+&lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我會在我的學習過程中，持續翻譯課程內容
+&lt;ul&gt;
+&lt;li&gt;一方面深入個人學習&lt;/li&gt;
+&lt;li&gt;另一方面也回饋社群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;依照課程的進度進行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;若有餘力，會嘗試翻譯以下內容&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;課堂 Q &amp;amp; A&lt;/li&gt;
+&lt;li&gt;論文&lt;/li&gt;
+&lt;li&gt;lab 實做&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MIT 6.824 Distributed System Learning Note</title>
+      <link>https://chechiachang.github.io/project/mit-6.824-distributed-system/</link>
+      <pubDate>Mon, 16 Dec 2019 23:16:16 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/project/mit-6.824-distributed-system/</guid>
+      <description>&lt;p&gt;Learn distributed system with MIT 6.824&lt;/p&gt;
+&lt;p&gt;跟著 &lt;a href=&#34;http://nil.csail.mit.edu/6.824/2018/general.html&#34;&gt;MIT 6.824&lt;/a&gt; 學習分散式系統&lt;/p&gt;
+&lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我會在我的學習過程中，持續翻譯課程內容
+&lt;ul&gt;
+&lt;li&gt;一方面深入個人學習&lt;/li&gt;
+&lt;li&gt;另一方面也回饋社群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;依照課程的進度進行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;內容請見 &lt;a href=&#34;https://github.com/chechiachang/mit-6.824-distributed-system&#34;&gt;Github Project&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;想要獲取更多課程資訊，請到 &lt;a href=&#34;http://nil.csail.mit.edu/6.824/2018/general.html&#34;&gt;MIT課程網站&lt;/a&gt;上&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

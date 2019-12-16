@@ -593,89 +593,65 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>Prometheus / Grafana (5)
-
 <ul>
-<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/" target="_blank">GKE 上自架 Prometheus / Grafana</a></li>
+<li><a href="https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/">GKE 上自架 Prometheus / Grafana</a></li>
 <li>GKE 上自架 Grafana 與設定</li>
 <li>使用 exporter 監測 GKE 上的各項服務</li>
 <li>輸出 kubernetes 的監測數據</li>
 <li>輸出 redis-ha 的監測數據</li>
 <li>輸出 kafka 的監測數據</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
-<h1 id="摘要">摘要</h1>
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="heading">摘要</h1>
 <ul>
 <li>Grafana Introduction</li>
 <li>Deploy Grafana</li>
 </ul>
-
 <h1 id="grafana-introduction">Grafana Introduction</h1>
-
 <p>上偏我們簡單介紹了 Prometheus，prometheus 的 Web Portol 已經附上簡單的 Query 與 Graph 工具，但一般我們在使用時，還是會搭配 Grafana 來使用。</p>
-
-<p><a href="https://grafana.com/grafana/" target="_blank">Grafana 在官網上提到</a> 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。</p>
-
+<p><a href="https://grafana.com/grafana/">Grafana 在官網上提到</a> 是一個 Analytics system，可以協助了解運行資料，建立完整的 dashboard。</p>
 <ul>
 <li>支援許多圖表，直線圖，長條圖，區域分析，基本上需要的都有</li>
 <li>在圖表上定義 alter，並且主動告警，整合其他通訊軟體</li>
 <li>對後端 data source 的整合，可以同時使用 ELK, prometheus, influxdb 等 30 多種的資料來源</li>
 <li>有許多公開的 plugin 與 dashboard 可以匯入使用</li>
 </ul>
-
-<p>總之功能強大，至於用起來的感覺，個人是非常推薦。如果有大得想要試玩看看，可以直接到 <a href="https://play.grafana.org/d/000000029/prometheus-demo-dashboard?orgId=1&amp;refresh=5m" target="_blank">Grafana Live Demo</a> 上面試玩</p>
-
+<p>總之功能強大，至於用起來的感覺，個人是非常推薦。如果有大得想要試玩看看，可以直接到 <a href="https://play.grafana.org/d/000000029/prometheus-demo-dashboard?orgId=1&amp;refresh=5m">Grafana Live Demo</a> 上面試玩</p>
 <ul>
 <li>一般使用都會圍繞 dashboard 為核心，透過單一畫面，一覽目前使用者需要讀取的資料</li>
 <li>左上角的下拉選單，可以選擇不同的 dashboards</li>
 </ul>
-
-<h1 id="與-kibana-做比較">與 Kibana 做比較</h1>
-
+<h1 id="-kibana-">與 Kibana 做比較</h1>
 <p>雖然大部分使用上，我們都會使用 ELK 一套，而 Prometheus + Grafana 另一套。但其實兩邊的 data source 都可以互接。例如 grafana 可以吃 elasticsearch 的 data source，而 kibana 有 prometheus module。</p>
-
 <p>我們這邊基於兩款前端分析工具，稍微做個比較，底層的 data source 差異這邊先不提。</p>
-
 <ul>
 <li>都是開源: 兩者的開源社群都非常強大</li>
 <li>兩者內建的 dashboard 都非常完整，而且不斷推出新功能</li>
 <li>Log vs Metrics:
-
 <ul>
 <li>Kibana 的 metrics 也是像 log 一樣的 key value pairs，能夠 explore 未定義的 log</li>
 <li>Grafana 的 UI 專注於呈現 time series 的 metrics，並沒有提供 data 的欄位搜尋，而是使用語法 Query 來取得數據</li>
-</ul></li>
+</ul>
+</li>
 <li>Data source:
-
 <ul>
 <li>Grafana 可以收集各種不同的後端資料來源</li>
 <li>ELK 主要核心還是 ELK stack，用其他 Module 輔助其他資料源</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h1 id="deploy-grafana">Deploy Grafana</h1>
-
-<p>我把我的寶藏都放在這了<a href="https://github.com/chechiachang/prometheus-kubernetes" target="_blank">https://github.com/chechiachang/prometheus-kubernetes</a></p>
-
+<p>我把我的寶藏都放在這了<a href="https://github.com/chechiachang/prometheus-kubernetes">https://github.com/chechiachang/prometheus-kubernetes</a></p>
 <p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
-
 <pre><code>cd grafana
 
 cat install.sh
@@ -686,25 +662,16 @@ HELM_NAME=grafana-1
 helm upgrade --install grafana stable/grafana \
   --namespace default \
   --values values-staging.yaml
-</code></pre>
-
-<h3 id="helm">Helm</h3>
-
-<p>我們這邊用 helm 部屬，<a href="https://github.com/helm/charts/tree/master/stable/grafana" target="_blank">Grafana Stable Chart</a></p>
-
+</code></pre><h3 id="helm">Helm</h3>
+<p>我們這邊用 helm 部屬，<a href="https://github.com/helm/charts/tree/master/stable/grafana">Grafana Stable Chart</a></p>
 <h3 id="configuration">Configuration</h3>
-
 <p>簡單看一下設定檔</p>
-
 <pre><code>vim values-staging.yaml
 
 replicas: 1
 
 deploymentStrategy: RollingUpdate
-</code></pre>
-
-<p>Grafana 是支援 <a href="https://grafana.com/docs/tutorials/ha_setup/" target="_blank">Grafana HA</a> ，其實也非常簡單，就是把 grafana 本身的 dashboard database 從每個 grafana 一台 SQLite，變成外部統一的 MySQL，統一讀取後端資料，前端就可水平擴展。</p>
-
+</code></pre><p>Grafana 是支援 <a href="https://grafana.com/docs/tutorials/ha_setup/">Grafana HA</a> ，其實也非常簡單，就是把 grafana 本身的 dashboard database 從每個 grafana 一台 SQLite，變成外部統一的 MySQL，統一讀取後端資料，前端就可水平擴展。</p>
 <pre><code>readinessProbe:
   httpGet:
     path: /api/health
@@ -729,10 +696,7 @@ image:
   ##
   # pullSecrets:
   #   - myRegistrKeySecretName
-</code></pre>
-
-<p>一些 Pod 的基本配置， health check 使用內建的 api，有需要也可以直接打 api</p>
-
+</code></pre><p>一些 Pod 的基本配置， health check 使用內建的 api，有需要也可以直接打 api</p>
 <pre><code>securityContext:
   runAsUser: 472
   fsGroup: 472
@@ -743,10 +707,7 @@ extraConfigmapMounts: []
   #   mountPath: /etc/grafana/ssl/
   #   configMap: certs-configmap
   #   readOnly: true
-</code></pre>
-
-<p>有要開外部 ingress，需要 ssl 的話可以從這邊掛進去</p>
-
+</code></pre><p>有要開外部 ingress，需要 ssl 的話可以從這邊掛進去</p>
 <pre><code>## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
@@ -772,10 +733,7 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-</code></pre>
-
-<p>這邊可以開 service load balancer, 以及 ingress，看實際使用的需求</p>
-
+</code></pre><p>這邊可以開 service load balancer, 以及 ingress，看實際使用的需求</p>
 <pre><code>persistence:
   enabled: true
   initChownData: true
@@ -786,10 +744,7 @@ ingress:
   # annotations: {}
   # subPath: &quot;&quot;
   # existingClaim:
-</code></pre>
-
-<p>Persistent Volume 作為本地儲存建議都開起來，</p>
-
+</code></pre><p>Persistent Volume 作為本地儲存建議都開起來，</p>
 <pre><code># Administrator credentials when not using an existing secret (see below)
 adminUser: admin
 # adminPassword: strongpassword
@@ -799,10 +754,7 @@ admin:
   existingSecret: &quot;&quot;
   userKey: admin-user
   passwordKey: admin-password
-</code></pre>
-
-<p>帳號密碼建議使用 secret 掛進去</p>
-
+</code></pre><p>帳號密碼建議使用 secret 掛進去</p>
 <pre><code>datasources: {}
 #  datasources.yaml:
 #    apiVersion: 1
@@ -853,10 +805,7 @@ dashboards: {}
   #   local-dashboard-base64:
   #     url: https://example.com/repository/test-b64.json
   #     b64content: true
-</code></pre>
-
-<p>Data source, Dashboard 想要直接載入，可以在這邊設定，或是 grafana 起來後，透過 Web UI 進去新增也可以</p>
-
+</code></pre><p>Data source, Dashboard 想要直接載入，可以在這邊設定，或是 grafana 起來後，透過 Web UI 進去新增也可以</p>
 <pre><code>## Grafana's primary configuration
 ## NOTE: values in map will be converted to ini format
 ## ref: http://docs.grafana.org/installation/configuration/
@@ -873,90 +822,64 @@ grafana.ini:
     mode: console
   grafana_net:
     url: https://grafana.net
-</code></pre>
-
-<p>然後是 grafana.ini 核心 runtime 設定，更多設定可以參考<a href="http://docs.grafana.org/installation/configuration/" target="_blank">官方文件</a></p>
-
+</code></pre><p>然後是 grafana.ini 核心 runtime 設定，更多設定可以參考<a href="http://docs.grafana.org/installation/configuration/">官方文件</a></p>
 <h1 id="deployment">Deployment</h1>
-
 <p>部屬完看一下</p>
-
 <pre><code>kubectl get po --selector='app=grafana'
 
 
-</code></pre>
-
-<h1 id="access">Access</h1>
-
+</code></pre><h1 id="access">Access</h1>
 <p>如果沒有透過 service load balancer 打出來，一樣可以使用 kubectl 做 port forwarding，權限就是 context 的權限，沒有 cluster context 的使用者就會進步來</p>
-
 <pre><code>GRAFANA_POD_NAME=$(kc get po -n default --selector='app=grafana' -o=jsonpath='{.items[0].metadata.name}')
 kubectl --namespace default port-forward ${GRAFANA_POD_NAME} 3000
 
 http://localhost:3000
-</code></pre>
-
-<p>由於我們透過 service load balancer，gcp 會在外部幫忙架一個 load balancer，
+</code></pre><p>由於我們透過 service load balancer，gcp 會在外部幫忙架一個 load balancer，
 可以直接透過 load balancer ip 存取，如果想設定 dns，指向這個 ip 後記得去調整 grafana 的 server hostname。</p>
-
 <p>使用 secret 的密碼登入，username: grafana，這個是系統管理員</p>
-
 <pre><code>kubectl get secret --namespace default grafana -o jsonpath=&quot;{.data.admin-password}&quot; | base64 --decode ; echo
-</code></pre>
-
-<h1 id="configuration-1">Configuration</h1>
-
-<p>近來畫面後先到左邊的<a href="https://play.grafana.org/plugins" target="_blank">Configuration</a> 調整</p>
-
+</code></pre><h1 id="configuration-1">Configuration</h1>
+<p>近來畫面後先到左邊的<a href="https://play.grafana.org/plugins">Configuration</a> 調整</p>
 <ul>
 <li>產生新的 user org 與 user，把 admin 權限控制在需要的人手上</li>
 <li>把 prometheus data source 加進來，就可以直接看到 prometheus 裡面的資料。</li>
 <li>切換到非管理員的 user 繼續操作</li>
 </ul>
-
 <h3 id="import-dashboard">Import Dashboard</h3>
-
-<p>Grafana 網站上已經有<a href="https://grafana.com/grafana/dashboards" target="_blank">超多設置好的 Dashboard</a> 可以直接 import，大部分的服務都已經有別人幫我們把視覺畫圖表拉好，使用社群主流的 exporter 的話，參數直接接好。我們匯入後再進行簡單的客製化調整即可。</p>
-
+<p>Grafana 網站上已經有<a href="https://grafana.com/grafana/dashboards">超多設置好的 Dashboard</a> 可以直接 import，大部分的服務都已經有別人幫我們把視覺畫圖表拉好，使用社群主流的 exporter 的話，參數直接接好。我們匯入後再進行簡單的客製化調整即可。</p>
 <p>我們鐵人賽有用到的服務，都已經有 dashboard</p>
-
 <ul>
 <li>kubernetes Cluster: 6417
-
 <ul>
-<li><a href="https://grafana.com/dashboards/6417" target="_blank">https://grafana.com/dashboards/6417</a></li>
-</ul></li>
+<li><a href="https://grafana.com/dashboards/6417">https://grafana.com/dashboards/6417</a></li>
+</ul>
+</li>
 <li>Kafka Exporter Overview: 7589
-
 <ul>
-<li><a href="https://grafana.com/dashboards/7589" target="_blank">https://grafana.com/dashboards/7589</a></li>
-</ul></li>
+<li><a href="https://grafana.com/dashboards/7589">https://grafana.com/dashboards/7589</a></li>
+</ul>
+</li>
 <li>Prometheus Redis: 763
-
 <ul>
-<li><a href="https://grafana.com/dashboards/763" target="_blank">https://grafana.com/dashboards/763</a></li>
-</ul></li>
+<li><a href="https://grafana.com/dashboards/763">https://grafana.com/dashboards/763</a></li>
+</ul>
+</li>
 <li>Kubernetes Deployment Statefulset Daemonset metrics: 8588
-
 <ul>
-<li><a href="https://grafana.com/dashboards/8588" target="_blank">https://grafana.com/dashboards/8588</a></li>
-</ul></li>
+<li><a href="https://grafana.com/dashboards/8588">https://grafana.com/dashboards/8588</a></li>
+</ul>
+</li>
 <li>Haproxy Metrics Servers: 367
-
 <ul>
-<li><a href="https://grafana.com/dashboards/367" target="_blank">https://grafana.com/dashboards/367</a></li>
-</ul></li>
+<li><a href="https://grafana.com/dashboards/367">https://grafana.com/dashboards/367</a></li>
+</ul>
+</li>
 <li>Go to grafana lab to find more dashboards</li>
 </ul>
-
 <h3 id="export-dashboard">Export Dashboard</h3>
-
 <p>dashboard 會依照登入使用者的需求做調整，每個腳色需要看到的圖表都不同，基本上讓各個腳色都能一眼看到所需的表格即可</p>
-
 <p>自己的調整過的 dashboard 也可以匯出分享</p>
-
-<h1 id="小結">小結</h1>
-
+<h1 id="heading-1">小結</h1>
 <p>到這邊就可以正常使用 grafana了，資料來源的 exporter 我們會搭配前幾周分享過的服務，一起來講</p>
 
     </div>
@@ -1270,7 +1193,7 @@ http://localhost:3000
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

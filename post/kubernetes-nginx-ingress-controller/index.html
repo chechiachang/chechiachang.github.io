@@ -593,40 +593,26 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank">2020 It邦幫忙鐵人賽</a> 系列文章</p>
-
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <p>這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。</p>
-
 <ul>
 <li>Nginx Ingress Controller</li>
 <li>Cert-manager</li>
 <li>Jenkin-x on Kubernetes</li>
 <li>Kubernetes CRD &amp; Operator-sdk</li>
 </ul>
-
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
-
 <p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
-
-<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io" target="_blank">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
-
-<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" /></p>
-
-<hr />
-
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
 <h1 id="nginx-ingress-controller">Nginx Ingress Controller</h1>
-
 <ul>
 <li>簡介 nginx &amp; Ingress Controller</li>
 <li>部屬並設定 nginx ingress controller</li>
 </ul>
-
 <h1 id="nginx-introduction">Nginx Introduction</h1>
-
-<p><a href="https://nginx.org/en/docs/" target="_blank">Nginx</a> 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。</p>
-
+<p><a href="https://nginx.org/en/docs/">Nginx</a> 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。</p>
 <ul>
 <li>高效能的 web server，遠勝傳統 apache server 的資源與效能</li>
 <li>大量的模組與擴充功能</li>
@@ -634,20 +620,15 @@
 <li>輕量</li>
 <li>容易水平擴展</li>
 </ul>
-
-<h1 id="ingress-ingress-controller">Ingress &amp; Ingress Controller</h1>
-
-<p>這邊簡單講一下 <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/" target="_blank">kubernetes ingress</a>。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:</p>
-
+<h1 id="ingress--ingress-controller">Ingress &amp; Ingress Controller</h1>
+<p>這邊簡單講一下 <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">kubernetes ingress</a>。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:</p>
 <ul>
 <li>service 連接</li>
 <li>load balance 設定</li>
 <li>SSL/TLS 終端</li>
 <li>虛擬主機設定</li>
 </ul>
-
 <p>一個簡單的 ingress 大概長這樣</p>
-
 <pre><code>apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -662,56 +643,32 @@ spec:
         backend:
           serviceName: test
           servicePort: 80
-</code></pre>
-
-<p>除了一般的 k8s 資源，nginx 主要的設定會落在 spec，以及依賴底下實作不同，額外設定的 annotation。</p>
-
+</code></pre><p>除了一般的 k8s 資源，nginx 主要的設定會落在 spec，以及依賴底下實作不同，額外設定的 annotation。</p>
 <p>這邊可以看到 spec.rule 定義了外部 http 流量，引導到 backend service 的路徑。</p>
-
 <p>annotations 下已經標註的 nginx.ingress 的 annotation，來快速增加額外的設定。</p>
-
-<h1 id="ingress-ingress-controller-1">Ingress &amp; Ingress Controller</h1>
-
+<h1 id="ingress--ingress-controller-1">Ingress &amp; Ingress Controller</h1>
 <p>雖然已經指定 nginx 的 annotation，但這邊要注意，ingress resource 本身是不指定底層的實現 (ingress controller)，也就是說，底下是 nginx 也好，traefik 也行，只要能夠實現 ingress 裏頭設定的 routing rules 就可以。</p>
-
 <p>只設定好 ingress，集群上是不會有任何作用的，還需要在集群上安裝 ingress controller 的實作，實作安裝完了以後，會依據 ingress 的設定，在 controller 裏頭實現，不管是 routing、ssl/tls termination、load balancing 等等功能。如同許多 Kubernetes resource 的設計理念一樣，這邊也很優雅的用 ingress 與 ingress controller，拆分的需求設定與實作實現兩邊的職責。</p>
-
 <p>例如以 nginx ingress controller，安裝完後會依據 ingress 的設定，在 nginx pod 裡設定對應的 routing rules，如果有 ssl/tls 設定，也一併載入。</p>
-
-<p>Kubernetes 官方文件提供了<a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/#additional-controllers" target="_blank">許多不同的 controller</a> 可以依照需求選擇。</p>
-
+<p>Kubernetes 官方文件提供了<a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/#additional-controllers">許多不同的 controller</a> 可以依照需求選擇。</p>
 <p>但如果不知道如何選擇，個人會推薦使用 nginx ingress controller，穩定、功能強大、設定又不至於太過複雜，基本的設定就能很好的支撐服務，不熟悉的大德們比較不容易被雷到。</p>
-
 <p>底下我們就要來開始使用 nginx ingress controller。</p>
-
 <h1 id="deployment">Deployment</h1>
-
-<p>我們這邊使用的 <a href="https://github.com/kubernetes/ingress-nginx" target="_blank">ingress-nginx</a> 是 kubernetes org 內維護的專案，專案內容主要是再 k8s 上執行 nginx，抽象與實作的整合，並透過 configmap 來設定 nginx。針對 nginx ingress kubernetes 官方有提供<a href="https://kubernetes.github.io/ingress-nginx/" target="_blank">非常詳細的說明文件</a> ，剛接觸 nginx 的大德可以透過這份文件，快速的操作 nginx 的設定，而不用直接寫 nginx.conf 的設定檔案。</p>
-
+<p>我們這邊使用的 <a href="https://github.com/kubernetes/ingress-nginx">ingress-nginx</a> 是 kubernetes org 內維護的專案，專案內容主要是再 k8s 上執行 nginx，抽象與實作的整合，並透過 configmap 來設定 nginx。針對 nginx ingress kubernetes 官方有提供<a href="https://kubernetes.github.io/ingress-nginx/">非常詳細的說明文件</a> ，剛接觸 nginx 的大德可以透過這份文件，快速的操作 nginx 的設定，而不用直接寫 nginx.conf 的設定檔案。</p>
 <ul>
 <li>repo 版本是 nginx-0.26.1</li>
 <li>Image 版本是 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1</li>
 </ul>
-
 <h3 id="helm">Helm</h3>
-
-<p>我們這邊用 helm 部屬，<a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress" target="_blank">Nginx Ingress Controller Stable Chart</a>，讓各位大德用最簡單的步驟，獲得一個功能完整的 nginx ingress controller。</p>
-
+<p>我們這邊用 helm 部屬，<a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress">Nginx Ingress Controller Stable Chart</a>，讓各位大德用最簡單的步驟，獲得一個功能完整的 nginx ingress controller。</p>
 <p>與前面幾個 helm chart 一樣，我們可以先取得 default values.yaml 設定檔，再進行更改。</p>
-
 <pre><code>$ wget https://raw.githubusercontent.com/helm/charts/master/stable/nginx-ingress/values.yaml
 $ vim values.yaml
-</code></pre>
-
-<p>安裝時也可以使用 &ndash;set 來變更<a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration" target="_blank">安裝 chart 時的 parameters</a></p>
-
+</code></pre><p>安裝時也可以使用 &ndash;set 來變更<a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration">安裝 chart 時的 parameters</a></p>
 <pre><code>$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
 	-f values.yaml
-</code></pre>
-
-<p>安裝完後，resource 很快就起來。</p>
-
+</code></pre><p>安裝完後，resource 很快就起來。</p>
 <pre><code>kubectl get all --selector app=nginx-ingress
 NAME                                                 READY   STATUS    RESTARTS   AGE
 pod/nginx-ingress-controller-7bbcbdcf7f-tx69n        1/1     Running   0          216d
@@ -736,39 +693,26 @@ nginx-ingress-controller   2      216d
 kubectl get ingress
 NAME            HOSTS                  ADDRESS       PORTS     AGE
 ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
-</code></pre>
-
-<p>兩個 Pods</p>
-
+</code></pre><p>兩個 Pods</p>
 <ul>
 <li>Nginx ingress controller 是主要的 nginx pod，裡面跑的是 nginx</li>
 <li>Nginx default backend 跑的是 default backend，nginx 看不懂了 route request 都往這邊送。</li>
 </ul>
-
 <p>Service</p>
-
 <ul>
 <li>nginx-ingress-contrller 是我們在 GCP 上，在集群外部的 GCP 上的對外接口。如果在不同平台上，依據預設 service load balancer 有不同實作。</li>
 <li>在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量</li>
 <li>另外一個 service 就是 default backend 的 service</li>
 </ul>
-
-<h1 id="踩雷">踩雷</h1>
-
-<p>第一個雷點是 helm chart install 帶入的 <a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration" target="_blank">parameters</a>，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。</p>
-
+<h1 id="heading">踩雷</h1>
+<p>第一個雷點是 helm chart install 帶入的 <a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration">parameters</a>，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。</p>
 <pre><code>$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
 	--set controller.service.externalTrafficPolicy=Local \
 	-f values.yaml
-</code></pre>
-
-<p>這邊開了 prometheus metrics exporter，以及 source IP preservation。</p>
-
+</code></pre><p>這邊開了 prometheus metrics exporter，以及 source IP preservation。</p>
 <h1 id="nginx-config">Nginx Config</h1>
-
 <p>再安裝完後，外部的 load balancer 啟用後，就可以透過 GCP 的 external ip 連入 nginx，nginx 依照設定的 rule 向後端服務做集群內的 load balancing 與 routing。</p>
-
 <p>如果在使用過程中，有需要執行更改設定，或是 hot reload config，在 kubernetes 上要如何做呢? 我們下回分解。</p>
 
     </div>
@@ -1082,7 +1026,7 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
   
 
   <p class="powered-by">
-    chechiachang &copy; 2016 &middot; 
+    chechiachang © 2016 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
