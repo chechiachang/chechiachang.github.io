@@ -91,7 +91,7 @@ gcloud container clusters get-credentials ${CLUSTER_NAME}
 # Check cluster stats.
 kubectl get nodes
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;install-jx-on-local-machine&#34;&gt;Install jx on Local Machine&lt;/h3&gt;
-&lt;p&gt;[Jenkins X Release](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases&#34;&gt;https://github.com/jenkins-x/jx/releases&lt;/a&gt;](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases&#34;&gt;https://github.com/jenkins-x/jx/releases&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;[Jenkins X Release](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases%5D(https://github.com/jenkins-x/jx/releases)&#34;&gt;https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases)&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;JX_VERSION=v2.0.2
 OS_ARCH=darwin-amd64
 #OS_ARCH=linux-amd64

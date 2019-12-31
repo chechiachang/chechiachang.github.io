@@ -7,7 +7,7 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Mon, 16 Dec 2019 23:46:46 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 24 Dec 2019 19:00:00 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>distributed-system</title>
       <link>https://chechiachang.github.io/tags/distributed-system/</link>
-      <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
+      <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/distributed-system/</guid>
       <description></description>
@@ -24,9 +24,36 @@
     <item>
       <title>golang</title>
       <link>https://chechiachang.github.io/tags/golang/</link>
-      <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
+      <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mapreduce</title>
+      <link>https://chechiachang.github.io/tags/mapreduce/</link>
+      <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/mapreduce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>meetup</title>
+      <link>https://chechiachang.github.io/tags/meetup/</link>
+      <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/meetup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mit</title>
+      <link>https://chechiachang.github.io/tags/mit/</link>
+      <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/tags/mit/</guid>
       <description></description>
     </item>
     
@@ -36,15 +63,6 @@
       <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/tags/lecture/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>mit</title>
-      <link>https://chechiachang.github.io/tags/mit/</link>
-      <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
-      
-      <guid>https://chechiachang.github.io/tags/mit/</guid>
       <description></description>
     </item>
     

@@ -12,6 +12,36 @@
     
     
     <item>
+      <title>Say Goodbye 2019</title>
+      <link>https://chechiachang.github.io/post/say-goodbye-2019/</link>
+      <pubDate>Tue, 31 Dec 2019 18:38:51 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/post/say-goodbye-2019/</guid>
+      <description>&lt;p&gt;今年結束了，回顧一下今年做的事情&lt;/p&gt;
+&lt;p&gt;&amp;ndash; 我是軟體工程師 &amp;ndash;&lt;/p&gt;
+&lt;p&gt;6 場公開演講，並且踏出熟悉的社群舒適圈，南下進軍高雄XD&lt;/p&gt;
+&lt;p&gt;37 篇技術文章
+其中包含 30 篇 Ithome 30天(參賽就不用睡覺)鐵人賽參賽文章
+結賽撿到賀優選狂賀?&lt;/p&gt;
+&lt;p&gt;正職工作方面，進了幣圈，切身了解敝圈真亂後，又踏出了幣圈&lt;/p&gt;
+&lt;p&gt;開坑翻譯麻省理工學院的課程『分散式系統』，好課揪團一起修
+預計會有 22 篇文章，準備在可見的未來，犧牲無數個夜晚，邁向 2020&lt;/p&gt;
+&lt;p&gt;&amp;ndash; 我是專業水肺潛水教練 &amp;ndash;
+也是自由潛水員&lt;/p&gt;
+&lt;p&gt;年末的幾天，正式開始執業，帶學生下海(?)
+學習教導學生，也學習對學生的安全負責&lt;/p&gt;
+&lt;p&gt;新年復工後，正職碼農，副業潛水
+有人要潛請找我，保證優惠不藏私&lt;/p&gt;
+&lt;p&gt;&amp;ndash; 我是數位行銷實習生 &amp;ndash;&lt;/p&gt;
+&lt;p&gt;跟前公司 (雖然都不是MK但卻) 超強的行銷團隊&amp;lt;3學習數位行銷
+從零開始大造個人品牌，邊學邊實習
+開了兩個粉絲專頁
+一個是技術文章分享，一個做潛水影片分享
+打造個人品牌，自己推廣行銷，學習數位行銷&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
       <link>https://chechiachang.github.io/post/mit-6.824-distributed-system/</link>
       <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
@@ -6122,7 +6152,7 @@ gcloud container clusters get-credentials ${CLUSTER_NAME}
 # Check cluster stats.
 kubectl get nodes
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;install-jx-on-local-machine&#34;&gt;Install jx on Local Machine&lt;/h3&gt;
-&lt;p&gt;[Jenkins X Release](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases&#34;&gt;https://github.com/jenkins-x/jx/releases&lt;/a&gt;](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases&#34;&gt;https://github.com/jenkins-x/jx/releases&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;[Jenkins X Release](&lt;a href=&#34;https://github.com/jenkins-x/jx/releases%5D(https://github.com/jenkins-x/jx/releases)&#34;&gt;https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases)&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;JX_VERSION=v2.0.2
 OS_ARCH=darwin-amd64
 #OS_ARCH=linux-amd64
