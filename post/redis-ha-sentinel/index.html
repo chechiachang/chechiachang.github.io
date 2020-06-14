@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -597,7 +597,7 @@
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
 <hr>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>redis-sentinel</li>
 </ul>
@@ -796,9 +796,9 @@ return &amp;redis.Pool{
 	},
 }
 </code></pre><p>這邊要注意，客戶端 (golang) 處理 connection 的 exception，要記得重新執行 sntnl.MasterAddr() 來取得 failover 後新指派的 master。</p>
-<h1 id="client-">Client 測試</h1>
+<h1 id="client-測試">Client 測試</h1>
 <p>寫一個 golang redis 的 client 跑起來。這個部分我們在 <a href="https://chechiachang.github.io/post/kafka-basic-usage/">kafka的章節</a>做過類似的事情，可以簡單湊一個玩玩。</p>
-<h1 id="heading-1">延伸問題</h1>
+<h1 id="延伸問題">延伸問題</h1>
 <p>使用上面的 golang 範例，確實是能透過 sentinel 取得 master，再向 master 取得連線。但這邊有兩個問題</p>
 <ul>
 <li>客戶端需要支援 sentinel</li>

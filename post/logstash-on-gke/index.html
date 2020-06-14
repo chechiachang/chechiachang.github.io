@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -593,18 +593,18 @@
 <p>作為範例的 ELK 的版本是當前的 stable release 7.3.1。</p>
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
 <hr>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>簡介 logstash</li>
 <li>將 logstash 部屬到 kubernetes 上</li>
 <li>設定 logstash pipeline 處理 nginx access log</li>
 </ul>
-<h1 id="-logstash">介紹 Logstash</h1>
+<h1 id="介紹-logstash">介紹 Logstash</h1>
 <p>Logstash 是開元的資料處理引擎，可以動態的將輸入的資料做大量的處裡。原先的目的是處理 log ，但目前以不限於處理 log ，各種 ELK beat 或是其他來源的不同監測數據，都能處理。</p>
 <p>Logastash 內部的功能也大多模組化，因此可以組裝不同的 plugin，來快速處理不同來源資料。</p>
 <p>基本上常見的資料來源，logstash 都能夠處理，並且有寫好的 plugin 可以直接使用，細節請見<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html">logstash 官方文件</a></p>
 <p><img src="https://www.elastic.co/guide/en/logstash/current/static/images/logstash.png" alt="官方架構圖"></p>
-<h1 id="heading-1">後送資料庫與最終儲存庫</h1>
+<h1 id="後送資料庫與最終儲存庫">後送資料庫與最終儲存庫</h1>
 <p>在開始架設 logstash 要先考慮 pipeline 處理過後送的資料庫，<a href="https://www.elastic.co/guide/en/logstash/current/introduction.html#_choose_your_stash">可使用的資料庫非常多</a>，這邊會展示的有：</p>
 <ul>
 <li>ELK Stack 標準配備送到 Elasticsearch
@@ -620,7 +620,7 @@
 </li>
 </ul>
 <p>Elasticsearch 在前幾篇已經架設好，<a href="https://cloud.google.com/bigquery/docs/?hl=zh-tw">GCP Big Query</a> 的設定也事先開好。</p>
-<h1 id="-logstash-1">部屬 Logstash</h1>
+<h1 id="部屬-logstash">部屬 Logstash</h1>
 <p>kubernetes resource 的 yaml 請參考 <a href="https://github.com/chechiachang/elk-kubernetes/tree/master/logstash">我的 github elk-kubernetes</a></p>
 <pre><code>kubectl apply -f config-configmap.yaml
 kubectl apply -f pipelines-configmap.yam
@@ -684,7 +684,7 @@ output.logstash:
   username: &quot;elastic&quot;
   password: 
 
-</code></pre><h1 id="-logstash-2">設定 logstash</h1>
+</code></pre><h1 id="設定-logstash">設定 logstash</h1>
 <p>這邊要先說，logstash 也支援 <a href="https://www.elastic.co/guide/en/logstash/7.3/configuring-centralized-pipelines.html">centralized configuration</a>，如果你的 logstash 不是跑在 Kubernetes 上，沒辦法配置一套 configmap 就應用到全部的 instance，記的一定要使用。</p>
 <p>Logastash 的運行設定 logstash.yml，這邊我們沒有做設定，都是預設值，有需求可以自行更改</p>
 <p>當然之後要調整 batch size 或是 queue, cache 等等效能調校，也是來這邊改，改完 configmap ，rolling update logstash 就可以。</p>
@@ -828,7 +828,7 @@ data:
 </code></pre><p>其中的變數，我們全都用環境變數，在 deployment.yaml 配置，啟動 logstash pods 時代入</p>
 <p><code>GCP_JSON_KEY_FILE_PATH</code> 這邊要配置一隻 GCP 的服務帳號金鑰，一個有 Big Query 寫入權限的 service account，把 json 使用 kubernetes secret 放到集群上，然後在 pod 上使用 volume from secret 掛載進來。
 <code>csv_schema =&gt; &quot;path:STRING,status:INTEGER,score:FLOAT&quot;</code> 這邊要配置之後會存入 Big Query 的 csv 結構</p>
-<h1 id="heading-2">小結</h1>
+<h1 id="小結">小結</h1>
 <ul>
 <li>部屬 Logstash deployment 到 kubernetes 上</li>
 <li>設定 pipeline，超多 plugin，族繁不及備載</li>

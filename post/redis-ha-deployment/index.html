@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -685,7 +685,7 @@ Address 3: 10.0.2.8 redis-redis-ha-server-0.redis-redis-ha.default.svc.cluster.l
 
 Name:      redis-redis-ha-server-1.redis-redis-ha.default.svc.cluster.local
 Address 1: 10.0.0.43 redis-redis-ha-server-1.redis-redis-ha.default.svc.cluster.local
-</code></pre><h1 id="heading">連線</h1>
+</code></pre><h1 id="連線">連線</h1>
 <p>所有連線透過 redis-redis-ha service 連入</p>
 <pre><code>redis-cli -h redis-redis-ha -p 6479 -a &lt;password&gt;
 </code></pre><p>或是直接指定 redis instance 連入。</p>
@@ -697,7 +697,7 @@ redis-cli -h redis-redis-ha-announce-2 -p 6479 -a &lt;password&gt;
 <p>Sentinel 是 redis 官方提供的 HA solution，主要負責監控 redis 的狀態，並控制 redis master 的 failover 機制，一但超過 threshold，sentinel 就會把 master failover 到其他 slave 上。並把 master 連線指向新 master。</p>
 <p>redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。</p>
 <pre><code>redis-cli -h redis-redis-ha -p 26479
-</code></pre><h1 id="app--sentinel">App 端支援 sentinel</h1>
+</code></pre><h1 id="app-端支援-sentinel">App 端支援 sentinel</h1>
 <p>需要有支援 sentinel 的 redis client library，例如: python redis-py 有支援 sentinel 的設定。</p>
 <p>這邊就會比較麻煩，因為不是所有的語言對 redis-sentinel 的支援性都夠好，或是沒辦法設定到妮旺使用的情境上。</p>
 <p>如果你找得到支援性良好的套件，恭喜你。不然就像我們公司，與我們的需求有衝突，只好自己 fork library。</p>
@@ -706,7 +706,7 @@ redis-cli -h redis-redis-ha-announce-2 -p 6479 -a &lt;password&gt;
 <p>部署完後，可以跑一下 benchmark，看看在 kubernetes 上運行的效能有沒有符合需求。</p>
 <p>Run a redis pod with sleep command
 NOTE: CPU usage (rapidly) increasing during benchmark
-DON'T DO THIS on PRODUCTION</p>
+DON&rsquo;T DO THIS on PRODUCTION</p>
 <pre><code>kubectl run test-redis --image redis:5.0.5-alpine --command sleep 36000
 kubectl exec -it test-redis-xxxxxxxxx-xxxxx sh
 </code></pre><p>Benchmark</p>

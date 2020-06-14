@@ -7,10 +7,27 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Thu, 17 Oct 2019 20:50:50 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 11 Feb 2020 17:26:22 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechiachang.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Operate Kafka on Kubernetes</title>
+      <link>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</link>
+      <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
+      
+      <guid>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</guid>
+      <description>&lt;p&gt;後端工程與Devops，專精開發流程自動化，微服務開發，容器化，Kubernetes 維運。常出沒於 Golang Taipei 與 CNCF 社群，喜歡分享演講與撰寫技術文章。https://chechiachang.github.io/&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2019 GDG DevFest Kaohsiung&lt;/li&gt;
+&lt;li&gt;2018, 2019 IThome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 IThome Kubernetes Summit&lt;/li&gt;
+&lt;li&gt;2018 GDG DevFest Taipei&lt;/li&gt;
+&lt;li&gt;2018 COSCUP&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Deploy Kafka on Kubernetes</title>
@@ -39,23 +56,23 @@
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Cert-manager Introduction&lt;/li&gt;
 &lt;li&gt;Deploy cert-manager&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;-cert-manager&#34;&gt;簡介 cert-manager&lt;/h1&gt;
+&lt;h1 id=&#34;簡介-cert-manager&#34;&gt;簡介 cert-manager&lt;/h1&gt;
 &lt;p&gt;TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。&lt;/p&gt;
-&lt;p&gt;以往我們使用 &lt;a href=&#34;https://letsencrypt.org/zh-tw/&#34;&gt;Let&#39;s Encrypt&lt;/a&gt; 提供的免費自動化憑證頒發，搭配 &lt;a href=&#34;https://github.com/jetstack/kube-lego&#34;&gt;kube-lego&lt;/a&gt; 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 &lt;a href=&#34;https://github.com/jetstack/cert-manager/&#34;&gt;Cert-manager&lt;/a&gt; 來進行 kubernetes 上的憑證自動化管理。&lt;/p&gt;
+&lt;p&gt;以往我們使用 &lt;a href=&#34;https://letsencrypt.org/zh-tw/&#34;&gt;Let&amp;rsquo;s Encrypt&lt;/a&gt; 提供的免費自動化憑證頒發，搭配 &lt;a href=&#34;https://github.com/jetstack/kube-lego&#34;&gt;kube-lego&lt;/a&gt; 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 &lt;a href=&#34;https://github.com/jetstack/cert-manager/&#34;&gt;Cert-manager&lt;/a&gt; 來進行 kubernetes 上的憑證自動化管理。&lt;/p&gt;
 &lt;p&gt;cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在 kubernetes 上 使用 CRD (Customized Resource Definition) 來定義 certificate issuing 的 desired state&lt;/li&gt;
-&lt;li&gt;向 let&#39;s encrypt 取得公開的憑證&lt;/li&gt;
+&lt;li&gt;向 let&amp;rsquo;s encrypt 取得公開的憑證&lt;/li&gt;
 &lt;li&gt;在 kubernetes 上自動檢查憑證的有效期限，並自動在有效時限內 renew certificate。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;安裝&lt;/h1&gt;
+&lt;h1 id=&#34;安裝&#34;&gt;安裝&lt;/h1&gt;
 &lt;p&gt;官方文件有提供 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html&#34;&gt;詳細步驟&lt;/a&gt; 可以直接使用 release 的 yaml 部屬，也可以透過 helm。&lt;/p&gt;
-&lt;h3 id=&#34;-yaml-&#34;&gt;使用 yaml 部屬&lt;/h3&gt;
+&lt;h3 id=&#34;使用-yaml-部屬&#34;&gt;使用 yaml 部屬&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;# Create a namespace to run cert-manager in
 kubectl create namespace cert-manager
 
@@ -235,7 +252,7 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;li&gt;在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量&lt;/li&gt;
 &lt;li&gt;另外一個 service 就是 default backend 的 service&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading&#34;&gt;踩雷&lt;/h1&gt;
+&lt;h1 id=&#34;踩雷&#34;&gt;踩雷&lt;/h1&gt;
 &lt;p&gt;第一個雷點是 helm chart install 帶入的 &lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34;&gt;parameters&lt;/a&gt;，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
@@ -267,12 +284,12 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx Ingress Controller 運作原理&lt;/li&gt;
 &lt;li&gt;設定 Nginx Ingress Controller&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;運作原理&lt;/h1&gt;
+&lt;h1 id=&#34;運作原理&#34;&gt;運作原理&lt;/h1&gt;
 &lt;p&gt;昨天講完 nginx ingress controller 部屬，今天來談談 controller 是如何運作的。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx&lt;/li&gt;
@@ -463,7 +480,7 @@ For clusters of more than 100 nodes, allocate at least
 &lt;li&gt;nginx ingress controller&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;三個願望一次滿足~&lt;/p&gt;
-&lt;h1 id=&#34;heading&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;跑 kubernetes 務必使用這兩個 exporter&lt;/li&gt;
 &lt;li&gt;kube-state-metrics 整理得很舒服，有時間可以多看看這個專案&lt;/li&gt;
@@ -496,7 +513,7 @@ For clusters of more than 100 nodes, allocate at least
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Exporter 工作原理簡介&lt;/li&gt;
 &lt;li&gt;Prometheus exporter library&lt;/li&gt;
@@ -590,7 +607,7 @@ blocked_clients:1
 &lt;li&gt;訊息的流量，以及超出 time-to-live 的資料清除。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;都是需要好好加上 alert 的核心 metrics&lt;/p&gt;
-&lt;h1 id=&#34;-exporter&#34;&gt;貢獻 exporter&lt;/h1&gt;
+&lt;h1 id=&#34;貢獻-exporter&#34;&gt;貢獻 exporter&lt;/h1&gt;
 &lt;p&gt;其他服務的 exporter 工作原理也相似，如果服務本身有內部的 metrics，可以透過 client command 或是 API 取得，exporter 的工作就只是轉成 time series data。&lt;/p&gt;
 &lt;p&gt;如果有比較特殊的 metrics 沒有匯出，例如說自家的 metrics ，但又希望能放到 prometheus 上監測，例如每秒收到多少 request count，回應速度，錯誤訊息的統計&amp;hellip;&amp;hellip;等，這點也可以使用 client library 自幹 exporter 然後 expose http endpoint，這樣在 prometheus 上也可以看到自家產品的 metrics，非常好用。有機會我們來聊自幹 exporter。&lt;/p&gt;
 </description>
@@ -620,7 +637,7 @@ blocked_clients:1
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus Introduction&lt;/li&gt;
 &lt;li&gt;Deploy Prometheus&lt;/li&gt;
@@ -636,7 +653,7 @@ blocked_clients:1
 &lt;li&gt;有許多隨插即用的整合 exporter，例如 redis-exporter, kafka-exporter，kubernetes-exporter ，都可以直接取得資料&lt;/li&gt;
 &lt;li&gt;支援 alert，使用 PromQL 以及多功能的告警，可以設定精準的告警條件&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;-elk-&#34;&gt;與 ELK 做比較&lt;/h1&gt;
+&lt;h1 id=&#34;與-elk-做比較&#34;&gt;與 ELK 做比較&lt;/h1&gt;
 &lt;p&gt;基本上 Prometheus 跟 ELK 比，其實是很奇怪的一件事，但這也是最常被問的一個問題。兩者在本質上是完全不同的系統。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus 是 based on time series database 的資料收集系統&lt;/li&gt;
@@ -794,7 +811,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;li&gt;查詢運行的 status&lt;/li&gt;
 &lt;li&gt;查詢目前所有收集的 targets 的狀態,有收集器掛了也可以在這邊看到&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;輕鬆自架 prometheus&lt;/li&gt;
 &lt;li&gt;Prometheus 頁面有精簡，但是功能完整的 graph 製圖&lt;/li&gt;
@@ -827,7 +844,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Grafana Introduction&lt;/li&gt;
 &lt;li&gt;Deploy Grafana&lt;/li&gt;
@@ -846,7 +863,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;li&gt;一般使用都會圍繞 dashboard 為核心，透過單一畫面，一覽目前使用者需要讀取的資料&lt;/li&gt;
 &lt;li&gt;左上角的下拉選單，可以選擇不同的 dashboards&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;-kibana-&#34;&gt;與 Kibana 做比較&lt;/h1&gt;
+&lt;h1 id=&#34;與-kibana-做比較&#34;&gt;與 Kibana 做比較&lt;/h1&gt;
 &lt;p&gt;雖然大部分使用上，我們都會使用 ELK 一套，而 Prometheus + Grafana 另一套。但其實兩邊的 data source 都可以互接。例如 grafana 可以吃 elasticsearch 的 data source，而 kibana 有 prometheus module。&lt;/p&gt;
 &lt;p&gt;我們這邊基於兩款前端分析工具，稍微做個比較，底層的 data source 差異這邊先不提。&lt;/p&gt;
 &lt;ul&gt;
@@ -1095,7 +1112,7 @@ http://localhost:3000
 &lt;h3 id=&#34;export-dashboard&#34;&gt;Export Dashboard&lt;/h3&gt;
 &lt;p&gt;dashboard 會依照登入使用者的需求做調整，每個腳色需要看到的圖表都不同，基本上讓各個腳色都能一眼看到所需的表格即可&lt;/p&gt;
 &lt;p&gt;自己的調整過的 dashboard 也可以匯出分享&lt;/p&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;p&gt;到這邊就可以正常使用 grafana了，資料來源的 exporter 我們會搭配前幾周分享過的服務，一起來講&lt;/p&gt;
 </description>
     </item>
@@ -1124,7 +1141,7 @@ http://localhost:3000
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus scrape&lt;/li&gt;
 &lt;li&gt;scrape_configs&lt;/li&gt;
@@ -1361,7 +1378,7 @@ kubectl apply -f filebeat/7.3.1/nginx-config-configmap.yaml
   tag ${if record[&#39;stream&#39;] == &#39;stderr&#39; then &#39;raw.stderr&#39; else &#39;raw.stdout&#39; end}
   remove_keys stream,log
 &amp;lt;/match&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ssh-&#34;&gt;ssh 進去逛&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ssh-進去逛&#34;&gt;ssh 進去逛&lt;/h3&gt;
 &lt;p&gt;想看機器上實際的 log 狀況，我們也可以直接 ssh 進去&lt;/p&gt;
 &lt;p&gt;先透過 kubectl 看一下 pod&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ kubectl get daemonsets --namespace kube-system
@@ -1388,7 +1405,7 @@ gke-chechaichang-pool-1-123456789-8n8z   Ready    &amp;lt;none&amp;gt;   37d   v
 
 gcloud compute ssh gke-chechaichang-pool-1-123456789-3bzp
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如使用其他雲平台的 kubernetes service，或是 bare metal 的集群，請依照各自系統的方式連進去看看。&lt;/p&gt;
-&lt;h1 id=&#34;ssh-node--log&#34;&gt;ssh node 找 log&lt;/h1&gt;
+&lt;h1 id=&#34;ssh-node-找-log&#34;&gt;ssh node 找 log&lt;/h1&gt;
 &lt;p&gt;ssh 進去後就可以到處來探險，順便看看 GKE 跑在機器上到底做了什麼事情。&lt;/p&gt;
 &lt;p&gt;如果官方有出文件，可能可以不用進來看。各位大德有發現文件請留言跟我說。我個人很喜歡自己架集群起來連就去看，面對照官方文件上寫的東西，當然大部份時候都是文件沒有帶到，有很多發現。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ ls /var/log
@@ -1433,7 +1450,7 @@ drwx------  2 root root 4.0K Aug 12 07:42 mounts
 &lt;pre&gt;&lt;code&gt;head /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這樣就找到我們的 log 了&lt;/p&gt;
-&lt;h1 id=&#34;heading&#34;&gt;小節&lt;/h1&gt;
+&lt;h1 id=&#34;小節&#34;&gt;小節&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 filebeat 去查找&lt;/li&gt;
 &lt;li&gt;透過 kubernetes daemonsets 可以快速佈置一份 filebeat 到所有 node，且設定都是一起更新&lt;/li&gt;
@@ -1450,7 +1467,7 @@ tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca
       <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/post/x.509-certificate/</guid>
-      <description>&lt;h1 id=&#34;-certificate&#34;&gt;簡單講一下 certificate&lt;/h1&gt;
+      <description>&lt;h1 id=&#34;簡單講一下-certificate&#34;&gt;簡單講一下 certificate&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;X.509 是公鑰憑證(public key certificate) 的一套標準，用在很多網路通訊協定 (包含 TLS/SSL)&lt;/p&gt;
@@ -1573,7 +1590,7 @@ issuer=CN = Elastic Certificate Tool Autogenerated CA
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;-x-pack&#34;&gt;啟用 X-pack&lt;/h1&gt;
+&lt;h1 id=&#34;啟用-x-pack&#34;&gt;啟用 X-pack&lt;/h1&gt;
 &lt;p&gt;Elasticsearch 的安全性模組由 x-pack extension 提供，在 &lt;a href=&#34;https://www.elastic.co/what-is/open-x-pack&#34;&gt;6.3.0 之後的版本&lt;/a&gt;，安裝 elasticsearch 的過程中就預設安裝 x-pack。&lt;/p&gt;
 &lt;p&gt;附上&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/get-started-enable-security.html&#34;&gt;啟用的官方文件&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;然而，由於舊版的 x-pack 是付費內容，目前的 elasticsearch 安裝完後，elasticsearch.yml 設定預設不啟用 x-pack，也就是說沒看到這篇官方文件的話，很容易就獲得沒有任何 security 功能的 ELK。&lt;/p&gt;
@@ -1663,7 +1680,7 @@ elasticsearch.password: &amp;quot;***********&amp;quot;
 &lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/configuring-tls.html#configuring-tls&#34;&gt;elasticsearch configuring tls&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/7.3/certutil.html&#34;&gt;certutil&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading&#34;&gt;分析一下需求跟規格&lt;/h1&gt;
+&lt;h1 id=&#34;分析一下需求跟規格&#34;&gt;分析一下需求跟規格&lt;/h1&gt;
 &lt;p&gt;我們需要為每一個 node 生一組 node certificate，使用 node certificate 產生 client certificates 提供給其他 client，連入時會驗證 client 是否為 authenticated user。&lt;/p&gt;
 &lt;p&gt;針對目前這個 single-node ELK stack，我們可能有幾種選擇&lt;/p&gt;
 &lt;ul&gt;
@@ -1765,7 +1782,7 @@ chown -R elasticsearch:elasticsearch /etc/elasticsearch/config
 &lt;pre&gt;&lt;code&gt;/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
 /usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;關於 X.509 Certifcate 之後有空我們來聊一下&lt;/p&gt;
-&lt;h1 id=&#34;-elasticsearch-&#34;&gt;更新 elasticsearch 設定&lt;/h1&gt;
+&lt;h1 id=&#34;更新-elasticsearch-設定&#34;&gt;更新 elasticsearch 設定&lt;/h1&gt;
 &lt;p&gt;Certificates 都生完了，接下來更改 elasticsearch 的參數，在 transport layer 啟用 ssl。啟用 security 後，在 transport layer 啟動 ssl 是必須的。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ sudo vim /etc/elasticsearch/elasticsearch.yml
 
@@ -1858,7 +1875,7 @@ journalctl -fu kibana
 &lt;li&gt;filebeat client to kibana server&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;就是他們彼此互打，都要有 ca, key, cert&lt;/p&gt;
-&lt;h3 id=&#34;xd&#34;&gt;但基本上的設定都一樣，下面可以不用看下去了XD&lt;/h3&gt;
+&lt;h3 id=&#34;但基本上的設定都一樣下面可以不用看下去了xd&#34;&gt;但基本上的設定都一樣，下面可以不用看下去了XD&lt;/h3&gt;
 &lt;p&gt;如果有用到再查文件就好，這邊直接小結&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;設定 security 前要先想號自己的需求，如何連入，安全性設定到哪邊&lt;/li&gt;
@@ -1866,7 +1883,7 @@ journalctl -fu kibana
 &lt;li&gt;使用 server certificate 再 parse 出 ca-certificate, client cers, key&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;kibana--server&#34;&gt;kibana 作為 server&lt;/h1&gt;
+&lt;h1 id=&#34;kibana-作為-server&#34;&gt;kibana 作為 server&lt;/h1&gt;
 &lt;p&gt;工作路徑可能是這樣： app(apm-client library) -&amp;gt; apm-server -&amp;gt; kibana -&amp;gt; elasticsearch&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;kibana 連入 elasticsearch時， kibana 是 client 吃 elasticsearch 的憑證&lt;/li&gt;
@@ -1934,7 +1951,7 @@ openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain 
 &lt;pre&gt;&lt;code&gt;systemctl restart filebeat
 journalctl -fu filebeat
 &lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h1 id=&#34;-kubernetes-&#34;&gt;如果你的應用在 kubernetes 上&lt;/h1&gt;
+&lt;h1 id=&#34;如果你的應用在-kubernetes-上&#34;&gt;如果你的應用在 kubernetes 上&lt;/h1&gt;
 &lt;p&gt;可以使用下面方法拿到 client.cer ，然後用 secret 塞進 k8s，在用 volume from secrets，掛給監測應用的 filebeat&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 mkdir -p /etc/beats/config
@@ -1976,16 +1993,16 @@ kubectl apply -f elk/gke/filebeat/
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&amp;ndash;&lt;/p&gt;
-&lt;h1 id=&#34;-elk-stack&#34;&gt;簡介 ELK stack&lt;/h1&gt;
+&lt;h1 id=&#34;簡介-elk-stack&#34;&gt;簡介 ELK stack&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/index.html&#34;&gt;官方說明文件&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;elk-&#34;&gt;ELK 的元件&lt;/h3&gt;
+&lt;h3 id=&#34;elk-的元件&#34;&gt;ELK 的元件&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Elasticsearch: 基於 Lucene 的分散式全文搜索引擎&lt;/li&gt;
 &lt;li&gt;Logstash: 數據處理 pipeline&lt;/li&gt;
 &lt;li&gt;Kibana: ELK stack 的管理後台與數據視覺化工具&lt;/li&gt;
 &lt;li&gt;Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;elk--1&#34;&gt;ELK 的工作流程&lt;/h3&gt;
+&lt;h3 id=&#34;elk-的工作流程&#34;&gt;ELK 的工作流程&lt;/h3&gt;
 &lt;p&gt;beats -&amp;gt; (logstash) -&amp;gt; elasticsearch -&amp;gt; kibana&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;將 beats 放在應用端的主機上，或是在容器化環境種作為 sidecar，跟應用放在一起&lt;/li&gt;
@@ -1995,7 +2012,7 @@ kubectl apply -f elk/gke/filebeat/
 &lt;li&gt;beats 向後輸出到 elasticsearch，儲存數據文件(document)，並依照樣式(template)與索引(index)儲存，便可在 elasticsearch 上全文搜索數據&lt;/li&gt;
 &lt;li&gt;透過 Kibana，將 elasticsearch 上的 log 顯示&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id=&#34;heading&#34;&gt;官方不是有出文件嗎&lt;/h1&gt;
+&lt;h1 id=&#34;官方不是有出文件嗎&#34;&gt;官方不是有出文件嗎&lt;/h1&gt;
 &lt;p&gt;Elastic 官方準備了大量的文件，理論上要跟著文件一步一步架設這整套工具應該是十分容易。然而實際照著做卻遇上很多困難。由於缺乏 get-started 的範例文件，不熟悉 ELK 設定的使用者，常常需要停下來除錯，甚至因為漏掉某個步驟，而需要回頭重做一遍。&lt;/p&gt;
 &lt;p&gt;說穿了本篇的技術含量不高，就只是一個踩雷過程。&lt;/p&gt;
 &lt;p&gt;Lets get our hands dirty.&lt;/p&gt;
@@ -2008,7 +2025,7 @@ kubectl apply -f elk/gke/filebeat/
 &lt;/ul&gt;
 &lt;p&gt;雖然沒有安全性設定，但仍然有完整的功能，如果只是在測試環境，或是想要評估試用 self-hosted ELK，這篇的說明已足夠。但千萬不要用這篇上 public network 或是用在 production 環境喔。&lt;/p&gt;
 &lt;p&gt;如果希望第一次安裝就有完整的 security 設定，請等待下篇 &lt;a href=&#34;#secure-elk-stack&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;討論需求與規格&lt;/h1&gt;
+&lt;h1 id=&#34;討論需求與規格&#34;&gt;討論需求與規格&lt;/h1&gt;
 &lt;p&gt;這邊只是帶大家過一下基礎安裝流程，我們在私有網路中搭建一台 standalone 的 ELK stack，通通放在一台節點(node)上。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;elk-node-standalone 10.140.0.10
 app-node-1          10.140.0.11
@@ -2048,7 +2065,7 @@ app-node-1          10.140.0.11
 &lt;/li&gt;
 &lt;li&gt;如果應用在已經容器化, 這些服務元件也可以上 Kubernetes 做容器自動化，這個部份蠻好玩，如果有時間我們來聊這篇&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-2&#34;&gt;主機設定&lt;/h1&gt;
+&lt;h1 id=&#34;主機設定&#34;&gt;主機設定&lt;/h1&gt;
 &lt;p&gt;Elasticsearch 儲存數據會佔用不少硬碟空間，我個人的習慣是只要有額外占用儲存空間，都要另外掛載硬碟，不要占用 root，所以這邊會需要另外掛載硬碟。&lt;/p&gt;
 &lt;p&gt;GCP 上使用 Google Compote Engine 的朋友，可以照 &lt;a href=&#34;https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=zh-tw&#34;&gt;Google 官方操作步驟操作&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;完成後接近這樣&lt;/p&gt;
@@ -2065,7 +2082,7 @@ $ ls /mnt/disks/elk
 /mnt/disks/elk/apm-server
 /mnt/disks/elk/kibana
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至於需要多少容量，取決收集數據的數量，落差非常大，可以先上個 100Gb ，試跑一段時間，再視情況 scale storage disk。&lt;/p&gt;
-&lt;h1 id=&#34;heading-3&#34;&gt;開防火牆&lt;/h1&gt;
+&lt;h1 id=&#34;開防火牆&#34;&gt;開防火牆&lt;/h1&gt;
 &lt;p&gt;需要開放 10.140.0.10 這台機器的幾個 port&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;elasticsearch           :9200   來源只開放私有網路其他 ip 10.140.0.0/9&lt;/li&gt;
@@ -2095,13 +2112,13 @@ sudo apt-get install elasticsearch
 # Log
 /var/log/elasticsearch/elasticsearch.log
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;有需要也可以複寫設定檔，把 log 也移到 /mnt/disks/elk/elasticsearch/logs&lt;/p&gt;
-&lt;h3 id=&#34;heading-4&#34;&gt;服務控制&lt;/h3&gt;
+&lt;h3 id=&#34;服務控制&#34;&gt;服務控制&lt;/h3&gt;
 &lt;p&gt;透過 systemd 管理，我們可以用 systemctl 控制，
 用戶 elasticsearch:elasticsearch，操作時會需要 sudo 權限。&lt;/p&gt;
 &lt;p&gt;但在啟動前要先調整數據儲存路徑，並把權限移轉給使用者。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mkdir -p /mnt/disks/elk/elasticsearch
 chown elasticsearch:elasticsearch /mnt/disks/elk/elasticsearch
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;heading-5&#34;&gt;設定檔案&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;設定檔案&#34;&gt;設定檔案&lt;/h3&gt;
 &lt;p&gt;ELK 提供了許多可設定調整的設定,但龐大的設定檔案也十分難上手。我們這邊先簡單更改以下設定檔案&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo vim /etc/elasticsearch/elasticsearch.yml
 
@@ -2253,7 +2270,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 
 &lt;p&gt;Standalone cluster 中的 filebeat，是還未跟 elasticsearch 配對完成的數據，會顯示在另外一個集群中，配對完後會歸到 elk cluster 中，就是我們的主要 cluster。&lt;/p&gt;
 &lt;p&gt;點進去可以看各個元件的服務情形。&lt;/p&gt;
-&lt;h1 id=&#34;heading-6&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;簡單思考 self-host ELK stack 搭建的架構&lt;/li&gt;
 &lt;li&gt;在單一 node 上安裝最簡易的 elastic stack&lt;/li&gt;
@@ -2289,7 +2306,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Redis Sentinel Topology&lt;/li&gt;
 &lt;/ul&gt;
@@ -2302,7 +2319,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;li&gt;每個方格代表一台機器或是 VM&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;2-sentinels&#34;&gt;2 Sentinels&lt;/h3&gt;
-&lt;p&gt;DON&#39;T DO THIS&lt;/p&gt;
+&lt;p&gt;DON&amp;rsquo;T DO THIS&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;+----+         +----+
 | M1 |---------| R1 |
 | S1 |         | S2 |
@@ -2324,7 +2341,7 @@ Configuration: quorum = 1
 Configuration: quorum = 2
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這是最基本的蛋又兼顧安全設定的設置&lt;/p&gt;
 &lt;p&gt;如果 M1 死了 S1 跟著機器故障，S2 與 S3 還可以取得多數，順利 failover 到 R2 或是 R3。&lt;/p&gt;
-&lt;h3 id=&#34;heading-1&#34;&gt;寫入資料遺失&lt;/h3&gt;
+&lt;h3 id=&#34;寫入資料遺失&#34;&gt;寫入資料遺失&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;         +----+
          | M1 |
          | S1 | &amp;lt;- C1 (writes will be lost)
@@ -2347,7 +2364,7 @@ Configuration: quorum = 2
 &lt;li&gt;min-slaves-max-lag 10&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;當 master 發現自己再也無法 sync 到足夠的 slave，表示 master 可能被孤立，這時主動拒絕客戶端的寫入請求。客戶端被拒絕後，會再向 sentinel 取得有效的 master，重新執行寫入請求，確保資料寫到有效的 master 上。&lt;/p&gt;
-&lt;h3 id=&#34;sentinel--client-&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
+&lt;h3 id=&#34;sentinel-放在-client-端&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;            +----+         +----+
             | M1 |----+----| R1 |
             |    |    |    |    |
@@ -2366,7 +2383,7 @@ Configuration: quorum = 2
 &lt;li&gt;sentinel 與 client 所觀察到的 redis 狀態是相同的&lt;/li&gt;
 &lt;li&gt;如果 M1 死了，要 failover ，客戶端的 3 sentinel 可以正確地執行 failover，不受故障影響&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;-3-&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
+&lt;h3 id=&#34;客戶端又不足-3-個&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;            +----+         +----+
             | M1 |----+----| R1 |
             | S1 |    |    | S2 |
@@ -2417,19 +2434,19 @@ Configuration: quorum = 2
 &lt;li&gt;如何Service-to-Service的網路層管理監控&lt;/li&gt;
 &lt;li&gt;導入 Istio 到 Kubernetes&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;heading&#34;&gt;目標聽眾&lt;/h3&gt;
+&lt;h3 id=&#34;目標聽眾&#34;&gt;目標聽眾&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;微運大量微服務，希望導入Service Mesh 的Operator&lt;/li&gt;
 &lt;li&gt;想了解微服務生態中竄紅的 Service Mesh&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;heading-1&#34;&gt;收穫&lt;/h3&gt;
+&lt;h3 id=&#34;收穫&#34;&gt;收穫&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;了解為服務的優勢與Cloud Native應用發展趨勢&lt;/li&gt;
 &lt;li&gt;了解 Service Mesh 與 Istio 觀念&lt;/li&gt;
 &lt;li&gt;能使用 Istio 於 Kubernetes，進行服務網路的管理。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;-microservice--istio&#34;&gt;你有聽過 Microservice / Istio有聽過嗎？&lt;/h3&gt;
+&lt;h3 id=&#34;你有聽過-microservice--istio有聽過嗎&#34;&gt;你有聽過 Microservice / Istio有聽過嗎？&lt;/h3&gt;
 &lt;p&gt;今天來介紹一款好藥：Istio。如果你有以下問題：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;維運大量(成千上百)微服務&lt;/li&gt;
@@ -2654,14 +2671,14 @@ jx install \
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Select the organization where you want to create the environment repository:
@@ -2690,14 +2707,14 @@ jx install \
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Select the organization where you want to create the environment repository:
@@ -2777,7 +2794,7 @@ Login with username and password&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kc config set-context gke_my-project_asia-east1-b_jenkins \
   --namespace=jx
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;why-not-use-helm-chart&#34;&gt;Why not use helm chart?&lt;/h3&gt;
-&lt;p&gt;It&#39;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/jenkins&#34;&gt;Jenkins Helm Chart&lt;/a&gt; create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
 Jenkin Platform with jx is Jenkins Platform native to Kubernetes. It comes with powerful cloud native components like Prow automation, Nexus, Docker Registry, Tekton Pipeline, &amp;hellip;&lt;/p&gt;
 &lt;h3 id=&#34;check-jenkins-x-examples&#34;&gt;Check jenkins-x examples&lt;/h3&gt;
@@ -2898,7 +2915,7 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
       
       <guid>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</guid>
       <description>&lt;h1 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h1&gt;
-&lt;p&gt;If you&#39;re interested in building your own Kubernetes. Install the following tools we use.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re interested in building your own Kubernetes. Install the following tools we use.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;virtualbox 5.1+&lt;/a&gt; to create VMs, on which we deploy our Kubernetes.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34;&gt;vagrant 2.0.x+&lt;/a&gt; to control virtualbox to build and manage vms.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://docs.ansible.com/ansible/latest/intro_installation.html&#34;&gt;ansible-playbook&lt;/a&gt; to run Kubespray playbook to deploy Kuberentes&lt;/p&gt;
@@ -2915,13 +2932,13 @@ pip install ansible
 port install py27-netaddr
 
 # netaddr is required by Kubespray
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;lets-get-started&#34;&gt;Let&#39;s get started&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;lets-get-started&#34;&gt;Let&amp;rsquo;s get started&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;clone https://github.com/kubernetes-incubator/kubespray.git
 
 cd kubespray
 vagrant up
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That&#39;s it!&lt;/p&gt;
-&lt;p&gt;This gonna take a while. Let&#39;s get to some details.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That&amp;rsquo;s it!&lt;/p&gt;
+&lt;p&gt;This gonna take a while. Let&amp;rsquo;s get to some details.&lt;/p&gt;
 &lt;h3 id=&#34;virtualbox&#34;&gt;Virtualbox&lt;/h3&gt;
 &lt;p&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;virtualbox 5.1+&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Disadvantage about vbox GUI:&lt;/p&gt;

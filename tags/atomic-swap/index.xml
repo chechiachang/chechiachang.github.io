@@ -30,11 +30,11 @@
 &lt;/ol&gt;
 &lt;p&gt;A: random number x&lt;/p&gt;
 &lt;p&gt;tx1: A pay B
-A Pay BTC to B&#39;s public key
+A Pay BTC to B&amp;rsquo;s public key
 if x known &amp;amp; singed by B
 or Signed by A &amp;amp; B&lt;/p&gt;
 &lt;p&gt;tx2: A claim
-tx1 pay BTC to A&#39;s public key
+tx1 pay BTC to A&amp;rsquo;s public key
 locked 48 hours
 signed by A&lt;/p&gt;
 &lt;p&gt;A -&amp;gt; B tx2

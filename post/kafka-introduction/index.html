@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -612,13 +612,13 @@
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
 <hr>
 <p>寫了部屬，本想談一下 kafka 的高可用性配置，看到大德的留言，才想到應該要先跟各位介紹一下 kafka，跟 kafka 的用途。也感謝大德路過發問，我也會順代調整內容。今天就說明何為 kafka，以及在什麼樣的狀況使用。</p>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>簡介 kafka</li>
 <li>基本元件</li>
 <li>Kafka 的工作流程</li>
 </ul>
-<h1 id="-kafka">簡介 Kafka</h1>
+<h1 id="簡介-kafka">簡介 Kafka</h1>
 <p>Kafka 是分散式的 streaming platform，可以 subscribe &amp; publish 訊息，可以當作是一個功能強大的 message queue 系統，由於分散式的架構，讓 kafka 有很大程度的 fault tolerance。<a href="https://kafka.apache.org/documentation/#gettingStarted">原版的說明在這邊</a></p>
 <p>這邊有幾個東西要解釋。</p>
 <h1 id="message-queue-system">Message Queue System</h1>
@@ -661,10 +661,10 @@
 <li>Consumer group 去所有 partitions 裡拿訊息，所有 partitions 的訊息分配到 consumer group 中的 consumer。</li>
 </ul>
 <p>app 在接收訊息時，設置正確的化，在一個 consumer group 中，可以容忍 consumer 失效，仍能確保訊息一指定的次序送達。在需要大流量時，也可調整 consumer 的數量提高負載。</p>
-<h1 id="heading-1">用例</h1>
+<h1 id="用例">用例</h1>
 <p><a href="https://kafka.apache.org/documentation/#uses">kafka 的使用例子</a>非常的多，使用範圍非常廣泛。</p>
 <p>基本上是訊息傳遞的使用例子，kafka 大多能勝任。</p>
-<h1 id="heading-2">小結</h1>
+<h1 id="小結">小結</h1>
 <p>這邊只提了 kafka 的基本概念，基本元件，以及 consumer group 機制，為我們底下要談的 configuration 與 topology 鋪路。</p>
 
     </div>

@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -592,7 +592,7 @@
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <hr>
 <p>有板友問到，要如何選擇要不要用 ELK，其實也這是整篇 ELK 的初衷。這邊分享一下 ELK 與其他選擇，以及選擇解決方案應該考慮的事情。</p>
-<h1 id="heading">其他常用的服務</h1>
+<h1 id="其他常用的服務">其他常用的服務</h1>
 <p><a href="https://prometheus.io/">Prometheus</a>: 開源的 time series metrics 收集系統</p>
 <p><a href="https://cloud.google.com/stackdriver/?hl=zh-tw">Stackdriver</a>: GCP 的 log 與 metrics 平台</p>
 <p><a href="https://www.elastic.co/cloud/">Elastic Cloud</a>: ELK 的 Sass</p>
@@ -622,7 +622,7 @@
 <p>Logging: ELK vs Stackdriver</p>
 </li>
 </ul>
-<h1 id="heading-1">取捨原則</h1>
+<h1 id="取捨原則">取捨原則</h1>
 <p>各個方法都各有利弊，完全取決於需求</p>
 <ol>
 <li>已知條件限制，例如安全性考量就是要放在私有網路防火牆內，或是預算</li>
@@ -634,11 +634,11 @@
 <p>Sass: 指的是直接用 Elasitc Cloud，或是直接使用公有雲的服務(ex. 在 GCP 上使用 stackdriver)</p>
 <p>Cloud Self-hosted: 在公有雲上使用 ELK</p>
 <p>On-Premised: 自己在機房搭設</p>
-<h3 id="heading-2">安全性</h3>
+<h3 id="安全性">安全性</h3>
 <p>看公司的安全政策，允許將日誌及監控數據，送到私有網路以外的地方嗎？如果在防火牆內，搞不好 port 根本就不開給你，根本不用考慮使用外部服務。</p>
 <p>要知道服務的 log 其實可以看出很多東西．如果有特別做資料分析，敏感的資料，金流相關數據，通常不會想要倒到第三方服務平台。</p>
 <p>可能有做金流的，光是安全性這點，就必須選擇自架。</p>
-<h3 id="heading-3">成本</h3>
+<h3 id="成本">成本</h3>
 <p>金錢成本 + 維護成本</p>
 <p>金錢成本就看各個服務的計費方式</p>
 <ul>
@@ -651,10 +651,10 @@
 <p>如果公司有完整的維護團隊，有機房，服務的使用量也很大，當然 self-hosted 是比較省。
 中小型企業以及新創，服務在公有雲上的，直接使用Sass 服務往往比較節省成本，服務直接由 Sass 維護，節省很多機器上管理跟日常維護。</p>
 <p>避免迷思，買外部服務的帳單是顯性的，報帳時看得到，而工程師維護的時間成本是隱性的。self-host 可能省下 Sass 費用，但工程因為分了時間去維護，而影響進度。這部分就看團隊如何取捨。</p>
-<h3 id="heading-4">易用性</h3>
+<h3 id="易用性">易用性</h3>
 <p>如果應用都跑在公有雲上，可以考慮使用雲平台提供的監測服務，使用便利，而且整合度高。ex  GCP 上，要啟用 Stackdriver 是非常輕鬆的事情，只是改一兩個選項，就可以開啟 / 關閉 logging 與 metrics</p>
 <p>如果是 On-premised 自家機房，也許 self-hosted 會更為適合。</p>
-<h3 id="heading-5">客製化程度</h3>
+<h3 id="客製化程度">客製化程度</h3>
 <p>在大多數時候，沒有需要更改到服務的核心設定，都可以不可律客製化程度，直接使用 Sass 的設定，就能滿足大部分需求。可以等有有明確需求後再考慮這一點。短期內沒有特殊需求就可以從簡使用。</p>
 <p>使用GKE 到 Stackdriver 的話，對主機本身的機器是沒有控制權的，執行的 pipeline 也不太能更改
 Elastic Cloud 有提供上傳 elasticsearch config 檔案的介面，也就是可以更改 server 運行的參數設定
@@ -694,7 +694,7 @@ Self-Hosted 除了上述的設定，還可以依照需求更改 ELK / prometheus
 <li>論系統資源 CP 值以及效能，time series 的 db 都會比 Elasticsearch 好上不少。</li>
 <li>Elasticsearch 中也不太適合一直存放大量的資料在 hot 可寫可讀狀態，繪希好很多系統資源。</li>
 </ul>
-<h1 id="heading-6">其他服務</h1>
+<h1 id="其他服務">其他服務</h1>
 <p>Elastic 有出許多不同的增值服務</p>
 <ul>
 <li>Application Performance Monitoring(APM)</li>
@@ -719,7 +719,7 @@ Self-Hosted 除了上述的設定，還可以依照需求更改 ELK / prometheus
 <li>然後產品本身的維護介面，目前只是在堪用，許多重要的功能也還在開發中。</li>
 </ul>
 <p>如果公司有人會管 ELK，個人建議是可以 self-host</p>
-<h1 id="heading-7">小結</h1>
+<h1 id="小結">小結</h1>
 <ul>
 <li>弄清楚需求，如果沒有特殊需求可以走 general solution</li>
 <li>Sass vs Self-hosted vs On-premised</li>

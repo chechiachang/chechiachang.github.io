@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -594,7 +594,7 @@
 <h1 id="recap">Recap</h1>
 <p>昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事</p>
 <ul>
-<li>設置 Let's Encript prod site 的 Issuer</li>
+<li>設置 Let&rsquo;s Encript prod site 的 Issuer</li>
 <li>設置 certificates.certmanager.k8s.io 資源來定義 certificate 的取得方式</li>
 <li>或是在 ingress 中配置 tls，讓 cert-manager 自動透過 ingress-shim 產生 certifcates.cert-manager，並且產生 certificate</li>
 </ul>
@@ -604,7 +604,7 @@
 <h1 id="certificaterequests">CertificateRequests</h1>
 <p>certificaterequests.certmanager 是 cert-manager 產生 certificate 過程中會使用的資源，不是設計來讓人類操作的資源。</p>
 <p>當 cert-manager 監測到 certificate 產生後，會產生 certificaterequests.certmanager.k8s.io 資源，來向 issuer request certificate，這個過程與使用其他客戶端 (ex. certbot) 來向 3rd party CA server request certificate 時的內容相同，只是這邊我們使用 kubernetes resource 來定義。</p>
-<p>包含的 certificate request，會以 pem encoded 的形式，再變成 base64 encoded 存放在 resource 中。這個 pem key 也會從到遠方的 CA sercer (Let's Encrypt prod) 來 request certificate</p>
+<p>包含的 certificate request，會以 pem encoded 的形式，再變成 base64 encoded 存放在 resource 中。這個 pem key 也會從到遠方的 CA sercer (Let&rsquo;s Encrypt prod) 來 request certificate</p>
 <p>如果 issuance 成功，certificaterequest 資源應該會被 cert-manager 吃掉，不會被人類看到。</p>
 <p>一個 certificaterequests.certmanager 大概長這樣</p>
 <pre><code>apiVersion: cert-manager.io/v1alpha2

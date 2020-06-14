@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -593,16 +593,16 @@
 <p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <p>&ndash;</p>
-<h1 id="-elk-stack">簡介 ELK stack</h1>
+<h1 id="簡介-elk-stack">簡介 ELK stack</h1>
 <p><a href="https://www.elastic.co/guide/index.html">官方說明文件</a></p>
-<h3 id="elk-">ELK 的元件</h3>
+<h3 id="elk-的元件">ELK 的元件</h3>
 <ul>
 <li>Elasticsearch: 基於 Lucene 的分散式全文搜索引擎</li>
 <li>Logstash: 數據處理 pipeline</li>
 <li>Kibana: ELK stack 的管理後台與數據視覺化工具</li>
 <li>Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)</li>
 </ul>
-<h3 id="elk--1">ELK 的工作流程</h3>
+<h3 id="elk-的工作流程">ELK 的工作流程</h3>
 <p>beats -&gt; (logstash) -&gt; elasticsearch -&gt; kibana</p>
 <ol>
 <li>將 beats 放在應用端的主機上，或是在容器化環境種作為 sidecar，跟應用放在一起</li>
@@ -612,7 +612,7 @@
 <li>beats 向後輸出到 elasticsearch，儲存數據文件(document)，並依照樣式(template)與索引(index)儲存，便可在 elasticsearch 上全文搜索數據</li>
 <li>透過 Kibana，將 elasticsearch 上的 log 顯示</li>
 </ol>
-<h1 id="heading">官方不是有出文件嗎</h1>
+<h1 id="官方不是有出文件嗎">官方不是有出文件嗎</h1>
 <p>Elastic 官方準備了大量的文件，理論上要跟著文件一步一步架設這整套工具應該是十分容易。然而實際照著做卻遇上很多困難。由於缺乏 get-started 的範例文件，不熟悉 ELK 設定的使用者，常常需要停下來除錯，甚至因為漏掉某個步驟，而需要回頭重做一遍。</p>
 <p>說穿了本篇的技術含量不高，就只是一個踩雷過程。</p>
 <p>Lets get our hands dirty.</p>
@@ -625,7 +625,7 @@
 </ul>
 <p>雖然沒有安全性設定，但仍然有完整的功能，如果只是在測試環境，或是想要評估試用 self-hosted ELK，這篇的說明已足夠。但千萬不要用這篇上 public network 或是用在 production 環境喔。</p>
 <p>如果希望第一次安裝就有完整的 security 設定，請等待下篇 <a href="#secure-elk-stack">Secure ELK Stask</a></p>
-<h1 id="heading-1">討論需求與規格</h1>
+<h1 id="討論需求與規格">討論需求與規格</h1>
 <p>這邊只是帶大家過一下基礎安裝流程，我們在私有網路中搭建一台 standalone 的 ELK stack，通通放在一台節點(node)上。</p>
 <pre><code>elk-node-standalone 10.140.0.10
 app-node-1          10.140.0.11
@@ -665,7 +665,7 @@ app-node-1          10.140.0.11
 </li>
 <li>如果應用在已經容器化, 這些服務元件也可以上 Kubernetes 做容器自動化，這個部份蠻好玩，如果有時間我們來聊這篇</li>
 </ul>
-<h1 id="heading-2">主機設定</h1>
+<h1 id="主機設定">主機設定</h1>
 <p>Elasticsearch 儲存數據會佔用不少硬碟空間，我個人的習慣是只要有額外占用儲存空間，都要另外掛載硬碟，不要占用 root，所以這邊會需要另外掛載硬碟。</p>
 <p>GCP 上使用 Google Compote Engine 的朋友，可以照 <a href="https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=zh-tw">Google 官方操作步驟操作</a></p>
 <p>完成後接近這樣</p>
@@ -682,7 +682,7 @@ $ ls /mnt/disks/elk
 /mnt/disks/elk/apm-server
 /mnt/disks/elk/kibana
 </code></pre><p>至於需要多少容量，取決收集數據的數量，落差非常大，可以先上個 100Gb ，試跑一段時間，再視情況 scale storage disk。</p>
-<h1 id="heading-3">開防火牆</h1>
+<h1 id="開防火牆">開防火牆</h1>
 <p>需要開放 10.140.0.10 這台機器的幾個 port</p>
 <ul>
 <li>elasticsearch           :9200   來源只開放私有網路其他 ip 10.140.0.0/9</li>
@@ -712,13 +712,13 @@ sudo apt-get install elasticsearch
 # Log
 /var/log/elasticsearch/elasticsearch.log
 </code></pre><p>有需要也可以複寫設定檔，把 log 也移到 /mnt/disks/elk/elasticsearch/logs</p>
-<h3 id="heading-4">服務控制</h3>
+<h3 id="服務控制">服務控制</h3>
 <p>透過 systemd 管理，我們可以用 systemctl 控制，
 用戶 elasticsearch:elasticsearch，操作時會需要 sudo 權限。</p>
 <p>但在啟動前要先調整數據儲存路徑，並把權限移轉給使用者。</p>
 <pre><code>mkdir -p /mnt/disks/elk/elasticsearch
 chown elasticsearch:elasticsearch /mnt/disks/elk/elasticsearch
-</code></pre><h3 id="heading-5">設定檔案</h3>
+</code></pre><h3 id="設定檔案">設定檔案</h3>
 <p>ELK 提供了許多可設定調整的設定,但龐大的設定檔案也十分難上手。我們這邊先簡單更改以下設定檔案</p>
 <pre><code>sudo vim /etc/elasticsearch/elasticsearch.yml
 
@@ -870,7 +870,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 
 <p>Standalone cluster 中的 filebeat，是還未跟 elasticsearch 配對完成的數據，會顯示在另外一個集群中，配對完後會歸到 elk cluster 中，就是我們的主要 cluster。</p>
 <p>點進去可以看各個元件的服務情形。</p>
-<h1 id="heading-6">小結</h1>
+<h1 id="小結">小結</h1>
 <ul>
 <li>簡單思考 self-host ELK stack 搭建的架構</li>
 <li>在單一 node 上安裝最簡易的 elastic stack</li>

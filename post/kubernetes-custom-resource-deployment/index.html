@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -591,7 +591,7 @@
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
 <hr>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>CRD 內容</li>
 <li>Deploy CRD</li>
@@ -710,7 +710,7 @@ status:
   conditions: []
   storedVersions: []
 </code></pre><p>helm-values.yaml 與 01-namespace.yaml 很單純，前者是使用 helm 部署的可設定參數，預設只有 kubernetes resources，後者則是為之後的 cert-manager 元件新增一個 kubernetes namespace。</p>
-<h1 id="-crd--apiextensionsv1beta1">小結 CRD 內容 (apiextensions/v1beta1)</h1>
+<h1 id="小結-crd-內容-apiextensionsv1beta1">小結 CRD 內容 (apiextensions/v1beta1)</h1>
 <ul>
 <li>CRD 顯示名稱，內容</li>
 <li>CRD spec 驗證
@@ -721,9 +721,9 @@ status:
 </li>
 <li>CRD 自身部署狀態</li>
 </ul>
-<h1 id="heading-1">部署</h1>
+<h1 id="部署">部署</h1>
 <p>部署相較定義本身就非常簡單，直接 kubectl apply 到 kubernetes 上</p>
-<h1 id="-custom-resource">使用 custom resource</h1>
+<h1 id="使用-custom-resource">使用 custom resource</h1>
 <p>有了 CRD，我們便可以使用 CRUD API，互動模式與其他 build-in kubernetes resources 相同，只是內容會照 CRD 上的定義調整</p>
 <pre><code>kubectl get certificates.certmanager.k8s.io
 kubectl get certificates
@@ -787,7 +787,7 @@ Events:                    &lt;none&gt;
 <p>當然，不爽這個 cert resource 也可以幹掉</p>
 <pre><code>$ kubectl delete cert ingress-nginx-tls -n cert-manager
 </code></pre><p>以上</p>
-<h1 id="heading-2">小結</h1>
+<h1 id="小結">小結</h1>
 <ul>
 <li>簡介 CRD 與 CRD 內容</li>
 <li>操作 custom resource</li>

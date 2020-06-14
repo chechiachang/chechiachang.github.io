@@ -129,7 +129,7 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;li&gt;在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量&lt;/li&gt;
 &lt;li&gt;另外一個 service 就是 default backend 的 service&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading&#34;&gt;踩雷&lt;/h1&gt;
+&lt;h1 id=&#34;踩雷&#34;&gt;踩雷&lt;/h1&gt;
 &lt;p&gt;第一個雷點是 helm chart install 帶入的 &lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34;&gt;parameters&lt;/a&gt;，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
@@ -161,12 +161,12 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx Ingress Controller 運作原理&lt;/li&gt;
 &lt;li&gt;設定 Nginx Ingress Controller&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;運作原理&lt;/h1&gt;
+&lt;h1 id=&#34;運作原理&#34;&gt;運作原理&lt;/h1&gt;
 &lt;p&gt;昨天講完 nginx ingress controller 部屬，今天來談談 controller 是如何運作的。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx&lt;/li&gt;
@@ -357,7 +357,7 @@ For clusters of more than 100 nodes, allocate at least
 &lt;li&gt;nginx ingress controller&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;三個願望一次滿足~&lt;/p&gt;
-&lt;h1 id=&#34;heading&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;跑 kubernetes 務必使用這兩個 exporter&lt;/li&gt;
 &lt;li&gt;kube-state-metrics 整理得很舒服，有時間可以多看看這個專案&lt;/li&gt;
@@ -390,7 +390,7 @@ For clusters of more than 100 nodes, allocate at least
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Exporter 工作原理簡介&lt;/li&gt;
 &lt;li&gt;Prometheus exporter library&lt;/li&gt;
@@ -484,7 +484,7 @@ blocked_clients:1
 &lt;li&gt;訊息的流量，以及超出 time-to-live 的資料清除。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;都是需要好好加上 alert 的核心 metrics&lt;/p&gt;
-&lt;h1 id=&#34;-exporter&#34;&gt;貢獻 exporter&lt;/h1&gt;
+&lt;h1 id=&#34;貢獻-exporter&#34;&gt;貢獻 exporter&lt;/h1&gt;
 &lt;p&gt;其他服務的 exporter 工作原理也相似，如果服務本身有內部的 metrics，可以透過 client command 或是 API 取得，exporter 的工作就只是轉成 time series data。&lt;/p&gt;
 &lt;p&gt;如果有比較特殊的 metrics 沒有匯出，例如說自家的 metrics ，但又希望能放到 prometheus 上監測，例如每秒收到多少 request count，回應速度，錯誤訊息的統計&amp;hellip;&amp;hellip;等，這點也可以使用 client library 自幹 exporter 然後 expose http endpoint，這樣在 prometheus 上也可以看到自家產品的 metrics，非常好用。有機會我們來聊自幹 exporter。&lt;/p&gt;
 </description>
@@ -514,7 +514,7 @@ blocked_clients:1
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus Introduction&lt;/li&gt;
 &lt;li&gt;Deploy Prometheus&lt;/li&gt;
@@ -530,7 +530,7 @@ blocked_clients:1
 &lt;li&gt;有許多隨插即用的整合 exporter，例如 redis-exporter, kafka-exporter，kubernetes-exporter ，都可以直接取得資料&lt;/li&gt;
 &lt;li&gt;支援 alert，使用 PromQL 以及多功能的告警，可以設定精準的告警條件&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;-elk-&#34;&gt;與 ELK 做比較&lt;/h1&gt;
+&lt;h1 id=&#34;與-elk-做比較&#34;&gt;與 ELK 做比較&lt;/h1&gt;
 &lt;p&gt;基本上 Prometheus 跟 ELK 比，其實是很奇怪的一件事，但這也是最常被問的一個問題。兩者在本質上是完全不同的系統。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus 是 based on time series database 的資料收集系統&lt;/li&gt;
@@ -688,7 +688,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;li&gt;查詢運行的 status&lt;/li&gt;
 &lt;li&gt;查詢目前所有收集的 targets 的狀態,有收集器掛了也可以在這邊看到&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;輕鬆自架 prometheus&lt;/li&gt;
 &lt;li&gt;Prometheus 頁面有精簡，但是功能完整的 graph 製圖&lt;/li&gt;
@@ -721,7 +721,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Grafana Introduction&lt;/li&gt;
 &lt;li&gt;Deploy Grafana&lt;/li&gt;
@@ -740,7 +740,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;li&gt;一般使用都會圍繞 dashboard 為核心，透過單一畫面，一覽目前使用者需要讀取的資料&lt;/li&gt;
 &lt;li&gt;左上角的下拉選單，可以選擇不同的 dashboards&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;-kibana-&#34;&gt;與 Kibana 做比較&lt;/h1&gt;
+&lt;h1 id=&#34;與-kibana-做比較&#34;&gt;與 Kibana 做比較&lt;/h1&gt;
 &lt;p&gt;雖然大部分使用上，我們都會使用 ELK 一套，而 Prometheus + Grafana 另一套。但其實兩邊的 data source 都可以互接。例如 grafana 可以吃 elasticsearch 的 data source，而 kibana 有 prometheus module。&lt;/p&gt;
 &lt;p&gt;我們這邊基於兩款前端分析工具，稍微做個比較，底層的 data source 差異這邊先不提。&lt;/p&gt;
 &lt;ul&gt;
@@ -989,7 +989,7 @@ http://localhost:3000
 &lt;h3 id=&#34;export-dashboard&#34;&gt;Export Dashboard&lt;/h3&gt;
 &lt;p&gt;dashboard 會依照登入使用者的需求做調整，每個腳色需要看到的圖表都不同，基本上讓各個腳色都能一眼看到所需的表格即可&lt;/p&gt;
 &lt;p&gt;自己的調整過的 dashboard 也可以匯出分享&lt;/p&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;小結&lt;/h1&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
 &lt;p&gt;到這邊就可以正常使用 grafana了，資料來源的 exporter 我們會搭配前幾周分享過的服務，一起來講&lt;/p&gt;
 </description>
     </item>
@@ -1018,7 +1018,7 @@ http://localhost:3000
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus scrape&lt;/li&gt;
 &lt;li&gt;scrape_configs&lt;/li&gt;
@@ -1141,7 +1141,7 @@ scrape_configs:
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Redis Sentinel Topology&lt;/li&gt;
 &lt;/ul&gt;
@@ -1154,7 +1154,7 @@ scrape_configs:
 &lt;li&gt;每個方格代表一台機器或是 VM&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;2-sentinels&#34;&gt;2 Sentinels&lt;/h3&gt;
-&lt;p&gt;DON&#39;T DO THIS&lt;/p&gt;
+&lt;p&gt;DON&amp;rsquo;T DO THIS&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;+----+         +----+
 | M1 |---------| R1 |
 | S1 |         | S2 |
@@ -1176,7 +1176,7 @@ Configuration: quorum = 1
 Configuration: quorum = 2
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這是最基本的蛋又兼顧安全設定的設置&lt;/p&gt;
 &lt;p&gt;如果 M1 死了 S1 跟著機器故障，S2 與 S3 還可以取得多數，順利 failover 到 R2 或是 R3。&lt;/p&gt;
-&lt;h3 id=&#34;heading-1&#34;&gt;寫入資料遺失&lt;/h3&gt;
+&lt;h3 id=&#34;寫入資料遺失&#34;&gt;寫入資料遺失&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;         +----+
          | M1 |
          | S1 | &amp;lt;- C1 (writes will be lost)
@@ -1199,7 +1199,7 @@ Configuration: quorum = 2
 &lt;li&gt;min-slaves-max-lag 10&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;當 master 發現自己再也無法 sync 到足夠的 slave，表示 master 可能被孤立，這時主動拒絕客戶端的寫入請求。客戶端被拒絕後，會再向 sentinel 取得有效的 master，重新執行寫入請求，確保資料寫到有效的 master 上。&lt;/p&gt;
-&lt;h3 id=&#34;sentinel--client-&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
+&lt;h3 id=&#34;sentinel-放在-client-端&#34;&gt;Sentinel 放在 Client 端&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;            +----+         +----+
             | M1 |----+----| R1 |
             |    |    |    |    |
@@ -1218,7 +1218,7 @@ Configuration: quorum = 2
 &lt;li&gt;sentinel 與 client 所觀察到的 redis 狀態是相同的&lt;/li&gt;
 &lt;li&gt;如果 M1 死了，要 failover ，客戶端的 3 sentinel 可以正確地執行 failover，不受故障影響&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;-3-&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
+&lt;h3 id=&#34;客戶端又不足-3-個&#34;&gt;客戶端又不足 3 個&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;            +----+         +----+
             | M1 |----+----| R1 |
             | S1 |    |    | S2 |
@@ -1346,14 +1346,14 @@ jx install \
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Select the organization where you want to create the environment repository:
@@ -1382,14 +1382,14 @@ jx install \
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Select the organization where you want to create the environment repository:
@@ -1469,7 +1469,7 @@ Login with username and password&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kc config set-context gke_my-project_asia-east1-b_jenkins \
   --namespace=jx
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;why-not-use-helm-chart&#34;&gt;Why not use helm chart?&lt;/h3&gt;
-&lt;p&gt;It&#39;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/jenkins&#34;&gt;Jenkins Helm Chart&lt;/a&gt; create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
 Jenkin Platform with jx is Jenkins Platform native to Kubernetes. It comes with powerful cloud native components like Prow automation, Nexus, Docker Registry, Tekton Pipeline, &amp;hellip;&lt;/p&gt;
 &lt;h3 id=&#34;check-jenkins-x-examples&#34;&gt;Check jenkins-x examples&lt;/h3&gt;

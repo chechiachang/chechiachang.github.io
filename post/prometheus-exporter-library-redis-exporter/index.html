@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -598,7 +598,7 @@
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
 <hr>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>Exporter 工作原理簡介</li>
 <li>Prometheus exporter library</li>
@@ -692,7 +692,7 @@ blocked_clients:1
 <li>訊息的流量，以及超出 time-to-live 的資料清除。</li>
 </ul>
 <p>都是需要好好加上 alert 的核心 metrics</p>
-<h1 id="-exporter">貢獻 exporter</h1>
+<h1 id="貢獻-exporter">貢獻 exporter</h1>
 <p>其他服務的 exporter 工作原理也相似，如果服務本身有內部的 metrics，可以透過 client command 或是 API 取得，exporter 的工作就只是轉成 time series data。</p>
 <p>如果有比較特殊的 metrics 沒有匯出，例如說自家的 metrics ，但又希望能放到 prometheus 上監測，例如每秒收到多少 request count，回應速度，錯誤訊息的統計&hellip;&hellip;等，這點也可以使用 client library 自幹 exporter 然後 expose http endpoint，這樣在 prometheus 上也可以看到自家產品的 metrics，非常好用。有機會我們來聊自幹 exporter。</p>
 
@@ -848,9 +848,9 @@ blocked_clients:1
           
           <li><a href="/post/prometheus-deployment-on-kubernetes/">Prometheus Deployment on Kubernetes</a></li>
           
-          <li><a href="/post/prometheus-deploy-grafana/">Prometheus Deploy Grafana</a></li>
-          
           <li><a href="/post/prometheus-scrape/">Prometheus Deploy Grafana</a></li>
+          
+          <li><a href="/post/prometheus-deploy-grafana/">Prometheus Deploy Grafana</a></li>
           
           <li><a href="/post/redis-ha-topology/">Redis Ha Topology</a></li>
           

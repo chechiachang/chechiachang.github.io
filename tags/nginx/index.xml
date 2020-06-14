@@ -129,7 +129,7 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;li&gt;在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量&lt;/li&gt;
 &lt;li&gt;另外一個 service 就是 default backend 的 service&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading&#34;&gt;踩雷&lt;/h1&gt;
+&lt;h1 id=&#34;踩雷&#34;&gt;踩雷&lt;/h1&gt;
 &lt;p&gt;第一個雷點是 helm chart install 帶入的 &lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34;&gt;parameters&lt;/a&gt;，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \
@@ -161,12 +161,12 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;heading&#34;&gt;摘要&lt;/h1&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx Ingress Controller 運作原理&lt;/li&gt;
 &lt;li&gt;設定 Nginx Ingress Controller&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;heading-1&#34;&gt;運作原理&lt;/h1&gt;
+&lt;h1 id=&#34;運作原理&#34;&gt;運作原理&lt;/h1&gt;
 &lt;p&gt;昨天講完 nginx ingress controller 部屬，今天來談談 controller 是如何運作的。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx&lt;/li&gt;

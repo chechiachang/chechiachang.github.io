@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -690,7 +690,7 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 <li>在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量</li>
 <li>另外一個 service 就是 default backend 的 service</li>
 </ul>
-<h1 id="heading">踩雷</h1>
+<h1 id="踩雷">踩雷</h1>
 <p>第一個雷點是 helm chart install 帶入的 <a href="https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration">parameters</a>，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。</p>
 <pre><code>$ helm install stable/nginx-ingress \
 	--set controller.metrics.enabled=true \

@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -611,7 +611,7 @@
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
 <hr>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>Zookeeper Multi-server setup</li>
 <li>Kafka Multi-broker setup</li>
@@ -672,7 +672,7 @@ kafka-0-zookeeper-2   1/1     Running     0          42d     10.8.3.6        gke
 </ul>
 </li>
 </ul>
-<h1 id="kafka-">Kafka 的設定</h1>
+<h1 id="kafka-的設定">Kafka 的設定</h1>
 <pre><code>## The StatefulSet installs 3 pods by default
 replicas: 3
 
@@ -722,7 +722,7 @@ kafkaHeapOptions: &quot;-Xmx4G -Xms1G&quot;
   &quot;auto.create.topics.enable&quot;: true
   &quot;message.max.bytes&quot;: &quot;16000000&quot; # Extend global topic max message bytes to 16 Mb
 </code></pre><p>這邊再把 broker 運行的設定參數塞進去，參數的用途大多與複本與高可用機制有關下面都會提到。</p>
-<h1 id="kafka--1">Kafka 的複本機制</h1>
+<h1 id="kafka-的複本機制">Kafka 的複本機制</h1>
 <p><a href="https://kafka.apache.org/documentation/#replication">kafka 的副本機制</a> 預設將各個 topic partition 的 log 分散到 server 上，如果其中一台 server 故障，資料仍然可用。</p>
 <p>兩個重要的設定</p>
 <ul>

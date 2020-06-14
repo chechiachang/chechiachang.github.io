@@ -4,12 +4,47 @@
   
   <url>
     <loc>https://chechiachang.github.io/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/devops/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/distributed/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/kafka/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/stateful/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechiachang.github.io/tags/</loc>
+    <lastmod>2020-02-11T17:29:35+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechiachang.github.io/post/say-goodbye-2019/</loc>
-    <lastmod>2019-12-31T18:38:51+08:00</lastmod>
+    <lastmod>2019-12-31T19:29:13+08:00</lastmod>
   </url>
   
   <url>
@@ -39,11 +74,6 @@
   
   <url>
     <loc>https://chechiachang.github.io/talk/mit-6.824-go-mapreduce/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/</loc>
     <lastmod>2019-12-31T19:28:28+08:00</lastmod>
   </url>
   
@@ -164,21 +194,6 @@
   
   <url>
     <loc>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</loc>
-    <lastmod>2019-10-19T09:22:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/distributed/</loc>
-    <lastmod>2019-10-19T09:22:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/kafka/</loc>
-    <lastmod>2019-10-19T09:22:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechiachang.github.io/tags/kubernetes/</loc>
     <lastmod>2019-10-19T09:22:28+08:00</lastmod>
   </url>
   
@@ -473,11 +488,6 @@
   </url>
   
   <url>
-    <loc>https://chechiachang.github.io/tags/devops/</loc>
-    <lastmod>2019-04-19T22:26:02+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechiachang.github.io/tags/jenkins/</loc>
     <lastmod>2019-04-19T22:26:02+08:00</lastmod>
   </url>
@@ -669,6 +679,7 @@
   
   <url>
     <loc>https://chechiachang.github.io/authors/</loc>
+    <lastmod>2019-12-17T00:43:11+08:00</lastmod>
   </url>
   
   <url>

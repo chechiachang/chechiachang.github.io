@@ -119,14 +119,14 @@ jx install \
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Select the organization where you want to create the environment repository:
@@ -155,14 +155,14 @@ jx install \
 &lt;li&gt;Enable Github as Git pipeline server&lt;/li&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Select the organization where you want to create the environment repository:
@@ -242,7 +242,7 @@ Login with username and password&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;kc config set-context gke_my-project_asia-east1-b_jenkins \
   --namespace=jx
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;why-not-use-helm-chart&#34;&gt;Why not use helm chart?&lt;/h3&gt;
-&lt;p&gt;It&#39;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s readlly depend on what we need in CI/CD automation.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/jenkins&#34;&gt;Jenkins Helm Chart&lt;/a&gt; create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
 Jenkin Platform with jx is Jenkins Platform native to Kubernetes. It comes with powerful cloud native components like Prow automation, Nexus, Docker Registry, Tekton Pipeline, &amp;hellip;&lt;/p&gt;
 &lt;h3 id=&#34;check-jenkins-x-examples&#34;&gt;Check jenkins-x examples&lt;/h3&gt;

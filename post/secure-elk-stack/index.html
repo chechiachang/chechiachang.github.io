@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -605,7 +605,7 @@
 </li>
 </ul>
 <hr>
-<h1 id="-x-pack">啟用 X-pack</h1>
+<h1 id="啟用-x-pack">啟用 X-pack</h1>
 <p>Elasticsearch 的安全性模組由 x-pack extension 提供，在 <a href="https://www.elastic.co/what-is/open-x-pack">6.3.0 之後的版本</a>，安裝 elasticsearch 的過程中就預設安裝 x-pack。</p>
 <p>附上<a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/get-started-enable-security.html">啟用的官方文件</a></p>
 <p>然而，由於舊版的 x-pack 是付費內容，目前的 elasticsearch 安裝完後，elasticsearch.yml 設定預設不啟用 x-pack，也就是說沒看到這篇官方文件的話，很容易就獲得沒有任何 security 功能的 ELK。</p>
@@ -695,7 +695,7 @@ elasticsearch.password: &quot;***********&quot;
 <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/configuring-tls.html#configuring-tls">elasticsearch configuring tls</a></li>
 <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/certutil.html">certutil</a></li>
 </ul>
-<h1 id="heading">分析一下需求跟規格</h1>
+<h1 id="分析一下需求跟規格">分析一下需求跟規格</h1>
 <p>我們需要為每一個 node 生一組 node certificate，使用 node certificate 產生 client certificates 提供給其他 client，連入時會驗證 client 是否為 authenticated user。</p>
 <p>針對目前這個 single-node ELK stack，我們可能有幾種選擇</p>
 <ul>
@@ -797,7 +797,7 @@ chown -R elasticsearch:elasticsearch /etc/elasticsearch/config
 <pre><code>/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
 /usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
 </code></pre><p>關於 X.509 Certifcate 之後有空我們來聊一下</p>
-<h1 id="-elasticsearch-">更新 elasticsearch 設定</h1>
+<h1 id="更新-elasticsearch-設定">更新 elasticsearch 設定</h1>
 <p>Certificates 都生完了，接下來更改 elasticsearch 的參數，在 transport layer 啟用 ssl。啟用 security 後，在 transport layer 啟動 ssl 是必須的。</p>
 <pre><code>$ sudo vim /etc/elasticsearch/elasticsearch.yml
 
@@ -890,7 +890,7 @@ journalctl -fu kibana
 <li>filebeat client to kibana server</li>
 </ul>
 <p>就是他們彼此互打，都要有 ca, key, cert</p>
-<h3 id="xd">但基本上的設定都一樣，下面可以不用看下去了XD</h3>
+<h3 id="但基本上的設定都一樣下面可以不用看下去了xd">但基本上的設定都一樣，下面可以不用看下去了XD</h3>
 <p>如果有用到再查文件就好，這邊直接小結</p>
 <ul>
 <li>設定 security 前要先想號自己的需求，如何連入，安全性設定到哪邊</li>
@@ -898,7 +898,7 @@ journalctl -fu kibana
 <li>使用 server certificate 再 parse 出 ca-certificate, client cers, key</li>
 </ul>
 <hr>
-<h1 id="kibana--server">kibana 作為 server</h1>
+<h1 id="kibana-作為-server">kibana 作為 server</h1>
 <p>工作路徑可能是這樣： app(apm-client library) -&gt; apm-server -&gt; kibana -&gt; elasticsearch</p>
 <ul>
 <li>kibana 連入 elasticsearch時， kibana 是 client 吃 elasticsearch 的憑證</li>
@@ -966,7 +966,7 @@ openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain 
 <pre><code>systemctl restart filebeat
 journalctl -fu filebeat
 </code></pre><hr>
-<h1 id="-kubernetes-">如果你的應用在 kubernetes 上</h1>
+<h1 id="如果你的應用在-kubernetes-上">如果你的應用在 kubernetes 上</h1>
 <p>可以使用下面方法拿到 client.cer ，然後用 secret 塞進 k8s，在用 volume from secrets，掛給監測應用的 filebeat</p>
 <pre><code>
 mkdir -p /etc/beats/config

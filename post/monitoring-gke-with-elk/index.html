@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -712,7 +712,7 @@ kubectl apply -f filebeat/7.3.1/nginx-config-configmap.yaml
   tag ${if record['stream'] == 'stderr' then 'raw.stderr' else 'raw.stdout' end}
   remove_keys stream,log
 &lt;/match&gt;
-</code></pre><h3 id="ssh-">ssh 進去逛</h3>
+</code></pre><h3 id="ssh-進去逛">ssh 進去逛</h3>
 <p>想看機器上實際的 log 狀況，我們也可以直接 ssh 進去</p>
 <p>先透過 kubectl 看一下 pod</p>
 <pre><code>$ kubectl get daemonsets --namespace kube-system
@@ -739,7 +739,7 @@ gke-chechaichang-pool-1-123456789-8n8z   Ready    &lt;none&gt;   37d   v1.13.7-g
 
 gcloud compute ssh gke-chechaichang-pool-1-123456789-3bzp
 </code></pre><p>如使用其他雲平台的 kubernetes service，或是 bare metal 的集群，請依照各自系統的方式連進去看看。</p>
-<h1 id="ssh-node--log">ssh node 找 log</h1>
+<h1 id="ssh-node-找-log">ssh node 找 log</h1>
 <p>ssh 進去後就可以到處來探險，順便看看 GKE 跑在機器上到底做了什麼事情。</p>
 <p>如果官方有出文件，可能可以不用進來看。各位大德有發現文件請留言跟我說。我個人很喜歡自己架集群起來連就去看，面對照官方文件上寫的東西，當然大部份時候都是文件沒有帶到，有很多發現。</p>
 <pre><code>$ ls /var/log
@@ -784,7 +784,7 @@ drwx------  2 root root 4.0K Aug 12 07:42 mounts
 <pre><code>head /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 </code></pre><p>這樣就找到我們的 log 了</p>
-<h1 id="heading">小節</h1>
+<h1 id="小節">小節</h1>
 <ul>
 <li>使用 filebeat 去查找</li>
 <li>透過 kubernetes daemonsets 可以快速佈置一份 filebeat 到所有 node，且設定都是一起更新</li>

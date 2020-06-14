@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -611,7 +611,7 @@
 <p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechiachang.github.io">https://chechiachang.github.io</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
 <p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
 <hr>
-<h1 id="heading">摘要</h1>
+<h1 id="摘要">摘要</h1>
 <ul>
 <li>從 Zookeeper 獲取資訊</li>
 <li>取得並處理 topic</li>
@@ -707,13 +707,13 @@ kafka-topics
 kafka-verifiable-consumer
 kafka-verifiable-producer
 </code></pre><p>很多工具，我們這邊只會看其中幾個</p>
-<h3 id="topic-">topic 資訊</h3>
+<h3 id="topic-資訊">topic 資訊</h3>
 <p>Topic 的資訊，跟 zookeeper 要</p>
 <pre><code># List topics
 /usr/bin/kafka-topics --list --zookeeper kafka-0-zookeeper
 
 ticker
-</code></pre><h3 id="-message">操作 message</h3>
+</code></pre><h3 id="操作-message">操作 message</h3>
 <p>從 topic 取得 message</p>
 <pre><code># This will create a new console-consumer and start consuming message to stdout
 /usr/bin/kafka-console-consumer \
@@ -752,7 +752,7 @@ Consumer group 'test' has no active members.
 
 TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
 ticker          0          23              23              0               -               -               -
-</code></pre><h1 id="topic--1">Topic 設定操作</h1>
+</code></pre><h1 id="topic-設定操作">Topic 設定操作</h1>
 <p><a href="https://kafka.apache.org/documentation/#topicconfigs">Topic 設定文件</a> 在此</p>
 <p>這邊透過 kafka-configs 從 zookeeper 取得 topic 設定，這邊的 max.message.bytes，是這個 topic 每個 message 的最大上限。</p>
 <pre><code>/usr/bin/kafka-configs --zookeeper kafka-0-zookeeper:2181 --describe max.message.bytes --entity-type topics

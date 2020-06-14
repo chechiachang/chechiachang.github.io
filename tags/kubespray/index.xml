@@ -19,7 +19,7 @@
       
       <guid>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</guid>
       <description>&lt;h1 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h1&gt;
-&lt;p&gt;If you&#39;re interested in building your own Kubernetes. Install the following tools we use.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re interested in building your own Kubernetes. Install the following tools we use.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;virtualbox 5.1+&lt;/a&gt; to create VMs, on which we deploy our Kubernetes.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34;&gt;vagrant 2.0.x+&lt;/a&gt; to control virtualbox to build and manage vms.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://docs.ansible.com/ansible/latest/intro_installation.html&#34;&gt;ansible-playbook&lt;/a&gt; to run Kubespray playbook to deploy Kuberentes&lt;/p&gt;
@@ -36,13 +36,13 @@ pip install ansible
 port install py27-netaddr
 
 # netaddr is required by Kubespray
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;lets-get-started&#34;&gt;Let&#39;s get started&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;lets-get-started&#34;&gt;Let&amp;rsquo;s get started&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;clone https://github.com/kubernetes-incubator/kubespray.git
 
 cd kubespray
 vagrant up
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That&#39;s it!&lt;/p&gt;
-&lt;p&gt;This gonna take a while. Let&#39;s get to some details.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That&amp;rsquo;s it!&lt;/p&gt;
+&lt;p&gt;This gonna take a while. Let&amp;rsquo;s get to some details.&lt;/p&gt;
 &lt;h3 id=&#34;virtualbox&#34;&gt;Virtualbox&lt;/h3&gt;
 &lt;p&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;virtualbox 5.1+&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Disadvantage about vbox GUI:&lt;/p&gt;

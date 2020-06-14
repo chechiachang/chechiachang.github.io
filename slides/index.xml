@@ -18,7 +18,7 @@
       <pubDate>Wed, 30 Oct 2019 11:26:31 +0800</pubDate>
       
       <guid>https://chechiachang.github.io/slides/kubernetes-introduction-for-non-engineer/</guid>
-      <description>&lt;h3 id=&#34;kubernetes-&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
+      <description>&lt;h3 id=&#34;kubernetes-是啥能吃嗎&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
 &lt;p&gt;給非工程師的 Kubernetes 簡介&lt;/p&gt;
 
 
@@ -34,17 +34,17 @@
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;heading&#34;&gt;大綱&lt;/h3&gt;
+&lt;h3 id=&#34;大綱&#34;&gt;大綱&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;kubernetes 是一個工具，&lt;a href=&#34;https://trends.google.com.tw/trends/explore?date=today%205-y&amp;amp;q=docker,kubernetes,blockchain&#34;&gt;越來越夯&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;這個工具想解決的問題&lt;/li&gt;
 &lt;li&gt;最後才說 Kubernetes 是啥能吃嗎&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;-app-&#34;&gt;寫完 app 到上線要走的路&lt;/h3&gt;
+&lt;h3 id=&#34;寫完-app-到上線要走的路&#34;&gt;寫完 app 到上線要走的路&lt;/h3&gt;
 &lt;p&gt;工程團隊產出完美的程式碼後，大家從此過著幸福快樂的日子?&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;-app--1&#34;&gt;寫完 app 到上線要走的路&lt;/h3&gt;
+&lt;h3 id=&#34;寫完-app-到上線要走的路-1&#34;&gt;寫完 app 到上線要走的路&lt;/h3&gt;
 
 
 
@@ -59,7 +59,7 @@
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;heading-1&#34;&gt;常見問題&lt;/h3&gt;
+&lt;h3 id=&#34;常見問題&#34;&gt;常見問題&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;ldquo;It works on MY PC !&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;一個 app 不夠力，有沒有試過兩個 app ？&lt;/li&gt;
@@ -78,7 +78,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;1--container&#34;&gt;1. 容器 (Container)&lt;/h3&gt;
+&lt;h3 id=&#34;1-容器-container&#34;&gt;1. 容器 (Container)&lt;/h3&gt;
 &lt;p&gt;使用容器來解決 It works on my PC ! 的問題&lt;/p&gt;
 
 
@@ -94,7 +94,7 @@
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;1--container-1&#34;&gt;1. 容器 (Container)&lt;/h3&gt;
+&lt;h3 id=&#34;1-容器-container-1&#34;&gt;1. 容器 (Container)&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;怕缺東西，整包包好放上去跑
 &lt;ul&gt;
@@ -107,7 +107,7 @@
 &lt;li&gt;開發 -&amp;gt; 打包 -&amp;gt; 部署&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;1--container-2&#34;&gt;1. 容器 (Container)&lt;/h3&gt;
+&lt;h3 id=&#34;1-容器-container-2&#34;&gt;1. 容器 (Container)&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;keywords: 容器，容器化，container, &lt;a href=&#34;https://www.docker.com/&#34;&gt;docker&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -125,7 +125,7 @@
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;2--app--app-&#34;&gt;2. 一個 app 不夠力，有沒有試過兩個 app ？&lt;/h3&gt;
+&lt;h3 id=&#34;2-一個-app-不夠力有沒有試過兩個-app-&#34;&gt;2. 一個 app 不夠力，有沒有試過兩個 app ？&lt;/h3&gt;
 &lt;p&gt;1 app = 100 使用者使用，1,000 使用者要怎麼辦?&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;把 app 放到 10 倍大的 server&lt;/li&gt;
@@ -135,7 +135,7 @@
 &lt;li&gt;垂直擴展(vertical scaling), 水平擴展(horizontal scaling)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;2-&#34;&gt;2. 水平擴展與效能提升&lt;/h3&gt;
+&lt;h3 id=&#34;2-水平擴展與效能提升&#34;&gt;2. 水平擴展與效能提升&lt;/h3&gt;
 
 
 
@@ -150,14 +150,14 @@
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;3-staging--production-&#34;&gt;3. staging 跟 production 的差別&lt;/h3&gt;
+&lt;h3 id=&#34;3-staging-跟-production-的差別&#34;&gt;3. staging 跟 production 的差別&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;staging 有一個 QA&lt;/li&gt;
 &lt;li&gt;production 有很多 QA&lt;/li&gt;
 &lt;li&gt;壞了被使用者發現，把使用者當 QA ，會遭到報應的&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;3-staging--production--1&#34;&gt;3. staging 跟 production 的差別&lt;/h3&gt;
+&lt;h3 id=&#34;3-staging-跟-production-的差別-1&#34;&gt;3. staging 跟 production 的差別&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;production 穩定嗎？有多穩？&lt;/li&gt;
 &lt;li&gt;production 速度快嗎？有多快？&lt;/li&gt;
@@ -165,7 +165,7 @@
 &lt;li&gt;服務監測(monitoring)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;3-staging--production--2&#34;&gt;3. staging 跟 production 的差別&lt;/h3&gt;
+&lt;h3 id=&#34;3-staging-跟-production-的差別-2&#34;&gt;3. staging 跟 production 的差別&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;壞了才發現壞掉&lt;/li&gt;
 &lt;li&gt;壞之前發現即將要壞掉&lt;/li&gt;
@@ -190,7 +190,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;heading-2&#34;&gt;複習一下&lt;/h3&gt;
+&lt;h3 id=&#34;複習一下&#34;&gt;複習一下&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&amp;ldquo;It works on MY PC !&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;一個 app 變成兩個 app&lt;/li&gt;
@@ -198,7 +198,7 @@
 &lt;li&gt;Valar Morghulis. Valar Dohaeris.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;kubernetes--1&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
+&lt;h3 id=&#34;kubernetes-是啥能吃嗎-1&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes (K8s) is an open-source system for automating deployment, scaling, and management of containerized applications.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kubernetes.io/&#34;&gt;https://kubernetes.io/&lt;/a&gt;&lt;/li&gt;
@@ -217,7 +217,7 @@
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;kubernetes--2&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
+&lt;h3 id=&#34;kubernetes-是啥能吃嗎-2&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Containerized: &amp;ldquo;It works on every PC&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;Scaling: 1 app -&amp;gt; 10 apps&lt;/li&gt;
@@ -225,7 +225,7 @@
 &lt;li&gt;Health Check, Auto Recovery&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;-kubernetes-&#34;&gt;我們用 Kubernetes 做到的事&lt;/h3&gt;
+&lt;h3 id=&#34;我們用-kubernetes-做到的事&#34;&gt;我們用 Kubernetes 做到的事&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;一鍵部署上線&lt;/li&gt;
 &lt;li&gt;自動監測&lt;/li&gt;
@@ -639,7 +639,7 @@ kafka-1-zookeeper-2                                      1/1     Running     0  
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;heading&#34;&gt;重點&lt;/h3&gt;
+&lt;h3 id=&#34;重點&#34;&gt;重點&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;要仔細看完 helm chart values 的設定，設錯就幹掉重來&lt;/li&gt;
 &lt;li&gt;kafka 的概念與設定，要花時間研究清楚&lt;/li&gt;
@@ -747,14 +747,14 @@ jx install \
 &lt;ul&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -773,14 +773,14 @@ jx install \
 &lt;ul&gt;
 &lt;li&gt;Select Jenkins installation type:
 &lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Static Master Jenkins&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Serverless Jenkins X Pipelines with Tekon&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Static Master Jenkins&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Pick default workload build pack
 &lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt;Library Workloads: CI+Release but no CD&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Kubernetes Workloads: Automated CI+CD with GitOps Promotion&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Library Workloads: CI+Release but no CD&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1218,7 +1218,7 @@ kubelet -&amp;gt; cri-o -&amp;gt; runC -&amp;gt; container&lt;/p&gt;
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;lets-use-cri-o&#34;&gt;Let&#39;s use CRI-O&lt;/h3&gt;
+&lt;h3 id=&#34;lets-use-cri-o&#34;&gt;Let&amp;rsquo;s use CRI-O&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes-sigs/cri-o&#34;&gt;Install cri-o&lt;/a&gt; and dependencies, runC and CNI&lt;/li&gt;
 &lt;li&gt;Install &lt;a href=&#34;https://github.com/containers/libpod&#34;&gt;Podman&lt;/a&gt;
@@ -1288,7 +1288,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;outline&#34;&gt;Outline&lt;/h1&gt;
 &lt;ol&gt;
-&lt;li&gt;Let&#39;s try Github API&lt;/li&gt;
+&lt;li&gt;Let&amp;rsquo;s try Github API&lt;/li&gt;
 &lt;li&gt;Use github API with go-github&lt;/li&gt;
 &lt;li&gt;Work with limitation of github API&lt;/li&gt;
 &lt;li&gt;An application of github user data&lt;/li&gt;
@@ -1309,7 +1309,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 &lt;/figure&gt;
 
 &lt;hr&gt;
-&lt;h1 id=&#34;lets-try-github-api&#34;&gt;Let&#39;s Try Github API&lt;/h1&gt;
+&lt;h1 id=&#34;lets-try-github-api&#34;&gt;Let&amp;rsquo;s Try Github API&lt;/h1&gt;
 &lt;p&gt;Get data of a user with username&lt;/p&gt;
 &lt;p&gt;Web page&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/chechiachang&#34;&gt;https://github.com/chechiachang&lt;/a&gt;&lt;/p&gt;
@@ -1371,7 +1371,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Most API requires authentication&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://developer.github.com/v3/#authentication&#34;&gt;https://developer.github.com/v3/#authentication&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Let&#39;s generate api access token from web page&lt;/li&gt;
+&lt;li&gt;Let&amp;rsquo;s generate api access token from web page&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;p&gt;Github -&amp;gt; User -&amp;gt; settings -&amp;gt; Developer settings -&amp;gt; Personal access tokens&lt;/p&gt;
@@ -1473,7 +1473,7 @@ One of the easist ways is time.Sleep()&lt;/li&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;an-application-using-github-data&#34;&gt;An Application Using Github Data&lt;/h1&gt;
 &lt;p&gt;Scouter &lt;a href=&#34;https://github.com/chechiachang/scouter&#34;&gt;https://github.com/chechiachang/scouter&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Let&#39;s Live Demo&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s Live Demo&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;an-application-using-github-data-1&#34;&gt;An Application Using Github Data&lt;/h1&gt;
 &lt;ul&gt;
@@ -1514,7 +1514,7 @@ Drangon Ball!
 For COSCUP!&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;../images/5000.jpg&#34; alt=&#34;inline&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;lets-live-demo&#34;&gt;Let&#39;s Live Demo!&lt;/h1&gt;
+&lt;h1 id=&#34;lets-live-demo&#34;&gt;Let&amp;rsquo;s Live Demo!&lt;/h1&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;outline&#34;&gt;Outline&lt;/h1&gt;
 &lt;p&gt;Data mining
@@ -1542,7 +1542,7 @@ Face detection &amp;amp; recognition&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;User fetcher &amp;ndash; fetch user data with search API&lt;/li&gt;
 &lt;li&gt;User detail fetcher &amp;ndash; fetch user detail with user API&lt;/li&gt;
-&lt;li&gt;Avatar downloader &amp;ndash; fetch user&#39;s avatar by user data&lt;/li&gt;
+&lt;li&gt;Avatar downloader &amp;ndash; fetch user&amp;rsquo;s avatar by user data&lt;/li&gt;
 &lt;li&gt;Contribution fetcher &amp;ndash; parse github contribution HTML&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
@@ -1558,7 +1558,7 @@ User API 50000 query / hour&lt;/li&gt;
 &lt;p&gt;&lt;a href=&#34;https://api.github.com/search/users?q=location:taiwan+created:2008-01-01..2008-02-01&amp;amp;sort=joined&amp;amp;order=asc&#34;&gt;https://github.com/kubernetes/kubernetes/pull/66403&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;face-detection--face-recognition&#34;&gt;Face detection &amp;amp; Face recognition&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/ageitgey/face_recognition&#34;&gt;The world&#39;s simplest facial recognition api&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/ageitgey/face_recognition&#34;&gt;The world&amp;rsquo;s simplest facial recognition api&lt;/a&gt;
 Data pre-processing -&amp;gt; Face encoding -&amp;gt; Face recognition&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;../images/face_recognition.png&#34; alt=&#34;inline&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -1635,7 +1635,7 @@ find the distances between all face identities&lt;/li&gt;
 Nobody use their won face! 3000 human faces / 14000 avatars
 Github avatar has very low resolution&lt;/li&gt;
 &lt;li&gt;Face recognition API tuning required&lt;/li&gt;
-&lt;li&gt;I&#39;m a Unity and C# newbie ;)&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m a Unity and C# newbie ;)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
 &lt;p&gt;『不是不準，只是正確機率不夠高。』

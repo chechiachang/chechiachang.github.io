@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.6902eb787847c86c68b614c4f6c96e42.css">
+  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
 
   
 
@@ -595,24 +595,24 @@
 <h1 id="ca-terminology">CA Terminology</h1>
 <p>先把實際執行 CA 簽發的名詞定義一下，以免跟 cert-manager 的資源搞混</p>
 <ul>
-<li>Certificate: 憑證，x509 certificate，cert-manager 自動管理的目標，透過 let's encript 取得的 x509 certificates</li>
+<li>Certificate: 憑證，x509 certificate，cert-manager 自動管理的目標，透過 let&rsquo;s encript 取得的 x509 certificates</li>
 <li>CA (Certificate Authority): issue signed certificate 的機構</li>
 <li>issue: 頒發，指 CA 產生 certificate 與 key (今天的範例格式是 .crt 與 .key)</li>
 <li>Sign vs self-signed: 簽核，自己簽核，使用信任的 CA issue certificate，或是使用自己產生的 CA self-sign，然後把 CA 加到可以被信任的 CA 清單中。</li>
 </ul>
-<p>Let's Encript CA issues signed certificates</p>
+<p>Let&rsquo;s Encript CA issues signed certificates</p>
 <p>Kubernetes in-cluster CA issues self-signed certificates</p>
 <p>cert-manager 的 CRD 資源，使用來描述 cert-manager 如何執行上述操作，CRD 底下都會加上 ``*.certmanager.k8s.io` 方便辨識。</p>
-<h1 id="-issuer">設定 Issuer</h1>
+<h1 id="設定-issuer">設定 Issuer</h1>
 <p>Issuer 要怎麼翻成中文XD，憑證頒發機構？</p>
-<p>總之在開始簽發 certificates 前，要先定義 issuers.certmanager.k8s.io ，代表一個能簽發 certificate CA，例如 Let's Encript，或是 kubernetes 內部也有內部使用的憑證簽發，放在 secrets 中。</p>
+<p>總之在開始簽發 certificates 前，要先定義 issuers.certmanager.k8s.io ，代表一個能簽發 certificate CA，例如 Let&rsquo;s Encript，或是 kubernetes 內部也有內部使用的憑證簽發，放在 secrets 中。</p>
 <p>這些 Issuer 會讓 certificates.certmanager.k8s.i8o 使用，定義如何取得 certificate 時，選擇 Issuer。</p>
 <p>cert-manager 上可以定義單一 namespace 的 issuers.certmanager 與集群都可使用的 clusterissuers.certmanager</p>
 <p>cert-manager 有支援幾種的 issuer type</p>
 <ul>
 <li>CA: 使用 x509 keypair 產生certificate，存在 kubernetes secret</li>
 <li>Self signed: 自簽 certificate</li>
-<li>ACME: 從 ACME (ex. Let's Encrypt) server 取得 ceritificate</li>
+<li>ACME: 從 ACME (ex. Let&rsquo;s Encrypt) server 取得 ceritificate</li>
 <li>Vault: 從 Vault PKI backend 頒發 certificate</li>
 <li>Venafi: Venafi Cloud</li>
 </ul>
@@ -650,7 +650,7 @@ spec:
 <li>與 certificate.certmanager 都放在相同 namespace 中，產生 certificate.certmanager 的時候要注意才不會找不到 secret</li>
 <li>這邊指定了 certificate 的有效期間與 renew 時間 (預設值)，有需要可以更改</li>
 </ul>
-<h1 id="-ingress--tls">配合 Ingress 設置 tls</h1>
+<h1 id="配合-ingress-設置-tls">配合 Ingress 設置 tls</h1>
 <p>有上述的設定，接下來可以請求 tls certificate</p>
 <p>記得我們上篇 Nginx Ingress Controller 提到的 ingreess 設定嗎？這邊準備了一個適合配合 nginx ingress 使用的 tls 設定</p>
 <pre><code>apiVersion: extensions/v1beta1
@@ -738,7 +738,7 @@ Data
 tls.crt:  3566 bytes
 tls.key:  1675 bytes
 </code></pre><p>如此便可以透過 ingress 設定 nginx 使用 https</p>
-<h1 id="heading">小結</h1>
+<h1 id="小結">小結</h1>
 <ul>
 <li>了解 *.certmanager.k8s.io CRD 定義與意義</li>
 <li>設定 Issuer 與 certificate</li>
