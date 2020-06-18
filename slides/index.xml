@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Slides on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/slides/</link>
+    <link>https://chechia.net/slides/</link>
     <description>Recent content in Slides on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Wed, 30 Oct 2019 11:26:31 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/slides/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/slides/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Kubernetes Introduction for Non Engineer</title>
-      <link>https://chechiachang.github.io/slides/kubernetes-introduction-for-non-engineer/</link>
+      <link>https://chechia.net/slides/kubernetes-introduction-for-non-engineer/</link>
       <pubDate>Wed, 30 Oct 2019 11:26:31 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/kubernetes-introduction-for-non-engineer/</guid>
+      <guid>https://chechia.net/slides/kubernetes-introduction-for-non-engineer/</guid>
       <description>&lt;h3 id=&#34;kubernetes-是啥能吃嗎&#34;&gt;Kubernetes 是啥能吃嗎&lt;/h3&gt;
 &lt;p&gt;給非工程師的 Kubernetes 簡介&lt;/p&gt;
 
@@ -247,10 +247,10 @@
     
     <item>
       <title>Deploy Kafka on Kubernetes</title>
-      <link>https://chechiachang.github.io/slides/kubernetes-kafka-deployment/</link>
+      <link>https://chechia.net/slides/kubernetes-kafka-deployment/</link>
       <pubDate>Fri, 18 Oct 2019 16:12:42 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/kubernetes-kafka-deployment/</guid>
+      <guid>https://chechia.net/slides/kubernetes-kafka-deployment/</guid>
       <description>&lt;h3 id=&#34;deploy-kafka-on-kubernetes&#34;&gt;Deploy Kafka on Kubernetes&lt;/h3&gt;
 &lt;p&gt;David Chang&lt;/p&gt;
 
@@ -263,7 +263,7 @@
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/kubernetes-kafka-qrcode.png&#34; width=&#34;60%&#34; height=&#34;60%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/kubernetes-kafka-qrcode.png&#34; width=&#34;60%&#34; height=&#34;60%&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -669,10 +669,10 @@ kafka-1-zookeeper-2                                      1/1     Running     0  
     
     <item>
       <title>Jenkins X on Kubernetes</title>
-      <link>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</link>
+      <link>https://chechia.net/slides/jenkins-x-on-kubernetes/</link>
       <pubDate>Fri, 19 Apr 2019 21:36:50 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/jenkins-x-on-kubernetes/</guid>
+      <guid>https://chechia.net/slides/jenkins-x-on-kubernetes/</guid>
       <description>&lt;h3 id=&#34;jenkinshttpsjenkinsio&#34;&gt;&lt;a href=&#34;https://jenkins.io/&#34;&gt;Jenkins&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;One of the earliest open source antomation server&lt;/li&gt;
@@ -950,7 +950,7 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/jenkins/github-page-qrcode.png&#34; width=&#34;45%&#34; height=&#34;45%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/jenkins/github-page-qrcode.png&#34; width=&#34;45%&#34; height=&#34;45%&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -960,10 +960,10 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     
     <item>
       <title>CRI, OCI, CRI-O</title>
-      <link>https://chechiachang.github.io/slides/container-runtime-interface/</link>
+      <link>https://chechia.net/slides/container-runtime-interface/</link>
       <pubDate>Sun, 19 Aug 2018 18:00:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/container-runtime-interface/</guid>
+      <guid>https://chechia.net/slides/container-runtime-interface/</guid>
       <description>&lt;p&gt;footer: Che-Chia David Chang, 2018,  &lt;a href=&#34;https://github.com/chechiachang&#34;&gt;https://github.com/chechiachang&lt;/a&gt;
 slidenumbers: true&lt;/p&gt;
 &lt;h1 id=&#34;cri-oci-cri-o&#34;&gt;CRI, OCI, CRI-O&lt;/h1&gt;
@@ -980,7 +980,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/davidchang.jpg&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/davidchang.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -995,7 +995,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/mithril.jpg&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/mithril.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1018,7 +1018,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/cri-o.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/cri-o.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1033,7 +1033,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/kubernetes.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/kubernetes.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1089,7 +1089,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/docker-angry.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/docker-angry.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1104,7 +1104,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/rkt.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/rkt.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1133,7 +1133,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/containerd.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/containerd.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1212,7 +1212,7 @@ kubelet -&amp;gt; cri-o -&amp;gt; runC -&amp;gt; container&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/cri-o-arch.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/cri-o-arch.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1260,10 +1260,10 @@ Rttps://kubernetes.io/blog/2017/11/containerd-container-runtime-options-kubernet
     
     <item>
       <title>Github API with go-github</title>
-      <link>https://chechiachang.github.io/slides/go-github/</link>
+      <link>https://chechia.net/slides/go-github/</link>
       <pubDate>Thu, 19 Apr 2018 18:00:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/go-github/</guid>
+      <guid>https://chechia.net/slides/go-github/</guid>
       <description>&lt;p&gt;footer: Che-Chia David Chang, 2018,  &lt;a href=&#34;https://github.com/chechiachang/my-speeches/tree/master/go-github&#34;&gt;https://github.com/chechiachang/my-speeches/tree/master/go-github&lt;/a&gt;
 slidenumbers: true&lt;/p&gt;
 &lt;h1 id=&#34;github-api-with-go-github&#34;&gt;Github API with Go-Github&lt;/h1&gt;
@@ -1280,7 +1280,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/davidchang.jpg&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/davidchang.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1303,7 +1303,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/octocat.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/octocat.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1327,7 +1327,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/go-github/github-api-search-bigbig.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/go-github/github-api-search-bigbig.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1344,7 +1344,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/go-github/github-api-search-audreyt.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/go-github/github-api-search-audreyt.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1361,7 +1361,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/go-github/github-api-search-user.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/go-github/github-api-search-user.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1385,7 +1385,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/go-github/github-api-access-token.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/go-github/github-api-access-token.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1408,7 +1408,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/go-github/github-api-gogithub-auth.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/go-github/github-api-gogithub-auth.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1425,7 +1425,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/go-github/github-api-example.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/go-github/github-api-example.png&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1457,7 +1457,7 @@ One of the easist ways is time.Sleep()&lt;/li&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/party_parrot.gif&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/party_parrot.gif&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1496,10 +1496,10 @@ One of the easist ways is time.Sleep()&lt;/li&gt;
     
     <item>
       <title>Scouter</title>
-      <link>https://chechiachang.github.io/slides/coscup-2018-scouter/</link>
+      <link>https://chechia.net/slides/coscup-2018-scouter/</link>
       <pubDate>Thu, 19 Apr 2018 18:00:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/coscup-2018-scouter/</guid>
+      <guid>https://chechia.net/slides/coscup-2018-scouter/</guid>
       <description>&lt;p&gt;footer: Che-Chia David Chang, 2018,  &lt;a href=&#34;https://github.com/chechiachang/scouter&#34;&gt;https://github.com/chechiachang/scouter&lt;/a&gt;
 slidenumbers: true&lt;/p&gt;
 &lt;h1 id=&#34;scouter-face-recognition-contribution-detector&#34;&gt;Scouter: Face recognition contribution detector&lt;/h1&gt;

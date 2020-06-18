@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>golang on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/golang/</link>
+    <link>https://chechia.net/tags/golang/</link>
     <description>Recent content in golang on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Tue, 24 Dec 2019 19:00:00 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechiachang.github.io/talk/mit-6.824-go-mapreduce/</link>
+      <link>https://chechia.net/talk/mit-6.824-go-mapreduce/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/mit-6.824-go-mapreduce/</guid>
+      <guid>https://chechia.net/talk/mit-6.824-go-mapreduce/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechiachang.github.io/post/mit-6.824-distributed-system/</link>
+      <link>https://chechia.net/post/mit-6.824-distributed-system/</link>
       <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/mit-6.824-distributed-system/</guid>
+      <guid>https://chechia.net/post/mit-6.824-distributed-system/</guid>
       <description>&lt;p&gt;跟著 MIT 6.824 學習分散式系統&lt;/p&gt;
 &lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
 &lt;ul&gt;
@@ -49,10 +49,10 @@
     
     <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechiachang.github.io/project/mit-6.824-distributed-system/</link>
+      <link>https://chechia.net/project/mit-6.824-distributed-system/</link>
       <pubDate>Mon, 16 Dec 2019 23:16:16 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/project/mit-6.824-distributed-system/</guid>
+      <guid>https://chechia.net/project/mit-6.824-distributed-system/</guid>
       <description>&lt;p&gt;Learn distributed system with MIT 6.824&lt;/p&gt;
 &lt;p&gt;跟著 &lt;a href=&#34;http://nil.csail.mit.edu/6.824/2018/general.html&#34;&gt;MIT 6.824&lt;/a&gt; 學習分散式系統&lt;/p&gt;
 &lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
@@ -72,19 +72,19 @@
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</link>
+      <link>https://chechia.net/talk/gdd-devfest-2019-scouter/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</guid>
+      <guid>https://chechia.net/talk/gdd-devfest-2019-scouter/</guid>
       <description></description>
     </item>
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</link>
+      <link>https://chechia.net/talk/gdg-devfest-2018-scouter/</link>
       <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</guid>
+      <guid>https://chechia.net/talk/gdg-devfest-2018-scouter/</guid>
       <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
 &lt;p&gt;本次演講內容有:&lt;/p&gt;
 &lt;ol&gt;
@@ -97,28 +97,28 @@
     
     <item>
       <title>Go Webassembly Intro</title>
-      <link>https://chechiachang.github.io/talk/go-webassembly-intro/</link>
+      <link>https://chechia.net/talk/go-webassembly-intro/</link>
       <pubDate>Tue, 18 Dec 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/go-webassembly-intro/</guid>
+      <guid>https://chechia.net/talk/go-webassembly-intro/</guid>
       <description></description>
     </item>
     
     <item>
       <title>使用 go-github 接 github api</title>
-      <link>https://chechiachang.github.io/talk/go-github/</link>
+      <link>https://chechia.net/talk/go-github/</link>
       <pubDate>Tue, 28 Aug 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/go-github/</guid>
+      <guid>https://chechia.net/talk/go-github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/coscup-2018-scouter/</link>
+      <link>https://chechia.net/talk/coscup-2018-scouter/</link>
       <pubDate>Sat, 11 Aug 2018 09:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/coscup-2018-scouter/</guid>
+      <guid>https://chechia.net/talk/coscup-2018-scouter/</guid>
       <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
 &lt;p&gt;本次演講內容有:&lt;/p&gt;
 &lt;ol&gt;
@@ -137,10 +137,10 @@
     
     <item>
       <title>Scouter: face recognition.</title>
-      <link>https://chechiachang.github.io/project/scouter/</link>
+      <link>https://chechia.net/project/scouter/</link>
       <pubDate>Wed, 19 Apr 2017 17:45:16 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/project/scouter/</guid>
+      <guid>https://chechia.net/project/scouter/</guid>
       <description></description>
     </item>
     

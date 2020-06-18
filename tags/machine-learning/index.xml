@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>machine-learning on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/machine-learning/</link>
+    <link>https://chechia.net/tags/machine-learning/</link>
     <description>Recent content in machine-learning on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Sat, 07 Dec 2019 00:47:35 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</link>
+      <link>https://chechia.net/talk/gdd-devfest-2019-scouter/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</guid>
+      <guid>https://chechia.net/talk/gdd-devfest-2019-scouter/</guid>
       <description></description>
     </item>
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</link>
+      <link>https://chechia.net/talk/gdg-devfest-2018-scouter/</link>
       <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</guid>
+      <guid>https://chechia.net/talk/gdg-devfest-2018-scouter/</guid>
       <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
 &lt;p&gt;本次演講內容有:&lt;/p&gt;
 &lt;ol&gt;
@@ -39,10 +39,10 @@
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/coscup-2018-scouter/</link>
+      <link>https://chechia.net/talk/coscup-2018-scouter/</link>
       <pubDate>Sat, 11 Aug 2018 09:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/coscup-2018-scouter/</guid>
+      <guid>https://chechia.net/talk/coscup-2018-scouter/</guid>
       <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
 &lt;p&gt;本次演講內容有:&lt;/p&gt;
 &lt;ol&gt;
@@ -61,10 +61,10 @@
     
     <item>
       <title>Scouter: face recognition.</title>
-      <link>https://chechiachang.github.io/project/scouter/</link>
+      <link>https://chechia.net/project/scouter/</link>
       <pubDate>Wed, 19 Apr 2017 17:45:16 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/project/scouter/</guid>
+      <guid>https://chechia.net/project/scouter/</guid>
       <description></description>
     </item>
     

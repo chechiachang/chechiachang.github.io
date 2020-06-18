@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Recent &amp; Upcoming Talks on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/talk/</link>
+    <link>https://chechia.net/talk/</link>
     <description>Recent content in Recent &amp; Upcoming Talks on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     
-	    <atom:link href="https://chechiachang.github.io/talk/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/talk/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Operate Kafka on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</link>
+      <link>https://chechia.net/talk/operate-kafka-on-kubernetes/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</guid>
-      <description>&lt;p&gt;後端工程與Devops，專精開發流程自動化，微服務開發，容器化，Kubernetes 維運。常出沒於 Golang Taipei 與 CNCF 社群，喜歡分享演講與撰寫技術文章。https://chechiachang.github.io/&lt;/p&gt;
+      <guid>https://chechia.net/talk/operate-kafka-on-kubernetes/</guid>
+      <description>&lt;p&gt;後端工程與Devops，專精開發流程自動化，微服務開發，容器化，Kubernetes 維運。常出沒於 Golang Taipei 與 CNCF 社群，喜歡分享演講與撰寫技術文章。https://chechia.net/&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;2019 GDG DevFest Kaohsiung&lt;/li&gt;
 &lt;li&gt;2018, 2019 IThome Cloud Summit&lt;/li&gt;
@@ -30,37 +30,37 @@
     
     <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechiachang.github.io/talk/mit-6.824-go-mapreduce/</link>
+      <link>https://chechia.net/talk/mit-6.824-go-mapreduce/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/mit-6.824-go-mapreduce/</guid>
+      <guid>https://chechia.net/talk/mit-6.824-go-mapreduce/</guid>
       <description></description>
     </item>
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</link>
+      <link>https://chechia.net/talk/gdd-devfest-2019-scouter/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gdd-devfest-2019-scouter/</guid>
+      <guid>https://chechia.net/talk/gdd-devfest-2019-scouter/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Deploy Kafka on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</link>
+      <link>https://chechia.net/talk/kubernetes-kafka-deployment/</link>
       <pubDate>Thu, 17 Oct 2019 20:50:50 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/kubernetes-kafka-deployment/</guid>
+      <guid>https://chechia.net/talk/kubernetes-kafka-deployment/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Service Mesh for Microservices on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</link>
+      <link>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</link>
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/service-mesh-for-microservices-on-kubernetes/</guid>
+      <guid>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</guid>
       <description>&lt;hr&gt;
 &lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
 &lt;p&gt;傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。&lt;/p&gt;
@@ -123,10 +123,10 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
     
     <item>
       <title>Jenkins on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</link>
+      <link>https://chechia.net/talk/jenkins-on-kubernetes/</link>
       <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</guid>
+      <guid>https://chechia.net/talk/jenkins-on-kubernetes/</guid>
       <description>&lt;ol&gt;
 &lt;li&gt;How to deploy a cloud-native Jenkins with Jenkins X.&lt;/li&gt;
 &lt;li&gt;A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes).&lt;/li&gt;
@@ -138,10 +138,10 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</link>
+      <link>https://chechia.net/talk/gdg-devfest-2018-scouter/</link>
       <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gdg-devfest-2018-scouter/</guid>
+      <guid>https://chechia.net/talk/gdg-devfest-2018-scouter/</guid>
       <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
 &lt;p&gt;本次演講內容有:&lt;/p&gt;
 &lt;ol&gt;
@@ -154,37 +154,37 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
     
     <item>
       <title>ELK for Applications on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/elk-on-kubernetes/</link>
+      <link>https://chechia.net/talk/elk-on-kubernetes/</link>
       <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/elk-on-kubernetes/</guid>
+      <guid>https://chechia.net/talk/elk-on-kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Go Webassembly Intro</title>
-      <link>https://chechiachang.github.io/talk/go-webassembly-intro/</link>
+      <link>https://chechia.net/talk/go-webassembly-intro/</link>
       <pubDate>Tue, 18 Dec 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/go-webassembly-intro/</guid>
+      <guid>https://chechia.net/talk/go-webassembly-intro/</guid>
       <description></description>
     </item>
     
     <item>
       <title>使用 go-github 接 github api</title>
-      <link>https://chechiachang.github.io/talk/go-github/</link>
+      <link>https://chechia.net/talk/go-github/</link>
       <pubDate>Tue, 28 Aug 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/go-github/</guid>
+      <guid>https://chechia.net/talk/go-github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechiachang.github.io/talk/coscup-2018-scouter/</link>
+      <link>https://chechia.net/talk/coscup-2018-scouter/</link>
       <pubDate>Sat, 11 Aug 2018 09:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/coscup-2018-scouter/</guid>
+      <guid>https://chechia.net/talk/coscup-2018-scouter/</guid>
       <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
 &lt;p&gt;本次演講內容有:&lt;/p&gt;
 &lt;ol&gt;
@@ -203,10 +203,10 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
     
     <item>
       <title>Kubernetes Networking</title>
-      <link>https://chechiachang.github.io/talk/kubernetes-networking/</link>
+      <link>https://chechia.net/talk/kubernetes-networking/</link>
       <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/kubernetes-networking/</guid>
+      <guid>https://chechia.net/talk/kubernetes-networking/</guid>
       <description>&lt;p&gt;從系統管理層面看Kubernetes的網路架構&lt;/p&gt;
 &lt;p&gt;網路實作為Kubernetes架構，也是開發過程中容易出錯的部分。本次演講將從群集管理員的角度，說明Kubernetes 中網路的實作。&lt;/p&gt;
 &lt;p&gt;大綱:&lt;/p&gt;
@@ -230,10 +230,10 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
     
     <item>
       <title>Manage and Schedule GPU Computing Tasks on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</link>
+      <link>https://chechia.net/talk/gpu-computing-on-kubernetes/</link>
       <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/gpu-computing-on-kubernetes/</guid>
+      <guid>https://chechia.net/talk/gpu-computing-on-kubernetes/</guid>
       <description>&lt;p&gt;Manage and Schedule GPU Computing Tasks on Kubernetes&lt;/p&gt;
 &lt;p&gt;使用Kubernets管理集群GPU機器，靈活的分配調度GPU資源，並自動排程GPU運算工作。
 使用者如資料科學家，只需將運算工作實施到Kubernetes上，Kubernetes便會檢視機器上可用的GPU資源，將運算工作分配到合適的機器
@@ -249,10 +249,10 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
     
     <item>
       <title>Deploy Kubernetes With Kubespray</title>
-      <link>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</link>
+      <link>https://chechia.net/talk/deploy-kubernetes-with-kubespray/</link>
       <pubDate>Wed, 28 Mar 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/deploy-kubernetes-with-kubespray/</guid>
+      <guid>https://chechia.net/talk/deploy-kubernetes-with-kubespray/</guid>
       <description>&lt;h1 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h1&gt;
 &lt;p&gt;If you&amp;rsquo;re interested in building your own Kubernetes. Install the following tools we use.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;virtualbox 5.1+&lt;/a&gt; to create VMs, on which we deploy our Kubernetes.&lt;/p&gt;
@@ -335,10 +335,10 @@ vagrant destroy
     
     <item>
       <title>Kubernetes Storage and Glusterfs</title>
-      <link>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</link>
+      <link>https://chechia.net/talk/kubernetes-storage-and-glusterfs/</link>
       <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/kubernetes-storage-and-glusterfs/</guid>
+      <guid>https://chechia.net/talk/kubernetes-storage-and-glusterfs/</guid>
       <description>&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;

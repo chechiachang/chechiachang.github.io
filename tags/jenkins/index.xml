@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>jenkins on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/jenkins/</link>
+    <link>https://chechia.net/tags/jenkins/</link>
     <description>Recent content in jenkins on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Sat, 20 Apr 2019 13:00:00 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Jenkins on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</link>
+      <link>https://chechia.net/talk/jenkins-on-kubernetes/</link>
       <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/jenkins-on-kubernetes/</guid>
+      <guid>https://chechia.net/talk/jenkins-on-kubernetes/</guid>
       <description>&lt;ol&gt;
 &lt;li&gt;How to deploy a cloud-native Jenkins with Jenkins X.&lt;/li&gt;
 &lt;li&gt;A pipeline with Kubernetes based dynamics worker sclaing (jenkins-kubernetes).&lt;/li&gt;
@@ -29,10 +29,10 @@
     
     <item>
       <title>Jenkins X on Kubernetes</title>
-      <link>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</link>
+      <link>https://chechia.net/post/jenkins-x-on-kubernetes/</link>
       <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</guid>
+      <guid>https://chechia.net/post/jenkins-x-on-kubernetes/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jenkins.io/&#34;&gt;Jenkins&lt;/a&gt; is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://jenkins-x.io/&#34;&gt;Jenkins X&lt;/a&gt;, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.&lt;/p&gt;
 &lt;p&gt;Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.&lt;/p&gt;
@@ -56,7 +56,7 @@
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/jenkins/architecture-serverless.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/jenkins/architecture-serverless.png&#34; &gt;
 
 
 
@@ -283,10 +283,10 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     
     <item>
       <title>Jenkins X on Kubernetes</title>
-      <link>https://chechiachang.github.io/project/jenkins-x-on-kubernetes/</link>
+      <link>https://chechia.net/project/jenkins-x-on-kubernetes/</link>
       <pubDate>Fri, 19 Apr 2019 11:11:59 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/project/jenkins-x-on-kubernetes/</guid>
+      <guid>https://chechia.net/project/jenkins-x-on-kubernetes/</guid>
       <description>&lt;p&gt;An example project to demonstrate a working pipeline with jenkins-x on Kubernetes.&lt;/p&gt;
 </description>
     </item>

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/post/</link>
+    <link>https://chechia.net/post/</link>
     <description>Recent content in Posts on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     
-	    <atom:link href="https://chechiachang.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Say Goodbye 2019</title>
-      <link>https://chechiachang.github.io/post/say-goodbye-2019/</link>
+      <link>https://chechia.net/post/say-goodbye-2019/</link>
       <pubDate>Tue, 31 Dec 2019 18:38:51 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/say-goodbye-2019/</guid>
+      <guid>https://chechia.net/post/say-goodbye-2019/</guid>
       <description>&lt;p&gt;今年結束了，回顧一下今年做的事情&lt;/p&gt;
 &lt;p&gt;&amp;ndash; 我是軟體工程師 &amp;ndash;&lt;/p&gt;
 &lt;p&gt;6 場公開演講，並且踏出熟悉的社群舒適圈，南下進軍高雄XD&lt;/p&gt;
@@ -43,10 +43,10 @@
     
     <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechiachang.github.io/post/mit-6.824-distributed-system/</link>
+      <link>https://chechia.net/post/mit-6.824-distributed-system/</link>
       <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/mit-6.824-distributed-system/</guid>
+      <guid>https://chechia.net/post/mit-6.824-distributed-system/</guid>
       <description>&lt;p&gt;跟著 MIT 6.824 學習分散式系統&lt;/p&gt;
 &lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
 &lt;ul&gt;
@@ -69,10 +69,10 @@
     
     <item>
       <title>Ablockchain Atomic Swap</title>
-      <link>https://chechiachang.github.io/post/blockchain-atomic-swap/</link>
+      <link>https://chechia.net/post/blockchain-atomic-swap/</link>
       <pubDate>Fri, 08 Nov 2019 08:03:30 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/blockchain-atomic-swap/</guid>
+      <guid>https://chechia.net/post/blockchain-atomic-swap/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://en.bitcoin.it/wiki/Atomic_swap&#34;&gt;https://en.bitcoin.it/wiki/Atomic_swap&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;algorithm&#34;&gt;Algorithm&lt;/h1&gt;
 &lt;ul&gt;
@@ -118,10 +118,10 @@ A -&amp;gt; B tx4 signed by A &amp;amp; B&lt;/p&gt;
     
     <item>
       <title>Blockchain Bep3 Atomic Swap</title>
-      <link>https://chechiachang.github.io/post/blockchain-bep3-atomic-swap/</link>
+      <link>https://chechia.net/post/blockchain-bep3-atomic-swap/</link>
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/blockchain-bep3-atomic-swap/</guid>
+      <guid>https://chechia.net/post/blockchain-bep3-atomic-swap/</guid>
       <description>&lt;h1 id=&#34;bep3-atomic-swap&#34;&gt;BEP3 Atomic Swap&lt;/h1&gt;
 &lt;p&gt;Binance 在 &lt;a href=&#34;https://github.com/binance-chain/BEPs/blob/master/BEP3.md&#34;&gt;BEP3: HTLC and Atomic Peg&lt;/a&gt; 提到，BEP 即將在 binance chain 上支援原生的 Hash Timer Locked Transfer (HTLT) ，這使跨鏈的原子性交換 (atomic swap) 變得可行，透過 HTLC 在兩邊的鏈上鎖住 (peg) tokens，然後只有在執行交換的時候，透過 hash 交換，一次執行雙邊的交易。&lt;/p&gt;
 &lt;p&gt;關於 Atomic Swap 網路有非常多的訊息，有興趣的話可以看&lt;a href=&#34;https://en.bitcoin.it/wiki/Atomic_swap&#34;&gt;這篇&lt;/a&gt;&lt;/p&gt;
@@ -588,7 +588,7 @@ value: 10000 PPToken (乘上 10^18)&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/bep3-atomic-swap-failure-01.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/bep3-atomic-swap-failure-01.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -603,7 +603,7 @@ value: 10000 PPToken (乘上 10^18)&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/bep3-atomic-swap-failure-02.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/bep3-atomic-swap-failure-02.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -803,10 +803,10 @@ go build  -o build/deputy main.go
     
     <item>
       <title>Kubernetes Custom Resources with Operator SDK</title>
-      <link>https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/</link>
+      <link>https://chechia.net/post/kubernetes-custom-resource-with-operator-sdk/</link>
       <pubDate>Tue, 15 Oct 2019 17:28:12 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/</guid>
+      <guid>https://chechia.net/post/kubernetes-custom-resource-with-operator-sdk/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -816,7 +816,7 @@ go build  -o build/deputy main.go
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -894,10 +894,10 @@ example-appservice-pod   1/1       Running   0          1m
     
     <item>
       <title>Kubernetes Custom Resource Deployment</title>
-      <link>https://chechiachang.github.io/post/kubernetes-custom-resource-deployment/</link>
+      <link>https://chechia.net/post/kubernetes-custom-resource-deployment/</link>
       <pubDate>Sun, 13 Oct 2019 22:03:08 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kubernetes-custom-resource-deployment/</guid>
+      <guid>https://chechia.net/post/kubernetes-custom-resource-deployment/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -907,7 +907,7 @@ example-appservice-pod   1/1       Running   0          1m
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -1116,10 +1116,10 @@ Events:                    &amp;lt;none&amp;gt;
     
     <item>
       <title>Kubernetes Custom Resources Basic</title>
-      <link>https://chechiachang.github.io/post/kubernetes-custom-resources-basic/</link>
+      <link>https://chechia.net/post/kubernetes-custom-resources-basic/</link>
       <pubDate>Sun, 13 Oct 2019 17:28:12 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kubernetes-custom-resources-basic/</guid>
+      <guid>https://chechia.net/post/kubernetes-custom-resources-basic/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -1129,7 +1129,7 @@ Events:                    &amp;lt;none&amp;gt;
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -1207,10 +1207,10 @@ error: the server doesn&#39;t have a resource type &amp;quot;chechiachang&amp;qu
     
     <item>
       <title>Cert Manager Complete Workflow</title>
-      <link>https://chechiachang.github.io/post/cert-manager-complete-workflow/</link>
+      <link>https://chechia.net/post/cert-manager-complete-workflow/</link>
       <pubDate>Sat, 12 Oct 2019 17:41:25 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/cert-manager-complete-workflow/</guid>
+      <guid>https://chechia.net/post/cert-manager-complete-workflow/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -1220,7 +1220,7 @@ error: the server doesn&#39;t have a resource type &amp;quot;chechiachang&amp;qu
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;recap&#34;&gt;Recap&lt;/h1&gt;
@@ -1288,10 +1288,10 @@ spec:
     
     <item>
       <title>Cert Manager How It Work</title>
-      <link>https://chechiachang.github.io/post/cert-manager-how-it-work/</link>
+      <link>https://chechia.net/post/cert-manager-how-it-work/</link>
       <pubDate>Fri, 11 Oct 2019 11:24:34 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/cert-manager-how-it-work/</guid>
+      <guid>https://chechia.net/post/cert-manager-how-it-work/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -1301,7 +1301,7 @@ spec:
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer&lt;/p&gt;
@@ -1462,10 +1462,10 @@ tls.key:  1675 bytes
     
     <item>
       <title>Cert Manager Deployment on Kubernetes</title>
-      <link>https://chechiachang.github.io/post/cert-manager-deployment/</link>
+      <link>https://chechia.net/post/cert-manager-deployment/</link>
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/cert-manager-deployment/</guid>
+      <guid>https://chechia.net/post/cert-manager-deployment/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -1475,7 +1475,7 @@ tls.key:  1675 bytes
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -1559,10 +1559,10 @@ cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0          2m
     
     <item>
       <title>Kubernetes Nginx Ingress Controller</title>
-      <link>https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/</link>
+      <link>https://chechia.net/post/kubernetes-nginx-ingress-controller/</link>
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/</guid>
+      <guid>https://chechia.net/post/kubernetes-nginx-ingress-controller/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -1573,7 +1573,7 @@ cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0          2m
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;nginx-ingress-controller&#34;&gt;Nginx Ingress Controller&lt;/h1&gt;
@@ -1689,10 +1689,10 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
     
     <item>
       <title>Kubernetes Nginx Ingress Controller Config</title>
-      <link>https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/</link>
+      <link>https://chechia.net/post/kubernetes-nginx-ingress-config/</link>
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/</guid>
+      <guid>https://chechia.net/post/kubernetes-nginx-ingress-config/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
 &lt;ul&gt;
@@ -1703,7 +1703,7 @@ ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -1785,15 +1785,15 @@ metadata:
     
     <item>
       <title>Prometheus &amp; Kubernetes State Metrics Exporter</title>
-      <link>https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/</link>
+      <link>https://chechia.net/post/prometheus-kube-state-metrics-exporter/</link>
       <pubDate>Mon, 07 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/</guid>
+      <guid>https://chechia.net/post/prometheus-kube-state-metrics-exporter/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
@@ -1805,7 +1805,7 @@ metadata:
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;如果要透過 prometheus 來監控集群的運行狀況，有兩個 exporter 是必裝的，一個是把 node 狀態 export 出來的 node exporter，一個是把 kubernetes 集群狀態 export 出來的 kube state metrics exporter。&lt;/p&gt;
@@ -1857,8 +1857,8 @@ curl prometheus-kube-state-metrics:8080
     &amp;lt;body&amp;gt;
     &amp;lt;h1&amp;gt;Kube Metrics&amp;lt;/h1&amp;gt;
     &amp;lt;ul&amp;gt;
-    	&amp;lt;li&amp;gt;&amp;lt;a href=&#39;https://chechiachang.github.io/metrics&#39;&amp;gt;metrics&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-    	&amp;lt;li&amp;gt;&amp;lt;a href=&#39;https://chechiachang.github.io/healthz&#39;&amp;gt;healthz&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+    	&amp;lt;li&amp;gt;&amp;lt;a href=&#39;https://chechia.net/metrics&#39;&amp;gt;metrics&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+    	&amp;lt;li&amp;gt;&amp;lt;a href=&#39;https://chechia.net/healthz&#39;&amp;gt;healthz&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
     &amp;lt;/ul&amp;gt;
     &amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
@@ -1871,7 +1871,7 @@ curl prometheus-kube-state-metrics:8081
     &amp;lt;h1&amp;gt;Kube-State-Metrics Metrics&amp;lt;/h1&amp;gt;
     &amp;lt;ul&amp;gt;
     	&amp;lt;li&amp;gt;
-			&amp;lt;a href=&#39;https://chechiachang.github.io/metrics&#39;&amp;gt;metrics&amp;lt;/a&amp;gt;
+			&amp;lt;a href=&#39;https://chechia.net/metrics&#39;&amp;gt;metrics&amp;lt;/a&amp;gt;
 		&amp;lt;/li&amp;gt;
     &amp;lt;/ul&amp;gt;
     &amp;lt;/body&amp;gt;
@@ -1912,15 +1912,15 @@ For clusters of more than 100 nodes, allocate at least
     
     <item>
       <title>Prometheus Exporter Library &amp; Redis Exporter</title>
-      <link>https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/</link>
+      <link>https://chechia.net/post/prometheus-exporter-library-redis-exporter/</link>
       <pubDate>Sun, 06 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/</guid>
+      <guid>https://chechia.net/post/prometheus-exporter-library-redis-exporter/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
@@ -1932,7 +1932,7 @@ For clusters of more than 100 nodes, allocate at least
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -2037,16 +2037,16 @@ blocked_clients:1
     
     <item>
       <title>Prometheus Deployment on Kubernetes</title>
-      <link>https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/</link>
+      <link>https://chechia.net/post/prometheus-deployment-on-kubernetes/</link>
       <pubDate>Fri, 04 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/</guid>
+      <guid>https://chechia.net/post/prometheus-deployment-on-kubernetes/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deploy-grafana/&#34;&gt;GKE 上自架 Grafana 與設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deploy-grafana/&#34;&gt;GKE 上自架 Grafana 與設定&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
 &lt;li&gt;輸出 redis-ha 的監測數據&lt;/li&gt;
@@ -2056,7 +2056,7 @@ blocked_clients:1
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -2244,15 +2244,15 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
     
     <item>
       <title>Prometheus Deploy Grafana</title>
-      <link>https://chechiachang.github.io/post/prometheus-deploy-grafana/</link>
+      <link>https://chechia.net/post/prometheus-deploy-grafana/</link>
       <pubDate>Fri, 04 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/prometheus-deploy-grafana/</guid>
+      <guid>https://chechia.net/post/prometheus-deploy-grafana/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
@@ -2263,7 +2263,7 @@ kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -2541,15 +2541,15 @@ http://localhost:3000
     
     <item>
       <title>Prometheus Deploy Grafana</title>
-      <link>https://chechiachang.github.io/post/prometheus-scrape/</link>
+      <link>https://chechia.net/post/prometheus-scrape/</link>
       <pubDate>Fri, 04 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/prometheus-scrape/</guid>
+      <guid>https://chechia.net/post/prometheus-scrape/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus / Grafana&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;GKE 上自架 Grafana 與設定&lt;/li&gt;
 &lt;li&gt;使用 exporter 監測 GKE 上的各項服務&lt;/li&gt;
 &lt;li&gt;輸出 kubernetes 的監測數據&lt;/li&gt;
@@ -2560,7 +2560,7 @@ http://localhost:3000
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -2663,16 +2663,16 @@ scrape_configs:
     
     <item>
       <title>Redis Ha Sentinel</title>
-      <link>https://chechiachang.github.io/post/redis-ha-sentinel/</link>
+      <link>https://chechia.net/post/redis-ha-sentinel/</link>
       <pubDate>Sun, 29 Sep 2019 17:14:38 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/redis-ha-sentinel/</guid>
+      <guid>https://chechia.net/post/redis-ha-sentinel/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在 GKE 上部署 Redis HA
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-sentinel/&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-sentinel/&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
 &lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
 &lt;li&gt;應用端的基本範例，效能調校&lt;/li&gt;
@@ -2682,7 +2682,7 @@ scrape_configs:
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -2885,7 +2885,7 @@ return &amp;amp;redis.Pool{
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這邊要注意，客戶端 (golang) 處理 connection 的 exception，要記得重新執行 sntnl.MasterAddr() 來取得 failover 後新指派的 master。&lt;/p&gt;
 &lt;h1 id=&#34;client-測試&#34;&gt;Client 測試&lt;/h1&gt;
-&lt;p&gt;寫一個 golang redis 的 client 跑起來。這個部分我們在 &lt;a href=&#34;https://chechiachang.github.io/post/kafka-basic-usage/&#34;&gt;kafka的章節&lt;/a&gt;做過類似的事情，可以簡單湊一個玩玩。&lt;/p&gt;
+&lt;p&gt;寫一個 golang redis 的 client 跑起來。這個部分我們在 &lt;a href=&#34;https://chechia.net/post/kafka-basic-usage/&#34;&gt;kafka的章節&lt;/a&gt;做過類似的事情，可以簡單湊一個玩玩。&lt;/p&gt;
 &lt;h1 id=&#34;延伸問題&#34;&gt;延伸問題&lt;/h1&gt;
 &lt;p&gt;使用上面的 golang 範例，確實是能透過 sentinel 取得 master，再向 master 取得連線。但這邊有兩個問題&lt;/p&gt;
 &lt;ul&gt;
@@ -2903,15 +2903,15 @@ return &amp;amp;redis.Pool{
     
     <item>
       <title>Redis Ha Deployment</title>
-      <link>https://chechiachang.github.io/post/redis-ha-deployment/</link>
+      <link>https://chechia.net/post/redis-ha-deployment/</link>
       <pubDate>Sat, 28 Sep 2019 15:14:23 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/redis-ha-deployment/</guid>
+      <guid>https://chechia.net/post/redis-ha-deployment/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在 GKE 上部署 Redis HA
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Redis HA with sentinel&lt;/li&gt;
 &lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
 &lt;li&gt;集群內部的 HA 設定，網路設定&lt;/li&gt;
@@ -2922,7 +2922,7 @@ return &amp;amp;redis.Pool{
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;今天的文會比較短，因為我早上在綠島已經水肺潛水潛了三趟，有點累哈哈&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -3064,20 +3064,20 @@ keep alive: 1
     
     <item>
       <title>Kafka HA Continued</title>
-      <link>https://chechiachang.github.io/post/kafka-ha-continued/</link>
+      <link>https://chechia.net/post/kafka-ha-continued/</link>
       <pubDate>Thu, 26 Sep 2019 22:50:32 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-ha-continued/</guid>
+      <guid>https://chechia.net/post/kafka-ha-continued/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3097,7 +3097,7 @@ keep alive: 1
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -3162,20 +3162,20 @@ keep alive: 1
     
     <item>
       <title>Kafka HA Topology</title>
-      <link>https://chechiachang.github.io/post/kafka-ha-topology/</link>
+      <link>https://chechia.net/post/kafka-ha-topology/</link>
       <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-ha-topology/</guid>
+      <guid>https://chechia.net/post/kafka-ha-topology/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3195,7 +3195,7 @@ keep alive: 1
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -3355,20 +3355,20 @@ kafkaHeapOptions: &amp;quot;-Xmx4G -Xms1G&amp;quot;
     
     <item>
       <title>Kafka Operation Scripts</title>
-      <link>https://chechiachang.github.io/post/kafka-operation-scripts/</link>
+      <link>https://chechia.net/post/kafka-operation-scripts/</link>
       <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-operation-scripts/</guid>
+      <guid>https://chechia.net/post/kafka-operation-scripts/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3388,7 +3388,7 @@ kafkaHeapOptions: &amp;quot;-Xmx4G -Xms1G&amp;quot;
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -3575,20 +3575,20 @@ Configs for topic &#39;ticker&#39; are
     
     <item>
       <title>Kafka-basic-usage</title>
-      <link>https://chechiachang.github.io/post/kafka-basic-usage/</link>
+      <link>https://chechia.net/post/kafka-basic-usage/</link>
       <pubDate>Tue, 24 Sep 2019 21:59:49 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-basic-usage/</guid>
+      <guid>https://chechia.net/post/kafka-basic-usage/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3608,7 +3608,7 @@ Configs for topic &#39;ticker&#39; are
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -3819,20 +3819,20 @@ go build .
     
     <item>
       <title>Kafka-introduction</title>
-      <link>https://chechiachang.github.io/post/kafka-introduction/</link>
+      <link>https://chechia.net/post/kafka-introduction/</link>
       <pubDate>Mon, 23 Sep 2019 21:59:49 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-introduction/</guid>
+      <guid>https://chechia.net/post/kafka-introduction/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3852,7 +3852,7 @@ go build .
 &lt;/ul&gt;
 &lt;p&gt;於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;寫了部屬，本想談一下 kafka 的高可用性配置，看到大德的留言，才想到應該要先跟各位介紹一下 kafka，跟 kafka 的用途。也感謝大德路過發問，我也會順代調整內容。今天就說明何為 kafka，以及在什麼樣的狀況使用。&lt;/p&gt;
@@ -3915,20 +3915,20 @@ go build .
     
     <item>
       <title>Kafka Helm Configuration</title>
-      <link>https://chechiachang.github.io/post/kafka-helm-configuration/</link>
+      <link>https://chechia.net/post/kafka-helm-configuration/</link>
       <pubDate>Mon, 23 Sep 2019 21:55:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-helm-configuration/</guid>
+      <guid>https://chechia.net/post/kafka-helm-configuration/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3952,20 +3952,20 @@ go build .
     
     <item>
       <title>Kafka Deployment on Kubernetes</title>
-      <link>https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/</link>
+      <link>https://chechia.net/post/kafka-deployment-on-kubernetes/</link>
       <pubDate>Sun, 22 Sep 2019 09:58:41 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kafka-deployment-on-kubernetes/</guid>
+      <guid>https://chechia.net/post/kafka-deployment-on-kubernetes/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ELK Stack
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -3998,7 +3998,7 @@ go build .
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;但不會再一篇 10000 字了，逼死我吧&amp;hellip;&lt;/li&gt;
-&lt;li&gt;寫不完的部份 30 天候會在IT邦幫忙，或是&lt;a href=&#34;https:/chechiachang.github.io&#34;&gt;我的 Github Page https://chechiachang.github.io/&lt;/a&gt;補完&lt;/li&gt;
+&lt;li&gt;寫不完的部份 30 天候會在IT邦幫忙，或是&lt;a href=&#34;https:/chechia.net&#34;&gt;我的 Github Page https://chechia.net/&lt;/a&gt;補完&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
@@ -4098,18 +4098,18 @@ kafka-1-zookeeper-2                                      1/1     Running     0  
     
     <item>
       <title>Logstash on GKE</title>
-      <link>https://chechiachang.github.io/post/logstash-on-gke/</link>
+      <link>https://chechia.net/post/logstash-on-gke/</link>
       <pubDate>Sat, 21 Sep 2019 15:22:23 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/logstash-on-gke/</guid>
+      <guid>https://chechia.net/post/logstash-on-gke/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -4363,16 +4363,16 @@ data:
     
     <item>
       <title>Monitoring GKE With Elk</title>
-      <link>https://chechiachang.github.io/post/monitoring-gke-with-elk/</link>
+      <link>https://chechia.net/post/monitoring-gke-with-elk/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/monitoring-gke-with-elk/</guid>
+      <guid>https://chechia.net/post/monitoring-gke-with-elk/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
@@ -4585,16 +4585,16 @@ tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca
     
     <item>
       <title>Monitoring GCE With ELK</title>
-      <link>https://chechiachang.github.io/post/monitoring-gce-with-elk/</link>
+      <link>https://chechia.net/post/monitoring-gce-with-elk/</link>
       <pubDate>Wed, 18 Sep 2019 19:10:50 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/monitoring-gce-with-elk/</guid>
+      <guid>https://chechia.net/post/monitoring-gce-with-elk/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
@@ -4699,28 +4699,28 @@ output.logstash: 先向後送到 logstash&lt;/p&gt;
     
     <item>
       <title>ELK or Not ELK</title>
-      <link>https://chechiachang.github.io/post/elastic-or-not-elastic/</link>
+      <link>https://chechia.net/post/elastic-or-not-elastic/</link>
       <pubDate>Wed, 18 Sep 2019 18:51:40 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/elastic-or-not-elastic/</guid>
+      <guid>https://chechia.net/post/elastic-or-not-elastic/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;監測 Google Compute Engine 上服務的各項數據&lt;/li&gt;
 &lt;li&gt;監測 Google Kubernetes Engine 的各項數據&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;有板友問到，要如何選擇要不要用 ELK，其實也這是整篇 ELK 的初衷。這邊分享一下 ELK 與其他選擇，以及選擇解決方案應該考慮的事情。&lt;/p&gt;
 &lt;h1 id=&#34;其他常用的服務&#34;&gt;其他常用的服務&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://prometheus.io/&#34;&gt;Prometheus&lt;/a&gt;: 開源的 time series metrics 收集系統&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://cloud.google.com/stackdriver/?hl=zh-tw&#34;&gt;Stackdriver&lt;/a&gt;: GCP 的 log 與 metrics 平台&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cloud/&#34;&gt;Elastic Cloud&lt;/a&gt;: ELK 的 Sass&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-hosted ELK&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-hosted ELK&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;或是依照需求混搭，各個服務使用的各層套件是可以相容，例如&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -4854,10 +4854,10 @@ Self-Hosted 除了上述的設定，還可以依照需求更改 ELK / prometheus
     
     <item>
       <title>X.509 certificate</title>
-      <link>https://chechiachang.github.io/post/x.509-certificate/</link>
+      <link>https://chechia.net/post/x.509-certificate/</link>
       <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/x.509-certificate/</guid>
+      <guid>https://chechia.net/post/x.509-certificate/</guid>
       <description>&lt;h1 id=&#34;簡單講一下-certificate&#34;&gt;簡單講一下 certificate&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -4951,23 +4951,23 @@ issuer=CN = Elastic Certificate Tool Autogenerated CA
     
     <item>
       <title>Secure Elk Stack</title>
-      <link>https://chechiachang.github.io/post/secure-elk-stack/</link>
+      <link>https://chechia.net/post/secure-elk-stack/</link>
       <pubDate>Sun, 15 Sep 2019 23:00:33 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/secure-elk-stack/</guid>
+      <guid>https://chechia.net/post/secure-elk-stack/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;監測 Google Compute Engine 上服務的各項數據&lt;/li&gt;
 &lt;li&gt;監測 Google Kubernetes Engine 的各項數據&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&amp;ndash;&lt;/p&gt;
-&lt;p&gt;上篇&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt; 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。&lt;/p&gt;
+&lt;p&gt;上篇&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt; 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html&#34;&gt;官方的文件在這裡&lt;/a&gt;，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的&lt;a href=&#34;https://www.elastic.co/guide/en/elastic-stack-overview/7.3/security-getting-started.html&#34;&gt;Tutorial: Getting started with security&lt;/a&gt; 開始，過程比較不會這麼血尿。&lt;/p&gt;
 &lt;p&gt;總之為了啟用 authentication &amp;amp; https，這篇要做的事情：&lt;/p&gt;
 &lt;ul&gt;
@@ -5366,23 +5366,23 @@ kubectl apply -f elk/gke/filebeat/
     
     <item>
       <title>Self-host ELK stack - Installation</title>
-      <link>https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/</link>
+      <link>https://chechia.net/post/self-host-elk-stack-on-gcp/</link>
       <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/</guid>
+      <guid>https://chechia.net/post/self-host-elk-stack-on-gcp/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;作為範例的 ELK 的版本是當前的 stable release 7.3.1。&lt;/p&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&amp;ndash;&lt;/p&gt;
 &lt;h1 id=&#34;簡介-elk-stack&#34;&gt;簡介 ELK stack&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/index.html&#34;&gt;官方說明文件&lt;/a&gt;&lt;/p&gt;
@@ -5654,7 +5654,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/elk/kibana-monitoring.png&#34; width=&#34;100%&#34; height=&#34;100%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/elk/kibana-monitoring.png&#34; width=&#34;100%&#34; height=&#34;100%&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -5674,10 +5674,10 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
     
     <item>
       <title>2020 IT邦幫忙鐵人賽</title>
-      <link>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</link>
+      <link>https://chechia.net/post/2020-ithome-ironman-challenge/</link>
       <pubDate>Mon, 09 Sep 2019 16:56:03 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/2020-ithome-ironman-challenge/</guid>
+      <guid>https://chechia.net/post/2020-ithome-ironman-challenge/</guid>
       <description>&lt;p&gt;各位好，我是Che-Chia Chang，社群上常用的名子是 David Chang。是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 &lt;a href=&#34;https://www.meetup.com/golang-taipei-meetup/&#34;&gt;Golang Taiwan Meetup&lt;/a&gt; 的 organizer。&lt;/p&gt;
 &lt;p&gt;受到&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman/signup/team/63&#34;&gt;友人們&lt;/a&gt;邀請（推坑）參加了&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt;，挑戰在30天內，每天發一篇技術分享文章。一方面將工作上遇到的問題與解法分享給社群，另一方面也是給自己一點成長的壓力，把這段時間的心得沈澱下來，因此也了這系列文章。&lt;/p&gt;
 &lt;p&gt;本系列文章重點有三：&lt;/p&gt;
@@ -5696,12 +5696,12 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;ul&gt;
 &lt;li&gt;ELK Stask on GCP (8)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
 &lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
 &lt;/ul&gt;
@@ -5720,9 +5720,9 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;/li&gt;
 &lt;li&gt;在 GKE 上部署 Redis HA (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-sentinel/&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-topology/&#34;&gt;Redis sentinel topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-sentinel/&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-topology/&#34;&gt;Redis sentinel topology&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;[Redis HA with HAproxy]({{ ref &amp;ldquo;/post/redis-ha-on-haproxy&amp;rdquo; }})&lt;/li&gt;
 &lt;li&gt;[Redis HA Failure Recovery]({{ ref &amp;ldquo;/post/redis-ha-failure-recovery&amp;rdquo; }})&lt;/li&gt;
 &lt;li&gt;Prometheus Metrics Exporter&lt;/li&gt;
@@ -5730,31 +5730,31 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;/li&gt;
 &lt;li&gt;Prometheus / Grafana (5)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-deploy-grafana/&#34;&gt;GKE 上自架 Grafana&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-scrape/&#34;&gt;scrape config &amp;amp; exporter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-exporter-library-redis-exporter/&#34;&gt;Dive into Redis Exporter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/prometheus-kube-state-metrics-exporter/&#34;&gt;輸出 kube-state 的監測數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-deploy-grafana/&#34;&gt;GKE 上自架 Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-scrape/&#34;&gt;scrape config &amp;amp; exporter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-exporter-library-redis-exporter/&#34;&gt;Dive into Redis Exporter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/prometheus-kube-state-metrics-exporter/&#34;&gt;輸出 kube-state 的監測數據&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Nginx Ingress (3)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Cert-manager (3)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -5829,15 +5829,15 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
     
     <item>
       <title>Redis Ha Topology</title>
-      <link>https://chechiachang.github.io/post/redis-ha-topology/</link>
+      <link>https://chechia.net/post/redis-ha-topology/</link>
       <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/redis-ha-topology/</guid>
+      <guid>https://chechia.net/post/redis-ha-topology/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在 GKE 上部署 Redis HA
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechiachang.github.io/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Redis HA with sentinel&lt;/li&gt;
 &lt;li&gt;Redis sentinel topology&lt;/li&gt;
 &lt;li&gt;Redis HA with HAproxy&lt;/li&gt;
@@ -5849,7 +5849,7 @@ Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        
 &lt;/ul&gt;
 &lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
 &lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechiachang.github.io&#34;&gt;https://chechiachang.github.io&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
@@ -5967,10 +5967,10 @@ Configuration: quorum = 2
     
     <item>
       <title>Kuberentes Source Code</title>
-      <link>https://chechiachang.github.io/post/kuberentes-source-code/</link>
+      <link>https://chechia.net/post/kuberentes-source-code/</link>
       <pubDate>Fri, 21 Jun 2019 13:17:53 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kuberentes-source-code/</guid>
+      <guid>https://chechia.net/post/kuberentes-source-code/</guid>
       <description>&lt;h1 id=&#34;api-resources&#34;&gt;API resources&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;kubectl api-resources
 &lt;/code&gt;&lt;/pre&gt;</description>
@@ -5978,10 +5978,10 @@ Configuration: quorum = 2
     
     <item>
       <title>Journey to Quantum Computing</title>
-      <link>https://chechiachang.github.io/post/journey-to-quantum-computing/</link>
+      <link>https://chechia.net/post/journey-to-quantum-computing/</link>
       <pubDate>Sun, 02 Jun 2019 10:21:37 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/journey-to-quantum-computing/</guid>
+      <guid>https://chechia.net/post/journey-to-quantum-computing/</guid>
       <description>&lt;p&gt;This post is about my learning steps for quantum-computing.&lt;/p&gt;
 &lt;p&gt;For a quick-start tutorial, check my workshop project throught the project link above.&lt;/p&gt;
 &lt;h1 id=&#34;resources&#34;&gt;Resources&lt;/h1&gt;
@@ -6011,10 +6011,10 @@ Configuration: quorum = 2
     
     <item>
       <title>Istio 三分鐘就入坑 佈署篇</title>
-      <link>https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/</link>
+      <link>https://chechia.net/post/service-mesh-for-microservice-on-kubernetes/</link>
       <pubDate>Mon, 06 May 2019 18:12:15 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/service-mesh-for-microservice-on-kubernetes/</guid>
+      <guid>https://chechia.net/post/service-mesh-for-microservice-on-kubernetes/</guid>
       <description>&lt;h1 id=&#34;create-gke&#34;&gt;Create GKE&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;gcloud beta container --project &amp;quot;istio-playground-239810&amp;quot; clusters create &amp;quot;istio-playground&amp;quot; \
   --zone &amp;quot;asia-east1-b&amp;quot; \
@@ -6090,10 +6090,10 @@ kubectl get gateways
     
     <item>
       <title>Jenkins X on Kubernetes</title>
-      <link>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</link>
+      <link>https://chechia.net/post/jenkins-x-on-kubernetes/</link>
       <pubDate>Fri, 19 Apr 2019 12:15:41 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/jenkins-x-on-kubernetes/</guid>
+      <guid>https://chechia.net/post/jenkins-x-on-kubernetes/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://jenkins.io/&#34;&gt;Jenkins&lt;/a&gt; is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://jenkins-x.io/&#34;&gt;Jenkins X&lt;/a&gt;, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.&lt;/p&gt;
 &lt;p&gt;Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.&lt;/p&gt;
@@ -6117,7 +6117,7 @@ kubectl get gateways
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/jenkins/architecture-serverless.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/jenkins/architecture-serverless.png&#34; &gt;
 
 
 
@@ -6344,11 +6344,11 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     
     <item>
       <title>Kubernetes Container Runtime Interface</title>
-      <link>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</link>
+      <link>https://chechia.net/post/kubernetes-container-runtime-interface/</link>
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/kubernetes-container-runtime-interface/</guid>
-      <description>&lt;p&gt;-&amp;gt; &lt;a href=&#34;https://chechiachang.github.io/slides/container-runtime-interface/&#34;&gt;Slides here&lt;/a&gt; &amp;lt;-&lt;/p&gt;
+      <guid>https://chechia.net/post/kubernetes-container-runtime-interface/</guid>
+      <description>&lt;p&gt;-&amp;gt; &lt;a href=&#34;https://chechia.net/slides/container-runtime-interface/&#34;&gt;Slides here&lt;/a&gt; &amp;lt;-&lt;/p&gt;
 </description>
     </item>
     

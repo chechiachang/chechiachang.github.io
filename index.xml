@@ -2,58 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/</link>
+    <link>https://chechia.net/</link>
     <description>Recent content on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Tue, 11 Feb 2020 17:26:22 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Projects</title>
-      <link>https://chechiachang.github.io/project/</link>
+      <link>https://chechia.net/project/</link>
       <pubDate>Mon, 16 Dec 2019 23:16:16 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/project/</guid>
+      <guid>https://chechia.net/project/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Slides</title>
-      <link>https://chechiachang.github.io/slides/</link>
+      <link>https://chechia.net/slides/</link>
       <pubDate>Wed, 30 Oct 2019 11:26:31 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/slides/</guid>
+      <guid>https://chechia.net/slides/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Posts</title>
-      <link>https://chechiachang.github.io/post/</link>
+      <link>https://chechia.net/post/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chechiachang.github.io/post/</guid>
+      <guid>https://chechia.net/post/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Publications</title>
-      <link>https://chechiachang.github.io/publication/</link>
+      <link>https://chechia.net/publication/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chechiachang.github.io/publication/</guid>
+      <guid>https://chechia.net/publication/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Recent &amp; Upcoming Talks</title>
-      <link>https://chechiachang.github.io/talk/</link>
+      <link>https://chechia.net/talk/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/</guid>
+      <guid>https://chechia.net/talk/</guid>
       <description></description>
     </item>
     

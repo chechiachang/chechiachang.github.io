@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>erc-20 on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/erc-20/</link>
+    <link>https://chechia.net/tags/erc-20/</link>
     <description>Recent content in erc-20 on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Tue, 22 Oct 2019 10:35:20 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/erc-20/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/tags/erc-20/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Blockchain Bep3 Atomic Swap</title>
-      <link>https://chechiachang.github.io/post/blockchain-bep3-atomic-swap/</link>
+      <link>https://chechia.net/post/blockchain-bep3-atomic-swap/</link>
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/post/blockchain-bep3-atomic-swap/</guid>
+      <guid>https://chechia.net/post/blockchain-bep3-atomic-swap/</guid>
       <description>&lt;h1 id=&#34;bep3-atomic-swap&#34;&gt;BEP3 Atomic Swap&lt;/h1&gt;
 &lt;p&gt;Binance 在 &lt;a href=&#34;https://github.com/binance-chain/BEPs/blob/master/BEP3.md&#34;&gt;BEP3: HTLC and Atomic Peg&lt;/a&gt; 提到，BEP 即將在 binance chain 上支援原生的 Hash Timer Locked Transfer (HTLT) ，這使跨鏈的原子性交換 (atomic swap) 變得可行，透過 HTLC 在兩邊的鏈上鎖住 (peg) tokens，然後只有在執行交換的時候，透過 hash 交換，一次執行雙邊的交易。&lt;/p&gt;
 &lt;p&gt;關於 Atomic Swap 網路有非常多的訊息，有興趣的話可以看&lt;a href=&#34;https://en.bitcoin.it/wiki/Atomic_swap&#34;&gt;這篇&lt;/a&gt;&lt;/p&gt;
@@ -484,7 +484,7 @@ value: 10000 PPToken (乘上 10^18)&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/bep3-atomic-swap-failure-01.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/bep3-atomic-swap-failure-01.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -499,7 +499,7 @@ value: 10000 PPToken (乘上 10^18)&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechiachang.github.io/img/bep3-atomic-swap-failure-02.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/bep3-atomic-swap-failure-02.png&#34; width=&#34;70%&#34; height=&#34;70%&#34; &gt;
 
 
 &lt;/figure&gt;

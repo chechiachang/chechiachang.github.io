@@ -2,580 +2,580 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/</link>
+    <link>https://chechia.net/tags/</link>
     <description>Recent content in Tags on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Tue, 11 Feb 2020 17:26:22 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>devops</title>
-      <link>https://chechiachang.github.io/tags/devops/</link>
+      <link>https://chechia.net/tags/devops/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/devops/</guid>
+      <guid>https://chechia.net/tags/devops/</guid>
       <description></description>
     </item>
     
     <item>
       <title>distributed</title>
-      <link>https://chechiachang.github.io/tags/distributed/</link>
+      <link>https://chechia.net/tags/distributed/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/distributed/</guid>
+      <guid>https://chechia.net/tags/distributed/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kafka</title>
-      <link>https://chechiachang.github.io/tags/kafka/</link>
+      <link>https://chechia.net/tags/kafka/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/kafka/</guid>
+      <guid>https://chechia.net/tags/kafka/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kubernetes</title>
-      <link>https://chechiachang.github.io/tags/kubernetes/</link>
+      <link>https://chechia.net/tags/kubernetes/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/kubernetes/</guid>
+      <guid>https://chechia.net/tags/kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>stateful</title>
-      <link>https://chechiachang.github.io/tags/stateful/</link>
+      <link>https://chechia.net/tags/stateful/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/stateful/</guid>
+      <guid>https://chechia.net/tags/stateful/</guid>
       <description></description>
     </item>
     
     <item>
       <title>distributed-system</title>
-      <link>https://chechiachang.github.io/tags/distributed-system/</link>
+      <link>https://chechia.net/tags/distributed-system/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/distributed-system/</guid>
+      <guid>https://chechia.net/tags/distributed-system/</guid>
       <description></description>
     </item>
     
     <item>
       <title>golang</title>
-      <link>https://chechiachang.github.io/tags/golang/</link>
+      <link>https://chechia.net/tags/golang/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/golang/</guid>
+      <guid>https://chechia.net/tags/golang/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mapreduce</title>
-      <link>https://chechiachang.github.io/tags/mapreduce/</link>
+      <link>https://chechia.net/tags/mapreduce/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/mapreduce/</guid>
+      <guid>https://chechia.net/tags/mapreduce/</guid>
       <description></description>
     </item>
     
     <item>
       <title>meetup</title>
-      <link>https://chechiachang.github.io/tags/meetup/</link>
+      <link>https://chechia.net/tags/meetup/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/meetup/</guid>
+      <guid>https://chechia.net/tags/meetup/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mit</title>
-      <link>https://chechiachang.github.io/tags/mit/</link>
+      <link>https://chechia.net/tags/mit/</link>
       <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/mit/</guid>
+      <guid>https://chechia.net/tags/mit/</guid>
       <description></description>
     </item>
     
     <item>
       <title>lecture</title>
-      <link>https://chechiachang.github.io/tags/lecture/</link>
+      <link>https://chechia.net/tags/lecture/</link>
       <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/lecture/</guid>
+      <guid>https://chechia.net/tags/lecture/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ar</title>
-      <link>https://chechiachang.github.io/tags/ar/</link>
+      <link>https://chechia.net/tags/ar/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/ar/</guid>
+      <guid>https://chechia.net/tags/ar/</guid>
       <description></description>
     </item>
     
     <item>
       <title>face-detection</title>
-      <link>https://chechiachang.github.io/tags/face-detection/</link>
+      <link>https://chechia.net/tags/face-detection/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/face-detection/</guid>
+      <guid>https://chechia.net/tags/face-detection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>face-recognition</title>
-      <link>https://chechiachang.github.io/tags/face-recognition/</link>
+      <link>https://chechia.net/tags/face-recognition/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/face-recognition/</guid>
+      <guid>https://chechia.net/tags/face-recognition/</guid>
       <description></description>
     </item>
     
     <item>
       <title>github-api</title>
-      <link>https://chechiachang.github.io/tags/github-api/</link>
+      <link>https://chechia.net/tags/github-api/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/github-api/</guid>
+      <guid>https://chechia.net/tags/github-api/</guid>
       <description></description>
     </item>
     
     <item>
       <title>machine-learning</title>
-      <link>https://chechiachang.github.io/tags/machine-learning/</link>
+      <link>https://chechia.net/tags/machine-learning/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/machine-learning/</guid>
+      <guid>https://chechia.net/tags/machine-learning/</guid>
       <description></description>
     </item>
     
     <item>
       <title>swift</title>
-      <link>https://chechiachang.github.io/tags/swift/</link>
+      <link>https://chechia.net/tags/swift/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/swift/</guid>
+      <guid>https://chechia.net/tags/swift/</guid>
       <description></description>
     </item>
     
     <item>
       <title>unity</title>
-      <link>https://chechiachang.github.io/tags/unity/</link>
+      <link>https://chechia.net/tags/unity/</link>
       <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/unity/</guid>
+      <guid>https://chechia.net/tags/unity/</guid>
       <description></description>
     </item>
     
     <item>
       <title>atomic-swap</title>
-      <link>https://chechiachang.github.io/tags/atomic-swap/</link>
+      <link>https://chechia.net/tags/atomic-swap/</link>
       <pubDate>Fri, 08 Nov 2019 08:03:30 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/atomic-swap/</guid>
+      <guid>https://chechia.net/tags/atomic-swap/</guid>
       <description></description>
     </item>
     
     <item>
       <title>blockchain</title>
-      <link>https://chechiachang.github.io/tags/blockchain/</link>
+      <link>https://chechia.net/tags/blockchain/</link>
       <pubDate>Fri, 08 Nov 2019 08:03:30 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/blockchain/</guid>
+      <guid>https://chechia.net/tags/blockchain/</guid>
       <description></description>
     </item>
     
     <item>
       <title>bep3</title>
-      <link>https://chechiachang.github.io/tags/bep3/</link>
+      <link>https://chechia.net/tags/bep3/</link>
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/bep3/</guid>
+      <guid>https://chechia.net/tags/bep3/</guid>
       <description></description>
     </item>
     
     <item>
       <title>binance</title>
-      <link>https://chechiachang.github.io/tags/binance/</link>
+      <link>https://chechia.net/tags/binance/</link>
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/binance/</guid>
+      <guid>https://chechia.net/tags/binance/</guid>
       <description></description>
     </item>
     
     <item>
       <title>erc-20</title>
-      <link>https://chechiachang.github.io/tags/erc-20/</link>
+      <link>https://chechia.net/tags/erc-20/</link>
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/erc-20/</guid>
+      <guid>https://chechia.net/tags/erc-20/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ethereum</title>
-      <link>https://chechiachang.github.io/tags/ethereum/</link>
+      <link>https://chechia.net/tags/ethereum/</link>
       <pubDate>Tue, 22 Oct 2019 10:35:20 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/ethereum/</guid>
+      <guid>https://chechia.net/tags/ethereum/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cert-manager</title>
-      <link>https://chechiachang.github.io/tags/cert-manager/</link>
+      <link>https://chechia.net/tags/cert-manager/</link>
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/cert-manager/</guid>
+      <guid>https://chechia.net/tags/cert-manager/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ssl</title>
-      <link>https://chechiachang.github.io/tags/ssl/</link>
+      <link>https://chechia.net/tags/ssl/</link>
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/ssl/</guid>
+      <guid>https://chechia.net/tags/ssl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tls</title>
-      <link>https://chechiachang.github.io/tags/tls/</link>
+      <link>https://chechia.net/tags/tls/</link>
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/tls/</guid>
+      <guid>https://chechia.net/tags/tls/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cd</title>
-      <link>https://chechiachang.github.io/tags/cd/</link>
+      <link>https://chechia.net/tags/cd/</link>
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/cd/</guid>
+      <guid>https://chechia.net/tags/cd/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ci</title>
-      <link>https://chechiachang.github.io/tags/ci/</link>
+      <link>https://chechia.net/tags/ci/</link>
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/ci/</guid>
+      <guid>https://chechia.net/tags/ci/</guid>
       <description></description>
     </item>
     
     <item>
       <title>nginx</title>
-      <link>https://chechiachang.github.io/tags/nginx/</link>
+      <link>https://chechia.net/tags/nginx/</link>
       <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/nginx/</guid>
+      <guid>https://chechia.net/tags/nginx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>redis</title>
-      <link>https://chechiachang.github.io/tags/redis/</link>
+      <link>https://chechia.net/tags/redis/</link>
       <pubDate>Mon, 07 Oct 2019 08:12:10 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/redis/</guid>
+      <guid>https://chechia.net/tags/redis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>daemonsets</title>
-      <link>https://chechiachang.github.io/tags/daemonsets/</link>
+      <link>https://chechia.net/tags/daemonsets/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/daemonsets/</guid>
+      <guid>https://chechia.net/tags/daemonsets/</guid>
       <description></description>
     </item>
     
     <item>
       <title>elk</title>
-      <link>https://chechiachang.github.io/tags/elk/</link>
+      <link>https://chechia.net/tags/elk/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/elk/</guid>
+      <guid>https://chechia.net/tags/elk/</guid>
       <description></description>
     </item>
     
     <item>
       <title>filebeat</title>
-      <link>https://chechiachang.github.io/tags/filebeat/</link>
+      <link>https://chechia.net/tags/filebeat/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/filebeat/</guid>
+      <guid>https://chechia.net/tags/filebeat/</guid>
       <description></description>
     </item>
     
     <item>
       <title>fluentd</title>
-      <link>https://chechiachang.github.io/tags/fluentd/</link>
+      <link>https://chechia.net/tags/fluentd/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/fluentd/</guid>
+      <guid>https://chechia.net/tags/fluentd/</guid>
       <description></description>
     </item>
     
     <item>
       <title>log</title>
-      <link>https://chechiachang.github.io/tags/log/</link>
+      <link>https://chechia.net/tags/log/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/log/</guid>
+      <guid>https://chechia.net/tags/log/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pod-affinity</title>
-      <link>https://chechiachang.github.io/tags/pod-affinity/</link>
+      <link>https://chechia.net/tags/pod-affinity/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/pod-affinity/</guid>
+      <guid>https://chechia.net/tags/pod-affinity/</guid>
       <description></description>
     </item>
     
     <item>
       <title>https</title>
-      <link>https://chechiachang.github.io/tags/https/</link>
+      <link>https://chechia.net/tags/https/</link>
       <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/https/</guid>
+      <guid>https://chechia.net/tags/https/</guid>
       <description></description>
     </item>
     
     <item>
       <title>xpack</title>
-      <link>https://chechiachang.github.io/tags/xpack/</link>
+      <link>https://chechia.net/tags/xpack/</link>
       <pubDate>Tue, 17 Sep 2019 10:15:36 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/xpack/</guid>
+      <guid>https://chechia.net/tags/xpack/</guid>
       <description></description>
     </item>
     
     <item>
       <title>elasticsearch</title>
-      <link>https://chechiachang.github.io/tags/elasticsearch/</link>
+      <link>https://chechia.net/tags/elasticsearch/</link>
       <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/elasticsearch/</guid>
+      <guid>https://chechia.net/tags/elasticsearch/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gcp</title>
-      <link>https://chechiachang.github.io/tags/gcp/</link>
+      <link>https://chechia.net/tags/gcp/</link>
       <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/gcp/</guid>
+      <guid>https://chechia.net/tags/gcp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ibm-q-experience</title>
-      <link>https://chechiachang.github.io/tags/ibm-q-experience/</link>
+      <link>https://chechia.net/tags/ibm-q-experience/</link>
       <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/ibm-q-experience/</guid>
+      <guid>https://chechia.net/tags/ibm-q-experience/</guid>
       <description></description>
     </item>
     
     <item>
       <title>quantum-computing</title>
-      <link>https://chechiachang.github.io/tags/quantum-computing/</link>
+      <link>https://chechia.net/tags/quantum-computing/</link>
       <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/quantum-computing/</guid>
+      <guid>https://chechia.net/tags/quantum-computing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tutorial</title>
-      <link>https://chechiachang.github.io/tags/tutorial/</link>
+      <link>https://chechia.net/tags/tutorial/</link>
       <pubDate>Sun, 02 Jun 2019 13:51:54 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/tutorial/</guid>
+      <guid>https://chechia.net/tags/tutorial/</guid>
       <description></description>
     </item>
     
     <item>
       <title>istio</title>
-      <link>https://chechiachang.github.io/tags/istio/</link>
+      <link>https://chechia.net/tags/istio/</link>
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/istio/</guid>
+      <guid>https://chechia.net/tags/istio/</guid>
       <description></description>
     </item>
     
     <item>
       <title>service-mesh</title>
-      <link>https://chechiachang.github.io/tags/service-mesh/</link>
+      <link>https://chechia.net/tags/service-mesh/</link>
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/service-mesh/</guid>
+      <guid>https://chechia.net/tags/service-mesh/</guid>
       <description></description>
     </item>
     
     <item>
       <title>jenkins</title>
-      <link>https://chechiachang.github.io/tags/jenkins/</link>
+      <link>https://chechia.net/tags/jenkins/</link>
       <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/jenkins/</guid>
+      <guid>https://chechia.net/tags/jenkins/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ios</title>
-      <link>https://chechiachang.github.io/tags/ios/</link>
+      <link>https://chechia.net/tags/ios/</link>
       <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/ios/</guid>
+      <guid>https://chechia.net/tags/ios/</guid>
       <description></description>
     </item>
     
     <item>
       <title>monitoring</title>
-      <link>https://chechiachang.github.io/tags/monitoring/</link>
+      <link>https://chechia.net/tags/monitoring/</link>
       <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/monitoring/</guid>
+      <guid>https://chechia.net/tags/monitoring/</guid>
       <description></description>
     </item>
     
     <item>
       <title>webassembly</title>
-      <link>https://chechiachang.github.io/tags/webassembly/</link>
+      <link>https://chechia.net/tags/webassembly/</link>
       <pubDate>Tue, 18 Dec 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/webassembly/</guid>
+      <guid>https://chechia.net/tags/webassembly/</guid>
       <description></description>
     </item>
     
     <item>
       <title>container</title>
-      <link>https://chechiachang.github.io/tags/container/</link>
+      <link>https://chechia.net/tags/container/</link>
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/container/</guid>
+      <guid>https://chechia.net/tags/container/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cri</title>
-      <link>https://chechiachang.github.io/tags/cri/</link>
+      <link>https://chechia.net/tags/cri/</link>
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/cri/</guid>
+      <guid>https://chechia.net/tags/cri/</guid>
       <description></description>
     </item>
     
     <item>
       <title>docker</title>
-      <link>https://chechiachang.github.io/tags/docker/</link>
+      <link>https://chechia.net/tags/docker/</link>
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/docker/</guid>
+      <guid>https://chechia.net/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>github</title>
-      <link>https://chechiachang.github.io/tags/github/</link>
+      <link>https://chechia.net/tags/github/</link>
       <pubDate>Tue, 28 Aug 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/github/</guid>
+      <guid>https://chechia.net/tags/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>flannel</title>
-      <link>https://chechiachang.github.io/tags/flannel/</link>
+      <link>https://chechia.net/tags/flannel/</link>
       <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/flannel/</guid>
+      <guid>https://chechia.net/tags/flannel/</guid>
       <description></description>
     </item>
     
     <item>
       <title>networking</title>
-      <link>https://chechiachang.github.io/tags/networking/</link>
+      <link>https://chechia.net/tags/networking/</link>
       <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/networking/</guid>
+      <guid>https://chechia.net/tags/networking/</guid>
       <description></description>
     </item>
     
     <item>
       <title>automation</title>
-      <link>https://chechiachang.github.io/tags/automation/</link>
+      <link>https://chechia.net/tags/automation/</link>
       <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/automation/</guid>
+      <guid>https://chechia.net/tags/automation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cloud-computing</title>
-      <link>https://chechiachang.github.io/tags/cloud-computing/</link>
+      <link>https://chechia.net/tags/cloud-computing/</link>
       <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/cloud-computing/</guid>
+      <guid>https://chechia.net/tags/cloud-computing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gpu-computing</title>
-      <link>https://chechiachang.github.io/tags/gpu-computing/</link>
+      <link>https://chechia.net/tags/gpu-computing/</link>
       <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/gpu-computing/</guid>
+      <guid>https://chechia.net/tags/gpu-computing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kubespray</title>
-      <link>https://chechiachang.github.io/tags/kubespray/</link>
+      <link>https://chechia.net/tags/kubespray/</link>
       <pubDate>Wed, 28 Mar 2018 19:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/kubespray/</guid>
+      <guid>https://chechia.net/tags/kubespray/</guid>
       <description></description>
     </item>
     
     <item>
       <title>filesystem</title>
-      <link>https://chechiachang.github.io/tags/filesystem/</link>
+      <link>https://chechia.net/tags/filesystem/</link>
       <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/filesystem/</guid>
+      <guid>https://chechia.net/tags/filesystem/</guid>
       <description></description>
     </item>
     
     <item>
       <title>glusterfs</title>
-      <link>https://chechiachang.github.io/tags/glusterfs/</link>
+      <link>https://chechia.net/tags/glusterfs/</link>
       <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/glusterfs/</guid>
+      <guid>https://chechia.net/tags/glusterfs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>storage</title>
-      <link>https://chechiachang.github.io/tags/storage/</link>
+      <link>https://chechia.net/tags/storage/</link>
       <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/tags/storage/</guid>
+      <guid>https://chechia.net/tags/storage/</guid>
       <description></description>
     </item>
     

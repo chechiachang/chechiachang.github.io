@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>stateful on Che-Chia Chang</title>
-    <link>https://chechiachang.github.io/tags/stateful/</link>
+    <link>https://chechia.net/tags/stateful/</link>
     <description>Recent content in stateful on Che-Chia Chang</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
     <lastBuildDate>Tue, 11 Feb 2020 17:26:22 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechiachang.github.io/tags/stateful/index.xml" rel="self" type="application/rss+xml" />
+	    <atom:link href="https://chechia.net/tags/stateful/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Operate Kafka on Kubernetes</title>
-      <link>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</link>
+      <link>https://chechia.net/talk/operate-kafka-on-kubernetes/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechiachang.github.io/talk/operate-kafka-on-kubernetes/</guid>
-      <description>&lt;p&gt;後端工程與Devops，專精開發流程自動化，微服務開發，容器化，Kubernetes 維運。常出沒於 Golang Taipei 與 CNCF 社群，喜歡分享演講與撰寫技術文章。https://chechiachang.github.io/&lt;/p&gt;
+      <guid>https://chechia.net/talk/operate-kafka-on-kubernetes/</guid>
+      <description>&lt;p&gt;後端工程與Devops，專精開發流程自動化，微服務開發，容器化，Kubernetes 維運。常出沒於 Golang Taipei 與 CNCF 社群，喜歡分享演講與撰寫技術文章。https://chechia.net/&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;2019 GDG DevFest Kaohsiung&lt;/li&gt;
 &lt;li&gt;2018, 2019 IThome Cloud Summit&lt;/li&gt;
