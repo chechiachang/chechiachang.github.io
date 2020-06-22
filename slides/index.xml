@@ -1018,7 +1018,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechia.net/img/cri-o.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/cri-o.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1089,7 +1089,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechia.net/img/docker-angry.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/docker-angry.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1104,7 +1104,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechia.net/img/rkt.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/rkt.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1133,7 +1133,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechia.net/img/containerd.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/containerd.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1212,7 +1212,7 @@ kubelet -&amp;gt; cri-o -&amp;gt; runC -&amp;gt; container&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechia.net/img/cri-o-arch.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/cri-o-arch.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1303,7 +1303,7 @@ Back-End Developer, Kuberentes admin, DevOps&lt;/p&gt;
 
 &lt;figure&gt;
 
-&lt;img src=&#34;https://chechia.net/img/octocat.png&#34; &gt;
+&lt;img src=&#34;https://chechia.net/img/octocat.jpg&#34; &gt;
 
 
 &lt;/figure&gt;
@@ -1536,7 +1536,7 @@ Face detection &amp;amp; recognition&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;a href=&#34;https://developer.github.com/v3/&#34;&gt;Github API&lt;/a&gt;
 &lt;a href=&#34;https://github.com/google/go-github&#34;&gt;go-github&lt;/a&gt; (Api library in Golang)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../images/octocat.png&#34; alt=&#34;inline&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../images/octocat.jpg&#34; alt=&#34;inline&#34;&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;4-data-miners-golang&#34;&gt;4 Data Miners (Golang)&lt;/h1&gt;
 &lt;ol&gt;

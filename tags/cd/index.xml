@@ -1047,7 +1047,7 @@ scrape_configs:
     static_configs:
       - targets: [&#39;localhost:9090&#39;]
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;透過 Grafana -&amp;gt; explore 就可以看到 Prometheus 的 metrics&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;static/img/prometheus-self-metrics.png&#34; alt=&#34;Prometheus Self Metrics&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;static/img/prometheus-self-metrics.jpg&#34; alt=&#34;Prometheus Self Metrics&#34;&gt;&lt;/p&gt;
 &lt;p&gt;而使用 metrics 時最好先查到說明文件，確定 metrics 的定義與計算方法，才可以有效的製圖。關於 &lt;a href=&#34;https://wiki.lnd.bz/display/LFTC/Prometheus&#34;&gt;Prometheus Exporter 的 metrics 說明&lt;/a&gt; 可以到這裡來找。&lt;/p&gt;
 &lt;h1 id=&#34;dashboard&#34;&gt;Dashboard&lt;/h1&gt;
 &lt;p&gt;收集到 metrics 之後就可以在 prometheus 中 query，但一般使用不會一直跑進來下 query，而是會直接搭配 dashboard 製圖呈現，讓資料一覽無遺。&lt;/p&gt;
