@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識技術探測工程師在Github上的的開源貢獻力">
+  <meta name="description" content="About this presentation Speaker note Presentation file Source Code on Github Check chechia.net for full contents of past talks Outlline basics IaC, terraform benefits risks and 坑 our story: issues, steps, &amp; results to be or not to be experience oriented Our stories 100&#43; devs, many teams 25&#43; projects 50&#43; GKEs 80&#43; SQLs IAMs, redis, VPCs, load-balancers, &hellip; Issues Ops manually create resources through GUI by SOP. We have many">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://chechia.net/talk/gdd-devfest-2019-scouter/">
+  <link rel="alternate" hreflang="en-us" href="https://chechia.net/post/terraform-infrastructure-as-code/">
 
   
 
@@ -110,7 +110,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://chechia.net/talk/gdd-devfest-2019-scouter/">
+  <link rel="canonical" href="https://chechia.net/post/terraform-infrastructure-as-code/">
 
   
   
@@ -124,14 +124,14 @@
   <meta property="twitter:creator" content="@chechiachang">
   
   <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechia.net/talk/gdd-devfest-2019-scouter/">
-  <meta property="og:title" content="從零開始的人臉辨識，七龍珠戰鬥力探測器 | Che-Chia Chang">
-  <meta property="og:description" content="是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識技術探測工程師在Github上的的開源貢獻力"><meta property="og:image" content="https://chechia.net/img/c.png">
+  <meta property="og:url" content="https://chechia.net/post/terraform-infrastructure-as-code/">
+  <meta property="og:title" content="Terraform Infrastructure as Code | Che-Chia Chang">
+  <meta property="og:description" content="About this presentation Speaker note Presentation file Source Code on Github Check chechia.net for full contents of past talks Outlline basics IaC, terraform benefits risks and 坑 our story: issues, steps, &amp; results to be or not to be experience oriented Our stories 100&#43; devs, many teams 25&#43; projects 50&#43; GKEs 80&#43; SQLs IAMs, redis, VPCs, load-balancers, &hellip; Issues Ops manually create resources through GUI by SOP. We have many"><meta property="og:image" content="https://chechia.net/img/c.png">
   <meta property="twitter:image" content="https://chechia.net/img/c.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-12-07T00:47:35&#43;08:00">
+  <meta property="article:published_time" content="2020-07-14T16:46:09&#43;08:00">
   
-  <meta property="article:modified_time" content="2019-12-31T19:27:18&#43;08:00">
+  <meta property="article:modified_time" content="2020-07-16T13:49:04&#43;08:00">
   
 
   
@@ -169,7 +169,7 @@
 
 
 
-  <title>從零開始的人臉辨識，七龍珠戰鬥力探測器 | Che-Chia Chang</title>
+  <title>Terraform Infrastructure as Code | Che-Chia Chang</title>
 
 </head>
 
@@ -414,7 +414,7 @@
 </nav>
 
 
-  <div class="pub" itemscope itemtype="http://schema.org/Event">
+  <article class="article" itemscope itemtype="http://schema.org/Article">
 
   
 
@@ -435,7 +435,7 @@
   
   
 <div class="article-container pt-3">
-  <h1 itemprop="name">從零開始的人臉辨識，七龍珠戰鬥力探測器</h1>
+  <h1 itemprop="name">Terraform Infrastructure as Code</h1>
 
   
 
@@ -444,8 +444,8 @@
 
 
 
-<meta content="2019-12-07 00:47:35 &#43;0800 CST" itemprop="datePublished">
-<meta content="2019-12-31 19:27:18 &#43;0800 CST" itemprop="dateModified">
+<meta content="2020-07-14 16:46:09 &#43;0800 CST" itemprop="datePublished">
+<meta content="2020-07-16 13:49:04 &#43;0800 CST" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -453,9 +453,24 @@
   
 
   
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    <time>Jul 16, 2020</time>
+  </span>
+  
 
   
 
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
   
 
   
@@ -477,7 +492,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechia.net/talk/gdd-devfest-2019-scouter/&amp;text=%e5%be%9e%e9%9b%b6%e9%96%8b%e5%a7%8b%e7%9a%84%e4%ba%ba%e8%87%89%e8%be%a8%e8%ad%98%ef%bc%8c%e4%b8%83%e9%be%8d%e7%8f%a0%e6%88%b0%e9%ac%a5%e5%8a%9b%e6%8e%a2%e6%b8%ac%e5%99%a8" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://chechia.net/post/terraform-infrastructure-as-code/&amp;text=Terraform%20Infrastructure%20as%20Code" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -490,7 +505,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechia.net/talk/gdd-devfest-2019-scouter/&amp;t=%e5%be%9e%e9%9b%b6%e9%96%8b%e5%a7%8b%e7%9a%84%e4%ba%ba%e8%87%89%e8%be%a8%e8%ad%98%ef%bc%8c%e4%b8%83%e9%be%8d%e7%8f%a0%e6%88%b0%e9%ac%a5%e5%8a%9b%e6%8e%a2%e6%b8%ac%e5%99%a8" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://chechia.net/post/terraform-infrastructure-as-code/&amp;t=Terraform%20Infrastructure%20as%20Code" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -503,7 +518,7 @@
       
       
       <li>
-        <a href="mailto:?subject=%e5%be%9e%e9%9b%b6%e9%96%8b%e5%a7%8b%e7%9a%84%e4%ba%ba%e8%87%89%e8%be%a8%e8%ad%98%ef%bc%8c%e4%b8%83%e9%be%8d%e7%8f%a0%e6%88%b0%e9%ac%a5%e5%8a%9b%e6%8e%a2%e6%b8%ac%e5%99%a8&amp;body=https://chechia.net/talk/gdd-devfest-2019-scouter/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Terraform%20Infrastructure%20as%20Code&amp;body=https://chechia.net/post/terraform-infrastructure-as-code/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -516,7 +531,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechia.net/talk/gdd-devfest-2019-scouter/&amp;title=%e5%be%9e%e9%9b%b6%e9%96%8b%e5%a7%8b%e7%9a%84%e4%ba%ba%e8%87%89%e8%be%a8%e8%ad%98%ef%bc%8c%e4%b8%83%e9%be%8d%e7%8f%a0%e6%88%b0%e9%ac%a5%e5%8a%9b%e6%8e%a2%e6%b8%ac%e5%99%a8" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://chechia.net/post/terraform-infrastructure-as-code/&amp;title=Terraform%20Infrastructure%20as%20Code" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -529,7 +544,7 @@
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=%e5%be%9e%e9%9b%b6%e9%96%8b%e5%a7%8b%e7%9a%84%e4%ba%ba%e8%87%89%e8%be%a8%e8%ad%98%ef%bc%8c%e4%b8%83%e9%be%8d%e7%8f%a0%e6%88%b0%e9%ac%a5%e5%8a%9b%e6%8e%a2%e6%b8%ac%e5%99%a8%20https://chechia.net/talk/gdd-devfest-2019-scouter/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Terraform%20Infrastructure%20as%20Code%20https://chechia.net/post/terraform-infrastructure-as-code/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -542,7 +557,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechia.net/talk/gdd-devfest-2019-scouter/&amp;title=%e5%be%9e%e9%9b%b6%e9%96%8b%e5%a7%8b%e7%9a%84%e4%ba%ba%e8%87%89%e8%be%a8%e8%ad%98%ef%bc%8c%e4%b8%83%e9%be%8d%e7%8f%a0%e6%88%b0%e9%ac%a5%e5%8a%9b%e6%8e%a2%e6%b8%ac%e5%99%a8" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://chechia.net/post/terraform-infrastructure-as-code/&amp;title=Terraform%20Infrastructure%20as%20Code" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -569,77 +584,6 @@
 
 
 
-<div class="btn-links mb-3">
-  
-  
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="/project/scouter/">
-    Project
-  </a>
-  
-
-
-
-
-
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://docs.google.com/presentation/d/1WMOZ7EXDinXvQHBwl08KaFQVYKktq_4eOlEvXlzZtcY/edit#slide=id.g6c2194b22d_2_35" target="_blank" rel="noopener">
-  Slides
-</a>
-
-
-
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://youtu.be/OXfJRA0qeIw?list=PL5ZANox03XxeCZvz4cdANf82qm5Z2S2ZR&amp;t=103" target="_blank" rel="noopener">
-  Video
-</a>
-
-
-
-
-  
-  
-  
-    
-  
-  
-  
-  
-  
-    
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="https://photos.google.com/share/AF1QipN0zAXDtpCwjnJ44NoBlISUDh2bD1HrPIb3zoSbw6ckRgOjP0xA8i9rk5Q9Otnn0w?key=aC01d2xUOEZDczdHdFl6VS1lNjB6THRNT1Jnc3dR" target="_blank" rel="noopener">
-    <i class="fab fa-google mr-1"></i>
-    Google Photo
-  </a>
-
-
-</div>
-
 
   
 </div>
@@ -648,85 +592,261 @@
 
   <div class="article-container">
 
-    
-      <h3>Abstract</h3>
-      <p class="pub-abstract" itemprop="text">是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識技術探測工程師在Github上的的開源貢獻力。 使用技術包含 Golang，Python, Github API, Face Detection API, Unity AR, Swift.</p>
-    
+    <div class="article-style" itemprop="articleBody">
+      <h1 id="about-this-presentation">About this presentation</h1>
+<ul>
+<li><a href="">Speaker note</a></li>
+<li><a href="">Presentation file</a></li>
+<li><a href="https://github.com/chechiachang/chechiachang.github.io-src/blob/master/content/post/terraform-infrastructure-as-code/index.md">Source Code on Github</a></li>
+<li><a href="https://chechia.net">Check chechia.net for full contents of past talks</a></li>
+</ul>
+<h1 id="outlline">Outlline</h1>
+<ul>
+<li>basics IaC, terraform</li>
+<li>benefits</li>
+<li>risks and 坑</li>
+<li>our story: issues, steps, &amp; results</li>
+<li>to be or not to be</li>
+</ul>
+<p>experience oriented</p>
+<h1 id="our-stories">Our stories</h1>
+<ul>
+<li>100+ devs, many teams</li>
+<li>25+ projects</li>
+<li>50+ GKEs</li>
+<li>80+ SQLs</li>
+<li>IAMs, redis, VPCs, load-balancers, &hellip;</li>
+</ul>
+<h1 id="issues">Issues</h1>
+<ul>
+<li>Ops manually create resources through GUI by SOP.</li>
+<li>We have many isolated, separeated resources, VPCs. It&rsquo;s our culture, and we (devops) want to change.</li>
+<li>Some projects have short life-cycle. Rapid resources created &amp; destroy.</li>
+</ul>
+<h1 id="our-user-story">Our user story</h1>
+<p>As a devops,
+I would like to introduce terraform (IaC)
+so that I can</p>
+<ul>
+<li>review all existing resources</li>
+<li>minimize error from manual operation</li>
+<li>minimize efforts to operate infra</li>
+<li>delegate infra operations to junior team members</li>
+</ul>
+<p>As a devops,
+I would like to fully enforce terraform (IaC)
+so that I can</p>
+<ul>
+<li>restrict manual operation</li>
+<li>minimize IAM privilges</li>
+<li>Separate global infra scope into project infra scope</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<ol>
+<li>import existing resources</li>
+<li>review existing resources code</li>
+<li>plan best practice resource templates</li>
+<li>create new resources with templates</li>
+<li>introduce git workflow, plan, commit, PR, and review</li>
+<li>add wrapper handler</li>
+<li>automation pipeline</li>
+<li>repeat 2-4</li>
+</ol>
+<h1 id="iac">IaC</h1>
+<ul>
+<li>Programatic way to operate infra</li>
+<li>Perfect for public cloud, cloud native, virtualized resources</li>
+</ul>
+<h1 id="terraform">Terraform</h1>
+<p><a href="https://www.terraform.io/">Terraform</a></p>
+<ul>
+<li>Declarative (functional) IaC</li>
+<li>Invoke API delegation</li>
+<li>State management</li>
+</ul>
+<h1 id="scope">Scope</h1>
+<ul>
+<li>
+<p>Compute Instances</p>
+</li>
+<li>
+<p>Kubernetes</p>
+</li>
+<li>
+<p>Databases</p>
+</li>
+<li>
+<p>IAM</p>
+</li>
+<li>
+<p>Networking</p>
+</li>
+<li>
+<p>Load Balancer</p>
+</li>
+</ul>
+<h1 id="expected-result">Expected Result</h1>
+<ul>
+<li>Zero manual operation error</li>
+<li>Infra workflow with infra review</li>
+</ul>
+<h1 id="unexpected-results">Unexpected Results</h1>
+<ul>
+<li>We made a massive infra migration</li>
+</ul>
+<h1 id="expected-benefits">Expected benefits</h1>
+<ul>
+<li>(Preference) Better readability to GUI. Allow comment everywhere.</li>
+<li>Standarized infra. Infra as a (stable) product.</li>
+<li>Easy to create identical dev, staging, prod envs</li>
+<li>Minimize manual operation. Fully automized infra pipeline.</li>
+<li>Reviewed infra. Better workflow. Code needs reviews, so do infra.</li>
+</ul>
+<h1 id="other-benefits">Other Benefits</h1>
+<ul>
+<li>Don&rsquo;t afraid to change prod sites anymore</li>
+<li>understand resources from API aspect
+<ul>
+<li>how terraform work with GCP API</li>
+</ul>
+</li>
+</ul>
+<h1 id="risks">Risks</h1>
+<ul>
+<li>Incorrect usage could cause massive destruction.
+<ul>
+<li>如果看見 destroy 的提示，請雙手離開鍵盤。 ~ first line in our SOP</li>
+<li>If see &ldquo;destroy&rdquo;, cancel operation &amp; call for help.</li>
+</ul>
+</li>
+<li>State management</li>
+<li>A little latency between infra version and terraform provider version</li>
+</ul>
+<h1 id="state">State</h1>
+<ul>
+<li>Shared but synced</li>
+<li>watch out for state conflicts when colaborating
+<ul>
+<li>state diff. could cause terraform mis-plan</li>
+</ul>
+</li>
+<li>Solution: synced state lock
+<ul>
+<li>Colatorative edit (git branch &amp; PR), synchronized terraform plan &amp; apply</li>
+<li>or better: automation</li>
+</ul>
+</li>
+</ul>
+<h1 id="reduce-risks">Reduce Risks</h1>
+<ul>
+<li>Sufficient understanding to infra &amp; terraform</li>
+<li>Sufficient training to juniors</li>
+<li>Minimize IAM privilege: remove update / delete permissions</li>
+</ul>
+<h1 id="privide-template">Privide template</h1>
+<ul>
+<li>wrap resources for
+<ul>
+<li>better accesibility</li>
+<li>lower operation risks</li>
+<li>uniform naming convention</li>
+<li>best practice</li>
+<li>suggested default value</li>
+</ul>
+</li>
+</ul>
+<h1 id="about-introducing-new-tool">About introducing new tool</h1>
+<ul>
+<li>The hardest part is always people
+<ul>
+<li>Focus on critical issues (痛點) instead of tool itself. &ldquo;We introduce tool to solve&hellip;&rdquo;</li>
+<li>Put result into statistics &ldquo;The outage due to misconfig is reduced by&hellip;&rdquo;</li>
+</ul>
+</li>
+</ul>
+<h1 id="overall-my-iac-experience-is-great">Overall, my IaC experience is GREAT!</h1>
+<ul>
+<li>IaC to automation.</li>
+<li>Comment (for infra) is important. You have to write doc anyway. Why not put in IaC?</li>
+</ul>
+<h1 id="appendixi-understand-resources-from-api-aspect">Appendix.I understand resources from API aspect</h1>
+<p>GCP Load Balancer</p>
+<h3 id="gcp-load-balancing">GCP Load Balancing</h3>
+<ul>
+<li>internal
+<ul>
+<li>regional
+<ul>
+<li>pass-through: tcp / udp   -&gt; internal TCP/UDP</li>
+<li>proxy: http / https       -&gt; internal HTTP(S)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>external
+<ul>
+<li>regional
+<ul>
+<li>pass-through: tcp / udp   -&gt; tcp/udp network</li>
+</ul>
+</li>
+<li>global / effective regional
+<ul>
+<li>proxy
+<ul>
+<li>tcp                     -&gt; TCP Proxy</li>
+<li>ssl                     -&gt; SSL Proxy</li>
+<li>http / https            -&gt; External HTTP(S)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="terraform-resource">Terraform Resource</h3>
+<ul>
+<li>
+<p>forwarding_rule</p>
+<ul>
+<li>forwarding_rule: tcp &amp; http</li>
+<li>global_forwarding_rule: only http</li>
+</ul>
+</li>
+<li>
+<p>backend_service</p>
+<ul>
+<li>backend_service
+<ul>
+<li>health_check</li>
+<li>http_health_check</li>
+<li>https_health_check</li>
+</ul>
+</li>
+<li>region_backend_service
+<ul>
+<li>region_health_check</li>
+<li>region_http_health_check</li>
+<li>region_https_health_check</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="some-ways-to-do-iac">Some ways to do IaC</h1>
+<ul>
+<li>Cloud Formation</li>
+<li>bash script with API / client</li>
+</ul>
 
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Date</div>
-          <div class="col-12 col-md-9" itemprop="datePublished">
-            Dec 7, 2019 &mdash;
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
     </div>
-    <div class="d-md-none space-below"></div>
-
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Event</div>
-          <div class="col-12 col-md-9">
-            <a href="https://gdg-kaohsiung.kktix.cc/events/devfest-kaohsiung-2019" target="_blank" rel="noopener">
-            GDG DevFest 2019 Kaohsiung
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="d-md-none space-below"></div>
 
     
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Location</div>
-          <div class="col-12 col-md-9">高雄市數位內容創意中心 DAKUO</div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="d-md-none space-below"></div>
+
+
+
     
-
-    <div class="space-below"></div>
-
-    <div class="article-style">
       
-    </div>
-
-    
-
-<div class="article-tags">
-  
-  <a class="badge badge-light" href="/tags/machine-learning/">machine-learning</a>
-  
-  <a class="badge badge-light" href="/tags/face-detection/">face-detection</a>
-  
-  <a class="badge badge-light" href="/tags/face-recognition/">face-recognition</a>
-  
-  <a class="badge badge-light" href="/tags/unity/">unity</a>
-  
-  <a class="badge badge-light" href="/tags/swift/">swift</a>
-  
-  <a class="badge badge-light" href="/tags/golang/">golang</a>
-  
-  <a class="badge badge-light" href="/tags/github-api/">github-api</a>
-  
-  <a class="badge badge-light" href="/tags/ar/">ar</a>
-  
-</div>
-
-
-    
 
 
 
@@ -850,33 +970,32 @@
 
 
 
+      
+      
+    
 
-  </div>
-</div>
-
-
-<div class="article-container article-widget">
-  
+    
+    <div class="article-widget">
+      
 <div class="post-nav">
   
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/talk/mit-6.824-go-mapreduce/" rel="next">MIT 6.824 Distributed System Learning Note</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/talk/kubernetes-kafka-deployment/" rel="prev">Deploy Kafka on Kubernetes</a>
+    <a href="/post/say-goodbye-2019/" rel="prev">Say Goodbye 2019</a>
   </div>
   
 </div>
 
-</div>
+    </div>
+    
 
+    
+
+
+  </div>
+</article>
 
       
 
