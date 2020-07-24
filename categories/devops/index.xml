@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>devops on Che-Chia Chang</title>
+    <link>https://chechia.net/categories/devops/</link>
+    <description>Recent content in devops on Che-Chia Chang</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
+    <language>en-us</language>
+    <copyright>chechiachang &amp;copy; 2016</copyright>
+    <lastBuildDate>Sat, 12 Oct 2019 17:41:25 +0800</lastBuildDate>
+    
+	    <atom:link href="https://chechia.net/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cert Manager Complete Workflow</title>
+      <link>https://chechia.net/post/cert-manager-complete-workflow/</link>
+      <pubDate>Sat, 12 Oct 2019 17:41:25 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/cert-manager-complete-workflow/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress Controller&lt;/li&gt;
+&lt;li&gt;Cert-manager&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;recap&#34;&gt;Recap&lt;/h1&gt;
+&lt;p&gt;昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;設置 Let&amp;rsquo;s Encript prod site 的 Issuer&lt;/li&gt;
+&lt;li&gt;設置 certificates.certmanager.k8s.io 資源來定義 certificate 的取得方式&lt;/li&gt;
+&lt;li&gt;或是在 ingress 中配置 tls，讓 cert-manager 自動透過 ingress-shim 產生 certifcates.cert-manager，並且產生 certificate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上是使用 cert-manager 產生 certificate 的基本操作，剩下的是由 cert-manager 完成。實際上 cert-manager 在產生出 certificate 之前還做了很多事情，我們今天就詳細走過完整流程，藉此了解 cert-manager 配合 issuing certificate 的流程&lt;/p&gt;
+&lt;p&gt;使用者設置 Issuer&lt;/p&gt;
+&lt;p&gt;使用者設定 certificate -&amp;gt; cert-manager 根據 certificate -&amp;gt; 產生 certificate&lt;/p&gt;
+&lt;h1 id=&#34;certificaterequests&#34;&gt;CertificateRequests&lt;/h1&gt;
+&lt;p&gt;certificaterequests.certmanager 是 cert-manager 產生 certificate 過程中會使用的資源，不是設計來讓人類操作的資源。&lt;/p&gt;
+&lt;p&gt;當 cert-manager 監測到 certificate 產生後，會產生 certificaterequests.certmanager.k8s.io 資源，來向 issuer request certificate，這個過程與使用其他客戶端 (ex. certbot) 來向 3rd party CA server request certificate 時的內容相同，只是這邊我們使用 kubernetes resource 來定義。&lt;/p&gt;
+&lt;p&gt;包含的 certificate request，會以 pem encoded 的形式，再變成 base64 encoded 存放在 resource 中。這個 pem key 也會從到遠方的 CA sercer (Let&amp;rsquo;s Encrypt prod) 來 request certificate&lt;/p&gt;
+&lt;p&gt;如果 issuance 成功，certificaterequest 資源應該會被 cert-manager 吃掉，不會被人類看到。&lt;/p&gt;
+&lt;p&gt;一個 certificaterequests.certmanager 大概長這樣&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: cert-manager.io/v1alpha2
+kind: CertificateRequest
+metadata:
+  name: my-ca-cr
+spec:
+  csr: LS0tLS1CRUdJTiBDRVJUSUZJQ0FUR
+  ..................................
+  LQo=
+  isCA: false
+  duraton: 90d
+  issuerRef:
+    name: ca-issuer
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: Issuer
+    group: cert-manager.io
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這個 certificaterequests.certmanager 會讓 cert-manager 嘗試向 Issuer (lets-encrypt-prod) request certificate。&lt;/p&gt;
+&lt;h1 id=&#34;order&#34;&gt;Order&lt;/h1&gt;
+&lt;p&gt;orders.certmanager.k8s.io 被 ACME 的 Issuer 使用，用來管理 signed TLD certificate 的 ACME order，這個 resource 也是 cert-manager 自行產生管理的 resource，不需要人類來更改。&lt;/p&gt;
+&lt;p&gt;當一個 certificates.certmanager 產生，且需要使勇 ACME isser 時，certmanager 會產生 orders.certmanager ，來取得 certificate。&lt;/p&gt;
+&lt;h1 id=&#34;challenges&#34;&gt;Challenges&lt;/h1&gt;
+&lt;p&gt;challenges.certmanager 資源是 ACME Issuer 管理 issuing lifecycle 時，用來完成單一個 DNS name/identifier authorization 時所使用的。用來確定 issue certiticate 的客戶端真的是 DNS name 的擁有者。&lt;/p&gt;
+&lt;p&gt;當 cert-manager 產生 order 時，order controller 接到 order ，就會為每一個需要 DNS certificate 的 DNSname ，產生 challenges.certmanager。&lt;/p&gt;
+&lt;p&gt;這段也是 order controller 自動產生，並不需要使用者參與。&lt;/p&gt;
+&lt;h1 id=&#34;acme-certificate-issuing&#34;&gt;ACME certificate issuing&lt;/h1&gt;
+&lt;p&gt;user -&amp;gt; 設定好 issuers.certmanager&lt;/p&gt;
+&lt;p&gt;user -&amp;gt; 產生 certificates.certmanager -&amp;gt; 選擇 Issuer -&amp;gt;&lt;/p&gt;
+&lt;p&gt;cert-manager -&amp;gt; 產生 certificaterequest -&amp;gt;&lt;/p&gt;
+&lt;p&gt;cert-manager 根據 certiticfates.certmanager 產生 orders.certmanager -&amp;gt;&lt;/p&gt;
+&lt;p&gt;order controller 根據 order ，並且跟每一個 DNS name target，產生一個 challenges.certmanager&lt;/p&gt;
+&lt;p&gt;challenges.certmanager 產生後，會開啟這個 DNS name challenge 的 lifecycle&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;challenges 狀態為 queued for processing，在佇列中等待，&lt;/li&gt;
+&lt;li&gt;如果沒有別的 chellenges 在進行，challenges 狀態變成 scheduled，這樣可以避免多個 DNS challenge 同時發生，或是相同名稱的 DNS challenge 重複&lt;/li&gt;
+&lt;li&gt;challenges 與遠端的 ACME server &amp;lsquo;synced&amp;rsquo; 當前的狀態，是否 valid
+&lt;ul&gt;
+&lt;li&gt;如果 ACME 回應這個 DNS name 的 challenge 還是有效的，則直接把 challenges 的狀態改成 valid，然後移出排程佇列。&lt;/li&gt;
+&lt;li&gt;如果 challenges 狀態仍然為 pending，challenge controller 會依照設定 present 這個 challenge，使用 HTTP01 或是 DNS01，challenges 被標記為 presented&lt;/li&gt;
+&lt;li&gt;challenges 先執行 self check，確定 challenge 狀態已經傳播給 dns servers，如果 self check 失敗，則會依照 interval retry&lt;/li&gt;
+&lt;li&gt;ACME authorization 關聯到 challenge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cert-manager 處理 &amp;lsquo;scheduled&amp;rsquo; challenges.certmanager -&amp;gt; ACME challenge&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cert Manager How It Work</title>
+      <link>https://chechia.net/post/cert-manager-how-it-work/</link>
+      <pubDate>Fri, 11 Oct 2019 11:24:34 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/cert-manager-how-it-work/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress Controller&lt;/li&gt;
+&lt;li&gt;Cert-manager&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer&lt;/p&gt;
+&lt;h1 id=&#34;ca-terminology&#34;&gt;CA Terminology&lt;/h1&gt;
+&lt;p&gt;先把實際執行 CA 簽發的名詞定義一下，以免跟 cert-manager 的資源搞混&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Certificate: 憑證，x509 certificate，cert-manager 自動管理的目標，透過 let&amp;rsquo;s encript 取得的 x509 certificates&lt;/li&gt;
+&lt;li&gt;CA (Certificate Authority): issue signed certificate 的機構&lt;/li&gt;
+&lt;li&gt;issue: 頒發，指 CA 產生 certificate 與 key (今天的範例格式是 .crt 與 .key)&lt;/li&gt;
+&lt;li&gt;Sign vs self-signed: 簽核，自己簽核，使用信任的 CA issue certificate，或是使用自己產生的 CA self-sign，然後把 CA 加到可以被信任的 CA 清單中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let&amp;rsquo;s Encript CA issues signed certificates&lt;/p&gt;
+&lt;p&gt;Kubernetes in-cluster CA issues self-signed certificates&lt;/p&gt;
+&lt;p&gt;cert-manager 的 CRD 資源，使用來描述 cert-manager 如何執行上述操作，CRD 底下都會加上 ``*.certmanager.k8s.io` 方便辨識。&lt;/p&gt;
+&lt;h1 id=&#34;設定-issuer&#34;&gt;設定 Issuer&lt;/h1&gt;
+&lt;p&gt;Issuer 要怎麼翻成中文XD，憑證頒發機構？&lt;/p&gt;
+&lt;p&gt;總之在開始簽發 certificates 前，要先定義 issuers.certmanager.k8s.io ，代表一個能簽發 certificate CA，例如 Let&amp;rsquo;s Encript，或是 kubernetes 內部也有內部使用的憑證簽發，放在 secrets 中。&lt;/p&gt;
+&lt;p&gt;這些 Issuer 會讓 certificates.certmanager.k8s.i8o 使用，定義如何取得 certificate 時，選擇 Issuer。&lt;/p&gt;
+&lt;p&gt;cert-manager 上可以定義單一 namespace 的 issuers.certmanager 與集群都可使用的 clusterissuers.certmanager&lt;/p&gt;
+&lt;p&gt;cert-manager 有支援幾種的 issuer type&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CA: 使用 x509 keypair 產生certificate，存在 kubernetes secret&lt;/li&gt;
+&lt;li&gt;Self signed: 自簽 certificate&lt;/li&gt;
+&lt;li&gt;ACME: 從 ACME (ex. Let&amp;rsquo;s Encrypt) server 取得 ceritificate&lt;/li&gt;
+&lt;li&gt;Vault: 從 Vault PKI backend 頒發 certificate&lt;/li&gt;
+&lt;li&gt;Venafi: Venafi Cloud&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;certificate&#34;&gt;Certificate&lt;/h1&gt;
+&lt;p&gt;有了簽發憑證的單位，接下來要定義如何取得 certificate。certificates.certmanager.k8s.io 是 CRD，用來告訴 cert-manager 要如何取得 certificate&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cert-manager.io/en/latest/reference/certificates.html#certificates&#34;&gt;certifcates.certmanager.k8s.io&lt;/a&gt; 提供了簡單範例&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: acme-crt
+spec:
+  secretName: acme-crt-secret
+  duration: 90d
+  renewBefore: 30d
+  dnsNames:
+  - foo.example.com
+  - bar.example.com
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - foo.example.com
+      - bar.example.com
+  issuerRef:
+    name: letsencrypt-prod
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: Issuer
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上面這個 certificate.certmanger 告訴 cert-manager&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;針對 foo.example.com 與 bar.example.com 兩個 domainsc&lt;/li&gt;
+&lt;li&gt;使用 letsencript-prd Issuer 去取得 certificate key pair&lt;/li&gt;
+&lt;li&gt;成功後把 ceritifcate 與 key 存在 secret/acme-crt-secret 中(以 tls.key, tls.crt 的形式)&lt;/li&gt;
+&lt;li&gt;與 certificate.certmanager 都放在相同 namespace 中，產生 certificate.certmanager 的時候要注意才不會找不到 secret&lt;/li&gt;
+&lt;li&gt;這邊指定了 certificate 的有效期間與 renew 時間 (預設值)，有需要可以更改&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;配合-ingress-設置-tls&#34;&gt;配合 Ingress 設置 tls&lt;/h1&gt;
+&lt;p&gt;有上述的設定，接下來可以請求 tls certificate&lt;/p&gt;
+&lt;p&gt;記得我們上篇 Nginx Ingress Controller 提到的 ingreess 設定嗎？這邊準備了一個適合配合 nginx ingress 使用的 tls 設定&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-nginx-ingress
+  annotations:
+    kubernetes.io/ingress.class: &amp;quot;nginx&amp;quot;
+    cert-manager.io/issuer: &amp;quot;letsencrypt-prod&amp;quot;
+
+spec:
+  tls:
+  - hosts:
+    - foo.example.com
+    secretName: my-nginx-ingrss-tls
+  rules:
+  - host: foo.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: chechiachang-backend
+          servicePort: 80
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這個 ingress apply 後，就會根據 spec.tls 的 hosts 設定，自動產生一個 certificate.certmanager 資源，並在這個資源使用 letsencryp-prod。&lt;/p&gt;
+&lt;p&gt;不用我們手動 apply 新的 ceritificate，這邊是 cert-manager 使用了 annotation 來觸發 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/tasks/issuing-certificates/ingress-shim.html&#34;&gt;Ingress-shim&lt;/a&gt;，簡單來說，當 ingress 上有使用 cert-manager.io 的 annotation 時，cert-manager 就會根據 ingress 設定內容，抽出 spec.tls 與 isuer annotation，來產生同名的 certificates.certmanager，這個 certificateas.certmanager 會觸發接下的 certificate 頒發需求。&lt;/p&gt;
+&lt;p&gt;只要部署 Issuer 與 Ingress 就可以自動產生 certificate。當然，希望手動 apply certificates.certmanager 也是行得通。&lt;/p&gt;
+&lt;p&gt;把產生了 certificate.certmanager 拉出來看&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl describe certificate my-nginx-ingress
+
+ Name:         my-nginx-ingress
+ Namespace:    default
+ API Version:  cert-manager.io/v1alpha2
+ Kind:         Certificate
+ Metadata:
+   Cluster Name:
+   Creation Timestamp:  2019-10-10T17:58:37Z
+   Generation:          0
+   Owner References:
+     API Version:           extensions/v1beta1
+     Block Owner Deletion:  true
+     Controller:            true
+     Kind:                  Ingress
+     Name:                  my-nginx-ingress
+   Resource Version:        9295
+ Spec:
+   Dns Names:
+     example.your-domain.com
+   Issuer Ref:
+     Kind:       Issuer
+     Name:       letsencrypt-prod
+   Secret Name:  my-nginx-ingress-tls
+ Status:
+   Acme:
+     Order:
+       URL:  https://acme-prod-v02.api.letsencrypt.org/acme/order/7374163/13665676
+   Conditions:
+     Last Transition Time:  2019-10-10T18:05:57Z
+     Message:               Certificate issued successfully
+     Reason:                CertIssued
+     Status:                True
+     Type:                  Ready
+ Events:
+   Type     Reason          Age                From          Message
+   ----     ------          ----               ----          -------
+   Normal   CreateOrder     1d                 cert-manager  Created new ACME order, attempting validation...
+   Normal   DomainVerified  1d                 cert-manager  Domain &amp;quot;foo.example.com&amp;quot; verified with &amp;quot;http-01&amp;quot; validation
+   Normal   IssueCert       1d                 cert-manager  Issuing certificate...
+   Normal   CertObtained    1d                 cert-manager  Obtained certificate from ACME server
+   Normal   CertIssued      1d                 cert-manager  Certificate issued Successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;把 certificate 從 secret 撈出來看&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ kubectl describe secret my-nginx-ingress-tls
+
+Name:         my-nginx-ingress-tls
+Namespace:    default
+Labels:       cert-manager.io/certificate-name=my-nginx-ingrsss-tls
+Annotations:  cert-manager.io/alt-names=foo.example.com
+              cert-manager.io/common-name=foo.example.com
+              cert-manager.io/issuer-kind=Issuer
+              cert-manager.io/issuer-name=letsencrypt-prod
+
+Type:  kubernetes.io/tls
+
+Data
+====
+tls.crt:  3566 bytes
+tls.key:  1675 bytes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如此便可以透過 ingress 設定 nginx 使用 https&lt;/p&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;了解 *.certmanager.k8s.io CRD 定義與意義&lt;/li&gt;
+&lt;li&gt;設定 Issuer 與 certificate&lt;/li&gt;
+&lt;li&gt;透過 ingress-shim 直接部署 ingress 來產生 certificate&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cert Manager Deployment on Kubernetes</title>
+      <link>https://chechia.net/post/cert-manager-deployment/</link>
+      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/cert-manager-deployment/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress Controller&lt;/li&gt;
+&lt;li&gt;Cert-manager&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Cert-manager Introduction&lt;/li&gt;
+&lt;li&gt;Deploy cert-manager&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;簡介-cert-manager&#34;&gt;簡介 cert-manager&lt;/h1&gt;
+&lt;p&gt;TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。&lt;/p&gt;
+&lt;p&gt;以往我們使用 &lt;a href=&#34;https://letsencrypt.org/zh-tw/&#34;&gt;Let&amp;rsquo;s Encrypt&lt;/a&gt; 提供的免費自動化憑證頒發，搭配 &lt;a href=&#34;https://github.com/jetstack/kube-lego&#34;&gt;kube-lego&lt;/a&gt; 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 &lt;a href=&#34;https://github.com/jetstack/cert-manager/&#34;&gt;Cert-manager&lt;/a&gt; 來進行 kubernetes 上的憑證自動化管理。&lt;/p&gt;
+&lt;p&gt;cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 kubernetes 上 使用 CRD (Customized Resource Definition) 來定義 certificate issuing 的 desired state&lt;/li&gt;
+&lt;li&gt;向 let&amp;rsquo;s encrypt 取得公開的憑證&lt;/li&gt;
+&lt;li&gt;在 kubernetes 上自動檢查憑證的有效期限，並自動在有效時限內 renew certificate。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;安裝&#34;&gt;安裝&lt;/h1&gt;
+&lt;p&gt;官方文件有提供 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html&#34;&gt;詳細步驟&lt;/a&gt; 可以直接使用 release 的 yaml 部屬，也可以透過 helm。&lt;/p&gt;
+&lt;h3 id=&#34;使用-yaml-部屬&#34;&gt;使用 yaml 部屬&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# Create a namespace to run cert-manager in
+kubectl create namespace cert-manager
+
+# Disable resource validation on the cert-manager namespace
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;開一個獨立的 namespace 來管理 cert-manager resources&lt;/p&gt;
+&lt;p&gt;取消 namespcae 中的 kubernetes validating webhook。由於 cert-manager 本身就會使用 &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/&#34;&gt;ValidatingWebhookConfiguration&lt;/a&gt; 來為 cert-manager 定義的 Issuer, Certificate resource 做 validating。然而這會造成 cert-manager 與 webhook 的循環依賴 (circling dependency)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Install the CustomResourceDefinitions and cert-manager itself
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# Install the CustomResourceDefinitions and cert-manager itself
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這個 yaml 裡面還有幾個元件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Role-bindings&lt;/li&gt;
+&lt;li&gt;CustomResourceDefinition
+&lt;ul&gt;
+&lt;li&gt;certificaterequests.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;certificates.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;challenges.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;clusterissuers.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;issuers.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;orders.certmanager.k8s.io&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;這些元件的細節，留待運作原理分析時再詳解。&lt;/p&gt;
+&lt;h3 id=&#34;helm-deployment&#34;&gt;helm deployment&lt;/h3&gt;
+&lt;p&gt;這邊也附上使用 helm 安裝的步驟&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+
+# Install the CustomResourceDefinition resources separately
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.10/deploy/manifests/00-crds.yaml
+
+# Create the namespace for cert-manager
+kubectl create namespace cert-manager
+
+# Label the cert-manager namespace to disable resource validation
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+
+# Add the Jetstack Helm repository
+helm repo add jetstack https://charts.jetstack.io
+
+# Update your local Helm chart repository cache
+helm repo update
+
+# Install the cert-manager Helm chart
+helm install \
+  --name cert-manager \
+  --namespace cert-manager \
+  --version v0.10.1 \
+  jetstack/cert-managerNAMESPACE=cert-manager
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;部屬完檢查一下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl get pods --namespace cert-manager
+
+NAME                                       READY   STATUS    RESTARTS   AGE
+cert-manager-5c6866597-zw7kh               1/1     Running   0          2m
+cert-manager-cainjector-577f6d9fd7-tr77l   1/1     Running   0          2m
+cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0          2m
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這邊部屬完，會獲得完整的 cert-manager 與 cert-manager CRD，但 certificate 的 desired state object 還沒部屬。也就是關於我們要如何 issue certificate 的相關描述，都還沒有 deploy， cert-manager 自然不會工作。關於 issuing resources configuration，我們下次再聊。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ELK or Not ELK</title>
+      <link>https://chechia.net/post/elastic-or-not-elastic/</link>
+      <pubDate>Wed, 18 Sep 2019 18:51:40 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/elastic-or-not-elastic/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;監測 Google Compute Engine 上服務的各項數據&lt;/li&gt;
+&lt;li&gt;監測 Google Kubernetes Engine 的各項數據&lt;/li&gt;
+&lt;li&gt;使用 logstash pipeline 做數據前處理&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;有板友問到，要如何選擇要不要用 ELK，其實也這是整篇 ELK 的初衷。這邊分享一下 ELK 與其他選擇，以及選擇解決方案應該考慮的事情。&lt;/p&gt;
+&lt;h1 id=&#34;其他常用的服務&#34;&gt;其他常用的服務&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://prometheus.io/&#34;&gt;Prometheus&lt;/a&gt;: 開源的 time series metrics 收集系統&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/stackdriver/?hl=zh-tw&#34;&gt;Stackdriver&lt;/a&gt;: GCP 的 log 與 metrics 平台&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/cloud/&#34;&gt;Elastic Cloud&lt;/a&gt;: ELK 的 Sass&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/post/self-host-elk-stack-on-gcp/&#34;&gt;Self-hosted ELK&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;或是依照需求混搭，各個服務使用的各層套件是可以相容，例如&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 GKE 上不用 beat 可以用 fluentd&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Prometheus -&amp;gt; Stackdriver&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ELK -&amp;gt; Stackdriver&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Fluentd -&amp;gt; Prometheus
+&amp;hellip;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sass vs cloud self-hosted vs on-premised&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Metrics: ELK vs Prometheus vs Stackdriver&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Logging: ELK vs Stackdriver&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;取捨原則&#34;&gt;取捨原則&lt;/h1&gt;
+&lt;p&gt;各個方法都各有利弊，完全取決於需求&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;已知條件限制，例如安全性考量就是要放在私有網路防火牆內，或是預算&lt;/li&gt;
+&lt;li&gt;資料讀取方式，有沒有要交叉比對收集的資料，還是單純依照時間序查詢&lt;/li&gt;
+&lt;li&gt;或是資料量非常大，應用數量非常多&lt;/li&gt;
+&lt;li&gt;維護的團隊，有沒有想，或有沒有能力自己養 self-host 服務&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;sass-vs-self-hosted-vs-on-premised&#34;&gt;Sass vs Self-hosted vs On-premised&lt;/h1&gt;
+&lt;p&gt;Sass: 指的是直接用 Elasitc Cloud，或是直接使用公有雲的服務(ex. 在 GCP 上使用 stackdriver)&lt;/p&gt;
+&lt;p&gt;Cloud Self-hosted: 在公有雲上使用 ELK&lt;/p&gt;
+&lt;p&gt;On-Premised: 自己在機房搭設&lt;/p&gt;
+&lt;h3 id=&#34;安全性&#34;&gt;安全性&lt;/h3&gt;
+&lt;p&gt;看公司的安全政策，允許將日誌及監控數據，送到私有網路以外的地方嗎？如果在防火牆內，搞不好 port 根本就不開給你，根本不用考慮使用外部服務。&lt;/p&gt;
+&lt;p&gt;要知道服務的 log 其實可以看出很多東西．如果有特別做資料分析，敏感的資料，金流相關數據，通常不會想要倒到第三方服務平台。&lt;/p&gt;
+&lt;p&gt;可能有做金流的，光是安全性這點，就必須選擇自架。&lt;/p&gt;
+&lt;h3 id=&#34;成本&#34;&gt;成本&lt;/h3&gt;
+&lt;p&gt;金錢成本 + 維護成本&lt;/p&gt;
+&lt;p&gt;金錢成本就看各個服務的計費方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.elastic.co/products/elasticsearch/service/pricing&#34;&gt;Elastic Cloud Pricing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Self-hosted ELK &amp;amp; Prometheus：機器成本&lt;/li&gt;
+&lt;li&gt;公有雲服務(ex. &lt;a href=&#34;https://cloud.google.com/stackdriver/pricing?hl=zh-tw&#34;&gt;GCP Stackdriver&lt;/a&gt;): 用量計費&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;維護成本: 工程師的月薪 * 每個月要花在維護服務的工時比例&lt;/p&gt;
+&lt;p&gt;一般 Sass 代管的服務，會降低維護成本，基本上就是做到網頁點一點就可以用。&lt;/p&gt;
+&lt;p&gt;如果公司有完整的維護團隊，有機房，服務的使用量也很大，當然 self-hosted 是比較省。
+中小型企業以及新創，服務在公有雲上的，直接使用Sass 服務往往比較節省成本，服務直接由 Sass 維護，節省很多機器上管理跟日常維護。&lt;/p&gt;
+&lt;p&gt;避免迷思，買外部服務的帳單是顯性的，報帳時看得到，而工程師維護的時間成本是隱性的。self-host 可能省下 Sass 費用，但工程因為分了時間去維護，而影響進度。這部分就看團隊如何取捨。&lt;/p&gt;
+&lt;h3 id=&#34;易用性&#34;&gt;易用性&lt;/h3&gt;
+&lt;p&gt;如果應用都跑在公有雲上，可以考慮使用雲平台提供的監測服務，使用便利，而且整合度高。ex  GCP 上，要啟用 Stackdriver 是非常輕鬆的事情，只是改一兩個選項，就可以開啟 / 關閉 logging 與 metrics&lt;/p&gt;
+&lt;p&gt;如果是 On-premised 自家機房，也許 self-hosted 會更為適合。&lt;/p&gt;
+&lt;h3 id=&#34;客製化程度&#34;&gt;客製化程度&lt;/h3&gt;
+&lt;p&gt;在大多數時候，沒有需要更改到服務的核心設定，都可以不可律客製化程度，直接使用 Sass 的設定，就能滿足大部分需求。可以等有有明確需求後再考慮這一點。短期內沒有特殊需求就可以從簡使用。&lt;/p&gt;
+&lt;p&gt;使用GKE 到 Stackdriver 的話，對主機本身的機器是沒有控制權的，執行的 pipeline 也不太能更改
+Elastic Cloud 有提供上傳 elasticsearch config 檔案的介面，也就是可以更改 server 運行的參數設定
+Self-Hosted 除了上述的設定，還可以依照需求更改 ELK / prometheus 服務，在實體機器上的 topology，cpu 記憶體的資源配置，儲存空間配置等，可以最大化機器的效能。&lt;/p&gt;
+&lt;h3 id=&#34;scalability&#34;&gt;Scalability&lt;/h3&gt;
+&lt;p&gt;資料流量大，儲存空間消耗多，服務負擔大，可能就會需要擴展。&lt;/p&gt;
+&lt;p&gt;一個是資料量的擴展。一個是為了應付服務的負擔，對 ELK 服務元件做水平擴展。&lt;/p&gt;
+&lt;p&gt;除了 elasticsearch 以爲的元件，例如 kibana，apm-server, beats 都可以透過 kubernetes 輕易的擴展，唯有 elasticsearch ，由於又牽扯上述資料量的擴展，以及分佈，還有副本管理，index 本身的 lifecycle 管理。Elasticsearch 的 scaling 設定上是蠻複雜的，也有很多工要做。index 的 shards / replicas 設定都要注意到。否則一路 scale 上去，集群大的時候彼此 sharding sync 的效能消耗是否會太重。&lt;/p&gt;
+&lt;p&gt;Stackdriver 從使用者的角度，是不存在服務節點的擴展問題，節點的維護全都給 Sass 管理。資料量的擴展問題也不大，只要整理資料 pipeline，讓最後儲存的資料容易被查找。&lt;/p&gt;
+&lt;h1 id=&#34;timeseries-vs-non-timeseriese&#34;&gt;Timeseries vs non-timeseriese&lt;/h1&gt;
+&lt;p&gt;Prometheus &lt;a href=&#34;https://prometheus.io/docs/prometheus/latest/storage/&#34;&gt;是自帶 time series database&lt;/a&gt;，stackdriver 也是 time series 的儲存。ELK 的 elasticsearch 是全文搜索引擎，用了 timestamp 做分析所以可以做到 time series 的資料紀錄與分析。這點在本質上是完全不同的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;光只處理 time series data，Prometheus 的 query 效能是比 elasticsearch 好很多&lt;/li&gt;
+&lt;li&gt;Elasticsearch 有大量的 index 維護，需要較多系統資源處理，在沒有 query 壓力的情形下會有系統自動維護的效能消耗&lt;/li&gt;
+&lt;li&gt;ELK 的資料不需要預先建模，就可以做到非常彈性的搜尋查找。Stackdriver 的話，無法用未建模的資料欄位交叉查找。
+&lt;ul&gt;
+&lt;li&gt;Log 收集方面
+&lt;ul&gt;
+&lt;li&gt;Elasticsearch 中的資料欄位透過 tempalte 匯入後，都是有做 index ，所以交叉查找，例如可以從 log text 中包含特定字串的紀錄，在做 aggregate 算出其他欄位的資料分佈。會比較慢，但是是做得到的全文搜索&lt;/li&gt;
+&lt;li&gt;Stackdriver 可以做基本的 filter ，例如 filter 某個欄位，但不能做太複雜的交叉比對，也不能針對 text 內容作交互查找，需要換出來另外處理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Metrics 收集方面
+&lt;ul&gt;
+&lt;li&gt;(同上) Elasticsearch 可以用全文搜索，做到很複雜的交叉比對，例如：從 metrics 數值，計算在時間範圍的分佈情形(cpu 超過 50% 落在一天 24 小時，各個小時的次數)&lt;/li&gt;
+&lt;li&gt;Stackdriver 只能做基本的 time series 查找，然後透過預先定義好的 field filter 資料，再各自圖像化。&lt;/li&gt;
+&lt;li&gt;Prometheus 也是必須依照 time series 查找，語法上彈性比 stackdriver 多很多，但依樣不能搜尋沒有 index 的欄位&lt;/li&gt;
+&lt;li&gt;這邊要替別提，雖然 Elasticsearch 能用全文搜索輕易地做到複雜的查詢語法，但以 metrics 來說，其實沒有太多跳脫 time series 查找的需求。能做到，但有沒有必要這樣做，可以打個問號。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;個人心得，如果驗證全新的 business model，或是還不確定的需求，可以使用 ELK 做各種複雜的查詢&lt;/p&gt;
+&lt;p&gt;如果需求明確，收進來的 log 處理流程都很明確，也許不用使用 ELK。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;論系統資源 CP 值以及效能，time series 的 db 都會比 Elasticsearch 好上不少。&lt;/li&gt;
+&lt;li&gt;Elasticsearch 中也不太適合一直存放大量的資料在 hot 可寫可讀狀態，繪希好很多系統資源。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;其他服務&#34;&gt;其他服務&lt;/h1&gt;
+&lt;p&gt;Elastic 有出許多不同的增值服務&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Application Performance Monitoring(APM)&lt;/li&gt;
+&lt;li&gt;Realtime User Monitoring(RUM)&lt;/li&gt;
+&lt;li&gt;Machine Learning(ELK ML)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而 ELK 以外也都有不同的解決方案，例如&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GCP 也出了自己的 APM Sass&lt;/li&gt;
+&lt;li&gt;Google Analytics(GA) 不僅能做多樣的前端使用者行為分析，還能整合 Google 收集到的使用者行為，做更多維度的分析&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;相較之下 ELK 在這塊其實沒有特別優勢。&lt;/p&gt;
+&lt;h1 id=&#34;elastic-cloud&#34;&gt;Elastic Cloud&lt;/h1&gt;
+&lt;p&gt;我這邊要特別說 Elastic Cloud vs ELK&lt;/p&gt;
+&lt;p&gt;Elatic Cloud 的運行方式，是代為向公與恩平台(aaws, gcp,&amp;hellip;)，帶客戶向平台租用機器，然後把 ELK 服務部署到租用的機器上。用戶這邊無法直接存取機器，只能透過 ELK 介面或是 Kibana , API 進入 ELK。Elastic Cloud 會監控無誤節點的狀況，並做到一定程度的代管。&lt;/p&gt;
+&lt;p&gt;這邊指的一定程度的代管，是 Elastic Cloud 只是代為部署服務，監控。有故障時並不負責排除，如果 ELK 故障，簡單的問題（ex. 記憶體資源不足）會代為重開機器，但如果是複雜的問題，還是要用戶自己處理．但是用戶又沒有主機節點的直接存取權限，所以可能會造成服務卡住無法啟動，只能透過 Elastic Cloud 的管理介面嘗試修復。&lt;/p&gt;
+&lt;p&gt;使用服務除了把服務都架設完以外，還是需要定期要花時間處理 performance tuning，設定定期清理跟維護。包括 kafka, redis, mongoDB, cassandra, SQLs&amp;hellip;都是一樣，架構越複雜，效能要求越高，這部分的工都會更多。如果公司有 DBA，或是專職維護工程師，那恭喜就不用煩惱。&lt;/p&gt;
+&lt;p&gt;Elasticsearch server 目前用起來，算是是數服務中，維護上會花比較多時間的服務。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;因為引擎本身設計的架構，並不是很多人都熟悉。在使用ELK同時，對ELK底層引擎的運作流程有多熟悉，會直接影響穩定性跟跑出來的效能。&lt;/li&gt;
+&lt;li&gt;需要好好處理設計資料的儲存，如果使用上沒處理好，會直接讓整個ELK 掛掉。&lt;/li&gt;
+&lt;li&gt;然後產品本身的維護介面，目前只是在堪用，許多重要的功能也還在開發中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果公司有人會管 ELK，個人建議是可以 self-host&lt;/p&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;弄清楚需求，如果沒有特殊需求可以走 general solution&lt;/li&gt;
+&lt;li&gt;Sass vs Self-hosted vs On-premised&lt;/li&gt;
+&lt;li&gt;Time series vs non time series&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -13,13 +13,12 @@
     
     
     <item>
-      <title>Service Mesh for Microservices on Kubernetes</title>
+      <title>Ithome Cloud Summit 2019: Service Mesh for Microservices on Kubernetes</title>
       <link>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</link>
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
       <guid>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</guid>
-      <description>&lt;hr&gt;
-&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
+      <description>&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
 &lt;p&gt;傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;何為 Service Mesh ？為何需要 Service Mesh ？&lt;/li&gt;

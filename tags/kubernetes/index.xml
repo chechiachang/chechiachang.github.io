@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>Operate Kafka on Kubernetes</title>
+      <title>Ithome Cloud Summit 2020: Operate Kafka on Kubernetes</title>
       <link>https://chechia.net/talk/operate-kafka-on-kubernetes/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
@@ -30,7 +30,7 @@
     </item>
     
     <item>
-      <title>Deploy Kafka on Kubernetes</title>
+      <title>Cloud Native Taiwan #21: Deploy Kafka on Kubernetes</title>
       <link>https://chechia.net/talk/kubernetes-kafka-deployment/</link>
       <pubDate>Thu, 17 Oct 2019 20:50:50 +0800</pubDate>
       
@@ -2420,13 +2420,12 @@ Configuration: quorum = 2
     </item>
     
     <item>
-      <title>Service Mesh for Microservices on Kubernetes</title>
+      <title>Ithome Cloud Summit 2019: Service Mesh for Microservices on Kubernetes</title>
       <link>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</link>
       <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
       
       <guid>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</guid>
-      <description>&lt;hr&gt;
-&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
+      <description>&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
 &lt;p&gt;傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;何為 Service Mesh ？為何需要 Service Mesh ？&lt;/li&gt;
@@ -2565,7 +2564,7 @@ kubectl get gateways
     </item>
     
     <item>
-      <title>Jenkins on Kubernetes</title>
+      <title>DevOps Taiwan Conference 2019: Jenkins X on Kubernetes</title>
       <link>https://chechia.net/talk/jenkins-on-kubernetes/</link>
       <pubDate>Sat, 20 Apr 2019 13:00:00 +0800</pubDate>
       
@@ -2844,7 +2843,7 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     </item>
     
     <item>
-      <title>ELK for Applications on Kubernetes</title>
+      <title>Cloud Native Taiwan #13: ELK for Applications on Kubernetes</title>
       <link>https://chechia.net/talk/elk-on-kubernetes/</link>
       <pubDate>Tue, 22 Jan 2019 19:00:00 +0800</pubDate>
       
@@ -2863,7 +2862,7 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     </item>
     
     <item>
-      <title>Kubernetes Networking</title>
+      <title>Ithome Kubernetes Summit 2018: Kubernetes Networking</title>
       <link>https://chechia.net/talk/kubernetes-networking/</link>
       <pubDate>Thu, 14 Jun 2018 09:00:00 +0800</pubDate>
       
@@ -2890,7 +2889,7 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     </item>
     
     <item>
-      <title>Manage and Schedule GPU Computing Tasks on Kubernetes</title>
+      <title>Ithome Cloud Summit 2018: Manage and Schedule GPU Computing Tasks on Kubernetes</title>
       <link>https://chechia.net/talk/gpu-computing-on-kubernetes/</link>
       <pubDate>Wed, 16 May 2018 11:00:00 +0800</pubDate>
       
@@ -2909,7 +2908,7 @@ jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
     </item>
     
     <item>
-      <title>Deploy Kubernetes With Kubespray</title>
+      <title>Azure Taiwan #12: Deploy Kubernetes With Kubespray</title>
       <link>https://chechia.net/talk/deploy-kubernetes-with-kubespray/</link>
       <pubDate>Wed, 28 Mar 2018 19:00:00 +0800</pubDate>
       
@@ -2995,7 +2994,7 @@ vagrant destroy
     </item>
     
     <item>
-      <title>Kubernetes Storage and Glusterfs</title>
+      <title>Cloud Native Taiwan #02: Kubernetes Storage and Glusterfs</title>
       <link>https://chechia.net/talk/kubernetes-storage-and-glusterfs/</link>
       <pubDate>Sat, 10 Feb 2018 10:00:00 +0800</pubDate>
       
