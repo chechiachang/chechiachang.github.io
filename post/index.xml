@@ -47,9 +47,10 @@
 &lt;p&gt;開始之前，先分享一些資源&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://slides.com/chechiachang/terraform-introduction/edit&#34;&gt;投影片&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;講稿&lt;/li&gt;
-&lt;li&gt;程式碼&lt;/li&gt;
-&lt;li&gt;SOP 範本&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/terraform-infrastructure-as-code-transcript/&#34;&gt;講稿&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/terraform-playground&#34;&gt;程式碼&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/terraform-playground/blob/master/SOP.md&#34;&gt;SOP 範本&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.facebook.com/engineer.from.scratch/&#34;&gt;Facebook 粉專&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;都放在這裡，因為有附逐字稿，所以如果很忙的朋友，掃了 QR code 就可以回家自己看了，不用客氣。&lt;/p&gt;
 &lt;p&gt;然後有興趣在追這系列文章的，可以幫我 facebook 粉專按個讚跟追蹤，每周新文章出來，會推播通知。&lt;/p&gt;
