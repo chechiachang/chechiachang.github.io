@@ -3,53 +3,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://chechia.net/categories/aws/</loc>
-    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/categories/</loc>
-    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechia.net/</loc>
-    <lastmod>2020-08-17T11:50:55+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/categories/kubernetes/</loc>
-    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/post/aws-eks-low-cost/</loc>
-    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/categories/pricing/</loc>
-    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/post/self-sign-tls-with-own-ca/</loc>
-    <lastmod>2020-08-07T14:30:47+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/post/k8s-manage-tls-certificate/</loc>
-    <lastmod>2020-08-07T14:30:47+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/post/host-your-free-website/</loc>
-    <lastmod>2020-08-07T09:42:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/post/gitops-with-argo-cd/</loc>
-    <lastmod>2020-07-31T09:24:04+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
@@ -64,17 +19,17 @@
   
   <url>
     <loc>https://chechia.net/tags/devops/</loc>
-    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/kubernetes/</loc>
-    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/</loc>
-    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
@@ -89,22 +44,22 @@
   
   <url>
     <loc>https://chechia.net/tags/distributed/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/ithome2020-cloudsummit-terraform-iac/</loc>
-    <lastmod>2020-02-11T17:26:22+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/kafka/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/stateful/</loc>
-    <lastmod>2020-02-11T17:26:22+08:00</lastmod>
+    <lastmod>2020-08-17T11:55:05+08:00</lastmod>
   </url>
   
   <url>
@@ -278,12 +233,22 @@
   </url>
   
   <url>
+    <loc>https://chechia.net/categories/</loc>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chechia.net/post/cert-manager-complete-workflow/</loc>
     <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/categories/devops/</loc>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/categories/kubernetes/</loc>
     <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
