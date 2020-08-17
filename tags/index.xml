@@ -7,7 +7,7 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Tue, 11 Feb 2020 17:26:22 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2020 16:46:09 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechia.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,9 +15,27 @@
     <item>
       <title>devops</title>
       <link>https://chechia.net/tags/devops/</link>
-      <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
+      <pubDate>Sun, 14 Jun 2020 16:46:09 +0800</pubDate>
       
       <guid>https://chechia.net/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://chechia.net/tags/kubernetes/</link>
+      <pubDate>Sun, 14 Jun 2020 16:46:09 +0800</pubDate>
+      
+      <guid>https://chechia.net/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terraform</title>
+      <link>https://chechia.net/tags/terraform/</link>
+      <pubDate>Sun, 14 Jun 2020 16:46:09 +0800</pubDate>
+      
+      <guid>https://chechia.net/tags/terraform/</guid>
       <description></description>
     </item>
     
@@ -36,15 +54,6 @@
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
       <guid>https://chechia.net/tags/kafka/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://chechia.net/tags/kubernetes/</link>
-      <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
-      
-      <guid>https://chechia.net/tags/kubernetes/</guid>
       <description></description>
     </item>
     

@@ -7,10 +7,355 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
     <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Tue, 11 Feb 2020 17:26:22 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2020 16:46:09 +0800</lastBuildDate>
     
 	    <atom:link href="https://chechia.net/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>從零開始的 Infrastructure as Code: Terraform - 01</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code/</link>
+      <pubDate>Sun, 14 Jun 2020 16:46:09 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code/</guid>
+      <description>&lt;p&gt;This article is part of &lt;a href=&#34;https://chechia.net/post/terraform-infrastructure-as-code/&#34;&gt;從零開始的 Infrastructu as Code: Terraform&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/terraform-infrastructure-as-code/&#34;&gt;01 - Introduction to Infrastructure as Code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[02 - Terraform 簡介與基本操作]&lt;/li&gt;
+&lt;li&gt;[03 - 為公司導入 Terraform]&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/terraform-playground&#34;&gt;Get-started examples / SOP on Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/post/terraform-infrastructure-as-code/&#34;&gt;Introducation to Terraform Iac: Speaker transcript&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Check my website &lt;a href=&#34;https://chechia.net&#34;&gt;chechia.net&lt;/a&gt; for other blog. &lt;a href=&#34;https://www.facebook.com/engineer.from.scratch&#34;&gt;Follow my page to get notification&lt;/a&gt;. Like my page if you really like it :)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;outlline&#34;&gt;Outlline&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;our story: issues, steps, &amp;amp; results&lt;/li&gt;
+&lt;li&gt;basics IaC, terraform&lt;/li&gt;
+&lt;li&gt;benefits&lt;/li&gt;
+&lt;li&gt;risks and 坑&lt;/li&gt;
+&lt;li&gt;to be or not to be&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;experience oriented&lt;/p&gt;
+&lt;h1 id=&#34;our-stories&#34;&gt;Our stories&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;100+ devs, many teams&lt;/li&gt;
+&lt;li&gt;25+ projects&lt;/li&gt;
+&lt;li&gt;50+ GKEs&lt;/li&gt;
+&lt;li&gt;80+ SQLs&lt;/li&gt;
+&lt;li&gt;IAMs, redis, VPCs, load-balancers, &amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;issues&#34;&gt;Issues&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Ops manually create resources through GUI by SOP.&lt;/li&gt;
+&lt;li&gt;We have many isolated, separeated resources, VPCs. It&amp;rsquo;s our culture, and we (devops) want to change.&lt;/li&gt;
+&lt;li&gt;Some projects have short life-cycle. Rapid resources created &amp;amp; destroy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;our-user-story&#34;&gt;Our user story&lt;/h1&gt;
+&lt;p&gt;As a devops,
+I would like to introduce terraform (IaC)
+so that I can&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;review all existing resources&lt;/li&gt;
+&lt;li&gt;minimize error from manual operation&lt;/li&gt;
+&lt;li&gt;ASAP!!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a devops,
+I would like to fully enforce terraform (IaC)
+so that I can&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;minimize efforts to operate infra&lt;/li&gt;
+&lt;li&gt;delegate infra operations to junior team members&lt;/li&gt;
+&lt;li&gt;minimize IAM privilges&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;import existing resources&lt;/li&gt;
+&lt;li&gt;review existing resources code&lt;/li&gt;
+&lt;li&gt;plan best practice resource templates&lt;/li&gt;
+&lt;li&gt;create new resources with templates&lt;/li&gt;
+&lt;li&gt;introduce git workflow, plan, commit, PR, and review&lt;/li&gt;
+&lt;li&gt;add wrapper handler&lt;/li&gt;
+&lt;li&gt;automation pipeline&lt;/li&gt;
+&lt;li&gt;repeat 2-4&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;iac&#34;&gt;IaC&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Programatic way to operate infra&lt;/li&gt;
+&lt;li&gt;declarative (functional) vs. imperative (procedural)&lt;/li&gt;
+&lt;li&gt;Perfect for public cloud, cloud native, virtualized resources&lt;/li&gt;
+&lt;li&gt;Benefits: cost (reduction), speed (faster execution) and risk (remove errors and security violations)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;terraform&#34;&gt;Terraform&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.terraform.io/&#34;&gt;Terraform&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Declarative (functional) IaC&lt;/li&gt;
+&lt;li&gt;Invoke API delegation&lt;/li&gt;
+&lt;li&gt;State management&lt;/li&gt;
+&lt;li&gt;providers: azure / aws / gcp /alicloud / &amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;demo&#34;&gt;Demo&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/chechiachang/terraform-playground&#34;&gt;https://github.com/chechiachang/terraform-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;scope&#34;&gt;Scope&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Compute Instances&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kubernetes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Databases&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;IAM&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Networking&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Load Balancer&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;expected-benefits&#34;&gt;Expected benefits&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Minimize manual operation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Zero manual operation error&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Standarized infra. Infra as a (stable) product.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;fast, really fast to duplicate envs&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Infra workflow with infra review&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Easy to create identical dev, staging, prod envs&lt;/li&gt;
+&lt;li&gt;Reviewed infra. Better workflow. Code needs reviews, so do infra.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Fully automized infra pipeline.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;other-benefits&#34;&gt;Other Benefits&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Don&amp;rsquo;t afraid to change prod sites anymore
+&lt;ul&gt;
+&lt;li&gt;We made a massive infra migration in this quater!!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Better readability to GUI. Allow comment everywhere.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;risks&#34;&gt;Risks&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Incorrect usage could cause massive destruction.
+&lt;ul&gt;
+&lt;li&gt;如果看見 destroy 的提示，請雙手離開鍵盤。 ~ first line in our SOP&lt;/li&gt;
+&lt;li&gt;If see &amp;ldquo;destroy&amp;rdquo;, cancel operation &amp;amp; call for help.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;State management&lt;/li&gt;
+&lt;li&gt;A little latency between infra version and terraform provider version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;reduce-risks&#34;&gt;Reduce Risks&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Sufficient understanding to infra &amp;amp; terraform&lt;/li&gt;
+&lt;li&gt;Sufficient training to juniors&lt;/li&gt;
+&lt;li&gt;Minimize IAM privilege: remove update / delete permissions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;git-flow&#34;&gt;Git-flow&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/chechiachang/terraform-playground/blob/master/SOP.md&#34;&gt;Our SOP&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;edit tf&lt;/li&gt;
+&lt;li&gt;push new branch commit&lt;/li&gt;
+&lt;li&gt;PR, review &amp;amp; discussion&lt;/li&gt;
+&lt;li&gt;merge &amp;amp; apply&lt;/li&gt;
+&lt;li&gt;revert to previous tag if necessary&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;utility-provide-template&#34;&gt;(Utility) Provide template&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;wrap resources for
+&lt;ul&gt;
+&lt;li&gt;better accesibility&lt;/li&gt;
+&lt;li&gt;lower operation risks&lt;/li&gt;
+&lt;li&gt;uniform naming convention&lt;/li&gt;
+&lt;li&gt;best practice&lt;/li&gt;
+&lt;li&gt;suggested default value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;about-introducing-new-tool&#34;&gt;About introducing new tool&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;The hardest part is always people
+&lt;ul&gt;
+&lt;li&gt;Focus on critical issues (痛點) instead of tool itself. &amp;ldquo;We introduce tool to solve&amp;hellip;&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Put result into statistics &amp;ldquo;The outage due to misconfig is reduced by&amp;hellip;&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;overall-my-iac-experience-is-great&#34;&gt;Overall, my IaC experience is GREAT!&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;IaC to automation.&lt;/li&gt;
+&lt;li&gt;Comment (for infra) is important. You have to write doc anyway. Why not put in IaC?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;qa&#34;&gt;Q&amp;amp;A&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;&#34;&gt;Full transcript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;&#34;&gt;Presentation file&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/chechiachang.github.io-src/blob/master/content/post/terraform-infrastructure-as-code/index.md&#34;&gt;Source Code on Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net&#34;&gt;chechia.net&lt;/a&gt; &amp;lt;- full contents&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.facebook.com/engineer.from.scratch&#34;&gt;Follow my page to get notification&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;Like it if you really like it :)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;appendixi-more-about-terraform&#34;&gt;Appendix.I more about terraform&lt;/h1&gt;
+&lt;p&gt;terraform validate
+terraform import
+terraform module
+terraform cloud &amp;amp; state management&lt;/p&gt;
+&lt;h1 id=&#34;appendixi-understand-state-conflict&#34;&gt;Appendix.I understand State conflict&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Shared but synced&lt;/li&gt;
+&lt;li&gt;watch out for state conflicts when colaborating
+&lt;ul&gt;
+&lt;li&gt;state diff. could cause terraform mis-plan&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Solution: synced state lock
+&lt;ul&gt;
+&lt;li&gt;Colatorative edit (git branch &amp;amp; PR), synchronized terraform plan &amp;amp; apply&lt;/li&gt;
+&lt;li&gt;or better: automation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;appendixii-understand-resources-from-api-aspect&#34;&gt;Appendix.II understand resources from API aspect&lt;/h1&gt;
+&lt;p&gt;GCP Load Balancer&lt;/p&gt;
+&lt;h3 id=&#34;gcp-load-balancing&#34;&gt;GCP Load Balancing&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;understand resources from API aspect&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;how terraform work with GCP API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;internal&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;regional
+&lt;ul&gt;
+&lt;li&gt;pass-through: tcp / udp   -&amp;gt; internal TCP/UDP&lt;/li&gt;
+&lt;li&gt;proxy: http / https       -&amp;gt; internal HTTP(S)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;external&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;regional
+&lt;ul&gt;
+&lt;li&gt;pass-through: tcp / udp   -&amp;gt; tcp/udp network&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;global / effective regional
+&lt;ul&gt;
+&lt;li&gt;proxy
+&lt;ul&gt;
+&lt;li&gt;tcp                     -&amp;gt; TCP Proxy&lt;/li&gt;
+&lt;li&gt;ssl                     -&amp;gt; SSL Proxy&lt;/li&gt;
+&lt;li&gt;http / https            -&amp;gt; External HTTP(S)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;terraform-resource&#34;&gt;Terraform Resource&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;forwarding_rule&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;forwarding_rule: tcp &amp;amp; http&lt;/li&gt;
+&lt;li&gt;global_forwarding_rule: only http&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;backend_service&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;backend_service
+&lt;ul&gt;
+&lt;li&gt;health_check&lt;/li&gt;
+&lt;li&gt;http_health_check&lt;/li&gt;
+&lt;li&gt;https_health_check&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;region_backend_service
+&lt;ul&gt;
+&lt;li&gt;region_health_check&lt;/li&gt;
+&lt;li&gt;region_http_health_check&lt;/li&gt;
+&lt;li&gt;region_https_health_check&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;some-ways-to-do-iac&#34;&gt;Some ways to do IaC&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Cloud Formation&lt;/li&gt;
+&lt;li&gt;bash script with API / client&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;引言-infrastructure-as-code&#34;&gt;引言 Infrastructure as Code&lt;/h1&gt;
+&lt;p&gt;從字面上解釋，IaC 就是用程式碼描述 infrastructure。那為何會出現這個概念？&lt;/p&gt;
+&lt;p&gt;如果不 IaC 是什麼狀況？我們還是可以透過 GUI 或是 API 操作。隨叫隨用&lt;/p&gt;
+&lt;p&gt;雲端運算風行，工程師可以很在 GUI 介面上，很輕易的部署資料中心的架構。輸入基本資訊，滑鼠點個一兩下，就可以在遠端啟用運算機器，啟用資料庫，設置虛擬網路與路由，幾分鐘就可以完成架設服務的基礎建設(infrastructure)，開始運行服務。&lt;/p&gt;
+&lt;p&gt;然而隨著&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;雲平台提供更多新的（複雜的）服務
+&lt;ul&gt;
+&lt;li&gt;服務彼此可能是有相依性（dependency），服務需要仰賴其他服務&lt;/li&gt;
+&lt;li&gt;或是動態耦合，更改服務會連動其他服務，一髮動全身&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;需要縝密的存取控管（access control）
+&lt;ul&gt;
+&lt;li&gt;防火牆，路由規則&lt;/li&gt;
+&lt;li&gt;雲平台上，團隊成員的存取權限&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;專案的規模與複雜度增加
+&lt;ul&gt;
+&lt;li&gt;多環境的部署&lt;/li&gt;
+&lt;li&gt;多個備援副本設定&lt;/li&gt;
+&lt;li&gt;大量機器形成的集群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;iac-的實際需求&#34;&gt;IaC 的實際需求&lt;/h1&gt;
+&lt;p&gt;以下這些對話是不是很耳熟？&lt;/p&gt;
+&lt;h1 id=&#34;iac-的實際需求-1&#34;&gt;IaC 的實際需求&lt;/h1&gt;
+&lt;p&gt;沒有需求，就不需要找尋新的解決方案。&lt;/p&gt;
+&lt;p&gt;有看上面目錄的朋友，應該知道這系列文章的後面，我會實際分享於公司內部導入 Terraform 與 IaC 方法的過程。&lt;/p&gt;
+&lt;p&gt;各位讀者會找到這篇文，大概都是因為實際搜尋了 Terraform 或是 IaC 的關鍵字才找到這篇。&lt;/p&gt;
+&lt;p&gt;如果沒有需求，自己因為覺得有趣而拉下來研究，&lt;/p&gt;
+&lt;p&gt;如果沒有明確需求，就貿然導入
+無謂增加亂度&lt;/p&gt;
+&lt;h1 id=&#34;iac-的實現工具&#34;&gt;IaC 的實現工具&lt;/h1&gt;
+&lt;h1 id=&#34;為何選擇-terraform&#34;&gt;為何選擇 Terraform&lt;/h1&gt;
+&lt;h1 id=&#34;建議&#34;&gt;建議&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;如果不熟，從 import 現有最好的資源開始。把 70 分保住，再向 80 90 邁進。&lt;/li&gt;
+&lt;li&gt;善用 module 封裝，只露出會用到的參數。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Ithome Cloud Summit 2020: Operate Kafka on Kubernetes</title>

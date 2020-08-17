@@ -3,93 +3,148 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://chechia.net/categories/aws/</loc>
+    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/categories/</loc>
+    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chechia.net/</loc>
-    <lastmod>2020-07-23T11:53:59+08:00</lastmod>
+    <lastmod>2020-08-17T11:50:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/categories/kubernetes/</loc>
+    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/aws-eks-low-cost/</loc>
+    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/categories/pricing/</loc>
+    <lastmod>2020-08-13T18:35:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/self-sign-tls-with-own-ca/</loc>
+    <lastmod>2020-08-07T14:30:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/k8s-manage-tls-certificate/</loc>
+    <lastmod>2020-08-07T14:30:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/host-your-free-website/</loc>
+    <lastmod>2020-08-07T09:42:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/gitops-with-argo-cd/</loc>
+    <lastmod>2020-07-31T09:24:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/terraform-infrastructure-as-code-module/</loc>
+    <lastmod>2020-07-27T16:33:32+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/terraform-infrastructure-as-code-transcript/</loc>
-    <lastmod>2020-07-23T11:53:59+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/post/terraform-infrastructure-as-code/</loc>
-    <lastmod>2020-07-23T11:53:59+08:00</lastmod>
+    <lastmod>2020-08-17T11:50:55+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/devops/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/tags/distributed/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/talk/operate-kafka-on-kubernetes/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/tags/kafka/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/kubernetes/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/tags/stateful/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/terraform/</loc>
+    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/terraform-infrastructure-as-code/</loc>
+    <lastmod>2020-08-10T23:44:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/distributed/</loc>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/talk/operate-kafka-on-kubernetes/</loc>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/kafka/</loc>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/stateful/</loc>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/say-goodbye-2019/</loc>
-    <lastmod>2019-12-31T19:29:13+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/distributed-system/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/golang/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/mit-6.824-go-mapreduce/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/mapreduce/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/meetup/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/mit/</loc>
-    <lastmod>2019-12-31T19:28:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/lecture/</loc>
-    <lastmod>2019-12-17T00:10:53+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -99,67 +154,67 @@
   
   <url>
     <loc>https://chechia.net/project/mit-6.824-distributed-system/</loc>
-    <lastmod>2019-12-17T00:10:53+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/project/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ar/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/face-detection/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/face-recognition/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/gdd-devfest-2019-scouter/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/github-api/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/machine-learning/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/swift/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/unity/</loc>
-    <lastmod>2019-12-31T19:27:18+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/blockchain-atomic-swap/</loc>
-    <lastmod>2019-11-08T08:24:40+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/atomic-swap/</loc>
-    <lastmod>2019-11-08T08:24:40+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/blockchain/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -174,27 +229,27 @@
   
   <url>
     <loc>https://chechia.net/tags/bep3/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/binance/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/blockchain-bep3-atomic-swap/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/erc-20/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ethereum/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -204,222 +259,212 @@
   
   <url>
     <loc>https://chechia.net/talk/kubernetes-kafka-deployment/</loc>
-    <lastmod>2019-10-19T09:22:28+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kubernetes-custom-resource-with-operator-sdk/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kubernetes-custom-resource-deployment/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kubernetes-custom-resources-basic/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/categories/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/cert-manager-complete-workflow/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/categories/devops/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/categories/kubernetes/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/cert-manager-how-it-work/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/cert-manager-deployment/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/cert-manager/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ssl/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/tls/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/cd/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ci/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kubernetes-nginx-ingress-controller/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kubernetes-nginx-ingress-config/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/nginx/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/prometheus-kube-state-metrics-exporter/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/redis/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/prometheus-exporter-library-redis-exporter/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/prometheus-deployment-on-kubernetes/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/prometheus-deploy-grafana/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/prometheus-scrape/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/redis-ha-sentinel/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/redis-ha-deployment/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-ha-continued/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-ha-topology/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-operation-scripts/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-basic-usage/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-introduction/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-helm-configuration/</loc>
-    <lastmod>2019-09-27T22:57:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kafka-deployment-on-kubernetes/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/logstash-on-gke/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/daemonsets/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/elk/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/filebeat/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/fluentd/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/log/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/monitoring-gke-with-elk/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/pod-affinity/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/monitoring-gce-with-elk/</loc>
-    <lastmod>2019-09-22T11:32:44+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/categories/elasticsearch/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/elastic-or-not-elastic/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -434,47 +479,47 @@
   
   <url>
     <loc>https://chechia.net/tags/xpack/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/secure-elk-stack/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/elasticsearch/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/gcp/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/self-host-elk-stack-on-gcp/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/2020-ithome-ironman-challenge/</loc>
-    <lastmod>2019-10-16T20:40:22+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/redis-ha-topology/</loc>
-    <lastmod>2020-06-18T17:35:16+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kuberentes-source-code/</loc>
-    <lastmod>2019-08-23T16:09:00+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ibm-q-experience/</loc>
-    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -484,47 +529,47 @@
   
   <url>
     <loc>https://chechia.net/tags/quantum-computing/</loc>
-    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/tutorial/</loc>
-    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/journey-to-quantum-computing/</loc>
-    <lastmod>2019-06-03T11:05:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/istio/</loc>
-    <lastmod>2019-05-23T11:30:14+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</loc>
-    <lastmod>2019-05-23T11:30:14+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/service-mesh/</loc>
-    <lastmod>2019-05-23T11:30:14+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/service-mesh-for-microservice-on-kubernetes/</loc>
-    <lastmod>2019-05-15T09:51:30+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/jenkins-on-kubernetes/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/jenkins/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -534,72 +579,72 @@
   
   <url>
     <loc>https://chechia.net/talk/gdg-devfest-2018-scouter/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ios/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/jenkins-x-on-kubernetes/</loc>
-    <lastmod>2019-04-19T14:28:43+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/project/jenkins-x-on-kubernetes/</loc>
-    <lastmod>2020-06-22T10:31:34+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/elk-on-kubernetes/</loc>
-    <lastmod>2019-04-19T21:04:05+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/monitoring/</loc>
-    <lastmod>2019-04-19T21:04:05+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/go-webassembly-intro/</loc>
-    <lastmod>2019-04-19T19:57:09+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/webassembly/</loc>
-    <lastmod>2019-04-19T19:57:09+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/container/</loc>
-    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/cri/</loc>
-    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/docker/</loc>
-    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/kubernetes-container-runtime-interface/</loc>
-    <lastmod>2019-09-11T11:17:01+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/github/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/go-github/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -609,42 +654,42 @@
   
   <url>
     <loc>https://chechia.net/talk/coscup-2018-scouter/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/flannel/</loc>
-    <lastmod>2019-04-19T18:44:52+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/kubernetes-networking/</loc>
-    <lastmod>2019-04-19T18:44:52+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/networking/</loc>
-    <lastmod>2019-04-19T18:44:52+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/automation/</loc>
-    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/cloud-computing/</loc>
-    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/gpu-computing/</loc>
-    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/gpu-computing-on-kubernetes/</loc>
-    <lastmod>2019-04-19T19:02:50+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -659,37 +704,37 @@
   
   <url>
     <loc>https://chechia.net/talk/deploy-kubernetes-with-kubespray/</loc>
-    <lastmod>2019-04-19T19:17:41+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/kubespray/</loc>
-    <lastmod>2019-04-19T19:17:41+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/talk/kubernetes-storage-and-glusterfs/</loc>
-    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/filesystem/</loc>
-    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/glusterfs/</loc>
-    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/storage/</loc>
-    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/project/scouter/</loc>
-    <lastmod>2019-04-19T21:19:04+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
   <url>
@@ -718,7 +763,7 @@
   
   <url>
     <loc>https://chechia.net/talk/</loc>
-    <lastmod>2019-04-19T21:19:17+08:00</lastmod>
+    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
   </url>
   
 </urlset>
