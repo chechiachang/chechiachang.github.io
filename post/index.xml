@@ -122,7 +122,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;promatical-approach-for-infra&#34;&gt;Promatical approach for infra&lt;/h1&gt;
+&lt;h1 id=&#34;programatical-approach-for-infra&#34;&gt;Programatical approach for infra&lt;/h1&gt;
 &lt;p&gt;啊不就是 Infrastructure as code XD&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;導入前，大家都有聽過，大家都覺得很想導入，但沒人有經驗，每個人都超怕，但又不知道在怕三小&lt;/li&gt;
@@ -182,6 +182,9 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;add my-gce.tf&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;git diff&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;state&lt;/p&gt;
@@ -337,6 +340,13 @@
 &lt;/ol&gt;
 &lt;p&gt;犯錯過一次，永不再犯。這個對於長期團隊經營非常重要，讓經驗跟知識累積，團隊質量才會成長。IaC 在這點幫助很大。&lt;/p&gt;
 &lt;h2 id=&#34;demo-2&#34;&gt;Demo 2&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;NAME=terraform-devops make gke redis sql&lt;/li&gt;
+&lt;li&gt;module&lt;/li&gt;
+&lt;li&gt;git commit&lt;/li&gt;
+&lt;li&gt;Review on github&lt;/li&gt;
+&lt;li&gt;Merge request&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&#34;repo&#34;&gt;Repo&lt;/h1&gt;
 &lt;p&gt;我使用的原碼都開源在 github 上，因為是真的拿來導入我們公司的架構，保證可以用。阿不能用的話，幫我發 issue 給我，或是你人更好發個 PR 給我都可以(XD。把 repo 拉下來，這邊有 gcp / azure / aws，雖然有三個但我們公司主要是用 gcp，剩下兩個我自己做興趣的。裡面 templates 跟 modules ，但你不用管，我 makefile 都寫好了&lt;/p&gt;
 &lt;ul&gt;
