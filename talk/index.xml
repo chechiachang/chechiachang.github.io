@@ -12,19 +12,18 @@
     
     
     <item>
-      <title>Ithome Cloud Summit 2020: Operate Kafka on Kubernetes</title>
-      <link>https://chechia.net/talk/operate-kafka-on-kubernetes/</link>
+      <title>Ithome Cloud Summit 2020: Terraform Infrastructure as Code</title>
+      <link>https://chechia.net/talk/ithome2020-cloudsummit-terraform-iac/</link>
       <pubDate>Tue, 11 Feb 2020 17:26:22 +0800</pubDate>
       
-      <guid>https://chechia.net/talk/operate-kafka-on-kubernetes/</guid>
-      <description>&lt;p&gt;後端工程與Devops，專精開發流程自動化，微服務開發，容器化，Kubernetes 維運。常出沒於 Golang Taipei 與 CNCF 社群，喜歡分享演講與撰寫技術文章。https://chechia.net/&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2019 GDG DevFest Kaohsiung&lt;/li&gt;
-&lt;li&gt;2018, 2019 IThome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2018 IThome Kubernetes Summit&lt;/li&gt;
-&lt;li&gt;2018 GDG DevFest Taipei&lt;/li&gt;
-&lt;li&gt;2018 COSCUP&lt;/li&gt;
-&lt;/ul&gt;
+      <guid>https://chechia.net/talk/ithome2020-cloudsummit-terraform-iac/</guid>
+      <description>&lt;p&gt;Infrastructure as code 的概念已經推廣許久，不是什麼新概念，然而公司卻尚未導入。op 需要新環境都是透過 GUI 去開環境。&lt;/p&gt;
+&lt;p&gt;環境越開越多，漸漸浮現出幾個痛點：&lt;/p&gt;
+&lt;p&gt;「這個環境怎麼少一個設定」-&amp;gt; 環境沒標準化&lt;/p&gt;
+&lt;p&gt;「是誰改了這個設定」-&amp;gt; 環境的變更沒有 change log，無法 blame&lt;/p&gt;
+&lt;p&gt;「你環境開錯了吧」 -&amp;gt; 環境交付沒自動化測試&lt;/p&gt;
+&lt;p&gt;其他如：只看單一環境不在乎全局設定，環境數量多不易管理或更新維護，人工操作錯誤率高&amp;hellip;等問題層出不窮。&lt;/p&gt;
+&lt;p&gt;本次分享以一步一步實際導入 Terraform 的經驗，描述如何針對需求對症下藥，帶領公司導入 infrastructure as code，內容包含實作步驟，心得感想，並紀錄沿路踩過的雷，希望能提供其他團隊導入經驗。&lt;/p&gt;
 </description>
     </item>
     
