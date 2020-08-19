@@ -17,7 +17,12 @@
       <pubDate>Wed, 19 Aug 2020 10:01:31 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-08-season-review/</guid>
-      <description>&lt;p&gt;季回顧&lt;/p&gt;
+      <description>&lt;p&gt;季中回顧&lt;/p&gt;
+&lt;p&gt;這一季開了很多新坑，卻來不及寫文章填上&lt;/p&gt;
+&lt;p&gt;完成的有 Terraform 的基礎與實務導入經驗&lt;/p&gt;
+&lt;p&gt;正在趕工的有 hashicorp vault，Gitops，與 tls。&lt;/p&gt;
+&lt;p&gt;其中 GitOps 已經有強者我朋友 Hwchiu 巨巨填坑了，我這邊就會偷懶跳過。&lt;a href=&#34;https://hwchiu.com/&#34;&gt;友情連結&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;剩下的希望本季結束前能填完(掩面)&lt;/p&gt;
 &lt;h1 id=&#34;已填坑&#34;&gt;已填坑&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.facebook.com/engineer.from.scratch/posts/185733642920123&#34;&gt;從零開始導入 Terraform&lt;/a&gt;
