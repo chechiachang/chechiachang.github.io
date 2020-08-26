@@ -3,13 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://chechia.net/post/2020-08-season-review/</loc>
-    <lastmod>2020-08-19T10:01:31+08:00</lastmod>
+    <loc>https://chechia.net/post/borg-omega-and-kubernetes/</loc>
+    <lastmod>2020-08-26T16:00:31+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/</loc>
-    <lastmod>2020-08-19T10:01:31+08:00</lastmod>
+    <lastmod>2020-08-26T16:00:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/2020-08-season-review/</loc>
+    <lastmod>2020-08-26T16:00:31+08:00</lastmod>
   </url>
   
   <url>
@@ -24,12 +29,12 @@
   
   <url>
     <loc>https://chechia.net/tags/kubernetes/</loc>
-    <lastmod>2020-08-17T12:00:52+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/</loc>
-    <lastmod>2020-08-17T12:00:52+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
@@ -279,12 +284,12 @@
   
   <url>
     <loc>https://chechia.net/tags/cd/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/ci/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
@@ -309,7 +314,7 @@
   
   <url>
     <loc>https://chechia.net/tags/redis/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
@@ -334,12 +339,12 @@
   
   <url>
     <loc>https://chechia.net/post/redis-ha-failure-recovery/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/redis-ha-on-haproxy/</loc>
-    <lastmod>2020-07-24T12:10:26+08:00</lastmod>
+    <lastmod>2020-08-19T10:22:29+08:00</lastmod>
   </url>
   
   <url>
