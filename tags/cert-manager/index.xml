@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cert-manager on Che-Chia Chang</title>
     <link>https://chechia.net/tags/cert-manager/</link>
     <description>Recent content in cert-manager on Che-Chia Chang</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
-    <language>en-us</language>
-    <copyright>chechiachang &amp;copy; 2016</copyright>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
     <lastBuildDate>Thu, 10 Oct 2019 16:12:10 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechia.net/tags/cert-manager/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chechia.net/tags/cert-manager/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,95 +17,14 @@
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
       <guid>https://chechia.net/post/cert-manager-deployment/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
-&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Nginx Ingress Controller&lt;/li&gt;
-&lt;li&gt;Cert-manager&lt;/li&gt;
-&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
-&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
-&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34;&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Cert-manager Introduction&lt;/li&gt;
-&lt;li&gt;Deploy cert-manager&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;簡介-cert-manager&#34;&gt;簡介 cert-manager&lt;/h1&gt;
-&lt;p&gt;TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。&lt;/p&gt;
-&lt;p&gt;以往我們使用 &lt;a href=&#34;https://letsencrypt.org/zh-tw/&#34;&gt;Let&amp;rsquo;s Encrypt&lt;/a&gt; 提供的免費自動化憑證頒發，搭配 &lt;a href=&#34;https://github.com/jetstack/kube-lego&#34;&gt;kube-lego&lt;/a&gt; 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 &lt;a href=&#34;https://github.com/jetstack/cert-manager/&#34;&gt;Cert-manager&lt;/a&gt; 來進行 kubernetes 上的憑證自動化管理。&lt;/p&gt;
-&lt;p&gt;cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在 kubernetes 上 使用 CRD (Customized Resource Definition) 來定義 certificate issuing 的 desired state&lt;/li&gt;
-&lt;li&gt;向 let&amp;rsquo;s encrypt 取得公開的憑證&lt;/li&gt;
-&lt;li&gt;在 kubernetes 上自動檢查憑證的有效期限，並自動在有效時限內 renew certificate。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;安裝&#34;&gt;安裝&lt;/h1&gt;
-&lt;p&gt;官方文件有提供 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html&#34;&gt;詳細步驟&lt;/a&gt; 可以直接使用 release 的 yaml 部屬，也可以透過 helm。&lt;/p&gt;
-&lt;h3 id=&#34;使用-yaml-部屬&#34;&gt;使用 yaml 部屬&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;# Create a namespace to run cert-manager in
-kubectl create namespace cert-manager
-
-# Disable resource validation on the cert-manager namespace
-kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;開一個獨立的 namespace 來管理 cert-manager resources&lt;/p&gt;
-&lt;p&gt;取消 namespcae 中的 kubernetes validating webhook。由於 cert-manager 本身就會使用 &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/&#34;&gt;ValidatingWebhookConfiguration&lt;/a&gt; 來為 cert-manager 定義的 Issuer, Certificate resource 做 validating。然而這會造成 cert-manager 與 webhook 的循環依賴 (circling dependency)&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Install the CustomResourceDefinitions and cert-manager itself
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;# Install the CustomResourceDefinitions and cert-manager itself
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這個 yaml 裡面還有幾個元件&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Cluster Role-bindings&lt;/li&gt;
-&lt;li&gt;CustomResourceDefinition
-&lt;ul&gt;
-&lt;li&gt;certificaterequests.certmanager.k8s.io&lt;/li&gt;
-&lt;li&gt;certificates.certmanager.k8s.io&lt;/li&gt;
-&lt;li&gt;challenges.certmanager.k8s.io&lt;/li&gt;
-&lt;li&gt;clusterissuers.certmanager.k8s.io&lt;/li&gt;
-&lt;li&gt;issuers.certmanager.k8s.io&lt;/li&gt;
-&lt;li&gt;orders.certmanager.k8s.io&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;這些元件的細節，留待運作原理分析時再詳解。&lt;/p&gt;
-&lt;h3 id=&#34;helm-deployment&#34;&gt;helm deployment&lt;/h3&gt;
-&lt;p&gt;這邊也附上使用 helm 安裝的步驟&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-# Install the CustomResourceDefinition resources separately
-kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.10/deploy/manifests/00-crds.yaml
-
-# Create the namespace for cert-manager
-kubectl create namespace cert-manager
-
-# Label the cert-manager namespace to disable resource validation
-kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-
-# Add the Jetstack Helm repository
-helm repo add jetstack https://charts.jetstack.io
-
-# Update your local Helm chart repository cache
-helm repo update
-
-# Install the cert-manager Helm chart
-helm install \
-  --name cert-manager \
-  --namespace cert-manager \
-  --version v0.10.1 \
-  jetstack/cert-managerNAMESPACE=cert-manager
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;部屬完檢查一下&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;kubectl get pods --namespace cert-manager
-
-NAME                                       READY   STATUS    RESTARTS   AGE
-cert-manager-5c6866597-zw7kh               1/1     Running   0          2m
-cert-manager-cainjector-577f6d9fd7-tr77l   1/1     Running   0          2m
-cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0          2m
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;這邊部屬完，會獲得完整的 cert-manager 與 cert-manager CRD，但 certificate 的 desired state object 還沒部屬。也就是關於我們要如何 issue certificate 的相關描述，都還沒有 deploy， cert-manager 自然不會工作。關於 issuing resources configuration，我們下次再聊。&lt;/p&gt;
-</description>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
+以往我們使用 Let&amp;rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
+cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情</description>
     </item>
     
   </channel>

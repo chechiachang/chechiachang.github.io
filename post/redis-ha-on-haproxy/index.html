@@ -1,805 +1,167 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Source Themes Academic 4.4.0">
-
-  
-
-  
-  
-  
-  
-  
-    
-    
-    
-  
-  
-
-  <meta name="author" content="Che-Chia Chang">
-
-  
-  
-  
-    
-  
-  <meta name="description" content="2020 It邦幫忙鐵人賽 系列文章 在 GKE 上部署 Redis HA 使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis 由">
-
-  
-  <link rel="alternate" hreflang="en-us" href="https://chechia.net/post/redis-ha-on-haproxy/">
-
-  
-
-
-  
-
-  
-  
-  
-  <meta name="theme-color" content="#3f51b5">
-  
-
-  
-  
-  
-  
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
-
-    
-    
-    
-      
-    
-    
-      
-      
-        
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
-        
-      
-    
-
-    
-
-    
-
-  
-
-  
-  
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather|Roboto+Mono&display=swap">
-  
-
-  
-  
-  
-  <link rel="stylesheet" href="/css/academic.min.bb3d6bdf99118ed929d8b64f9013e74f.css">
-
-  
-
-  
-  
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-169903302-1', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('require', 'eventTracker');
-      ga('require', 'outboundLinkTracker');
-      ga('require', 'urlChangeTracker');
-      ga('send', 'pageview');
-    </script>
-    <script async src="https://www.google-analytics.com/analytics.js"></script>
-    
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
-    
-  
-  
-
-  
-
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
-
-  <link rel="canonical" href="https://chechia.net/post/redis-ha-on-haproxy/">
-
-  
-  
-  
-  
-    
-  
-  <meta property="twitter:card" content="summary_large_image">
-  
-  <meta property="twitter:site" content="@chechiachang">
-  <meta property="twitter:creator" content="@chechiachang">
-  
-  <meta property="og:site_name" content="Che-Chia Chang">
-  <meta property="og:url" content="https://chechia.net/post/redis-ha-on-haproxy/">
-  <meta property="og:title" content="Redis Ha HAProxy | Che-Chia Chang">
-  <meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章 在 GKE 上部署 Redis HA 使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis 由"><meta property="og:image" content="https://chechia.net/img/c.png">
-  <meta property="twitter:image" content="https://chechia.net/img/c.png"><meta property="og:locale" content="en-us">
-  
-  <meta property="article:published_time" content="2019-10-02T16:12:10&#43;08:00">
-  
-  <meta property="article:modified_time" content="2020-08-19T10:22:29&#43;08:00">
-  
-
-  
-
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<html lang="en" data-figures="" class="page">
+  <head>  <title>Redis Ha HAProxy | Che-Chia Chang</title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.72.0" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169903302-1"></script>
 <script>
-  window.addEventListener("load", function(){
-    window.cookieconsent.initialise({
-      "palette": {
-        "popup": {
-          "background": "#3f51b5",
-          "text": "#fff"
-        },
-        "button": {
-          "background": "#fff",
-          "text": "#3f51b5"
-        }
-      },
-      "theme": "classic",
-      "content": {
-        "message": "This website uses cookies to ensure you get the best experience on our website.",
-        "dismiss": "Got it!",
-        "link": "Learn more",
-        "href": "https://cookies.insites.com"
-      }
-    })});
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-169903302-1');
 </script>
+<meta property = "og:locale" content = "en_US" />
+<meta property="og:type" content="article">
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校  …">
+<meta name = "twitter:card" content = "summary" />
+<meta name = "twitter:creator" content = "@chechiachang">
+<meta name = "twitter:title" content = "Redis Ha HAProxy" />
+<meta property = "og:url" content = "https://chechia.net/post/redis-ha-on-haproxy/" />
+<meta property = "og:title" content = "Redis Ha HAProxy" />
+<meta property = "og:description" content = "2020 It邦幫忙鐵人賽 系列文章
+ 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校  …" />
+<meta property = "og:image" content = "https://chechia.net/images/logos/white_logo_dark_background.jpg" />
+<link rel='apple-touch-icon' sizes='180x180' href='https://chechia.net/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://chechia.net/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://chechia.net/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://chechia.net/icons/site.webmanifest'>
+<link rel="mask-icon" href= 'https://chechia.net/safari-pinned-tab.svg' color="#002538">
+<meta name="msapplication-TileColor" content="#002538">
+<meta name="theme-color" content="#002538">
 
-
-
-  
-
-
-
-
-
-  <title>Redis Ha HAProxy | Che-Chia Chang</title>
-
-</head>
-
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
-
-  <aside class="search-results" id="search">
-  <div class="container">
-    <section class="search-header">
-
-      <div class="row no-gutters justify-content-between mb-3">
-        <div class="col-6">
-          <h1>Search</h1>
-        </div>
-        <div class="col-6 col-search-close">
-          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
-        </div>
-      </div>
-
-      <div id="search-box">
-        
-        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
-        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
-        
-      </div>
-
-    </section>
-    <section class="section-search-results">
-
-      <div id="search-hits">
-        
-      </div>
-
-    </section>
-  </div>
-</aside>
-
-
-  
-<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
-  <div class="container">
+  <link rel='canonical' href='https://chechia.net/post/redis-ha-on-haproxy/'>
 
     
-      <a class="navbar-brand" href="/">Che-Chia Chang</a>
-      
-      <button type="button" class="navbar-toggler" data-toggle="collapse"
-              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span><i class="fas fa-bars"></i></span>
-      </button>
-      
 
     
-    <div class="collapse navbar-collapse" id="navbar">
+    <link rel="preload" href="https://chechia.net/css/styles.8c77cda9454d30afb96a03bf232ee1089eb4b0da2a7c6e7f2b2a09d6cfcf2fe97836d9edfca70365fb630563fff409fd484299df18ca05a2950108d46da3cf1e.css" integrity = "sha512-jHfNqUVNMK&#43;5agO/Iy7hCJ60sNoqfG5/KyoJ1s/PL&#43;l4Ntnt/KcDZftjBWP/9An9SEKZ3xjKBaKVAQjUbaPPHg==" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://chechia.net/js/bundle.min.8475c29f8da3c876e0358b05e6aeecc90b3affb7bfd705c202f65f468c200268c1cc8c5ea6a01b1b47ddf853c358f96e98e3df6c0cc877a19ead459cf06b9afc.js" as="script" integrity=
+    "sha512-hHXCn42jyHbgNYsF5q7syQs6/7e/1wXCAvZfRowgAmjBzIxepqAbG0fd&#43;FPDWPlumOPfbAzId6GerUWc8Gua/A==" crossorigin="anonymous">
 
-      
-      
-      <ul class="navbar-nav ml-auto">
-        
+    
+    <link rel="stylesheet" type="text/css" href="https://chechia.net/css/styles.8c77cda9454d30afb96a03bf232ee1089eb4b0da2a7c6e7f2b2a09d6cfcf2fe97836d9edfca70365fb630563fff409fd484299df18ca05a2950108d46da3cf1e.css" integrity="sha512-jHfNqUVNMK&#43;5agO/Iy7hCJ60sNoqfG5/KyoJ1s/PL&#43;l4Ntnt/KcDZftjBWP/9An9SEKZ3xjKBaKVAQjUbaPPHg==" crossorigin="anonymous">
+	  
+  </head>
+  
+  
+    
+  
+  <body data-code="7" data-lines="false" id="documentTop">
 
-        
+<header class = 'nav_header' >
+  <nav class = 'nav'>
+    <a href='https://chechia.net/' class = 'nav_brand nav_item'>
+      <img src="https://chechia.net/images/fav_79x79.jpg" class="logo">
+      <div class = 'nav_close'>
+        <div>
+          <svg class="icon">
+            <use xlink:href="#open-menu"></use>
+          </svg>
+          <svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg>
+        </div>
+      </div>
+    </a>
+    <div class = 'nav_body nav_body_left'>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/' class = 'nav_item'>Home </a>
+      </div>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/' class = 'nav_item'>系列文 <img src= https://chechia.net/icons/caret-icon.svg alt="icon" class="nav_icon"></a>
+        <div class = 'nav_sub'>
+          <a href = 'https://chechia.net/post/2020-ithome-ironman-challenge/' class = 'nav_child nav_item'>2020 iThome 鐵人賽優勝文章</a>
+        </div>
+      </div>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/about/' class = 'nav_item'>About </a>
+      </div>
+<div class='follow'>
+  <a href='https://www.facebook.com/engineer.from.scratch'>
+    <svg class="icon">
+      <use xlink:href="#facebook"></use>
+    </svg>
+  </a>
+  <a href='https://github.com/chechiachang'>
+    <svg class="icon">
+      <use xlink:href="#github"></use>
+    </svg>
+  </a>
+  <a href='https://twitter.com/chechiachang'>
+    <svg class="icon">
+      <use xlink:href="#twitter"></use>
+    </svg>
+  </a>
+  <a href='https://www.linkedin.com/in/che-chia-chang-92194a4a/'>
+    <svg class="icon">
+      <use xlink:href="#linkedin"></use>
+    </svg>
+  </a>
+<div class = 'color_mode'>
+  <input type = 'checkbox' class = 'color_choice' id = 'mode'>
+</div>
 
-        
-        
-        
-          
-        
-
-        
-        
-        
-        
-        
-        
-          
-          
-          
-            
-          
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link " href="/#about"><span>Me</span></a>
-        </li>
-
-        
-        
-
-        
-
-        
-        
-        
-          
-        
-
-        
-        
-        
-        
-        
-        
-          
-          
-          
-            
-          
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link " href="/#posts"><span>Posts</span></a>
-        </li>
-
-        
-        
-
-        
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Talks</span><span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/deploy-kubernetes-with-kubespray/"><span>Azure Taiwan #12: Deploy Kubernetes With Kubespray</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/kubernetes-storage-and-glusterfs/"><span>Cloud Native Taiwan #02: Kubernetes Storage and Glusterfs</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/elk-on-kubernetes/"><span>Cloud Native Taiwan #13: ELK for Applications on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/kubernetes-kafka-deployment/"><span>Cloud Native Taiwan #21: Deploy Kafka on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/coscup-2018-scouter/"><span>COSCUP 2018: 從零開始的人臉辨識，七龍珠戰鬥力探測器</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/jenkins-on-kubernetes/"><span>DevOps Taiwan Conference 2019: Jenkins X on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/gdg-devfest-2018-scouter/"><span>GDG DevFest 2018: 從零開始的人臉辨識，七龍珠戰鬥力探測器</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/gdd-devfest-2019-scouter/"><span>GDG DevFest 2019: 從零開始的人臉辨識，七龍珠戰鬥力探測器</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/go-github/"><span>Golang Taipei #34: 使用 go-github 接 github api</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/go-webassembly-intro/"><span>Golang Taipei #37: Go Webassembly Intro</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/mit-6.824-go-mapreduce/"><span>Golang Taipei #46: MIT 6.824 Distributed System Learning Note</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/gpu-computing-on-kubernetes/"><span>Ithome Cloud Summit 2018: Manage and Schedule GPU Computing Tasks on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/service-mesh-for-microservices-on-kubernetes/"><span>Ithome Cloud Summit 2019: Service Mesh for Microservices on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/ithome2020-cloudsummit-terraform-iac/"><span>Ithome Cloud Summit 2020: Terraform Infrastructure as Code</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/talk/kubernetes-networking/"><span>Ithome Kubernetes Summit 2018: Kubernetes Networking</span></a>
-            </li>
-            
-          </ul>
-        </li>
-
-        
-        
-
-        
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Projects</span><span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/project/scouter/"><span>GDG Devfest 2018: Scouter: face recognition.</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/project/mit-6.824-distributed-system/"><span>MIT 6.824 Distributed System Learning Note</span></a>
-            </li>
-            
-          </ul>
-        </li>
-
-        
-        
-
-        
-
-        
-        
-        
-          
-        
-
-        
-        
-        
-        
-        
-        
-          
-          
-          
-            
-          
-          
-        
-
-        <li class="nav-item">
-          <a class="nav-link " href="/#contact"><span>Contact</span></a>
-        </li>
-
-        
-        
-
-        
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Blockchain</span><span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/blockchain-atomic-swap/"><span>Ablockchain Atomic Swap</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/blockchain-bep3-atomic-swap/"><span>Blockchain Bep3 Atomic Swap</span></a>
-            </li>
-            
-          </ul>
-        </li>
-
-        
-        
-
-        
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Ithelp 鐵人賽</span><span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/cert-manager-complete-workflow/"><span>Cert Manager Complete Workflow</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/cert-manager-deployment/"><span>Cert Manager Deployment on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/cert-manager-how-it-work/"><span>Cert Manager How It Work</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/elastic-or-not-elastic/"><span>ELK or Not ELK</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-deployment-on-kubernetes/"><span>Kafka Deployment on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-ha-continued/"><span>Kafka HA Continued</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-ha-topology/"><span>Kafka HA Topology</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-helm-configuration/"><span>Kafka Helm Configuration</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-operation-scripts/"><span>Kafka Operation Scripts</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-basic-usage/"><span>Kafka-basic-usage</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kafka-introduction/"><span>Kafka-introduction</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kubernetes-custom-resource-deployment/"><span>Kubernetes Custom Resource Deployment</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kubernetes-custom-resources-basic/"><span>Kubernetes Custom Resources Basic</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kubernetes-custom-resource-with-operator-sdk/"><span>Kubernetes Custom Resources with Operator SDK</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kubernetes-nginx-ingress-controller/"><span>Kubernetes Nginx Ingress Controller</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kubernetes-nginx-ingress-config/"><span>Kubernetes Nginx Ingress Controller Config</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/logstash-on-gke/"><span>Logstash on GKE</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/monitoring-gce-with-elk/"><span>Monitoring GCE With ELK</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/monitoring-gke-with-elk/"><span>Monitoring GKE With Elk</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/prometheus-kube-state-metrics-exporter/"><span>Prometheus & Kubernetes State Metrics Exporter</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/prometheus-deploy-grafana/"><span>Prometheus Deploy Grafana</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/prometheus-deployment-on-kubernetes/"><span>Prometheus Deployment on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/prometheus-exporter-library-redis-exporter/"><span>Prometheus Exporter Library & Redis Exporter</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/redis-ha-deployment/"><span>Redis Ha Deployment</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/redis-ha-failure-recovery/"><span>Redis Ha Failure Recovery</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/redis-ha-on-haproxy/"><span>Redis Ha HAProxy</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/redis-ha-sentinel/"><span>Redis Ha Sentinel</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/redis-ha-topology/"><span>Redis Ha Topology</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/say-goodbye-2019/"><span>Say Goodbye 2019</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/secure-elk-stack/"><span>Secure Elk Stack</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/self-host-elk-stack-on-gcp/"><span>Self-host ELK stack - Installation</span></a>
-            </li>
-            
-          </ul>
-        </li>
-
-        
-        
-
-        
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Kubernetes</span><span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/service-mesh-for-microservice-on-kubernetes/"><span>Istio 三分鐘就入坑 佈署篇</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/jenkins-x-on-kubernetes/"><span>Jenkins X on Kubernetes</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/kubernetes-container-runtime-interface/"><span>Kubernetes Container Runtime Interface</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/terraform-infrastructure-as-code-transcript/"><span>Terraform Infrastructure as Code Transcript</span></a>
-            </li>
-            
-            <li class="dropdown-item my-0 py-0 mx-0 px-0">
-              <a href="/post/terraform-infrastructure-as-code/"><span>從零開始的 Infrastructure as Code: Terraform - 01</span></a>
-            </li>
-            
-          </ul>
-        </li>
-
-        
-        
-
-      
-
-        
-
-        
-        <li class="nav-item">
-          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
-        </li>
-        
-
-        
-
-        
-        <li class="nav-item">
-          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
-        </li>
-        
-
-      </ul>
+</div>
 
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
-
-  <article class="article" itemscope itemtype="http://schema.org/Article">
-
+    <main>
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-  
-  
-<div class="article-container pt-3">
-  <h1 itemprop="name">Redis Ha HAProxy</h1>
-
-  
-
-  
-    
-
-
-
-<meta content="2019-10-02 16:12:10 &#43;0800 CST" itemprop="datePublished">
-<meta content="2020-08-19 10:22:29 &#43;0800 CST" itemprop="dateModified">
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          Last updated on
-      
-    
-    <time>Aug 19, 2020</time>
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-
-  
-    
-<div class="share-box" aria-hidden="true">
-  <ul class="share">
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://twitter.com/intent/tweet?url=https://chechia.net/post/redis-ha-on-haproxy/&amp;text=Redis%20Ha%20HAProxy" target="_blank" rel="noopener" class="share-btn-twitter">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://chechia.net/post/redis-ha-on-haproxy/&amp;t=Redis%20Ha%20HAProxy" target="_blank" rel="noopener" class="share-btn-facebook">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="mailto:?subject=Redis%20Ha%20HAProxy&amp;body=https://chechia.net/post/redis-ha-on-haproxy/" target="_blank" rel="noopener" class="share-btn-email">
-          <i class="fas fa-envelope"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://chechia.net/post/redis-ha-on-haproxy/&amp;title=Redis%20Ha%20HAProxy" target="_blank" rel="noopener" class="share-btn-linkedin">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://web.whatsapp.com/send?text=Redis%20Ha%20HAProxy%20https://chechia.net/post/redis-ha-on-haproxy/" target="_blank" rel="noopener" class="share-btn-whatsapp">
-          <i class="fab fa-whatsapp"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://chechia.net/post/redis-ha-on-haproxy/&amp;title=Redis%20Ha%20HAProxy" target="_blank" rel="noopener" class="share-btn-weibo">
-          <i class="fab fa-weibo"></i>
-        </a>
-      </li>
-    
-  </ul>
+<div class = 'grid-inverse wrap content'>
+  <article class='post_content'>
+    <h1 class='post_title'>Redis Ha HAProxy</h1><div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Oct 2, 2019</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/redis' class = 'post_tag button button_translucent'>redis
+  </a>
+  <a href = 'https://chechia.net/tags/ci' class = 'post_tag button button_translucent'>ci
+  </a>
+  <a href = 'https://chechia.net/tags/cd' class = 'post_tag button button_translucent'>cd
+  </a>
 </div>
 
-
+    <div class='post_share'>
+  Share on:
+  <a href="https://twitter.com/intent/tweet?text=Redis%20Ha%20HAProxy&url=https%3a%2f%2fchechia.net%2fpost%2fredis-ha-on-haproxy%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <svg class="icon">
+      <use xlink:href="#twitter"></use>
+    </svg>
+  </a>
   
-
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2fredis-ha-on-haproxy%2f&t=Redis%20Ha%20HAProxy" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <svg class="icon">
+      <use xlink:href="#facebook"></use>
+    </svg>
+  </a>
+  <script>
+    function shareViaLinkedin() {
+      window.open('http://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent("https://chechia.net/post/redis-ha-on-haproxy/"), '', 'left=0,top=0,width=650,height=420,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+    }
+  </script>
+  <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow" onclick="shareViaLinkedin()">
+    <svg class="icon">
+      <use xlink:href="#linkedin"></use>
+    </svg>
+  </a>
+  <a href="https://chechia.net/post/redis-ha-on-haproxy/" title="Copy Link" class="link link_yank">
+    <svg class="icon">
+      <use xlink:href="#yank"></use>
+    </svg>
+  </a>
 </div>
 
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-</div>
-
-
-
-  <div class="article-container">
-
-    <div class="article-style" itemprop="articleBody">
-      <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+    <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
 <ul>
 <li>在 GKE 上部署 Redis HA
 <ul>
@@ -838,33 +200,33 @@
 <p>HAProxy 還有其他非常多的功能，想了解細節可以來看<a href="http://cbonte.github.io/haproxy-dconv/1.9/intro.html#3">原理解說文件</a></p>
 <h1 id="topology">Topology</h1>
 <p>我們今天的範例是在後端的 redis 與 clients 中間多放一層 HAProxys</p>
-<pre><code>
-   +-------+   +--------+    +------------+    +---------+
-   |Clients|---|HAProxys|----|redis master|----|sentinels|
-   +-------+   +--------+    +------------+    +---------+
-
-</code></pre><p>可能有人會問說，那前兩天講的 redis sentinel，跑去哪裡了。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>
+<span class="ln">2</span>   +-------+   +--------+    +------------+    +---------+
+<span class="ln">3</span>   |Clients|---|HAProxys|----|redis master|----|sentinels|
+<span class="ln">4</span>   +-------+   +--------+    +------------+    +---------+
+<span class="ln">5</span>
+</code></pre></div><p>可能有人會問說，那前兩天講的 redis sentinel，跑去哪裡了。</p>
 <p>sentinel 還在正常運作，負責監測 redis 狀態與 failover，只是 client 不再透過 sentinel 去取得 master，而是透過 HAProxy。</p>
 <h1 id="deploy-haproxy">Deploy HAProxy</h1>
 <p>我把我的寶藏都在這了<a href="https://github.com/chechiachang/haproxy-kubernetes">https://github.com/chechiachang/haproxy-kubernetes</a></p>
 <p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
-<pre><code>cat install.sh
-
-#!/bin/bash
-
-# redis-db-credentials should already exists
-#kubectl create secret generic redis-db-credentials \
-   --from-literal=REDIS_PASSWORD=123456
-
-# Update haproxy.cfg as configmap
-kubectl create configmap haproxy-config \
-   --from-file=haproxy.cfg \
-   --output yaml \
-   --dry-run | kubectl apply -f -
-
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
-</code></pre><p>這邊做的事情有幾件</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>cat install.sh
+<span class="ln"> 2</span>
+<span class="ln"> 3</span><span class="c1">#!/bin/bash</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span><span class="c1"># redis-db-credentials should already exists</span>
+<span class="ln"> 6</span><span class="c1">#kubectl create secret generic redis-db-credentials \</span>
+<span class="ln"> 7</span>   --from-literal<span class="o">=</span><span class="nv">REDIS_PASSWORD</span><span class="o">=</span><span class="m">123456</span>
+<span class="ln"> 8</span>
+<span class="ln"> 9</span><span class="c1"># Update haproxy.cfg as configmap</span>
+<span class="ln">10</span>kubectl create configmap haproxy-config <span class="se">\
+</span><span class="ln">11</span><span class="se"></span>   --from-file<span class="o">=</span>haproxy.cfg <span class="se">\
+</span><span class="ln">12</span><span class="se"></span>   --output yaml <span class="se">\
+</span><span class="ln">13</span><span class="se"></span>   --dry-run <span class="p">|</span> kubectl apply -f -
+<span class="ln">14</span>
+<span class="ln">15</span>kubectl apply -f deployment.yaml
+<span class="ln">16</span>kubectl apply -f service.yaml
+</code></pre></div><p>這邊做的事情有幾件</p>
 <ul>
 <li>取得 redis 的 auth REDIS_PASSWORD 放在 secret 中，如果前面是照我們的範例，那都已經設定了</li>
 <li>把 haproxy.cfg 的設定檔，使用 configmap 的方式放到 kubernetes 上</li>
@@ -872,71 +234,71 @@ kubectl apply -f service.yaml
 <li>部屬 HAProxy service</li>
 </ul>
 <p>簡單看一下 deployment</p>
-<pre><code>apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: haproxy
-spec:
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: haproxy
-        app.kubernetes.io/name: haproxy
-        component: haproxy
-    spec:
-      volumes:
-      - name: haproxy-config
-        configMap:
-          name: haproxy-config
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: &quot;app&quot;
-                  operator: &quot;In&quot;
-                  values:
-                  - &quot;haproxy&quot;
-              topologyKey: kubernetes.io/hostname
-      containers:
-      - name: haproxy
-        image: haproxy:2.0.3-alpine
-        command: [&quot;haproxy&quot;, &quot;-f&quot;, &quot;/usr/local/etc/haproxy/config/haproxy.cfg&quot;]
-        readinessProbe:
-          initialDelaySeconds: 15
-          periodSeconds: 5
-          timeoutSeconds: 1
-          successThreshold: 2
-          failureThreshold: 2
-          tcpSocket:
-            port: 26999
-            port: 6379
-        volumeMounts:
-        - name: haproxy-config
-          mountPath: /usr/local/etc/haproxy/config
-        resources:
-          requests:
-            cpu: 10m
-            memory: 30Mi
-        env:
-        - name: REDIS_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: redis-db-credentials
-              key: REDIS_PASSWORD
-        ports:
-        - containerPort: 8000
-          name: http
-        - containerPort: 9000
-          name: https
-        - containerPort: 26999
-          name: stats
-        - containerPort: 6379
-          name: redis
-</code></pre><ul>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>apiVersion: apps/v1beta1
+<span class="ln"> 2</span>kind: Deployment
+<span class="ln"> 3</span>metadata:
+<span class="ln"> 4</span>  name: haproxy
+<span class="ln"> 5</span>spec:
+<span class="ln"> 6</span>  replicas: 3
+<span class="ln"> 7</span>  template:
+<span class="ln"> 8</span>    metadata:
+<span class="ln"> 9</span>      labels:
+<span class="ln">10</span>        app: haproxy
+<span class="ln">11</span>        app.kubernetes.io/name: haproxy
+<span class="ln">12</span>        component: haproxy
+<span class="ln">13</span>    spec:
+<span class="ln">14</span>      volumes:
+<span class="ln">15</span>      - name: haproxy-config
+<span class="ln">16</span>        configMap:
+<span class="ln">17</span>          name: haproxy-config
+<span class="ln">18</span>      affinity:
+<span class="ln">19</span>        podAntiAffinity:
+<span class="ln">20</span>          preferredDuringSchedulingIgnoredDuringExecution:
+<span class="ln">21</span>          - weight: 100
+<span class="ln">22</span>            podAffinityTerm:
+<span class="ln">23</span>              labelSelector:
+<span class="ln">24</span>                matchExpressions:
+<span class="ln">25</span>                - key: &#34;app&#34;
+<span class="ln">26</span>                  operator: &#34;In&#34;
+<span class="ln">27</span>                  values:
+<span class="ln">28</span>                  - &#34;haproxy&#34;
+<span class="ln">29</span>              topologyKey: kubernetes.io/hostname
+<span class="ln">30</span>      containers:
+<span class="ln">31</span>      - name: haproxy
+<span class="ln">32</span>        image: haproxy:2.0.3-alpine
+<span class="ln">33</span>        command: [&#34;haproxy&#34;, &#34;-f&#34;, &#34;/usr/local/etc/haproxy/config/haproxy.cfg&#34;]
+<span class="ln">34</span>        readinessProbe:
+<span class="ln">35</span>          initialDelaySeconds: 15
+<span class="ln">36</span>          periodSeconds: 5
+<span class="ln">37</span>          timeoutSeconds: 1
+<span class="ln">38</span>          successThreshold: 2
+<span class="ln">39</span>          failureThreshold: 2
+<span class="ln">40</span>          tcpSocket:
+<span class="ln">41</span>            port: 26999
+<span class="ln">42</span>            port: 6379
+<span class="ln">43</span>        volumeMounts:
+<span class="ln">44</span>        - name: haproxy-config
+<span class="ln">45</span>          mountPath: /usr/local/etc/haproxy/config
+<span class="ln">46</span>        resources:
+<span class="ln">47</span>          requests:
+<span class="ln">48</span>            cpu: 10m
+<span class="ln">49</span>            memory: 30Mi
+<span class="ln">50</span>        env:
+<span class="ln">51</span>        - name: REDIS_PASSWORD
+<span class="ln">52</span>          valueFrom:
+<span class="ln">53</span>            secretKeyRef:
+<span class="ln">54</span>              name: redis-db-credentials
+<span class="ln">55</span>              key: REDIS_PASSWORD
+<span class="ln">56</span>        ports:
+<span class="ln">57</span>        - containerPort: 8000
+<span class="ln">58</span>          name: http
+<span class="ln">59</span>        - containerPort: 9000
+<span class="ln">60</span>          name: https
+<span class="ln">61</span>        - containerPort: 26999
+<span class="ln">62</span>          name: stats
+<span class="ln">63</span>        - containerPort: 6379
+<span class="ln">64</span>          name: redis
+</code></pre></div><ul>
 <li>Replicas: 3 ，開起來是三個 HAProxy</li>
 <li>podAntiAffinity，三個分布到不同 node 上，盡量維持 HA</li>
 <li>readinessProbe，等 tcpSocket 26999 (HAProxy Stats) 與 6370 (Redis Proxy) 通了才 READY</li>
@@ -945,34 +307,34 @@ spec:
 <li>開幾個 port</li>
 </ul>
 <p>看一下 service</p>
-<pre><code>kind: Service
-apiVersion: v1
-metadata:
-  name: haproxy-service
-spec:
-  sessionAffinity: ClientIP
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800 # 3 hr
-  selector:
-    app: haproxy
-  ports:
-    - name: http
-      protocol: TCP
-      port: 8000
-    - name: https
-      protocol: TCP
-      port: 9000
-    - name: stats
-      protocol: TCP
-      port: 26999
-    - name: redis
-      protocol: TCP
-      port: 6379
-    - name: redis-exporter
-      protocol: TCP
-      port: 8404
-</code></pre><ul>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>kind: Service
+<span class="ln"> 2</span>apiVersion: v1
+<span class="ln"> 3</span>metadata:
+<span class="ln"> 4</span>  name: haproxy-service
+<span class="ln"> 5</span>spec:
+<span class="ln"> 6</span>  sessionAffinity: ClientIP
+<span class="ln"> 7</span>  sessionAffinityConfig:
+<span class="ln"> 8</span>    clientIP:
+<span class="ln"> 9</span>      timeoutSeconds: 10800 # 3 hr
+<span class="ln">10</span>  selector:
+<span class="ln">11</span>    app: haproxy
+<span class="ln">12</span>  ports:
+<span class="ln">13</span>    - name: http
+<span class="ln">14</span>      protocol: TCP
+<span class="ln">15</span>      port: 8000
+<span class="ln">16</span>    - name: https
+<span class="ln">17</span>      protocol: TCP
+<span class="ln">18</span>      port: 9000
+<span class="ln">19</span>    - name: stats
+<span class="ln">20</span>      protocol: TCP
+<span class="ln">21</span>      port: 26999
+<span class="ln">22</span>    - name: redis
+<span class="ln">23</span>      protocol: TCP
+<span class="ln">24</span>      port: 6379
+<span class="ln">25</span>    - name: redis-exporter
+<span class="ln">26</span>      protocol: TCP
+<span class="ln">27</span>      port: 8404
+</code></pre></div><ul>
 <li>很單純，就是把幾個 port 接出來</li>
 <li>把 sessionAffinity 開起來
 <ul>
@@ -983,53 +345,53 @@ spec:
 </ul>
 </li>
 </ul>
-<pre><code>kubectl get po | grep haproxy
-
-haproxy-56d94f857f-gmd4s                                 1/1     Running     0          47d
-haproxy-56d94f857f-p2vj6                                 1/1     Running     0          47d
-haproxy-56d94f857f-vhz8b                                 1/1     Running     0          47d
-</code></pre><h1 id="haproxy-config">HAProxy Config</h1>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>kubectl get po | grep haproxy
+<span class="ln">2</span>
+<span class="ln">3</span>haproxy-56d94f857f-gmd4s                                 1/1     Running     0          47d
+<span class="ln">4</span>haproxy-56d94f857f-p2vj6                                 1/1     Running     0          47d
+<span class="ln">5</span>haproxy-56d94f857f-vhz8b                                 1/1     Running     0          47d
+</code></pre></div><h1 id="haproxy-config">HAProxy Config</h1>
 <p>看一下 haproxy.cfg</p>
-<pre><code># https://cbonte.github.io/haproxy-dconv/2.0/configuration.html
-
-# https://github.com/prometheus/haproxy_exporter
-# https://www.haproxy.com/blog/haproxy-exposes-a-prometheus-metrics-endpoint/
-# curl http://localhost:8404/metrics
-# curl http://localhost:8404/stats
-frontend stats
- mode http
- timeout client 30s
- bind *:8404
- option http-use-htx
- http-request use-service prometheus-exporter if { path /metrics }
- stats enable
- stats uri /stats
- stats refresh 10s
-
-# Redis
-frontend redis_gate
- mode tcp
- timeout client 7d
- bind 0.0.0.0:6379 name redis
- default_backend redis_servers
-
-backend redis_servers
- mode tcp
- timeout connect 3s
- timeout server 7d
- option tcp-check
- tcp-check connect
- tcp-check send AUTH\ &quot;${REDIS_PASSWORD}&quot;\r\n
- tcp-check send PING\r\n
- tcp-check expect string PONG
- tcp-check send info\ replication\r\n
- tcp-check expect string role:master
- tcp-check send QUIT\r\n
- tcp-check expect string +OK
- server R1 redis-2-redis-ha-announce-0:6379 check inter 1s
- server R2 redis-2-redis-ha-announce-1:6379 check inter 1s
- server R3 redis-2-redis-ha-announce-2:6379 check inter 1s
-</code></pre><ul>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span># https://cbonte.github.io/haproxy-dconv/2.0/configuration.html
+<span class="ln"> 2</span>
+<span class="ln"> 3</span># https://github.com/prometheus/haproxy_exporter
+<span class="ln"> 4</span># https://www.haproxy.com/blog/haproxy-exposes-a-prometheus-metrics-endpoint/
+<span class="ln"> 5</span># curl http://localhost:8404/metrics
+<span class="ln"> 6</span># curl http://localhost:8404/stats
+<span class="ln"> 7</span>frontend stats
+<span class="ln"> 8</span> mode http
+<span class="ln"> 9</span> timeout client 30s
+<span class="ln">10</span> bind *:8404
+<span class="ln">11</span> option http-use-htx
+<span class="ln">12</span> http-request use-service prometheus-exporter if { path /metrics }
+<span class="ln">13</span> stats enable
+<span class="ln">14</span> stats uri /stats
+<span class="ln">15</span> stats refresh 10s
+<span class="ln">16</span>
+<span class="ln">17</span># Redis
+<span class="ln">18</span>frontend redis_gate
+<span class="ln">19</span> mode tcp
+<span class="ln">20</span> timeout client 7d
+<span class="ln">21</span> bind 0.0.0.0:6379 name redis
+<span class="ln">22</span> default_backend redis_servers
+<span class="ln">23</span>
+<span class="ln">24</span>backend redis_servers
+<span class="ln">25</span> mode tcp
+<span class="ln">26</span> timeout connect 3s
+<span class="ln">27</span> timeout server 7d
+<span class="ln">28</span> option tcp-check
+<span class="ln">29</span> tcp-check connect
+<span class="ln">30</span> tcp-check send AUTH\ &#34;${REDIS_PASSWORD}&#34;\r\n
+<span class="ln">31</span> tcp-check send PING\r\n
+<span class="ln">32</span> tcp-check expect string PONG
+<span class="ln">33</span> tcp-check send info\ replication\r\n
+<span class="ln">34</span> tcp-check expect string role:master
+<span class="ln">35</span> tcp-check send QUIT\r\n
+<span class="ln">36</span> tcp-check expect string +OK
+<span class="ln">37</span> server R1 redis-2-redis-ha-announce-0:6379 check inter 1s
+<span class="ln">38</span> server R2 redis-2-redis-ha-announce-1:6379 check inter 1s
+<span class="ln">39</span> server R3 redis-2-redis-ha-announce-2:6379 check inter 1s
+</code></pre></div><ul>
 <li>兩個 frontend，吃前端 (client) 來的 request
 <ul>
 <li>frontend stats 是 HAProxy 本身服務的 stats
@@ -1064,11 +426,11 @@ backend redis_servers
 </ul>
 <p>HAProxy 會維護 backend 的 proxy stats，找到三台 redis 中，是 master 的這台</p>
 <p>Running Log</p>
-<pre><code>kubectl logs -f haproxy-123-123456789
-
-[WARNING] 273/153936 (1) : Server redis_servers/R2 is DOWN, reason: Layer7 timeout, info: &quot; at step 6 of tcp-check (expect string 'role:master')&quot;, check duration: 1000ms. 2 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
-[WARNING] 273/153937 (1) : Server redis_servers/R3 is DOWN, reason: Layer7 timeout, info: &quot; at step 6 of tcp-check (expect string 'role:master')&quot;, check duration: 1001ms. 1 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
-</code></pre><p>HAProxy 去 redis 問，你是 master 嗎，兩個人回不是，只有一個回 role:master，所以把 client 導過去</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>kubectl logs -f haproxy-123-123456789
+<span class="ln">2</span>
+<span class="ln">3</span>[WARNING] 273/153936 (1) : Server redis_servers/R2 is DOWN, reason: Layer7 timeout, info: &#34; at step 6 of tcp-check (expect string &#39;role:master&#39;)&#34;, check duration: 1000ms. 2 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
+<span class="ln">4</span>[WARNING] 273/153937 (1) : Server redis_servers/R3 is DOWN, reason: Layer7 timeout, info: &#34; at step 6 of tcp-check (expect string &#39;role:master&#39;)&#34;, check duration: 1001ms. 1 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
+</code></pre></div><p>HAProxy 去 redis 問，你是 master 嗎，兩個人回不是，只有一個回 role:master，所以把 client 導過去</p>
 <h1 id="haproxy-vs-sentinel">HAProxy vs Sentinel</h1>
 <ul>
 <li>Client 不用知道中間的 proxy，只要知道透過 HAproxy service 就會被 proxy 到 master</li>
@@ -1076,363 +438,439 @@ backend redis_servers
 <li>Client 不用支援 sentinel，只要一般的 redis-cli 就可以連入</li>
 </ul>
 
+  </article>
+<aside class="sidebar">
+  <section class="sidebar_inner">
+    <h2>Che-Chia Chang</h2>
+    <div>
+      DevOps, SRE, Kubernetes admin.
     </div>
-
+    <a href = 'https://chechia.net/about/' class="button mt-1" role="button">Read More</a>
+    <h2 class="mt-4">Featured Posts</h2>
+    <ul>
     
-
-<div class="article-tags">
-  
-  <a class="badge badge-light" href="/tags/kubernetes/">kubernetes</a>
-  
-  <a class="badge badge-light" href="/tags/redis/">redis</a>
-  
-  <a class="badge badge-light" href="/tags/ci/">ci</a>
-  
-  <a class="badge badge-light" href="/tags/cd/">cd</a>
-  
-</div>
-
-
-
+      <li>
+        <a href="https://chechia.net/post/self-host-elk-stack-on-gcp/" class="nav-link">Self-host ELK stack - Installation</a>
+      </li>
     
+      <li>
+        <a href="https://chechia.net/post/2020-ithome-ironman-challenge/" class="nav-link">2020 IT邦幫忙鐵人賽</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/markdown-syntax/" class="nav-link">Markdown Syntax Guide</a>
+      </li>
+    
+    </ul>
+    <h2 class="mt-4">Recent Posts</h2>
+    <ul class="flex-column">
       
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-  
-  
+      <li>
+        <a href="https://chechia.net/post/borg-omega-and-kubernetes/" class="nav-link">Borg Omega and Kubernetes 摘要翻譯</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-08-season-review/" class="nav-link">2020 08 Season Review</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/terraform-infrastructure-as-code-transcript/" class="nav-link">Terraform Infrastructure as Code Transcript</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/terraform-infrastructure-as-code/" class="nav-link">從零開始的 Infrastructure as Code: Terraform - 01</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/say-goodbye-2019/" class="nav-link">Say Goodbye 2019</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/mit-6.824-distributed-system/" class="nav-link">MIT 6.824 Distributed System Learning Note</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/blockchain-atomic-swap/" class="nav-link">Ablockchain Atomic Swap</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/blockchain-bep3-atomic-swap/" class="nav-link">Blockchain Bep3 Atomic Swap</a>
+      </li>
+    </ul> 
     
-  
-  
-  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
-    
-      
-      <img class="portrait mr-3" src="/authors/admin/avatar_hu2c43387b68a5b6b528d86c827c9ada90_16517_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
-    
-
-    <div class="media-body">
-      <h5 class="card-title" itemprop="name"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
-      <h6 class="card-subtitle">Back-End / DevOps</h6>
-      <p class="card-text" itemprop="description">A software engineer specilized in Back-End development, DevOps, containerization and Kubernetes administration.</p>
-      <ul class="network-icon" aria-hidden="true">
+    <div>
+      <h2 class="mt-4 taxonomy" id="categories-section">categories</h2>
+      <nav class="tags_nav">
+        <a href='https://chechia.net/categories/kubernetes/' class=" post_tag button button_translucent">
+          KUBERNETES
+          <span class='button_tally'>7</span>
+        </a>
         
-          
-          
-          
-            
-          
-          
-          
-          
-          
-            
-          
-          <li>
-            <a itemprop="sameAs" href="/#contact" >
-              <i class="fas fa-envelope"></i>
-            </a>
-          </li>
+        <a href='https://chechia.net/categories/devops/' class=" post_tag button button_translucent">
+          DEVOPS
+          <span class='button_tally'>4</span>
+        </a>
         
-          
-          
-          
-            
-          
-          
-          
-          
-          
-            
-          
-          <li>
-            <a itemprop="sameAs" href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
-              <i class="fab fa-twitter"></i>
-            </a>
-          </li>
+        <a href='https://chechia.net/categories/elasticsearch/' class=" post_tag button button_translucent">
+          ELASTICSEARCH
+          <span class='button_tally'>1</span>
+        </a>
         
-          
-          
-          
-            
-          
-          
-          
-          
-          
-            
-          
-          <li>
-            <a itemprop="sameAs" href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
-              <i class="fab fa-facebook"></i>
-            </a>
-          </li>
+        <a href='https://chechia.net/categories/syntax/' class=" post_tag button button_translucent">
+          SYNTAX
+          <span class='button_tally'>1</span>
+        </a>
         
-          
-          
-          
-            
-          
-          
-          
-          
-          
-            
-          
-          <li>
-            <a itemprop="sameAs" href="https://github.com/chechiachang" target="_blank" rel="noopener">
-              <i class="fab fa-github"></i>
-            </a>
-          </li>
+        <a href='https://chechia.net/categories/themes/' class=" post_tag button button_translucent">
+          THEMES
+          <span class='button_tally'>1</span>
+        </a>
         
-          
-          
-          
-            
-          
-          
-          
-          
-          
-            
-          
-          <li>
-            <a itemprop="sameAs" href="https://www.meetup.com/golang-taipei-meetup/" target="_blank" rel="noopener">
-              <i class="fab fa-meetup"></i>
-            </a>
-          </li>
         
-      </ul>
-    </div>
-  </div>
-
-
-
-      
-      
-      <div class="article-widget">
-        <div class="hr-light"></div>
-        <h3>Related</h3>
-        <ul>
-          
-          <li><a href="/post/redis-ha-topology/">Redis Ha Topology</a></li>
-          
-          <li><a href="/post/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></li>
-          
-          <li><a href="/project/jenkins-x-on-kubernetes/">Jenkins X on Kubernetes</a></li>
-          
-          <li><a href="/post/monitoring-gke-with-elk/">Monitoring GKE With Elk</a></li>
-          
-          <li><a href="/post/x.509-certificate/">X.509 certificate</a></li>
-          
-        </ul>
-      </div>
-      
-    
-
-    
-    <div class="article-widget">
-      
-<div class="post-nav">
-  
-  
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/post/redis-ha-failure-recovery/" rel="next">Redis Ha Failure Recovery</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/post/redis-ha-sentinel/" rel="prev">Redis Ha Sentinel</a>
-  </div>
-  
-</div>
-
+      </nav>
     </div>
     
-
-    
-
-
-  </div>
-</article>
-
-      
-
-    
-    
-    
-    <script src="/js/mathjax-config.js"></script>
-    
-
-    
-    
-    
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
-
-      
-
-      
+    <div>
+      <h2 class="mt-4 taxonomy" id="tags-section">tags</h2>
+      <nav class="tags_nav">
+        <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent">
+          KUBERNETES
+          <span class='button_tally'>19</span>
+        </a>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        <a href='https://chechia.net/tags/cd/' class=" post_tag button button_translucent">
+          CD
+          <span class='button_tally'>11</span>
+        </a>
         
-      
-
-      
-      
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
-      
-    
-
-    
-    
-
-    
-    
-    
-
-    
-    
-    <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    
-    
-    <script>
-      const search_index_filename = "/index.json";
-      const i18n = {
-        'placeholder': "Search...",
-        'results': "results found",
-        'no_results': "No results found"
-      };
-      const content_type = {
-        'post': "Posts",
-        'project': "Projects",
-        'publication' : "Publications",
-        'talk' : "Talks"
-        };
-    </script>
-    
-
-    
-    
-
-    
-    
-    <script id="search-hit-fuse-template" type="text/x-template">
-      <div class="search-hit" id="summary-{{key}}">
-      <div class="search-hit-content">
-        <div class="search-hit-name">
-          <a href="{{relpermalink}}">{{title}}</a>
-          <div class="article-metadata search-hit-type">{{type}}</div>
-          <p class="search-hit-description">{{snippet}}</p>
+        <a href='https://chechia.net/tags/ci/' class=" post_tag button button_translucent">
+          CI
+          <span class='button_tally'>11</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent">
+          REDIS
+          <span class='button_tally'>8</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/elk/' class=" post_tag button button_translucent">
+          ELK
+          <span class='button_tally'>4</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/tls/' class=" post_tag button button_translucent">
+          TLS
+          <span class='button_tally'>3</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/blockchain/' class=" post_tag button button_translucent">
+          BLOCKCHAIN
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/nginx/' class=" post_tag button button_translucent">
+          NGINX
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/ssl/' class=" post_tag button button_translucent">
+          SSL
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/xpack/' class=" post_tag button button_translucent">
+          XPACK
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/atomic-swap/' class=" post_tag button button_translucent">
+          ATOMIC-SWAP
+          <span class='button_tally'>1</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/bep3/' class=" post_tag button button_translucent">
+          BEP3
+          <span class='button_tally'>1</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/binance/' class=" post_tag button button_translucent">
+          BINANCE
+          <span class='button_tally'>1</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/cert-manager/' class=" post_tag button button_translucent">
+          CERT-MANAGER
+          <span class='button_tally'>1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All tags</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://chechia.net/tags/atomic-swap/' class=" post_tag button button_translucent" data-position=1>ATOMIC-SWAP<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/bep3/' class=" post_tag button button_translucent" data-position=1>BEP3<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/binance/' class=" post_tag button button_translucent" data-position=1>BINANCE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/blockchain/' class=" post_tag button button_translucent" data-position=2>BLOCKCHAIN<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cd/' class=" post_tag button button_translucent" data-position=11>CD<span class='button_tally'>11</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cert-manager/' class=" post_tag button button_translucent" data-position=1>CERT-MANAGER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ci/' class=" post_tag button button_translucent" data-position=11>CI<span class='button_tally'>11</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/container/' class=" post_tag button button_translucent" data-position=1>CONTAINER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cri/' class=" post_tag button button_translucent" data-position=1>CRI<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/css/' class=" post_tag button button_translucent" data-position=1>CSS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/daemonsets/' class=" post_tag button button_translucent" data-position=1>DAEMONSETS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent" data-position=1>DEVOPS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/distributed-system/' class=" post_tag button button_translucent" data-position=1>DISTRIBUTED-SYSTEM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/docker/' class=" post_tag button button_translucent" data-position=1>DOCKER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/elasticsearch/' class=" post_tag button button_translucent" data-position=1>ELASTICSEARCH<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/elk/' class=" post_tag button button_translucent" data-position=4>ELK<span class='button_tally'>4</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/erc-20/' class=" post_tag button button_translucent" data-position=1>ERC-20<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ethereum/' class=" post_tag button button_translucent" data-position=1>ETHEREUM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/featured/' class=" post_tag button button_translucent" data-position=1>FEATURED<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/filebeat/' class=" post_tag button button_translucent" data-position=1>FILEBEAT<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/fluentd/' class=" post_tag button button_translucent" data-position=1>FLUENTD<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=1>GCP<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/golang/' class=" post_tag button button_translucent" data-position=1>GOLANG<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/html/' class=" post_tag button button_translucent" data-position=1>HTML<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/https/' class=" post_tag button button_translucent" data-position=1>HTTPS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ibm-q-experience/' class=" post_tag button button_translucent" data-position=1>IBM-Q-EXPERIENCE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/index/' class=" post_tag button button_translucent" data-position=1>INDEX<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/istio/' class=" post_tag button button_translucent" data-position=1>ISTIO<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/jenkins/' class=" post_tag button button_translucent" data-position=1>JENKINS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=19>KUBERNETES<span class='button_tally'>19</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/lecture/' class=" post_tag button button_translucent" data-position=1>LECTURE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/log/' class=" post_tag button button_translucent" data-position=1>LOG<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/markdown/' class=" post_tag button button_translucent" data-position=1>MARKDOWN<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/mit/' class=" post_tag button button_translucent" data-position=1>MIT<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/nginx/' class=" post_tag button button_translucent" data-position=2>NGINX<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/pod-affinity/' class=" post_tag button button_translucent" data-position=1>POD-AFFINITY<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/quantum-computing/' class=" post_tag button button_translucent" data-position=1>QUANTUM-COMPUTING<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent" data-position=8>REDIS<span class='button_tally'>8</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/service-mesh/' class=" post_tag button button_translucent" data-position=1>SERVICE-MESH<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ssl/' class=" post_tag button button_translucent" data-position=2>SSL<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=1>TERRAFORM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/themes/' class=" post_tag button button_translucent" data-position=1>THEMES<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/tls/' class=" post_tag button button_translucent" data-position=3>TLS<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/tutorial/' class=" post_tag button button_translucent" data-position=1>TUTORIAL<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/xpack/' class=" post_tag button button_translucent" data-position=2>XPACK<span class='button_tally'>2</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
         </div>
-      </div>
-      </div>
-    </script>
-    
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
-    
-
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-      
-    
-    
-    
-    
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
-
-    
-
-
-
-
-
-
-  
-  <div class="container">
-    <footer class="site-footer">
-  
-
-  <p class="powered-by">
-    chechiachang © 2016 &middot; 
-
-    Powered by the
-    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
-
-    
-    <span class="float-right" aria-hidden="true">
-      <a href="#" id="back_to_top">
-        <span class="button_icon">
-          <i class="fas fa-chevron-up fa-2x"></i>
-        </span>
-      </a>
-    </span>
-    
-  </p>
-</footer>
-
-  </div>
-  
-
-  
-<div id="modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Cite</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <pre><code class="tex hljs"></code></pre>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
-          <i class="fas fa-copy"></i> Copy
-        </a>
-        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
-          <i class="fas fa-download"></i> Download
-        </a>
-        <div id="modal-error"></div>
-      </div>
+        
+      </nav>
     </div>
-  </div>
-</div>
+    
+  </section>
+</aside>
 
-</body>
+</div>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter">
+    <path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68 0 0 1-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078a3.56 3.56 0 0 0-1.076 2.605c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388a3.623 3.623 0 0 0 2.115 1.291c-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652 0 0 0 2.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77 0 0 0 1.172-4.892v-.468a7.788 7.788 0 0 0 1.84-1.921 8.142 8.142 0 0 1-2.11.593z"
+      ></path>
+  </symbol>
+  <symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail">
+    <path  d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar">
+    <path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916 0 100v352c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V100c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028 0 20 8.972 20 20v48z"></path>
+    <path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"></path>
+  </symbol>
+  <symbol viewBox="-21 0 512 512" xmlns="http://www.w3.org/2000/svg" id="yank">
+    <path d="M410.668 405.332H165.332c-32.363 0-58.664-26.3-58.664-58.664v-288c0-32.363 26.3-58.668 58.664-58.668h181.504c21.059 0 41.687 8.535 56.555 23.445l42.496 42.496c15.125 15.125 23.445 35.223 23.445 56.575v224.152c0 32.363-26.3 58.664-58.664 58.664zM165.332 32c-14.7 0-26.664 11.969-26.664 26.668v288c0 14.7 11.965 26.664 26.664 26.664h245.336c14.7 0 26.664-11.965 26.664-26.664V122.516c0-12.82-4.992-24.871-14.059-33.942l-42.496-42.496C371.84 37.121 359.488 32 346.836 32zm0 0"></path>
+    <path d="M314.668 512h-256C26.305 512 0 485.695 0 453.332V112c0-32.363 26.305-58.668 58.668-58.668h10.664c8.832 0 16 7.168 16 16s-7.168 16-16 16H58.668C43.968 85.332 32 97.301 32 112v341.332C32 468.032 43.969 480 58.668 480h256c14.7 0 26.664-11.969 26.664-26.668v-10.664c0-8.832 7.168-16 16-16s16 7.168 16 16v10.664c0 32.363-26.3 58.668-58.664 58.668zM368 181.332H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"></path>
+    <path d="M368 245.332H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 64H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github">
+    <path d="M255.968 5.329C114.624 5.329 0 120.401 0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384 0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008 0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992 0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584 0 34.368-.32 62.08-.32 70.496 0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"></path>
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss">
+    <circle cx="3.429" cy="20.571" r="3.429"></circle>
+    <path d="M11.429 24h4.57C15.999 15.179 8.821 8.001 0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"></path>
+    <path d="M24 24C24 10.766 13.234 0 0 0v4.571c10.714 0 19.43 8.714 19.43 19.429z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h362c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="arrow">
+    <path d="M604.501 440.509L325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298 0 36.323s26.223 10.024 36.222 0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221 0 9.999-10.023 9.999-26.298 0-36.323z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly">
+    <path d="M504.971 239.029L448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c19.851 0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002 0 0 0 400 320v108c0 19.851-16.149 36-36 36h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c46.318 0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568 0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255 0 24-10.745 24-24S205.255 0 192 0h-44c-46.318 0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568 0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255 0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851 0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002 0 0 0 112 192z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="copy">
+    <path d="M366.345 406.069H66.207c-9.751 0-17.655-7.904-17.655-17.655V17.655C48.552 7.904 56.456 0 66.207 0h300.138C376.096 0 384 7.904 384 17.655v370.759c0 9.751-7.904 17.655-17.655 17.655z" fill="#f1f4fb"></path>
+    <path d="M384 388.414v-76.992c-.907.322-1.869.494-2.751.882-6.307-6.593-14.733-11.025-24.111-11.964a40.49 40.49 0 0 0-8.448.039v-92.93c0-21.903-17.82-39.723-39.723-39.724a40.5 40.5 0 0 0-4.036.202c-20.012 2.004-35.689 19.916-35.689 40.781v101.773l-21.581 21.581c-15.241 15.241-21.393 36.866-16.456 57.847l3.802 16.16h131.338c9.75 0 17.655-7.905 17.655-17.655z"
+      fill="#d5dced"></path>
+    <circle cx="128" cy="105.931" r="26.483" fill="#b4e66e"></circle>
+    <circle cx="128" cy="203.034" r="26.483" fill="#dae169"></circle>
+    <circle cx="128" cy="300.138" r="26.483" fill="#ffdc64"></circle>
+    <path d="M331.034 229.517H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h141.241c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 194.207H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h105.931a8.826 8.826 0 0 1 8.828 8.828 8.826 8.826 0 0 1-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M331.034 326.621H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h141.241c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 291.31H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h105.931c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M331.034 132.414H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h141.241a8.826 8.826 0 0 1 8.828 8.828 8.826 8.826 0 0 1-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 97.103H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h105.931a8.826 8.826 0 0 1 8.828 8.828 8.825 8.825 0 0 1-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M443.656 335.563c-13.21-1.323-24.345 9.015-24.345 21.954v-7.569c0-11.544-8.306-22.063-19.794-23.213-13.209-1.323-24.344 9.015-24.344 21.954v-7.569c0-11.544-8.306-22.063-19.794-23.213-13.209-1.323-24.344 9.015-24.344 21.954V207.448c0-12.939-11.135-23.277-24.345-21.954-11.486 1.15-19.793 11.669-19.793 23.213v109.086l-26.752 26.752a44.14 44.14 0 0 0-11.754 41.32l18.47 78.495c6.567 27.913 31.475 47.64 60.15 47.64h74.645c34.127 0 61.793-27.666 61.793-61.793v-91.431c-.001-11.544-8.306-22.063-19.793-23.213z"
+      fill="#f0c087"></path>
+    <path d="M339.862 361.377a8.829 8.829 0 0 0 8.828-8.828v-34.194c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zM384 370.205a8.829 8.829 0 0 0 8.828-8.828v-34.194c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zm44.138 8.827a8.829 8.829 0 0 0 8.828-8.828V336.01c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zM288.885 464.36l-20.467-86.985a28.482 28.482 0 0 1 7.585-26.663l10.893-10.894v22.113a8.829 8.829 0 0 0 17.656 0V185.933c-10.344 2.173-17.655 11.972-17.655 22.773v109.087l-26.752 26.752a44.14 44.14 0 0 0-11.754 41.32l18.47 78.495c6.567 27.913 31.475 47.64 60.15 47.64h22.026c-28.677 0-53.584-19.727-60.152-47.64z"
+      fill="#e6af78"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme">
+    <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0 0 14.143 5.857 19.94 19.94 0 0 0 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu">
+    <path d="M492 236H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954 0 96s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20z"></path>
+  </symbol>
+</svg>
+<footer class = 'footer'>
+  <div class = 'footer_inner wrap pale'>
+    <img src = 'https://chechia.net/icons/apple-touch-icon.png' class = 'icon icon_2 transparent'>
+    <p>Copyright &copy;&nbsp;<span class = 'year'></span>&nbsp;CHE-CHIA CHANG. All Rights Reserved</p>
+<a class='to_top' href="#documentTop">
+  <svg class="icon">
+    <use xlink:href="#arrow"></use>
+  </svg>
+</a>
+
+  </div>
+</footer>
+    <script type="text/javascript" src = "https://chechia.net/js/bundle.min.8475c29f8da3c876e0358b05e6aeecc90b3affb7bfd705c202f65f468c200268c1cc8c5ea6a01b1b47ddf853c358f96e98e3df6c0cc877a19ead459cf06b9afc.js" integrity=
+    "sha512-hHXCn42jyHbgNYsF5q7syQs6/7e/1wXCAvZfRowgAmjBzIxepqAbG0fd&#43;FPDWPlumOPfbAzId6GerUWc8Gua/A==" crossorigin="anonymous"></script>
+  </body>
 </html>

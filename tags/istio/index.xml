@@ -1,81 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>istio on Che-Chia Chang</title>
     <link>https://chechia.net/tags/istio/</link>
     <description>Recent content in istio on Che-Chia Chang</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
-    <language>en-us</language>
-    <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Wed, 15 May 2019 12:00:00 +0800</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 06 May 2019 18:12:15 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechia.net/tags/istio/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chechia.net/tags/istio/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Ithome Cloud Summit 2019: Service Mesh for Microservices on Kubernetes</title>
-      <link>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</link>
-      <pubDate>Wed, 15 May 2019 12:00:00 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/service-mesh-for-microservices-on-kubernetes/</guid>
-      <description>&lt;h3 id=&#34;outlines&#34;&gt;Outlines&lt;/h3&gt;
-&lt;p&gt;傳統的 Monolith被分解為分散的微服務，以取得更高的效能與更彈性的管理。當眾多的為服務同時運作，產生複雜的依賴與交流，網路層不再只是有『有通就好』，而是需要精細且彈性的流量管理與監控，來提供穩定的效能。本次主題將基於 Kubernetes 平台上的 Istio ，探討 Service Mesh 的概念與相關應用。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;何為 Service Mesh ？為何需要 Service Mesh ？&lt;/li&gt;
-&lt;li&gt;Service Mesh 基本概念&lt;/li&gt;
-&lt;li&gt;如何Service-to-Service的網路層管理監控&lt;/li&gt;
-&lt;li&gt;導入 Istio 到 Kubernetes&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;目標聽眾&#34;&gt;目標聽眾&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;微運大量微服務，希望導入Service Mesh 的Operator&lt;/li&gt;
-&lt;li&gt;想了解微服務生態中竄紅的 Service Mesh&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;收穫&#34;&gt;收穫&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;了解為服務的優勢與Cloud Native應用發展趨勢&lt;/li&gt;
-&lt;li&gt;了解 Service Mesh 與 Istio 觀念&lt;/li&gt;
-&lt;li&gt;能使用 Istio 於 Kubernetes，進行服務網路的管理。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;你有聽過-microservice--istio有聽過嗎&#34;&gt;你有聽過 Microservice / Istio有聽過嗎？&lt;/h3&gt;
-&lt;p&gt;今天來介紹一款好藥：Istio。如果你有以下問題：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;維運大量(成千上百)微服務&lt;/li&gt;
-&lt;li&gt;需要服務對服務的流量控制，監控，管理&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;談 Service Mesh 之前，不免的要先談一下 Microservice，這個目前好像很夯的一個技術名詞。&lt;/p&gt;
-&lt;p&gt;如果手上有一個 App，會希望依照 Monolith 的架構，或是 Microservices？
-Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Decoupling&lt;/li&gt;
-&lt;li&gt;Scalability&lt;/li&gt;
-&lt;li&gt;Performance&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;也有明顯的壞處：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Development Complexity&lt;/li&gt;
-&lt;li&gt;Operation Cost&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;沒事別挖坑跳&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;p&gt;何為 Service Mesh？&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Service Mesh: Model / Pattern&lt;/li&gt;
-&lt;li&gt;Implementations: linkerd, istio, &amp;hellip;&lt;/li&gt;
-&lt;li&gt;基於底層的網路服務，在複雜的 topology 中可靠的傳遞&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;使用Microservie 可能會遇到的問題：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Traffic control&lt;/li&gt;
-&lt;li&gt;Monitoring&lt;/li&gt;
-&lt;li&gt;A/B Testing&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
     
     <item>
       <title>Istio 三分鐘就入坑 佈署篇</title>
@@ -83,77 +17,7 @@ Microservices 聽起來又新又潮。相對於 Monolith有許多明顯的好處
       <pubDate>Mon, 06 May 2019 18:12:15 +0800</pubDate>
       
       <guid>https://chechia.net/post/service-mesh-for-microservice-on-kubernetes/</guid>
-      <description>&lt;h1 id=&#34;create-gke&#34;&gt;Create GKE&lt;/h1&gt;
-&lt;pre&gt;&lt;code&gt;gcloud beta container --project &amp;quot;istio-playground-239810&amp;quot; clusters create &amp;quot;istio-playground&amp;quot; \
-  --zone &amp;quot;asia-east1-b&amp;quot; \
-  --username &amp;quot;admin&amp;quot; \
-  --cluster-version &amp;quot;1.11.8-gke.6&amp;quot; \
-  --machine-type &amp;quot;n1-standard-2&amp;quot; \
-  --image-type &amp;quot;COS&amp;quot; \
-  --disk-type &amp;quot;pd-standard&amp;quot; \
-  --disk-size &amp;quot;100&amp;quot; \
-  --preemptible \
-  --num-nodes &amp;quot;1&amp;quot; \
-  --enable-cloud-logging \
-  --enable-cloud-monitoring \
-  --no-enable-ip-alias \
-  --addons HorizontalPodAutoscaling,HttpLoadBalancing,KubernetesDashboard,Istio \
-  --istio-config auth=MTLS_PERMISSIVE \
-  --no-enable-autoupgrade \
-  --enable-autorepair
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;take-a-peek&#34;&gt;Take a Peek&lt;/h1&gt;
-&lt;pre&gt;&lt;code&gt;$ kubectl get namespaces
-
-NAME           STATUS    AGE
-default        Active    2m
-istio-system   Active    1m
-kube-public    Active    2m
-kube-system    Active    2m
-
-$ kubectl get po -n istio-system
-NAME                                      READY     STATUS      RESTARTS   AGE
-istio-citadel-7f6f77cd7b-nxfbf            1/1       Running     0          3m
-istio-cleanup-secrets-h454m               0/1       Completed   0          3m
-istio-egressgateway-7c56db84cc-nlrwq      1/1       Running     0          3m
-istio-galley-6c747bdb4f-45jrp             1/1       Running     0          3m
-istio-ingressgateway-6ff68cf95d-tlkq4     1/1       Running     0          3m
-istio-pilot-8ff66f8c4-q9chz               2/2       Running     0          3m
-istio-policy-69b78b7d6-c8pld              2/2       Running     0          3m
-istio-sidecar-injector-558996c897-hr6q4   1/1       Running     0          3m
-istio-telemetry-f96459fb-5cbpg            2/2       Running     0          3m
-promsd-ff878d44b-hv8nh                    2/2       Running     1          3m
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;deploy-app&#34;&gt;Deploy app&lt;/h1&gt;
-&lt;pre&gt;&lt;code&gt;kubectl label namespace default istio-injection=enabled
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Bookinfo Application&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/platform/kube/bookinfo.yaml
-
-kubectl get pods
-kubectl get services
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Gateway&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/bookinfo-gateway.yaml
-
-kubectl get gateways
-
-kubectl get svc istio-ingressgateway -n istio-system
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Go to ingress public ip&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=&#39;{.status.loadBalancer.ingress[0].ip}&#39;)
-export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=&#39;{.spec.ports[?(@.name==&amp;quot;http2&amp;quot;)].port}&#39;)
-export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=&#39;{.spec.ports[?(@.name==&amp;quot;https&amp;quot;)].port}&#39;)
-
-curl -v ${INGRESS_HOST}:{$INGRESS_PORT}/productpage
-
-404 Not Found
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Apply destination rules&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all.yaml
-
-curl -v ${INGRESS_HOST}:{$INGRESS_PORT}/productpage
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;brief-review&#34;&gt;Brief review&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;kubectl get virtualservices
-kubectl get destinationrules
-kubectl get gateways
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;istio-tasks&#34;&gt;Istio Tasks&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://istio.io/docs/tasks/traffic-management/&#34;&gt;https://istio.io/docs/tasks/traffic-management/&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。</description>
     </item>
     
   </channel>

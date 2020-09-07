@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cri on Che-Chia Chang</title>
     <link>https://chechia.net/tags/cri/</link>
     <description>Recent content in cri on Che-Chia Chang</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
-    <language>en-us</language>
-    <copyright>chechiachang &amp;copy; 2016</copyright>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
     <lastBuildDate>Sat, 06 Oct 2018 12:07:00 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechia.net/tags/cri/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chechia.net/tags/cri/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,8 +17,7 @@
       <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
       
       <guid>https://chechia.net/post/kubernetes-container-runtime-interface/</guid>
-      <description>&lt;p&gt;-&amp;gt; &lt;a href=&#34;https://chechia.net/slides/container-runtime-interface/&#34;&gt;Slides here&lt;/a&gt; &amp;lt;-&lt;/p&gt;
-</description>
+      <description></description>
     </item>
     
   </channel>

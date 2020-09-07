@@ -1,25 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>golang on Che-Chia Chang</title>
     <link>https://chechia.net/tags/golang/</link>
     <description>Recent content in golang on Che-Chia Chang</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
-    <language>en-us</language>
-    <copyright>chechiachang &amp;copy; 2016</copyright>
-    <lastBuildDate>Tue, 24 Dec 2019 19:00:00 +0800</lastBuildDate>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 16 Dec 2019 23:46:46 +0800</lastBuildDate>
     
-	    <atom:link href="https://chechia.net/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chechia.net/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Golang Taipei #46: MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechia.net/talk/mit-6.824-go-mapreduce/</link>
-      <pubDate>Tue, 24 Dec 2019 19:00:00 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/mit-6.824-go-mapreduce/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>MIT 6.824 Distributed System Learning Note</title>
@@ -27,121 +17,7 @@
       <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
       
       <guid>https://chechia.net/post/mit-6.824-distributed-system/</guid>
-      <description>&lt;p&gt;跟著 MIT 6.824 學習分散式系統&lt;/p&gt;
-&lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我會在我的學習過程中，持續翻譯課程內容
-&lt;ul&gt;
-&lt;li&gt;一方面深入個人學習&lt;/li&gt;
-&lt;li&gt;另一方面也回饋社群&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;依照課程的進度進行&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;若有餘力，會嘗試翻譯以下內容&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;課堂 Q &amp;amp; A&lt;/li&gt;
-&lt;li&gt;論文&lt;/li&gt;
-&lt;li&gt;lab 實做&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>MIT 6.824 Distributed System Learning Note</title>
-      <link>https://chechia.net/project/mit-6.824-distributed-system/</link>
-      <pubDate>Mon, 16 Dec 2019 23:16:16 +0800</pubDate>
-      
-      <guid>https://chechia.net/project/mit-6.824-distributed-system/</guid>
-      <description>&lt;p&gt;Learn distributed system with MIT 6.824&lt;/p&gt;
-&lt;p&gt;跟著 &lt;a href=&#34;http://nil.csail.mit.edu/6.824/2018/general.html&#34;&gt;MIT 6.824&lt;/a&gt; 學習分散式系統&lt;/p&gt;
-&lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我會在我的學習過程中，持續翻譯課程內容
-&lt;ul&gt;
-&lt;li&gt;一方面深入個人學習&lt;/li&gt;
-&lt;li&gt;另一方面也回饋社群&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;依照課程的進度進行&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;內容請見 &lt;a href=&#34;https://github.com/chechiachang/mit-6.824-distributed-system&#34;&gt;Github Project&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;想要獲取更多課程資訊，請到 &lt;a href=&#34;http://nil.csail.mit.edu/6.824/2018/general.html&#34;&gt;MIT課程網站&lt;/a&gt;上&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GDG DevFest 2019: 從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechia.net/talk/gdd-devfest-2019-scouter/</link>
-      <pubDate>Sat, 07 Dec 2019 00:47:35 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/gdd-devfest-2019-scouter/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GDG DevFest 2018: 從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechia.net/talk/gdg-devfest-2018-scouter/</link>
-      <pubDate>Fri, 19 Apr 2019 17:31:58 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/gdg-devfest-2018-scouter/</guid>
-      <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
-&lt;p&gt;本次演講內容有:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;初心者的人臉辨識技術 ，Face Recognition API&lt;/li&gt;
-&lt;li&gt;使用 Golang 在 Github 上做 Data Mining&lt;/li&gt;
-&lt;li&gt;從零開始的 side project，開發心路歷程與收穫分享&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Golang Taipei #37: Go Webassembly Intro</title>
-      <link>https://chechia.net/talk/go-webassembly-intro/</link>
-      <pubDate>Tue, 18 Dec 2018 19:00:00 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/go-webassembly-intro/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Golang Taipei #34: 使用 go-github 接 github api</title>
-      <link>https://chechia.net/talk/go-github/</link>
-      <pubDate>Tue, 28 Aug 2018 19:00:00 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/go-github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>COSCUP 2018: 從零開始的人臉辨識，七龍珠戰鬥力探測器</title>
-      <link>https://chechia.net/talk/coscup-2018-scouter/</link>
-      <pubDate>Sat, 11 Aug 2018 09:00:00 +0800</pubDate>
-      
-      <guid>https://chechia.net/talk/coscup-2018-scouter/</guid>
-      <description>&lt;p&gt;是的，我們做了一款七龍珠中的戰鬥力探測器，透過人臉辨識，探測工程師的開源貢獻力。&lt;/p&gt;
-&lt;p&gt;本次演講內容有:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;初心者的人臉辨識技術 ，Face Recognition API&lt;/li&gt;
-&lt;li&gt;使用 Golang 在 Github 上做 Data Mining&lt;/li&gt;
-&lt;li&gt;從零開始的 side project，開發心路歷程與收穫分享&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Live Stream on Youtube&lt;/p&gt;
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;https://www.youtube.com/embed/4SWO4x7bNjo?start=23633&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-</description>
-    </item>
-    
-    <item>
-      <title>GDG Devfest 2018: Scouter: face recognition.</title>
-      <link>https://chechia.net/project/scouter/</link>
-      <pubDate>Wed, 19 Apr 2017 17:45:16 +0800</pubDate>
-      
-      <guid>https://chechia.net/project/scouter/</guid>
-      <description></description>
+      <description>跟著 MIT 6.824 深入淺出分散式系統</description>
     </item>
     
   </channel>
