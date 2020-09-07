@@ -6,10 +6,36 @@
     <description>Recent content in kubernetes on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 14 Jun 2020 16:46:09 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2020 13:50:52 +0800</lastBuildDate>
     
 	<atom:link href="https://chechia.net/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Borg Omega and Kubernetes 摘要翻譯</title>
+      <link>https://chechia.net/post/borg-omega-and-kubernetes/</link>
+      <pubDate>Wed, 26 Aug 2020 13:50:52 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/borg-omega-and-kubernetes/</guid>
+      <description>原文：
+https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+摘要 在 container 技術夯起來前，Google 已經做 container 十幾年，過程中發展出需多到容器管理系統，每一代都受上一代發展影響。
+ Borg 以前就有應用管理系統，那時還沒有 Linux control group Borg  是第一套統一的 container-management system Borg 仍被大規模的使用，有許多功能而且非常堅固   Omega  繼承 Borg 上成功的設計，並希望改進 Borg 的生態系   Kubernetes  開源 透過 REST API 溝通 client 應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統    Container  Google 使用 Container 來提昇 utilization  把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job   現代 container 的定義是 runtime-isolation 與 image  Application-oriented infrastructure  container 使用久了，不只滿足 utilization 的需求  資料中心從機器導向變成應用導向   Container 封裝環境，把機器與 OS 的依賴抽象化  應用不依賴  部署流程 runtime infrastrcture     Container scope 在應用上，專注在應用管理而不是機器管理  Application environment  cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響  混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS  提供完全相同的部署環境，避免切換環境(ex.</description>
+    </item>
+    
+    <item>
+      <title>Terraform Infrastructure as Code Transcript</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-transcript/</link>
+      <pubDate>Mon, 15 Jun 2020 10:58:56 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-transcript/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation file  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 各位好
+About this presentation 開始之前，先分享一些資源
+ 投影片 講稿 程式碼 SOP 範本 Facebook 粉專  都放在這裡，因為有附逐字稿，所以如果很忙的朋友，掃了 QR code 就可以回家自己看了，不用客氣。
+然後有興趣在追這系列文章的，可以幫我 facebook 粉專按個讚跟追蹤，每周新文章出來，會推播通知。</description>
+    </item>
     
     <item>
       <title>從零開始的 Infrastructure as Code: Terraform - 01</title>
@@ -20,6 +46,68 @@
       <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
  01 - Introduction to Infrastructure as Code [02 - Terraform 簡介與基本操作] [03 - 為公司導入 Terraform] Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
  Outlline  our story: issues, steps, &amp;amp; results basics IaC, terraform benefits risks and 坑 to be or not to be  experience oriented</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Custom Resource Deployment</title>
+      <link>https://chechia.net/post/kubernetes-custom-resource-deployment/</link>
+      <pubDate>Sun, 13 Oct 2019 22:03:08 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kubernetes-custom-resource-deployment/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  CRD 內容 Deploy CRD Use custom resource  Recap 在上次的 cert-manager 內容中我們走過 cert-manager 的安裝步驟，其中有一個步驟是 apply cert-manager 的 manigests 檔案 *.yaml)
+https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests
+1$ git clone https://github.com/jetstack/cert-manager 2$ git checkout release-0.11 3$ ls deploy/manifest 4 500-crds.yaml 601-namespace.yaml 7BUILD.bazel	8README.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Custom Resources Basic</title>
+      <link>https://chechia.net/post/kubernetes-custom-resources-basic/</link>
+      <pubDate>Sun, 13 Oct 2019 17:28:12 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kubernetes-custom-resources-basic/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  custom resources custom controllers  簡介 custom resources Kubernetes 預先定義許多 resource ，這些 resource 是 kubernetes API 預先設置的 API objects，例如 kubernetes pods resource 包含許多 pods 物件。
+Custom resoure 則是透過擴充 kubernetes API ，讓自定義的物件也可以在 kubernetes 上使用。上篇 cert-manager 就使用了許多 custom resource，這些 resource 在一般安裝的 kubernetes 上沒有安裝，需要安裝 custom resource difinition，向 kubernetes cluster 定義新的 custom resource。例如 certificates.</description>
+    </item>
+    
+    <item>
+      <title>Cert Manager Complete Workflow</title>
+      <link>https://chechia.net/post/cert-manager-complete-workflow/</link>
+      <pubDate>Sat, 12 Oct 2019 17:41:25 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/cert-manager-complete-workflow/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ Recap 昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事
+ 設置 Let&amp;rsquo;s Encript prod site 的 Issuer 設置 certificates.certmanager.k8s.io 資源來定義 certificate 的取得方式 或是在 ingress 中配置 tls，讓 cert-manager 自動透過 ingress-shim 產生 certifcates.cert-manager，並且產生 certificate  以上是使用 cert-manager 產生 certificate 的基本操作，剩下的是由 cert-manager 完成。實際上 cert-manager 在產生出 certificate 之前還做了很多事情，我們今天就詳細走過完整流程，藉此了解 cert-manager 配合 issuing certificate 的流程</description>
+    </item>
+    
+    <item>
+      <title>Cert Manager How It Work</title>
+      <link>https://chechia.net/post/cert-manager-how-it-work/</link>
+      <pubDate>Fri, 11 Oct 2019 11:24:34 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/cert-manager-how-it-work/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer
+CA Terminology 先把實際執行 CA 簽發的名詞定義一下，以免跟 cert-manager 的資源搞混
+ Certificate: 憑證，x509 certificate，cert-manager 自動管理的目標，透過 let&amp;rsquo;s encript 取得的 x509 certificates CA (Certificate Authority): issue signed certificate 的機構 issue: 頒發，指 CA 產生 certificate 與 key (今天的範例格式是 .</description>
     </item>
     
     <item>
@@ -164,6 +252,105 @@ Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行
     </item>
     
     <item>
+      <title>Redis Ha Sentinel</title>
+      <link>https://chechia.net/post/redis-ha-sentinel/</link>
+      <pubDate>Sun, 29 Sep 2019 17:14:38 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/redis-ha-sentinel/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  redis-sentinel  redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。
+1redis-cli -h redis-redis-ha -p 26479 上篇我們的 redis-ha 安裝完變這樣</description>
+    </item>
+    
+    <item>
+      <title>Redis Ha Deployment</title>
+      <link>https://chechia.net/post/redis-ha-deployment/</link>
+      <pubDate>Sat, 28 Sep 2019 15:14:23 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/redis-ha-deployment/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+今天的文會比較短，因為我早上在綠島已經水肺潛水潛了三趟，有點累哈哈
+ Redis introduction Redis 是常用的 in-memory 的資料儲存庫，可作為資料庫，快取，message broker 使用，都非常好用。Redis 官方支援 high availability，使用的是 redis-sentinel ，今天我們就來部署一個有完整 sentinel 的 redis-ha。
+Redis 另外提供了一個 solution Redis cluster (multiple writer solution)，作為增加資料輸出帶寬，與增加資料耐用度的分散式解決方案，與 redis sentinel 所處理的 ha 問題是不相同的。有機會我們也來談。</description>
+    </item>
+    
+    <item>
+      <title>Kafka HA Continued</title>
+      <link>https://chechia.net/post/kafka-ha-continued/</link>
+      <pubDate>Thu, 26 Sep 2019 22:50:32 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-ha-continued/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) [kafka operation scripts]({{ ref &amp;ldquo;/post/kafka-operation-script&amp;rdquo;}}) [集群內部的 HA topology]({{ ref &amp;ldquo;/post/kafka-ha-topology&amp;rdquo; }}) [集群內部的 HA 細節]({{ ref &amp;ldquo;/post/kafka-ha-continuerd&amp;rdquo; }}) Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
+      <title>Kafka HA Topology</title>
+      <link>https://chechia.net/post/kafka-ha-topology/</link>
+      <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-ha-topology/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) [kafka operation scripts]({{ ref &amp;ldquo;/post/kafka-operation-script&amp;rdquo;}}) [集群內部的 HA topology]({{ ref &amp;ldquo;/post/kafka-ha-topology&amp;rdquo; }}) [集群內部的 HA 細節]({{ ref &amp;ldquo;/post/kafka-ha-continuerd&amp;rdquo; }}) Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
+      <title>Kafka Operation Scripts</title>
+      <link>https://chechia.net/post/kafka-operation-scripts/</link>
+      <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-operation-scripts/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) [kafka operation scripts]({{ ref &amp;ldquo;/post/kafka-operation-script&amp;rdquo;}}) [集群內部的 HA topology]({{ ref &amp;ldquo;/post/kafka-ha-topology&amp;rdquo; }}) [集群內部的 HA 細節]({{ ref &amp;ldquo;/post/kafka-ha-continuerd&amp;rdquo; }}) Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
+      <title>Kafka-basic-usage</title>
+      <link>https://chechia.net/post/kafka-basic-usage/</link>
+      <pubDate>Tue, 24 Sep 2019 21:59:49 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-basic-usage/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) kafka utility scripts, topic operation, kafka benchmark 集群內部的 HA topology 集群內部的 HA 設定，網路設定 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
+      <title>Kafka-introduction</title>
+      <link>https://chechia.net/post/kafka-introduction/</link>
+      <pubDate>Mon, 23 Sep 2019 21:59:49 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-introduction/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) [kafka operation scripts]({{ ref &amp;ldquo;/post/kafka-operation-script&amp;rdquo;}}) [集群內部的 HA topology]({{ ref &amp;ldquo;/post/kafka-ha-topology&amp;rdquo; }}) [集群內部的 HA 細節]({{ ref &amp;ldquo;/post/kafka-ha-continuerd&amp;rdquo; }}) Prometheus Metrics Exporter 很重要 效能調校    於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
+      <title>Kafka Helm Configuration</title>
+      <link>https://chechia.net/post/kafka-helm-configuration/</link>
+      <pubDate>Mon, 23 Sep 2019 21:55:29 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-helm-configuration/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) [kafka operation scripts]({{ ref &amp;ldquo;/post/kafka-operation-script&amp;rdquo;}}) [集群內部的 HA topology]({{ ref &amp;ldquo;/post/kafka-ha-topology&amp;rdquo; }}) [集群內部的 HA 細節]({{ ref &amp;ldquo;/post/kafka-ha-continuerd&amp;rdquo; }}) Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
+      <title>Kafka Deployment on Kubernetes</title>
+      <link>https://chechia.net/post/kafka-deployment-on-kubernetes/</link>
+      <pubDate>Sun, 22 Sep 2019 09:58:41 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kafka-deployment-on-kubernetes/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes  [Deploy kafka-ha]({{ ref &amp;ldquo;/post/kafka-deployment-on-kubernetes&amp;rdquo; }}) [Kafka Introduction]({{ ref &amp;ldquo;/post/kafka-introduction&amp;rdquo; }}) [kafka 基本使用]({{ ref &amp;ldquo;/post/kafka-basic-usage&amp;rdquo; }}) [kafka operation scripts]({{ ref &amp;ldquo;/post/kafka-operation-script&amp;rdquo;}}) [集群內部的 HA topology]({{ ref &amp;ldquo;/post/kafka-ha-topology&amp;rdquo; }}) [集群內部的 HA 細節]({{ ref &amp;ldquo;/post/kafka-ha-continuerd&amp;rdquo; }}) Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+    </item>
+    
+    <item>
       <title>Monitoring GKE With Elk</title>
       <link>https://chechia.net/post/monitoring-gke-with-elk/</link>
       <pubDate>Thu, 19 Sep 2019 17:06:29 +0800</pubDate>
@@ -193,33 +380,12 @@ Grafana 在官網上提到 是一個 Analytics system，可以協助了解運行
     </item>
     
     <item>
-      <title>Secure Elk Stack</title>
-      <link>https://chechia.net/post/secure-elk-stack/</link>
-      <pubDate>Sun, 15 Sep 2019 23:00:33 +0800</pubDate>
+      <title>2020 IT邦幫忙鐵人賽</title>
+      <link>https://chechia.net/post/2020-ithome-ironman-challenge/</link>
+      <pubDate>Mon, 09 Sep 2019 16:56:03 +0800</pubDate>
       
-      <guid>https://chechia.net/post/secure-elk-stack/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-&amp;ndash;
-上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
-官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
-總之為了啟用 authentication &amp;amp; https，這篇要做的事情：
- enable x-pack &amp;amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp;amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server     啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6.</description>
-    </item>
-    
-    <item>
-      <title>Self-host ELK stack - Installation</title>
-      <link>https://chechia.net/post/self-host-elk-stack-on-gcp/</link>
-      <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
-      
-      <guid>https://chechia.net/post/self-host-elk-stack-on-gcp/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
-由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
-&amp;ndash;
-簡介 ELK stack 官方說明文件
-ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&amp;gt; (logstash) -&amp;gt; elasticsearch -&amp;gt; kibana</description>
+      <guid>https://chechia.net/post/2020-ithome-ironman-challenge/</guid>
+      <description>2020 IT邦幫忙鐵人賽</description>
     </item>
     
     <item>

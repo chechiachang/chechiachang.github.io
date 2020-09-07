@@ -41,5 +41,14 @@
  Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx 針對 upstream (後端 app 的 endpoint) 變更，使用 lua-nginx-module 來更新。因為 kubernetes 上，service 後的服務常常會動態的變更，scaling，但 endpint ip list 又需要更新到 nginx，所以使用 lua 額外處理  在 kubernetes 上要如何做到上述兩件事呢?</description>
     </item>
     
+    <item>
+      <title>2020 IT邦幫忙鐵人賽</title>
+      <link>https://chechia.net/post/2020-ithome-ironman-challenge/</link>
+      <pubDate>Mon, 09 Sep 2019 16:56:03 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/2020-ithome-ironman-challenge/</guid>
+      <description>2020 IT邦幫忙鐵人賽</description>
+    </item>
+    
   </channel>
 </rss>

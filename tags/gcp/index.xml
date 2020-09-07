@@ -6,10 +6,41 @@
     <description>Recent content in gcp on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 15 Sep 2019 11:43:03 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 22:03:08 +0800</lastBuildDate>
     
 	<atom:link href="https://chechia.net/tags/gcp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes Custom Resource Deployment</title>
+      <link>https://chechia.net/post/kubernetes-custom-resource-deployment/</link>
+      <pubDate>Sun, 13 Oct 2019 22:03:08 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kubernetes-custom-resource-deployment/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  CRD 內容 Deploy CRD Use custom resource  Recap 在上次的 cert-manager 內容中我們走過 cert-manager 的安裝步驟，其中有一個步驟是 apply cert-manager 的 manigests 檔案 *.yaml)
+https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests
+1$ git clone https://github.com/jetstack/cert-manager 2$ git checkout release-0.11 3$ ls deploy/manifest 4 500-crds.yaml 601-namespace.yaml 7BUILD.bazel	8README.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Custom Resources Basic</title>
+      <link>https://chechia.net/post/kubernetes-custom-resources-basic/</link>
+      <pubDate>Sun, 13 Oct 2019 17:28:12 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/kubernetes-custom-resources-basic/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+ Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  custom resources custom controllers  簡介 custom resources Kubernetes 預先定義許多 resource ，這些 resource 是 kubernetes API 預先設置的 API objects，例如 kubernetes pods resource 包含許多 pods 物件。
+Custom resoure 則是透過擴充 kubernetes API ，讓自定義的物件也可以在 kubernetes 上使用。上篇 cert-manager 就使用了許多 custom resource，這些 resource 在一般安裝的 kubernetes 上沒有安裝，需要安裝 custom resource difinition，向 kubernetes cluster 定義新的 custom resource。例如 certificates.</description>
+    </item>
     
     <item>
       <title>Self-host ELK stack - Installation</title>

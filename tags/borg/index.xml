@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>borg on Che-Chia Chang</title>
+    <link>https://chechia.net/tags/borg/</link>
+    <description>Recent content in borg on Che-Chia Chang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
+    <lastBuildDate>Wed, 26 Aug 2020 13:50:52 +0800</lastBuildDate>
+    
+	<atom:link href="https://chechia.net/tags/borg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Borg Omega and Kubernetes 摘要翻譯</title>
+      <link>https://chechia.net/post/borg-omega-and-kubernetes/</link>
+      <pubDate>Wed, 26 Aug 2020 13:50:52 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/borg-omega-and-kubernetes/</guid>
+      <description>原文：
+https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+摘要 在 container 技術夯起來前，Google 已經做 container 十幾年，過程中發展出需多到容器管理系統，每一代都受上一代發展影響。
+ Borg 以前就有應用管理系統，那時還沒有 Linux control group Borg  是第一套統一的 container-management system Borg 仍被大規模的使用，有許多功能而且非常堅固   Omega  繼承 Borg 上成功的設計，並希望改進 Borg 的生態系   Kubernetes  開源 透過 REST API 溝通 client 應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統    Container  Google 使用 Container 來提昇 utilization  把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job   現代 container 的定義是 runtime-isolation 與 image  Application-oriented infrastructure  container 使用久了，不只滿足 utilization 的需求  資料中心從機器導向變成應用導向   Container 封裝環境，把機器與 OS 的依賴抽象化  應用不依賴  部署流程 runtime infrastrcture     Container scope 在應用上，專注在應用管理而不是機器管理  Application environment  cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響  混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS  提供完全相同的部署環境，避免切換環境(ex.</description>
+    </item>
+    
+  </channel>
+</rss>

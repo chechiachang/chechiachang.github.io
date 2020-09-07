@@ -6,10 +6,24 @@
     <description>Recent content in terraform on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 14 Jun 2020 16:46:09 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2020 10:58:56 +0800</lastBuildDate>
     
 	<atom:link href="https://chechia.net/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Terraform Infrastructure as Code Transcript</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-transcript/</link>
+      <pubDate>Mon, 15 Jun 2020 10:58:56 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-transcript/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation file  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 各位好
+About this presentation 開始之前，先分享一些資源
+ 投影片 講稿 程式碼 SOP 範本 Facebook 粉專  都放在這裡，因為有附逐字稿，所以如果很忙的朋友，掃了 QR code 就可以回家自己看了，不用客氣。
+然後有興趣在追這系列文章的，可以幫我 facebook 粉專按個讚跟追蹤，每周新文章出來，會推播通知。</description>
+    </item>
     
     <item>
       <title>從零開始的 Infrastructure as Code: Terraform - 01</title>

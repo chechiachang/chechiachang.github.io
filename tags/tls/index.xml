@@ -6,26 +6,10 @@
     <description>Recent content in tls on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 10 Oct 2019 16:12:10 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 17 Sep 2019 10:15:36 +0800</lastBuildDate>
     
 	<atom:link href="https://chechia.net/tags/tls/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Cert Manager Deployment on Kubernetes</title>
-      <link>https://chechia.net/post/cert-manager-deployment/</link>
-      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
-      
-      <guid>https://chechia.net/post/cert-manager-deployment/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- 摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
-以往我們使用 Let&amp;rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
-cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情</description>
-    </item>
     
     <item>
       <title>X.509 certificate</title>
@@ -54,6 +38,21 @@ cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核�
 官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
 總之為了啟用 authentication &amp;amp; https，這篇要做的事情：
  enable x-pack &amp;amp; activate basic license Generate self-signed ca, server certificate, client certificate Configure Elasticsearch, Kibana, &amp;amp; other components to  use server certificate when act as server use client certificate when connect to an ELK server     啟用 X-pack Elasticsearch 的安全性模組由 x-pack extension 提供，在 6.</description>
+    </item>
+    
+    <item>
+      <title>Self-host ELK stack - Installation</title>
+      <link>https://chechia.net/post/self-host-elk-stack-on-gcp/</link>
+      <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/self-host-elk-stack-on-gcp/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+&amp;ndash;
+簡介 ELK stack 官方說明文件
+ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logstash: 數據處理 pipeline Kibana: ELK stack 的管理後台與數據視覺化工具 Beats: 輕量級的應用端數據收集器，會從被監控端收集 log 與監控數據(metrics)  ELK 的工作流程 beats -&amp;gt; (logstash) -&amp;gt; elasticsearch -&amp;gt; kibana</description>
     </item>
     
   </channel>

@@ -551,15 +551,6 @@ ELK 的元件  Elasticsearch: 基於 Lucene 的分散式全文搜索引擎 Logst
     </item>
     
     <item>
-      <title>Kuberentes Source Code</title>
-      <link>https://chechia.net/post/kuberentes-source-code/</link>
-      <pubDate>Fri, 21 Jun 2019 13:17:53 +0800</pubDate>
-      
-      <guid>https://chechia.net/post/kuberentes-source-code/</guid>
-      <description>API resources 1kubectl api-resources </description>
-    </item>
-    
-    <item>
       <title>Journey to Quantum Computing</title>
       <link>https://chechia.net/post/journey-to-quantum-computing/</link>
       <pubDate>Sun, 02 Jun 2019 10:21:37 +0800</pubDate>
