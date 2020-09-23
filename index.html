@@ -119,6 +119,112 @@
   <div class = 'excerpt'>
     <div class = 'excerpt_header'>
       <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-requirement/'>Gcp Preemptible Instance Requirement</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 22, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
+  </a>
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
+另外，雖然先占虛擬機會有很多額外的限制與技術困難，但實務上還是要對比實際的需求，有些限制與需求是衝突的，有些限制則完全不會影響我們的需求。前者當然會帶給我們較高的導入難度，後者可能會非常輕鬆。
+這邊想給大家的概念是，務必先明確需求，再討論技術。這點很重要，技術的適用與否，不是由個人的喜好決定，唯一的判斷標準，是能不能有效率的滿足需求。
+所以這邊先定義我們以下 …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-requirement/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-introduction/'>Gcp Preemptible Instance Introduction</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 22, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
+  </a>
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>先占虛擬機，技術文件二三事 第一篇的內容大部份還是翻譯跟講解官方文件。後面幾篇才會有實際的需求與解決方案分析。
+Google 先占虛擬機官方文件
+使用不熟悉的產品前一定要好好看文件，才不會踩到雷的時候，發現人家就是這樣設計的，而且文件上寫得清清楚楚。以為是 bug 結果真的是 feature，雷到自己。先占虛擬機是用起來跟普通虛擬機沒什麼兩樣，但實際上超級多細節要注意，毛很多的產品，請務必要小心使用。
+以下文章是筆者工作經驗，覺得好用、確實有幫助公司，來跟大家分享。礙於篇幅，這裡只能非常粗略地描述我們團隊思考過的問題，實際上的問題會複雜非常多。文章只是作個發想，並不足以支撐實際的業務，所以如果要考慮導入，還是要
+ 多作功課，仔細查閱 …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-introduction/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/gcp-preemptible-instance/'>Gcp Preemptible Instance</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 22, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
+  </a>
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>前言 鐵人賽的第二部分，要帶來公有雲省錢系列文章。
+架構的成本，很多時候會影響架構的設計與需求。公司的營運都需要在成本與需求之前平衡，成本其實是影響公司決策的重要因素。身為架構管理員，應該要試著量化並且進行成本管理，提出解決方案時，也需要思考如何幫公司開源節流。
+一昧消減架構的成本也未必是最佳方案，帳面上消減的成本有時也會反映在其他地方，例如：使用比較便宜的解決方案，或是較低的算力，但卻造成維運需要花更多時間維護，造成隱性的人力成本消耗。用什麼替代方案 (trade-off) 省了這些錢。
+Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省錢」，但也有人說「Kubernetes …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
         <a href='https://chechia.net/post/borg-omega-and-kubernetes/'>Borg Omega and Kubernetes Translation 全文翻譯</a>
       </h3>
       <div class = 'post_meta'>
@@ -327,99 +433,6 @@ About …</p>
     </div>
   </li>
   
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/blockchain-atomic-swap/'>Ablockchain Atomic Swap</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Nov 8, 2019</span>
-  <a href = 'https://chechia.net/tags/blockchain' class = 'post_tag button button_translucent'>blockchain
-  </a>
-  <a href = 'https://chechia.net/tags/atomic-swap' class = 'post_tag button button_translucent'>atomic-swap
-  </a>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>https://en.bitcoin.it/wiki/Atomic_swap
-Algorithm  2 pay txs and 2 claim tx claim txs are singed at first, locked with time 2 pay txs are encrypted by x, affects only when x is reveal on the network  Initialization  A: random number x
-tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or Signed …</p>
-          <a href='https://chechia.net/post/blockchain-atomic-swap/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/blockchain-bep3-atomic-swap/'>Blockchain Bep3 Atomic Swap</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Oct 22, 2019</span>
-  <a href = 'https://chechia.net/tags/blockchain' class = 'post_tag button button_translucent'>blockchain
-  </a>
-  <a href = 'https://chechia.net/tags/bep3' class = 'post_tag button button_translucent'>bep3
-  </a>
-  <a href = 'https://chechia.net/tags/binance' class = 'post_tag button button_translucent'>binance
-  </a>
-  <a href = 'https://chechia.net/tags/ethereum' class = 'post_tag button button_translucent'>ethereum
-  </a>
-  <a href = 'https://chechia.net/tags/erc-20' class = 'post_tag button button_translucent'>erc-20
-  </a>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>BEP3 Atomic Swap Binance 在 BEP3: HTLC and Atomic Peg 提到，BEP 即將在 binance chain 上支援原生的 Hash Timer Locked Transfer (HTLT) ，這使跨鏈的原子性交換 (atomic swap) 變得可行，透過 HTLC 在兩邊的鏈上鎖住 (peg) tokens，然後只有在執行交換的時候，透過 hash 交換，一次執行雙邊的交易。
-關於 Atomic Swap 網路有非常多的訊息，有興趣的話可以看這篇
- 交易只有在雙邊完成後才完成，完成之前不能動用交換的資產 在任何階段失效都可以完全 fallback，並進行 refund 交易的認證是去 …</p>
-          <a href='https://chechia.net/post/blockchain-bep3-atomic-swap/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/kubernetes-custom-resource-with-operator-sdk/'>Kubernetes Custom Resources with Operator SDK</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Oct 15, 2019</span>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的 …</p>
-          <a href='https://chechia.net/post/kubernetes-custom-resource-with-operator-sdk/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
     <li>
 <ul class="pagination">
   <li class="page-item">
@@ -441,13 +454,13 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
     <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
   </li>
   <li class="page-item">
-    <a class="page-link" href="/page/5/">5</a>
+    <a class="page-link" href="/page/6/">6</a>
   </li>
   <li class="page-item">
     <a href="/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
   </li>
   <li class="page-item">
-    <a href="/page/5/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    <a href="/page/6/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
   </li>
 </ul>
 
@@ -463,6 +476,18 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
     <a href = 'https://chechia.net/about/' class="button mt-1" role="button">Read More</a>
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance/" class="nav-link">Gcp Preemptible Instance</a>
+      </li>
     
       <li>
         <a href="https://chechia.net/post/borg-omega-and-kubernetes/" class="nav-link">Borg Omega and Kubernetes Translation 全文翻譯</a>
@@ -489,6 +514,15 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
     <ul class="flex-column">
       
       <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance/" class="nav-link">Gcp Preemptible Instance</a>
+      </li>
+      <li>
         <a href="https://chechia.net/post/borg-omega-and-kubernetes/" class="nav-link">Borg Omega and Kubernetes Translation 全文翻譯</a>
       </li>
       <li>
@@ -502,15 +536,6 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
       </li>
       <li>
         <a href="https://chechia.net/post/terraform-infrastructure-as-code/" class="nav-link">從零開始的 Infrastructure as Code: Terraform - 01</a>
-      </li>
-      <li>
-        <a href="https://chechia.net/post/say-goodbye-2019/" class="nav-link">Say Goodbye 2019</a>
-      </li>
-      <li>
-        <a href="https://chechia.net/post/mit-6.824-distributed-system/" class="nav-link">MIT 6.824 Distributed System Learning Note</a>
-      </li>
-      <li>
-        <a href="https://chechia.net/post/blockchain-atomic-swap/" class="nav-link">Ablockchain Atomic Swap</a>
       </li>
     </ul> 
     
@@ -688,7 +713,7 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
       <nav class="tags_nav">
         <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent">
           KUBERNETES
-          <span class='button_tally'>35</span>
+          <span class='button_tally'>38</span>
         </a>
         
         <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent">
@@ -704,6 +729,11 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
         <a href='https://chechia.net/tags/kafka/' class=" post_tag button button_translucent">
           KAFKA
           <span class='button_tally'>9</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
+          GCP
+          <span class='button_tally'>6</span>
         </a>
         
         <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent">
@@ -736,11 +766,6 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
           <span class='button_tally'>3</span>
         </a>
         
-        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
-          GCP
-          <span class='button_tally'>3</span>
-        </a>
-        
         <a href='https://chechia.net/tags/haproxy/' class=" post_tag button button_translucent">
           HAPROXY
           <span class='button_tally'>3</span>
@@ -751,8 +776,8 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
           <span class='button_tally'>3</span>
         </a>
         
-        <a href='https://chechia.net/tags/tls/' class=" post_tag button button_translucent">
-          TLS
+        <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent">
+          PREEMPTIBLE
           <span class='button_tally'>3</span>
         </a>
         
@@ -854,7 +879,7 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
             </a>
             
             
-            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=3>GCP<span class='button_tally'>3</span>
+            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=6>GCP<span class='button_tally'>6</span>
             </a>
             
             
@@ -902,7 +927,7 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
             </a>
             
             
-            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=35>KUBERNETES<span class='button_tally'>35</span>
+            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=38>KUBERNETES<span class='button_tally'>38</span>
             </a>
             
             
@@ -926,6 +951,10 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
             </a>
             
             
+            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=3>PREEMPTIBLE<span class='button_tally'>3</span>
+            </a>
+            
+            
             <a href='https://chechia.net/tags/prometheus/' class=" post_tag button button_translucent" data-position=5>PROMETHEUS<span class='button_tally'>5</span>
             </a>
             
@@ -935,6 +964,10 @@ tx1: A pay B A Pay BTC to B&rsquo;s public key if x known &amp; singed by B or S
             
             
             <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent" data-position=6>REDIS<span class='button_tally'>6</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=3>SPOT-INSTANCE<span class='button_tally'>3</span>
             </a>
             
             
