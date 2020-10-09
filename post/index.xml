@@ -6,7 +6,87 @@
     <description>Recent content in Posts on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 22 Sep 2020 13:39:12 +0800</lastBuildDate><atom:link href="https://chechia.net/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Oct 2020 11:15:48 +0800</lastBuildDate><atom:link href="https://chechia.net/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Terraform Infrastructure as Code: Atlantis</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-atlantis/</link>
+      <pubDate>Wed, 07 Oct 2020 11:15:48 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-atlantis/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 需求與問題  Git-flow  PR review   有時會忘記 merge 有時會忘記 apply  Atlantis 解決方案是與版本控制整合，PR + Review 遠端執行，自動 plan apply 與自動 merge</description>
+    </item>
+    
+    <item>
+      <title>Terraform Infrastructure as Code: Terragrunt</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-terragrunt/</link>
+      <pubDate>Tue, 06 Oct 2020 11:15:48 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-terragrunt/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+而當使用 Terraform 的規模越來越大，管理的資料越來越多時，開始會出現一些問題，例如重複的 terraform code 越來越多，協同工作 review 不太容易，state 的內容管理與鎖管理，等等。這些問題可以透過一些工作流程的改進，或是導入新的小工具，來改善工作效率。
+接下來筆者推薦幾個心得與工具，希望能提升使用 Terraform 的效率與產值
+以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。</description>
+    </item>
+    
+    <item>
+      <title>Terraform Infrastructure as Code: Recommended Practices</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-recommended-practices/</link>
+      <pubDate>Mon, 05 Oct 2020 11:15:48 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-recommended-practices/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。
+ 心得  CI/CD 全自動化 State backend 選擇 最佳實踐   工具  Terraform Atlantis Terragrunt    工具與文化 新工具提供解決方案，然而單純導入工具後不是就一勞永逸，許多實務上的問題，還是要依賴改善工作流程，並且避免整體運作的錯誤。</description>
+    </item>
+    
+    <item>
+      <title>Terraform Infrastructure as Code: Backends</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-backend/</link>
+      <pubDate>Sun, 04 Oct 2020 11:15:48 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-backend/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+而當使用 Terraform 的規模越來越大，管理的資料越來越多時，開始會出現一些問題，例如重複的 terraform code 越來越多，協同工作 review 不太容易，state 的內容管理與鎖管理，等等。這些問題可以透過一些工作流程的改進，或是導入新的小工具，來改善工作效率。
+接下來筆者推薦幾個心得與工具，希望能提升使用 Terraform 的效率與產值
+以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。</description>
+    </item>
+    
+    <item>
+      <title>Terraform Infrastructure as Code: CI/CD automation</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-automation/</link>
+      <pubDate>Sat, 03 Oct 2020 11:15:48 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-automation/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+而當使用 Terraform 的規模越來越大，管理的資料越來越多時，開始會出現一些問題，例如重複的 terraform code 越來越多，協同工作 review 不太容易，state 的內容管理與鎖管理，等等。這些問題可以透過一些工作流程的改進，或是導入新的小工具，來改善工作效率。
+接下來筆者推薦幾個心得與工具，希望能提升使用 Terraform 的效率與產值
+以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。</description>
+    </item>
+    
+    <item>
+      <title>Terraform Infrastructure as Code: Example repository</title>
+      <link>https://chechia.net/post/terraform-infrastructure-as-code-repository-example/</link>
+      <pubDate>Fri, 02 Oct 2020 11:15:48 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/terraform-infrastructure-as-code-repository-example/</guid>
+      <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ 上面講了很多 terraform 的操作範例，應該看到這裡，對於 terraform 基本上是什麼東西，應該有些概念了。然而這樣還不能算是學會 terraform，這種工具的東西一定要有實際操作過的經驗才算是學會。
+可以直接參考 Terraform 官方的 Get-started 文件來操作學習，我這邊也提供一個 Git repository 讓大家上手，當作初次操作的框架。
+提供做為範例的原始碼 這個 Github Repository 是我給社群演講所使用的範例，第一次使用的可以參考
+https://github.com/chechiachang/terraform-playground</description>
+    </item>
+    
     <item>
       <title>Gcp Preemptible Instance Requirement</title>
       <link>https://chechia.net/post/gcp-preemptible-instance-requirement/</link>

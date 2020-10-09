@@ -6,20 +6,11 @@
     <description>Recent content in Categories on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 19 Aug 2020 10:01:31 +0800</lastBuildDate><atom:link href="https://chechia.net/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>murmur</title>
-      <link>https://chechia.net/categories/murmur/</link>
-      <pubDate>Wed, 19 Aug 2020 10:01:31 +0800</pubDate>
-      
-      <guid>https://chechia.net/categories/murmur/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Wed, 07 Oct 2020 11:15:48 +0800</lastBuildDate><atom:link href="https://chechia.net/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>kubernetes</title>
       <link>https://chechia.net/categories/kubernetes/</link>
-      <pubDate>Mon, 15 Jun 2020 10:58:56 +0800</pubDate>
+      <pubDate>Wed, 07 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/categories/kubernetes/</guid>
       <description></description>
@@ -28,9 +19,18 @@
     <item>
       <title>terraform</title>
       <link>https://chechia.net/categories/terraform/</link>
-      <pubDate>Mon, 15 Jun 2020 10:58:56 +0800</pubDate>
+      <pubDate>Wed, 07 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/categories/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>murmur</title>
+      <link>https://chechia.net/categories/murmur/</link>
+      <pubDate>Wed, 19 Aug 2020 10:01:31 +0800</pubDate>
+      
+      <guid>https://chechia.net/categories/murmur/</guid>
       <description></description>
     </item>
     
