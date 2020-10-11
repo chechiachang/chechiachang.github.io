@@ -166,29 +166,151 @@
 <p>Check my website <a href="https://chechia.net">chechia.net</a> for other blog. <a href="https://www.facebook.com/engineer.from.scratch">Follow my page to get notification</a>. Like my page if you really like it :)</p>
 <hr>
 <h1 id="需求與問題">需求與問題</h1>
+<p>隨著 terraform 在團隊內的規模持續成長，團隊需要讓工作流程更加順暢，來面對大量的 tf 變更查核與變更請求。想像幾十個工程師同時在修改幾十個不同的 terraform projects / modules，這時可能會有幾個問題</p>
 <ul>
-<li>Git-flow
+<li>需要一個穩定乾淨的環境執行 terraform
 <ul>
-<li>PR</li>
-<li>review</li>
+<li>工程師的開發本機不是個好選擇</li>
+<li>需要 24/7 的 terraform 執行中心
+<ul>
+<li>執行中心會有各個環境 (dev / stage / prod) 的存取權限，希望設置在內部</li>
 </ul>
 </li>
-<li>有時會忘記 merge</li>
-<li>有時會忘記 apply</li>
 </ul>
-<p>Atlantis 解決方案是與版本控制整合，PR + Review
-遠端執行，自動 plan apply 與自動 merge</p>
-<p><a href="https://www.runatlantis.io/">https://www.runatlantis.io/</a></p>
+</li>
+<li>下列兩個工作會切換工作平台，例如 Github
+<ul>
+<li>review，檢視 difference，與討論</li>
+<li>PR</li>
+</ul>
+</li>
+<li>review 完有時會忘記 merge，merge 完有時會忘記 apply
+<ul>
+<li>repository 越多，忘得越多&hellip;</li>
+</ul>
+</li>
+</ul>
+<p>團隊已經導入 Git-flow，希望把工作流程做得更完整自動化更加便利</p>
+<p><a href="https://www.runatlantis.io/">Atlantis 解決方案</a>是與版本控制整合，提供 terraform 執行的 worker，病可以與 Git Host (e.g. Github) 整合做 PR + Review，來達成持續的 CI/CD 遠端執行，自動 plan 與自動 apply merge。也就是 Atlantis 幫我們處理以下幾件事</p>
 <ul>
 <li>Git-flow</li>
-<li>自動化 plan</li>
-<li>Webhook 回傳 plan 結果</li>
-<li>透過 bot 控制 apply</li>
-<li>自動 merge</li>
+<li>TODO 自動化 plan</li>
+<li>TODO Webhook 回傳 plan 結果</li>
+<li>TODO 透過 bot 控制 apply</li>
+<li>TODO 自動 merge</li>
 </ul>
-<h1 id="安裝與設定">安裝與設定</h1>
-<p><a href="https://www.runatlantis.io/docs/installation-guide.html">https://www.runatlantis.io/docs/installation-guide.html</a></p>
-<h1 id="優點">優點</h1>
+<h1 id="需求與工作流程">需求與工作流程</h1>
+<p>以下的範例使用</p>
+<ul>
+<li>Github 作為版本控管工具
+<ul>
+<li>是整個工作流程的控制中心</li>
+<li>tf code，review，plan，apply 的結果都會在 Github</li>
+<li>進一步整合到 Slack 上也非常方便</li>
+</ul>
+</li>
+<li>Atlantis 放在 Kubernetes 上
+<ul>
+<li>使用 helm chart 部署</li>
+</ul>
+</li>
+</ul>
+<p>如果需要其他的版本控制工具或是安裝方式，請見<a href="https://www.runatlantis.io/docs/installation-guide.html">Atlantis 官方文件</a>，Atlantis 支援非常多版本控制工具，例如 Github，Gitlab，Bitbucket，&hellip;等</p>
+<p>整個工作流程</p>
+<ul>
+<li>Github commit push
+<ul>
+<li>Github event -&gt; Atlantis webhook</li>
+<li>Atlantis run terraform validate plan</li>
+</ul>
+</li>
+<li>Github PR push
+<ul>
+<li>Github event -&gt; Atlantis webhook</li>
+<li>Atlantis run terraform validate plan</li>
+</ul>
+</li>
+<li>Github Merge event / main branch push
+<ul>
+<li>Github event -&gt; Atlantis webhook</li>
+<li>Atlantis run terraform validate plan</li>
+<li>Atlantis acquire access to site (dev / stage)</li>
+<li>Atlantis apply to site</li>
+</ul>
+</li>
+<li>Github release tag push (eg. 1.2.0-rc)
+<ul>
+<li>Github event -&gt; Atlantis webhook</li>
+<li>Atlantis run terraform validate plan</li>
+<li>Atlantis acquire access to site (dev/stage)</li>
+<li>Atlantis apply to site (release-candidate / prod)</li>
+</ul>
+</li>
+</ul>
+<p>依據上面的環境，安裝需要準備以下幾個東西</p>
+<ul>
+<li>Git
+<ul>
+<li>Git Host 上設定 Atlantis 存取 Git Repository 的權限</li>
+<li>為 Git Host 設定存取私鑰，讓 Atlantis 認證 webhook</li>
+</ul>
+</li>
+<li>Terraform Backend State storage: Atlantis 需要存取外部的 state storage</li>
+<li>Terraform 使用的版本要注意一下。Atlantis 可以支援不同 repository / project 使用不同版本</li>
+<li>Environment credential (provider credential)
+<ul>
+<li>Atlantis 會需要存取不同的環境 (dev / stage / prod)</li>
+<li>為這些環境獨立配置 credential 讓 Atlantis 存取</li>
+</ul>
+</li>
+</ul>
+<p>實際 Atlantis 的環境會有</p>
+<ul>
+<li>Docker 作為孤城師本機開發測試使用</li>
+<li>Kubernetes Atlantis
+<ul>
+<li>我們的團隊會是一個環境一個獨立的 Atlantis
+<ul>
+<li>安全性：切分各個環境的權限與 Access</li>
+<li>各個 Atlantis webhook 只接收屬於自己的 event</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="docker">Docker</h3>
+<p>使用 Docker 作為本地開發與測試的容器 runtime：</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>docker pull runatlantis/atlantis:v0.15.0
+<span class="ln">2</span>
+<span class="ln">3</span>docker run runatlantis/atlantis:v0.15.0 atlantis \
+<span class="ln">4</span>  --gh-user=GITHUB_USERNAME \
+<span class="ln">5</span>  --gh-token=GITHUB_TOKEN
+</code></pre></div><h3 id="helm-chart">Helm Chart</h3>
+<p>Helm 的安裝十分簡易</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>helm repo add runatlantis https://runatlantis.github.io/helm-charts
+<span class="ln">2</span>helm inspect values runatlantis/atlantis &gt; values.yaml
+</code></pre></div><p>更改 values.yaml</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>github:
+<span class="ln">2</span>  user: chechiachang
+<span class="ln">3</span>  token: ...
+<span class="ln">4</span>  secret: ...
+<span class="ln">5</span>
+<span class="ln">6</span>orgWhitelist: github.com/chechiachang/*
+</code></pre></div><p>安裝到 Kubernetes 上</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>helm install atlantis runatlantis/atlantis -f values.yaml
+</code></pre></div><h1 id="結果">結果</h1>
+<ul>
+<li>工程師透過 Github 就可以完成所有工作
+<ul>
+<li>加上 Github Slack 整合，就完全不用離開 Slack，跟 bot 聊天就可以完成所有 terraform 工作</li>
+</ul>
+</li>
+<li>安全穩定的 terraform 執行環境</li>
+<li>獨立的 in-cluster credential，集群的存取權限都控制在集群內，不會暴露到外部環境</li>
+<li>自動 plan 與 apply，不會遺忘</li>
+</ul>
+<h1 id="優劣">優劣</h1>
+<p>優點</p>
 <ul>
 <li>可以 self-hosted，credential 不外洩，確保最高的安全性</li>
 <li>已經整合 Kubernetes, helm chart</li>
@@ -200,6 +322,15 @@
 </ul>
 </li>
 </ul>
+<p>缺點，其實沒什麼缺點</p>
+<ul>
+<li>就需要多養一組 Atlantis
+<ul>
+<li>使用 stateless deployment，其實是應該不會有什麼負擔</li>
+</ul>
+</li>
+</ul>
+<p>Terraform 系列至此應該是全部完結，感謝各位</p>
 
   </article>
 <aside class="sidebar">

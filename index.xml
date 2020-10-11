@@ -15,7 +15,8 @@
       <guid>https://chechia.net/post/terraform-infrastructure-as-code-atlantis/</guid>
       <description>This article is part of Infrastructure as Code: introduce Terraform from stratch
  Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 需求與問題  Git-flow  PR review   有時會忘記 merge 有時會忘記 apply  Atlantis 解決方案是與版本控制整合，PR + Review 遠端執行，自動 plan apply 與自動 merge</description>
+ 需求與問題 隨著 terraform 在團隊內的規模持續成長，團隊需要讓工作流程更加順暢，來面對大量的 tf 變更查核與變更請求。想像幾十個工程師同時在修改幾十個不同的 terraform projects / modules，這時可能會有幾個問題
+ 需要一個穩定乾淨的環境執行 terraform  工程師的開發本機不是個好選擇 需要 24/7 的 terraform 執行中心  執行中心會有各個環境 (dev / stage / prod) 的存取權限，希望設置在內部     下列兩個工作會切換工作平台，例如 Github  review，檢視 difference，與討論 PR   review 完有時會忘記 merge，merge 完有時會忘記 apply  repository 越多，忘得越多&amp;hellip;    團隊已經導入 Git-flow，希望把工作流程做得更完整自動化更加便利</description>
     </item>
     
     <item>
