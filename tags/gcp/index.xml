@@ -6,28 +6,25 @@
     <description>Recent content in gcp on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 22 Sep 2020 13:39:12 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/gcp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Sep 2020 17:24:20 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/gcp/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Gcp Preemptible Instance Requirement</title>
-      <link>https://chechia.net/post/gcp-preemptible-instance-requirement/</link>
-      <pubDate>Tue, 22 Sep 2020 13:39:12 +0800</pubDate>
+      <title>Gcp Preemptible Instance Kubernetes</title>
+      <link>https://chechia.net/post/gcp-preemptible-instance-kubernetes/</link>
+      <pubDate>Sat, 26 Sep 2020 17:24:20 +0800</pubDate>
       
-      <guid>https://chechia.net/post/gcp-preemptible-instance-requirement/</guid>
-      <description>需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
-另外，雖然先占虛擬機會有很多額外的限制與技術困難，但實務上還是要對比實際的需求，有些限制與需求是衝突的，有些限制則完全不會影響我們的需求。前者當然會帶給我們較高的導入難度，後者可能會非常輕鬆。
-這邊想給大家的概念是，務必先明確需求，再討論技術。這點很重要，技術的適用與否，不是由個人的喜好決定，唯一的判斷標準，是能不能有效率的滿足需求。
-所以這邊先定義我們以下幾個需求：
- 執行短期的 batch job 執行長期的 user-facing API server 執行長期的 stateful 資料庫、儲存庫  Batch Job 常見的範例，例如
- 使用網路爬蟲 (crawler) 去抓取許多網站的所有內容 使用 GPU 進行機器學習的 Model Training 大數據計算 MapReduce  這些任務的核心需求，很簡單直接
- 盡快完成整體工作 盡可能節省大量算力成本  例如：我手上的機器學習 Model 粗略估計 10000 小時*GPU 的算力需求，才能產出一個有效的Model。由於大量的算力需求，一般來說都會選擇分散式的運算框架 (ex. MapReduce) ，將真正消耗算力的工作，使用分而化之 (divide and conquer) 的架構設計，將分配任務的控制節點 (master)，與實際進行運算的工作節點(worker) 拆分。基於原本的分散式架構，幾乎可以無痛地將工作節點轉移到先占虛擬機上。
-根據上述的需求，這類的工作特性可能有
- CPU / GPU 算力需求高的運算節點 (Worker) Worker 本身是無狀態的 Stateless 可控的即時負載 將整體工作切分成任務單元 (task)，分配給工作節點 任務單元的狀態外部保留，工作節點可容錯 (fault-tolerent)，任務單元可復原  由於先占虛擬機可能是浮動價格，這類工作可以根據優先程度，調整合適的工作時間，例如在資料中心算力需求低，先占虛擬機的費用低廉時，啟用較多的工作節點加快運算，如果費用高時，可以降低先占虛擬機的使用，延後工作，甚至是調用不同區域，費用低的工作節點，來降低整體的成本。</description>
+      <guid>https://chechia.net/post/gcp-preemptible-instance-kubernetes/</guid>
+      <description>先占虛擬機與 Kubernetes 在 GCP 使用先占虛擬機，會需要面對先占虛擬機的額外限制
+ 資料中心會 (可預期或不可預期地) 終止先占虛擬機 先占虛擬機不能自動重啟，而是會被資料中心終止後回收 GCP 不保證有足夠的先占虛擬機  節點的終止會造成額外的維運成本，例如
+ 管理多個節點，容忍先占虛擬機的移除，自動補充新的先占虛擬機 管理多個應用複本，節點終止時，維護整體應用的可用性 將移除節點上的應用，重新排程到其他可用節點 動態維護應用複本的服務發現 (Service Discovery) 與服務端點 (Endpoints)  意思是應用關閉重啟後，換了一個新 IP，還要能持續存取應用。舊的 IP 要主動失效 配合應用的健康檢查 (Health Check) 與可用檢查 (Readiness Check)，再分配網路流量    這些需求，必須要有自動化的管理工具，是不可能人工管理的，想像你手上使用 100 個先占節點，平均每天會有 10% - 15% 的先占節點被資料中心回收，維運需要
+ 補足被移除的 15 個節點 計算被移除的應用，補足移除的應用數量 移除失效的應用端點，補上新的應用端點 持續監控應用狀態 &amp;hellip;  沒有自動化管理工具，看了心已累 (貓爪掩面)
+我們使用 Kubernetes 協助維運自動化，在 GCP 上我們使用 GKE，除了上述提到的容器應用管理自動化外，GKE 還額外整合先占虛擬機的使用
+ 啟用先占虛擬機的節點池 (node-pool)，設定節點池的自動拓展，自動補足先占節點的數量 GKE 自動維護先占虛擬機的 labels  關於 GKE 的先占虛擬機的完整細節，請見GCP 官方文件。這份文件底下也提供了 GCP 官方建議的先占虛擬機最佳實踐</description>
     </item>
     
     <item>
       <title>Gcp Preemptible Instance Introduction</title>
       <link>https://chechia.net/post/gcp-preemptible-instance-introduction/</link>
-      <pubDate>Tue, 22 Sep 2020 11:03:40 +0800</pubDate>
+      <pubDate>Sat, 26 Sep 2020 11:03:40 +0800</pubDate>
       
       <guid>https://chechia.net/post/gcp-preemptible-instance-introduction/</guid>
       <description>先占虛擬機，技術文件二三事 第一篇的內容大部份還是翻譯跟講解官方文件。後面幾篇才會有實際的需求與解決方案分析。
@@ -44,9 +41,76 @@ Hourly Machine type	CPUs	Memory	Price (USD)	Preemptible price (USD) n1-standard-
     </item>
     
     <item>
+      <title>Gcp Preemptible Instance Resource Calculation</title>
+      <link>https://chechia.net/post/gcp-preemptible-instance-resource-calculation/</link>
+      <pubDate>Fri, 25 Sep 2020 12:22:02 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/gcp-preemptible-instance-resource-calculation/</guid>
+      <description>關於資源評估 架構團隊提供虛擬機給應用，有個問題時常出現：應該分配多少資源給應用？例如：後端準備一個 API server，SRE 這邊要準備多少什麼規格的機器？
+以往使用虛擬機直接部署應用時，會需要明確規劃各群虛擬機，各自需要執行的應用，如果沒有做資源的事前評估，有可能放上機器運行後就發生資源不足。
+導入 Kubernetes 後，透過節點池 (Node Pool) 形成一個大型資源池，設定部署的政策後，讓 Kubernetes 自動調度應用：
+ 每一個節點的資源夠大，使得應用虛擬機器上所佔的比例相對較小，也就是單一應用的調度不會影響節點的整體負載  如果節點太小，調度應用就會有些侷促，例如：一個 API server 均載時消耗 1 cpu 滿載時消耗 2 cpu。準備 3 cpu 的虛擬機，調度應用時幾乎是遷移整台虛擬機的負載 此外還有機會因為上篇提到的資源保留，造成調度失敗。如果準備 24 cpu 的機器，調度起來彈性就很大，對節點的性能衝擊也比較低   只需要估計整體的資源消耗率計算需求，配合自動擴展，動態器補足不足的資源  例如：估計總共需要 32 cpu ，準備 36 cpu 的虛擬機，當滿載時依據 cpu 壓力自動擴容到 48 cpu   希望整體資源的使用率夠高，當然預留太多的資源會造成浪費  要控管 Kubernetes 的資源使用量也可設定資源需求與資源限制，延伸閱讀。
+估計得越準確，當然實際部署的資源掌握度就越高，然而筆者過去的經驗，團隊在交付源碼時未必就能夠做出有效的資源消耗評估，那有沒有什麼辦法可以幫助我們？
+資源需求估估看 如果應用開發團隊，有先作應用的 profiling，然後 release candidate 版本有在 staging 上作壓力測試的話，維運團隊這邊應該就取得的數據，做部署前的資源評估。
+應用在不同狀態或是工作階段，會消耗不同的資源
+例如：運算密集的 batch job 可能會有
+ 控制節點 (master node) 啟動後會佔有一定的資源，一般來說不會消耗太多，只是需要為控制節點優先保留資源 工作節點 (worker node) 啟動時會需要預留足夠的資源，接收工作後會逐漸增加資源使用，拉到滿載  例如：面向用戶的服務，可能會有</description>
+    </item>
+    
+    <item>
+      <title>Gcp Preemptible Instance Requirement</title>
+      <link>https://chechia.net/post/gcp-preemptible-instance-requirement/</link>
+      <pubDate>Thu, 24 Sep 2020 13:39:12 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/gcp-preemptible-instance-requirement/</guid>
+      <description>需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
+另外，雖然先占虛擬機會有很多額外的限制與技術困難，但實務上還是要對比實際的需求，有些限制與需求是衝突的，有些限制則完全不會影響我們的需求。前者當然會帶給我們較高的導入難度，後者可能會非常輕鬆。
+這邊想給大家的概念是，務必先明確需求，再討論技術。這點很重要，技術的適用與否，不是由個人的喜好決定，唯一的判斷標準，是能不能有效率的滿足需求。
+所以這邊先定義我們以下幾個需求：
+ 執行短期的 batch job 執行長期的 user-facing API server 執行長期的 stateful 資料庫、儲存庫  Batch Job 常見的範例，例如
+ 使用網路爬蟲 (crawler) 去抓取許多網站的所有內容 使用 GPU 進行機器學習的 Model Training 大數據計算 MapReduce  這些任務的核心需求，很簡單直接
+ 盡快完成整體工作 盡可能節省大量算力成本  例如：我手上的機器學習 Model 粗略估計 10000 小時*GPU 的算力需求，才能產出一個有效的Model。由於大量的算力需求，一般來說都會選擇分散式的運算框架 (ex. MapReduce) ，將真正消耗算力的工作，使用分而化之 (divide and conquer) 的架構設計，將分配任務的控制節點 (master)，與實際進行運算的工作節點(worker) 拆分。基於原本的分散式架構，幾乎可以無痛地將工作節點轉移到先占虛擬機上。
+根據上述的需求，這類的工作特性可能有
+ CPU / GPU 算力需求高的運算節點 (Worker) Worker 本身是無狀態的 Stateless 可控的即時負載 將整體工作切分成任務單元 (task)，分配給工作節點 任務單元的狀態外部保留，工作節點可容錯 (fault-tolerent)，任務單元可復原  由於先占虛擬機可能是浮動價格，這類工作可以根據優先程度，調整合適的工作時間，例如在資料中心算力需求低，先占虛擬機的費用低廉時，啟用較多的工作節點加快運算，如果費用高時，可以降低先占虛擬機的使用，延後工作，甚至是調用不同區域，費用低的工作節點，來降低整體的成本。</description>
+    </item>
+    
+    <item>
+      <title>Gcp Preemptible Instance Speficication</title>
+      <link>https://chechia.net/post/gcp-preemptible-instance-speficication/</link>
+      <pubDate>Wed, 23 Sep 2020 16:23:14 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/gcp-preemptible-instance-speficication/</guid>
+      <description>先占虛擬機終止流程 (Preemption process) 子曰：未知生焉知死。但做工程師要反過來，考量最差情形，也就是要知道應用可能如何死去。不知道應用可能怎麼死，別說你知道應用活得好好的，大概想表達這麼意思。
+這對先占虛擬機來說特別重要，一般應用面對的機器故障或是機器終止，在使用先占西你幾的狀況下，變成每日的必然，因此，需要對應用的終止情境，與終止流程有更精細的掌控。如同前幾篇所說的，先占虛擬機會被公有雲收回，但收回的時候不會突然機器就 ben 不見，會有一個固定的流程。
+如果你的應用已經帶有可容錯的機制，能夠承受機器突然變不見，服務還好好的，仍然要花時間理解這邊的流程，藉此精算每天虛擬機的終止與替換：應用會有什麼反應，會產生多少衝擊，稍後可以量化服務的影響。例如
+ 應用重啟初始化時 cpu memory 突然拉高 承受節點錯誤後的復原流程，需要消耗額外算力。例如需要從上個 checkpoint 接續做，需要去讀取資料造成 IO，或是資料需要做 rebalance &amp;hellip;等等  如果你的應用需要有 graceful shutdown 的機制，那你務必要細心理解這邊的步驟。並仔細安排安全下樁的步驟。又或是無法保證在先占虛擬機回收的作業時限內，完成優雅終止，需要考慮其他可能的實作解法。
+這邊有幾個面向要注意
+ GCP 如何終止先占節點 GCP 移除節點對 GKE 、以及執行中應用的影響 GKE 集群如何應對的節點失效 GCP 自動調度補足新的先占節點 GKE 集群如何應對節點補足  三個重點
+ 先占虛擬機終止對集群的影響 Pod 隨之終止對應用的影響，是否能夠優雅終止 有沒有方法可以避免上面兩者的影響  劇透一下：有的，有一些招式可以處理。讓我們繼續看下去。
+GCP 如何終止虛擬機 先占虛擬機的硬體終止步驟與一般隨選虛擬機相同，所以我們要先理解虛擬機的停止流程
+這裡指的終止 (Stop) 是虛擬機生命週期 的 RUNNING -&amp;gt; instances.stop() -&amp;gt; STOPPING -&amp;gt; TERMINATED 的步驟。
+ instances.stop() ACPI shutdown OS 會進行 shutdown 流程，並嘗試執行各個服務的終止流程，以安全的終止服務。如果虛擬機有設定Shtudown Script 會在這步驟處理 等待至少 90 秒，讓 OS 完成終止的流程  逾時的終止流程，GCP 會直接強制終止，就算 shutdown script 還沒跑完 GCP 不保證終止時限的時間，官方建議不要寫重要的依賴腳本在終止時限內   虛擬機變成 TERMINATED 狀態  GCP 如何終止先占虛擬機 與隨選虛擬機不同</description>
+    </item>
+    
+    <item>
+      <title>Gcp Preemptible Instance Requirement Distributed</title>
+      <link>https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/</link>
+      <pubDate>Tue, 22 Sep 2020 14:39:00 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/</guid>
+      <description>我們以下幾個需求：
+ 執行短期的 batch job 執行長期的 user-facing API server 執行長期的 stateful 資料庫、儲存庫  該不該在 Kubernetes 上面跑 database？
+TL;DR ，如果你剛開始考慮這件事，通常的答案都是否定的
+等等，我們這邊不是討論該不該上 Kuberentes ，而是該不該使用先占虛擬機吧。然而由於先占虛擬機節點的諸多限制，光憑先占虛擬機並不適合跑任何持久性的儲存庫。我們這邊仰賴 Kubernetes 的網路功能 (e.g. 服務發現)，與自動管理 (e.g. health check，HPA，auto-scaler)，基於先占虛擬機，建構高可用性的服務架構，來支撐高可用，且有狀態的的儲存庫。
+應用是否適合部署到 Kubernetes 上，可以看這篇 Google Blog: To run or not to run a database on Kubernetes: What to consider，如果大家有興趣，再留言告訴我，我再進行中文翻譯。
+文中針對三個可能的方案做分析，以 MySQL 為例：
+ Sass，GCP 的 Cloud SQL  最低的管理維運成本   自架 MySQL 在 GCP 的 VM 上，自行管理  自負完全的管理責任，包含可用性，備份 (backup)，以及容錯移轉 (failover)   自架 MySQL 在 Kubernetes 上  自負完全的管理責任 Kubernetes 的複雜抽象層，會加重維運工作的複雜程度    然而 RDBMS 的提供商，自家也提供 Operator</description>
+    </item>
+    
+    <item>
       <title>Gcp Preemptible Instance</title>
       <link>https://chechia.net/post/gcp-preemptible-instance/</link>
-      <pubDate>Tue, 22 Sep 2020 09:22:17 +0800</pubDate>
+      <pubDate>Mon, 21 Sep 2020 09:22:17 +0800</pubDate>
       
       <guid>https://chechia.net/post/gcp-preemptible-instance/</guid>
       <description>前言 鐵人賽的第二部分，要帶來公有雲省錢系列文章。

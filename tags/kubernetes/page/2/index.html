@@ -116,6 +116,143 @@
   <div class = 'excerpt'>
     <div class = 'excerpt_header'>
       <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-speficication/'>Gcp Preemptible Instance Speficication</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 23, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
+  </a>
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>先占虛擬機終止流程 (Preemption process) 子曰：未知生焉知死。但做工程師要反過來，考量最差情形，也就是要知道應用可能如何死去。不知道應用可能怎麼死，別說你知道應用活得好好的，大概想表達這麼意思。
+這對先占虛擬機來說特別重要，一般應用面對的機器故障或是機器終止，在使用先占西你幾的狀況下，變成每日的必然，因此，需要對應用的終止情境，與終止流程有更精細的掌控。如同前幾篇所說的，先占虛擬機會被公有雲收回，但收回的時候不會突然機器就 ben 不見，會有一個固定的流程。
+如果你的應用已經帶有可容錯的機制，能夠承受機器突然變不見，服務還好好的，仍然要花時間理解這邊的流程，藉此精算每天虛擬機的終止與替換：應用會有什麼反應，會產生 …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-speficication/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/'>Gcp Preemptible Instance Requirement Distributed</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 22, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
+  </a>
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>我們以下幾個需求：
+ 執行短期的 batch job 執行長期的 user-facing API server 執行長期的 stateful 資料庫、儲存庫  該不該在 Kubernetes 上面跑 database？
+TL;DR ，如果你剛開始考慮這件事，通常的答案都是否定的
+等等，我們這邊不是討論該不該上 Kuberentes ，而是該不該使用先占虛擬機吧。然而由於先占虛擬機節點的諸多限制，光憑先占虛擬機並不適合跑任何持久性的儲存庫。我們這邊仰賴 Kubernetes 的網路功能 (e.g. 服務發現)，與自動管理 (e.g. health check，HPA，auto-scaler)，基於先占虛擬機，建構高可用性的服務架構，來 …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/gcp-preemptible-instance/'>Gcp Preemptible Instance</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 21, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
+  </a>
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>前言 鐵人賽的第二部分，要帶來公有雲省錢系列文章。
+架構的成本，很多時候會影響架構的設計與需求。公司的營運都需要在成本與需求之前平衡，成本其實是影響公司決策的重要因素。身為架構管理員，應該要試著量化並且進行成本管理，提出解決方案時，也需要思考如何幫公司開源節流。
+一昧消減架構的成本也未必是最佳方案，帳面上消減的成本有時也會反映在其他地方，例如：使用比較便宜的解決方案，或是較低的算力，但卻造成維運需要花更多時間維護，造成隱性的人力成本消耗。用什麼替代方案 (trade-off) 省了這些錢。
+Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省錢」，但也有人說「Kubernetes …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
+        <a href='https://chechia.net/post/borg-omega-and-kubernetes/'>Borg Omega and Kubernetes Translation 全文翻譯</a>
+      </h3>
+      <div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 12, 2020</span>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/google' class = 'post_tag button button_translucent'>google
+  </a>
+  <a href = 'https://chechia.net/tags/borg' class = 'post_tag button button_translucent'>borg
+  </a>
+</div>
+
+    </div>
+      <div class = 'excerpt_footer'>
+        <div>
+          <p class = 'pale'>前言 這是原文完整版本。太長不讀 (TL;DR) 請見Borg Omega and Kubernetes 前世今生摘要
+原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+摘要 在 container 技術夯起來前，Google 已經做了 container 十幾年，過程中發展出需三套容器管理系統。雖然每一代系統的開發需求不同，但每一代都深受上一代影響。這篇文章描述 Google 開發這些系統時，學到的經驗。
+第一套 container management 系統是 Borg，為了管理 1. 長期執行的服務 2. 批次的短 …</p>
+          <a href='https://chechia.net/post/borg-omega-and-kubernetes/' class='excerpt_more button'>Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+      <li class = 'post_item'>
+  <div class = 'excerpt'>
+    <div class = 'excerpt_header'>
+      <h3 class = 'post_link'>
         <a href='https://chechia.net/post/borg-omega-and-kubernetes-tldr/'>Borg Omega and Kubernetes TLDR 摘要翻譯</a>
       </h3>
       <div class = 'post_meta'>
@@ -305,138 +442,6 @@ About …</p>
     </div>
   </li>
   
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/cert-manager-how-it-work/'>Cert Manager How It Work</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Oct 11, 2019</span>
-  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
-  </a>
-  <a href = 'https://chechia.net/tags/cert-manager' class = 'post_tag button button_translucent'>cert-manager
-  </a>
-  <a href = 'https://chechia.net/tags/devops' class = 'post_tag button button_translucent'>devops
-  </a>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的 …</p>
-          <a href='https://chechia.net/post/cert-manager-how-it-work/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/cert-manager-deployment/'>Cert Manager Deployment on Kubernetes</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Oct 10, 2019</span>
-  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
-  </a>
-  <a href = 'https://chechia.net/tags/cert-manager' class = 'post_tag button button_translucent'>cert-manager
-  </a>
-  <a href = 'https://chechia.net/tags/devops' class = 'post_tag button button_translucent'>devops
-  </a>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的 …</p>
-          <a href='https://chechia.net/post/cert-manager-deployment/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/kubernetes-nginx-ingress-controller/'>Kubernetes Nginx Ingress Controller</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Oct 8, 2019</span>
-  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
-  </a>
-  <a href = 'https://chechia.net/tags/nginx' class = 'post_tag button button_translucent'>nginx
-  </a>
-  <a href = 'https://chechia.net/tags/ingress' class = 'post_tag button button_translucent'>ingress
-  </a>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>2020 It邦幫忙鐵人賽 系列文章
-這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Jenkin-x on Kubernetes Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按 …</p>
-          <a href='https://chechia.net/post/kubernetes-nginx-ingress-controller/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
-      <li class = 'post_item'>
-  <div class = 'excerpt'>
-    <div class = 'excerpt_header'>
-      <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/kubernetes-nginx-ingress-config/'>Kubernetes Nginx Ingress Controller Config</a>
-      </h3>
-      <div class = 'post_meta'>
-  <svg class="icon">
-    <use xlink:href="#calendar"></use>
-  </svg>
-  <span class="post_date">
-    Oct 8, 2019</span>
-  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
-  </a>
-  <a href = 'https://chechia.net/tags/nginx' class = 'post_tag button button_translucent'>nginx
-  </a>
-  <a href = 'https://chechia.net/tags/ingress' class = 'post_tag button button_translucent'>ingress
-  </a>
-</div>
-
-    </div>
-      <div class = 'excerpt_footer'>
-        <div>
-          <p class = 'pale'>2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Jenkin-x on Kubernetes Kubernetes CRD &amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按 …</p>
-          <a href='https://chechia.net/post/kubernetes-nginx-ingress-config/' class='excerpt_more button'>Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-  
     <li>
 <ul class="pagination">
   <li class="page-item">
@@ -482,11 +487,19 @@ About …</p>
     <ul>
     
       <li>
-        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
       </li>
     
       <li>
         <a href="https://chechia.net/post/gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/" class="nav-link">Gcp Preemptible Instance Requirement Distributed</a>
       </li>
     
       <li>
@@ -536,7 +549,7 @@ About …</p>
         <a href="https://chechia.net/post/terraform-infrastructure-as-code-repository-example/" class="nav-link">Terraform Infrastructure as Code: Example repository</a>
       </li>
       <li>
-        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
       </li>
       <li>
         <a href="https://chechia.net/post/gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
@@ -717,12 +730,17 @@ About …</p>
       <nav class="tags_nav">
         <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent">
           KUBERNETES
-          <span class='button_tally'>44</span>
+          <span class='button_tally'>48</span>
         </a>
         
         <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent">
           ITHOME
           <span class='button_tally'>20</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
+          GCP
+          <span class='button_tally'>10</span>
         </a>
         
         <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent">
@@ -740,9 +758,14 @@ About …</p>
           <span class='button_tally'>8</span>
         </a>
         
-        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
-          GCP
-          <span class='button_tally'>6</span>
+        <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent">
+          PREEMPTIBLE
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent">
+          SPOT-INSTANCE
+          <span class='button_tally'>7</span>
         </a>
         
         <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent">
@@ -772,16 +795,6 @@ About …</p>
         
         <a href='https://chechia.net/tags/crd/' class=" post_tag button button_translucent">
           CRD
-          <span class='button_tally'>3</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/haproxy/' class=" post_tag button button_translucent">
-          HAPROXY
-          <span class='button_tally'>3</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/nginx/' class=" post_tag button button_translucent">
-          NGINX
           <span class='button_tally'>3</span>
         </a>
         
@@ -883,7 +896,7 @@ About …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=6>GCP<span class='button_tally'>6</span>
+            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=10>GCP<span class='button_tally'>10</span>
             </a>
             
             
@@ -931,7 +944,7 @@ About …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=44>KUBERNETES<span class='button_tally'>44</span>
+            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=48>KUBERNETES<span class='button_tally'>48</span>
             </a>
             
             
@@ -955,7 +968,7 @@ About …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=3>PREEMPTIBLE<span class='button_tally'>3</span>
+            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=7>PREEMPTIBLE<span class='button_tally'>7</span>
             </a>
             
             
@@ -971,7 +984,7 @@ About …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=3>SPOT-INSTANCE<span class='button_tally'>3</span>
+            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=7>SPOT-INSTANCE<span class='button_tally'>7</span>
             </a>
             
             

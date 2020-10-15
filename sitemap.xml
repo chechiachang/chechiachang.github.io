@@ -74,32 +74,52 @@
   
   <url>
     <loc>https://chechia.net/tags/gcp/</loc>
-    <lastmod>2020-09-22T13:39:12+08:00</lastmod>
+    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chechia.net/post/gcp-preemptible-instance-requirement/</loc>
-    <lastmod>2020-09-22T13:39:12+08:00</lastmod>
+    <loc>https://chechia.net/post/gcp-preemptible-instance-kubernetes/</loc>
+    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/preemptible/</loc>
-    <lastmod>2020-09-22T13:39:12+08:00</lastmod>
+    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/tags/spot-instance/</loc>
-    <lastmod>2020-09-22T13:39:12+08:00</lastmod>
+    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/gcp-preemptible-instance-introduction/</loc>
-    <lastmod>2020-09-22T11:03:40+08:00</lastmod>
+    <lastmod>2020-09-26T11:03:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/gcp-preemptible-instance-resource-calculation/</loc>
+    <lastmod>2020-09-25T12:22:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/gcp-preemptible-instance-requirement/</loc>
+    <lastmod>2020-09-24T13:39:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/gcp-preemptible-instance-speficication/</loc>
+    <lastmod>2020-09-23T16:23:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/</loc>
+    <lastmod>2020-09-22T14:39:00+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/gcp-preemptible-instance/</loc>
-    <lastmod>2020-09-22T09:22:17+08:00</lastmod>
+    <lastmod>2020-09-21T09:22:17+08:00</lastmod>
   </url>
   
   <url>

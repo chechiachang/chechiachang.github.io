@@ -295,14 +295,14 @@
   <div class = 'excerpt'>
     <div class = 'excerpt_header'>
       <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/gcp-preemptible-instance-requirement/'>Gcp Preemptible Instance Requirement</a>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-kubernetes/'>Gcp Preemptible Instance Kubernetes</a>
       </h3>
       <div class = 'post_meta'>
   <svg class="icon">
     <use xlink:href="#calendar"></use>
   </svg>
   <span class="post_date">
-    Sep 22, 2020</span>
+    Sep 26, 2020</span>
   <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
   </a>
   <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
@@ -316,11 +316,10 @@
     </div>
       <div class = 'excerpt_footer'>
         <div>
-          <p class = 'pale'>需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
-另外，雖然先占虛擬機會有很多額外的限制與技術困難，但實務上還是要對比實際的需求，有些限制與需求是衝突的，有些限制則完全不會影響我們的需求。前者當然會帶給我們較高的導入難度，後者可能會非常輕鬆。
-這邊想給大家的概念是，務必先明確需求，再討論技術。這點很重要，技術的適用與否，不是由個人的喜好決定，唯一的判斷標準，是能不能有效率的滿足需求。
-所以這邊先定義我們以下 …</p>
-          <a href='https://chechia.net/post/gcp-preemptible-instance-requirement/' class='excerpt_more button'>Read More</a>
+          <p class = 'pale'>先占虛擬機與 Kubernetes 在 GCP 使用先占虛擬機，會需要面對先占虛擬機的額外限制
+ 資料中心會 (可預期或不可預期地) 終止先占虛擬機 先占虛擬機不能自動重啟，而是會被資料中心終止後回收 GCP 不保證有足夠的先占虛擬機  節點的終止會造成額外的維運成本，例如
+ 管理多個節點，容忍先占虛擬機的移除，自動補充新的先占虛擬機 管理多個應用複本，節點終止時，維護整體應用的可用性 將移除節點上的應用，重新排程到其他可用節點 動態維護應用複本的服務發現 (Service Discovery) 與服務端點 (Endpoints)  意思是應用關閉重啟後，換了一個新 IP，還要能持續存取應用。舊的 IP 要主動失效 配合應用的健康檢 …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-kubernetes/' class='excerpt_more button'>Read More</a>
         </div>
       </div>
     </div>
@@ -337,7 +336,7 @@
     <use xlink:href="#calendar"></use>
   </svg>
   <span class="post_date">
-    Sep 22, 2020</span>
+    Sep 26, 2020</span>
   <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
   </a>
   <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
@@ -366,14 +365,14 @@ Google 先占虛擬機官方文件
   <div class = 'excerpt'>
     <div class = 'excerpt_header'>
       <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/gcp-preemptible-instance/'>Gcp Preemptible Instance</a>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-resource-calculation/'>Gcp Preemptible Instance Resource Calculation</a>
       </h3>
       <div class = 'post_meta'>
   <svg class="icon">
     <use xlink:href="#calendar"></use>
   </svg>
   <span class="post_date">
-    Sep 22, 2020</span>
+    Sep 25, 2020</span>
   <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
   </a>
   <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
@@ -387,11 +386,11 @@ Google 先占虛擬機官方文件
     </div>
       <div class = 'excerpt_footer'>
         <div>
-          <p class = 'pale'>前言 鐵人賽的第二部分，要帶來公有雲省錢系列文章。
-架構的成本，很多時候會影響架構的設計與需求。公司的營運都需要在成本與需求之前平衡，成本其實是影響公司決策的重要因素。身為架構管理員，應該要試著量化並且進行成本管理，提出解決方案時，也需要思考如何幫公司開源節流。
-一昧消減架構的成本也未必是最佳方案，帳面上消減的成本有時也會反映在其他地方，例如：使用比較便宜的解決方案，或是較低的算力，但卻造成維運需要花更多時間維護，造成隱性的人力成本消耗。用什麼替代方案 (trade-off) 省了這些錢。
-Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省錢」，但也有人說「Kubernetes …</p>
-          <a href='https://chechia.net/post/gcp-preemptible-instance/' class='excerpt_more button'>Read More</a>
+          <p class = 'pale'>關於資源評估 架構團隊提供虛擬機給應用，有個問題時常出現：應該分配多少資源給應用？例如：後端準備一個 API server，SRE 這邊要準備多少什麼規格的機器？
+以往使用虛擬機直接部署應用時，會需要明確規劃各群虛擬機，各自需要執行的應用，如果沒有做資源的事前評估，有可能放上機器運行後就發生資源不足。
+導入 Kubernetes 後，透過節點池 (Node Pool) 形成一個大型資源池，設定部署的政策後，讓 Kubernetes 自動調度應用：
+ 每一個節點的資源夠大，使得應用虛擬機器上所佔的比例相對較小，也就是單一應用的調度不會影響節點的整體負載  如果節點太小，調度應用就會有些侷促，例如：一個 API server …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-resource-calculation/' class='excerpt_more button'>Read More</a>
         </div>
       </div>
     </div>
@@ -401,30 +400,32 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
   <div class = 'excerpt'>
     <div class = 'excerpt_header'>
       <h3 class = 'post_link'>
-        <a href='https://chechia.net/post/borg-omega-and-kubernetes/'>Borg Omega and Kubernetes Translation 全文翻譯</a>
+        <a href='https://chechia.net/post/gcp-preemptible-instance-requirement/'>Gcp Preemptible Instance Requirement</a>
       </h3>
       <div class = 'post_meta'>
   <svg class="icon">
     <use xlink:href="#calendar"></use>
   </svg>
   <span class="post_date">
-    Sep 12, 2020</span>
+    Sep 24, 2020</span>
   <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
   </a>
-  <a href = 'https://chechia.net/tags/google' class = 'post_tag button button_translucent'>google
+  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
   </a>
-  <a href = 'https://chechia.net/tags/borg' class = 'post_tag button button_translucent'>borg
+  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
+  </a>
+  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
   </a>
 </div>
 
     </div>
       <div class = 'excerpt_footer'>
         <div>
-          <p class = 'pale'>前言 這是原文完整版本。太長不讀 (TL;DR) 請見Borg Omega and Kubernetes 前世今生摘要
-原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
-摘要 在 container 技術夯起來前，Google 已經做了 container 十幾年，過程中發展出需三套容器管理系統。雖然每一代系統的開發需求不同，但每一代都深受上一代影響。這篇文章描述 Google 開發這些系統時，學到的經驗。
-第一套 container management 系統是 Borg，為了管理 1. 長期執行的服務 2. 批次的短 …</p>
-          <a href='https://chechia.net/post/borg-omega-and-kubernetes/' class='excerpt_more button'>Read More</a>
+          <p class = 'pale'>需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
+另外，雖然先占虛擬機會有很多額外的限制與技術困難，但實務上還是要對比實際的需求，有些限制與需求是衝突的，有些限制則完全不會影響我們的需求。前者當然會帶給我們較高的導入難度，後者可能會非常輕鬆。
+這邊想給大家的概念是，務必先明確需求，再討論技術。這點很重要，技術的適用與否，不是由個人的喜好決定，唯一的判斷標準，是能不能有效率的滿足需求。
+所以這邊先定義我們以下 …</p>
+          <a href='https://chechia.net/post/gcp-preemptible-instance-requirement/' class='excerpt_more button'>Read More</a>
         </div>
       </div>
     </div>
@@ -475,11 +476,19 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
     <ul>
     
       <li>
-        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
       </li>
     
       <li>
         <a href="https://chechia.net/post/gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement-distributed/" class="nav-link">Gcp Preemptible Instance Requirement Distributed</a>
       </li>
     
       <li>
@@ -529,7 +538,7 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
         <a href="https://chechia.net/post/terraform-infrastructure-as-code-repository-example/" class="nav-link">Terraform Infrastructure as Code: Example repository</a>
       </li>
       <li>
-        <a href="https://chechia.net/post/gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+        <a href="https://chechia.net/post/gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
       </li>
       <li>
         <a href="https://chechia.net/post/gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
@@ -710,12 +719,17 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
       <nav class="tags_nav">
         <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent">
           KUBERNETES
-          <span class='button_tally'>44</span>
+          <span class='button_tally'>48</span>
         </a>
         
         <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent">
           ITHOME
           <span class='button_tally'>20</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
+          GCP
+          <span class='button_tally'>10</span>
         </a>
         
         <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent">
@@ -733,9 +747,14 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
           <span class='button_tally'>8</span>
         </a>
         
-        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
-          GCP
-          <span class='button_tally'>6</span>
+        <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent">
+          PREEMPTIBLE
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent">
+          SPOT-INSTANCE
+          <span class='button_tally'>7</span>
         </a>
         
         <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent">
@@ -765,16 +784,6 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
         
         <a href='https://chechia.net/tags/crd/' class=" post_tag button button_translucent">
           CRD
-          <span class='button_tally'>3</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/haproxy/' class=" post_tag button button_translucent">
-          HAPROXY
-          <span class='button_tally'>3</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/nginx/' class=" post_tag button button_translucent">
-          NGINX
           <span class='button_tally'>3</span>
         </a>
         
@@ -876,7 +885,7 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
             </a>
             
             
-            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=6>GCP<span class='button_tally'>6</span>
+            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=10>GCP<span class='button_tally'>10</span>
             </a>
             
             
@@ -924,7 +933,7 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
             </a>
             
             
-            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=44>KUBERNETES<span class='button_tally'>44</span>
+            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=48>KUBERNETES<span class='button_tally'>48</span>
             </a>
             
             
@@ -948,7 +957,7 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
             </a>
             
             
-            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=3>PREEMPTIBLE<span class='button_tally'>3</span>
+            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=7>PREEMPTIBLE<span class='button_tally'>7</span>
             </a>
             
             
@@ -964,7 +973,7 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
             </a>
             
             
-            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=3>SPOT-INSTANCE<span class='button_tally'>3</span>
+            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=7>SPOT-INSTANCE<span class='button_tally'>7</span>
             </a>
             
             
