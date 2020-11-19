@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" data-figures="" class="page">
+  <head>  <title>Kafka HA Continued | Che-Chia Chang</title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.75.1" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169903302-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-169903302-1');
+</script>
+<meta property = "og:locale" content = "en_US" />
+<meta property="og:type" content="article">
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使 …">
+<meta name = "twitter:card" content = "summary" />
+<meta name = "twitter:creator" content = "@chechiachang">
+<meta name = "twitter:title" content = "Kafka HA Continued" />
+<meta property = "og:url" content = "https://chechia.net/post/2019-09-26-kafka-ha-continued/" />
+<meta property = "og:title" content = "Kafka HA Continued" />
+<meta property = "og:description" content = "2020 It邦幫忙鐵人賽 系列文章
+ ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使 …" />
+<meta property = "og:image" content = "https://chechia.net/images/logos/white_logo_dark_background.jpg" />
+<link rel='apple-touch-icon' sizes='180x180' href='https://chechia.net/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://chechia.net/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://chechia.net/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://chechia.net/icons/site.webmanifest'>
+<link rel="mask-icon" href= 'https://chechia.net/safari-pinned-tab.svg' color="#002538">
+<meta name="msapplication-TileColor" content="#002538">
+<meta name="theme-color" content="#002538">
+
+  <link rel='canonical' href='https://chechia.net/post/2019-09-26-kafka-ha-continued/'>
+
+    
+
+    
+    <link rel="preload" href="https://chechia.net/css/styles.8c77cda9454d30afb96a03bf232ee1089eb4b0da2a7c6e7f2b2a09d6cfcf2fe97836d9edfca70365fb630563fff409fd484299df18ca05a2950108d46da3cf1e.css" integrity = "sha512-jHfNqUVNMK&#43;5agO/Iy7hCJ60sNoqfG5/KyoJ1s/PL&#43;l4Ntnt/KcDZftjBWP/9An9SEKZ3xjKBaKVAQjUbaPPHg==" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://chechia.net/js/bundle.min.8475c29f8da3c876e0358b05e6aeecc90b3affb7bfd705c202f65f468c200268c1cc8c5ea6a01b1b47ddf853c358f96e98e3df6c0cc877a19ead459cf06b9afc.js" as="script" integrity=
+    "sha512-hHXCn42jyHbgNYsF5q7syQs6/7e/1wXCAvZfRowgAmjBzIxepqAbG0fd&#43;FPDWPlumOPfbAzId6GerUWc8Gua/A==" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://chechia.net/css/styles.8c77cda9454d30afb96a03bf232ee1089eb4b0da2a7c6e7f2b2a09d6cfcf2fe97836d9edfca70365fb630563fff409fd484299df18ca05a2950108d46da3cf1e.css" integrity="sha512-jHfNqUVNMK&#43;5agO/Iy7hCJ60sNoqfG5/KyoJ1s/PL&#43;l4Ntnt/KcDZftjBWP/9An9SEKZ3xjKBaKVAQjUbaPPHg==" crossorigin="anonymous">
+	  
+  </head>
+  
+  
+    
+  
+  <body data-code="7" data-lines="false" id="documentTop">
+
+<header class = 'nav_header' >
+  <nav class = 'nav'>
+    <a href='https://chechia.net/' class = 'nav_brand nav_item'>
+      <img src="https://chechia.net/images/fav_79x79.jpg" class="logo">
+      <div class = 'nav_close'>
+        <div>
+          <svg class="icon">
+            <use xlink:href="#open-menu"></use>
+          </svg>
+          <svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg>
+        </div>
+      </div>
+    </a>
+    <div class = 'nav_body nav_body_left'>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/' class = 'nav_item'>Home </a>
+      </div>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/' class = 'nav_item'>系列文 <img src= https://chechia.net/icons/caret-icon.svg alt="icon" class="nav_icon"></a>
+        <div class = 'nav_sub'>
+          <a href = 'https://chechia.net/post/2020-ithome-ironman-challenge/' class = 'nav_child nav_item'>2020 iThome 鐵人賽優勝文章</a>
+        </div>
+      </div>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/about/' class = 'nav_item'>About </a>
+      </div>
+<div class='follow'>
+  <a href='https://www.facebook.com/engineer.from.scratch'>
+    <svg class="icon">
+      <use xlink:href="#facebook"></use>
+    </svg>
+  </a>
+  <a href='https://github.com/chechiachang'>
+    <svg class="icon">
+      <use xlink:href="#github"></use>
+    </svg>
+  </a>
+  <a href='https://twitter.com/chechiachang'>
+    <svg class="icon">
+      <use xlink:href="#twitter"></use>
+    </svg>
+  </a>
+  <a href='https://www.linkedin.com/in/che-chia-chang-92194a4a/'>
+    <svg class="icon">
+      <use xlink:href="#linkedin"></use>
+    </svg>
+  </a>
+<div class = 'color_mode'>
+  <input type = 'checkbox' class = 'color_choice' id = 'mode'>
+</div>
+
+</div>
+
+    </div>
+  </nav>
+</header>
+
+    <main>
+  
+<div class = 'grid-inverse wrap content'>
+  <article class='post_content'>
+    <h1 class='post_title'>Kafka HA Continued</h1><div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 26, 2019</span>
+  <a href = 'https://chechia.net/tags/kafka' class = 'post_tag button button_translucent'>kafka
+  </a>
+  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
+  </a>
+  <a href = 'https://chechia.net/tags/ithome' class = 'post_tag button button_translucent'>ithome
+  </a>
+</div>
+
+    <div class='post_share'>
+  Share on:
+  <a href="https://twitter.com/intent/tweet?text=Kafka%20HA%20Continued&url=https%3a%2f%2fchechia.net%2fpost%2f2019-09-26-kafka-ha-continued%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <svg class="icon">
+      <use xlink:href="#twitter"></use>
+    </svg>
+  </a>
+  
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2f2019-09-26-kafka-ha-continued%2f&t=Kafka%20HA%20Continued" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <svg class="icon">
+      <use xlink:href="#facebook"></use>
+    </svg>
+  </a>
+  <script>
+    function shareViaLinkedin() {
+      window.open('http://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent("https://chechia.net/post/2019-09-26-kafka-ha-continued/"), '', 'left=0,top=0,width=650,height=420,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+    }
+  </script>
+  <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow" onclick="shareViaLinkedin()">
+    <svg class="icon">
+      <use xlink:href="#linkedin"></use>
+    </svg>
+  </a>
+  <a href="https://chechia.net/post/2019-09-26-kafka-ha-continued/" title="Copy Link" class="link link_yank">
+    <svg class="icon">
+      <use xlink:href="#yank"></use>
+    </svg>
+  </a>
+</div>
+
+    
+    <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+<ul>
+<li>ELK Stack
+<ul>
+<li><a href="https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechia.net/post/2019-09-15-secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechia.net/post/2019-09-18-monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechia.net/post/2019-09-19-monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechia.net/post/2019-09-18-elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechia.net/post/2019-09-21-logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
+<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
+<li>Debug ELK stack on GCP</li>
+</ul>
+</li>
+<li>Kafka HA on Kubernetes(6)
+<ul>
+<li><a href="https://chechia.net/post/2019-09-22-kafka-deployment-on-kubernetes/">Deploy kafka-ha</a></li>
+<li><a href="https://chechia.net/post/2019-09-23-kafka-introduction/">Kafka Introduction</a></li>
+<li><a href="https://chechia.net/post/2019-09-24-kafka-basic-usage/">kafka 基本使用</a></li>
+<li><a href="https://chechia.net/post/2019-09-25-kafka-operation-scripts/">kafka operation scripts</a></li>
+<li><a href="https://chechia.net/post/2019-09-25-kafka-ha-topology/">集群內部的 HA topology</a></li>
+<li><a href="https://chechia.net/post/2019-09-26-kafka-ha-continued/">集群內部的 HA 細節</a></li>
+<li>Prometheus Metrics Exporter 很重要</li>
+<li>效能調校</li>
+</ul>
+</li>
+</ul>
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechia.net">https://chechia.net</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face"></p>
+<hr>
+<h1 id="摘要">摘要</h1>
+<ul>
+<li>Kafka&rsquo;s quorum set</li>
+</ul>
+<h1 id="kafka-的-quorum-set">Kafka 的 quorum set</h1>
+<p>這篇跟上篇其實再講 quorum，應該連在一起，但礙於篇幅（以及我個人的時間ＱＱ）拆成了兩篇。各位有需要可以回顧一下。</p>
+<h3 id="replicated-log-commit-decision">Replicated log commit decision</h3>
+<p>上篇提到了兩個維持 replicated log 的 model</p>
+<ul>
+<li>有更新進來，leader 等待所有 follower 都 ack，才 commit。</li>
+<li>有更新進來，leader 取得所有 node (2n+1) 中的多數 node 回應(n+1)，就 commit。而 leader election 時，必須比對 node 上的 log，決定誰是 electable leader(有最完整 log 的 follower)，這樣稱為共識(Quorum)</li>
+</ul>
+<p>前者的好處是，所有 node 都有完整的 log 後，leader 才會 commit，回覆給客戶 commit  的資訊，所以每個 follower 都是 leader electable 人人都可以當 leader，leader 一故障就選擇新的 leader 即可。壞處就是 leader 在等待所有 follow ack 的時間會非常久，而且時間複雜度可能會隨 cluster size scale，或是變成要等最慢的 node 回應(worst case)。這樣在 node 數量多的時候非常不經濟。</p>
+<p>後者的好處是，n+1 node ack 後就 commit，leader commit 的速度是由前段班的回應速度決定。leader 出現故障，仍能維持多數 node 的資料正確。</p>
+<h3 id="leader-election-decision">Leader election decision</h3>
+<p>Leader Election 的問題也是類似，如果選擇 leader 時，所有的 follower 都比對過 log，這樣花的時間會很久。要知道，這是個分散式的架構，沒有中心化的 controller，也就是 follower 彼此需要交互比對。而且時間隨 follower 數量 scale。 造成topic partition 沒有 leader 的時間(downtime)太長。</p>
+<p>如果使用 majority，也就是當 leader 死掉，產生新的 leader election 時，只詢問 n+1 個 follower ，然後從選出 log 最完整的人當 leader， 這樣過程中每個 follower 彼此比對，確認，然後才選出 leader，確認 leader 的結果，所花的時間會大幅縮短。</p>
+<p>當然，這麼做產生的 tradeoff，就是萬一取得多數決的 n+1 個 follower 裡面，沒有最完整的 log ，那從裡頭選出來的 leader 自然也沒有完整 log，選出來的 leader 就會遺失資料。</p>
+<h3 id="一個完整的-quorum-機制">一個完整的 Quorum 機制</h3>
+<p>這不是 kafka 的機制，但我們順帶聊聊。</p>
+<ul>
+<li>commit decision 使用多數決(majority)</li>
+<li>leader election 也使用多數決</li>
+</ul>
+<p>總共有 2n+1 replicas，leader 取得 n+1 ack 才能 commit message。然後 leader election 時，從至少 n+1 個 follower 中取得多數決才能選出 leader。有過半的完整log，加上取得過半數的人確認，兩者產生 overlap。這樣的共識就確保有完整的 log 的 follower 一定會出現在 leader election 中，確保選出來的 leader 有完整 log。</p>
+<p>好處如前面描述，整體效能由前段班的速度決定。</p>
+<p>壞處是，很容易就沒有足夠的 electable leader。要容忍 1 個錯誤，需要 3 個完整備份，要容忍 2 個錯誤需要 5 個備份。在實務上，只靠依賴夠多的 redundency 容錯非常的不實際：每一次寫入需要 5 倍寫入跟硬碟空間，但整體效能只有 1/5。資料量大就直接ＧＧ。所以 quorum 才會只存在分散式集群(ex. zookeeper)，而不會直接用在儲存系統。</p>
+<h3 id="kafkas-approach">Kafka&rsquo;s approach</h3>
+<p>Kafka 不使用 majority vote，而是去動態維護一套 in-sync replicas(ISR) ，這些 ISR 會跟上 leader 的進度，而只有這些 ISR 才能是 leader eligible。一個 update 只有在所有 ISR 都 ack 後才會 commit。</p>
+<p>ISR 的狀態不放在 kafka 而放在 zookeeper 上，也就是目前哪些 node 是 ISR 的記錄存在 zookeeper。這件事對維持 kafka 節點上，leader 能夠分散在各個 kafka node 上(leader rebalance)是很重要的。</p>
+<p>kafka&rsquo;s approach 與 majority vote，在等待 message commit ack 上所花的成本是一樣的。 然而在 leader election 上，kafka 的 ISR 確保了更多個 eligiable leader 的數量，持續維持在合理的數量，而不會要維持大量個 redundency。ISR 放在外部，更方便 kafka 做 leader rebalance，增加穩定度。</p>
+<h1 id="unclean-leader-election">Unclean leader election</h1>
+<p>如果 leaders 都死光了會怎樣？</p>
+<p>只要有一個 replica in-sync，Kafka 就保證資料的完整性。然而所有可用的 leaders 都死了，這個就無法保證。</p>
+<p>如果這個情形發生了，kafka 會做以下處理</p>
+<ul>
+<li>等 ISR 中有人完全回復過來，然後選這個 node 作為 leader(有資料遺失的風險)</li>
+<li>直接選擇第一個回覆的 node (不一定在 ISR 中)，先回覆的就指派為 leader</li>
+</ul>
+<p>前者犧牲 availability （回覆前沒有 leader 可作讀寫）來確保資料是來自 ISR，雖然錯誤中無法讀寫(downtime)，但可以確定錯誤前跟錯誤後的資料都來自 ISR</p>
+<p>後者犧牲 consistency （來自非 ISR 的 leader 可能導致資料不正確），然而卻能更快的從錯誤中回覆，減少 downtime</p>
+<p>0.11.0.0  後的 kafka 預設是選擇前者，也就是 consistency over availability，當然這可以在設定更改。</p>
+<h1 id="availability-and-durability-guarantees">Availability and Durability Guarantees</h1>
+<p>近一步考慮 client 的影響。</p>
+<p>Producer 在寫入時可以選擇 message 需要多少 acknowledge，0, 1 or all，ack=all 指的是 message 收到所有 in-sync replicas 的 ack</p>
+<ul>
+<li>如果 2 replicas 中有 1 個故障，這時寫入只要收到 1 個 ISR 的 ack，就達成 ack=all</li>
+<li>但如果不幸剩下一個 replicas 也死了 (0/0 ack)，寫入的資料就會遺失</li>
+</ul>
+<p>有些使用情境，會希望資料的耐用度(Durability)優先於可用性(Availability)，可以透過以下兩個方式設定</p>
+<ul>
+<li>禁用 unclean leader election，效果是如果所有的 replicas 都失效，則整個 partition 都失效，直到前一個 leader 回復正常。</li>
+<li>指定可接受的最少 ISR，如果 partition 中的 ISR 低於這個數量，就停止寫入這個 partition，直到 ISR 的數量回覆。</li>
+</ul>
+<p>這樣雖然犧牲了可用性，卻可以最大程度地確保資料的可靠性。</p>
+<h1 id="複本管理">複本管理</h1>
+<p>上面的討論都只是再說一個 topic，實務中 kafka 中會有大量的 topic ，乘上 partition number 與 replication factor，成千上萬的複本分散在集群中，kafka 會試圖分散 replicas 到集群中，並讓 leader 的數量平均在 node 上</p>
+
+  </article>
+<aside class="sidebar">
+  <section class="sidebar_inner">
+    <h2>Che-Chia Chang</h2>
+    <div>
+      DevOps, SRE, Kubernetes admin.
+    </div>
+    <a href = 'https://chechia.net/about/' class="button mt-1" role="button">Read More</a>
+    <h2 class="mt-4">Featured Posts</h2>
+    <ul>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/" class="nav-link">Gcp Preemptible Instance Requirement Distributed</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-21-gcp-preemptible-instance/" class="nav-link">Gcp Preemptible Instance</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-12-borg-omega-and-kubernetes/" class="nav-link">Borg Omega and Kubernetes Translation 全文翻譯</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/" class="nav-link">Self-host ELK stack - Installation</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2019-09-09-ithome-ironman-challenge/" class="nav-link">2019 IT邦幫忙鐵人賽</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-09-ithome-ironman-challenge/" class="nav-link">2020 IT邦幫忙鐵人賽</a>
+      </li>
+    
+    </ul>
+    <h2 class="mt-4">Recent Posts</h2>
+    <ul class="flex-column">
+      
+      <li>
+        <a href="https://chechia.net/post/2020-10-07-terraform-infrastructure-as-code-atlantis/" class="nav-link">Terraform Infrastructure as Code: Atlantis</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-06-terraform-infrastructure-as-code-terragrunt/" class="nav-link">Terraform Infrastructure as Code: Terragrunt</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/" class="nav-link">Terraform Infrastructure as Code: Recommended Practices</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-04-terraform-infrastructure-as-code-backend/" class="nav-link">Terraform Infrastructure as Code: Backends</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-03-terraform-infrastructure-as-code-automation/" class="nav-link">Terraform Infrastructure as Code: CI/CD automation</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-02-terraform-infrastructure-as-code-repository-example/" class="nav-link">Terraform Infrastructure as Code: Example repository</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    </ul> 
+    
+    <div>
+      <h2 class="mt-4 taxonomy" id="categories-section">categories</h2>
+      <nav class="tags_nav">
+        <a href='https://chechia.net/categories/kubernetes/' class=" post_tag button button_translucent">
+          KUBERNETES
+          <span class='button_tally'>44</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent">
+          TERRAFORM
+          <span class='button_tally'>8</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/kafka/' class=" post_tag button button_translucent">
+          KAFKA
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/prometheus/' class=" post_tag button button_translucent">
+          PROMETHEUS
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/redis/' class=" post_tag button button_translucent">
+          REDIS
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/elasticsearch/' class=" post_tag button button_translucent">
+          ELASTICSEARCH
+          <span class='button_tally'>4</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/cert-manager/' class=" post_tag button button_translucent">
+          CERT-MANAGER
+          <span class='button_tally'>3</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/blockchain/' class=" post_tag button button_translucent">
+          BLOCKCHAIN
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/crd/' class=" post_tag button button_translucent">
+          CRD
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/logstash/' class=" post_tag button button_translucent">
+          LOGSTASH
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/murmur/' class=" post_tag button button_translucent">
+          MURMUR
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/nginx/' class=" post_tag button button_translucent">
+          NGINX
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/certificate/' class=" post_tag button button_translucent">
+          CERTIFICATE
+          <span class='button_tally'>1</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/devops/' class=" post_tag button button_translucent">
+          DEVOPS
+          <span class='button_tally'>1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All categories</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://chechia.net/categories/blockchain/' class=" post_tag button button_translucent" data-position=2>BLOCKCHAIN<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/cert-manager/' class=" post_tag button button_translucent" data-position=3>CERT-MANAGER<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/certificate/' class=" post_tag button button_translucent" data-position=1>CERTIFICATE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/crd/' class=" post_tag button button_translucent" data-position=2>CRD<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/devops/' class=" post_tag button button_translucent" data-position=1>DEVOPS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/distributed-system/' class=" post_tag button button_translucent" data-position=1>DISTRIBUTED-SYSTEM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/elasticsearch/' class=" post_tag button button_translucent" data-position=4>ELASTICSEARCH<span class='button_tally'>4</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/golang/' class=" post_tag button button_translucent" data-position=1>GOLANG<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/istio/' class=" post_tag button button_translucent" data-position=1>ISTIO<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/jenkins/' class=" post_tag button button_translucent" data-position=1>JENKINS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/kafka/' class=" post_tag button button_translucent" data-position=7>KAFKA<span class='button_tally'>7</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/kubernetes/' class=" post_tag button button_translucent" data-position=44>KUBERNETES<span class='button_tally'>44</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/logstash/' class=" post_tag button button_translucent" data-position=2>LOGSTASH<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/murmur/' class=" post_tag button button_translucent" data-position=2>MURMUR<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/nginx/' class=" post_tag button button_translucent" data-position=2>NGINX<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/prometheus/' class=" post_tag button button_translucent" data-position=5>PROMETHEUS<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/redis/' class=" post_tag button button_translucent" data-position=5>REDIS<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent" data-position=8>TERRAFORM<span class='button_tally'>8</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+        
+      </nav>
+    </div>
+    
+    <div>
+      <h2 class="mt-4 taxonomy" id="tags-section">tags</h2>
+      <nav class="tags_nav">
+        <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent">
+          KUBERNETES
+          <span class='button_tally'>48</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent">
+          ITHOME
+          <span class='button_tally'>20</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
+          GCP
+          <span class='button_tally'>10</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent">
+          DEVOPS
+          <span class='button_tally'>9</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/kafka/' class=" post_tag button button_translucent">
+          KAFKA
+          <span class='button_tally'>9</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent">
+          TERRAFORM
+          <span class='button_tally'>8</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent">
+          PREEMPTIBLE
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent">
+          SPOT-INSTANCE
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent">
+          REDIS
+          <span class='button_tally'>6</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/elasticsearch/' class=" post_tag button button_translucent">
+          ELASTICSEARCH
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/logstash/' class=" post_tag button button_translucent">
+          LOGSTASH
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/prometheus/' class=" post_tag button button_translucent">
+          PROMETHEUS
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/cert-manager/' class=" post_tag button button_translucent">
+          CERT-MANAGER
+          <span class='button_tally'>4</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/crd/' class=" post_tag button button_translucent">
+          CRD
+          <span class='button_tally'>3</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All tags</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://chechia.net/tags/atomic-swap/' class=" post_tag button button_translucent" data-position=1>ATOMIC-SWAP<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/bep3/' class=" post_tag button button_translucent" data-position=1>BEP3<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/binance/' class=" post_tag button button_translucent" data-position=1>BINANCE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/blockchain/' class=" post_tag button button_translucent" data-position=2>BLOCKCHAIN<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/borg/' class=" post_tag button button_translucent" data-position=2>BORG<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cd/' class=" post_tag button button_translucent" data-position=1>CD<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cert-manager/' class=" post_tag button button_translucent" data-position=4>CERT-MANAGER<span class='button_tally'>4</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/certificate/' class=" post_tag button button_translucent" data-position=1>CERTIFICATE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ci/' class=" post_tag button button_translucent" data-position=1>CI<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/container/' class=" post_tag button button_translucent" data-position=1>CONTAINER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/crd/' class=" post_tag button button_translucent" data-position=3>CRD<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cri/' class=" post_tag button button_translucent" data-position=1>CRI<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent" data-position=9>DEVOPS<span class='button_tally'>9</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/distributed-system/' class=" post_tag button button_translucent" data-position=1>DISTRIBUTED-SYSTEM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/docker/' class=" post_tag button button_translucent" data-position=1>DOCKER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/elasticsearch/' class=" post_tag button button_translucent" data-position=5>ELASTICSEARCH<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/elk/' class=" post_tag button button_translucent" data-position=1>ELK<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/erc-20/' class=" post_tag button button_translucent" data-position=1>ERC-20<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ethereum/' class=" post_tag button button_translucent" data-position=1>ETHEREUM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/filebeat/' class=" post_tag button button_translucent" data-position=1>FILEBEAT<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/fluentd/' class=" post_tag button button_translucent" data-position=1>FLUENTD<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=10>GCP<span class='button_tally'>10</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/golang/' class=" post_tag button button_translucent" data-position=1>GOLANG<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/google/' class=" post_tag button button_translucent" data-position=2>GOOGLE<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/haproxy/' class=" post_tag button button_translucent" data-position=3>HAPROXY<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ibm-q-experience/' class=" post_tag button button_translucent" data-position=1>IBM-Q-EXPERIENCE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/index/' class=" post_tag button button_translucent" data-position=1>INDEX<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ingress/' class=" post_tag button button_translucent" data-position=2>INGRESS<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/istio/' class=" post_tag button button_translucent" data-position=1>ISTIO<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent" data-position=20>ITHOME<span class='button_tally'>20</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/jenkins/' class=" post_tag button button_translucent" data-position=1>JENKINS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/kafka/' class=" post_tag button button_translucent" data-position=9>KAFKA<span class='button_tally'>9</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=48>KUBERNETES<span class='button_tally'>48</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/lecture/' class=" post_tag button button_translucent" data-position=1>LECTURE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/logstash/' class=" post_tag button button_translucent" data-position=5>LOGSTASH<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/mit/' class=" post_tag button button_translucent" data-position=1>MIT<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/nginx/' class=" post_tag button button_translucent" data-position=3>NGINX<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=7>PREEMPTIBLE<span class='button_tally'>7</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/prometheus/' class=" post_tag button button_translucent" data-position=5>PROMETHEUS<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/quantum-computing/' class=" post_tag button button_translucent" data-position=1>QUANTUM-COMPUTING<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent" data-position=6>REDIS<span class='button_tally'>6</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=7>SPOT-INSTANCE<span class='button_tally'>7</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=8>TERRAFORM<span class='button_tally'>8</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/tls/' class=" post_tag button button_translucent" data-position=3>TLS<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/tutorial/' class=" post_tag button button_translucent" data-position=1>TUTORIAL<span class='button_tally'>1</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+        
+      </nav>
+    </div>
+    
+  </section>
+</aside>
+
+</div>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter">
+    <path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68 0 0 1-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078a3.56 3.56 0 0 0-1.076 2.605c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388a3.623 3.623 0 0 0 2.115 1.291c-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652 0 0 0 2.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77 0 0 0 1.172-4.892v-.468a7.788 7.788 0 0 0 1.84-1.921 8.142 8.142 0 0 1-2.11.593z"
+      ></path>
+  </symbol>
+  <symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail">
+    <path  d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar">
+    <path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916 0 100v352c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V100c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028 0 20 8.972 20 20v48z"></path>
+    <path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"></path>
+  </symbol>
+  <symbol viewBox="-21 0 512 512" xmlns="http://www.w3.org/2000/svg" id="yank">
+    <path d="M410.668 405.332H165.332c-32.363 0-58.664-26.3-58.664-58.664v-288c0-32.363 26.3-58.668 58.664-58.668h181.504c21.059 0 41.687 8.535 56.555 23.445l42.496 42.496c15.125 15.125 23.445 35.223 23.445 56.575v224.152c0 32.363-26.3 58.664-58.664 58.664zM165.332 32c-14.7 0-26.664 11.969-26.664 26.668v288c0 14.7 11.965 26.664 26.664 26.664h245.336c14.7 0 26.664-11.965 26.664-26.664V122.516c0-12.82-4.992-24.871-14.059-33.942l-42.496-42.496C371.84 37.121 359.488 32 346.836 32zm0 0"></path>
+    <path d="M314.668 512h-256C26.305 512 0 485.695 0 453.332V112c0-32.363 26.305-58.668 58.668-58.668h10.664c8.832 0 16 7.168 16 16s-7.168 16-16 16H58.668C43.968 85.332 32 97.301 32 112v341.332C32 468.032 43.969 480 58.668 480h256c14.7 0 26.664-11.969 26.664-26.668v-10.664c0-8.832 7.168-16 16-16s16 7.168 16 16v10.664c0 32.363-26.3 58.668-58.664 58.668zM368 181.332H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"></path>
+    <path d="M368 245.332H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 64H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github">
+    <path d="M255.968 5.329C114.624 5.329 0 120.401 0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384 0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008 0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992 0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584 0 34.368-.32 62.08-.32 70.496 0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"></path>
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss">
+    <circle cx="3.429" cy="20.571" r="3.429"></circle>
+    <path d="M11.429 24h4.57C15.999 15.179 8.821 8.001 0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"></path>
+    <path d="M24 24C24 10.766 13.234 0 0 0v4.571c10.714 0 19.43 8.714 19.43 19.429z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h362c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="arrow">
+    <path d="M604.501 440.509L325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298 0 36.323s26.223 10.024 36.222 0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221 0 9.999-10.023 9.999-26.298 0-36.323z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly">
+    <path d="M504.971 239.029L448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c19.851 0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002 0 0 0 400 320v108c0 19.851-16.149 36-36 36h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c46.318 0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568 0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255 0 24-10.745 24-24S205.255 0 192 0h-44c-46.318 0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568 0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255 0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851 0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002 0 0 0 112 192z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="copy">
+    <path d="M366.345 406.069H66.207c-9.751 0-17.655-7.904-17.655-17.655V17.655C48.552 7.904 56.456 0 66.207 0h300.138C376.096 0 384 7.904 384 17.655v370.759c0 9.751-7.904 17.655-17.655 17.655z" fill="#f1f4fb"></path>
+    <path d="M384 388.414v-76.992c-.907.322-1.869.494-2.751.882-6.307-6.593-14.733-11.025-24.111-11.964a40.49 40.49 0 0 0-8.448.039v-92.93c0-21.903-17.82-39.723-39.723-39.724a40.5 40.5 0 0 0-4.036.202c-20.012 2.004-35.689 19.916-35.689 40.781v101.773l-21.581 21.581c-15.241 15.241-21.393 36.866-16.456 57.847l3.802 16.16h131.338c9.75 0 17.655-7.905 17.655-17.655z"
+      fill="#d5dced"></path>
+    <circle cx="128" cy="105.931" r="26.483" fill="#b4e66e"></circle>
+    <circle cx="128" cy="203.034" r="26.483" fill="#dae169"></circle>
+    <circle cx="128" cy="300.138" r="26.483" fill="#ffdc64"></circle>
+    <path d="M331.034 229.517H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h141.241c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 194.207H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h105.931a8.826 8.826 0 0 1 8.828 8.828 8.826 8.826 0 0 1-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M331.034 326.621H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h141.241c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 291.31H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h105.931c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M331.034 132.414H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h141.241a8.826 8.826 0 0 1 8.828 8.828 8.826 8.826 0 0 1-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 97.103H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h105.931a8.826 8.826 0 0 1 8.828 8.828 8.825 8.825 0 0 1-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M443.656 335.563c-13.21-1.323-24.345 9.015-24.345 21.954v-7.569c0-11.544-8.306-22.063-19.794-23.213-13.209-1.323-24.344 9.015-24.344 21.954v-7.569c0-11.544-8.306-22.063-19.794-23.213-13.209-1.323-24.344 9.015-24.344 21.954V207.448c0-12.939-11.135-23.277-24.345-21.954-11.486 1.15-19.793 11.669-19.793 23.213v109.086l-26.752 26.752a44.14 44.14 0 0 0-11.754 41.32l18.47 78.495c6.567 27.913 31.475 47.64 60.15 47.64h74.645c34.127 0 61.793-27.666 61.793-61.793v-91.431c-.001-11.544-8.306-22.063-19.793-23.213z"
+      fill="#f0c087"></path>
+    <path d="M339.862 361.377a8.829 8.829 0 0 0 8.828-8.828v-34.194c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zM384 370.205a8.829 8.829 0 0 0 8.828-8.828v-34.194c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zm44.138 8.827a8.829 8.829 0 0 0 8.828-8.828V336.01c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zM288.885 464.36l-20.467-86.985a28.482 28.482 0 0 1 7.585-26.663l10.893-10.894v22.113a8.829 8.829 0 0 0 17.656 0V185.933c-10.344 2.173-17.655 11.972-17.655 22.773v109.087l-26.752 26.752a44.14 44.14 0 0 0-11.754 41.32l18.47 78.495c6.567 27.913 31.475 47.64 60.15 47.64h22.026c-28.677 0-53.584-19.727-60.152-47.64z"
+      fill="#e6af78"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme">
+    <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0 0 14.143 5.857 19.94 19.94 0 0 0 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu">
+    <path d="M492 236H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954 0 96s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20z"></path>
+  </symbol>
+</svg>
+<footer class = 'footer'>
+  <div class = 'footer_inner wrap pale'>
+    <img src = 'https://chechia.net/icons/apple-touch-icon.png' class = 'icon icon_2 transparent'>
+    <p>Copyright &copy;&nbsp;<span class = 'year'></span>&nbsp;CHE-CHIA CHANG. All Rights Reserved</p>
+<a class='to_top' href="#documentTop">
+  <svg class="icon">
+    <use xlink:href="#arrow"></use>
+  </svg>
+</a>
+
+  </div>
+</footer>
+    <script type="text/javascript" src = "https://chechia.net/js/bundle.min.8475c29f8da3c876e0358b05e6aeecc90b3affb7bfd705c202f65f468c200268c1cc8c5ea6a01b1b47ddf853c358f96e98e3df6c0cc877a19ead459cf06b9afc.js" integrity=
+    "sha512-hHXCn42jyHbgNYsF5q7syQs6/7e/1wXCAvZfRowgAmjBzIxepqAbG0fd&#43;FPDWPlumOPfbAzId6GerUWc8Gua/A==" crossorigin="anonymous"></script>
+  </body>
+</html>

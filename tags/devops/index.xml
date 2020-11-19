@@ -9,68 +9,63 @@
     <lastBuildDate>Sun, 14 Jun 2020 16:46:09 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>從零開始的 Infrastructure as Code: Terraform - 01</title>
-      <link>https://chechia.net/post/terraform-infrastructure-as-code/</link>
+      <link>https://chechia.net/post/2020-06-14-terraform-infrastructure-as-code/</link>
       <pubDate>Sun, 14 Jun 2020 16:46:09 +0800</pubDate>
       
-      <guid>https://chechia.net/post/terraform-infrastructure-as-code/</guid>
+      <guid>https://chechia.net/post/2020-06-14-terraform-infrastructure-as-code/</guid>
       <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- 01 - Introduction to Infrastructure as Code [02 - Terraform 簡介與基本操作] [03 - 為公司導入 Terraform] Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
  Outlline  our story: issues, steps, &amp;amp; results basics IaC, terraform benefits risks and 坑 to be or not to be  experience oriented</description>
     </item>
     
     <item>
       <title>Cert Manager Complete Workflow</title>
-      <link>https://chechia.net/post/cert-manager-complete-workflow/</link>
+      <link>https://chechia.net/post/2019-10-12-cert-manager-complete-workflow/</link>
       <pubDate>Sat, 12 Oct 2019 17:41:25 +0800</pubDate>
       
-      <guid>https://chechia.net/post/cert-manager-complete-workflow/</guid>
+      <guid>https://chechia.net/post/2019-10-12-cert-manager-complete-workflow/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ Nginx Ingress (3)  Deploy Nginx Ingress Controller Configure Nginx Ingress   Cert-manager (3)  Deploy cert-manager How cert-manager work Cert-manager complete workflow   Kubernetes CRD &amp;amp; Operator-sdk (3)  Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- Recap 昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事
- 設置 Let&amp;rsquo;s Encript prod site 的 Issuer 設置 certificates.certmanager.k8s.io 資源來定義 certificate 的取得方式 或是在 ingress 中配置 tls，讓 cert-manager 自動透過 ingress-shim 產生 certifcates.cert-manager，並且產生 certificate  以上是使用 cert-manager 產生 certificate 的基本操作，剩下的是由 cert-manager 完成。實際上 cert-manager 在產生出 certificate 之前還做了很多事情，我們今天就詳細走過完整流程，藉此了解 cert-manager 配合 issuing certificate 的流程</description>
+ Recap 昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事</description>
     </item>
     
     <item>
       <title>Cert Manager How It Work</title>
-      <link>https://chechia.net/post/cert-manager-how-it-work/</link>
+      <link>https://chechia.net/post/2019-10-11-cert-manager-how-it-work/</link>
       <pubDate>Fri, 11 Oct 2019 11:24:34 +0800</pubDate>
       
-      <guid>https://chechia.net/post/cert-manager-how-it-work/</guid>
+      <guid>https://chechia.net/post/2019-10-11-cert-manager-how-it-work/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ Nginx Ingress (3)  Deploy Nginx Ingress Controller Configure Nginx Ingress   Cert-manager (3)  Deploy cert-manager How cert-manager work Cert-manager complete workflow   Kubernetes CRD &amp;amp; Operator-sdk (3)  Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- 今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer
-CA Terminology 先把實際執行 CA 簽發的名詞定義一下，以免跟 cert-manager 的資源搞混
- Certificate: 憑證，x509 certificate，cert-manager 自動管理的目標，透過 let&amp;rsquo;s encript 取得的 x509 certificates CA (Certificate Authority): issue signed certificate 的機構 issue: 頒發，指 CA 產生 certificate 與 key (今天的範例格式是 .</description>
+ 今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer</description>
     </item>
     
     <item>
       <title>Cert Manager Deployment on Kubernetes</title>
-      <link>https://chechia.net/post/cert-manager-deployment/</link>
+      <link>https://chechia.net/post/2019-10-10-cert-manager-deployment/</link>
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechia.net/post/cert-manager-deployment/</guid>
+      <guid>https://chechia.net/post/2019-10-10-cert-manager-deployment/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress Controller Cert-manager Kubernetes CRD &amp;amp; Operator-sdk  由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ Nginx Ingress (3)  Deploy Nginx Ingress Controller Configure Nginx Ingress   Cert-manager (3)  Deploy cert-manager How cert-manager work Cert-manager complete workflow   Kubernetes CRD &amp;amp; Operator-sdk (3)  Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- 摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
-以往我們使用 Let&amp;rsquo;s Encrypt 提供的免費自動化憑證頒發，搭配 kube-lego 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 Cert-manager 來進行 kubernetes 上的憑證自動化管理。
-cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情</description>
+ 摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。</description>
     </item>
     
     <item>
       <title>Logstash on GKE</title>
-      <link>https://chechia.net/post/logstash-on-gke/</link>
+      <link>https://chechia.net/post/2019-09-21-logstash-on-gke/</link>
       <pubDate>Sat, 21 Sep 2019 15:22:23 +0800</pubDate>
       
-      <guid>https://chechia.net/post/logstash-on-gke/</guid>
+      <guid>https://chechia.net/post/2019-09-21-logstash-on-gke/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
@@ -79,12 +74,12 @@ cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核�
     
     <item>
       <title>Monitoring GCE With ELK</title>
-      <link>https://chechia.net/post/monitoring-gce-with-elk/</link>
+      <link>https://chechia.net/post/2019-09-18-monitoring-gce-with-elk/</link>
       <pubDate>Wed, 18 Sep 2019 19:10:50 +0800</pubDate>
       
-      <guid>https://chechia.net/post/monitoring-gce-with-elk/</guid>
+      <guid>https://chechia.net/post/2019-09-18-monitoring-gce-with-elk/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
  ELK 的 beats 是輕量級的系統監測收集器，beats 收集到的 data 經過 mapping 可以送到 Elasticsearch 後，進行彈性的搜尋比對。
 beat 有許多種類，依據收集的 data 區別：
@@ -93,12 +88,12 @@ beat 有許多種類，依據收集的 data 區別：
     
     <item>
       <title>ELK or Not ELK</title>
-      <link>https://chechia.net/post/elastic-or-not-elastic/</link>
+      <link>https://chechia.net/post/2019-09-18-elastic-or-not-elastic/</link>
       <pubDate>Wed, 18 Sep 2019 18:51:40 +0800</pubDate>
       
-      <guid>https://chechia.net/post/elastic-or-not-elastic/</guid>
+      <guid>https://chechia.net/post/2019-09-18-elastic-or-not-elastic/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
  有板友問到，要如何選擇要不要用 ELK，其實也這是整篇 ELK 的初衷。這邊分享一下 ELK 與其他選擇，以及選擇解決方案應該考慮的事情。
 其他常用的服務 Prometheus: 開源的 time series metrics 收集系統
 Stackdriver: GCP 的 log 與 metrics 平台
@@ -110,12 +105,12 @@ Self-hosted ELK
     
     <item>
       <title>Secure Elk Stack</title>
-      <link>https://chechia.net/post/secure-elk-stack/</link>
+      <link>https://chechia.net/post/2019-09-15-secure-elk-stack/</link>
       <pubDate>Sun, 15 Sep 2019 23:00:33 +0800</pubDate>
       
-      <guid>https://chechia.net/post/secure-elk-stack/</guid>
+      <guid>https://chechia.net/post/2019-09-15-secure-elk-stack/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
 &amp;ndash;
 上篇Self-host ELK stack on GCP 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。
 官方的文件在這裡，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的Tutorial: Getting started with security 開始，過程比較不會這麼血尿。
@@ -125,12 +120,12 @@ Self-hosted ELK
     
     <item>
       <title>Self-host ELK stack - Installation</title>
-      <link>https://chechia.net/post/self-host-elk-stack-on-gcp/</link>
+      <link>https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/</link>
       <pubDate>Sun, 15 Sep 2019 11:43:03 +0800</pubDate>
       
-      <guid>https://chechia.net/post/self-host-elk-stack-on-gcp/</guid>
+      <guid>https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP  作為範例的 ELK 的版本是當前的 stable release 7.3.1。
 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
 &amp;ndash;

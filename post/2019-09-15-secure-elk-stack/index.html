@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en" data-figures="" class="page">
+  <head>  <title>Secure Elk Stack | Che-Chia Chang</title>
+  <meta charset='utf-8'>
+  <meta name="generator" content="Hugo 0.75.1" />
+  <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169903302-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-169903302-1');
+</script>
+<meta property = "og:locale" content = "en_US" />
+<meta property="og:type" content="article">
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash …">
+<meta name = "twitter:card" content = "summary" />
+<meta name = "twitter:creator" content = "@chechiachang">
+<meta name = "twitter:title" content = "Secure Elk Stack" />
+<meta property = "og:url" content = "https://chechia.net/post/2019-09-15-secure-elk-stack/" />
+<meta property = "og:title" content = "Secure Elk Stack" />
+<meta property = "og:description" content = "2020 It邦幫忙鐵人賽 系列文章
+ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash …" />
+<meta property = "og:image" content = "https://chechia.net/images/logos/white_logo_dark_background.jpg" />
+<link rel='apple-touch-icon' sizes='180x180' href='https://chechia.net/icons/apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='https://chechia.net/icons/favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='https://chechia.net/icons/favicon-16x16.png'>
+<link rel='manifest' href='https://chechia.net/icons/site.webmanifest'>
+<link rel="mask-icon" href= 'https://chechia.net/safari-pinned-tab.svg' color="#002538">
+<meta name="msapplication-TileColor" content="#002538">
+<meta name="theme-color" content="#002538">
+
+  <link rel='canonical' href='https://chechia.net/post/2019-09-15-secure-elk-stack/'>
+
+    
+
+    
+    <link rel="preload" href="https://chechia.net/css/styles.8c77cda9454d30afb96a03bf232ee1089eb4b0da2a7c6e7f2b2a09d6cfcf2fe97836d9edfca70365fb630563fff409fd484299df18ca05a2950108d46da3cf1e.css" integrity = "sha512-jHfNqUVNMK&#43;5agO/Iy7hCJ60sNoqfG5/KyoJ1s/PL&#43;l4Ntnt/KcDZftjBWP/9An9SEKZ3xjKBaKVAQjUbaPPHg==" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://chechia.net/js/bundle.min.8475c29f8da3c876e0358b05e6aeecc90b3affb7bfd705c202f65f468c200268c1cc8c5ea6a01b1b47ddf853c358f96e98e3df6c0cc877a19ead459cf06b9afc.js" as="script" integrity=
+    "sha512-hHXCn42jyHbgNYsF5q7syQs6/7e/1wXCAvZfRowgAmjBzIxepqAbG0fd&#43;FPDWPlumOPfbAzId6GerUWc8Gua/A==" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://chechia.net/css/styles.8c77cda9454d30afb96a03bf232ee1089eb4b0da2a7c6e7f2b2a09d6cfcf2fe97836d9edfca70365fb630563fff409fd484299df18ca05a2950108d46da3cf1e.css" integrity="sha512-jHfNqUVNMK&#43;5agO/Iy7hCJ60sNoqfG5/KyoJ1s/PL&#43;l4Ntnt/KcDZftjBWP/9An9SEKZ3xjKBaKVAQjUbaPPHg==" crossorigin="anonymous">
+	  
+  </head>
+  
+  
+    
+  
+  <body data-code="7" data-lines="false" id="documentTop">
+
+<header class = 'nav_header' >
+  <nav class = 'nav'>
+    <a href='https://chechia.net/' class = 'nav_brand nav_item'>
+      <img src="https://chechia.net/images/fav_79x79.jpg" class="logo">
+      <div class = 'nav_close'>
+        <div>
+          <svg class="icon">
+            <use xlink:href="#open-menu"></use>
+          </svg>
+          <svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg>
+        </div>
+      </div>
+    </a>
+    <div class = 'nav_body nav_body_left'>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/' class = 'nav_item'>Home </a>
+      </div>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/' class = 'nav_item'>系列文 <img src= https://chechia.net/icons/caret-icon.svg alt="icon" class="nav_icon"></a>
+        <div class = 'nav_sub'>
+          <a href = 'https://chechia.net/post/2020-ithome-ironman-challenge/' class = 'nav_child nav_item'>2020 iThome 鐵人賽優勝文章</a>
+        </div>
+      </div>
+      <div class = 'nav_parent'>
+        <a href = 'https://chechia.net/about/' class = 'nav_item'>About </a>
+      </div>
+<div class='follow'>
+  <a href='https://www.facebook.com/engineer.from.scratch'>
+    <svg class="icon">
+      <use xlink:href="#facebook"></use>
+    </svg>
+  </a>
+  <a href='https://github.com/chechiachang'>
+    <svg class="icon">
+      <use xlink:href="#github"></use>
+    </svg>
+  </a>
+  <a href='https://twitter.com/chechiachang'>
+    <svg class="icon">
+      <use xlink:href="#twitter"></use>
+    </svg>
+  </a>
+  <a href='https://www.linkedin.com/in/che-chia-chang-92194a4a/'>
+    <svg class="icon">
+      <use xlink:href="#linkedin"></use>
+    </svg>
+  </a>
+<div class = 'color_mode'>
+  <input type = 'checkbox' class = 'color_choice' id = 'mode'>
+</div>
+
+</div>
+
+    </div>
+  </nav>
+</header>
+
+    <main>
+  
+<div class = 'grid-inverse wrap content'>
+  <article class='post_content'>
+    <h1 class='post_title'>Secure Elk Stack</h1><div class = 'post_meta'>
+  <svg class="icon">
+    <use xlink:href="#calendar"></use>
+  </svg>
+  <span class="post_date">
+    Sep 15, 2019</span>
+  <a href = 'https://chechia.net/tags/tls' class = 'post_tag button button_translucent'>tls
+  </a>
+  <a href = 'https://chechia.net/tags/elasticsearch' class = 'post_tag button button_translucent'>elasticsearch
+  </a>
+  <a href = 'https://chechia.net/tags/devops' class = 'post_tag button button_translucent'>devops
+  </a>
+  <a href = 'https://chechia.net/tags/logstash' class = 'post_tag button button_translucent'>logstash
+  </a>
+</div>
+
+    <div class='post_share'>
+  Share on:
+  <a href="https://twitter.com/intent/tweet?text=Secure%20Elk%20Stack&url=https%3a%2f%2fchechia.net%2fpost%2f2019-09-15-secure-elk-stack%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <svg class="icon">
+      <use xlink:href="#twitter"></use>
+    </svg>
+  </a>
+  
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2f2019-09-15-secure-elk-stack%2f&t=Secure%20Elk%20Stack" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <svg class="icon">
+      <use xlink:href="#facebook"></use>
+    </svg>
+  </a>
+  <script>
+    function shareViaLinkedin() {
+      window.open('http://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent("https://chechia.net/post/2019-09-15-secure-elk-stack/"), '', 'left=0,top=0,width=650,height=420,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+    }
+  </script>
+  <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow" onclick="shareViaLinkedin()">
+    <svg class="icon">
+      <use xlink:href="#linkedin"></use>
+    </svg>
+  </a>
+  <a href="https://chechia.net/post/2019-09-15-secure-elk-stack/" title="Copy Link" class="link link_yank">
+    <svg class="icon">
+      <use xlink:href="#yank"></use>
+    </svg>
+  </a>
+</div>
+
+    
+    <p><a href="https://ithelp.ithome.com.tw/2020ironman">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+<ul>
+<li><a href="https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechia.net/post/2019-09-15-secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechia.net/post/2019-09-18-monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechia.net/post/2019-09-19-monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechia.net/post/2019-09-18-elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechia.net/post/2019-09-21-logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
+<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
+<li>Debug ELK stack on GCP</li>
+</ul>
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechia.net">https://chechia.net</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p>&ndash;</p>
+<p>上篇<a href="https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a> 介紹了，elk stack 基本的安裝，安裝完獲得一個只支援 http (裸奔)的 elk stack，沒有 https 在公開網路上使用是非常危險的。這篇要來介紹如何做安全性設定。</p>
+<p><a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html">官方的文件在這裡</a>，碎念一下，除非對 ELK 的功能有一定了解，不然這份真的不是很友善。建議從官方文件底下的<a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/security-getting-started.html">Tutorial: Getting started with security</a> 開始，過程比較不會這麼血尿。</p>
+<p>總之為了啟用 authentication &amp; https，這篇要做的事情：</p>
+<ul>
+<li>enable x-pack &amp; activate basic license</li>
+<li>Generate self-signed ca, server certificate, client certificate</li>
+<li>Configure Elasticsearch, Kibana, &amp; other components to
+<ul>
+<li>use server certificate when act as server</li>
+<li>use client certificate when connect to an ELK server</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="啟用-x-pack">啟用 X-pack</h1>
+<p>Elasticsearch 的安全性模組由 x-pack extension 提供，在 <a href="https://www.elastic.co/what-is/open-x-pack">6.3.0 之後的版本</a>，安裝 elasticsearch 的過程中就預設安裝 x-pack。</p>
+<p>附上<a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/get-started-enable-security.html">啟用的官方文件</a></p>
+<p>然而，由於舊版的 x-pack 是付費內容，目前的 elasticsearch 安裝完後，elasticsearch.yml 設定預設不啟用 x-pack，也就是說沒看到這篇官方文件的話，很容易就獲得沒有任何 security 功能的 ELK。</p>
+<p>雖然目前已經可以使用免費的 basic license 使用 security 功能，還是希望官方可以 default 啟用 security。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>$ sudo vim /etc/elasticsearch/elasticsearch.yml
+<span class="ln">2</span>
+<span class="ln">3</span>xpack.security.enabled: true
+<span class="ln">4</span>
+<span class="ln">5</span>xpack.license.self_generated.type: basic
+<span class="ln">6</span>
+<span class="ln">7</span>discovery.type: single-node
+</code></pre></div><p>我們這邊啟用 xpack.security，同時將 self-generated license 生出來，我們這邊只使用基本的 basic subscription。若希望啟用更多功能，可以看<a href="https://www.elastic.co/cn/subscriptions">官方subcription 方案介紹</a></p>
+<p>另外，如果不同時設定為 single-node 的話，預設會尋找其他elasticsearch node 來組成 cluster，而我們就必須要在所有 node 上啟用 security，這篇只帶大家做一個 single node cluster，簡化步驟。</p>
+<p>重啟 elasticsearch ，檢查 log，看啟動時有沒有載入 x-pack</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>sudo systemctl restart elasticsearch
+<span class="ln"> 2</span>
+<span class="ln"> 3</span>$ tail -f /var/log/elasticsearch/elasticsearch.log
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>[2019-09-16T07:39:49,467][INFO ][o.e.e.NodeEnvironment    ] [elk] using [1] data paths, mounts [[/mnt/disks/elk (/dev/sdb)]], net usable_space [423.6gb], net total_space [491.1gb], types [ext4]
+<span class="ln"> 6</span>[2019-09-16T07:39:49,474][INFO ][o.e.e.NodeEnvironment    ] [elk] heap size [3.9gb], compressed ordinary object pointers [true]
+<span class="ln"> 7</span>[2019-09-16T07:39:50,858][INFO ][o.e.n.Node               ] [elk] node name [elk], node ID [pC22j9D4R6uiCM7oTc1Fiw], cluster name [elasticsearch]
+<span class="ln"> 8</span>[2019-09-16T07:39:50,866][INFO ][o.e.n.Node               ] [elk] version[7.3.1], pid[17189], build[default/deb/4749ba6/2019-08-19T20:19:25.651794Z], OS[Linux/4.15.0-1040-gcp/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/12.0.2/12.0.2+10]
+<span class="ln"> 9</span>[2019-09-16T07:39:50,878][INFO ][o.e.n.Node               ] [elk] JVM home [/usr/share/elasticsearch/jdk]
+<span class="ln">10</span>...
+<span class="ln">11</span>[2019-09-16T07:39:59,108][INFO ][o.e.p.PluginsService     ] [elk] loaded module [x-pack-ccr]
+<span class="ln">12</span>[2019-09-16T07:39:59,109][INFO ][o.e.p.PluginsService     ] [elk] loaded module [x-pack-core]
+<span class="ln">13</span>...
+<span class="ln">14</span>[2019-09-16T07:39:59,111][INFO ][o.e.p.PluginsService     ] [elk] loaded module [x-pack-logstash]
+<span class="ln">15</span>[2019-09-16T07:39:59,113][INFO ][o.e.p.PluginsService     ] [elk] loaded module [x-pack-voting-only-node]
+<span class="ln">16</span>[2019-09-16T07:39:59,114][INFO ][o.e.p.PluginsService     ] [elk] loaded module [x-pack-watcher]
+<span class="ln">17</span>[2019-09-16T07:39:59,115][INFO ][o.e.p.PluginsService     ] [elk] no plugins loaded
+<span class="ln">18</span>[2019-09-16T07:40:07,964][INFO ][o.e.x.s.a.s.FileRolesStore] [elk] parsed [0] roles from file [/etc/elasticsearch/roles.yml]
+<span class="ln">19</span>[2019-09-16T07:40:10,369][INFO ][o.e.x.m.p.l.CppLogMessageHandler] [elk] [controller/17314] [Main.cc@110] controller (64 bit): Version 7.3.1 (Build 1d93901e09ef43) Copyright (c) 2019 Elasticsearch BV
+<span class="ln">20</span>[2019-09-16T07:40:11,776][DEBUG][o.e.a.ActionModule       ] [elk] Using REST wrapper from plugin org.elasticsearch.xpack.security.Security
+<span class="ln">21</span>[2019-09-16T07:40:14,396][INFO ][o.e.d.DiscoveryModule    ] [elk] using discovery type [single-node] and seed hosts providers [settings]
+<span class="ln">22</span>[2019-09-16T07:40:16,222][INFO ][o.e.n.Node               ] [elk] initialized
+<span class="ln">23</span>[2019-09-16T07:40:16,224][INFO ][o.e.n.Node               ] [elk] starting ...
+<span class="ln">24</span>[2019-09-16T07:40:16,821][INFO ][o.e.t.TransportService   ] [elk] publish_address {10.140.0.10:9300}, bound_addresses {[::]:9300}
+<span class="ln">25</span>[2019-09-16T07:40:16,872][INFO ][o.e.c.c.Coordinator      ] [elk] cluster UUID [1CB6_Lt-TUWEmRoN9SE49w]
+<span class="ln">26</span>[2019-09-16T07:40:17,088][INFO ][o.e.c.s.MasterService    ] [elk] elected-as-master ([1] nodes joined)[{elk}{pC22j9D4R6uiCM7oTc1Fiw}{Os-2FBjgSTOd1G_I3QYwVQ}{10.140.0.10}{10.140.0.10:9300}{dim}{ml.machine_memory=7836028928, xpack.installed=true, ml.max_open_jobs=20} elect leader, _BECOME_MASTER_TASK_, _FINISH_ELECTION_], term: 9, version: 921, reason: master node changed {previous [], current [{elk}{pC22j9D4R6uiCM7oTc1Fiw}{Os-2FBjgSTOd1G_I3QYwVQ}{10.140.0.10}{10.140.0.10:9300}{dim}{ml.machine_memory=7836028928, xpack.installed=true, ml.max_open_jobs=20}]}
+<span class="ln">27</span>[2019-09-16T07:40:17,819][INFO ][o.e.c.s.ClusterApplierService] [elk] master node changed {previous [], current [{elk}{pC22j9D4R6uiCM7oTc1Fiw}{Os-2FBjgSTOd1G_I3QYwVQ}{10.140.0.10}{10.140.0.10:9300}{dim}{ml.machine_memory=7836028928, xpack.installed=true, ml.max_open_jobs=20}]}, term: 9, version: 921, reason: Publication{term=9, version=921}
+<span class="ln">28</span>[2019-09-16T07:40:17,974][INFO ][o.e.h.AbstractHttpServerTransport] [elk] publish_address {10.140.0.10:9200}, bound_addresses {[::]:9200}
+<span class="ln">29</span>[2019-09-16T07:40:17,975][INFO ][o.e.n.Node               ] [elk] started
+<span class="ln">30</span>[2019-09-16T07:40:18,455][INFO ][o.e.c.s.ClusterSettings  ] [elk] updating [xpack.monitoring.collection.enabled] from [false] to [true]
+<span class="ln">31</span>[2019-09-16T07:40:22,555][INFO ][o.e.l.LicenseService     ] [elk] license [************************************] mode [basic] - valid
+<span class="ln">32</span>[2019-09-16T07:40:22,557][INFO ][o.e.x.s.s.SecurityStatusChangeListener] [elk] Active license is now [BASIC]; Security is enabled
+</code></pre></div><h1 id="enable-user-authentication">Enable user authentication</h1>
+<p>啟用 security 之前，我們直接連入 Kibana http://10.140.0.10:5601 ，不用任何使用者登入，便可以完整使用 Kibana 功能（包含 admin 管理介面）。</p>
+<p>啟用 security 後，便需要使用帳號密碼登入。在這邊先用工具把使用者密碼產生出來。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span># 互動式
+<span class="ln">2</span>/usr/share/elasticsearch/bin/elasticsearch-setup-passwords interactive
+<span class="ln">3</span>
+<span class="ln">4</span># 自動產生
+<span class="ln">5</span>/usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto
+</code></pre></div><p>密碼生出來後，就把帳號密碼收好，等等會用到。之後初次登入也是使用這些密碼。</p>
+<h1 id="configure-passwords-on-client-side">Configure passwords on client-side</h1>
+<p>由於已經啟用 authentication，其他 ELK 元件 (Kibana, logstash, filebeat, apm-server,&hellip;) 連入 Elasticsearch 也都會需要各自的帳號密碼驗證。</p>
+<p>以 Kibana 為例，可以直接在 kibana.yml 中直接設定帳號密碼</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>$ sudo vim /etc/kibana/kibana.yml
+<span class="ln">2</span>
+<span class="ln">3</span>elasticsearch.hosts: [&#34;http://localhost:9200&#34;]
+<span class="ln">4</span>xpack.security.enabled: true
+<span class="ln">5</span>
+<span class="ln">6</span>elasticsearch.username: &#34;kibana&#34;
+<span class="ln">7</span>elasticsearch.password: &#34;***********&#34;
+</code></pre></div><p>當然，這邊就是明碼的，看了不太安全。</p>
+<p>或是使用 keystore 把 built-in user 的密碼加密，存在 kibana 的 keystore 裡面，重啟 kibana 時便會載入。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>/usr/share/kibana/bin/kibana-keystore create
+<span class="ln">2</span>/usr/share/kibana/bin/kibana-keystore add elasticsearch.username
+<span class="ln">3</span>/usr/share/kibana/bin/kibana-keystore add elasticsearch.password
+</code></pre></div><p>如果有啟用 Filebeat 功能，beat 元件連入 elasticsearch 一樣需要設定</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>/usr/share/apm-server/bin/filebeat keystore create
+<span class="ln">2</span>/usr/share/apm-server/bin/filebeat add elasticsearch.username
+<span class="ln">3</span>/usr/share/apm-server/bin/filebeat add elasticsearch.password
+</code></pre></div><p>如果有啟用 application performance monitoring(APM) 功能，apm-server 元件連入 elasticsearch 一樣需要設定</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>/usr/share/apm-server/bin/apm-server keystore create
+<span class="ln">2</span>/usr/share/apm-server/bin/apm-server add elasticsearch.username
+<span class="ln">3</span>/usr/share/apm-server/bin/apm-server add elasticsearch.password
+</code></pre></div><hr>
+<h1 id="encrypting-communications">Encrypting Communications</h1>
+<p>上面加了 username/password authentication，但如果沒 https/tls 基本上還是裸奔。接下來要處理連線加密。</p>
+<p><a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/encrypting-internode-communications.html">官方 tutorial</a></p>
+<p>一堆官方文件，我們先跳過XD</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/elasticsearch-security.html">elasticsearch security</a></li>
+<li><a href="https://www.elastic.co/guide/en/elastic-stack-overview/7.3/ssl-tls.html">elastic stack ssl tls</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/configuring-tls.html#configuring-tls">elasticsearch configuring tls</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/certutil.html">certutil</a></li>
+</ul>
+<h1 id="分析一下需求跟規格">分析一下需求跟規格</h1>
+<p>我們需要為每一個 node 生一組 node certificate，使用 node certificate 產生 client certificates 提供給其他 client，連入時會驗證 client 是否為 authenticated user。</p>
+<p>針對目前這個 single-node ELK stack，我們可能有幾種選擇</p>
+<ul>
+<li>簽署一個 localhost，當然這個只能在 localhost 上的客戶端元件使用，別的 node 無法用這個連入</li>
+<li>簽署一個 public DNS elk.chechiachang.com，可以在公開網路上使用，別人也可以使用這個DNS嘗試連入</li>
+<li>簽署一個私有網域的 DNS，例如在 GCP 上可以使用<a href="https://cloud.google.com/compute/docs/internal-dns?hl=zh-tw">內部dns服務</a>
+<ul>
+<li>長這樣 elk.asia-east1-b.c.chechiachang.internal</li>
+<li>[INSTANCE_NAME].[ZONE].c.[PROJECT_ID].internal</li>
+</ul>
+</li>
+<li>有需要也可以一份 server certificate 中簽署複數個 site</li>
+</ul>
+<p>我們這邊選擇使用內部 dns，elk.asia-east1-b-c-chechaichang.internal，讓這個 single-node elk 只能透過內部網路存取。</p>
+<ul>
+<li>elasticsearch: elk.asia-east1-b.c.chechaichang.internal:9200</li>
+<li>kibana: elk.asia-east1-b.c.chechaichang.internal:5601</li>
+<li>外部要連近來 kibana，我們使用 vpn 服務連進私有網路</li>
+</ul>
+<p>如果想使用外部 dns，讓 elk stack 在公開網路可以使用，ex. elk.chechiachang.com，可以</p>
+<ul>
+<li>GCP 的 load balancer掛進來，用 GCP 的 certificate manager 自動管理 certificate</li>
+<li>或是在 node 上開一個 nginx server，再把 certificate 用 certbot 生出來</li>
+</ul>
+<h1 id="generate-certificates">Generate certificates</h1>
+<p>先把 X.509 digital certificate 的 certificate authority(CA) 生出來。我們可以設定密碼保護這個檔案</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>mkdir -p /etc/elasticsearch/config
+<span class="ln">2</span>
+<span class="ln">3</span># CA generated with Elastic tool
+<span class="ln">4</span>/usr/share/elasticsearch/bin/elasticsearch-certutil ca \
+<span class="ln">5</span>  -out /etc/elasticsearch/config/elastic-stack-ca.p12
+</code></pre></div><p>生出來是 PKCS#12 格式的 keystore，包含：</p>
+<ul>
+<li>CA 的 public certificate</li>
+<li>CA 的基本資訊</li>
+<li>簽署其他 node certificates 使用的私鑰(private key)</li>
+</ul>
+<p>用 openssl 工具看一下內容，如果有密碼這邊要用密碼解鎖</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>$ openssl pkcs12 -in /etc/elasticsearch/config/elastic-stack-ca.p12 -info -nokeys
+</code></pre></div><p>附帶說明，X.509 有多種檔案格式</p>
+<ul>
+<li>.pem</li>
+<li>.cer, .crt, .der</li>
+<li>.p12</li>
+<li>.p7b, .p7c</li>
+<li>&hellip;</li>
+</ul>
+<p>另外檔案格式可以有其他用途，也就是說裡面裝的不一定是 X.509 憑證。裡面的內容也不同。</p>
+<p>ELK 設定的過程中，由於不是所有的 ELK component 都支援使用 .p12 檔案，我們在設定過程中會互相專換，或是混用多種檔案格式。</p>
+<h1 id="generate-certificate">Generate certificate</h1>
+<p>&laquo;&laquo;&laquo;&lt; HEAD</p>
+<p>我們用 elastic-stack-ca.p12 這組 keystore裡面的 CA 與 private key，為 elk.asia-east1-b.c.chechiachang.internal 簽一個 p12 keystore，裡面有</p>
+<ul>
+<li>node certificate</li>
+<li>node key</li>
+<li>CA certificate</li>
+</ul>
+<p>這邊只產生一組 server certificate 給 single-node cluster 的 node-1</p>
+<p>=======</p>
+<p>我們用 elastic-stack-ca.p12 這組 keystore裡面的 CA 與 private key，為 elk.asia-east1-b.c.chechiachang.internal 簽一個 p12 keystore，裡面有</p>
+<ul>
+<li>node certificate</li>
+<li>node key</li>
+<li>CA certificate</li>
+</ul>
+<p>這邊只產生一組 server certificate 給 single-node cluster 的 node-1</p>
+<p>如果 cluster 中有多個 elasticsearch，為每個 node 產生 certificate 時都要使用同樣 CA 來簽署，讓 server 信任這組 CA。</p>
+<p>使用 elasticsearch-certutil 簡化簽署過程，從產生 CA ，到使用 CA 簽署 certificate。另外，再產生 certificate 中使用 Subject Alternative Name(SAN)，並輸入 ip 與 dns。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span># certificate for site: private dns with Elastic CA
+<span class="ln">2</span>/usr/share/elasticsearch/bin/elasticsearch-certutil cert \
+<span class="ln">3</span>  --ca /etc/elasticsearch/config/elastic-stack-ca.p12 \
+<span class="ln">4</span>  --name elk.asia-east1-b.c.chechaichang.internal \
+<span class="ln">5</span>  --dns elk.asia-east1-b.c.chechaichang.internal \
+<span class="ln">6</span>  --ip 10.140.0.10 \
+<span class="ln">7</span>  -out /etc/elasticsearch/config/node-1.p12
+</code></pre></div><p>用 openssl 看一下內容，如果有密碼這邊要用密碼解鎖</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>$ openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -info -nokeys
+</code></pre></div><p>server 用這個 certificate ，啟用 ssl。</p>
+<p>client 使用這個 certificate 產生出來的 client.cer 與 client.key 與 server 連線，server 才接受客戶端是安全的。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>25f5ab795b9e698333a36fde7ecf23a8ba9d4595
+記得把所有權還給 elasticsearch 的使用者，避免 permission denied</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span># Change owner to fix read permission
+<span class="ln">2</span>chown -R elasticsearch:elasticsearch /etc/elasticsearch/config
+</code></pre></div><p>有密碼記得也要用 keystore 把密碼加密後喂給 elasticsearch</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
+<span class="ln">2</span>/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
+</code></pre></div><p>關於 X.509 Certifcate 之後有空我們來聊一下</p>
+<h1 id="更新-elasticsearch-設定">更新 elasticsearch 設定</h1>
+<p>Certificates 都生完了，接下來更改 elasticsearch 的參數，在 transport layer 啟用 ssl。啟用 security 後，在 transport layer 啟動 ssl 是必須的。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>$ sudo vim /etc/elasticsearch/elasticsearch.yml
+<span class="ln">2</span>
+<span class="ln">3</span>xpack.security.enabled: true
+<span class="ln">4</span>xpack.security.transport.ssl.enabled: true
+<span class="ln">5</span># use certificate. full will verify dns and ip
+<span class="ln">6</span>xpack.security.transport.ssl.verification_mode: certificate
+<span class="ln">7</span>xpack.security.transport.ssl.keystore.path: /etc/elasticsearch/config/node-1.p12
+<span class="ln">8</span>xpack.security.transport.ssl.truststore.path: /etc/elasticsearch/config/node-1.p12
+</code></pre></div><p>啟用 security 與 transport layer 的 ssl，然後指定 keystore路徑，讓 server 執行 client authentication
+由於這筆 p12 帶有 CA certificate 作為 trusted certificate entry，所以也可以順便當作 trustore，讓 client 信任這個 CA</p>
+<p>security 這邊提供了 server side (elasticsearch) 在檢查客戶端連線時的檢查模式(vertification mode)，<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html#ssl-tls-settings">文件有說明</a>，可以設定</p>
+<ul>
+<li>certificate: 檢查 certificate 加密是否有效</li>
+<li>full: 簽 node certificate 時可以指定 ip dns，啟用會檢查來源 node ip dns 是否也正確</li>
+</ul>
+<p>(Optional) HTTP layer 啟動 ssl</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>vim /etc/elasticsearch/elasticsearch.yml
+<span class="ln">2</span>
+<span class="ln">3</span>xpack.security.http.ssl.enabled: true
+<span class="ln">4</span>xpack.security.http.ssl.keystore.path: /etc/elasticsearch/config/node-1.p12
+<span class="ln">5</span>xpack.security.http.ssl.truststore.path: /etc/elasticsearch/config/node-1.p12
+<span class="ln">6</span>
+<span class="ln">7</span>/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password
+<span class="ln">8</span>/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password
+</code></pre></div><p>重啟 elasticsearch，看一下 log</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>sudo systemctl restart elasticsearch
+<span class="ln">2</span>tail -f /var/log/elasticsearch/elasticsearch.log
+</code></pre></div><p>然後你就發現，原來 kibana 連入 的 http 連線，不斷被 server 這端拒絕。所以以下要來設定 kibana</p>
+<hr>
+<h1 id="kibana">Kibana</h1>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/kibana/7.3/using-kibana-with-security.html">using kibana with security</a></li>
+<li><a href="https://www.elastic.co/guide/en/kibana/7.3/configuring-tls.html">kibana configuring tls</a></li>
+</ul>
+<p>使用剛剛簽的 server certificate，從裡面 parse 出 client-ca.cer，還有 client.cer 與 client.key</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>mkdir -p /etc/kibana/config
+<span class="ln"> 2</span>
+<span class="ln"> 3</span>$ openssl pkcs12 --help
+<span class="ln"> 4</span>Usage: pkcs12 [options]
+<span class="ln"> 5</span>Valid options are:
+<span class="ln"> 6</span> -chain              Add certificate chain
+<span class="ln"> 7</span> -nokeys             Don&#39;t output private keys
+<span class="ln"> 8</span> -nocerts            Don&#39;t output certificates
+<span class="ln"> 9</span> -clcerts            Only output client certificates
+<span class="ln">10</span> -cacerts            Only output CA certificates
+<span class="ln">11</span> -info               Print info about PKCS#12 structure
+<span class="ln">12</span> -nodes              Don&#39;t encrypt private keys
+<span class="ln">13</span> -in infile          Input filename
+<span class="ln">14</span>
+<span class="ln">15</span># no certs, no descript
+<span class="ln">16</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -nocerts -nodes &gt; /etc/kibana/config/client.key
+<span class="ln">17</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -clcerts -nokeys &gt; /etc/kibana/config/client.cer
+<span class="ln">18</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain &gt; /etc/kibana/config/client-ca.cer
+<span class="ln">19</span>
+<span class="ln">20</span>sudo chown -R kibana:kibana /etc/kibana/config/
+</code></pre></div><p>更改 kibana 連入 elasticsearch 的連線設定</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>sudo vim /etc/kigana/kibana.yml
+<span class="ln">2</span>
+<span class="ln">3</span>elasticsearch.hosts: [&#34;https://elk.asia-east1-b.c.chechaichang.internal:9200&#34;]
+<span class="ln">4</span>xpack.security.enabled: true
+<span class="ln">5</span>elasticsearch.ssl.certificate: /etc/kibana/config/client.cer
+<span class="ln">6</span>elasticsearch.ssl.key: /etc/kibana/config/client.key
+<span class="ln">7</span>elasticsearch.ssl.certificateAuthorities: [ &#34;/etc/kibana/config/client-ca.cer&#34; ]
+<span class="ln">8</span>elasticsearch.ssl.verificationMode: full
+</code></pre></div><ul>
+<li>指定 ssl.certificate, ssl.key 做連線 elasticsearch server 時的 user authentication</li>
+<li>由於我們是 self-signed CA，所以需要讓客戶端信任這個我們自簽的 CA</li>
+</ul>
+<p>注意這邊 elasticsearch.hosts 我們已經從 http://localhost 換成 https 的內部 dns，原有的 localhost 已經無法使用（如果 elasicsearch 有 enforce https 的話）</p>
+<p>重啟 Kibana，看一下 log</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>sudo systemctl restart kibana
+<span class="ln">2</span>journalctl -fu kibana
+</code></pre></div><p>如果沒有一直噴 ssl certificate error 的話，恭喜你成功了</p>
+<p>然而，除了 kibana 以外，我們還有其他的 client 需要連入 elasticsearch</p>
+<ul>
+<li>把上述步驟在 apm-server, filebeat, 其他的 beat 上也設定</li>
+<li>如果在 k8s 上，要把 cer, key 等檔案用 volume 掛進去
+&laquo;&laquo;&laquo;&lt; HEAD</li>
+</ul>
+<p>Kibana 本身也有 server 的功能，讓其他 client 連入。例如讓 filebeat 自動將 document tempalte 匯入 kibana，我們也需要設定</p>
+<ul>
+<li>kibana server certificate</li>
+<li>filebeat client to kibana server</li>
+</ul>
+<p>=======</p>
+<p>Kibana 本身也有 server 的功能，讓其他 client 連入。例如讓 filebeat 自動將 document tempalte 匯入 kibana，我們也需要設定</p>
+<ul>
+<li>kibana server certificate</li>
+<li>filebeat client to kibana server</li>
+</ul>
+<p>就是他們彼此互打，都要有 ca, key, cert</p>
+<h3 id="但基本上的設定都一樣下面可以不用看下去了xd">但基本上的設定都一樣，下面可以不用看下去了XD</h3>
+<p>如果有用到再查文件就好，這邊直接小結</p>
+<ul>
+<li>設定 security 前要先想號自己的需求，如何連入，安全性設定到哪邊</li>
+<li>使用 utility 自簽 CA，然後產生 server certificate</li>
+<li>使用 server certificate 再 parse 出 ca-certificate, client cers, key</li>
+</ul>
+<hr>
+<h1 id="kibana-作為-server">kibana 作為 server</h1>
+<p>工作路徑可能是這樣： app(apm-client library) -&gt; apm-server -&gt; kibana -&gt; elasticsearch</p>
+<ul>
+<li>kibana 連入 elasticsearch時， kibana 是 client 吃 elasticsearch 的憑證</li>
+<li>apm-server 連入 kibana時，kibana 是 server，apm-server 吃 kibana 的憑證</li>
+</ul>
+<p>首先更改 kibana 設定</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>$ sudo vim /etc/kibana/kibana.yml
+<span class="ln">2</span>
+<span class="ln">3</span>server.ssl.enabled: true
+<span class="ln">4</span>server.ssl.certificate: /etc/kibana/config/client.cer
+<span class="ln">5</span>server.ssl.key: /etc/kibana/config/client.key
+</code></pre></div><p>重啟 kibana</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>journalctl -fu kibana
+</code></pre></div><h1 id="apm-server">Apm-server</h1>
+<p><a href="https://www.elastic.co/guide/en/apm/server/7.3/securing-apm-server.html">https://www.elastic.co/guide/en/apm/server/7.3/securing-apm-server.html</a></p>
+<p>應用端的 apm-client (ex. apm-python-client)，連入 apm-server</p>
+<ul>
+<li>在 http 的狀況下，雖然有使用 secret-token，但還是裸奔</li>
+<li>在 https 的狀況下，要把 certificates，然後餵給應用端的client library</li>
+</ul>
+<p>更改 apm-server 的設定</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>sudo vim /etc/apm-server/apm-server.yml
+<span class="ln"> 2</span>
+<span class="ln"> 3</span>host: &#34;0.0.0.0:8200&#34;
+<span class="ln"> 4</span>  secret_token: &lt;設定一組夠安全的 token&gt;
+<span class="ln"> 5</span>
+<span class="ln"> 6</span>  rum:
+<span class="ln"> 7</span>    enabled: true
+<span class="ln"> 8</span>
+<span class="ln"> 9</span>kibana:
+<span class="ln">10</span>  protocol: &#34;https&#34;
+<span class="ln">11</span>  ssl.enabled: true
+<span class="ln">12</span>
+<span class="ln">13</span>output.kibana:
+<span class="ln">14</span>  enable: false # can only have 1 output
+<span class="ln">15</span>output.elasticsearch:
+<span class="ln">16</span>
+<span class="ln">17</span>monitoring.elasticsearch:
+<span class="ln">18</span>  protocol: &#34;https&#34;
+<span class="ln">19</span>  username: &#34;elastic&#34;
+<span class="ln">20</span>  password: &#34;*******************&#34;
+<span class="ln">21</span>  hosts: [&#34;elk.asia-east1-b.c.checahichang.internal:9200&#34;]
+<span class="ln">22</span>  ssl.enabled: true
+<span class="ln">23</span>  ssl.verification_mode: full
+<span class="ln">24</span>  ssl.certificate_authorities: [&#34;/etc/apm-server/config/client-ca.cer&#34;]
+<span class="ln">25</span>  ssl.certificate: &#34;/etc/apm-server/config/client.cer&#34;
+<span class="ln">26</span>  ssl.key: &#34;/etc/apm-server/config/client.key&#34;
+</code></pre></div><p>重啟 apm-server</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>systemctl restart apm-server
+<span class="ln">2</span>journalctl -fu apm-server
+</code></pre></div><h1 id="apm-library">APM library</h1>
+<p>應用端的設定就需要依據 library 的實做設定，例如 flask-apmagent-python</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>ELASTIC_APM_SERVER_CERT=/etc/elk/certificates/client.cer
+</code></pre></div><p><a href="https://www.elastic.co/guide/en/apm/agent/python/current/configuration.html#config-server-cert">apm agent python config server cert</a></p>
+<h1 id="filebeat">filebeat</h1>
+<p>記得我們在 node 上有安裝 Self-monitoring filebeat，elasticsearch 改成 ssl 這邊當然也連不盡去了，再做同樣操作</p>
+<p><a href="https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html">https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>sudo apt-get install filebeat
+<span class="ln">2</span>
+<span class="ln">3</span>mkdir -p /etc/filebeat/config
+<span class="ln">4</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -nocerts -nodes &gt; /etc/filebeat/config/client.key
+<span class="ln">5</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -clcerts -nokeys &gt; /etc/filebeat/config/client.cer
+<span class="ln">6</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain &gt; /etc/filebeat/config/client-ca.cer
+</code></pre></div><p>Restart filebeat</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>systemctl restart filebeat
+<span class="ln">2</span>journalctl -fu filebeat
+</code></pre></div><hr>
+<h1 id="如果你的應用在-kubernetes-上">如果你的應用在 kubernetes 上</h1>
+<p>可以使用下面方法拿到 client.cer ，然後用 secret 塞進 k8s，在用 volume from secrets，掛給監測應用的 filebeat</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>
+<span class="ln"> 2</span>mkdir -p /etc/beats/config
+<span class="ln"> 3</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -nocerts -nodes &gt; /etc/beats/config/client.key
+<span class="ln"> 4</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -clcerts -nokeys &gt; /etc/beats/config/client.cer
+<span class="ln"> 5</span>openssl pkcs12 -in /etc/elasticsearch/config/node-1.p12 -cacerts -nokeys -chain &gt; /etc/beats/config/client-ca.cer
+<span class="ln"> 6</span>
+<span class="ln"> 7</span>gcloud compute scp elk:/etc/beats/config/* .
+<span class="ln"> 8</span> client-ca.cer
+<span class="ln"> 9</span> client.cer
+<span class="ln">10</span> client.key
+<span class="ln">11</span>
+<span class="ln">12</span>kubectl -n elk create secret generic elk-client-certificates \
+<span class="ln">13</span>  --from-file=client-ca.cer=client-ca.cer \
+<span class="ln">14</span>  --from-file=client.cer=client.cer \
+<span class="ln">15</span>  --from-file=client.key=client.key
+<span class="ln">16</span>
+<span class="ln">17</span>kubectl apply -f elk/gke/filebeat/
+</code></pre></div>
+  </article>
+<aside class="sidebar">
+  <section class="sidebar_inner">
+    <h2>Che-Chia Chang</h2>
+    <div>
+      DevOps, SRE, Kubernetes admin.
+    </div>
+    <a href = 'https://chechia.net/about/' class="button mt-1" role="button">Read More</a>
+    <h2 class="mt-4">Featured Posts</h2>
+    <ul>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/" class="nav-link">Gcp Preemptible Instance Requirement Distributed</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-21-gcp-preemptible-instance/" class="nav-link">Gcp Preemptible Instance</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-12-borg-omega-and-kubernetes/" class="nav-link">Borg Omega and Kubernetes Translation 全文翻譯</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2019-09-15-self-host-elk-stack-on-gcp/" class="nav-link">Self-host ELK stack - Installation</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2019-09-09-ithome-ironman-challenge/" class="nav-link">2019 IT邦幫忙鐵人賽</a>
+      </li>
+    
+      <li>
+        <a href="https://chechia.net/post/2020-09-09-ithome-ironman-challenge/" class="nav-link">2020 IT邦幫忙鐵人賽</a>
+      </li>
+    
+    </ul>
+    <h2 class="mt-4">Recent Posts</h2>
+    <ul class="flex-column">
+      
+      <li>
+        <a href="https://chechia.net/post/2020-10-07-terraform-infrastructure-as-code-atlantis/" class="nav-link">Terraform Infrastructure as Code: Atlantis</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-06-terraform-infrastructure-as-code-terragrunt/" class="nav-link">Terraform Infrastructure as Code: Terragrunt</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/" class="nav-link">Terraform Infrastructure as Code: Recommended Practices</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-04-terraform-infrastructure-as-code-backend/" class="nav-link">Terraform Infrastructure as Code: Backends</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-03-terraform-infrastructure-as-code-automation/" class="nav-link">Terraform Infrastructure as Code: CI/CD automation</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-10-02-terraform-infrastructure-as-code-repository-example/" class="nav-link">Terraform Infrastructure as Code: Example repository</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-kubernetes/" class="nav-link">Gcp Preemptible Instance Kubernetes</a>
+      </li>
+      <li>
+        <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
+      </li>
+    </ul> 
+    
+    <div>
+      <h2 class="mt-4 taxonomy" id="categories-section">categories</h2>
+      <nav class="tags_nav">
+        <a href='https://chechia.net/categories/kubernetes/' class=" post_tag button button_translucent">
+          KUBERNETES
+          <span class='button_tally'>44</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent">
+          TERRAFORM
+          <span class='button_tally'>8</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/kafka/' class=" post_tag button button_translucent">
+          KAFKA
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/prometheus/' class=" post_tag button button_translucent">
+          PROMETHEUS
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/redis/' class=" post_tag button button_translucent">
+          REDIS
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/elasticsearch/' class=" post_tag button button_translucent">
+          ELASTICSEARCH
+          <span class='button_tally'>4</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/cert-manager/' class=" post_tag button button_translucent">
+          CERT-MANAGER
+          <span class='button_tally'>3</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/blockchain/' class=" post_tag button button_translucent">
+          BLOCKCHAIN
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/crd/' class=" post_tag button button_translucent">
+          CRD
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/logstash/' class=" post_tag button button_translucent">
+          LOGSTASH
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/murmur/' class=" post_tag button button_translucent">
+          MURMUR
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/nginx/' class=" post_tag button button_translucent">
+          NGINX
+          <span class='button_tally'>2</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/certificate/' class=" post_tag button button_translucent">
+          CERTIFICATE
+          <span class='button_tally'>1</span>
+        </a>
+        
+        <a href='https://chechia.net/categories/devops/' class=" post_tag button button_translucent">
+          DEVOPS
+          <span class='button_tally'>1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All categories</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://chechia.net/categories/blockchain/' class=" post_tag button button_translucent" data-position=2>BLOCKCHAIN<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/cert-manager/' class=" post_tag button button_translucent" data-position=3>CERT-MANAGER<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/certificate/' class=" post_tag button button_translucent" data-position=1>CERTIFICATE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/crd/' class=" post_tag button button_translucent" data-position=2>CRD<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/devops/' class=" post_tag button button_translucent" data-position=1>DEVOPS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/distributed-system/' class=" post_tag button button_translucent" data-position=1>DISTRIBUTED-SYSTEM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/elasticsearch/' class=" post_tag button button_translucent" data-position=4>ELASTICSEARCH<span class='button_tally'>4</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/golang/' class=" post_tag button button_translucent" data-position=1>GOLANG<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/istio/' class=" post_tag button button_translucent" data-position=1>ISTIO<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/jenkins/' class=" post_tag button button_translucent" data-position=1>JENKINS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/kafka/' class=" post_tag button button_translucent" data-position=7>KAFKA<span class='button_tally'>7</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/kubernetes/' class=" post_tag button button_translucent" data-position=44>KUBERNETES<span class='button_tally'>44</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/logstash/' class=" post_tag button button_translucent" data-position=2>LOGSTASH<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/murmur/' class=" post_tag button button_translucent" data-position=2>MURMUR<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/nginx/' class=" post_tag button button_translucent" data-position=2>NGINX<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/prometheus/' class=" post_tag button button_translucent" data-position=5>PROMETHEUS<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/redis/' class=" post_tag button button_translucent" data-position=5>REDIS<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent" data-position=8>TERRAFORM<span class='button_tally'>8</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+        
+      </nav>
+    </div>
+    
+    <div>
+      <h2 class="mt-4 taxonomy" id="tags-section">tags</h2>
+      <nav class="tags_nav">
+        <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent">
+          KUBERNETES
+          <span class='button_tally'>48</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent">
+          ITHOME
+          <span class='button_tally'>20</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent">
+          GCP
+          <span class='button_tally'>10</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent">
+          DEVOPS
+          <span class='button_tally'>9</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/kafka/' class=" post_tag button button_translucent">
+          KAFKA
+          <span class='button_tally'>9</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent">
+          TERRAFORM
+          <span class='button_tally'>8</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent">
+          PREEMPTIBLE
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent">
+          SPOT-INSTANCE
+          <span class='button_tally'>7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent">
+          REDIS
+          <span class='button_tally'>6</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/elasticsearch/' class=" post_tag button button_translucent">
+          ELASTICSEARCH
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/logstash/' class=" post_tag button button_translucent">
+          LOGSTASH
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/prometheus/' class=" post_tag button button_translucent">
+          PROMETHEUS
+          <span class='button_tally'>5</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/cert-manager/' class=" post_tag button button_translucent">
+          CERT-MANAGER
+          <span class='button_tally'>4</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/crd/' class=" post_tag button button_translucent">
+          CRD
+          <span class='button_tally'>3</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All tags</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://chechia.net/tags/atomic-swap/' class=" post_tag button button_translucent" data-position=1>ATOMIC-SWAP<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/bep3/' class=" post_tag button button_translucent" data-position=1>BEP3<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/binance/' class=" post_tag button button_translucent" data-position=1>BINANCE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/blockchain/' class=" post_tag button button_translucent" data-position=2>BLOCKCHAIN<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/borg/' class=" post_tag button button_translucent" data-position=2>BORG<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cd/' class=" post_tag button button_translucent" data-position=1>CD<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cert-manager/' class=" post_tag button button_translucent" data-position=4>CERT-MANAGER<span class='button_tally'>4</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/certificate/' class=" post_tag button button_translucent" data-position=1>CERTIFICATE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ci/' class=" post_tag button button_translucent" data-position=1>CI<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/container/' class=" post_tag button button_translucent" data-position=1>CONTAINER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/crd/' class=" post_tag button button_translucent" data-position=3>CRD<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/cri/' class=" post_tag button button_translucent" data-position=1>CRI<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/devops/' class=" post_tag button button_translucent" data-position=9>DEVOPS<span class='button_tally'>9</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/distributed-system/' class=" post_tag button button_translucent" data-position=1>DISTRIBUTED-SYSTEM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/docker/' class=" post_tag button button_translucent" data-position=1>DOCKER<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/elasticsearch/' class=" post_tag button button_translucent" data-position=5>ELASTICSEARCH<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/elk/' class=" post_tag button button_translucent" data-position=1>ELK<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/erc-20/' class=" post_tag button button_translucent" data-position=1>ERC-20<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ethereum/' class=" post_tag button button_translucent" data-position=1>ETHEREUM<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/filebeat/' class=" post_tag button button_translucent" data-position=1>FILEBEAT<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/fluentd/' class=" post_tag button button_translucent" data-position=1>FLUENTD<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/gcp/' class=" post_tag button button_translucent" data-position=10>GCP<span class='button_tally'>10</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/golang/' class=" post_tag button button_translucent" data-position=1>GOLANG<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/google/' class=" post_tag button button_translucent" data-position=2>GOOGLE<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/haproxy/' class=" post_tag button button_translucent" data-position=3>HAPROXY<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ibm-q-experience/' class=" post_tag button button_translucent" data-position=1>IBM-Q-EXPERIENCE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/index/' class=" post_tag button button_translucent" data-position=1>INDEX<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ingress/' class=" post_tag button button_translucent" data-position=2>INGRESS<span class='button_tally'>2</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/istio/' class=" post_tag button button_translucent" data-position=1>ISTIO<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/ithome/' class=" post_tag button button_translucent" data-position=20>ITHOME<span class='button_tally'>20</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/jenkins/' class=" post_tag button button_translucent" data-position=1>JENKINS<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/kafka/' class=" post_tag button button_translucent" data-position=9>KAFKA<span class='button_tally'>9</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/kubernetes/' class=" post_tag button button_translucent" data-position=48>KUBERNETES<span class='button_tally'>48</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/lecture/' class=" post_tag button button_translucent" data-position=1>LECTURE<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/logstash/' class=" post_tag button button_translucent" data-position=5>LOGSTASH<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/mit/' class=" post_tag button button_translucent" data-position=1>MIT<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/nginx/' class=" post_tag button button_translucent" data-position=3>NGINX<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/preemptible/' class=" post_tag button button_translucent" data-position=7>PREEMPTIBLE<span class='button_tally'>7</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/prometheus/' class=" post_tag button button_translucent" data-position=5>PROMETHEUS<span class='button_tally'>5</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/quantum-computing/' class=" post_tag button button_translucent" data-position=1>QUANTUM-COMPUTING<span class='button_tally'>1</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/redis/' class=" post_tag button button_translucent" data-position=6>REDIS<span class='button_tally'>6</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/spot-instance/' class=" post_tag button button_translucent" data-position=7>SPOT-INSTANCE<span class='button_tally'>7</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=8>TERRAFORM<span class='button_tally'>8</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/tls/' class=" post_tag button button_translucent" data-position=3>TLS<span class='button_tally'>3</span>
+            </a>
+            
+            
+            <a href='https://chechia.net/tags/tutorial/' class=" post_tag button button_translucent" data-position=1>TUTORIAL<span class='button_tally'>1</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+        
+      </nav>
+    </div>
+    
+  </section>
+</aside>
+
+</div>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter">
+    <path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68 0 0 1-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078a3.56 3.56 0 0 0-1.076 2.605c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388a3.623 3.623 0 0 0 2.115 1.291c-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652 0 0 0 2.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77 0 0 0 1.172-4.892v-.468a7.788 7.788 0 0 0 1.84-1.921 8.142 8.142 0 0 1-2.11.593z"
+      ></path>
+  </symbol>
+  <symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail">
+    <path  d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar">
+    <path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916 0 100v352c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V100c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028 0 20 8.972 20 20v48z"></path>
+    <path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"></path>
+  </symbol>
+  <symbol viewBox="-21 0 512 512" xmlns="http://www.w3.org/2000/svg" id="yank">
+    <path d="M410.668 405.332H165.332c-32.363 0-58.664-26.3-58.664-58.664v-288c0-32.363 26.3-58.668 58.664-58.668h181.504c21.059 0 41.687 8.535 56.555 23.445l42.496 42.496c15.125 15.125 23.445 35.223 23.445 56.575v224.152c0 32.363-26.3 58.664-58.664 58.664zM165.332 32c-14.7 0-26.664 11.969-26.664 26.668v288c0 14.7 11.965 26.664 26.664 26.664h245.336c14.7 0 26.664-11.965 26.664-26.664V122.516c0-12.82-4.992-24.871-14.059-33.942l-42.496-42.496C371.84 37.121 359.488 32 346.836 32zm0 0"></path>
+    <path d="M314.668 512h-256C26.305 512 0 485.695 0 453.332V112c0-32.363 26.305-58.668 58.668-58.668h10.664c8.832 0 16 7.168 16 16s-7.168 16-16 16H58.668C43.968 85.332 32 97.301 32 112v341.332C32 468.032 43.969 480 58.668 480h256c14.7 0 26.664-11.969 26.664-26.668v-10.664c0-8.832 7.168-16 16-16s16 7.168 16 16v10.664c0 32.363-26.3 58.668-58.664 58.668zM368 181.332H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"></path>
+    <path d="M368 245.332H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 64H208c-8.832 0-16-7.168-16-16s7.168-16 16-16h160c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github">
+    <path d="M255.968 5.329C114.624 5.329 0 120.401 0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384 0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008 0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992 0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584 0 34.368-.32 62.08-.32 70.496 0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"></path>
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss">
+    <circle cx="3.429" cy="20.571" r="3.429"></circle>
+    <path d="M11.429 24h4.57C15.999 15.179 8.821 8.001 0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"></path>
+    <path d="M24 24C24 10.766 13.234 0 0 0v4.571c10.714 0 19.43 8.714 19.43 19.429z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h362c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="arrow">
+    <path d="M604.501 440.509L325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298 0 36.323s26.223 10.024 36.222 0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221 0 9.999-10.023 9.999-26.298 0-36.323z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly">
+    <path d="M504.971 239.029L448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c19.851 0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002 0 0 0 400 320v108c0 19.851-16.149 36-36 36h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c46.318 0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568 0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255 0 24-10.745 24-24S205.255 0 192 0h-44c-46.318 0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568 0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255 0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851 0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002 0 0 0 112 192z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="copy">
+    <path d="M366.345 406.069H66.207c-9.751 0-17.655-7.904-17.655-17.655V17.655C48.552 7.904 56.456 0 66.207 0h300.138C376.096 0 384 7.904 384 17.655v370.759c0 9.751-7.904 17.655-17.655 17.655z" fill="#f1f4fb"></path>
+    <path d="M384 388.414v-76.992c-.907.322-1.869.494-2.751.882-6.307-6.593-14.733-11.025-24.111-11.964a40.49 40.49 0 0 0-8.448.039v-92.93c0-21.903-17.82-39.723-39.723-39.724a40.5 40.5 0 0 0-4.036.202c-20.012 2.004-35.689 19.916-35.689 40.781v101.773l-21.581 21.581c-15.241 15.241-21.393 36.866-16.456 57.847l3.802 16.16h131.338c9.75 0 17.655-7.905 17.655-17.655z"
+      fill="#d5dced"></path>
+    <circle cx="128" cy="105.931" r="26.483" fill="#b4e66e"></circle>
+    <circle cx="128" cy="203.034" r="26.483" fill="#dae169"></circle>
+    <circle cx="128" cy="300.138" r="26.483" fill="#ffdc64"></circle>
+    <path d="M331.034 229.517H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h141.241c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 194.207H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h105.931a8.826 8.826 0 0 1 8.828 8.828 8.826 8.826 0 0 1-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M331.034 326.621H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h141.241c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 291.31H189.793c-4.879 0-8.828-3.953-8.828-8.828s3.948-8.828 8.828-8.828h105.931c4.879 0 8.828 3.953 8.828 8.828s-3.948 8.828-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M331.034 132.414H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h141.241a8.826 8.826 0 0 1 8.828 8.828 8.826 8.826 0 0 1-8.828 8.828z" fill="#7f8499"></path>
+    <path d="M295.724 97.103H189.793a8.826 8.826 0 0 1-8.828-8.828 8.826 8.826 0 0 1 8.828-8.828h105.931a8.826 8.826 0 0 1 8.828 8.828 8.825 8.825 0 0 1-8.828 8.828z" fill="#5b5d6e"></path>
+    <path d="M443.656 335.563c-13.21-1.323-24.345 9.015-24.345 21.954v-7.569c0-11.544-8.306-22.063-19.794-23.213-13.209-1.323-24.344 9.015-24.344 21.954v-7.569c0-11.544-8.306-22.063-19.794-23.213-13.209-1.323-24.344 9.015-24.344 21.954V207.448c0-12.939-11.135-23.277-24.345-21.954-11.486 1.15-19.793 11.669-19.793 23.213v109.086l-26.752 26.752a44.14 44.14 0 0 0-11.754 41.32l18.47 78.495c6.567 27.913 31.475 47.64 60.15 47.64h74.645c34.127 0 61.793-27.666 61.793-61.793v-91.431c-.001-11.544-8.306-22.063-19.793-23.213z"
+      fill="#f0c087"></path>
+    <path d="M339.862 361.377a8.829 8.829 0 0 0 8.828-8.828v-34.194c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zM384 370.205a8.829 8.829 0 0 0 8.828-8.828v-34.194c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zm44.138 8.827a8.829 8.829 0 0 0 8.828-8.828V336.01c-10.052 2.061-17.655 10.844-17.655 21.506v12.687a8.827 8.827 0 0 0 8.827 8.829zM288.885 464.36l-20.467-86.985a28.482 28.482 0 0 1 7.585-26.663l10.893-10.894v22.113a8.829 8.829 0 0 0 17.656 0V185.933c-10.344 2.173-17.655 11.972-17.655 22.773v109.087l-26.752 26.752a44.14 44.14 0 0 0-11.754 41.32l18.47 78.495c6.567 27.913 31.475 47.64 60.15 47.64h22.026c-28.677 0-53.584-19.727-60.152-47.64z"
+      fill="#e6af78"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme">
+    <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0 0 14.143 5.857 19.94 19.94 0 0 0 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu">
+    <path d="M492 236H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954 0 96s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20z"></path>
+  </symbol>
+</svg>
+<footer class = 'footer'>
+  <div class = 'footer_inner wrap pale'>
+    <img src = 'https://chechia.net/icons/apple-touch-icon.png' class = 'icon icon_2 transparent'>
+    <p>Copyright &copy;&nbsp;<span class = 'year'></span>&nbsp;CHE-CHIA CHANG. All Rights Reserved</p>
+<a class='to_top' href="#documentTop">
+  <svg class="icon">
+    <use xlink:href="#arrow"></use>
+  </svg>
+</a>
+
+  </div>
+</footer>
+    <script type="text/javascript" src = "https://chechia.net/js/bundle.min.8475c29f8da3c876e0358b05e6aeecc90b3affb7bfd705c202f65f468c200268c1cc8c5ea6a01b1b47ddf853c358f96e98e3df6c0cc877a19ead459cf06b9afc.js" integrity=
+    "sha512-hHXCn42jyHbgNYsF5q7syQs6/7e/1wXCAvZfRowgAmjBzIxepqAbG0fd&#43;FPDWPlumOPfbAzId6GerUWc8Gua/A==" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 08 Nov 2019 08:03:30 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/atomic-swap/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ablockchain Atomic Swap</title>
-      <link>https://chechia.net/post/blockchain-atomic-swap/</link>
+      <link>https://chechia.net/post/2019-11-08-blockchain-atomic-swap/</link>
       <pubDate>Fri, 08 Nov 2019 08:03:30 +0800</pubDate>
       
-      <guid>https://chechia.net/post/blockchain-atomic-swap/</guid>
+      <guid>https://chechia.net/post/2019-11-08-blockchain-atomic-swap/</guid>
       <description>https://en.bitcoin.it/wiki/Atomic_swap
 Algorithm  2 pay txs and 2 claim tx claim txs are singed at first, locked with time 2 pay txs are encrypted by x, affects only when x is reveal on the network  Initialization  A: random number x
 tx1: A pay B A Pay BTC to B&amp;rsquo;s public key if x known &amp;amp; singed by B or Signed by A &amp;amp; B

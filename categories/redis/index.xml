@@ -9,12 +9,12 @@
     <lastBuildDate>Thu, 03 Oct 2019 16:12:10 +0800</lastBuildDate><atom:link href="https://chechia.net/categories/redis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Redis Ha Failure Recovery</title>
-      <link>https://chechia.net/post/redis-ha-failure-recovery/</link>
+      <link>https://chechia.net/post/2019-10-03-redis-ha-failure-recovery/</link>
       <pubDate>Thu, 03 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechia.net/post/redis-ha-failure-recovery/</guid>
+      <guid>https://chechia.net/post/2019-10-03-redis-ha-failure-recovery/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy Redis HAProxy Failure Recovery 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ 在 GKE 上部署 Redis HA (5)  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy Redis HA Failure Recovery Prometheus Metrics Exporter    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
  摘要  Failure Case Recovery  Topology 上篇的例子完成應該是這樣
@@ -23,12 +23,12 @@
     
     <item>
       <title>Redis Ha HAProxy</title>
-      <link>https://chechia.net/post/redis-ha-on-haproxy/</link>
+      <link>https://chechia.net/post/2019-10-02-redis-ha-on-haproxy/</link>
       <pubDate>Wed, 02 Oct 2019 16:12:10 +0800</pubDate>
       
-      <guid>https://chechia.net/post/redis-ha-on-haproxy/</guid>
+      <guid>https://chechia.net/post/2019-10-02-redis-ha-on-haproxy/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ 在 GKE 上部署 Redis HA (5)  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy Redis HA Failure Recovery Prometheus Metrics Exporter    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
  摘要  HAProxy Introduction Redis Sentinel with HAProxy  HAProxy Intro HAproxy 全名是 High Availability Proxy，是一款開源 TCP/HTTP load balancer，他可以
@@ -36,13 +36,26 @@
     </item>
     
     <item>
+      <title>Redis Ha Topology</title>
+      <link>https://chechia.net/post/2019-09-30-redis-ha-topology/</link>
+      <pubDate>Mon, 30 Sep 2019 16:12:10 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/2019-09-30-redis-ha-topology/</guid>
+      <description>2020 It邦幫忙鐵人賽 系列文章
+ 在 GKE 上部署 Redis HA (5)  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy Redis HA Failure Recovery Prometheus Metrics Exporter    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
+ 摘要  Redis Sentinel Topology  Topology  Masters: M1, M2, M3, &amp;hellip;, Mn. Slaves: R1, R2, R3, &amp;hellip;, Rn (R stands for replica).</description>
+    </item>
+    
+    <item>
       <title>Redis Ha Sentinel</title>
-      <link>https://chechia.net/post/redis-ha-sentinel/</link>
+      <link>https://chechia.net/post/2019-09-29-redis-ha-sentinel/</link>
       <pubDate>Sun, 29 Sep 2019 17:14:38 +0800</pubDate>
       
-      <guid>https://chechia.net/post/redis-ha-sentinel/</guid>
+      <guid>https://chechia.net/post/2019-09-29-redis-ha-sentinel/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ 在 GKE 上部署 Redis HA (5)  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy Redis HA Failure Recovery Prometheus Metrics Exporter    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
  摘要  redis-sentinel  redis sentinel 與 redis 使用相容的 api，直接使用 redis-cli 透過 26479 port 連入，可以連到 sentinel，透過 sentinel 可以取得 redis master 的狀態與連線設定。
@@ -51,30 +64,17 @@
     
     <item>
       <title>Redis Ha Deployment</title>
-      <link>https://chechia.net/post/redis-ha-deployment/</link>
+      <link>https://chechia.net/post/2019-09-28-redis-ha-deployment/</link>
       <pubDate>Sat, 28 Sep 2019 15:14:23 +0800</pubDate>
       
-      <guid>https://chechia.net/post/redis-ha-deployment/</guid>
+      <guid>https://chechia.net/post/2019-09-28-redis-ha-deployment/</guid>
       <description>2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+ 在 GKE 上部署 Redis HA (5)  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy Redis HA Failure Recovery Prometheus Metrics Exporter    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
 今天的文會比較短，因為我早上在綠島已經水肺潛水潛了三趟，有點累哈哈
  Redis introduction Redis 是常用的 in-memory 的資料儲存庫，可作為資料庫，快取，message broker 使用，都非常好用。Redis 官方支援 high availability，使用的是 redis-sentinel ，今天我們就來部署一個有完整 sentinel 的 redis-ha。
 Redis 另外提供了一個 solution Redis cluster (multiple writer solution)，作為增加資料輸出帶寬，與增加資料耐用度的分散式解決方案，與 redis sentinel 所處理的 ha 問題是不相同的。有機會我們也來談。</description>
-    </item>
-    
-    <item>
-      <title>Redis Ha Topology</title>
-      <link>https://chechia.net/post/redis-ha-topology/</link>
-      <pubDate>Fri, 23 Aug 2019 16:12:10 +0800</pubDate>
-      
-      <guid>https://chechia.net/post/redis-ha-topology/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- 在 GKE 上部署 Redis HA  使用 helm 部署 redis-ha Redis HA with sentinel Redis sentinel topology Redis HA with HAproxy 集群內部的 HA 設定，網路設定 應用端的基本範例，效能調校 在 GKE 上維運 redis    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
-對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- 摘要  Redis Sentinel Topology  Topology  Masters: M1, M2, M3, &amp;hellip;, Mn. Slaves: R1, R2, R3, &amp;hellip;, Rn (R stands for replica).</description>
     </item>
     
   </channel>
