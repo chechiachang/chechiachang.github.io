@@ -6,7 +6,21 @@
     <description>Recent content on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 13 May 2021 16:29:26 +0800</lastBuildDate><atom:link href="https://chechia.net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 12:25:06 +0800</lastBuildDate><atom:link href="https://chechia.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021 09 01 Ithome Ironman Go</title>
+      <link>https://chechia.net/post/2021-09-01-ithome-ironman-go/</link>
+      <pubDate>Wed, 01 Sep 2021 12:25:06 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/2021-09-01-ithome-ironman-go/</guid>
+      <description>2021 ithome 鐵人賽開跑了～
+今年的題目是「Terraform Workshop - Infrastructure as Code for Public Cloud 疫情警戒陪你度過 30 天」，是一個長達 30 天的 terraform workshop，對 terraform 有興趣的朋友歡迎追縱
+Day 01 - 引言：Terraform 是個好東西。
+課程內容與代碼會放在 Github 上: https://github.com/chechiachang/terraform-30-days
+賽後文章會整理放到個人的部落格上 http://chechia.net/
+追蹤粉專可以收到文章的主動推播</description>
+    </item>
+    
     <item>
       <title>DevOps Taiwan Meetup #33: Hashicorp Vault for Kubernetes</title>
       <link>https://chechia.net/post/2021-05-13-devops-taiwan-33-hashicorp-vault-for-kubernetes-apps/</link>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-figures="" class="page">
-  <head>  <title>Gcp Preemptible Instance Requirement | Che-Chia Chang</title>
+  <head>  <title>2021 09 01 Ithome Ironman Go | Che-Chia Chang</title>
   <meta charset='utf-8'>
   <meta name="generator" content="Hugo 0.75.1" />
   <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
@@ -14,15 +14,17 @@
 </script>
 <meta property = "og:locale" content = "en_US" />
 <meta property="og:type" content="article">
-<meta name="description" content="需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
-另外，雖然先占虛擬機會有很多額外的限制與 …">
+<meta name="description" content="2021 ithome 鐵人賽開跑了～
+今年的題目是「Terraform Workshop - Infrastructure as Code for Public Cloud 疫情警戒陪你度過 30 天」，是一個長達 30 天的 terraform workshop，對 terraform 有興趣的朋友歡迎追縱
+Day …">
 <meta name = "twitter:card" content = "summary" />
 <meta name = "twitter:creator" content = "@chechiachang">
-<meta name = "twitter:title" content = "Gcp Preemptible Instance Requirement" />
-<meta property = "og:url" content = "https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/" />
-<meta property = "og:title" content = "Gcp Preemptible Instance Requirement" />
-<meta property = "og:description" content = "需求規劃 使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 Google Cloud Pricing Calculator 精算成本。
-另外，雖然先占虛擬機會有很多額外的限制與 …" />
+<meta name = "twitter:title" content = "2021 09 01 Ithome Ironman Go" />
+<meta property = "og:url" content = "https://chechia.net/post/2021-09-01-ithome-ironman-go/" />
+<meta property = "og:title" content = "2021 09 01 Ithome Ironman Go" />
+<meta property = "og:description" content = "2021 ithome 鐵人賽開跑了～
+今年的題目是「Terraform Workshop - Infrastructure as Code for Public Cloud 疫情警戒陪你度過 30 天」，是一個長達 30 天的 terraform workshop，對 terraform 有興趣的朋友歡迎追縱
+Day …" />
 <meta property = "og:image" content = "https://chechia.net/images/logos/white_logo_dark_background.jpg" />
 <link rel='apple-touch-icon' sizes='180x180' href='https://chechia.net/icons/apple-touch-icon.png'>
 <link rel='icon' type='image/png' sizes='32x32' href='https://chechia.net/icons/favicon-32x32.png'>
@@ -32,7 +34,7 @@
 <meta name="msapplication-TileColor" content="#002538">
 <meta name="theme-color" content="#002538">
 
-  <link rel='canonical' href='https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/'>
+  <link rel='canonical' href='https://chechia.net/post/2021-09-01-ithome-ironman-go/'>
 
     
 
@@ -115,38 +117,30 @@
   
 <div class = 'grid-inverse wrap content'>
   <article class='post_content'>
-    <h1 class='post_title'>Gcp Preemptible Instance Requirement</h1><div class = 'post_meta'>
+    <h1 class='post_title'>2021 09 01 Ithome Ironman Go</h1><div class = 'post_meta'>
   <svg class="icon">
     <use xlink:href="#calendar"></use>
   </svg>
   <span class="post_date">
-    Sep 24, 2020</span>
-  <a href = 'https://chechia.net/tags/kubernetes' class = 'post_tag button button_translucent'>kubernetes
-  </a>
-  <a href = 'https://chechia.net/tags/gcp' class = 'post_tag button button_translucent'>gcp
-  </a>
-  <a href = 'https://chechia.net/tags/preemptible' class = 'post_tag button button_translucent'>preemptible
-  </a>
-  <a href = 'https://chechia.net/tags/spot-instance' class = 'post_tag button button_translucent'>spot-instance
-  </a>
+    Sep 1, 2021</span>
 </div>
 
     <div class='post_share'>
   Share on:
-  <a href="https://twitter.com/intent/tweet?text=Gcp%20Preemptible%20Instance%20Requirement&url=https%3a%2f%2fchechia.net%2fpost%2f2020-09-24-gcp-preemptible-instance-requirement%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+  <a href="https://twitter.com/intent/tweet?text=2021%2009%2001%20Ithome%20Ironman%20Go&url=https%3a%2f%2fchechia.net%2fpost%2f2021-09-01-ithome-ironman-go%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
     <svg class="icon">
       <use xlink:href="#twitter"></use>
     </svg>
   </a>
   
-  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2f2020-09-24-gcp-preemptible-instance-requirement%2f&t=Gcp%20Preemptible%20Instance%20Requirement" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+  <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2f2021-09-01-ithome-ironman-go%2f&t=2021%2009%2001%20Ithome%20Ironman%20Go" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
     <svg class="icon">
       <use xlink:href="#facebook"></use>
     </svg>
   </a>
   <script>
     function shareViaLinkedin() {
-      window.open('http://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent("https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/"), '', 'left=0,top=0,width=650,height=420,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+      window.open('http://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent("https://chechia.net/post/2021-09-01-ithome-ironman-go/"), '', 'left=0,top=0,width=650,height=420,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
     }
   </script>
   <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow" onclick="shareViaLinkedin()">
@@ -154,7 +148,7 @@
       <use xlink:href="#linkedin"></use>
     </svg>
   </a>
-  <a href="https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/" title="Copy Link" class="link link_yank">
+  <a href="https://chechia.net/post/2021-09-01-ithome-ironman-go/" title="Copy Link" class="link link_yank">
     <svg class="icon">
       <use xlink:href="#yank"></use>
     </svg>
@@ -162,68 +156,13 @@
 </div>
 
     
-    <h1 id="需求規劃">需求規劃</h1>
-<p>使用先占節點比起使用一般隨選虛擬機，會多出許多技術困難需要克服，只有節省下的成本大於整體技術成本時，我們才會選用先占節點。因此這邊要進行成本精算，重新調整的架構下，實際到底能省多少錢。務必使用 <a href="https://cloud.google.com/products/calculator?hl=zh-tw">Google Cloud Pricing Calculator</a> 精算成本。</p>
-<p>另外，雖然先占虛擬機會有很多額外的限制與技術困難，但實務上還是要對比實際的需求，有些限制與需求是衝突的，有些限制則完全不會影響我們的需求。前者當然會帶給我們較高的導入難度，後者可能會非常輕鬆。</p>
-<p>這邊想給大家的概念是，務必先明確需求，再討論技術。這點很重要，技術的適用與否，不是由個人的喜好決定，唯一的判斷標準，是能不能有效率的滿足需求。</p>
-<p>所以這邊先定義我們以下幾個需求：</p>
-<ul>
-<li>執行短期的 batch job</li>
-<li>執行長期的 user-facing API server</li>
-<li>執行長期的 stateful 資料庫、儲存庫</li>
-</ul>
-<h3 id="batch-job">Batch Job</h3>
-<p>常見的範例，例如</p>
-<ul>
-<li>使用網路爬蟲 (crawler) 去抓取許多網站的所有內容</li>
-<li>使用 GPU 進行機器學習的 Model Training</li>
-<li>大數據計算</li>
-<li>MapReduce</li>
-</ul>
-<p>這些任務的核心需求，很簡單直接</p>
-<ul>
-<li>盡快完成整體工作</li>
-<li>盡可能節省大量算力成本</li>
-</ul>
-<p>例如：我手上的機器學習 Model 粗略估計 10000 小時*GPU 的算力需求，才能產出一個有效的Model。由於大量的算力需求，一般來說都會選擇分散式的運算框架 (ex. MapReduce) ，將真正消耗算力的工作，使用分而化之 (divide and conquer) 的架構設計，將分配任務的控制節點 (master)，與實際進行運算的工作節點(worker) 拆分。基於原本的分散式架構，幾乎可以無痛地將工作節點轉移到先占虛擬機上。</p>
-<p>根據上述的需求，這類的工作特性可能有</p>
-<ul>
-<li>CPU / GPU 算力需求高的運算節點 (Worker)</li>
-<li>Worker 本身是無狀態的 Stateless</li>
-<li>可控的即時負載</li>
-<li>將整體工作切分成任務單元 (task)，分配給工作節點</li>
-<li>任務單元的狀態外部保留，工作節點可容錯 (fault-tolerent)，任務單元可復原</li>
-</ul>
-<p>由於先占虛擬機可能是浮動價格，這類工作可以根據優先程度，調整合適的工作時間，例如在資料中心算力需求低，先占虛擬機的費用低廉時，啟用較多的工作節點加快運算，如果費用高時，可以降低先占虛擬機的使用，延後工作，甚至是調用不同區域，費用低的工作節點，來降低整體的成本。</p>
-<p>執得注意的是，這類任務的控制節點 (master)，也許是集中式的，也許是分散式的，需要根據性質考量，是否適合放在先占虛擬機上。有些架構控制節點可以容錯，然而錯誤發生後會需要復原狀態，這時會消耗額外的算力，可能會拖緩整體進度，造成算力的消耗。也許就可以考量使用隨選虛擬機配合使用。</p>
-<h3 id="user-facing-services">User-facing services</h3>
-<p>常見的範例，例如</p>
-<ul>
-<li>Restful API server</li>
-<li>Websocket Server</li>
-<li>TCP/HTTP reverse proxy</li>
-</ul>
-<p>這些工作的核心需求如下：</p>
-<ul>
-<li>整題服務的高可用性 (high availability)</li>
-<li>承受不可預期的負載高峰 (load spikes)</li>
-<li>整體表現需要低延遲 (low latency)</li>
-<li>可以水平擴展 (horizontal scaling)，支撐用戶的成長</li>
-<li>最終平衡效能呈現與成本</li>
-</ul>
-<p>由於會面對使用者，需要能支持使用者的壓力，又同時需要有一定的服務效能，來維持使用者體驗。實務上設計可能採用無狀態應用 (stateless)，多副本 (replica) 部署到集群中。需要儲存的狀態（如用戶狀態），使用外部的共用儲存 (例如：Redis，RDBMS，或是 Non-SQL DB)。請求的流量，透過上游的負載均衡器 (Load Balancer)，送進多個後端，處理完成請求後，再返回給使用者。</p>
-<p>這樣的設計，使用先占虛擬機也不會有太多的問題</p>
-<ul>
-<li>現代的附載均衡器多半都能像後端做可用性檢測 (health check)，可以把流量導向工作正常的節點，如果後端的虛擬機被資料中心收回了，流量也會移轉到其他節點上，不會遺失用戶請求</li>
-<li>配合自動水平拓展工具 (Auto horizontal scaler)，可以設定期望的服務節點數量，如果資料中心回收先占節點，拓展工具可以同時去取得新的先占節點，或是取得隨選隨用的虛擬機</li>
-<li>配合流量監測，也可以動態調整期望的服務節點數量，例如：偵測到大量用戶連線數時，增加更多服務節點，待流量下降後，再降低服務節點數量</li>
-</ul>
-<p>這樣的設計實務上有幾點注意</p>
-<ul>
-<li>雖然說應用後端本身是無狀態的，但面對用戶也許還是會有部分狀態存在應用外部，例如：User session，或是 websocket 的長連線。特別注意這些服務斷線的時候，對於使用者的影響，配合前端增強使用者體驗</li>
-<li>後端水平拓展後，瓶頸會轉移到其他地方，例如 Database 成為效能瓶頸，應用這邊需要做一定程度的自律( ex. connection limit，rate limit)，避免不斷增長的應用壓垮依賴的服務，如 MessageQueue 或是 Database</li>
-</ul>
-<p>分散式的儲存中心 (distributed DB)，如：cassandra 或是小強 DB。而這樣類型的服務，是否適合放在先占節點上？</p>
+    <p>2021 ithome 鐵人賽開跑了～</p>
+<p>今年的題目是「Terraform Workshop - Infrastructure as Code for Public Cloud 疫情警戒陪你度過 30 天」，是一個長達 30 天的 terraform workshop，對 terraform 有興趣的朋友歡迎追縱</p>
+<p><a href="https://ithelp.ithome.com.tw/articles/10258904">Day 01 - 引言：Terraform 是個好東西。</a></p>
+<p><a href="https://github.com/chechiachang/terraform-30-days">課程內容與代碼會放在 Github 上: https://github.com/chechiachang/terraform-30-days</a></p>
+<p><a href="http://chechia.net/">賽後文章會整理放到個人的部落格上 http://chechia.net/</a></p>
+<p><a href="https://www.facebook.com/engineer.from.scratch">追蹤粉專可以收到文章的主動推播</a></p>
+<p><img src="https://ithelp.ithome.com.tw/upload/images/20210901/20120327NvpHVr2QC0.jpg" alt="https://ithelp.ithome.com.tw/upload/images/20210901/20120327NvpHVr2QC0.jpg"></p>
 
   </article>
 <aside class="sidebar">
@@ -244,6 +183,9 @@
         <a href="https://chechia.net/post/2020-09-26-gcp-preemptible-instance-introduction/" class="nav-link">Gcp Preemptible Instance Introduction</a>
       </li>
     
+      <li>
+        <a href="https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/" class="nav-link">Gcp Preemptible Instance Requirement</a>
+      </li>
     
       <li>
         <a href="https://chechia.net/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/" class="nav-link">Gcp Preemptible Instance Requirement Distributed</a>
@@ -273,9 +215,6 @@
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
       
-      <li>
-        <a href="https://chechia.net/post/2021-09-01-ithome-ironman-go/" class="nav-link">2021 09 01 Ithome Ironman Go</a>
-      </li>
       <li>
         <a href="https://chechia.net/post/2021-05-13-devops-taiwan-33-hashicorp-vault-for-kubernetes-apps/" class="nav-link">DevOps Taiwan Meetup #33: Hashicorp Vault for Kubernetes</a>
       </li>
