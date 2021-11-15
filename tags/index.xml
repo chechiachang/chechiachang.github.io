@@ -6,11 +6,11 @@
     <description>Recent content in Tags on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 07 Oct 2020 11:15:48 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Nov 2021 01:04:12 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>kubernetes</title>
       <link>https://chechia.net/tags/kubernetes/</link>
-      <pubDate>Wed, 07 Oct 2020 11:15:48 +0800</pubDate>
+      <pubDate>Tue, 16 Nov 2021 01:04:12 +0800</pubDate>
       
       <guid>https://chechia.net/tags/kubernetes/</guid>
       <description></description>
@@ -19,9 +19,18 @@
     <item>
       <title>terraform</title>
       <link>https://chechia.net/tags/terraform/</link>
-      <pubDate>Wed, 07 Oct 2020 11:15:48 +0800</pubDate>
+      <pubDate>Tue, 16 Nov 2021 01:04:12 +0800</pubDate>
       
       <guid>https://chechia.net/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vault</title>
+      <link>https://chechia.net/tags/vault/</link>
+      <pubDate>Tue, 16 Nov 2021 01:04:12 +0800</pubDate>
+      
+      <guid>https://chechia.net/tags/vault/</guid>
       <description></description>
     </item>
     

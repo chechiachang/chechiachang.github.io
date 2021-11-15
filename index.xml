@@ -6,7 +6,23 @@
     <description>Recent content on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 01 Sep 2021 12:25:06 +0800</lastBuildDate><atom:link href="https://chechia.net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Nov 2021 01:04:12 +0800</lastBuildDate><atom:link href="https://chechia.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021 11 16 Ithome Cloud Summit Vault</title>
+      <link>https://chechia.net/post/2021-11-16-ithome-cloud-summit-vault/</link>
+      <pubDate>Tue, 16 Nov 2021 01:04:12 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/2021-11-16-ithome-cloud-summit-vault/</guid>
+      <description>各位好
+關於這個 QRcode
+每次上台前，我都會想要帶什麼樣的內容給觀眾，讓觀眾值得花 30 分鐘在底下聽。後來就習慣先發表一篇文章，把對觀眾有幫助的資源包成一包：
+ 首先是完整投影片：https://slides.com/chechiac&amp;hellip;/terraform-introduction-a56697 逐字講稿：(最後校稿中） 然而只有本次演講內容，回去可能還是不太容易操作。所以這次附上使用 Terraform 一鍵部署 vault 的 Github Repository：https://github.com/&amp;hellip;/southe&amp;hellip;/chechia_net/vault/singleton 如果不熟 Terraform，再附上 30 天手把手 Terraform 教學文章，只要願意花時間，全篇中文一個月帶你上手 Terraform。  IThome 鐵人賽好讀版：https://ithelp.ithome.com.tw/users/20120327/ironman/4057 Github Repository 完整版：https://github.com/&amp;hellip;/terraform-30&amp;hellip;/tree/main/lecture/zh   如果遇到問題還是需要找人發問，所以再推薦兩個社群，可以來這邊發問，要找我本人也找得到。甚至只是加入潛水不講話，都可以被動吸收許多新知。  Cloud Native Taiwan User Group  https://t.me/cntug https://fb.cloudnative.tw   DevOps Taiwan Meetup Group  https://t.me/devopstw      大家可以手機拍完這個就出去吃午餐了。 或是拍回家，然後傳給一個同事叫他花 30 天把 Terraform 跟 Vault 這些都學會。
+總之希望對各位有幫助，讓國內技術力能持續進步成長。
+ 回到本次演講。
+本次演講有三個關鍵字
+ Kubernetes Vault Terraform 這個是隱藏的  請問平時工作會用到這三個技術之一的朋友，請舉個手，好讓我知道一下觀眾的分布，等等分享的內容會照比例做一些調整。</description>
+    </item>
+    
     <item>
       <title>2021 09 01 Ithome Ironman Go</title>
       <link>https://chechia.net/post/2021-09-01-ithome-ironman-go/</link>

@@ -4,16 +4,51 @@
   
   <url>
     <loc>https://chechia.net/</loc>
-    <lastmod>2021-09-01T12:25:06+08:00</lastmod>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chechia.net/post/2021-09-01-ithome-ironman-go/</loc>
-    <lastmod>2021-09-01T12:25:06+08:00</lastmod>
+    <loc>https://chechia.net/post/2021-11-16-ithome-cloud-summit-vault/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/categories/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/kubernetes/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://chechia.net/post/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/categories/technology/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/terraform/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/tags/vault/</loc>
+    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chechia.net/post/2021-09-01-ithome-ironman-go/</loc>
     <lastmod>2021-09-01T12:25:06+08:00</lastmod>
   </url>
   
@@ -23,27 +58,7 @@
   </url>
   
   <url>
-    <loc>https://chechia.net/categories/</loc>
-    <lastmod>2020-10-07T11:15:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/tags/kubernetes/</loc>
-    <lastmod>2020-10-07T11:15:48+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chechia.net/categories/kubernetes/</loc>
-    <lastmod>2020-10-07T11:15:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/tags/</loc>
-    <lastmod>2020-10-07T11:15:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chechia.net/tags/terraform/</loc>
     <lastmod>2020-10-07T11:15:48+08:00</lastmod>
   </url>
   
