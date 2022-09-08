@@ -13,8 +13,17 @@
       <pubDate>Thu, 26 Sep 2019 22:50:32 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-26-kafka-ha-continued/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -23,8 +32,17 @@
       <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-25-kafka-ha-topology/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -33,8 +51,17 @@
       <pubDate>Wed, 25 Sep 2019 22:50:32 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-25-kafka-operation-scripts/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -43,8 +70,17 @@
       <pubDate>Tue, 24 Sep 2019 21:59:49 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-24-kafka-basic-usage/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -53,8 +89,17 @@
       <pubDate>Mon, 23 Sep 2019 21:59:49 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-23-kafka-introduction/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
+對我的文章有興趣，歡迎到我的網站上 https://chechia.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -63,8 +108,15 @@
       <pubDate>Mon, 23 Sep 2019 21:55:29 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-23-kafka-helm-configuration/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -73,8 +125,16 @@
       <pubDate>Sun, 22 Sep 2019 09:58:41 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-09-22-kafka-deployment-on-kubernetes/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
- ELK Stack  Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP   Kafka HA on Kubernetes(6)  Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</description>
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+碎念 30 天每天一文真的蠻逼人的，每一篇都是新寫，還要盡可能顧及文章品質，下班趕文章，各位大德寫看看就知道
+          
+          
+        
+      </description>
     </item>
     
   </channel>

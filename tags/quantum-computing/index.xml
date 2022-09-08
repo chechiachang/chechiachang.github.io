@@ -13,7 +13,10 @@
       <pubDate>Sun, 02 Jun 2019 10:21:37 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-06-02-journey-to-quantum-computing/</guid>
-      <description>This post is about my learning steps for quantum-computing.
+      <description>
+        
+          
+            This post is about my learning steps for quantum-computing.
 For a quick-start tutorial, check my workshop project throught the project link above.
 Resources Courses
 Coursera
@@ -24,7 +27,11 @@ IBM Q Experience
 https://github.com/Qiskit/openqasm
 https://github.com/Qiskit/qiskit-tutorials
 IBM Q Experience Day 1 Getting Started with Circuit Composer
-Hello Quantum World circuit transformed two qubits, from $ \vert0\rangle $ to $ \frac{\vert00\rangle + \vert11\rangle}{\sqrt{2}} $</description>
+Hello Quantum World circuit transformed two qubits, from $ \vert0\rangle $ to $ \frac{\vert00\rangle + \vert11\rangle}{\sqrt{2}} $
+          
+          
+        
+      </description>
     </item>
     
   </channel>

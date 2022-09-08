@@ -13,12 +13,20 @@
       <pubDate>Sat, 12 Oct 2019 17:41:25 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-10-12-cert-manager-complete-workflow/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress (3)  Deploy Nginx Ingress Controller Configure Nginx Ingress   Cert-manager (3)  Deploy cert-manager How cert-manager work Cert-manager complete workflow   Kubernetes CRD &amp;amp; Operator-sdk (3)  Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp;amp; Operator-sdk (3) Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- Recap 昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事</description>
+Recap 昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事
+設置 Let&amp;rsquo;s Encript prod site 的 Issuer 設置 certificates.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -27,12 +35,20 @@
       <pubDate>Fri, 11 Oct 2019 11:24:34 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-10-11-cert-manager-how-it-work/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress (3)  Deploy Nginx Ingress Controller Configure Nginx Ingress   Cert-manager (3)  Deploy cert-manager How cert-manager work Cert-manager complete workflow   Kubernetes CRD &amp;amp; Operator-sdk (3)  Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp;amp; Operator-sdk (3) Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- 今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer</description>
+今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer
+CA Terminology 先把實際執行 CA 簽發的名詞定義一下，以免跟 cert-manager 的資源搞混
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -41,12 +57,19 @@
       <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-10-10-cert-manager-deployment/</guid>
-      <description>2020 It邦幫忙鐵人賽 系列文章
+      <description>
+        
+          
+            2020 It邦幫忙鐵人賽 系列文章
 這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
- Nginx Ingress (3)  Deploy Nginx Ingress Controller Configure Nginx Ingress   Cert-manager (3)  Deploy cert-manager How cert-manager work Cert-manager complete workflow   Kubernetes CRD &amp;amp; Operator-sdk (3)  Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage    由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
+Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp;amp; Operator-sdk (3) Introduction about custom resource Deployment &amp;amp; Usage Deployment &amp;amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
 寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。
 對我的文章有興趣，歡迎到我的網站上 https://chechia.net 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。
- 摘要  Cert-manager Introduction Deploy cert-manager  簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。</description>
+摘要 Cert-manager Introduction Deploy cert-manager 簡介 cert-manager TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。
+          
+          
+        
+      </description>
     </item>
     
   </channel>

@@ -13,10 +13,17 @@
       <pubDate>Wed, 07 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-10-07-terraform-infrastructure-as-code-atlantis/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 需求與問題 隨著 terraform 在團隊內的規模持續成長，團隊需要讓工作流程更加順暢，來面對大量的 tf 變更查核與變更請求。想像幾十個工程師同時在修改幾十個不同的 terraform projects / modules，這時可能會有幾個問題
- 需要一個穩定乾淨的環境執行 terraform  工程師的開發本機不是個好選擇 需要 24/7 的 terraform 執行中心  執行中心會有各個環境 (dev / stage / prod) 的存取權限，希望設置在內部     下列兩個工作會切換工作平台，例如 Github  review，檢視 difference，與討論 PR   review 完有時會忘記 merge，merge 完有時會忘記 apply  repository 越多，忘得越多&amp;hellip;    團隊已經導入 Git-flow，希望把工作流程做得更完整自動化更加便利</description>
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+需求與問題 隨著 terraform 在團隊內的規模持續成長，團隊需要讓工作流程更加順暢，來面對大量的 tf 變更查核與變更請求。想像幾十個工程師同時在修改幾十個不同的 terraform projects / modules，這時可能會有幾個問題
+需要一個穩定乾淨的環境執行 terraform 工程師的開發本機不是個好選擇 需要 24/7 的 terraform 執行中心 執行中心會有各個環境 (dev / stage / prod) 的存取權限，希望設置在內部 下列兩個工作會切換工作平台，例如 Github review，檢視 difference，與討論 PR review 完有時會忘記 merge，merge 完有時會忘記 apply repository 越多，忘得越多&amp;hellip; 團隊已經導入 Git-flow，希望把工作流程做得更完整自動化更加便利
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -25,13 +32,20 @@
       <pubDate>Tue, 06 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-10-06-terraform-infrastructure-as-code-terragrunt/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
 而當使用 Terraform 的規模越來越大，管理的資料越來越多時，開始會出現一些問題，例如重複的 terraform code 越來越多，協同工作 review 不太容易，state 的內容管理與鎖管理，等等。這些問題可以透過一些工作流程的改進，或是導入新的小工具，來改善工作效率。
 接下來筆者推薦幾個心得與工具，希望能提升使用 Terraform 的效率與產值
 以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。
- 心得  CI/CD 全自動化 State backend 選擇 最佳實踐 https://www.</description>
+心得 CI/CD 全自動化 State backend 選擇 最佳實踐 https://www.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -40,11 +54,20 @@
       <pubDate>Mon, 05 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
 以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。
- 心得  CI/CD 全自動化 State backend 選擇 最佳實踐   工具  Terraform Atlantis Terragrunt    工具與文化 新工具提供解決方案，然而單純導入工具後不是就一勞永逸，許多實務上的問題，還是要依賴改善工作流程，並且避免整體運作的錯誤。</description>
+心得 CI/CD 全自動化 State backend 選擇 最佳實踐 工具 Terraform Atlantis Terragrunt 工具與文化 新工具提供解決方案，然而單純導入工具後不是就一勞永逸，許多實務上的問題，還是要依賴改善工作流程，並且避免整體運作的錯誤。
+其次，不同團隊已有既有的團隊文化，整合新的工具後還是需要磨合，不一定要照單全收。換句話說，工作流程的不斷改進也是解決方案的一環。
+建議實踐 Recommended Practices Terraform 官網有許多建議的實作與導入流程，其中大部分的建議我們都已經在前面的幾篇文章中提到，這邊要來說明一下，並補充其他官方推薦的實踐。
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -53,13 +76,20 @@
       <pubDate>Sun, 04 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-10-04-terraform-infrastructure-as-code-backend/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
 而當使用 Terraform 的規模越來越大，管理的資料越來越多時，開始會出現一些問題，例如重複的 terraform code 越來越多，協同工作 review 不太容易，state 的內容管理與鎖管理，等等。這些問題可以透過一些工作流程的改進，或是導入新的小工具，來改善工作效率。
 接下來筆者推薦幾個心得與工具，希望能提升使用 Terraform 的效率與產值
 以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。
- 心得  CI/CD 全自動化 State backend 選擇 最佳實踐 https://www.</description>
+心得 CI/CD 全自動化 State backend 選擇 最佳實踐 https://www.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -68,13 +98,20 @@
       <pubDate>Sat, 03 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-10-03-terraform-infrastructure-as-code-automation/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+上面講解 Terraform 的基本操作流程，提供範本原始碼，以及一步一步導入的詳細步驟。各位應該都可以依照上面幾篇的說明，開始快樂的使用 Terraform 了。
 而當使用 Terraform 的規模越來越大，管理的資料越來越多時，開始會出現一些問題，例如重複的 terraform code 越來越多，協同工作 review 不太容易，state 的內容管理與鎖管理，等等。這些問題可以透過一些工作流程的改進，或是導入新的小工具，來改善工作效率。
 接下來筆者推薦幾個心得與工具，希望能提升使用 Terraform 的效率與產值
 以下幾篇文章，適合已經使用過 terraform 一點時間，有經驗的團隊，並打算更大規模導入 terraform，正在尋求改善的方向。
- 心得  CI/CD 全自動化 State backend 選擇 最佳實踐 https://www.</description>
+心得 CI/CD 全自動化 State backend 選擇 最佳實踐 https://www.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -83,13 +120,20 @@
       <pubDate>Fri, 02 Oct 2020 11:15:48 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-10-02-terraform-infrastructure-as-code-repository-example/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 上面講了很多 terraform 的操作範例，應該看到這裡，對於 terraform 基本上是什麼東西，應該有些概念了。然而這樣還不能算是學會 terraform，這種工具的東西一定要有實際操作過的經驗才算是學會。
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+上面講了很多 terraform 的操作範例，應該看到這裡，對於 terraform 基本上是什麼東西，應該有些概念了。然而這樣還不能算是學會 terraform，這種工具的東西一定要有實際操作過的經驗才算是學會。
 可以直接參考 Terraform 官方的 Get-started 文件來操作學習，我這邊也提供一個 Git repository 讓大家上手，當作初次操作的框架。
 提供做為範例的原始碼 這個 Github Repository 是我給社群演講所使用的範例，第一次使用的可以參考
 https://github.com/chechiachang/terraform-playground
-1tree 2├── README.</description>
+1tree 2├── README.md 3├── SOP.md 4├── aws/ 5├── azure/ 6└── gcp/ TL;DR 選擇使用的雲平台，這邊提供三家範例，例如我這邊使用 gcp，當然你就要準備 GCP 的帳號，並且下載有執行權限的用戶 credential json key 等等。
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -98,13 +142,20 @@ https://github.com/chechiachang/terraform-playground
       <pubDate>Mon, 15 Jun 2020 10:58:56 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-06-15-terraform-infrastructure-as-code-transcript/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- 各位好
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+各位好
 About this presentation 開始之前，先分享一些資源
- 投影片 講稿 程式碼 SOP 範本 Facebook 粉專  都放在這裡，因為有附逐字稿，所以如果很忙的朋友，掃了 QR code 就可以回家自己看了，不用客氣。
+投影片 講稿 程式碼 SOP 範本 Facebook 粉專 都放在這裡，因為有附逐字稿，所以如果很忙的朋友，掃了 QR code 就可以回家自己看了，不用客氣。
 然後有興趣在追這系列文章的，可以幫我 facebook 粉專按個讚跟追蹤，每周新文章出來，會推播通知。
-文章在 chechia.</description>
+文章在 chechia.net 上，新文章通知靠 facebook 粉專這樣。也可以只追蹤不按讚。我自己看別人技術 blog 也很常這樣(XD
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -113,9 +164,17 @@ About this presentation 開始之前，先分享一些資源
       <pubDate>Sun, 14 Jun 2020 16:46:09 +0800</pubDate>
       
       <guid>https://chechia.net/post/2020-06-14-terraform-infrastructure-as-code/</guid>
-      <description>This article is part of 從零開始的 Infrastructu as Code: Terraform
- Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation  Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
- Outlline  our story: issues, steps, &amp;amp; results basics IaC, terraform benefits risks and 坑 to be or not to be  experience oriented</description>
+      <description>
+        
+          
+            This article is part of 從零開始的 Infrastructu as Code: Terraform
+Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification. Like my page if you really like it :)
+Outlline our story: issues, steps, &amp;amp; results basics IaC, terraform benefits risks and 坑 to be or not to be experience oriented
+Our stories 100+ devs, many teams 25+ projects 50+ GKEs 80+ SQLs IAMs, redis, VPCs, load-balancers, &amp;hellip; Issues Ops manually create resources through GUI by SOP.
+          
+          
+        
+      </description>
     </item>
     
   </channel>

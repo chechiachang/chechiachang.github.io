@@ -13,7 +13,14 @@
       <pubDate>Mon, 06 May 2019 18:12:15 +0800</pubDate>
       
       <guid>https://chechia.net/post/2019-05-06-service-mesh-for-microservice-on-kubernetes/</guid>
-      <description>基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。</description>
+      <description>
+        
+          
+            基於 Kubernetes 平台上的 Istio ，實際部署，並一步一步操作Istio 的功能。
+          
+          
+        
+      </description>
     </item>
     
   </channel>
