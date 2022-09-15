@@ -6,7 +6,29 @@
     <description>Recent content in kubernetes on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 16 Nov 2021 01:04:12 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 May 2022 01:04:12 +0800</lastBuildDate><atom:link href="https://chechia.net/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2022 05 21 COSCUP Operating Time Series Database in K8s</title>
+      <link>https://chechia.net/post/2022-05-21-coscup-proposal-operating-time-series-database-in-k8s/</link>
+      <pubDate>Sat, 21 May 2022 01:04:12 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/2022-05-21-coscup-proposal-operating-time-series-database-in-k8s/</guid>
+      <description>
+        
+          
+            Titleq 在 k8s 上跑 time series database 甘苦談 - Operating Time Series Database in K8s
+Google Slides Youtube live record: https://youtu.be/YexUnVOZC8M?t=9421
+Description Influxdb 為市占最高的 time series DBMS 之一，使用上與 RDBMS 有不同優劣勢。
+在維運方面，database 有許多相似需求：穩定性、高可用性、備份、還原、資源管理、調度、災難復原&amp;hellip;等。社群常聽到有人問：可不可以在 K8s 上跑 database。
+本演講會分享在 k8s 中維運，實務上所遇到的問題，提供一些思考方向。
+本次演講的 influxdb 版本為 Influxdb OSS / enterprise 1.9+
+InfluxDB is one the the most popular time series database management system (DBMS) and is a powerful platform when dealing with time series data.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>2021 11 16 Ithome Cloud Summit Vault</title>
       <link>https://chechia.net/post/2021-11-16-ithome-cloud-summit-vault/</link>
