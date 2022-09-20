@@ -3,30 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://chechia.net/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
-    <loc>https://chechia.net/post/2022-09-18-14th-ithome-ironman-iac-aws-workshop-04-aws-multi-account-structure/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <loc>https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-06-provision-iam-group-policy/</loc>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/tags/aws/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/categories/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/tags/iac/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/post/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/tags/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/tags/terraform/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/categories/terraform/</loc>
+    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-05-provision-iam-user/</loc>
+    <lastmod>2022-09-19T11:59:27+08:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/post/2022-09-18-14th-ithome-ironman-iac-aws-workshop-04-aws-multi-account-structure/</loc>
     <lastmod>2022-09-18T09:35:25+08:00</lastmod>
   </url><url>
     <loc>https://chechia.net/post/2022-09-16-14th-ithome-ironman-iac-aws-workshop-03-provision-aws-account/</loc>
