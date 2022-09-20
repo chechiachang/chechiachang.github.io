@@ -6,7 +6,26 @@
     <description>Recent content in terraform on Che-Chia Chang</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2016–2020, Che-Chia Chang; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 20 Sep 2022 10:39:37 +0800</lastBuildDate><atom:link href="https://chechia.net/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Sep 2022 18:30:06 +0800</lastBuildDate><atom:link href="https://chechia.net/categories/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>14th Ithome Ironman Iac Aws Workshop 07 Reset Iam User</title>
+      <link>https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/</link>
+      <pubDate>Tue, 20 Sep 2022 18:30:06 +0800</pubDate>
+      
+      <guid>https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/</guid>
+      <description>
+        
+          
+            昨天我們建立 IAM Group 與 policy，並說明 policy 管理原則。
+然而昨天最後創建 user 時，我們關閉了 create_login_profile = false 的選項 這是為了避免當前的登入機制被覆蓋掉，影響 root account Administrator 的使用 更改 login 方式，在某些極端的情形下，有可能讓 Administrator 自己覆蓋自己的 login 設定後，讓自己無法登入 如果你是管理員，在更改 admin 帳號的權限與登入設定時，一定要多加注意
+如果不幸改壞，無法登入，就只能再去找出 root account root user 帳號來解救了 如果是 root account root user 把自己的 login 改壞，就會很痛苦，要請 aws support 來救你 本日進度
+root 中設定 IAM User 將手動產生的 Administrator 的 IAM User import terraform 中 補上 root account IAM Policy 補上 root account IAM Group reset root account IAM user login profile &amp;amp; pgp key iThome 鐵人賽好讀版
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>14th Ithome Ironman Iac Aws Workshop 06 Provision Iam Group Policy</title>
       <link>https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-06-provision-iam-group-policy/</link>

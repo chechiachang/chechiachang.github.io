@@ -177,7 +177,7 @@
 </span>
     <span class="post_date">
       Sep 20, 2022</span>
-    <span class="post_time"> · 8 min read</span><span>&nbsp;· <a href='https://chechia.net/tags/terraform/' title="terraform" class="post_tag button button_translucent">terraform
+    <span class="post_time"> · 9 min read</span><span>&nbsp;· <a href='https://chechia.net/tags/terraform/' title="terraform" class="post_tag button button_translucent">terraform
         </a><a href='https://chechia.net/tags/iac/' title="iac" class="post_tag button button_translucent">iac
         </a><a href='https://chechia.net/tags/aws/' title="aws" class="post_tag button button_translucent">aws
         </a>
@@ -805,6 +805,27 @@
 <ul>
 <li>因為我們還沒有準備 pgp key，這個又要明天再來了</li>
 </ul>
+<h3 id="todo-與進度">TODO 與進度</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 透過 root account 設定一組 IAM User</li>
+<li><input checked="" disabled="" type="checkbox"> 透過 root account 設定多個 aws child accounts</li>
+<li><input checked="" disabled="" type="checkbox"> root 中設定 IAM User
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 將手動產生的 Administrator 的 IAM User import terraform 中</li>
+<li><input checked="" disabled="" type="checkbox"> 補上 root account IAM Policy</li>
+<li><input checked="" disabled="" type="checkbox"> 補上 root account IAM Group</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> security 中設定 IAM User
+<ul>
+<li><input disabled="" type="checkbox"> security 設定 password policy</li>
+<li><input disabled="" type="checkbox"> security 設定 MFA policy</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> security 中設定 IAM Policy &amp; Group</li>
+<li><input disabled="" type="checkbox"> dev 中設定 IAM role</li>
+<li><input disabled="" type="checkbox"> 允許 security assume dev IAM role</li>
+</ul>
 
     </div>
 <div class="post_comments">
@@ -833,6 +854,9 @@
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/" class="nav-link" title="14th Ithome Ironman Iac Aws Workshop 07 Reset Iam User">14th Ithome Ironman Iac Aws Workshop 07 Reset Iam User</a>
+      </li>
+      <li>
         <a href="https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-06-provision-iam-group-policy/" class="nav-link" title="14th Ithome Ironman Iac Aws Workshop 06 Provision Iam Group Policy">14th Ithome Ironman Iac Aws Workshop 06 Provision Iam Group Policy</a>
       </li>
       <li>
@@ -853,9 +877,6 @@
       <li>
         <a href="https://chechia.net/post/2022-06-09-ithome-devopsday-2022-proposal-introduce-policy-as-code-for-terraform-/" class="nav-link" title="IThome 2022 DevOpsDay Introducing policy as code for terraform">IThome 2022 DevOpsDay Introducing policy as code for terraform</a>
       </li>
-      <li>
-        <a href="https://chechia.net/post/2022-05-21-coscup-proposal-operating-time-series-database-in-k8s/" class="nav-link" title="2022 05 21 COSCUP Operating Time Series Database in K8s">2022 05 21 COSCUP Operating Time Series Database in K8s</a>
-      </li>
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
@@ -870,7 +891,7 @@
         
         <a href='https://chechia.net/categories/terraform/' class="post_tag button button_translucent" title="terraform">
           TERRAFORM
-          <span class="button_tally">14</span>
+          <span class="button_tally">15</span>
         </a>
         
         <a href='https://chechia.net/categories/kafka/' class="post_tag button button_translucent" title="kafka">
@@ -1011,7 +1032,7 @@
             </a>
             
             
-            <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent" data-position=14 title="terraform">TERRAFORM<span class="button_tally">14</span>
+            <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent" data-position=15 title="terraform">TERRAFORM<span class="button_tally">15</span>
             </a>
             
             <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
@@ -1038,7 +1059,7 @@
         
         <a href='https://chechia.net/tags/terraform/' class="post_tag button button_translucent" title="terraform">
           TERRAFORM
-          <span class="button_tally">17</span>
+          <span class="button_tally">18</span>
         </a>
         
         <a href='https://chechia.net/tags/devops/' class="post_tag button button_translucent" title="devops">
@@ -1056,6 +1077,16 @@
           <span class="button_tally">9</span>
         </a>
         
+        <a href='https://chechia.net/tags/aws/' class="post_tag button button_translucent" title="aws">
+          AWS
+          <span class="button_tally">7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/iac/' class="post_tag button button_translucent" title="iac">
+          IAC
+          <span class="button_tally">7</span>
+        </a>
+        
         <a href='https://chechia.net/tags/preemptible/' class="post_tag button button_translucent" title="preemptible">
           PREEMPTIBLE
           <span class="button_tally">7</span>
@@ -1064,16 +1095,6 @@
         <a href='https://chechia.net/tags/spot-instance/' class="post_tag button button_translucent" title="spot-instance">
           SPOT-INSTANCE
           <span class="button_tally">7</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/aws/' class="post_tag button button_translucent" title="aws">
-          AWS
-          <span class="button_tally">6</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/iac/' class="post_tag button button_translucent" title="iac">
-          IAC
-          <span class="button_tally">6</span>
         </a>
         
         <a href='https://chechia.net/tags/redis/' class="post_tag button button_translucent" title="redis">
@@ -1106,7 +1127,7 @@
             </a>
             
             
-            <a href='https://chechia.net/tags/aws/' class=" post_tag button button_translucent" data-position=6 title="aws">AWS<span class="button_tally">6</span>
+            <a href='https://chechia.net/tags/aws/' class=" post_tag button button_translucent" data-position=7 title="aws">AWS<span class="button_tally">7</span>
             </a>
             
             
@@ -1206,7 +1227,7 @@
             </a>
             
             
-            <a href='https://chechia.net/tags/iac/' class=" post_tag button button_translucent" data-position=6 title="iac">IAC<span class="button_tally">6</span>
+            <a href='https://chechia.net/tags/iac/' class=" post_tag button button_translucent" data-position=7 title="iac">IAC<span class="button_tally">7</span>
             </a>
             
             
@@ -1282,7 +1303,7 @@
             </a>
             
             
-            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=17 title="terraform">TERRAFORM<span class="button_tally">17</span>
+            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=18 title="terraform">TERRAFORM<span class="button_tally">18</span>
             </a>
             
             

@@ -180,6 +180,78 @@
   <div class="excerpt">
     <div class="excerpt_header">
       <h3 class="post_link">
+        <a href="https://chechia.net/post/2020-09-25-gcp-preemptible-instance-resource-calculation/" title="Gcp Preemptible Instance Resource Calculation">Gcp Preemptible Instance Resource Calculation</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 25, 2020</span>
+    <span class="post_time"> · 1 min read</span><span>&nbsp;· <a href='https://chechia.net/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
+        </a><a href='https://chechia.net/tags/gcp/' title="gcp" class="post_tag button button_translucent">gcp
+        </a><a href='https://chechia.net/tags/preemptible/' title="preemptible" class="post_tag button button_translucent">preemptible
+        </a><a href='https://chechia.net/tags/spot-instance/' title="spot-instance" class="post_tag button button_translucent">spot-instance
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Gcp%20Preemptible%20Instance%20Resource%20Calculation&url=https%3a%2f%2fchechia.net%2fpost%2f2020-09-25-gcp-preemptible-instance-resource-calculation%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2f2020-09-25-gcp-preemptible-instance-resource-calculation%2f&t=Gcp%20Preemptible%20Instance%20Resource%20Calculation" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://chechia.net/post/2020-09-25-gcp-preemptible-instance-resource-calculation/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>關於資源評估 架構團隊提供虛擬機給應用，有個問題時常出現：應該分配多少資源給應用？例如：後端準備一個 API server，SRE 這邊要準備多少什麼規格的機器？
+以往使用虛擬機直接部署應用時，會需要明確規劃各群虛擬機，各自需要執行的應用，如果沒有做資源的事前評估，有可能放上機器運行後就發生資源不足。
+導入 Kubernetes 後，透過節點池 (Node Pool) 形成一個大型資源池，設定部署的政策後，讓 Kubernetes 自動調度應用：
+每一個節點的資源夠大，使得應用虛擬機器上所佔的比例相對較小，也就是單一應用的調度不會影響節點的整體負載 如果節點太小，調度應用就會有些侷促，例如：一個 API server 均載時消耗 1 …</p>
+          
+          <br>
+          <a href="https://chechia.net/post/2020-09-25-gcp-preemptible-instance-resource-calculation/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
         <a href="https://chechia.net/post/2020-09-24-gcp-preemptible-instance-requirement/" title="Gcp Preemptible Instance Requirement">Gcp Preemptible Instance Requirement</a>
       </h3>
       
@@ -814,70 +886,6 @@ Outlline our story: issues, steps, …</p>
     </div>
   </li>
 
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://chechia.net/post/2019-12-31-say-goodbye-2019/" title="Say Goodbye 2019">Say Goodbye 2019</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Dec 31, 2019</span>
-    <span class="post_time"> · 1 min read</span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=Say%20Goodbye%202019&url=https%3a%2f%2fchechia.net%2fpost%2f2019-12-31-say-goodbye-2019%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fchechia.net%2fpost%2f2019-12-31-say-goodbye-2019%2f&t=Say%20Goodbye%202019" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://chechia.net/post/2019-12-31-say-goodbye-2019/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>2019 年度回顧</p>
-          
-          <br>
-          <a href="https://chechia.net/post/2019-12-31-say-goodbye-2019/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
       <li>
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -927,6 +935,9 @@ Outlline our story: issues, steps, …</p>
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/" class="nav-link" title="14th Ithome Ironman Iac Aws Workshop 07 Reset Iam User">14th Ithome Ironman Iac Aws Workshop 07 Reset Iam User</a>
+      </li>
+      <li>
         <a href="https://chechia.net/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-06-provision-iam-group-policy/" class="nav-link" title="14th Ithome Ironman Iac Aws Workshop 06 Provision Iam Group Policy">14th Ithome Ironman Iac Aws Workshop 06 Provision Iam Group Policy</a>
       </li>
       <li>
@@ -947,9 +958,6 @@ Outlline our story: issues, steps, …</p>
       <li>
         <a href="https://chechia.net/post/2022-06-09-ithome-devopsday-2022-proposal-introduce-policy-as-code-for-terraform-/" class="nav-link" title="IThome 2022 DevOpsDay Introducing policy as code for terraform">IThome 2022 DevOpsDay Introducing policy as code for terraform</a>
       </li>
-      <li>
-        <a href="https://chechia.net/post/2022-05-21-coscup-proposal-operating-time-series-database-in-k8s/" class="nav-link" title="2022 05 21 COSCUP Operating Time Series Database in K8s">2022 05 21 COSCUP Operating Time Series Database in K8s</a>
-      </li>
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
@@ -964,7 +972,7 @@ Outlline our story: issues, steps, …</p>
         
         <a href='https://chechia.net/categories/terraform/' class="post_tag button button_translucent" title="terraform">
           TERRAFORM
-          <span class="button_tally">14</span>
+          <span class="button_tally">15</span>
         </a>
         
         <a href='https://chechia.net/categories/kafka/' class="post_tag button button_translucent" title="kafka">
@@ -1105,7 +1113,7 @@ Outlline our story: issues, steps, …</p>
             </a>
             
             
-            <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent" data-position=14 title="terraform">TERRAFORM<span class="button_tally">14</span>
+            <a href='https://chechia.net/categories/terraform/' class=" post_tag button button_translucent" data-position=15 title="terraform">TERRAFORM<span class="button_tally">15</span>
             </a>
             
             <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
@@ -1132,7 +1140,7 @@ Outlline our story: issues, steps, …</p>
         
         <a href='https://chechia.net/tags/terraform/' class="post_tag button button_translucent" title="terraform">
           TERRAFORM
-          <span class="button_tally">17</span>
+          <span class="button_tally">18</span>
         </a>
         
         <a href='https://chechia.net/tags/devops/' class="post_tag button button_translucent" title="devops">
@@ -1150,6 +1158,16 @@ Outlline our story: issues, steps, …</p>
           <span class="button_tally">9</span>
         </a>
         
+        <a href='https://chechia.net/tags/aws/' class="post_tag button button_translucent" title="aws">
+          AWS
+          <span class="button_tally">7</span>
+        </a>
+        
+        <a href='https://chechia.net/tags/iac/' class="post_tag button button_translucent" title="iac">
+          IAC
+          <span class="button_tally">7</span>
+        </a>
+        
         <a href='https://chechia.net/tags/preemptible/' class="post_tag button button_translucent" title="preemptible">
           PREEMPTIBLE
           <span class="button_tally">7</span>
@@ -1158,16 +1176,6 @@ Outlline our story: issues, steps, …</p>
         <a href='https://chechia.net/tags/spot-instance/' class="post_tag button button_translucent" title="spot-instance">
           SPOT-INSTANCE
           <span class="button_tally">7</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/aws/' class="post_tag button button_translucent" title="aws">
-          AWS
-          <span class="button_tally">6</span>
-        </a>
-        
-        <a href='https://chechia.net/tags/iac/' class="post_tag button button_translucent" title="iac">
-          IAC
-          <span class="button_tally">6</span>
         </a>
         
         <a href='https://chechia.net/tags/redis/' class="post_tag button button_translucent" title="redis">
@@ -1200,7 +1208,7 @@ Outlline our story: issues, steps, …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/aws/' class=" post_tag button button_translucent" data-position=6 title="aws">AWS<span class="button_tally">6</span>
+            <a href='https://chechia.net/tags/aws/' class=" post_tag button button_translucent" data-position=7 title="aws">AWS<span class="button_tally">7</span>
             </a>
             
             
@@ -1300,7 +1308,7 @@ Outlline our story: issues, steps, …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/iac/' class=" post_tag button button_translucent" data-position=6 title="iac">IAC<span class="button_tally">6</span>
+            <a href='https://chechia.net/tags/iac/' class=" post_tag button button_translucent" data-position=7 title="iac">IAC<span class="button_tally">7</span>
             </a>
             
             
@@ -1376,7 +1384,7 @@ Outlline our story: issues, steps, …</p>
             </a>
             
             
-            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=17 title="terraform">TERRAFORM<span class="button_tally">17</span>
+            <a href='https://chechia.net/tags/terraform/' class=" post_tag button button_translucent" data-position=18 title="terraform">TERRAFORM<span class="button_tally">18</span>
             </a>
             
             
