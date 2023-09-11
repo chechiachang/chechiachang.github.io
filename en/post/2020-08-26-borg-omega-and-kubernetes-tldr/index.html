@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="這是原文翻譯的太長不讀 (TL;DR) 版本。完整翻譯請見Borg Omega and Kubernetes 前世今生浩文完整翻譯
+原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+前言 Borg 以前就有應用管理系統，那時還沒有 Linux control group Borg 是第一套統一的 container-management system Borg 仍被大規模的使用，有許多功能而且非常堅固 Omega 繼承 Borg 上成功的設計，並希望改進 Borg 的生態系 Kubernetes 開源 透過 REST API 溝通 client 應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統 Container Google 使用 Container 來提昇 utilization 把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job 現代 container 的定義是 runtime-isolation 與 image Application-oriented infrastructure container 使用久了，不只滿足 utilization 的需求 資料中心從機器導向變成應用導向 Container 封裝環境，把機器與 OS 的依賴抽象化 應用不依賴 部署流程 runtime infrastrcture Container scope 在應用上，專注在應用管理而不是機器管理 Application environment cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響 混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS 提供完全相同的部署環境，避免切換環境(ex." />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2020-08-26-borg-omega-and-kubernetes-tldr/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2020-08-26-borg-omega-and-kubernetes-tldr/" />
+<link rel="canonical" href="https://chechia.net/en/post/2020-08-26-borg-omega-and-kubernetes-tldr/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2020-08-26-borg-omega-and-kubernetes-tldr/" />
+<meta property="og:title" content="Borg Omega and Kubernetes TLDR 摘要翻譯 | Che-Chia Chang" />
+<meta property="og:description" content="這是原文翻譯的太長不讀 (TL;DR) 版本。完整翻譯請見Borg Omega and Kubernetes 前世今生浩文完整翻譯
+原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+前言 Borg 以前就有應用管理系統，那時還沒有 Linux control group Borg 是第一套統一的 container-management system Borg 仍被大規模的使用，有許多功能而且非常堅固 Omega 繼承 Borg 上成功的設計，並希望改進 Borg 的生態系 Kubernetes 開源 透過 REST API 溝通 client 應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統 Container Google 使用 Container 來提昇 utilization 把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job 現代 container 的定義是 runtime-isolation 與 image Application-oriented infrastructure container 使用久了，不只滿足 utilization 的需求 資料中心從機器導向變成應用導向 Container 封裝環境，把機器與 OS 的依賴抽象化 應用不依賴 部署流程 runtime infrastrcture Container scope 在應用上，專注在應用管理而不是機器管理 Application environment cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響 混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS 提供完全相同的部署環境，避免切換環境(ex." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2020-08-26T13:50:52&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2020-08-26T13:50:52&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2020-08-26-borg-omega-and-kubernetes-tldr/"
+  },
+  "headline": "Borg Omega and Kubernetes TLDR 摘要翻譯",
+  
+  "datePublished": "2020-08-26T13:50:52+08:00",
+  "dateModified": "2020-08-26T13:50:52+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "這是原文翻譯的太長不讀 (TL;DR) 版本。完整翻譯請見Borg Omega and Kubernetes 前世今生浩文完整翻譯\n原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf\n前言 Borg 以前就有應用管理系統，那時還沒有 Linux control group Borg 是第一套統一的 container-management system Borg 仍被大規模的使用，有許多功能而且非常堅固 Omega 繼承 Borg 上成功的設計，並希望改進 Borg 的生態系 Kubernetes 開源 透過 REST API 溝通 client 應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統 Container Google 使用 Container 來提昇 utilization 把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job 現代 container 的定義是 runtime-isolation 與 image Application-oriented infrastructure container 使用久了，不只滿足 utilization 的需求 資料中心從機器導向變成應用導向 Container 封裝環境，把機器與 OS 的依賴抽象化 應用不依賴 部署流程 runtime infrastrcture Container scope 在應用上，專注在應用管理而不是機器管理 Application environment cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響 混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS 提供完全相同的部署環境，避免切換環境(ex."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Borg Omega and Kubernetes TLDR 摘要翻譯 | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="666e87031b74dc9e2f3543c53783f03a" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2020-08-26-borg-omega-and-kubernetes-tldr/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Borg Omega and Kubernetes TLDR 摘要翻譯</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Aug 26, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>這是原文翻譯的太長不讀 (TL;DR) 版本。完整翻譯請見<a href="https://chechia.net/en/post/2020-09-12-borg-omega-and-kubernetes/">Borg Omega and Kubernetes 前世今生浩文完整翻譯</a></p>
+<p>原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf</p>
+<h1 id="前言">前言</h1>
+<ul>
+<li>Borg 以前就有應用管理系統，那時還沒有 Linux control group</li>
+<li>Borg
+<ul>
+<li>是第一套統一的 container-management system</li>
+<li>Borg 仍被大規模的使用，有許多功能而且非常堅固</li>
+</ul>
+</li>
+<li>Omega
+<ul>
+<li>繼承 Borg 上成功的設計，並希望改進 Borg 的生態系</li>
+</ul>
+</li>
+<li>Kubernetes
+<ul>
+<li>開源</li>
+<li>透過 REST API 溝通 client</li>
+<li>應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統</li>
+</ul>
+</li>
+</ul>
+<h1 id="container">Container</h1>
+<ul>
+<li>Google 使用 Container 來提昇 utilization
+<ul>
+<li>把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job</li>
+</ul>
+</li>
+<li>現代 container 的定義是 runtime-isolation 與 image</li>
+</ul>
+<h1 id="application-oriented-infrastructure">Application-oriented infrastructure</h1>
+<ul>
+<li>container 使用久了，不只滿足 utilization 的需求
+<ul>
+<li>資料中心從機器導向變成應用導向</li>
+</ul>
+</li>
+<li>Container 封裝環境，把機器與 OS 的依賴抽象化
+<ul>
+<li>應用不依賴
+<ul>
+<li>部署流程</li>
+<li>runtime infrastrcture</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Container scope 在應用上，專注在應用管理而不是機器管理</li>
+</ul>
+<h1 id="application-environment">Application environment</h1>
+<ul>
+<li>cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響
+<ul>
+<li>混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS
+<ul>
+<li>提供完全相同的部署環境，避免切換環境(ex. dev, prod)時造成環境差異</li>
+</ul>
+</li>
+<li>進一步把 app 的依賴程式也打包 image
+<ul>
+<li>container 對 OS 唯一的依賴只剩 Linux kernel system-call interface
+<ul>
+<li>大幅增加 app 調度的彈性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>然而有些 interface 仍附著 OS 上，ex socket, /prod, ioctl calls
+<ul>
+<li>希望透過 Open Container Initiative，清楚定義 interface 與抽象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>直接的好處，少數幾種 OS 與 OS Version 就可以跑所有應用，新版本也不影響</li>
+</ul>
+<h1 id="container-as-the-unit-of-management">Container as the unit of management</h1>
+<ul>
+<li>資料中心的重心，從管理機器變成管理應用
+<ul>
+<li>提供彈性給 infrastructure team
+<ul>
+<li>提供統一的架構</li>
+<li>收集統一的 metrics</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Container 統一的介面，讓 management system (ex. k8s) 可以提供 generic APIs
+<ul>
+<li>REST API, HTTP, /healthz, exec&hellip;</li>
+<li>統一的 health check 介面，更方便的終止與重啟</li>
+<li>一致性
+<ul>
+<li>容器提供統一的資訊，ex. status, text message, &hellip;</li>
+<li>管理平台提供統一設定 (ex. resource limits) ，並進行 logging 與 monitoring
+<ul>
+<li>提供更精細的功能 ex. graceful-termination</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>cgroups 提供 app 的資源使用資訊，而不需要知道 app spec，因為 contaier 本身即是 app
+<ul>
+<li>提供更簡單，卻更精細且堅固的 logging 與 monitoring</li>
+</ul>
+</li>
+<li>應用導向的 monitoring ，而不是機器導向的 monitoring
+<ul>
+<li>可以收集跨 OS 的 app 狀態，進行整合分析，而不會有 OS 不同造成的雜訊</li>
+<li>更容易對應用除錯</li>
+</ul>
+</li>
+<li>nested contaiers
+<ul>
+<li>resource allocation (aka. alloc in Borg, Pod in Kubernetes)</li>
+</ul>
+</li>
+</ul>
+<h1 id="orchestration-is-the-beginning-not-the-end">Orchestration is the beginning, not the end</h1>
+<ul>
+<li>原本 Borg 只是要把 workload 分配到共用的機器上，來改善 utilization
+<ul>
+<li>結果發現可以做更多事情，來幫助開發與部署
+<ul>
+<li>Naming, service discovery</li>
+<li>Application-aware load balancing</li>
+<li>Rollout tool</li>
+<li>Workflow tool</li>
+<li>Monitoring tool</li>
+</ul>
+</li>
+<li>成功的工具被留下
+<ul>
+<li>然而工具都需要各自的 API，副作用是增加部署的複雜度到 Borg 的生態系</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Kubernetese 試圖降低複雜度
+<ul>
+<li>提供一致的 API
+<ul>
+<li>ex. ObjectMetadata, Specification, Status</li>
+<li>Object metadata 是全域共通的</li>
+<li>Spec 與 Status 根據 Object 有所不同，但是概念是一致的
+<ul>
+<li>Spec 描述 desired state of object</li>
+<li>Status 提供 read-only 的 current state of object</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Uniform API 有許多好處
+<ul>
+<li>降低學習成本</li>
+<li>可以使用 generic 的工具讓所有 workflow 使用</li>
+<li>統一使用者的開發流程與開發經驗</li>
+<li>Kubernetes 本身模組化，可以使用延伸模組
+<ul>
+<li>ex. pod API 讓使用者使用，kubernetes 內部使用，外部自動化工具也使用</li>
+<li>使用者可以自己增加 customized API</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如何達到 Uniform API
+<ul>
+<li>decoupling API
+<ul>
+<li>切分 API 關注的面向，變成不同 components API. ex.
+<ul>
+<li>replication controller 確保 desired 數量的 Pod 存在</li>
+<li>autoscaler 關注在需求與使用的預測，然後控制 replication controller API</li>
+</ul>
+</li>
+<li>higher-level 服務都共用相同的 basic API</li>
+<li>切分 API 而外的好處
+<ul>
+<li>有關聯但是用途不同的 API 的內容與使用方式十分相似. ex.
+<ul>
+<li>ReplicationController: 控制長時間運行的 containers 與其複本</li>
+<li>DeamonSet: 每個機器上都跑一個 container</li>
+<li>Job: 一次性執行完畢的 container</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Common design patterns
+<ul>
+<li>ex. reconciliation controller loop 在 Borg, Omega, Kubernetes 中大量使用
+<ul>
+<li>需求(desired state)</li>
+<li>觀察現況(current state)</li>
+<li>執行動作，收斂需求與現況(reconcile)</li>
+<li>loop</li>
+</ul>
+</li>
+<li>由於狀態是基於實際觀測產生，reconciliation loop 非常堅固，可以承受相當的 failure</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Kubernetes 設計為一連串的為服務系統，以及許多小型的 control loop
+<ul>
+<li>對比大型的 centralized orchestration system</li>
+</ul>
+</li>
+</ul>
+<h1 id="things-to-avoid">Things to avoid</h1>
+<p>Google 開發過程中，也發現許多不該做的事情</p>
+<ul>
+<li>不要使用 conainer system 來管理 port numbers
+<ul>
+<li>Borg 會指定 unique port number 給每個 container
+<ul>
+<li>必須用其他方法取代 DNS</li>
+<li>port 也不易嵌入 URL 中，要另外處理轉址</li>
+<li>需要而外的系統處理 ip:port</li>
+</ul>
+</li>
+<li>Kubernetes 選擇指派 IP 給 Pod
+<ul>
+<li>可以直接使用常用 port (ex. 80,443)</li>
+<li>可以使用內部 DNS，使用一般常用的工具</li>
+<li>大部分公有雲都提供 networking underlays，達成 Ip-per-pod</li>
+<li>可以使用 DNS overlay 或是 L3 routing，來控制一台機器上的多個 IPs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不要幫 container 編號，使用 label 來管理大量的 container
+<ul>
+<li>Borg 會幫 job 從 0 開始編號
+<ul>
+<li>很直覺很直接，但稍後就後悔了
+<ul>
+<li>如果 job 死了，重啟新的 job 在機器上後，還需要去找上個死掉的 job</li>
+<li>task 中間會有很多洞 (死掉的 job)</li>
+<li>更新版本，要更新 jobs 時會依序重啟 jobs</li>
+<li>資料如果也是根據 index 做 sharding，重啟時要復原 index，不然會有資料遺失</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Kubernetes 使用 label
+<ul>
+<li>可以透過 label 管理一組 container</li>
+<li>一個 container 可使用多個 labels，更方便的調度</li>
+<li>需要的資訊打在 label 上 (ex. role assignments, work-partitioning, sharding&hellip;)，更容易管理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注意所有權
+<ul>
+<li>Borg 上，tasks 都綁定在 job 上，產生 job 也產生 tasks
+<ul>
+<li>很直覺方便</li>
+<li>只剩下一種 group 控制機制</li>
+</ul>
+</li>
+<li>Kubernetes 的 pod-lifecycle management (ex. replication controller) 使用 label selector 來控制 pod
+<ul>
+<li>可以彈性控制大量 pod</li>
+<li>可能有多個上層 controller 控制同一個 pod，要盡量避免這種情況</li>
+<li>好處是保留彈性的同時，可以很清楚界定管理的 pod，不會有 orphan / adapt pod</li>
+<li>透過 label 進行 service load balance
+<ul>
+<li>如果 pod 有問題，可以變更 label，讓流量不要進來，但又保留 Pod debug</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不要暴露 raw state
+<ul>
+<li>Borgmaster 是 monolithic，可見所有的 API Operation</li>
+<li>Omega 不是 centralized，只保留被動的資訊，使用 optimistic concurrent control
+<ul>
+<li>state 存到 client store，並基於 state 進行 operation</li>
+<li>所有 client 需要使用一樣的 client store library</li>
+</ul>
+</li>
+<li>Kubernetes 走中間
+<ul>
+<li>所有 state 存取需要透過 centralized API server</li>
+<li>client components 可以獨立運作</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="some-open-hard-problems">Some open, hard problems</h1>
+<ul>
+<li>configuration</li>
+<li>dependency management</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/en/tag/google/">google</a>
+  
+  <a class="badge badge-light" href="/en/tag/borg/">borg</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2020-08-26-borg-omega-and-kubernetes-tldr%2F&amp;text=Borg&#43;Omega&#43;and&#43;Kubernetes&#43;TLDR&#43;%E6%91%98%E8%A6%81%E7%BF%BB%E8%AD%AF" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2020-08-26-borg-omega-and-kubernetes-tldr%2F&amp;t=Borg&#43;Omega&#43;and&#43;Kubernetes&#43;TLDR&#43;%E6%91%98%E8%A6%81%E7%BF%BB%E8%AD%AF" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Borg%20Omega%20and%20Kubernetes%20TLDR%20%E6%91%98%E8%A6%81%E7%BF%BB%E8%AD%AF&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2020-08-26-borg-omega-and-kubernetes-tldr%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2020-08-26-borg-omega-and-kubernetes-tldr%2F&amp;title=Borg&#43;Omega&#43;and&#43;Kubernetes&#43;TLDR&#43;%E6%91%98%E8%A6%81%E7%BF%BB%E8%AD%AF" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Borg&#43;Omega&#43;and&#43;Kubernetes&#43;TLDR&#43;%E6%91%98%E8%A6%81%E7%BF%BB%E8%AD%AF%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2020-08-26-borg-omega-and-kubernetes-tldr%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2020-08-26-borg-omega-and-kubernetes-tldr%2F&amp;title=Borg&#43;Omega&#43;and&#43;Kubernetes&#43;TLDR&#43;%E6%91%98%E8%A6%81%E7%BF%BB%E8%AD%AF" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

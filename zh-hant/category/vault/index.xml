@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vault | Che-Chia Chang</title>
+    <link>https://chechia.net/zh-hant/category/vault/</link>
+      <atom:link href="https://chechia.net/zh-hant/category/vault/index.xml" rel="self" type="application/rss+xml" />
+    <description>vault</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Wed, 25 Oct 2023 13:20:00 +0000</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>vault</title>
+      <link>https://chechia.net/zh-hant/category/vault/</link>
+    </image>
+    
+    <item>
+      <title>Kubernetes Summit: Resource as Code for Kubernetes: Stop kubectl apply</title>
+      <link>https://chechia.net/zh-hant/talk/kubernetes-summit-resource-as-code-for-kubernetes-stop-kubectl-apply/</link>
+      <pubDate>Wed, 25 Oct 2023 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/kubernetes-summit-resource-as-code-for-kubernetes-stop-kubectl-apply/</guid>
+      <description>&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
+&lt;p&gt;Title: Resource as Code for Kubernetes: stop kubectl apply&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://k8s.ithome.com.tw/CFP&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://k8s.ithome.com.tw/CFP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Infrastrure as Code (IaC) 與 PaC，在萬物都該 as Code 得時代，你還在不斷的 kubectl apply 嗎？&lt;/p&gt;
+&lt;p&gt;手動 apply 的痛點：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;人就是會忘：是誰 apply 這個在 k8s 上的？是誰上次漏 apply 所以壞了？&lt;/li&gt;
+&lt;li&gt;人就是會寫錯：能否 apply&lt;/li&gt;
+&lt;li&gt;管理大量的 label, taint, annotation&lt;/li&gt;
+&lt;li&gt;安全：apply 變更內容是否有經過資訊安全的 review&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;當服務的 app code base 都已經用 chart 打包，使用 vcs 管理後，為何依賴的 k8s resource (namespace, secret, label, crd, &amp;hellip;) 不需要推上 vcs 管理的？&lt;/p&gt;
+&lt;p&gt;本次演講集合幾個管理 k8s 的範例，將 k8s resource 以 code 管理，推上 vcs，並使用 argoCD, secret operator, &amp;hellip; 等工具進行管理，來讓避免低級的人工操作錯誤，降低團隊整體失誤率，並降低 k8s admin 管理的成本，提高管理效率&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hashicorp Comminity Presentation Vault Introduction</title>
+      <link>https://chechia.net/zh-hant/post/2023-05-10-hashicorp-comminity-presentation-vault-introduction/</link>
+      <pubDate>Wed, 10 May 2023 12:19:02 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-05-10-hashicorp-comminity-presentation-vault-introduction/</guid>
+      <description>&lt;h1 id=&#34;target-group&#34;&gt;target group&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;金融客戶&lt;/li&gt;
+&lt;li&gt;vault&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;4/15 上架&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;accupass
+5/10 (Wed) 11:00-12:00&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;webbase link (online)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;10:30 上線設備測試&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;11:00 Ming 開場&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;11:05 主講&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;12:00 Q&amp;amp;A (留言)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;當天錄影會上線&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;演講大綱&#34;&gt;演講大綱&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;基本介紹 vault 架構&lt;/li&gt;
+&lt;li&gt;企業需求
+&lt;ul&gt;
+&lt;li&gt;self-host&lt;/li&gt;
+&lt;li&gt;複雜的 policy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;用例 demo
+&lt;ul&gt;
+&lt;li&gt;aws auth&lt;/li&gt;
+&lt;li&gt;k8s auth&lt;/li&gt;
+&lt;li&gt;policy&lt;/li&gt;
+&lt;li&gt;當天提供 github example&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Q&amp;amp;A (10mins)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;內容&#34;&gt;內容&lt;/h1&gt;
+&lt;p&gt;演講主題：Hashicorp vault 雲端地端通吃的私鑰管理平台&lt;/p&gt;
+&lt;p&gt;現代網路應用需要處理許多私密金曜的管理，例如：user 的密碼，server 的資料，database 的資料，microservices 彼此 authentication&amp;hellip;。加上駭客團體猖獗，許多國內外知名企業紛紛遭駭，導致公司與使用者的損失。
+如何系統化且自動化管理大量的私密資料，成為系統整體安全性的關鍵。
+Hashicorp Vault 為一款開源的私密資料管理平台，除了保障系統安全性，比起市面上的其他管理工具，有許多特點&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不依賴外部服務，適合自行架設在內部公有雲/私有雲/傳統server/Kubernetes/VM&lt;/li&gt;
+&lt;li&gt;支援跨環境的應用，可以串連混合雲中的應用，作為私要認證的中心
+本次演講簡介 Hashicorp Vault，以 aws cloud 與本地 kubernetes 為例，提供幾個基本的操作範例
+適合初次接觸的 Hashicorp Vault，與尋找私要管理平台的團隊&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;講者簡介&lt;/p&gt;
+&lt;p&gt;Che-Chia Chang，SRE，喜歡研究公有雲/容器化應用/Kubernetes
+Microsoft MVP，Ithome 雲端大會/COSCUP講師，常出現 CNTUG / DevOpsTW / Golang Taipei
+技術 blog 收錄過往演講與文章 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;presentation&#34;&gt;Presentation&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1iex9lm89OCIR8IAoD1RPe4vcW--bcKBmMHoixDybqP8/edit#slide=id.g2403737215e_0_147&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://docs.google.com/presentation/d/1iex9lm89OCIR8IAoD1RPe4vcW--bcKBmMHoixDybqP8/edit#slide=id.g2403737215e_0_147&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="Jenkins is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project." />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2019-04-19-jenkins-x-on-kubernetes/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2019-04-19-jenkins-x-on-kubernetes/" />
+<link rel="canonical" href="https://chechia.net/en/post/2019-04-19-jenkins-x-on-kubernetes/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2019-04-19-jenkins-x-on-kubernetes/" />
+<meta property="og:title" content="Jenkins X on Kubernetes | Che-Chia Chang" />
+<meta property="og:description" content="Jenkins is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2019-04-19T12:15:41&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2019-04-19T12:15:41&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2019-04-19-jenkins-x-on-kubernetes/"
+  },
+  "headline": "Jenkins X on Kubernetes",
+  
+  "datePublished": "2019-04-19T12:15:41+08:00",
+  "dateModified": "2019-04-19T12:15:41+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "Jenkins is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Jenkins X on Kubernetes | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="e6fd32ec536b4d36f5f015b1d2b76cc0" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2019-04-19-jenkins-x-on-kubernetes/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Jenkins X on Kubernetes</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Apr 19, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/devops/">devops</a>, <a href="/en/category/jenkins/">jenkins</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><a href="https://jenkins.io/" target="_blank" rel="noopener">Jenkins</a> is one of the earliest open source antomation server and remains the most common option in use today. Over the years, Jenkins has evolved into a powerful and flexible framework with hundreds of plugins to support automation for any project.</p>
+<p><a href="https://jenkins-x.io/" target="_blank" rel="noopener">Jenkins X</a>, on the other hand, is a CI/CD platform (Jenkins Platform) for modern cloud applications on Kubernetes.</p>
+<p>Here we talk about some basic concepts about Jenkins X and provide a hand-to-hand guide to deploy jenkins-x on Kubernetes.</p>
+<ul>
+<li><a href="#architecture">Architecture of Jenkins X</a></li>
+<li><a href="#install">Install Jenkins with jx</a></li>
+<li><a href="#pipeline">Create a Pipeline with jx</a></li>
+<li><a href="#client">Develope with jx client</a></li>
+</ul>
+<p>For more information about jx itself, check <a href="https://github.com/jenkins-x/jx" target="_blank" rel="noopener">Jenkins-X Github Repo</a></p>
+<p><a name="architecture"></a></p>
+<h1 id="architecture">Architecture</h1>
+<p>Check this beautiful diagram.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  id="figure-httpsjenkins-xioarchitecturediagram">
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="jenkins/architecture-serverless.png" alt="https://jenkins-x.io/architecture/diagram/" loading="lazy" data-zoomable /></div>
+  </div><figcaption>
+      <a href="https://jenkins-x.io/architecture/diagram/" target="_blank" rel="noopener">https://jenkins-x.io/architecture/diagram/</a>
+    </figcaption></figure>
+
+<hr>
+<p><a name="install"></a></p>
+<h1 id="install">Install</h1>
+<h3 id="create-gke-cluster--get-credentials">Create GKE cluster &amp; Get Credentials</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcloud init
+</span></span><span class="line"><span class="cl">gcloud components update
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CLUSTER_NAME=jenkins-server
+</span></span><span class="line"><span class="cl">#CLUSTER_NAME=jenkins-serverless
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gcloud container clusters create ${CLUSTER_NAME} \
+</span></span><span class="line"><span class="cl">  --num-nodes 1 \
+</span></span><span class="line"><span class="cl">  --machine-type n1-standard-4 \
+</span></span><span class="line"><span class="cl">  --enable-autoscaling \
+</span></span><span class="line"><span class="cl">  --min-nodes 1 \
+</span></span><span class="line"><span class="cl">  --max-nodes 2 \
+</span></span><span class="line"><span class="cl">  --zone asia-east1-b \
+</span></span><span class="line"><span class="cl">  --preemptible
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># After cluster initialization, get credentials to access cluster with kubectl
+</span></span><span class="line"><span class="cl">gcloud container clusters get-credentials ${CLUSTER_NAME}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Check cluster stats.
+</span></span><span class="line"><span class="cl">kubectl get nodes
+</span></span></code></pre></div><h3 id="install-jx-on-local-machine">Install jx on Local Machine</h3>
+<p>[Jenkins X Release](<a href="https://github.com/jenkins-x/jx/releases]%28https://github.com/jenkins-x/jx/releases%29" target="_blank" rel="noopener">https://github.com/jenkins-x/jx/releases](https://github.com/jenkins-x/jx/releases)</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">JX_VERSION=v2.0.2
+</span></span><span class="line"><span class="cl">OS_ARCH=darwin-amd64
+</span></span><span class="line"><span class="cl">#OS_ARCH=linux-amd64
+</span></span><span class="line"><span class="cl">curl -L https://github.com/jenkins-x/jx/releases/download/&#34;${JX_VERSION}&#34;/jx-&#34;${OS_ARCH}&#34;.tar.gz | tar xzv
+</span></span><span class="line"><span class="cl">sudo mv jx /usr/local/bin
+</span></span><span class="line"><span class="cl">jx version
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME               VERSION
+</span></span><span class="line"><span class="cl">jx                 2.0.2
+</span></span><span class="line"><span class="cl">Kubernetes cluster v1.11.7-gke.12
+</span></span><span class="line"><span class="cl">kubectl            v1.11.9-dispatcher
+</span></span><span class="line"><span class="cl">helm client        v2.11.0+g2e55dbe
+</span></span><span class="line"><span class="cl">helm server        v2.11.0+g2e55dbe
+</span></span><span class="line"><span class="cl">git                git version 2.20.1
+</span></span><span class="line"><span class="cl">Operating System   Mac OS X 10.14.4 build 18E226
+</span></span></code></pre></div><h3 id="option-1-install-serverless-jenkins-pipeline">(Option 1) Install Serverless Jenkins Pipeline</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">DEFAULT_PASSWORD=mySecretPassWord123
+</span></span><span class="line"><span class="cl">jx install \
+</span></span><span class="line"><span class="cl">  --default-admin-password=${DEFAULT_PASSWORD} \
+</span></span><span class="line"><span class="cl">  --provider=&#39;gke&#39;
+</span></span></code></pre></div><p>Options:</p>
+<ul>
+<li>Enter Github user name</li>
+<li>Enter Github personal api token for CI/CD</li>
+<li>Enable Github as Git pipeline server</li>
+<li>Select Jenkins installation type:
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Serverless Jenkins X Pipelines with Tekon</li>
+<li><input disabled="" type="checkbox"> Static Master Jenkins</li>
+</ul>
+</li>
+<li>Pick default workload build pack
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Kubernetes Workloads: Automated CI+CD with GitOps Promotion</li>
+<li><input disabled="" type="checkbox"> Library Workloads: CI+Release but no CD</li>
+</ul>
+</li>
+<li>Select the organization where you want to create the environment repository:
+<ul>
+<li>chechiachang</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Your Kubernetes context is now set to the namespace: jx
+</span></span><span class="line"><span class="cl">INFO[0231] To switch back to your original namespace use: jx namespace jx
+</span></span><span class="line"><span class="cl">INFO[0231] Or to use this context/namespace in just one terminal use: jx shell
+</span></span><span class="line"><span class="cl">INFO[0231] For help on switching contexts see: https://jenkins-x.io/developing/kube-context/
+</span></span><span class="line"><span class="cl">INFO[0231] To import existing projects into Jenkins:       jx import
+</span></span><span class="line"><span class="cl">INFO[0231] To create a new Spring Boot microservice:       jx create spring -d web -d actuator
+</span></span><span class="line"><span class="cl">INFO[0231] To create a new microservice from a quickstart: jx create quickstart
+</span></span></code></pre></div><h3 id="option-2-install-static-jenkins-server">(Option 2) Install Static Jenkins Server</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">DEFAULT_PASSWORD=mySecretPassWord123
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">jx install \
+</span></span><span class="line"><span class="cl">  --default-admin-password=${DEFAULT_PASSWORD} \
+</span></span><span class="line"><span class="cl">  --provider=&#39;gke&#39;
+</span></span></code></pre></div><p>Options:</p>
+<ul>
+<li>Enter Github user name</li>
+<li>Enter Github personal api token for CI/CD</li>
+<li>Enable Github as Git pipeline server</li>
+<li>Select Jenkins installation type:
+<ul>
+<li><input disabled="" type="checkbox"> Serverless Jenkins X Pipelines with Tekon</li>
+<li><input checked="" disabled="" type="checkbox"> Static Master Jenkins</li>
+</ul>
+</li>
+<li>Pick default workload build pack
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Kubernetes Workloads: Automated CI+CD with GitOps Promotion</li>
+<li><input disabled="" type="checkbox"> Library Workloads: CI+Release but no CD</li>
+</ul>
+</li>
+<li>Select the organization where you want to create the environment repository:
+<ul>
+<li>chechiachang</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">INFO[0465]Your Kubernetes context is now set to the namespace: jx
+</span></span><span class="line"><span class="cl">INFO[0465] To switch back to your original namespace use: jx namespace default
+</span></span><span class="line"><span class="cl">INFO[0465] Or to use this context/namespace in just one terminal use: jx shell
+</span></span><span class="line"><span class="cl">INFO[0465] For help on switching contexts see: https://jenkins-x.io/developing/kube-context/
+</span></span><span class="line"><span class="cl">INFO[0465] To import existing projects into Jenkins:       jx import
+</span></span><span class="line"><span class="cl">INFO[0465] To create a new Spring Boot microservice:       jx create spring -d web -d actuator
+</span></span><span class="line"><span class="cl">INFO[0465] To create a new microservice from a quickstart: jx create quickstart
+</span></span></code></pre></div><p>Access Static Jenkins Server through Domain with username and password
+Domain <a href="http://jenkins.jx.11.22.33.44.nip.io/" target="_blank" rel="noopener">http://jenkins.jx.11.22.33.44.nip.io/</a></p>
+<h3 id="uninstall">Uninstall</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx uninstall
+</span></span><span class="line"><span class="cl"># rm -rf ~/.jx
+</span></span></code></pre></div><hr>
+<p><a name="pipeline"></a></p>
+<h1 id="setup-cicd-pipeline">Setup CI/CD Pipeline</h1>
+<h3 id="create-quickstart-repository">Create Quickstart Repository</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pods --namespace jx --watch
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># cd workspace
+</span></span><span class="line"><span class="cl">jx create quickstart
+</span></span></code></pre></div><p>Options:</p>
+<ul>
+<li>Which organisation do you want to use? chechiachang</li>
+<li>Enter the new repository name:  serverless-jenkins-quickstart</li>
+<li>select the quickstart you wish to create  [Use arrows to move, type to filter]
+angular-io-quickstart
+aspnet-app
+dlang-http</li>
+</ul>
+<blockquote>
+<p>golang-http
+jenkins-cwp-quickstart
+jenkins-quickstart
+node-http</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">INFO[0121] Watch pipeline activity via:    jx get activity -f serverless-jenkins-quickstart -w
+</span></span><span class="line"><span class="cl">INFO[0121] Browse the pipeline log via:    jx get build logs chechiachang/serverless-jenkins-quickstart/master
+</span></span><span class="line"><span class="cl">INFO[0121] Open the Jenkins console via    jx console
+</span></span><span class="line"><span class="cl">INFO[0121] You can list the pipelines via: jx get pipelines
+</span></span><span class="line"><span class="cl">INFO[0121] Open the Jenkins console via    jx console
+</span></span><span class="line"><span class="cl">INFO[0121] You can list the pipelines via: jx get pipelines
+</span></span><span class="line"><span class="cl">INFO[0121] When the pipeline is complete:  jx get applications
+</span></span></code></pre></div><h3 id="check-log-of-the-first-run">Check log of the first run</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx logs pipeline
+</span></span></code></pre></div><h3 id="add-step-to-pipeline">Add Step to Pipeline</h3>
+<p>Add a setup step for pullrequest</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd serverless-jenkins-quickstart
+</span></span><span class="line"><span class="cl">jx create step --pipeline pullrequest \
+</span></span><span class="line"><span class="cl">  --lifecycle setup \
+</span></span><span class="line"><span class="cl">  --mode replace \
+</span></span><span class="line"><span class="cl">  --sh &#34;echo hello world&#34;
+</span></span></code></pre></div><p>Validate pipeline step for each modification</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx step validate
+</span></span></code></pre></div><p>A build-pack pod started after git push. Watch pod status with kubectl.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pods --namespace jx --watch
+</span></span></code></pre></div><h3 id="check-build-status-on-prow-serverless">Check Build Status on Prow (Serverless)</h3>
+<p><a href="http://deck.jx.130.211.245.13.nip.io/" target="_blank" rel="noopener">http://deck.jx.130.211.245.13.nip.io/</a>
+Login with username and password</p>
+<h3 id="import-existing-repository">Import Existing Repository</h3>
+<p>In source code repository:</p>
+<p>Import jx to remote jenkins-server. This will apply a Jenkinsfile to repository by default</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx import --url git@github.com:chechiachang/serverless-jenkins-quickstart.git
+</span></span></code></pre></div><p>Update jenkins-x.yml</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx create step
+</span></span></code></pre></div><p>git commit &amp; push</p>
+<h3 id="trouble-shooting">Trouble Shooting</h3>
+<p>Failed to get jx resources</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx get pipelines
+</span></span></code></pre></div><p>Make sure your jx (or kubectl) context is with the correct GKE and namespace</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kc config set-context gke_my-project_asia-east1-b_jenkins \
+</span></span><span class="line"><span class="cl">  --namespace=jx
+</span></span></code></pre></div><h3 id="why-not-use-helm-chart">Why not use helm chart?</h3>
+<p>It&rsquo;s readlly depend on what we need in CI/CD automation.</p>
+<p><a href="https://github.com/helm/charts/tree/master/stable/jenkins" target="_blank" rel="noopener">Jenkins Helm Chart</a> create Jenkins master and slave cluster on Kubernetes utilizing the Jenkins Kubernetes plugin.
+Jenkin Platform with jx is Jenkins Platform native to Kubernetes. It comes with powerful cloud native components like Prow automation, Nexus, Docker Registry, Tekton Pipeline, &hellip;</p>
+<h3 id="check-jenkins-x-examples">Check jenkins-x examples</h3>
+<p><a href="https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs" target="_blank" rel="noopener">https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/tree/master/packs</a></p>
+<hr>
+<p><a name="client"></a></p>
+<h1 id="client">Client</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx get urls
+</span></span><span class="line"><span class="cl">Name                      URL
+</span></span><span class="line"><span class="cl">jenkins                   http://jenkins.jx.11.22.33.44.nip.io
+</span></span><span class="line"><span class="cl">jenkins-x-chartmuseum     http://chartmuseum.jx.11.22.33.44.nip.io
+</span></span><span class="line"><span class="cl">jenkins-x-docker-registry http://docker-registry.jx.11.22.33.44.nip.io
+</span></span><span class="line"><span class="cl">jenkins-x-monocular-api   http://monocular.jx.11.22.33.44.nip.io
+</span></span><span class="line"><span class="cl">jenkins-x-monocular-ui    http://monocular.jx.11.22.33.44.nip.io
+</span></span><span class="line"><span class="cl">nexus                     http://nexus.jx.11.22.33.44.nip.io
+</span></span></code></pre></div><h3 id="get-cluster-status">Get Cluster Status</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx diagnose
+</span></span></code></pre></div><h3 id="get-applications--pipelines">Get Applications &amp; Pipelines</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx get applications
+</span></span><span class="line"><span class="cl">jx get pipelines
+</span></span></code></pre></div><h3 id="get-ci-activities--build-log">Get CI Activities &amp; build log</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx get activities
+</span></span><span class="line"><span class="cl">jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">jx get build log
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">INFO[0003] view the log at: http://jenkins.jx.11.22.33.44.nip.io/job/chechiachang/job/jenkins-x-on-kubernetes/job/feature-add-test/3/console
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><h3 id="trigger-build--check-activity">Trigger Build &amp; Check Activity</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx start pipeline
+</span></span><span class="line"><span class="cl">jx start pipeline --filter=&#39;jenkins-x-on-kubernetes/feature-add-test&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">jx get activities --filter=&#39;jenkins-x-on-kubernetes&#39;
+</span></span></code></pre></div><h3 id="create-pull-request">Create Pull Request</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jx create pullrequest
+</span></span></code></pre></div>
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/jenkins/">jenkins</a>
+  
+  <a class="badge badge-light" href="/en/tag/ci/">ci</a>
+  
+  <a class="badge badge-light" href="/en/tag/cd/">cd</a>
+  
+  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-04-19-jenkins-x-on-kubernetes%2F&amp;text=Jenkins&#43;X&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-04-19-jenkins-x-on-kubernetes%2F&amp;t=Jenkins&#43;X&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Jenkins%20X%20on%20Kubernetes&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-04-19-jenkins-x-on-kubernetes%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-04-19-jenkins-x-on-kubernetes%2F&amp;title=Jenkins&#43;X&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Jenkins&#43;X&#43;on&#43;Kubernetes%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-04-19-jenkins-x-on-kubernetes%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-04-19-jenkins-x-on-kubernetes%2F&amp;title=Jenkins&#43;X&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

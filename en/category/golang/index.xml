@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang | Che-Chia Chang</title>
+    <link>https://chechia.net/en/category/golang/</link>
+      <atom:link href="https://chechia.net/en/category/golang/index.xml" rel="self" type="application/rss+xml" />
+    <description>golang</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 16 Dec 2019 23:46:46 +0800</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>golang</title>
+      <link>https://chechia.net/en/category/golang/</link>
+    </image>
+    
+    <item>
+      <title>MIT 6.824 Distributed System Learning Note</title>
+      <link>https://chechia.net/en/post/2019-12-16-mit-6.824-distributed-system/</link>
+      <pubDate>Mon, 16 Dec 2019 23:46:46 +0800</pubDate>
+      <guid>https://chechia.net/en/post/2019-12-16-mit-6.824-distributed-system/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/chechiachang/mit-6.824-distributed-system&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/chechiachang/mit-6.824-distributed-system&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;課程講義中文翻譯&lt;/li&gt;
+&lt;li&gt;個人心得&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;跟著 MIT 6.824 學習分散式系統&lt;/p&gt;
+&lt;p&gt;這個專案儲存 MIT 6.824 分散式系統編程的上課內容，我將內容翻譯程中文，加上個人學習筆記&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我會在我的學習過程中，持續翻譯課程內容
+&lt;ul&gt;
+&lt;li&gt;一方面深入個人學習&lt;/li&gt;
+&lt;li&gt;另一方面也回饋社群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;依照課程的進度進行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;若有餘力，會嘗試翻譯以下內容&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;課堂 Q &amp;amp; A&lt;/li&gt;
+&lt;li&gt;論文&lt;/li&gt;
+&lt;li&gt;lab 實做&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

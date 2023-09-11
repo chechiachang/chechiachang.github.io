@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nginx | Che-Chia Chang</title>
+    <link>https://chechia.net/zh-hant/category/nginx/</link>
+      <atom:link href="https://chechia.net/zh-hant/category/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <description>nginx</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Tue, 08 Oct 2019 08:12:10 +0800</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>nginx</title>
+      <link>https://chechia.net/zh-hant/category/nginx/</link>
+    </image>
+    
+    <item>
+      <title>Kubernetes Nginx Ingress Controller</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/</link>
+      <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;nginx-ingress-controller&#34;&gt;Nginx Ingress Controller&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;簡介 nginx &amp;amp; Ingress Controller&lt;/li&gt;
+&lt;li&gt;部屬並設定 nginx ingress controller&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;nginx-introduction&#34;&gt;Nginx Introduction&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://nginx.org/en/docs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nginx&lt;/a&gt; 是一款高效能、耐用、且功能強大的 load balancer 以及 web server，也是市占率最高的 web server 之一。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;高效能的 web server，遠勝傳統 apache server 的資源與效能&lt;/li&gt;
+&lt;li&gt;大量的模組與擴充功能&lt;/li&gt;
+&lt;li&gt;有充足的安全性功能與設定&lt;/li&gt;
+&lt;li&gt;輕量&lt;/li&gt;
+&lt;li&gt;容易水平擴展&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;ingress--ingress-controller&#34;&gt;Ingress &amp;amp; Ingress Controller&lt;/h1&gt;
+&lt;p&gt;這邊簡單講一下 &lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kubernetes ingress&lt;/a&gt;。當我們在使用 kubernetes 時需要將外部流量 route 到集群內部，這邊使用 Ingress 這個 api resource，來定義外部到內部的設定，例如:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;service 連接&lt;/li&gt;
+&lt;li&gt;load balance 設定&lt;/li&gt;
+&lt;li&gt;SSL/TLS 終端&lt;/li&gt;
+&lt;li&gt;虛擬主機設定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一個簡單的 ingress 大概長這樣&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: networking.k8s.io/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: test-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  annotations:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/rewrite-target: /
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  rules:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - http:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      paths:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - path: /testpath
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        backend:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          serviceName: test
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          servicePort: 80
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除了一般的 k8s 資源，nginx 主要的設定會落在 spec，以及依賴底下實作不同，額外設定的 annotation。&lt;/p&gt;
+&lt;p&gt;這邊可以看到 spec.rule 定義了外部 http 流量，引導到 backend service 的路徑。&lt;/p&gt;
+&lt;p&gt;annotations 下已經標註的 nginx.ingress 的 annotation，來快速增加額外的設定。&lt;/p&gt;
+&lt;h1 id=&#34;ingress--ingress-controller-1&#34;&gt;Ingress &amp;amp; Ingress Controller&lt;/h1&gt;
+&lt;p&gt;雖然已經指定 nginx 的 annotation，但這邊要注意，ingress resource 本身是不指定底層的實現 (ingress controller)，也就是說，底下是 nginx 也好，traefik 也行，只要能夠實現 ingress 裏頭設定的 routing rules 就可以。&lt;/p&gt;
+&lt;p&gt;只設定好 ingress，集群上是不會有任何作用的，還需要在集群上安裝 ingress controller 的實作，實作安裝完了以後，會依據 ingress 的設定，在 controller 裏頭實現，不管是 routing、ssl/tls termination、load balancing 等等功能。如同許多 Kubernetes resource 的設計理念一樣，這邊也很優雅的用 ingress 與 ingress controller，拆分的需求設定與實作實現兩邊的職責。&lt;/p&gt;
+&lt;p&gt;例如以 nginx ingress controller，安裝完後會依據 ingress 的設定，在 nginx pod 裡設定對應的 routing rules，如果有 ssl/tls 設定，也一併載入。&lt;/p&gt;
+&lt;p&gt;Kubernetes 官方文件提供了&lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/#additional-controllers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;許多不同的 controller&lt;/a&gt; 可以依照需求選擇。&lt;/p&gt;
+&lt;p&gt;但如果不知道如何選擇，個人會推薦使用 nginx ingress controller，穩定、功能強大、設定又不至於太過複雜，基本的設定就能很好的支撐服務，不熟悉的大德們比較不容易被雷到。&lt;/p&gt;
+&lt;p&gt;底下我們就要來開始使用 nginx ingress controller。&lt;/p&gt;
+&lt;h1 id=&#34;deployment&#34;&gt;Deployment&lt;/h1&gt;
+&lt;p&gt;我們這邊使用的 &lt;a href=&#34;https://github.com/kubernetes/ingress-nginx&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ingress-nginx&lt;/a&gt; 是 kubernetes org 內維護的專案，專案內容主要是再 k8s 上執行 nginx，抽象與實作的整合，並透過 configmap 來設定 nginx。針對 nginx ingress kubernetes 官方有提供&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;非常詳細的說明文件&lt;/a&gt; ，剛接觸 nginx 的大德可以透過這份文件，快速的操作 nginx 的設定，而不用直接寫 nginx.conf 的設定檔案。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;repo 版本是 nginx-0.26.1&lt;/li&gt;
+&lt;li&gt;Image 版本是 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;helm&#34;&gt;Helm&lt;/h3&gt;
+&lt;p&gt;我們這邊用 helm 部屬，&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nginx Ingress Controller Stable Chart&lt;/a&gt;，讓各位大德用最簡單的步驟，獲得一個功能完整的 nginx ingress controller。&lt;/p&gt;
+&lt;p&gt;與前面幾個 helm chart 一樣，我們可以先取得 default values.yaml 設定檔，再進行更改。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ wget https://raw.githubusercontent.com/helm/charts/master/stable/nginx-ingress/values.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ vim values.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;安裝時也可以使用 &amp;ndash;set 來變更&lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;安裝 chart 時的 parameters&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ helm install stable/nginx-ingress \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	--set controller.metrics.enabled=true \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-f values.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;安裝完後，resource 很快就起來。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get all --selector app=nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                                                 READY   STATUS    RESTARTS   AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pod/nginx-ingress-controller-7bbcbdcf7f-tx69n        1/1     Running   0          216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pod/nginx-ingress-default-backend-544cfb69fc-rnn6h   1/1     Running   0          216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                                    TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                      AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;service/nginx-ingress-controller        LoadBalancer   10.15.246.22   34.35.36.37    80:30782/TCP,443:31933/TCP   216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;service/nginx-ingress-default-backend   ClusterIP      10.15.243.19   &amp;lt;none&amp;gt;         80/TCP                       216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;deployment.apps/nginx-ingress-controller        1/1     1            1           216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;deployment.apps/nginx-ingress-default-backend   1/1     1            1           216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                                                       DESIRED   CURRENT   READY   AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;replicaset.apps/nginx-ingress-controller-7bbcbdcf7f        1         1         1       216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;replicaset.apps/nginx-ingress-default-backend-544cfb69fc   1         1         1       216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get configmap -l app=nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                       DATA   AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nginx-ingress-controller   2      216d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME            HOSTS                  ADDRESS       PORTS     AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ingress-nginx   api.chechiachang.com   34.35.36.37   80, 443   216d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;兩個 Pods&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx ingress controller 是主要的 nginx pod，裡面跑的是 nginx&lt;/li&gt;
+&lt;li&gt;Nginx default backend 跑的是 default backend，nginx 看不懂了 route request 都往這邊送。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Service&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;nginx-ingress-contrller 是我們在 GCP 上，在集群外部的 GCP 上的對外接口。如果在不同平台上，依據預設 service load balancer 有不同實作。&lt;/li&gt;
+&lt;li&gt;在 gcp 上，會需要時間來啟動 load balancer，等 load balancer 啟動完成，service 這邊就可以取得外部的 ip，接受 load balancer 來的流量&lt;/li&gt;
+&lt;li&gt;另外一個 service 就是 default backend 的 service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;踩雷&#34;&gt;踩雷&lt;/h1&gt;
+&lt;p&gt;第一個雷點是 helm chart install 帶入的 &lt;a href=&#34;https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;parameters&lt;/a&gt;，有些 parameter 是直接影響 deployment 的設定，如果沒注意到，安裝完後沒辦法透過 hot reload 來處理，只能幹掉重來。建議把這份表格都看過一次，再依照環境與需求補上。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ helm install stable/nginx-ingress \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	--set controller.metrics.enabled=true \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	--set controller.service.externalTrafficPolicy=Local \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-f values.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這邊開了 prometheus metrics exporter，以及 source IP preservation。&lt;/p&gt;
+&lt;h1 id=&#34;nginx-config&#34;&gt;Nginx Config&lt;/h1&gt;
+&lt;p&gt;再安裝完後，外部的 load balancer 啟用後，就可以透過 GCP 的 external ip 連入 nginx，nginx 依照設定的 rule 向後端服務做集群內的 load balancing 與 routing。&lt;/p&gt;
+&lt;p&gt;如果在使用過程中，有需要執行更改設定，或是 hot reload config，在 kubernetes 上要如何做呢? 我們下回分解。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Nginx Ingress Controller Config</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/</link>
+      <pubDate>Tue, 08 Oct 2019 08:12:10 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress Controller 運作原理&lt;/li&gt;
+&lt;li&gt;設定 Nginx Ingress Controller&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;運作原理&#34;&gt;運作原理&lt;/h1&gt;
+&lt;p&gt;昨天講完 nginx ingress controller 部屬，今天來談談 controller 是如何運作的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx 使用 config file (nginx.conf) 做全域設定，為了讓 nginx 能隨 config file 更新，controller 要偵測 config file 變更，並且 reload nginx&lt;/li&gt;
+&lt;li&gt;針對 upstream (後端 app 的 endpoint) 變更，使用 lua-nginx-module 來更新。因為 kubernetes 上，service 後的服務常常會動態的變更，scaling，但 endpint ip list 又需要更新到 nginx，所以使用 lua 額外處理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 kubernetes 上要如何做到上述兩件事呢?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一般 controller 都使用同步 loop 來檢查 current state 是否與 desired state&lt;/li&gt;
+&lt;li&gt;desired state 使用 k8s object 描述，例如 ingress, services, configmap 等等 object&lt;/li&gt;
+&lt;li&gt;Nginx ingress controller 這邊使用的是 client-go 中的 Kubernetes Informer 的 &lt;a href=&#34;https://godoc.org/k8s.io/client-go/informers#SharedInformerFactory&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SharedInformer&lt;/a&gt;，可以根據 object 的更新執行 callback&lt;/li&gt;
+&lt;li&gt;由於無法檢查每一次的 object 更動，是否對 config 產生影響，這邊直接每次更動都產生全新的 model&lt;/li&gt;
+&lt;li&gt;如果新產生的 model 與現有相同，就跳過 reload&lt;/li&gt;
+&lt;li&gt;如果 model 只影響 endpoint，使用 nginx 內部的 lua handler 產生新的 endpoint list，來避免因為 upstream 服務變更造成的頻繁 reload&lt;/li&gt;
+&lt;li&gt;如果新 Model 影響不只 endpoint，則取代現有 model，然後觸發 reload&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;具體會觸發 reload 的事件，&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/how-it-works/#when-a-reload-is-required&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;請見官方文件&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;除了監測 objects，build model，觸發 reload，之前 controller 還會將 ingress 送到 &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#validatingadmissionwebhook&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kubernetes validating admission webhook server&lt;/a&gt; 做驗證，避免描述 desired state 的 ingress 有 syntax error，導致整個 controller 爆炸。&lt;/p&gt;
+&lt;h1 id=&#34;configuration&#34;&gt;Configuration&lt;/h1&gt;
+&lt;p&gt;要透過 controller 更改 nginx 設定，有以下三種方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;更改 configmap，對全域的 controller 設定&lt;/li&gt;
+&lt;li&gt;更改 ingress 上的 annotation，這些 annotation 針對獨立 ingress 生效&lt;/li&gt;
+&lt;li&gt;有更深入的客製化，是上述兩者達不到或尚未實作，可以使用 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/custom-template/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Custom Template&lt;/a&gt; 來做到，把 nginx.tmpl mount 進 controller&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;configmap&#34;&gt;Configmap&lt;/h1&gt;
+&lt;p&gt;由於把全域設定放到 configmap 上，nginx ingress controller 非常好調度與擴展，&lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;controller 官方說明文件&lt;/a&gt; 除了列出目前已經支援的設定外，也直接附上 nginx 官方的文件說明連結，讓使用者查詢時方便比對。&lt;/p&gt;
+&lt;p&gt;當需要更改需求，可以 google nginx 的關鍵字，找到 nginx 上設定的功能選項後，來 controller 的文件，找看看目前是否已經支援。有時候有需要對照 nginx 官方文件，來正確設定 controller。&lt;/p&gt;
+&lt;h1 id=&#34;annotation&#34;&gt;Annotation&lt;/h1&gt;
+&lt;p&gt;有很多 Nginx 的設定是根據 ingress 不同而有調整，例如針對這個 ingress 做白名單，設定 session，設定 ssl 等等，這些針對特定 ingress 所做的設定，可以直接寫在 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ingress annotation&lt;/a&gt; 裡面。&lt;/p&gt;
+&lt;p&gt;例如下面這個 Ingress&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: extensions/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: ingress-nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  annotations:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kubernetes.io/ingress.class: nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kubernetes.io/tls-acme: &amp;#39;true&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kubernetes.io/ingress.allow-http: &amp;#34;true&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ingress.kubernetes.io/force-ssl-redirect: &amp;#34;true&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/whitelist-source-range: &amp;#34;34.35.36.37&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/proxy-body-size: &amp;#34;20m&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ingress.kubernetes.io/proxy-body-size: &amp;#34;20m&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # https://github.com/Shopify/ingress/blob/master/docs/user-guide/nginx-configuration/annotations.md#custom-nginx-upstream-hashing
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/load-balance: &amp;#34;ip_hash&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # https://kubernetes.github.io/ingress-nginx/examples/affinity/cookie/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.org/server-snippets: gzip on;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/affinity: &amp;#34;cookie&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/session-cookie-name: &amp;#34;route&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/session-cookie-hash: &amp;#34;sha1&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/session-cookie-expires: &amp;#34;3600&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    nginx.ingress.kubernetes.io/session-cookie-max-age: &amp;#34;3600&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;nginx.ingress.kubernetes.io
+&lt;ul&gt;
+&lt;li&gt;whitelist-source-range: 只允許白名單 ip&lt;/li&gt;
+&lt;li&gt;load-balance: &amp;ldquo;ip_hash&amp;rdquo;: 更改預設 round_robin 的 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#load-balance&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;load balance&lt;/a&gt;，為了做 session cookie&lt;/li&gt;
+&lt;li&gt;affinity: &amp;ldquo;cookie&amp;rdquo;: 設定 upstream 的 &lt;a href=&#34;https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#session-affinity&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;session affinity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;session-cookie-name: &amp;ldquo;route&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;session-cookie-hash: &amp;ldquo;sha1&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;session-cookie-expires: &amp;ldquo;3600&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;session-cookie-max-age: &amp;ldquo;3600&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果後端 server 有 session 需求，希望相同 source ip 來的 request 能持續到相同的 endpoint。才做了以上設定。&lt;/p&gt;
+&lt;h1 id=&#34;helm-configuration&#34;&gt;helm configuration&lt;/h1&gt;
+&lt;p&gt;helm 的 configuration 也是重要的設定，這裡在安裝時決定了 nginx ingress controller 的 topology、replicas、resource、k8s runtime 設定如 healthz &amp;amp; readiness、其實都會影響 nginx 具體的設定。這部分就會有很多考量。有機會我們再來分享。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recent &amp; Upcoming Talks | Che-Chia Chang</title>
+    <link>https://chechia.net/zh-hant/event/</link>
+      <atom:link href="https://chechia.net/zh-hant/event/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent &amp; Upcoming Talks</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Wed, 25 Oct 2023 13:20:00 +0000</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Recent &amp; Upcoming Talks</title>
+      <link>https://chechia.net/zh-hant/event/</link>
+    </image>
+    
+    <item>
+      <title>Kubernetes Summit: Resource as Code for Kubernetes: Stop kubectl apply</title>
+      <link>https://chechia.net/zh-hant/talk/kubernetes-summit-resource-as-code-for-kubernetes-stop-kubectl-apply/</link>
+      <pubDate>Wed, 25 Oct 2023 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/kubernetes-summit-resource-as-code-for-kubernetes-stop-kubectl-apply/</guid>
+      <description>&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
+&lt;p&gt;Title: Resource as Code for Kubernetes: stop kubectl apply&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://k8s.ithome.com.tw/CFP&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://k8s.ithome.com.tw/CFP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Infrastrure as Code (IaC) 與 PaC，在萬物都該 as Code 得時代，你還在不斷的 kubectl apply 嗎？&lt;/p&gt;
+&lt;p&gt;手動 apply 的痛點：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;人就是會忘：是誰 apply 這個在 k8s 上的？是誰上次漏 apply 所以壞了？&lt;/li&gt;
+&lt;li&gt;人就是會寫錯：能否 apply&lt;/li&gt;
+&lt;li&gt;管理大量的 label, taint, annotation&lt;/li&gt;
+&lt;li&gt;安全：apply 變更內容是否有經過資訊安全的 review&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;當服務的 app code base 都已經用 chart 打包，使用 vcs 管理後，為何依賴的 k8s resource (namespace, secret, label, crd, &amp;hellip;) 不需要推上 vcs 管理的？&lt;/p&gt;
+&lt;p&gt;本次演講集合幾個管理 k8s 的範例，將 k8s resource 以 code 管理，推上 vcs，並使用 argoCD, secret operator, &amp;hellip; 等工具進行管理，來讓避免低級的人工操作錯誤，降低團隊整體失誤率，並降低 k8s admin 管理的成本，提高管理效率&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>DevOpsDay: HashiCorp Vault 自建金鑰管理最佳入坑姿勢</title>
+      <link>https://chechia.net/zh-hant/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/</link>
+      <pubDate>Tue, 26 Sep 2023 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

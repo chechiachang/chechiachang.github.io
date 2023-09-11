@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cri | Che-Chia Chang</title>
+    <link>https://chechia.net/en/tag/cri/</link>
+      <atom:link href="https://chechia.net/en/tag/cri/index.xml" rel="self" type="application/rss+xml" />
+    <description>cri</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 06 Oct 2018 12:07:00 +0800</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>cri</title>
+      <link>https://chechia.net/en/tag/cri/</link>
+    </image>
+    
+    <item>
+      <title>Kubernetes Container Runtime Interface</title>
+      <link>https://chechia.net/en/post/2018-10-06-kubernetes-container-runtime-interface/</link>
+      <pubDate>Sat, 06 Oct 2018 12:07:00 +0800</pubDate>
+      <guid>https://chechia.net/en/post/2018-10-06-kubernetes-container-runtime-interface/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

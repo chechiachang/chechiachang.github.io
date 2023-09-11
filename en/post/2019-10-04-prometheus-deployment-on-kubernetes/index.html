@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape config &amp; exporter Dive into Redis Exporter 輸出 kube-state 的監測數據 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。" />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2019-10-04-prometheus-deployment-on-kubernetes/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2019-10-04-prometheus-deployment-on-kubernetes/" />
+<link rel="canonical" href="https://chechia.net/en/post/2019-10-04-prometheus-deployment-on-kubernetes/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2019-10-04-prometheus-deployment-on-kubernetes/" />
+<meta property="og:title" content="Prometheus Deployment on Kubernetes | Che-Chia Chang" />
+<meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape config &amp; exporter Dive into Redis Exporter 輸出 kube-state 的監測數據 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2019-10-04T16:12:10&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2019-10-04T16:12:10&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2019-10-04-prometheus-deployment-on-kubernetes/"
+  },
+  "headline": "Prometheus Deployment on Kubernetes",
+  
+  "datePublished": "2019-10-04T16:12:10+08:00",
+  "dateModified": "2019-10-04T16:12:10+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "2020 It邦幫忙鐵人賽 系列文章\nPrometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape config \u0026amp; exporter Dive into Redis Exporter 輸出 kube-state 的監測數據 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Prometheus Deployment on Kubernetes | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="6a855918d449bd83b2812d9ad1b3bb83" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2019-10-04-prometheus-deployment-on-kubernetes/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Prometheus Deployment on Kubernetes</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Oct 4, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/prometheus/">prometheus</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank" rel="noopener">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+<ul>
+<li>Prometheus / Grafana (5)
+<ul>
+<li><a href="https://chechia.net/en/post/2019-10-04-prometheus-deployment-on-kubernetes/">GKE 上自架 Prometheus</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-04-prometheus-deploy-grafana/">GKE 上自架 Grafana</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-04-prometheus-scrape/">scrape config &amp; exporter</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-06-prometheus-exporter-library-redis-exporter/">Dive into Redis Exporter</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-07-prometheus-kube-state-metrics-exporter/">輸出 kube-state 的監測數據</a></li>
+</ul>
+</li>
+</ul>
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechia.net" target="_blank" rel="noopener">https://chechia.net</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<hr>
+<h1 id="摘要">摘要</h1>
+<ul>
+<li>Prometheus Introduction</li>
+<li>Deploy Prometheus</li>
+</ul>
+<h1 id="prometheus-introduction">Prometheus Introduction</h1>
+<p>生產環境與非生產環境，其中的一指標就是有沒有足夠完整的服務監測系統，這句話可以看出服務監測對於產品化是多麼重要。而監控資料 (metrics) 的收集與可視化工具其實非常多，例如上周介紹的 ELK Stack，這次我們要來介紹另外一個很多人使用的 prometheus。</p>
+<p><a href="https://prometheus.io/" target="_blank" rel="noopener">Promethues 在官網上提到</a> 是一個 Monitoring system and time series database</p>
+<ul>
+<li>可以收集高維度的資料</li>
+<li>使用自己的 PromQL 做有效且精簡的資料查詢</li>
+<li>內建資料瀏覽器，並且與 Grafana 高度整合</li>
+<li>支援 sharding 與 federation，來達到水平擴展</li>
+<li>有許多隨插即用的整合 exporter，例如 redis-exporter, kafka-exporter，kubernetes-exporter ，都可以直接取得資料</li>
+<li>支援 alert，使用 PromQL 以及多功能的告警，可以設定精準的告警條件</li>
+</ul>
+<h1 id="與-elk-做比較">與 ELK 做比較</h1>
+<p>基本上 Prometheus 跟 ELK 比，其實是很奇怪的一件事，但這也是最常被問的一個問題。兩者在本質上是完全不同的系統。</p>
+<ul>
+<li>Prometheus 是 based on time series database 的資料收集系統</li>
+<li>ELK 是基於全文搜索引擎的資料查詢系統</li>
+</ul>
+<p>是的，他們都能做 metrics 收集，在有限的尺度下，能達到一樣的效果。但這樣說的意思就等於是在說 mesos DC/OS 與 kubenetes 都能跑 container cluster 一樣，底下是完全不一樣的東西。</p>
+<p>兩者的差異使用上差非常多</p>
+<ul>
+<li>metrics 結構: ELK 借助全文搜索引擎，基本上送什麼資料近來都可以查找。Prometheus metrics 拉進來是 time series 的 key-value pairs。</li>
+<li>維護同樣的 metrics，prometheus 的使用的儲存空間遠小於 elasticsearch</li>
+<li>prometheus 針對 time based 的搜尋做了很多優化，效能很高</li>
+<li>Prometheus 對於記憶體與 cpu 的消耗也少很多</li>
+<li>Elasticsearch 資源上很貴，是因為在處理大量 text log 的時候，他能夠用後段的 pipeline 處理內容，再進行交叉比對，可以從 text 裡面提取很多未事先定義的資料</li>
+<li>Elasticsearch 的維護工作也比較複雜困難</li>
+</ul>
+<p>如果要收集服務運行資料，可以直接選 prometheus。如果有收集 log 進行交叉比對，可以考慮 elk。</p>
+<h3 id="helm">Helm</h3>
+<p>我們這邊用 helm 部屬，之所以用 helm ，因為這是我想到最簡單的方法，能讓輕鬆擁有一套功能完整的 prometheus。所以我們先用。</p>
+<p>沒用過 helm 的大德可以參考 <a href="https://helm.sh/docs/using_helm/#quickstart" target="_blank" rel="noopener">Helm Quickstart</a>，先把 helm cli 與 kubernetes 上的 helm tiller 都設定好</p>
+<h1 id="deploy-prometheus">Deploy Prometheus</h1>
+<p>我把我的寶藏都放在這了<a href="https://github.com/chechiachang/prometheus-kubernetes" target="_blank" rel="noopener">https://github.com/chechiachang/prometheus-kubernetes</a></p>
+<p>下載下來的 .sh ，跑之前養成習慣貓一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat install.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl"><span class="nv">HELM_NAME</span><span class="o">=</span>prometheus-1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">helm upgrade --install <span class="si">${</span><span class="nv">HELM_NAME</span><span class="si">}</span> stable/prometheus <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --namespace default <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --values values-staging.yaml
+</span></span></code></pre></div><h3 id="configuration">Configuration</h3>
+<p><a href="https://github.com/helm/charts/tree/master/stable/prometheus" target="_blank" rel="noopener">Prometheus Stable Chart</a></p>
+<p>values.yaml 很長，但其實各個元件設定是重複的,設定好各自的 image,
+replicas, service, topology 等等</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">alertmanager:
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubeStateMetrics:
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">nodeExporter:
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server:
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pushgateway:
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span></code></pre></div><p>底下有更多 runtime 的設定檔</p>
+<ul>
+<li>定義好 global 的 scrape 間距，越短 metrics 維度就越精準</li>
+<li>PersistenVolume 強謝建議開起來，維持歷史的資料
+<ul>
+<li>加上 storage usage 的 self monitoring（之後會講) 才不會滿出來 server 掛掉</li>
+</ul>
+</li>
+<li>server 的 scrapeConfigs 是 server 去收集的 job 設定。稍後再來細講。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server:
+</span></span><span class="line"><span class="cl">  global:
+</span></span><span class="line"><span class="cl">    ## How frequently to scrape targets by default
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    scrape_interval: 10s
+</span></span><span class="line"><span class="cl">    ## How long until a scrape request times out
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    scrape_timeout: 10s
+</span></span><span class="line"><span class="cl">    ## How frequently to evaluate rules
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    evaluation_interval: 10s
+</span></span><span class="line"><span class="cl">  persistentVolume:
+</span></span><span class="line"><span class="cl">    ## If true, Prometheus server will create/use a Persistent Volume Claim
+</span></span><span class="line"><span class="cl">    ## If false, use emptyDir
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    enabled: true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ## Prometheus server data Persistent Volume access modes
+</span></span><span class="line"><span class="cl">    ## Must match those of existing PV or dynamic provisioner
+</span></span><span class="line"><span class="cl">    ## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    accessModes:
+</span></span><span class="line"><span class="cl">      - ReadWriteOnce
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ## Prometheus server data Persistent Volume annotations
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    annotations: {}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ## Prometheus server data Persistent Volume existing claim name
+</span></span><span class="line"><span class="cl">    ## Requires server.persistentVolume.enabled: true
+</span></span><span class="line"><span class="cl">    ## If defined, PVC must be created manually before volume will be bound
+</span></span><span class="line"><span class="cl">    existingClaim: &#34;&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ## Prometheus server data Persistent Volume mount root path
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    mountPath: /data
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ## Prometheus server data Persistent Volume size
+</span></span><span class="line"><span class="cl">    ##
+</span></span><span class="line"><span class="cl">    size: 80Gi
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">alertmanagerFiles:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">serverFiles:
+</span></span></code></pre></div><p>部屬完看一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pods --selector=&#39;app=prometheus&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                             READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">prometheus-alertmanager-694d6694c6-dvkwd         2/2     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-kube-state-metrics-85f6d75f8b-7vlkp   1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter-2mpjc                   1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter-kg7fj                   1/1     Running   0          51d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter-snnn5                   1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-pushgateway-5cdfb4979c-dnmjn          1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-server-59b8b8ccb4-bplkx               2/2     Running   0          8d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl get services --selector=&#39;app=prometheus&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+</span></span><span class="line"><span class="cl">prometheus-alertmanager         ClusterIP   10.15.241.66   &lt;none&gt;        80/TCP     197d
+</span></span><span class="line"><span class="cl">prometheus-kube-state-metrics   ClusterIP   None           &lt;none&gt;        80/TCP     197d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter        ClusterIP   None           &lt;none&gt;        9100/TCP   197d
+</span></span><span class="line"><span class="cl">prometheus-pushgateway          ClusterIP   10.15.254.0    &lt;none&gt;        9091/TCP   197d
+</span></span><span class="line"><span class="cl">prometheus-server               ClusterIP   10.15.245.10   &lt;none&gt;        80/TCP     197d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl get endpoints --selector=&#39;app=prometheus&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                            ENDPOINTS                                             AGE
+</span></span><span class="line"><span class="cl">prometheus-alertmanager         10.12.6.220:9093                                      197d
+</span></span><span class="line"><span class="cl">prometheus-kube-state-metrics   10.12.6.222:8080                                      197d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter        10.140.0.30:9100,10.140.0.9:9100,10.140.15.212:9100   197d
+</span></span><span class="line"><span class="cl">prometheus-pushgateway          10.12.6.211:9091                                      197d
+</span></span><span class="line"><span class="cl">prometheus-server               10.12.3.14:9090                                       197d
+</span></span></code></pre></div><p>簡單說明一下</p>
+<ul>
+<li>prometheus-server 是主要的 api-server 以及 time series database</li>
+<li>alertmanager 負責告警工作</li>
+<li>pushgateway 提供 client 端主動推送 metrics 給 server 的 endpoint</li>
+<li>kube-state-metrics 是開來收集 cluster wide 的 metrics, 像是 pods running counts, deployment ready count, total pods number 等等 metrics</li>
+<li>node-exporter 是 daemonsets, 把每一個 node 的 metrics, 像是 memory, cpu, disk&hellip;等資料,收集出來</li>
+</ul>
+<p>主要服務存取就是透過 prometheus-server</p>
+<h1 id="access-prometheus-server">Access Prometheus server</h1>
+<p>除了直接 exec -it 進去 prometheus-server 以外，由於 prometheus 本身有提供 web portal, 所以我們這邊透過 port forwarding 打到本機上</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PROMETHEUS_POD_NAME=$(kc get po -n default --selector=&#39;app=prometheus,component=server&#39; -o=jsonpath=&#39;{.items[0].metadata.name}&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl --namespace default port-forward ${PROMETHEUS_POD_NAME} 9090
+</span></span></code></pre></div><p>透過 browser 就可以連入操作</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost:9090
+</span></span></code></pre></div><p>也可以透過 <a href="https://prometheus.io/docs/prometheus/latest/querying/api/" target="_blank" rel="noopener">HTTP API</a> 用程式接入控制</p>
+<h1 id="prometheus-web">Prometheus Web</h1>
+<p>Prometheus 本慎提供的 UI 其實功能就很強大</p>
+<ul>
+<li>可以查到 (已經匯入存在) 的 metrics</li>
+<li>可以在上面執行 PromQL 查詢語法</li>
+<li>查詢運行的 status</li>
+<li>查詢目前所有收集的 targets 的狀態,有收集器掛了也可以在這邊看到</li>
+</ul>
+<h1 id="小結">小結</h1>
+<ul>
+<li>輕鬆自架 prometheus</li>
+<li>Prometheus 頁面有精簡，但是功能完整的 graph 製圖</li>
+<li>但大家通常會使用 Grafana 搭配使用, 用過都說讚, 我們明天繼續</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
+  
+  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/en/tag/prometheus/">prometheus</a>
+  
+  <a class="badge badge-light" href="/en/tag/ithome/">ithome</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-04-prometheus-deployment-on-kubernetes%2F&amp;text=Prometheus&#43;Deployment&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-04-prometheus-deployment-on-kubernetes%2F&amp;t=Prometheus&#43;Deployment&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Prometheus%20Deployment%20on%20Kubernetes&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-04-prometheus-deployment-on-kubernetes%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-04-prometheus-deployment-on-kubernetes%2F&amp;title=Prometheus&#43;Deployment&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Prometheus&#43;Deployment&#43;on&#43;Kubernetes%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-04-prometheus-deployment-on-kubernetes%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-04-prometheus-deployment-on-kubernetes%2F&amp;title=Prometheus&#43;Deployment&#43;on&#43;Kubernetes" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

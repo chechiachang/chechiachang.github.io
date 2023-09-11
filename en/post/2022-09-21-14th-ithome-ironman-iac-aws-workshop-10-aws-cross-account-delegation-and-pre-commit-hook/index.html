@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="TODO 與進度 root 中設定 IAM User aws cross account iam role delegation root account MFA policy (Optional) Cloudtrail (Optional) terraform aws config security 中設定 IAM User security 設定 password policy security 設定 MFA policy security 中設定 IAM Policy &amp; Group dev 中設定 IAM role 允許 security assume dev IAM role iThome 鐵人賽好讀版" />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/" />
+<link rel="canonical" href="https://chechia.net/en/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/" />
+<meta property="og:title" content="Aws Cross Account Delegation &amp; pre-commit hook | Che-Chia Chang" />
+<meta property="og:description" content="TODO 與進度 root 中設定 IAM User aws cross account iam role delegation root account MFA policy (Optional) Cloudtrail (Optional) terraform aws config security 中設定 IAM User security 設定 password policy security 設定 MFA policy security 中設定 IAM Policy &amp; Group dev 中設定 IAM role 允許 security assume dev IAM role iThome 鐵人賽好讀版" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2022-09-21T22:55:41&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2022-09-21T22:55:41&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/"
+  },
+  "headline": "Aws Cross Account Delegation \u0026 pre-commit hook",
+  
+  "datePublished": "2022-09-21T22:55:41+08:00",
+  "dateModified": "2022-09-21T22:55:41+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "TODO 與進度 root 中設定 IAM User aws cross account iam role delegation root account MFA policy (Optional) Cloudtrail (Optional) terraform aws config security 中設定 IAM User security 設定 password policy security 設定 MFA policy security 中設定 IAM Policy \u0026amp; Group dev 中設定 IAM role 允許 security assume dev IAM role iThome 鐵人賽好讀版"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Aws Cross Account Delegation &amp; pre-commit hook | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="8de2d22651c7a119d2c32206633f5cfb" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Aws Cross Account Delegation &amp; pre-commit hook</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 21, 2022
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/terraform/">terraform</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h3 id="todo-與進度">TODO 與進度</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> root 中設定 IAM User
+<ul>
+<li><input disabled="" type="checkbox"> aws cross account iam role delegation</li>
+<li><input disabled="" type="checkbox"> root account MFA policy</li>
+<li><input disabled="" type="checkbox"> (Optional) Cloudtrail</li>
+<li><input disabled="" type="checkbox"> (Optional) terraform aws config</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> security 中設定 IAM User
+<ul>
+<li><input disabled="" type="checkbox"> security 設定 password policy</li>
+<li><input disabled="" type="checkbox"> security 設定 MFA policy</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> security 中設定 IAM Policy &amp; Group</li>
+<li><input disabled="" type="checkbox"> dev 中設定 IAM role</li>
+<li><input disabled="" type="checkbox"> 允許 security assume dev IAM role</li>
+</ul>
+<p><a href="https://ithelp.ithome.com.tw/articles/10290931" target="_blank" rel="noopener">iThome 鐵人賽好讀版</a></p>
+<p><a href="http://chechia.net/" target="_blank" rel="noopener">賽後文章會整理放到個人的部落格上 http://chechia.net/</a></p>
+<p><a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">追蹤粉專可以收到文章的主動推播</a></p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://ithelp.ithome.com.tw/upload/images/20210901/20120327NvpHVr2QC0.jpg" alt="https://ithelp.ithome.com.tw/upload/images/20210901/20120327NvpHVr2QC0.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<h3 id="aws-cross-account-with-iam-roles">AWS cross account with iam roles</h3>
+<p>要做跨 AWS account 的 IAM Roles access control，我們先看官方文件理解這個功能</p>
+<p><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html</a></p>
+<p>回憶我們在 day-04 提到的 multi-accounts 架構</p>
+<ul>
+<li>account/security 有所有 iam-users</li>
+<li>其他 child-account ex. account/test 中會有 iam-roles</li>
+<li>需求：security/iam-user 可以使用 test/iam-role 的身份，存取 test 底下的 resource ex.test/ec2</li>
+<li>好處
+<ul>
+<li>admin 不需要到每一個 child-account 下面去開每一個人的 iam user，統一到 account/security 管理</li>
+<li>user 只要登入一個 security 帳號，就可以控制多個 child-account，不用登出又登入不同 account</li>
+</ul>
+</li>
+</ul>
+<p>在 aws official doc 上，也是舉幾個 account 作為 cross account delegation 的範例。由於本 workshop 已經有現存的 child-account，我們會直接使用 workshop 的 accounts 做說明。完成這次 iam role delegation 的設定後，我們會得到以下成果</p>
+<ul>
+<li>account/security 下面 IAM User 可以 assume 到 account/test 下面的特定的 IAM role</li>
+<li>account/test 下面有一個 IAM role 可以存取 S3 Bucket</li>
+<li>工程師可以使用 web console 登入 security/user，然後 assume role 為 test/role，取得查看 s3 bucket 的權限</li>
+<li>工程師也可使用以 security/user 的身份， call aws API 取得 test/role 的暫時的 credential</li>
+</ul>
+<h3 id="步驟">步驟</h3>
+<p>我們會先過一次 aws 官方文件上所述的步驟，讓大家了解整個設定步驟，弄清整個 delegation 的流程與概念。之後會轉而使用 Terraform 設定所有的元件。</p>
+<ul>
+<li>首先要在 test (child-account) 設定 iam role
+<ul>
+<li>將 account/security 作為 trusted entity</li>
+<li>設定 role 的 policy，增加可以存取 s3 bucket 的權限給 test/role</li>
+</ul>
+</li>
+<li>調整 iam role，可以設定需要給予權限，或是 deny 某些權限</li>
+<li>最後做測試，是否可以完成 switch role</li>
+</ul>
+<p>AWS 的範例使用 aws web console 做範例，這個 workshop 後面我們會使用 terraform 來實作。</p>
+<h3 id="外出取材">外出取材</h3>
+<p>上面的範例還在 WIP，請當作者外出取材一天，今天先講另外一個工具</p>
+<hr>
+<h3 id="terraform-fmt--lint">Terraform fmt &amp; lint</h3>
+<p>要提升 terraform code 品質，有許多工具非常值得在 CI/CD 過程中使用</p>
+<p>例如 terraform 內建的 fmt 與 terragrunt 內建的 hclfmt</p>
+<ul>
+<li>在 module 的 repository 中會需要跑 terraform fmt，確保每個 module release 出去前都有經過 fmt</li>
+<li>在使用 terragrunt 的 root module 會需要 hclfmt .hcl 檔案</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd terragrunt-infrastructure-modules
+</span></span><span class="line"><span class="cl">terraform fmt -recursive
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd terragrunt-infrastructure-live-example
+</span></span><span class="line"><span class="cl">terragrunt hclfmt
+</span></span></code></pre></div><p>fmt 對於程式碼的品質是基礎但十分重要的</p>
+<ul>
+<li>沒有固定 format 的程式碼會造成 git 使用出現過多 diff，造成團隊協作的困難</li>
+<li>format 也會影響自動化，例如 templating / variable expension</li>
+</ul>
+<p>fmt / lint 是我們第一個帶入 CI/CD 的工具</p>
+<h3 id="手動-fmt">手動 fmt</h3>
+<p>fmt 一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd terragrunt-infrastructure-modules
+</span></span><span class="line"><span class="cl">terraform fmt -recursive
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd terragrunt-infrastructure-live-example
+</span></span><span class="line"><span class="cl">terragrunt hclfmt
+</span></span></code></pre></div><p>commit 如下</p>
+<ul>
+<li><a href="https://github.com/chechiachang/terragrunt-infrastructure-modules/commit/cab9fe72bafe8fa238ba04a17b7a60858ca2d27c" target="_blank" rel="noopener">terragrunt-infrastructure-modules commit</a></li>
+<li><a href="https://github.com/chechiachang/terragrunt-infrastructure-live-example/commit/1810e1a28558937058e21feafa4a8c9d2c82fab3" target="_blank" rel="noopener">terragrunt-infrastructure-live-example</a></li>
+</ul>
+<h3 id="git-precommit-hook">Git precommit hook</h3>
+<p>既然是 code 品質的基礎，應該每次 commit 之前都觸發檢查，這個階段適合使用 git pre-commit hook 前執行</p>
+<p><a href="https://github.com/antonbabenko/pre-commit-terraform" target="_blank" rel="noopener">https://github.com/antonbabenko/pre-commit-terraform</a></p>
+<p>以 terragrunt-infrastructure-live-example 為例</p>
+<ul>
+<li><a href="https://github.com/chechiachang/terragrunt-infrastructure-modules/pull/5" target="_blank" rel="noopener">PR 在此</a></li>
+<li>啟用前需要 install remote script 到本地</li>
+<li>git add 後，使用 run 來手動觸發 pre-commit hook
+<ul>
+<li>會根據 commit hook 執行腳本，以這邊的範例會執行
+<ul>
+<li>id: terraform-fmt</li>
+<li>id: terraform-validate</li>
+<li>id: tflint</li>
+<li>id: terraform_checkov</li>
+<li>id: terrascan</li>
+<li>id: terraform_tfsec</li>
+<li>id: infracost_breakdown</li>
+</ul>
+</li>
+<li>除了 fmt 有說明過以外，其他的 tool 我們後續再說明</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pre-commit install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pre-commit install
+</span></span><span class="line"><span class="cl">pre-commit installed at .git/hooks/pre-commit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pre-commit run
+</span></span></code></pre></div><ul>
+<li>如果通過 run 測試，就可以進行 git commit
+<ul>
+<li>commit 之前會在跑一次 script，所以稱作 pre-commit hook</li>
+<li>如果通過測試變化自動 commit</li>
+<li>如果沒有通過，則退回這次 commit</li>
+<li>如果想要跳過 pre-commit check，可以使用 git commit &ndash;no-verify</li>
+</ul>
+</li>
+</ul>
+<p>通過上述步驟，來確保工程師在本地發出的 commit 有經過基礎的驗證，非常值得團隊導入</p>
+<hr>
+<h3 id="github-action">Github Action</h3>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/terraform/">terraform</a>
+  
+  <a class="badge badge-light" href="/en/tag/iac/">iac</a>
+  
+  <a class="badge badge-light" href="/en/tag/aws/">aws</a>
+  
+  <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/">鐵人賽2022</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook%2F&amp;text=Aws&#43;Cross&#43;Account&#43;Delegation&#43;%26&#43;pre-commit&#43;hook" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook%2F&amp;t=Aws&#43;Cross&#43;Account&#43;Delegation&#43;%26&#43;pre-commit&#43;hook" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Aws%20Cross%20Account%20Delegation%20%26%20pre-commit%20hook&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook%2F&amp;title=Aws&#43;Cross&#43;Account&#43;Delegation&#43;%26&#43;pre-commit&#43;hook" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Aws&#43;Cross&#43;Account&#43;Delegation&#43;%26&#43;pre-commit&#43;hook%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook%2F&amp;title=Aws&#43;Cross&#43;Account&#43;Delegation&#43;%26&#43;pre-commit&#43;hook" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

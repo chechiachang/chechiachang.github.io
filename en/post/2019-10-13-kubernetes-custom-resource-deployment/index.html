@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。" />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resource-deployment/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2019-10-13-kubernetes-custom-resource-deployment/" />
+<link rel="canonical" href="https://chechia.net/en/post/2019-10-13-kubernetes-custom-resource-deployment/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2019-10-13-kubernetes-custom-resource-deployment/" />
+<meta property="og:title" content="Kubernetes Custom Resource Deployment | Che-Chia Chang" />
+<meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
+Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2019-10-13T22:03:08&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2019-10-13T22:03:08&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2019-10-13-kubernetes-custom-resource-deployment/"
+  },
+  "headline": "Kubernetes Custom Resource Deployment",
+  
+  "datePublished": "2019-10-13T22:03:08+08:00",
+  "dateModified": "2019-10-13T22:03:08+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "2020 It邦幫忙鐵人賽 系列文章\n這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。\nNginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD \u0026amp; Operator-sdk (3) Introduction about custom resource Deployment \u0026amp; Usage Deployment \u0026amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Kubernetes Custom Resource Deployment | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="c9449981dd25dbcce191863ae62972c7" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resource-deployment/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Kubernetes Custom Resource Deployment</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Oct 13, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/crd/">crd</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank" rel="noopener">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+<p>這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。</p>
+<ul>
+<li>Nginx Ingress (3)
+<ul>
+<li><a href="https://chechia.net/en/post/2019-10-08-kubernetes-nginx-ingress-controller/">Deploy Nginx Ingress Controller</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-08-kubernetes-nginx-ingress-config/">Configure Nginx Ingress</a></li>
+</ul>
+</li>
+<li>Cert-manager (3)
+<ul>
+<li><a href="https://chechia.net/en/post/2019-10-10-cert-manager-deployment/">Deploy cert-manager</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-11-cert-manager-how-it-work/">How cert-manager work</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-12-cert-manager-complete-workflow/">Cert-manager complete workflow</a></li>
+</ul>
+</li>
+<li>Kubernetes CRD &amp; Operator-sdk (3)
+<ul>
+<li><a href="https://chechia.net/en/post/2019-10-13-kubernetes-custom-resources-basic/">Introduction about custom resource</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-13-kubernetes-custom-resources-basic/">Deployment &amp; Usage</a></li>
+<li><a href="https://chechia.net/en/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/">Deployment &amp; Usage</a></li>
+</ul>
+</li>
+</ul>
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechia.net" target="_blank" rel="noopener">https://chechia.net</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<hr>
+<h1 id="摘要">摘要</h1>
+<ul>
+<li>CRD 內容</li>
+<li>Deploy CRD</li>
+<li>Use custom resource</li>
+</ul>
+<h1 id="recap">Recap</h1>
+<p>在上次的 cert-manager 內容中我們走過 cert-manager 的安裝步驟，其中有一個步驟是 apply cert-manager 的 manigests 檔案 <code>*.yaml</code>)</p>
+<p><a href="https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests" target="_blank" rel="noopener">https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ git clone https://github.com/jetstack/cert-manager
+</span></span><span class="line"><span class="cl">$ git checkout release-0.11
+</span></span><span class="line"><span class="cl">$ ls deploy/manifest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">00-crds.yaml
+</span></span><span class="line"><span class="cl">01-namespace.yaml
+</span></span><span class="line"><span class="cl">BUILD.bazel	
+</span></span><span class="line"><span class="cl">README.md	
+</span></span><span class="line"><span class="cl">helm-values.yaml
+</span></span></code></pre></div><p>我們快速看一下這個 00-crds.yaml，這個 yaml 非常長，直接<a href="https://github.com/jetstack/cert-manager/blob/release-0.11/deploy/manifests/00-crds.yaml#L1786" target="_blank" rel="noopener">跳到 certificates.certmanager.k8s.io</a></p>
+<p>希望看 golang 源碼文件的話，可以搭配<a href="https://godoc.org/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions#CustomResourceDefinitionSpec" target="_blank" rel="noopener">godoc.org/k8s.io/apiextensions</a> 來閱讀，更能理解 definition。</p>
+<p>在看之前先注意幾件事，CRD 內除了 schema 外，還定義了許多不同情境的使用資料。</p>
+<ul>
+<li>CRD 內定義了 custom resource 的資料儲存 .spec.validation.openAPIV3Schema，使用 custom resource 會透過 validator 驗證</li>
+<li>.openAPIV3Schema 內定義了 .spec，以及 rumtime 中紀錄 .status 的資料
+<ul>
+<li>controller 可以把狀態 sync 到 custom resource 的 .status 中紀錄</li>
+<li>controller 可以比對 .spec 與 .status 來決定是否要 sync 以及如何 sync</li>
+</ul>
+</li>
+<li>CRD 內定義了與 server 以及 client 互動的方式，
+<ul>
+<li>names 中定義各種使用情境的 custom resource 名稱</li>
+<li>additionalPrinterColumns 中添加 kubectl 中的顯示內容</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// 這邊使用的是 v1beta1 的 API (deprecated at v1.16) ，新版開發建議使用 apiextension.k8s.io/v1 的 api
+</span></span><span class="line"><span class="cl">apiVersion: apiextensions.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">kind: CustomResourceDefinition
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  creationTimestamp: null
+</span></span><span class="line"><span class="cl">  name: certificates.cert-manager.io
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  // 使用 kubectl 會額外顯示的資訊內容，透過 jsonpath 去 parse 顯示
+</span></span><span class="line"><span class="cl">  additionalPrinterColumns:
+</span></span><span class="line"><span class="cl">  - JSONPath: .status.conditions[?(@.type==&#34;Ready&#34;)].status
+</span></span><span class="line"><span class="cl">    name: Ready
+</span></span><span class="line"><span class="cl">    type: string
+</span></span><span class="line"><span class="cl">  - JSONPath: .spec.secretName
+</span></span><span class="line"><span class="cl">    name: Secret
+</span></span><span class="line"><span class="cl">    type: string
+</span></span><span class="line"><span class="cl">  - JSONPath: .spec.issuerRef.name
+</span></span><span class="line"><span class="cl">    name: Issuer
+</span></span><span class="line"><span class="cl">    priority: 1
+</span></span><span class="line"><span class="cl">    type: string
+</span></span><span class="line"><span class="cl">  - JSONPath: .status.conditions[?(@.type==&#34;Ready&#34;)].message
+</span></span><span class="line"><span class="cl">    name: Status
+</span></span><span class="line"><span class="cl">    priority: 1
+</span></span><span class="line"><span class="cl">    type: string
+</span></span><span class="line"><span class="cl">  - JSONPath: .metadata.creationTimestamp
+</span></span><span class="line"><span class="cl">    description: CreationTimestamp is a timestamp representing the server time when
+</span></span><span class="line"><span class="cl">      this object was created. It is not guaranteed to be set in happens-before order
+</span></span><span class="line"><span class="cl">      across separate operations. Clients may not set this value. It is represented
+</span></span><span class="line"><span class="cl">      in RFC3339 form and is in UTC.
+</span></span><span class="line"><span class="cl">    name: Age
+</span></span><span class="line"><span class="cl">    type: date
+</span></span><span class="line"><span class="cl">  group: cert-manager.io
+</span></span><span class="line"><span class="cl">  // 定義 CRD 在不同情境下使用的名稱
+</span></span><span class="line"><span class="cl">  names:
+</span></span><span class="line"><span class="cl">    kind: Certificate
+</span></span><span class="line"><span class="cl">    listKind: CertificateList
+</span></span><span class="line"><span class="cl">    plural: certificates
+</span></span><span class="line"><span class="cl">    shortNames:
+</span></span><span class="line"><span class="cl">    - cert
+</span></span><span class="line"><span class="cl">    - certs
+</span></span><span class="line"><span class="cl">    singular: certificate
+</span></span><span class="line"><span class="cl">  scope: Namespaced
+</span></span><span class="line"><span class="cl">  subresources:
+</span></span><span class="line"><span class="cl">    status: {}
+</span></span><span class="line"><span class="cl">  validation:
+</span></span><span class="line"><span class="cl">    // openAPIV3Schema 中是 custom resource 實際操作會使用的內容
+</span></span><span class="line"><span class="cl">    // properties 使用 . .description .type ，分別定義名稱，描述，檢查型別
+</span></span><span class="line"><span class="cl">    openAPIV3Schema:
+</span></span><span class="line"><span class="cl">      description: Certificate is a type to represent a Certificate from ACME
+</span></span><span class="line"><span class="cl">      properties:
+</span></span><span class="line"><span class="cl">        apiVersion:
+</span></span><span class="line"><span class="cl">          description: &#39;APIVersion defines the versioned schema of this representation
+</span></span><span class="line"><span class="cl">            of an object. Servers should convert recognized schemas to the latest
+</span></span><span class="line"><span class="cl">            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources&#39;
+</span></span><span class="line"><span class="cl">          type: string
+</span></span><span class="line"><span class="cl">        kind:
+</span></span><span class="line"><span class="cl">          description: &#39;Kind is a string value representing the REST resource this
+</span></span><span class="line"><span class="cl">            object represents. Servers may infer this from the endpoint the client
+</span></span><span class="line"><span class="cl">            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds&#39;
+</span></span><span class="line"><span class="cl">          type: string
+</span></span><span class="line"><span class="cl">        // custom resource runtime 中的 metadata
+</span></span><span class="line"><span class="cl">        metadata:
+</span></span><span class="line"><span class="cl">          type: object
+</span></span><span class="line"><span class="cl">        // custom resource 使用時的 spec，定義 custom resoure 的 desired status
+</span></span><span class="line"><span class="cl">        spec:
+</span></span><span class="line"><span class="cl">          ...
+</span></span><span class="line"><span class="cl">        // custom controller 監測 custom resource 的 current status，這邊的資料完全視 controller 實作來產生，如果沒有實作 sync status，也可以沒有資料
+</span></span><span class="line"><span class="cl">        status:
+</span></span><span class="line"><span class="cl">          ...
+</span></span><span class="line"><span class="cl">      type: object
+</span></span><span class="line"><span class="cl">  // 這個是 CRD 物件的 version，可以定義多個不同 version 的 CRD，調用時需要註明版本
+</span></span><span class="line"><span class="cl">  version: v1alpha2
+</span></span><span class="line"><span class="cl">  versions:
+</span></span><span class="line"><span class="cl">  - name: v1alpha2
+</span></span><span class="line"><span class="cl">    served: true
+</span></span><span class="line"><span class="cl">    storage: true
+</span></span><span class="line"><span class="cl">// 這個是 CRD 物件的 status，描述 CRD 部署到 API server 的狀態，例如 CRD 儲存適用 configmap 的儲存空間，這邊顯示在 API server 上的儲存狀態。不要跟 custom resource 的 status 弄混了
+</span></span><span class="line"><span class="cl">status:
+</span></span><span class="line"><span class="cl">  acceptedNames:
+</span></span><span class="line"><span class="cl">    kind: &#34;&#34;
+</span></span><span class="line"><span class="cl">    plural: &#34;&#34;
+</span></span><span class="line"><span class="cl">  conditions: []
+</span></span><span class="line"><span class="cl">  storedVersions: []
+</span></span></code></pre></div><p>helm-values.yaml 與 01-namespace.yaml 很單純，前者是使用 helm 部署的可設定參數，預設只有 kubernetes resources，後者則是為之後的 cert-manager 元件新增一個 kubernetes namespace。</p>
+<h1 id="小結-crd-內容-apiextensionsv1beta1">小結 CRD 內容 (apiextensions/v1beta1)</h1>
+<ul>
+<li>CRD 顯示名稱，內容</li>
+<li>CRD spec 驗證
+<ul>
+<li>custom resource</li>
+<li>custom resource schema</li>
+</ul>
+</li>
+<li>CRD 自身部署狀態</li>
+</ul>
+<h1 id="部署">部署</h1>
+<p>部署相較定義本身就非常簡單，直接 kubectl apply 到 kubernetes 上</p>
+<h1 id="使用-custom-resource">使用 custom resource</h1>
+<p>有了 CRD，我們便可以使用 CRUD API，互動模式與其他 build-in kubernetes resources 相同，只是內容會照 CRD 上的定義調整</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get certificates.certmanager.k8s.io
+</span></span><span class="line"><span class="cl">kubectl get certificates
+</span></span><span class="line"><span class="cl">kubectl get certs --all-namespaces
+</span></span><span class="line"><span class="cl">kubectl get cert -n cert-manager
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAMESPACE          NAME                READY   SECRET              AGE
+</span></span><span class="line"><span class="cl">cert-manager       ingress-nginx-tls   True    ingress-nginx-tls   221d
+</span></span></code></pre></div><p>這邊看到的內容可能會有些落差，因為我當初用的版本比較舊，但內容大同小異。</p>
+<p>底下的 describe 內容已經跟上面的 CRD 版本差太多，對不起來了。但我也懶得再佈一組，還要重做 dnsName 與 authotization challenge</p>
+<p>直接讓大家感受一下舊版的內容XD</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ kubectl describe cert ingress-nginx-tls
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Name:         ingress-nginx-tls
+</span></span><span class="line"><span class="cl">Namespace:    cert-manager
+</span></span><span class="line"><span class="cl">API Version:  certmanager.k8s.io/v1alpha1
+</span></span><span class="line"><span class="cl">Kind:         Certificate
+</span></span><span class="line"><span class="cl">Metadata:
+</span></span><span class="line"><span class="cl">  Creation Timestamp:  2019-03-06T06:48:26Z
+</span></span><span class="line"><span class="cl">  Generation:          4
+</span></span><span class="line"><span class="cl">  Owner References:
+</span></span><span class="line"><span class="cl">    API Version:           extensions/v1beta1
+</span></span><span class="line"><span class="cl">    Block Owner Deletion:  true
+</span></span><span class="line"><span class="cl">    Controller:            true
+</span></span><span class="line"><span class="cl">    Kind:                  Ingress
+</span></span><span class="line"><span class="cl">    Name:                  ingress-nginx
+</span></span><span class="line"><span class="cl">  Self Link:               /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/ingress-nginx-tls
+</span></span><span class="line"><span class="cl">Spec:
+</span></span><span class="line"><span class="cl">  Acme:
+</span></span><span class="line"><span class="cl">    Config:
+</span></span><span class="line"><span class="cl">      Domains:
+</span></span><span class="line"><span class="cl">        chechiachang.com
+</span></span><span class="line"><span class="cl">      Http 01:
+</span></span><span class="line"><span class="cl">        Ingress:
+</span></span><span class="line"><span class="cl">        Ingress Class:  nginx
+</span></span><span class="line"><span class="cl">  Dns Names:
+</span></span><span class="line"><span class="cl">    chechiachang.com
+</span></span><span class="line"><span class="cl">  Issuer Ref:
+</span></span><span class="line"><span class="cl">    Kind:       ClusterIssuer
+</span></span><span class="line"><span class="cl">    Name:       letsencrypt-prod
+</span></span><span class="line"><span class="cl">  Secret Name:  ingress-nginx-tls
+</span></span><span class="line"><span class="cl">// 當前的 status，controller sync 上來
+</span></span><span class="line"><span class="cl">// controller 會比對 .spec 與 .status，判斷是否需要做事，ex. renew
+</span></span><span class="line"><span class="cl">Status:
+</span></span><span class="line"><span class="cl">  Acme:
+</span></span><span class="line"><span class="cl">    Order:
+</span></span><span class="line"><span class="cl">      URL:  https://acme-v02.api.letsencrypt.org/acme/order/*
+</span></span><span class="line"><span class="cl">  Conditions:
+</span></span><span class="line"><span class="cl">    Last Transition Time:  2019-09-02T03:52:03Z
+</span></span><span class="line"><span class="cl">    Message:               Certificate renewed successfully
+</span></span><span class="line"><span class="cl">    Reason:                CertRenewed
+</span></span><span class="line"><span class="cl">    Status:                True
+</span></span><span class="line"><span class="cl">    Type:                  Ready
+</span></span><span class="line"><span class="cl">    Last Transition Time:  2019-09-02T03:52:01Z
+</span></span><span class="line"><span class="cl">    Message:               Order validated
+</span></span><span class="line"><span class="cl">    Reason:                OrderValidated
+</span></span><span class="line"><span class="cl">    Status:                False
+</span></span><span class="line"><span class="cl">    Type:                  ValidateFailed
+</span></span><span class="line"><span class="cl">Events:                    &lt;none&gt;
+</span></span></code></pre></div><p>想要新增，可以回去看 <a href="https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html#verifying-the-installation" target="_blank" rel="noopener">cert-manager tutorial</a>，這個是新版的文件</p>
+<p>當然，不爽這個 cert resource 也可以幹掉</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ kubectl delete cert ingress-nginx-tls -n cert-manager
+</span></span></code></pre></div><p>以上</p>
+<h1 id="小結">小結</h1>
+<ul>
+<li>簡介 CRD 與 CRD 內容</li>
+<li>操作 custom resource</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
+  
+  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/en/tag/crd/">crd</a>
+  
+  <a class="badge badge-light" href="/en/tag/gcp/">gcp</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-13-kubernetes-custom-resource-deployment%2F&amp;text=Kubernetes&#43;Custom&#43;Resource&#43;Deployment" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-13-kubernetes-custom-resource-deployment%2F&amp;t=Kubernetes&#43;Custom&#43;Resource&#43;Deployment" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Kubernetes%20Custom%20Resource%20Deployment&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-13-kubernetes-custom-resource-deployment%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-13-kubernetes-custom-resource-deployment%2F&amp;title=Kubernetes&#43;Custom&#43;Resource&#43;Deployment" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Kubernetes&#43;Custom&#43;Resource&#43;Deployment%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-13-kubernetes-custom-resource-deployment%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-10-13-kubernetes-custom-resource-deployment%2F&amp;title=Kubernetes&#43;Custom&#43;Resource&#43;Deployment" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

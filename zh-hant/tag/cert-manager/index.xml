@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cert-manager | Che-Chia Chang</title>
+    <link>https://chechia.net/zh-hant/tag/cert-manager/</link>
+      <atom:link href="https://chechia.net/zh-hant/tag/cert-manager/index.xml" rel="self" type="application/rss+xml" />
+    <description>cert-manager</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Sat, 12 Oct 2019 17:41:25 +0800</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>cert-manager</title>
+      <link>https://chechia.net/zh-hant/tag/cert-manager/</link>
+    </image>
+    
+    <item>
+      <title>Cert Manager Complete Workflow</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/</link>
+      <pubDate>Sat, 12 Oct 2019 17:41:25 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;recap&#34;&gt;Recap&lt;/h1&gt;
+&lt;p&gt;昨天我們實際使用 cert-manager，為 nginx ingress controller 產生 certificates，過程中我們做了幾件事&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;設置 Let&amp;rsquo;s Encript prod site 的 Issuer&lt;/li&gt;
+&lt;li&gt;設置 certificates.certmanager.k8s.io 資源來定義 certificate 的取得方式&lt;/li&gt;
+&lt;li&gt;或是在 ingress 中配置 tls，讓 cert-manager 自動透過 ingress-shim 產生 certifcates.cert-manager，並且產生 certificate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上是使用 cert-manager 產生 certificate 的基本操作，剩下的是由 cert-manager 完成。實際上 cert-manager 在產生出 certificate 之前還做了很多事情，我們今天就詳細走過完整流程，藉此了解 cert-manager 配合 issuing certificate 的流程&lt;/p&gt;
+&lt;p&gt;使用者設置 Issuer&lt;/p&gt;
+&lt;p&gt;使用者設定 certificate -&amp;gt; cert-manager 根據 certificate -&amp;gt; 產生 certificate&lt;/p&gt;
+&lt;h1 id=&#34;certificaterequests&#34;&gt;CertificateRequests&lt;/h1&gt;
+&lt;p&gt;certificaterequests.certmanager 是 cert-manager 產生 certificate 過程中會使用的資源，不是設計來讓人類操作的資源。&lt;/p&gt;
+&lt;p&gt;當 cert-manager 監測到 certificate 產生後，會產生 certificaterequests.certmanager.k8s.io 資源，來向 issuer request certificate，這個過程與使用其他客戶端 (ex. certbot) 來向 3rd party CA server request certificate 時的內容相同，只是這邊我們使用 kubernetes resource 來定義。&lt;/p&gt;
+&lt;p&gt;包含的 certificate request，會以 pem encoded 的形式，再變成 base64 encoded 存放在 resource 中。這個 pem key 也會從到遠方的 CA sercer (Let&amp;rsquo;s Encrypt prod) 來 request certificate&lt;/p&gt;
+&lt;p&gt;如果 issuance 成功，certificaterequest 資源應該會被 cert-manager 吃掉，不會被人類看到。&lt;/p&gt;
+&lt;p&gt;一個 certificaterequests.certmanager 大概長這樣&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: cert-manager.io/v1alpha2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: CertificateRequest
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: my-ca-cr
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  csr: LS0tLS1CRUdJTiBDRVJUSUZJQ0FUR
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ..................................
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  LQo=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  isCA: false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  duraton: 90d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  issuerRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: ca-issuer
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # We can reference ClusterIssuers by changing the kind here.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # The default value is Issuer (i.e. a locally namespaced Issuer)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kind: Issuer
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    group: cert-manager.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這個 certificaterequests.certmanager 會讓 cert-manager 嘗試向 Issuer (lets-encrypt-prod) request certificate。&lt;/p&gt;
+&lt;h1 id=&#34;order&#34;&gt;Order&lt;/h1&gt;
+&lt;p&gt;orders.certmanager.k8s.io 被 ACME 的 Issuer 使用，用來管理 signed TLD certificate 的 ACME order，這個 resource 也是 cert-manager 自行產生管理的 resource，不需要人類來更改。&lt;/p&gt;
+&lt;p&gt;當一個 certificates.certmanager 產生，且需要使勇 ACME isser 時，certmanager 會產生 orders.certmanager ，來取得 certificate。&lt;/p&gt;
+&lt;h1 id=&#34;challenges&#34;&gt;Challenges&lt;/h1&gt;
+&lt;p&gt;challenges.certmanager 資源是 ACME Issuer 管理 issuing lifecycle 時，用來完成單一個 DNS name/identifier authorization 時所使用的。用來確定 issue certiticate 的客戶端真的是 DNS name 的擁有者。&lt;/p&gt;
+&lt;p&gt;當 cert-manager 產生 order 時，order controller 接到 order ，就會為每一個需要 DNS certificate 的 DNSname ，產生 challenges.certmanager。&lt;/p&gt;
+&lt;p&gt;這段也是 order controller 自動產生，並不需要使用者參與。&lt;/p&gt;
+&lt;h1 id=&#34;acme-certificate-issuing&#34;&gt;ACME certificate issuing&lt;/h1&gt;
+&lt;p&gt;user -&amp;gt; 設定好 issuers.certmanager&lt;/p&gt;
+&lt;p&gt;user -&amp;gt; 產生 certificates.certmanager -&amp;gt; 選擇 Issuer -&amp;gt;&lt;/p&gt;
+&lt;p&gt;cert-manager -&amp;gt; 產生 certificaterequest -&amp;gt;&lt;/p&gt;
+&lt;p&gt;cert-manager 根據 certiticfates.certmanager 產生 orders.certmanager -&amp;gt;&lt;/p&gt;
+&lt;p&gt;order controller 根據 order ，並且跟每一個 DNS name target，產生一個 challenges.certmanager&lt;/p&gt;
+&lt;p&gt;challenges.certmanager 產生後，會開啟這個 DNS name challenge 的 lifecycle&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;challenges 狀態為 queued for processing，在佇列中等待，&lt;/li&gt;
+&lt;li&gt;如果沒有別的 chellenges 在進行，challenges 狀態變成 scheduled，這樣可以避免多個 DNS challenge 同時發生，或是相同名稱的 DNS challenge 重複&lt;/li&gt;
+&lt;li&gt;challenges 與遠端的 ACME server &amp;lsquo;synced&amp;rsquo; 當前的狀態，是否 valid
+&lt;ul&gt;
+&lt;li&gt;如果 ACME 回應這個 DNS name 的 challenge 還是有效的，則直接把 challenges 的狀態改成 valid，然後移出排程佇列。&lt;/li&gt;
+&lt;li&gt;如果 challenges 狀態仍然為 pending，challenge controller 會依照設定 present 這個 challenge，使用 HTTP01 或是 DNS01，challenges 被標記為 presented&lt;/li&gt;
+&lt;li&gt;challenges 先執行 self check，確定 challenge 狀態已經傳播給 dns servers，如果 self check 失敗，則會依照 interval retry&lt;/li&gt;
+&lt;li&gt;ACME authorization 關聯到 challenge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cert-manager 處理 &amp;lsquo;scheduled&amp;rsquo; challenges.certmanager -&amp;gt; ACME challenge&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cert Manager How It Work</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/</link>
+      <pubDate>Fri, 11 Oct 2019 11:24:34 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;今天我們來實際使用 cert-manager，為 nginx ingress controller 產生 certificates with ACME Issuer&lt;/p&gt;
+&lt;h1 id=&#34;ca-terminology&#34;&gt;CA Terminology&lt;/h1&gt;
+&lt;p&gt;先把實際執行 CA 簽發的名詞定義一下，以免跟 cert-manager 的資源搞混&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Certificate: 憑證，x509 certificate，cert-manager 自動管理的目標，透過 let&amp;rsquo;s encript 取得的 x509 certificates&lt;/li&gt;
+&lt;li&gt;CA (Certificate Authority): issue signed certificate 的機構&lt;/li&gt;
+&lt;li&gt;issue: 頒發，指 CA 產生 certificate 與 key (今天的範例格式是 .crt 與 .key)&lt;/li&gt;
+&lt;li&gt;Sign vs self-signed: 簽核，自己簽核，使用信任的 CA issue certificate，或是使用自己產生的 CA self-sign，然後把 CA 加到可以被信任的 CA 清單中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let&amp;rsquo;s Encript CA issues signed certificates&lt;/p&gt;
+&lt;p&gt;Kubernetes in-cluster CA issues self-signed certificates&lt;/p&gt;
+&lt;p&gt;cert-manager 的 CRD 資源，使用來描述 cert-manager 如何執行上述操作，CRD 底下都會加上 ``*.certmanager.k8s.io` 方便辨識。&lt;/p&gt;
+&lt;h1 id=&#34;設定-issuer&#34;&gt;設定 Issuer&lt;/h1&gt;
+&lt;p&gt;Issuer 要怎麼翻成中文XD，憑證頒發機構？&lt;/p&gt;
+&lt;p&gt;總之在開始簽發 certificates 前，要先定義 issuers.certmanager.k8s.io ，代表一個能簽發 certificate CA，例如 Let&amp;rsquo;s Encript，或是 kubernetes 內部也有內部使用的憑證簽發，放在 secrets 中。&lt;/p&gt;
+&lt;p&gt;這些 Issuer 會讓 certificates.certmanager.k8s.i8o 使用，定義如何取得 certificate 時，選擇 Issuer。&lt;/p&gt;
+&lt;p&gt;cert-manager 上可以定義單一 namespace 的 issuers.certmanager 與集群都可使用的 clusterissuers.certmanager&lt;/p&gt;
+&lt;p&gt;cert-manager 有支援幾種的 issuer type&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CA: 使用 x509 keypair 產生certificate，存在 kubernetes secret&lt;/li&gt;
+&lt;li&gt;Self signed: 自簽 certificate&lt;/li&gt;
+&lt;li&gt;ACME: 從 ACME (ex. Let&amp;rsquo;s Encrypt) server 取得 ceritificate&lt;/li&gt;
+&lt;li&gt;Vault: 從 Vault PKI backend 頒發 certificate&lt;/li&gt;
+&lt;li&gt;Venafi: Venafi Cloud&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;certificate&#34;&gt;Certificate&lt;/h1&gt;
+&lt;p&gt;有了簽發憑證的單位，接下來要定義如何取得 certificate。certificates.certmanager.k8s.io 是 CRD，用來告訴 cert-manager 要如何取得 certificate&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cert-manager.io/en/latest/reference/certificates.html#certificates&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;certifcates.certmanager.k8s.io&lt;/a&gt; 提供了簡單範例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: cert-manager.io/v1alpha2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: acme-crt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  secretName: acme-crt-secret
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  duration: 90d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  renewBefore: 30d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  dnsNames:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - foo.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - bar.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  acme:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    config:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - http01:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        ingressClass: nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      domains:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - foo.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - bar.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  issuerRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: letsencrypt-prod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # We can reference ClusterIssuers by changing the kind here.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # The default value is Issuer (i.e. a locally namespaced Issuer)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kind: Issuer
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面這個 certificate.certmanger 告訴 cert-manager&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;針對 foo.example.com 與 bar.example.com 兩個 domainsc&lt;/li&gt;
+&lt;li&gt;使用 letsencript-prd Issuer 去取得 certificate key pair&lt;/li&gt;
+&lt;li&gt;成功後把 ceritifcate 與 key 存在 secret/acme-crt-secret 中(以 tls.key, tls.crt 的形式)&lt;/li&gt;
+&lt;li&gt;與 certificate.certmanager 都放在相同 namespace 中，產生 certificate.certmanager 的時候要注意才不會找不到 secret&lt;/li&gt;
+&lt;li&gt;這邊指定了 certificate 的有效期間與 renew 時間 (預設值)，有需要可以更改&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;配合-ingress-設置-tls&#34;&gt;配合 Ingress 設置 tls&lt;/h1&gt;
+&lt;p&gt;有上述的設定，接下來可以請求 tls certificate&lt;/p&gt;
+&lt;p&gt;記得我們上篇 Nginx Ingress Controller 提到的 ingreess 設定嗎？這邊準備了一個適合配合 nginx ingress 使用的 tls 設定&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: extensions/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: my-nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  annotations:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kubernetes.io/ingress.class: &amp;#34;nginx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cert-manager.io/issuer: &amp;#34;letsencrypt-prod&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  tls:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - hosts:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - foo.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    secretName: my-nginx-ingrss-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  rules:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - host: foo.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    http:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      paths:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - path: /
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        backend:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          serviceName: chechiachang-backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          servicePort: 80
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這個 ingress apply 後，就會根據 spec.tls 的 hosts 設定，自動產生一個 certificate.certmanager 資源，並在這個資源使用 letsencryp-prod。&lt;/p&gt;
+&lt;p&gt;不用我們手動 apply 新的 ceritificate，這邊是 cert-manager 使用了 annotation 來觸發 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/tasks/issuing-certificates/ingress-shim.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ingress-shim&lt;/a&gt;，簡單來說，當 ingress 上有使用 cert-manager.io 的 annotation 時，cert-manager 就會根據 ingress 設定內容，抽出 spec.tls 與 isuer annotation，來產生同名的 certificates.certmanager，這個 certificateas.certmanager 會觸發接下的 certificate 頒發需求。&lt;/p&gt;
+&lt;p&gt;只要部署 Issuer 與 Ingress 就可以自動產生 certificate。當然，希望手動 apply certificates.certmanager 也是行得通。&lt;/p&gt;
+&lt;p&gt;把產生了 certificate.certmanager 拉出來看&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl describe certificate my-nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Name:         my-nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Namespace:    default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; API Version:  cert-manager.io/v1alpha2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Kind:         Certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Cluster Name:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Creation Timestamp:  2019-10-10T17:58:37Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Generation:          0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Owner References:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     API Version:           extensions/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Block Owner Deletion:  true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Controller:            true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Kind:                  Ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Name:                  my-nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Resource Version:        9295
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Dns Names:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     example.your-domain.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Issuer Ref:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Kind:       Issuer
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Name:       letsencrypt-prod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Secret Name:  my-nginx-ingress-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Status:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Acme:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Order:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;       URL:  https://acme-prod-v02.api.letsencrypt.org/acme/order/7374163/13665676
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Conditions:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Last Transition Time:  2019-10-10T18:05:57Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Message:               Certificate issued successfully
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Reason:                CertIssued
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Status:                True
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Type:                  Ready
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Events:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Type     Reason          Age                From          Message
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   ----     ------          ----               ----          -------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Normal   CreateOrder     1d                 cert-manager  Created new ACME order, attempting validation...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Normal   DomainVerified  1d                 cert-manager  Domain &amp;#34;foo.example.com&amp;#34; verified with &amp;#34;http-01&amp;#34; validation
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Normal   IssueCert       1d                 cert-manager  Issuing certificate...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Normal   CertObtained    1d                 cert-manager  Obtained certificate from ACME server
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Normal   CertIssued      1d                 cert-manager  Certificate issued Successfully
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;把 certificate 從 secret 撈出來看&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ kubectl describe secret my-nginx-ingress-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Name:         my-nginx-ingress-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Namespace:    default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Labels:       cert-manager.io/certificate-name=my-nginx-ingrsss-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Annotations:  cert-manager.io/alt-names=foo.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              cert-manager.io/common-name=foo.example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              cert-manager.io/issuer-kind=Issuer
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              cert-manager.io/issuer-name=letsencrypt-prod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Type:  kubernetes.io/tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;====
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tls.crt:  3566 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tls.key:  1675 bytes
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如此便可以透過 ingress 設定 nginx 使用 https&lt;/p&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;了解 *.certmanager.k8s.io CRD 定義與意義&lt;/li&gt;
+&lt;li&gt;設定 Issuer 與 certificate&lt;/li&gt;
+&lt;li&gt;透過 ingress-shim 直接部署 ingress 來產生 certificate&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cert Manager Deployment on Kubernetes</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/</link>
+      <pubDate>Thu, 10 Oct 2019 16:12:10 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Cert-manager Introduction&lt;/li&gt;
+&lt;li&gt;Deploy cert-manager&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;簡介-cert-manager&#34;&gt;簡介 cert-manager&lt;/h1&gt;
+&lt;p&gt;TLS certificate 管理很重要，但在 kubernetes 上管理 TLS certificates 很麻煩。&lt;/p&gt;
+&lt;p&gt;以往我們使用 &lt;a href=&#34;https://letsencrypt.org/zh-tw/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Let&amp;rsquo;s Encrypt&lt;/a&gt; 提供的免費自動化憑證頒發，搭配 &lt;a href=&#34;https://github.com/jetstack/kube-lego&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kube-lego&lt;/a&gt; 來自動處理 certificate issuing，然而隨著 kube-lego 已不再更新後，官方建議改使用 &lt;a href=&#34;https://github.com/jetstack/cert-manager/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cert-manager&lt;/a&gt; 來進行 kubernetes 上的憑證自動化管理。&lt;/p&gt;
+&lt;p&gt;cert-manager 是 kubernetes 原生的憑證管理 controller。是的他的核心也是一個 controller，透過 kubernetes object 定義 desired state，監控集群上的實際狀態，然後根據 resource object 產生憑證。cert-manager 做幾件事情&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 kubernetes 上 使用 CRD (Customized Resource Definition) 來定義 certificate issuing 的 desired state&lt;/li&gt;
+&lt;li&gt;向 let&amp;rsquo;s encrypt 取得公開的憑證&lt;/li&gt;
+&lt;li&gt;在 kubernetes 上自動檢查憑證的有效期限，並自動在有效時限內 renew certificate。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;安裝&#34;&gt;安裝&lt;/h1&gt;
+&lt;p&gt;官方文件有提供 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;詳細步驟&lt;/a&gt; 可以直接使用 release 的 yaml 部屬，也可以透過 helm。&lt;/p&gt;
+&lt;h3 id=&#34;使用-yaml-部屬&#34;&gt;使用 yaml 部屬&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Create a namespace to run cert-manager in
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create namespace cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Disable resource validation on the cert-manager namespace
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;開一個獨立的 namespace 來管理 cert-manager resources&lt;/p&gt;
+&lt;p&gt;取消 namespcae 中的 kubernetes validating webhook。由於 cert-manager 本身就會使用 &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ValidatingWebhookConfiguration&lt;/a&gt; 來為 cert-manager 定義的 Issuer, Certificate resource 做 validating。然而這會造成 cert-manager 與 webhook 的循環依賴 (circling dependency)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Install the CustomResourceDefinitions and cert-manager itself
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Install the CustomResourceDefinitions and cert-manager itself
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這個 yaml 裡面還有幾個元件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Role-bindings&lt;/li&gt;
+&lt;li&gt;CustomResourceDefinition
+&lt;ul&gt;
+&lt;li&gt;certificaterequests.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;certificates.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;challenges.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;clusterissuers.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;issuers.certmanager.k8s.io&lt;/li&gt;
+&lt;li&gt;orders.certmanager.k8s.io&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;這些元件的細節，留待運作原理分析時再詳解。&lt;/p&gt;
+&lt;h3 id=&#34;helm-deployment&#34;&gt;helm deployment&lt;/h3&gt;
+&lt;p&gt;這邊也附上使用 helm 安裝的步驟&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Install the CustomResourceDefinition resources separately&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.10/deploy/manifests/00-crds.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create the namespace for cert-manager&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create namespace cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Label the cert-manager namespace to disable resource validation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl label namespace cert-manager certmanager.k8s.io/disable-validation&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Add the Jetstack Helm repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm repo add jetstack https://charts.jetstack.io
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Update your local Helm chart repository cache&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm repo update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Install the cert-manager Helm chart&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm install &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --name cert-manager &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --namespace cert-manager &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --version v0.10.1 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  jetstack/cert-managerNAMESPACE&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;部屬完檢查一下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get pods --namespace cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                                       READY   STATUS    RESTARTS   AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cert-manager-5c6866597-zw7kh               1/1     Running   0          2m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cert-manager-cainjector-577f6d9fd7-tr77l   1/1     Running   0          2m
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cert-manager-webhook-787858fcdb-nlzsq      1/1     Running   0          2m
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這邊部屬完，會獲得完整的 cert-manager 與 cert-manager CRD，但 certificate 的 desired state object 還沒部屬。也就是關於我們要如何 issue certificate 的相關描述，都還沒有 deploy， cert-manager 自然不會工作。關於 issuing resources configuration，我們下次再聊。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2019 IT邦幫忙鐵人賽</title>
+      <link>https://chechia.net/zh-hant/post/2019-09-09-ithome-ironman-challenge/</link>
+      <pubDate>Mon, 09 Sep 2019 16:56:03 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-09-09-ithome-ironman-challenge/</guid>
+      <description>&lt;p&gt;各位好，我是Che-Chia Chang，社群上常用的名子是 David Chang。是個軟體工程師，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。目前為 &lt;a href=&#34;https://www.meetup.com/golang-taipei-meetup/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Golang Taiwan Meetup&lt;/a&gt; 的 organizer。&lt;/p&gt;
+&lt;p&gt;受到&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman/signup/team/63&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;友人們&lt;/a&gt;邀請（推坑）參加了&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt;，挑戰在30天內，每天發一篇技術分享文章。一方面將工作上遇到的問題與解法分享給社群，另一方面也是給自己一點成長的壓力，把這段時間的心得沈澱下來，因此也了這系列文章。&lt;/p&gt;
+&lt;p&gt;本系列文章重點有三：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;提供的解決方案，附上一步步的操作步驟。希望讓讀者可以重現完整操作步驟，直接使用，或是加以修改&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;著重 Google Cloud Platform，特別是Google Compute Engine (GCE) 與Google Kubernetes Engine (GKE) 兩大服務。這也是我最熟悉的平台，順便推廣，並分享一些雷點。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;從維運的角度除錯，分析問題，提升穩定性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;預定的主題如下（可能會依照實際撰寫狀況微調）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ELK Stask on GCP (8)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-15-self-host-elk-stack-on-gcp/&#34;&gt;Self-host ELK stack on GCP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-15-secure-elk-stack/&#34;&gt;Secure ELK Stask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-18-monitoring-gce-with-elk/&#34;&gt;監測 Google Compute Engine 上服務的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-19-monitoring-gke-with-elk/&#34;&gt;監測 Google Kubernetes Engine 的各項數據&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-18-elastic-or-not-elastic/&#34;&gt;是否選擇 ELK 作為解決方案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-21-logstash-on-gke/&#34;&gt;使用 logstash pipeline 做數據前處理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch 日常維護：數據清理，效能調校，永久儲存&lt;/li&gt;
+&lt;li&gt;Debug ELK stack on GCP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kafka HA on Kubernetes(6)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-22-kafka-deployment-on-kubernetes/&#34;&gt;Deploy kafka-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-23-kafka-introduction/&#34;&gt;Kafka Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-24-kafka-basic-usage/&#34;&gt;kafka 基本使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-25-kafka-operation-scripts/&#34;&gt;kafka operation scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-25-kafka-ha-topology/&#34;&gt;集群內部的 HA topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-26-kafka-ha-continued/&#34;&gt;集群內部的 HA 細節&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter 很重要&lt;/li&gt;
+&lt;li&gt;效能調校&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;在 GKE 上部署 Redis HA (5)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-28-redis-ha-deployment/&#34;&gt;使用 helm 部署 redis-ha&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-29-redis-ha-sentinel/&#34;&gt;Redis HA with sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-09-30-redis-ha-topology/&#34;&gt;Redis sentinel topology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-02-redis-ha-on-haproxy/&#34;&gt;Redis HA with HAproxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-03-redis-ha-failure-recovery/&#34;&gt;Redis HA Failure Recovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prometheus Metrics Exporter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Prometheus / Grafana (5)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-04-prometheus-deployment-on-kubernetes/&#34;&gt;GKE 上自架 Prometheus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-04-prometheus-deploy-grafana/&#34;&gt;GKE 上自架 Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-04-prometheus-scrape/&#34;&gt;scrape config &amp;amp; exporter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-06-prometheus-exporter-library-redis-exporter/&#34;&gt;Dive into Redis Exporter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-07-prometheus-kube-state-metrics-exporter/&#34;&gt;輸出 kube-state 的監測數據&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;文章發表於&lt;a href=&#34;https://ithelp.ithome.com.tw/users/20120327/ironman/2444&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人挑戰頁面&lt;/a&gt;，同時發布與本站備份。有任何謬誤，還煩請各方大德&amp;lt;3透過底下的聯絡方式聯絡我，感激不盡。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Features&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;step-by-step guide for deployment: guarentee a running deployment on GCP&lt;/li&gt;
+&lt;li&gt;basic configuration, usage, monitoring, networking on GKE&lt;/li&gt;
+&lt;li&gt;debugging, stability analysis in an aspect of devop&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Topics&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ELK stack(8)
+&lt;ul&gt;
+&lt;li&gt;Deploy self-hosted ELK stack on GCE instance&lt;/li&gt;
+&lt;li&gt;Secure ELK stack with SSL and role-based authentication&lt;/li&gt;
+&lt;li&gt;Monitoring services on Kubernetes with ELK beats&lt;/li&gt;
+&lt;li&gt;Monitoring services on GCE instances&lt;/li&gt;
+&lt;li&gt;Logstash pipelines and debugging walk through&lt;/li&gt;
+&lt;li&gt;Elasticsearch operations: house-cleaning, tuning, pernament storage&lt;/li&gt;
+&lt;li&gt;Elasticsearch maitainence, trouble shooting&lt;/li&gt;
+&lt;li&gt;Get-Started with Elastic Cloud SASS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;General operations on Kubernetes(4)
+&lt;ul&gt;
+&lt;li&gt;Kubernetes Debug SOP&lt;/li&gt;
+&lt;li&gt;Kubectl cheat sheet&lt;/li&gt;
+&lt;li&gt;Secure services with SSL by cert-manager&lt;/li&gt;
+&lt;li&gt;Speed up container updating with operator
+&lt;ul&gt;
+&lt;li&gt;My operator example&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Deploy Kafka HA on Kubernetes(4)
+&lt;ul&gt;
+&lt;li&gt;deploy kafka-ha on Kubernertes with helm&lt;/li&gt;
+&lt;li&gt;in-cluster networking configuration for high availability&lt;/li&gt;
+&lt;li&gt;basic app-side usage, performance tuning&lt;/li&gt;
+&lt;li&gt;Operate Kafka: update config, upgrade version, migrate data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Promethus / grafana(5)
+&lt;ul&gt;
+&lt;li&gt;Deploy Prometheus / Grafana stack on GCE instance&lt;/li&gt;
+&lt;li&gt;Monitoring services on Kubernetes with exporters&lt;/li&gt;
+&lt;li&gt;Export Kubernetes metrics to Prometheus&lt;/li&gt;
+&lt;li&gt;Export Redis-ha metrics to Prometheus&lt;/li&gt;
+&lt;li&gt;Export Kafka metrics to Prometheus&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;GCP networking(4)
+&lt;ul&gt;
+&lt;li&gt;Firewall basic concept for private network with GCE instances &amp;amp; Kubernetes&lt;/li&gt;
+&lt;li&gt;Load balancer for Kubernetes service &amp;amp; ingress&lt;/li&gt;
+&lt;li&gt;DNS on GCP from Kube-dns to GCP DNS service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;GCP log management(3)
+&lt;ul&gt;
+&lt;li&gt;Basic usage about GCP logging &amp;amp; GCP Error Report&lt;/li&gt;
+&lt;li&gt;Stackdriver, metrics, alerts&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Logging on GKE from gcp-fluentd to stackdriver&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

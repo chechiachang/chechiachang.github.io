@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>murmur | Che-Chia Chang</title>
+    <link>https://chechia.net/en/category/murmur/</link>
+      <atom:link href="https://chechia.net/en/category/murmur/index.xml" rel="self" type="application/rss+xml" />
+    <description>murmur</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 19 Aug 2020 10:01:31 +0800</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>murmur</title>
+      <link>https://chechia.net/en/category/murmur/</link>
+    </image>
+    
+    <item>
+      <title>2020 08 Season Review</title>
+      <link>https://chechia.net/en/post/2020-08-19-season-review/</link>
+      <pubDate>Wed, 19 Aug 2020 10:01:31 +0800</pubDate>
+      <guid>https://chechia.net/en/post/2020-08-19-season-review/</guid>
+      <description>&lt;p&gt;季中回顧&lt;/p&gt;
+&lt;p&gt;這一季開了很多新坑，卻來不及寫文章填上&lt;/p&gt;
+&lt;p&gt;完成的有 Terraform 的基礎與實務導入經驗&lt;/p&gt;
+&lt;p&gt;正在趕工的有 hashicorp vault，Gitops，與 tls。&lt;/p&gt;
+&lt;p&gt;其中 GitOps 已經有強者我朋友 Hwchiu 巨巨填坑了，我這邊就會偷懶跳過。&lt;a href=&#34;https://hwchiu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;友情連結&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;剩下的希望本季結束前能填完(掩面)&lt;/p&gt;
+&lt;h1 id=&#34;已填坑&#34;&gt;已填坑&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.facebook.com/engineer.from.scratch/posts/185733642920123&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;從零開始導入 Terraform&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;DevOps Taiwan Meetup&lt;/li&gt;
+&lt;li&gt;iThome Cloud Summit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;新坑碼農正在耕田挖坑自己跳&#34;&gt;新坑，碼農正在耕田，挖坑自己跳&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;hashicorp vault
+&lt;ul&gt;
+&lt;li&gt;install&lt;/li&gt;
+&lt;li&gt;basic operation&lt;/li&gt;
+&lt;li&gt;Sign &amp;amp; manage x509 certificate with pki secret engine&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;填坑中文章尚未完成&#34;&gt;填坑中，文章尚未完成&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;aws&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;post/play-aws-eks-with-low-cost: 精算小神童，如何用最少的 credits 玩 aws eks 服務&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tls&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;post/openssl-self-sign-tls-with-own-ca&lt;/li&gt;
+&lt;li&gt;post/k8s-manage-tls-certificate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;gitOps&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;post/gitops-with-argo-cd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;terraform&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;post/terraform-infrastructure-as-code-module&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;kubernetes&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;borg, omega, and kubernetes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;作者外出取材中&#34;&gt;作者外出取材中&amp;hellip;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;MIT 6.824 Distributed System Learning Note&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Say Goodbye 2019</title>
+      <link>https://chechia.net/en/post/2019-12-31-say-goodbye-2019/</link>
+      <pubDate>Tue, 31 Dec 2019 18:38:51 +0800</pubDate>
+      <guid>https://chechia.net/en/post/2019-12-31-say-goodbye-2019/</guid>
+      <description>&lt;p&gt;今年結束了，回顧一下今年做的事情&lt;/p&gt;
+&lt;p&gt;&amp;ndash; 我是軟體工程師 &amp;ndash;&lt;/p&gt;
+&lt;p&gt;6 場公開演講，並且踏出熟悉的社群舒適圈，南下進軍高雄XD&lt;/p&gt;
+&lt;p&gt;37 篇技術文章
+其中包含 30 篇 Ithome 30天(參賽就不用睡覺)鐵人賽參賽文章
+結賽撿到賀優選狂賀?&lt;/p&gt;
+&lt;p&gt;正職工作方面，進了幣圈，切身了解敝圈真亂後，又踏出了幣圈&lt;/p&gt;
+&lt;p&gt;開坑翻譯麻省理工學院的課程『分散式系統』，好課揪團一起修
+預計會有 22 篇文章，準備在可見的未來，犧牲無數個夜晚，邁向 2020&lt;/p&gt;
+&lt;p&gt;&amp;ndash; 我是專業水肺潛水教練 &amp;ndash;
+也是自由潛水員&lt;/p&gt;
+&lt;p&gt;年末的幾天，正式開始執業，帶學生下海(?)
+學習教導學生，也學習對學生的安全負責&lt;/p&gt;
+&lt;p&gt;新年復工後，正職碼農，副業潛水
+有人要潛請找我，保證優惠不藏私&lt;/p&gt;
+&lt;p&gt;&amp;ndash; 我是數位行銷實習生 &amp;ndash;&lt;/p&gt;
+&lt;p&gt;跟前公司 (雖然都不是MK但卻) 超強的行銷團隊&amp;lt;3學習數位行銷
+從零開始大造個人品牌，邊學邊實習
+開了兩個粉絲專頁
+一個是技術文章分享，一個做潛水影片分享
+打造個人品牌，自己推廣行銷，學習數位行銷&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

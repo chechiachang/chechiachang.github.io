@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP 作為範例的 ELK 的版本是當前的 stable release 7." />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2019-09-19-monitoring-gke-with-elk/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2019-09-19-monitoring-gke-with-elk/" />
+<link rel="canonical" href="https://chechia.net/en/post/2019-09-19-monitoring-gke-with-elk/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2019-09-19-monitoring-gke-with-elk/" />
+<meta property="og:title" content="Monitoring GKE With Elk | Che-Chia Chang" />
+<meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP 作為範例的 ELK 的版本是當前的 stable release 7." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2019-09-19T17:06:29&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2019-09-19T17:06:29&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2019-09-19-monitoring-gke-with-elk/"
+  },
+  "headline": "Monitoring GKE With Elk",
+  
+  "datePublished": "2019-09-19T17:06:29+08:00",
+  "dateModified": "2019-09-19T17:06:29+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "2020 It邦幫忙鐵人賽 系列文章\nSelf-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP 作為範例的 ELK 的版本是當前的 stable release 7."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Monitoring GKE With Elk | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="c82138a78b70f3c89d82c9eb81002374" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2019-09-19-monitoring-gke-with-elk/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Monitoring GKE With Elk</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 19, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/logstash/">logstash</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank" rel="noopener">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+<ul>
+<li><a href="https://chechia.net/en/post/2019-09-15-self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechia.net/en/post/2019-09-15-secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechia.net/en/post/2019-09-18-monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechia.net/en/post/2019-09-19-monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechia.net/en/post/2019-09-18-elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechia.net/en/post/2019-09-21-logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
+<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
+<li>Debug ELK stack on GCP</li>
+</ul>
+<p>作為範例的 ELK 的版本是當前的 stable release 7.3.1。</p>
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+<hr>
+<p>這篇來要 Kubernetes 環境(GKE)裡面的 log 抓出來，送到 ELK 上。</p>
+<p><a href="https://www.elastic.co/guide/en/beats/filebeat/7.3/running-on-kubernetes.html" target="_blank" rel="noopener">官方文件</a> ，寫得很簡易，如果已經很熟 kubernetes 的人可以直接腦補其他的部屬設定。</p>
+<p>這邊有幾個做法，依照 filebeat 部署的位置與收集目標簡單分為：</p>
+<ul>
+<li>node: 處理每一台 node 的 log ，包含 system log 與 node 監測資料(metrics)</li>
+<li>cluster: 處理 cluster 等級的 log,  event 或是 metrics</li>
+<li>pod: 針對特定 pod 直接去掛一個 sidecar</li>
+</ul>
+<p>上面的方法是可以混搭的，kubernetes 個個層級有<a href="https://kubernetes.io/docs/concepts/cluster-administration/logging/" target="_blank" rel="noopener">log 處理流程</a>，我們這邊把 log 送往第三方平台，也是需要依照原本的 log 流程，去收取我們想收集的 log。</p>
+<p>簡單來說，是去對的地方找對的 log。在架構上要注意 scalability 與 resource 分配，不要影響本身提供服務的 GKE ，但又能獲得盡量即時的 log。</p>
+<p>我們這邊直接進入 kubernetes resource 的設定，底下會附上在 GKE 找 log 的過程。</p>
+<h1 id="node-level-log-harvest">Node level log harvest</h1>
+<p>為每一個 node 配置 filebeat，然後在 node 上面尋找 log，然後如我們上篇所敘述加到 input ，就可以把 log 倒出來。</p>
+<p>直覺想到就是透過 daemonsets 為每個 node 部署一個 filebeat pod，然後 mount node 的 log 資料夾，在設置 input。</p>
+<h1 id="deploy-daemonsets">Deploy daemonsets</h1>
+<p>kubernetes resource 的 yaml 請參考 <a href="https://github.com/chechiachang/elk-kubernetes/tree/master/filebeat/7.3.1" target="_blank" rel="noopener">我的 github elk-kubernetes</a></p>
+<p>給予足夠的 clusterrolebinding 到 elk</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f filebeat/7.3.1/clusterrolebinding.yaml
+</span></span></code></pre></div><p>先更改 filebeat 的設定，如何設定 elasticsearch 與 kibana，請參考上篇。至於 input 的部份已經配置好了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim filebeat/7.3.1/daemonsets-config-configmap.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl apply -f filebeat/7.3.1/daemonsets-config-configmap.yaml
+</span></span></code></pre></div><p>部屬 filebeat daemonsets，會每一個 node 部屬一個 filebeat</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f filebeat/7.3.1/daemonsets.yaml
+</span></span></code></pre></div><p>取得 daemonsets 的狀態</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl --namespcae elk get pods
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME             READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">filebeat-bjfp9   1/1     Running   0          6m56s
+</span></span><span class="line"><span class="cl">filebeat-fzr9n   1/1     Running   0          6m56s
+</span></span><span class="line"><span class="cl">filebeat-vpkm7   1/1     Running   0          6m56s
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><p>有設定成功的話，kibana 這邊就會收到 kubernetes 上面 pod 的 log</p>
+<h1 id="log-havest-for-specific-pods">log havest for specific pods</h1>
+<p>由於 kubernetes 上我們可以便利的調度 filebeat 的部屬方式，這邊也可以也可以使用 deployment ，配合 pod affinity，把 filebeat 放到某個想要監測的 pod，這邊的例子是 nginx-ingress-controller。</p>
+<ul>
+<li>Kubernetes 上有一個或多個 nginx ingress controller</li>
+<li>部屬一個或多個 filebeat 到有 nginx 的 node 上</li>
+<li>filebeat 去抓取 nginx 的 input， 並使用 filebeat 的 nginx module 做預處理
+<ul>
+<li>nginx module 預設路徑需要調整，這邊使用 filebeat autodiscover 來處理</li>
+</ul>
+</li>
+</ul>
+<p>一樣 apply 前記得先檢查跟設定</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim filebeat/7.3.1/nginx-config-configmap.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl apply -f filebeat/7.3.1/nginx-config-configmap.yaml
+</span></span></code></pre></div><p>部屬 filebeat deployment
+由於有設定 pod affinity ，這個 filebeat 只會被放到有 nginx ingress controller 的這個節點上，並且依照 autodiscover 設定的條件去蒐集 nginx 的 log</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f filebeat/7.3.1/nginx-deployment.yaml
+</span></span></code></pre></div><p>有設定成功的話，kibana 這邊就會收到 kubernetes 上面 pod 的 log</p>
+<p>另外，由於有啟動 nginx module，logstash 收到的內容已經是處理過得內容。</p>
+<hr>
+<h1 id="gcp-fluentd">GCP fluentd</h1>
+<p>如果是使用 GKE 的朋友，可以投過開啟 stackdriver logging 的功能，把集群中服務的 log 倒到 stackdriver，基本上就是 node -&gt; (daemonsets) fluentd -&gt; stackdriver。</p>
+<p>這個 fluentd 是 GCP 如果有啟動 Stackdriver Logging 的話，自動幫你維護的 daemonsets，設定不可改，改了會被 overwrite 會去，所以不太方便從這邊動手腳。</p>
+<p>Btw stackdriver 最近好像改版，目前做 example 的版本已經變成 lagency （淚</p>
+<p>但我們先假設我們對這個 pod 的 log 很有興趣，然後把這邊的 log 透過 filebeat 送到 ELK 上XD</p>
+<p>因為 GKE 透過 fluentd 把 GKE 上面的 log 倒到 stackdriver，而我們是想把 log 倒到 ELK，既然這樣我們的 input 來源是相同的，而且很多處理步驟都可以在 ELK 上面互通，真的可以偷看一下 fluentd 是去哪收集 log ，怎麼處理 log pipeline，我們只要做相應設定就好。</p>
+<p>畢竟 google 都幫我們弄得妥妥的，不參考一下他的流程太可惜。</p>
+<p>偷看一下 GKE 上 fluentd 是去哪找 log ，這個是 <a href="https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/fluentd-gcp/fluentd-gcp-configmap.yaml" target="_blank" rel="noopener">fluentd gcp configmap</a>，雖然看到這邊感覺扯遠了，但因為很有趣所有我就繼續看下去，各位大德可以跳過XD</p>
+<p>configmap 中的這個 input 設定檔，其中一個 source 就是一個資料來源，相當於 filebeat 的 input。這邊這個 source 就是去 <code>/var/log/containers/*.log</code>  收 log</p>
+<p>這邊還做了幾件事：</p>
+<ul>
+<li>打上 <code>reform.*</code> tag，讓下個 match 可以 收進去 pipeline 處理</li>
+<li>附帶 parse 出 time</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">containers.input.conf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt;source&gt;
+</span></span><span class="line"><span class="cl">  @type tail
+</span></span><span class="line"><span class="cl">  path /var/log/containers/*.log
+</span></span><span class="line"><span class="cl">  pos_file /var/log/gcp-containers.log.pos
+</span></span><span class="line"><span class="cl">  # Tags at this point are in the format of:
+</span></span><span class="line"><span class="cl">  # reform.var.log.containers.&lt;POD_NAME&gt;_&lt;NAMESPACE_NAME&gt;_&lt;CONTAINER_NAME&gt;-&lt;CONTAINER_ID&gt;.log
+</span></span><span class="line"><span class="cl">  tag reform.*
+</span></span><span class="line"><span class="cl">  read_from_head true
+</span></span><span class="line"><span class="cl">  &lt;parse&gt;
+</span></span><span class="line"><span class="cl">    @type multi_format
+</span></span><span class="line"><span class="cl">    &lt;pattern&gt;
+</span></span><span class="line"><span class="cl">      format json
+</span></span><span class="line"><span class="cl">      time_key time
+</span></span><span class="line"><span class="cl">      time_format %Y-%m-%dT%H:%M:%S.%NZ
+</span></span><span class="line"><span class="cl">    &lt;/pattern&gt;
+</span></span><span class="line"><span class="cl">    &lt;pattern&gt;
+</span></span><span class="line"><span class="cl">      format /^(?&lt;time&gt;.+) (?&lt;stream&gt;stdout|stderr) [^ ]* (?&lt;log&gt;.*)$/
+</span></span><span class="line"><span class="cl">      time_format %Y-%m-%dT%H:%M:%S.%N%:z
+</span></span><span class="line"><span class="cl">    &lt;/pattern&gt;
+</span></span><span class="line"><span class="cl">  &lt;/parse&gt;
+</span></span><span class="line"><span class="cl">&lt;/source&gt;
+</span></span></code></pre></div><p>他這邊做一些 error handling，然後用 ruby (!) parse，這邊就真的太遠，細節大家可以 google ＸＤ。不過這邊使用的 pattern matching 我們後幾篇在 logstash pipeline 上，也會有機會提到，機制是類似的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;filter reform.**&gt;
+</span></span><span class="line"><span class="cl">  @type parser
+</span></span><span class="line"><span class="cl">  format /^(?&lt;severity&gt;\w)(?&lt;time&gt;\d{4} [^\s]*)\s+(?&lt;pid&gt;\d+)\s+(?&lt;source&gt;[^ \]]+)\] (?&lt;log&gt;.*)/
+</span></span><span class="line"><span class="cl">  reserve_data true
+</span></span><span class="line"><span class="cl">  suppress_parse_error_log true
+</span></span><span class="line"><span class="cl">  emit_invalid_record_to_error false
+</span></span><span class="line"><span class="cl">  key_name log
+</span></span><span class="line"><span class="cl">&lt;/filter&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt;match reform.**&gt;
+</span></span><span class="line"><span class="cl">  @type record_reformer
+</span></span><span class="line"><span class="cl">  enable_ruby true
+</span></span><span class="line"><span class="cl">  &lt;record&gt;
+</span></span><span class="line"><span class="cl">    # Extract local_resource_id from tag for &#39;k8s_container&#39; monitored
+</span></span><span class="line"><span class="cl">    # resource. The format is:
+</span></span><span class="line"><span class="cl">    # &#39;k8s_container.&lt;namespace_name&gt;.&lt;pod_name&gt;.&lt;container_name&gt;&#39;.
+</span></span><span class="line"><span class="cl">    &#34;logging.googleapis.com/local_resource_id&#34; ${&#34;k8s_container.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[1]}.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[0]}.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[2].rpartition(&#39;-&#39;)[0]}&#34;}
+</span></span><span class="line"><span class="cl">    # Rename the field &#39;log&#39; to a more generic field &#39;message&#39;. This way the
+</span></span><span class="line"><span class="cl">    # fluent-plugin-google-cloud knows to flatten the field as textPayload
+</span></span><span class="line"><span class="cl">    # instead of jsonPayload after extracting &#39;time&#39;, &#39;severity&#39; and
+</span></span><span class="line"><span class="cl">    # &#39;stream&#39; from the record.
+</span></span><span class="line"><span class="cl">    message ${record[&#39;log&#39;]}
+</span></span><span class="line"><span class="cl">    # If &#39;severity&#39; is not set, assume stderr is ERROR and stdout is INFO.
+</span></span><span class="line"><span class="cl">    severity ${record[&#39;severity&#39;] || if record[&#39;stream&#39;] == &#39;stderr&#39; then &#39;ERROR&#39; else &#39;INFO&#39; end}
+</span></span><span class="line"><span class="cl">  &lt;/record&gt;
+</span></span><span class="line"><span class="cl">  tag ${if record[&#39;stream&#39;] == &#39;stderr&#39; then &#39;raw.stderr&#39; else &#39;raw.stdout&#39; end}
+</span></span><span class="line"><span class="cl">  remove_keys stream,log
+</span></span><span class="line"><span class="cl">&lt;/match&gt;
+</span></span></code></pre></div><h3 id="ssh-進去逛">ssh 進去逛</h3>
+<p>想看機器上實際的 log 狀況，我們也可以直接 ssh 進去</p>
+<p>先透過 kubectl 看一下 pod</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ kubectl get daemonsets --namespace kube-system
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                                  AGE
+</span></span><span class="line"><span class="cl">fluentd-gcp-v3.2.0         7         7         7       7            7           beta.kubernetes.io/fluentd-ds-ready=true       196d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ kubectl get pods --output wide --namespace kube-system
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                      READY   STATUS    RESTARTS   AGE   IP          NODE                                     NOMINATED NODE   READINESS GATES
+</span></span><span class="line"><span class="cl">fluentd-gcp-scaler-1234567890-vfbhc       1/1     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-5gqn   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">fluentd-gcp-v3.2.0-44tl7                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-wcq0   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">fluentd-gcp-v3.2.0-5vc6l                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-tp05   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">fluentd-gcp-v3.2.0-6rqvc                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-5gqn   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">fluentd-gcp-v3.2.0-mmwk4                  2/2     Running   0          37d   10.140.0.   gke-chechiachang-pool-1-123456789-vxld   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></div><p>先透過 kubectl 看一下 node</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ kubectl get node
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                     STATUS   ROLES    AGE   VERSION
+</span></span><span class="line"><span class="cl">gke-chechaichang-pool-1-123456789-3bzp   Ready    &lt;none&gt;   37d   v1.13.7-gke.8
+</span></span><span class="line"><span class="cl">gke-chechaichang-pool-1-123456789-5gqn   Ready    &lt;none&gt;   37d   v1.13.7-gke.8
+</span></span><span class="line"><span class="cl">gke-chechaichang-pool-1-123456789-8n8z   Ready    &lt;none&gt;   37d   v1.13.7-gke.8
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gcloud compute ssh gke-chechaichang-pool-1-123456789-3bzp
+</span></span></code></pre></div><p>如使用其他雲平台的 kubernetes service，或是 bare metal 的集群，請依照各自系統的方式連進去看看。</p>
+<h1 id="ssh-node-找-log">ssh node 找 log</h1>
+<p>ssh 進去後就可以到處來探險，順便看看 GKE 跑在機器上到底做了什麼事情。</p>
+<p>如果官方有出文件，可能可以不用進來看。各位大德有發現文件請留言跟我說。我個人很喜歡自己架集群起來連就去看，面對照官方文件上寫的東西，當然大部份時候都是文件沒有帶到，有很多發現。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ ls /var/log
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">gcp-*-log.pos
+</span></span><span class="line"><span class="cl">kube-proxy.log
+</span></span><span class="line"><span class="cl">containers/
+</span></span><span class="line"><span class="cl">metrics/
+</span></span><span class="line"><span class="cl">pods/
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><p>/var/log/containers 看一下，格式是 <code>pod_namespace_container</code> 這邊是 link 到 /var/log/pods/</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ ls -al /var/log/containers
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 root root   105 Aug 12 07:42 fluentd-gcp-v3.2.0-st6cl_kube-system_fluentd-gcp-5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac.log -&gt; /var/log/pods/kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008/fluentd-gcp/0.log
+</span></span></code></pre></div><p>看到 pods 就覺得是你了，裡面有 pod 資料夾，格式是 <code>namespace_pod_uuid</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls /var/log/pods
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">default_pod-1-1234567890-fxxhp_uuid
+</span></span><span class="line"><span class="cl">kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008
+</span></span><span class="line"><span class="cl">kube-system_heapster-v1.6.0-beta.1-
+</span></span><span class="line"><span class="cl">kube-system_kube-proxy-gke-
+</span></span><span class="line"><span class="cl">kube-system_l7-default-backend-
+</span></span><span class="line"><span class="cl">kube-system_prometheus-to-sd-
+</span></span></code></pre></div><p>再進去有 container log，格式是 <code>pod_namespace_container.log</code>，也是 link</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls -al /var/log/pods/kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008/fluentd-gcp/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 root root  165 Aug 12 07:42 0.log -&gt; /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
+</span></span></code></pre></div><p>最終 link 到</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo su
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ls -alh /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/
+</span></span><span class="line"><span class="cl">total 3.9M
+</span></span><span class="line"><span class="cl">drwx------  4 root root 4.0K Aug 12 07:42 .
+</span></span><span class="line"><span class="cl">drwx------ 92 root root  20K Sep 18 11:28 ..
+</span></span><span class="line"><span class="cl">-rw-r-----  1 root root 3.8M Sep 18 11:29 5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
+</span></span><span class="line"><span class="cl">drwx------  2 root root 4.0K Aug 12 07:42 checkpoints
+</span></span><span class="line"><span class="cl">-rw-------  1 root root 7.8K Aug 12 07:42 config.v2.json
+</span></span><span class="line"><span class="cl">-rw-r--r--  1 root root 2.3K Aug 12 07:42 hostconfig.json
+</span></span><span class="line"><span class="cl">drwx------  2 root root 4.0K Aug 12 07:42 mounts
+</span></span></code></pre></div><p>頭尾偷喵一下，確定是我們在找的東西</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">head /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
+</span></span><span class="line"><span class="cl">tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
+</span></span></code></pre></div><p>這樣就找到我們的 log 了</p>
+<h1 id="小節">小節</h1>
+<ul>
+<li>使用 filebeat 去查找</li>
+<li>透過 kubernetes daemonsets 可以快速佈置一份 filebeat 到所有 node，且設定都是一起更新</li>
+<li>透過 kubernetes deployment 可以指定 filebeat 的位置，去跟隨想要監測的服務</li>
+<li>如果不熟 log 處理流程，可以直接看偷看大廠的服務，會有很多靈感</li>
+<li>沒事可以多跑進 Kubernetes 服務節點逛逛，有很多有趣的東西</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
+  
+  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/en/tag/logstash/">logstash</a>
+  
+  <a class="badge badge-light" href="/en/tag/ithome/">ithome</a>
+  
+  <a class="badge badge-light" href="/en/tag/filebeat/">filebeat</a>
+  
+  <a class="badge badge-light" href="/en/tag/fluentd/">fluentd</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-09-19-monitoring-gke-with-elk%2F&amp;text=Monitoring&#43;GKE&#43;With&#43;Elk" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-09-19-monitoring-gke-with-elk%2F&amp;t=Monitoring&#43;GKE&#43;With&#43;Elk" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Monitoring%20GKE%20With%20Elk&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-09-19-monitoring-gke-with-elk%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-09-19-monitoring-gke-with-elk%2F&amp;title=Monitoring&#43;GKE&#43;With&#43;Elk" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Monitoring&#43;GKE&#43;With&#43;Elk%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-09-19-monitoring-gke-with-elk%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2019-09-19-monitoring-gke-with-elk%2F&amp;title=Monitoring&#43;GKE&#43;With&#43;Elk" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

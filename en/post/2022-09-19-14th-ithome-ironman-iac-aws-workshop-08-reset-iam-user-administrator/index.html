@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: September 11, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Che-Chia Chang" />
+
+
+
+
+
+  
+
+<meta name="description" content="昨天處理完 Accounting 的 reset password，今天要來 reset root account Administrator 的權限
+本日進度
+root 中設定 IAM User 將手動產生的 Administrator 的 IAM User import terraform 中 補上 root account IAM Policy 補上 root account IAM Group reset root account IAM user login profile &amp; pgp key iThome 鐵人賽好讀版" />
+
+
+
+  <link rel="alternate" hreflang="zh-hant" href="https://chechia.net/zh-hant/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/" />
+
+<link rel="alternate" hreflang="en-us" href="https://chechia.net/en/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/" />
+<link rel="canonical" href="https://chechia.net/en/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/" />
+
+
+
+  <link rel="manifest" href="/en/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/en/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/" />
+<meta property="og:title" content="Reset Iam User Administrator | Che-Chia Chang" />
+<meta property="og:description" content="昨天處理完 Accounting 的 reset password，今天要來 reset root account Administrator 的權限
+本日進度
+root 中設定 IAM User 將手動產生的 Administrator 的 IAM User import terraform 中 補上 root account IAM Policy 補上 root account IAM Group reset root account IAM user login profile &amp; pgp key iThome 鐵人賽好讀版" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2022-09-20T23:56:47&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2022-09-20T23:56:47&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/en/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/"
+  },
+  "headline": "Reset Iam User Administrator",
+  
+  "datePublished": "2022-09-20T23:56:47+08:00",
+  "dateModified": "2022-09-20T23:56:47+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Che-Chia Chang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "昨天處理完 Accounting 的 reset password，今天要來 reset root account Administrator 的權限\n本日進度\nroot 中設定 IAM User 將手動產生的 Administrator 的 IAM User import terraform 中 補上 root account IAM Policy 補上 root account IAM Group reset root account IAM user login profile \u0026amp; pgp key iThome 鐵人賽好讀版"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Reset Iam User Administrator | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="2a383c951b1367a21cd12cdeb545d392" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/en/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/en/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>Leather</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>Scuba</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="Check my Github" target="_blank" rel="noopener" aria-label="Check my Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="Follow me on facebook" target="_blank" rel="noopener" aria-label="Follow me on facebook">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/zh-hant/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/">
+              <span>中文 (繁體)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Reset Iam User Administrator</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 20, 2022
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/terraform/">terraform</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>昨天處理完 Accounting 的 reset password，今天要來 reset root account Administrator 的權限</p>
+<p>本日進度</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> root 中設定 IAM User
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 將手動產生的 Administrator 的 IAM User import terraform 中</li>
+<li><input checked="" disabled="" type="checkbox"> 補上 root account IAM Policy</li>
+<li><input checked="" disabled="" type="checkbox"> 補上 root account IAM Group</li>
+<li><input disabled="" type="checkbox"> reset root account IAM user login profile &amp; pgp key</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://ithelp.ithome.com.tw/articles/10290931" target="_blank" rel="noopener">iThome 鐵人賽好讀版</a></p>
+<p><a href="http://chechia.net/" target="_blank" rel="noopener">賽後文章會整理放到個人的部落格上 http://chechia.net/</a></p>
+<p><a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">追蹤粉專可以收到文章的主動推播</a></p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://ithelp.ithome.com.tw/upload/images/20210901/20120327NvpHVr2QC0.jpg" alt="https://ithelp.ithome.com.tw/upload/images/20210901/20120327NvpHVr2QC0.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<hr>
+<h3 id="reset-iam-root-user-administrator-password">Reset IAM root user Administrator Password</h3>
+<p>依照上面的步驟，我們確定可以正常登入，於是可以來可以新建 Administrator 的 login profile</p>
+<ul>
+<li>由於 Administrator 會需要 access key，所以我們也把他設成 true</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># terragrunt.hcl
+</span></span><span class="line"><span class="cl">  users = {
+</span></span><span class="line"><span class="cl">    Administrator = {
+</span></span><span class="line"><span class="cl">      groups               = [&#34;full-access&#34;]
+</span></span><span class="line"><span class="cl">      pgp_key              = &#34;keybase:chechiachang&#34;
+</span></span><span class="line"><span class="cl">      create_login_profile = true
+</span></span><span class="line"><span class="cl">      create_access_keys   = true
+</span></span><span class="line"><span class="cl">    },
+</span></span><span class="line"><span class="cl">    Accounting = {
+</span></span><span class="line"><span class="cl">      groups               = [&#34;billing&#34;]
+</span></span><span class="line"><span class="cl">      pgp_key              = &#34;keybase:chechiachang&#34;
+</span></span><span class="line"><span class="cl">      create_login_profile = true
+</span></span><span class="line"><span class="cl">      create_access_keys   = false # accounting always use web console, won&#39;t use access key
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  }
+</span></span></code></pre></div><p>記得更改 module/output.tf，增加 secret key 的 output，而不要只留在 terraform state 裡面</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># output.tf
+</span></span><span class="line"><span class="cl">output &#34;keybase_secret_key_decrypt_command&#34; {
+</span></span><span class="line"><span class="cl">  description = &#34;Decrypt access secret key command&#34;
+</span></span><span class="line"><span class="cl">  value       = {
+</span></span><span class="line"><span class="cl">     for key, value in module.iam_user : key =&gt; value.keybase_secret_key_decrypt_command
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">output &#34;keybase_secret_key_pgp_message&#34; {
+</span></span><span class="line"><span class="cl">  description = &#34;Encrypted access secret key&#34;
+</span></span><span class="line"><span class="cl">  value       = {
+</span></span><span class="line"><span class="cl">     for key, value in module.iam_user : key =&gt; value.keybase_secret_key_pgp_message
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>試著 plan 一下，預期</p>
+<ul>
+<li>Administrator 會產生一組新的 login profile</li>
+<li>Administrator 會產生一組新的 access key</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt plan
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform used the selected providers to generate the following execution
+</span></span><span class="line"><span class="cl">plan. Resource actions are indicated with the following symbols:
+</span></span><span class="line"><span class="cl">  + create
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform will perform the following actions:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # module.iam_user[&#34;Administrator&#34;].aws_iam_access_key.this[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_access_key&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + create_date                    = (known after apply)
+</span></span><span class="line"><span class="cl">      + encrypted_secret               = (known after apply)
+</span></span><span class="line"><span class="cl">      + encrypted_ses_smtp_password_v4 = (known after apply)
+</span></span><span class="line"><span class="cl">      + id                             = (known after apply)
+</span></span><span class="line"><span class="cl">      + key_fingerprint                = (known after apply)
+</span></span><span class="line"><span class="cl">      + pgp_key                        = &#34;keybase:chechiachang&#34;
+</span></span><span class="line"><span class="cl">      + secret                         = (sensitive value)
+</span></span><span class="line"><span class="cl">      + ses_smtp_password_v4           = (sensitive value)
+</span></span><span class="line"><span class="cl">      + status                         = &#34;Active&#34;
+</span></span><span class="line"><span class="cl">      + user                           = &#34;Administrator&#34;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # module.iam_user[&#34;Administrator&#34;].aws_iam_user_login_profile.this[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_user_login_profile&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + encrypted_password      = (known after apply)
+</span></span><span class="line"><span class="cl">      + id                      = (known after apply)
+</span></span><span class="line"><span class="cl">      + key_fingerprint         = (known after apply)
+</span></span><span class="line"><span class="cl">      + password                = (known after apply)
+</span></span><span class="line"><span class="cl">      + password_length         = 20
+</span></span><span class="line"><span class="cl">      + password_reset_required = false
+</span></span><span class="line"><span class="cl">      + pgp_key                 = &#34;keybase:chechiachang&#34;
+</span></span><span class="line"><span class="cl">      + user                    = &#34;Administrator&#34;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Plan: 2 to add, 0 to change, 0 to destroy.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Changes to Outputs:
+</span></span><span class="line"><span class="cl">  + iam_access_key_id = {
+</span></span><span class="line"><span class="cl">      + Accounting    = &#34;&#34;
+</span></span><span class="line"><span class="cl">      + Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ~ keybase_password_decrypt_command   = {
+</span></span><span class="line"><span class="cl">      ~ Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">        # (1 unchanged element hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ~ keybase_password_pgp_message       = {
+</span></span><span class="line"><span class="cl">      ~ Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">        # (1 unchanged element hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  + keybase_secret_key_decrypt_command = {
+</span></span><span class="line"><span class="cl">      + Accounting    = null
+</span></span><span class="line"><span class="cl">      + Administrator = (known after apply)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  + keybase_secret_key_pgp_message     = {
+</span></span><span class="line"><span class="cl">      + Accounting    = null
+</span></span><span class="line"><span class="cl">      + Administrator = (known after apply)
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>符合預期!! 可喜可賀</p>
+<p>但是我們已經有 access key 在使用了，我又不想要走 day 3 aws-vault add key 的步驟換一組新的，這時該怎辦</p>
+<p>沒錯，我們可以像 Day3 一樣，使用 import 匯入已經存在的 resource 到 address 裡面</p>
+<ul>
+<li>google &ldquo;terraform aws iam user access key&rdquo;，<a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key#import" target="_blank" rel="noopener">找到 aws iam user access key 的說明頁面</a></li>
+<li>address 是 <code>module.iam_user[&quot;Administrator&quot;].aws_iam_access_key.this[0]</code></li>
+<li>access key ID
+<ul>
+<li>可以在密碼管理器查看</li>
+<li>或是在 aws web console -&gt; IAM -&gt; User -&gt; Administrator -&gt; Security Credential -&gt; Access Keys 查到</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt import &#39;module.iam_user[&#34;Administrator&#34;].aws_iam_access_key.this[0]&#39; AKIA1234567890
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">module.iam_user[&#34;Administrator&#34;].aws_iam_access_key.this[0]: Importing from ID &#34;AKIA2I2H7ERWKI4RIF4Z&#34;...
+</span></span><span class="line"><span class="cl">module.iam_user[&#34;Administrator&#34;].aws_iam_access_key.this[0]: Import prepared!
+</span></span><span class="line"><span class="cl">  Prepared aws_iam_access_key for import
+</span></span><span class="line"><span class="cl">module.iam_user[&#34;Administrator&#34;].aws_iam_access_key.this[0]: Refreshing state... [id=AKIA2I2H7ERWKI4RIF4Z]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Import successful!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The resources that were imported are shown above. These resources are now in
+</span></span><span class="line"><span class="cl">your Terraform state and will henceforth be managed by Terraform.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Releasing state lock. This may take a few moments...
+</span></span></code></pre></div><p>順便 <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_login_profile#import" target="_blank" rel="noopener">login profile 也 import 近來</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt import &#39;module.iam_user[&#34;Administrator&#34;].aws_iam_user_login_profile.this[0]&#39; Administrator
+</span></span></code></pre></div><p>再次 plan 就不需要新建一把 access key 了&hellip;吧？！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt plan
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform used the selected providers to generate the following execution
+</span></span><span class="line"><span class="cl">plan. Resource actions are indicated with the following symbols:
+</span></span><span class="line"><span class="cl">  + create
+</span></span><span class="line"><span class="cl">-/+ destroy and then create replacement
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform will perform the following actions:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # module.iam_user[&#34;Administrator&#34;].aws_iam_access_key.this[0] must be replaced
+</span></span><span class="line"><span class="cl">-/+ resource &#34;aws_iam_access_key&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      ~ create_date                    = &#34;2022-09-16T13:05:35Z&#34; -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">      + encrypted_secret               = (known after apply)
+</span></span><span class="line"><span class="cl">      + encrypted_ses_smtp_password_v4 = (known after apply)
+</span></span><span class="line"><span class="cl">      ~ id                             = &#34;AKIA2I2H7ERWKI4RIF4Z&#34; -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">      + key_fingerprint                = (known after apply)
+</span></span><span class="line"><span class="cl">      + pgp_key                        = &#34;keybase:chechiachang&#34; # forces replacement
+</span></span><span class="line"><span class="cl">      + secret                         = (sensitive value)
+</span></span><span class="line"><span class="cl">      + ses_smtp_password_v4           = (sensitive value)
+</span></span><span class="line"><span class="cl">        # (2 unchanged attributes hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # module.iam_user[&#34;Administrator&#34;].aws_iam_user_login_profile.this[0] must be replaced
+</span></span><span class="line"><span class="cl">-/+ resource &#34;aws_iam_user_login_profile&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + encrypted_password      = (known after apply)
+</span></span><span class="line"><span class="cl">      ~ id                      = &#34;Administrator&#34; -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">      + key_fingerprint         = (known after apply)
+</span></span><span class="line"><span class="cl">      + password                = (known after apply)
+</span></span><span class="line"><span class="cl">      + password_length         = 20 # forces replacement
+</span></span><span class="line"><span class="cl">      + pgp_key                 = &#34;keybase:chechiachang&#34; # forces replacement
+</span></span><span class="line"><span class="cl">        # (2 unchanged attributes hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Plan: 2 to add, 0 to change, 2 to destroy.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Changes to Outputs:
+</span></span><span class="line"><span class="cl">  + iam_access_key_id = {
+</span></span><span class="line"><span class="cl">      + Accounting    = &#34;&#34;
+</span></span><span class="line"><span class="cl">      + Administrator = &#34;AKIA2I2H7ERWARJJWIVK&#34;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ~ keybase_password_decrypt_command   = {
+</span></span><span class="line"><span class="cl">      ~ Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">        # (1 unchanged element hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ~ keybase_password_pgp_message       = {
+</span></span><span class="line"><span class="cl">      ~ Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">        # (1 unchanged element hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ~ keybase_secret_key_decrypt_command = {
+</span></span><span class="line"><span class="cl">      ~ Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">        # (1 unchanged element hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">  ~ keybase_secret_key_pgp_message     = {
+</span></span><span class="line"><span class="cl">      ~ Administrator = null -&gt; (known after apply)
+</span></span><span class="line"><span class="cl">        # (1 unchanged element hidden)
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></div><p>誒結果不符合預期，</p>
+<ul>
+<li><code>aws_iam_access_key.this</code> 需要重建
+<ul>
+<li>原因是我們更改了 <code>pgp_key = &quot;keybase:chechiachang&quot;</code> 造成 forces replacement</li>
+<li>因為</li>
+<li>想一想也很合理
+<ul>
+<li>第一次創建 access key 的時候，keybase 是亂寫的，這時用 module 的 code 去跑，產生無加密的 access key 放在 state 中</li>
+<li>這次 import 後，module 中的 .tf code 已經改過，不再存無加密的 access key，而是加密後儲存 GPG Encrypted Message</li>
+<li>這個改變讓 provider 覺得沒有辦法符合，只好刪掉重建</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>.aws_iam_user_login_profile.this</code> 需要重建，原因也是一樣，因為我們改了 .tf code 邏輯，造成 provider 勢必要重建 login profile</li>
+</ul>
+<p>執行 terraform apply</p>
+<p>NOTE: 注意有 destroy 的 terraform plan 都要特別小心 review，因為很多 aws API delete 發出去就是無法復原了</p>
+<ul>
+<li>例如 access key 與 password 刪掉後，是無法 recover 的</li>
+<li>有些 API request 會有副作用
+<ul>
+<li>reset password 後，aws web console 會被登出</li>
+<li>access key 換掉 terraform 就不能用，有可能導致 terraform 進行到一半被 permission denied (這個 apply 不會，只是提醒大家要注意)</li>
+</ul>
+</li>
+</ul>
+<p>有 destroy 的部分都要小心 review，看不懂就找 peering review
+有 destroy 的部分都要小心 review，看不懂就找 peering review
+有 destroy 的部分都要小心 review，看不懂就找 peering review</p>
+<p>很重要所以說三次</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt apply
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Apply complete! Resources: 2 added, 0 changed, 2 destroyed.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Outputs:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">keybase_password_decrypt_command = {
+</span></span><span class="line"><span class="cl">  &#34;Accounting&#34; = &lt;&lt;-EOT
+</span></span><span class="line"><span class="cl">  echo &#34;wcFMA4U4ylYlNYTfAQ/+KLtNeJqOqK/V3pNdcRh9nvyDw/huJfaYF7Ab/YdKqLKNVySBqc6HY8xedmER5Wn78RlG962/f772u8UlQN4XCOjOLjyOaNL8K0tkeoSVg+XXPx2qJO9Myc1d+74rG57biUD26XpwfS7+ryIjaHf+NzjisExZy2mgiMIzzAlfqTzRAc+jYP11wZcyFGwOe9pMq6BJy7FH5935ndVgNLCgYtSjgIV5b5kWQ3SDr0E9egAHnoAcHs8mni71x7OL7OCc/bS3nJSLz1jRkMoukWyQQ3+lM7Nwi36NSJneIKxW5f7lSxr7Bx+W3mx6gZgb18yRVIwbVW5iDFsAQOFb0zOHUf8tm3tAQ0F79Yeqy9sfLCfUUjVpCENEJe5FtwJkI8EbHKe8mGnYA4dbHaCkIDgVa8TZ4mdXl7yVZx0adlkKFIS48niwPHxMErZYqnRBitUCGdaH0bHcpPcnSVolLljZmXZUrntMjIEb9FGYbgl6hOiRF9MR3RQL5DNmpS7uSqU7V6TyhVbAOJO2oR01Z7hXdAMxZ54O+h06jN7fzvLrUSMWvUz/wp+JJnIDYNwu75Dvicn6NmXrP3fH3M8xmYIEPhpSvOldNzB4DMqQdD6tN+DphFFyvFwuLnWKWKOY+pbNXkd5q0H3A69owxgsONoOL1JqjZgOdcLtWTq+g9XqU5XSRQGo1ei5Ctv2f5yAHZuI2smwJkTA88SuyZqJNwRixw5OPpUDOuWxhK6xftsN7M1/TnioX8Ch3RTow7H0dvMFFD3ocvjG4A==&#34; | base64 --decode | keybase pgp decrypt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  EOT
+</span></span><span class="line"><span class="cl">  &#34;Administrator&#34; = &lt;&lt;-EOT
+</span></span><span class="line"><span class="cl">  echo &#34;wcFMA4U4ylYlNYTfAQ/+JcRNkO9SxMm9U196p2WuuXdSWo9ooktKJMp3q4Xf5xMG5z/ccphl5+fVDmkp2Pr76UJ9NmiBw8rzScFUEU4U+xZepNojSdN/rmZPWB6PKCdJMyItw6HOnn7OSa0i1arr0PHaC0bpVs4Bc+9Oqtw1SuU8uvwBpCeM+h33qOROnvKnGgvOHV2Zk1XcgT+sg7xMTv8q77KePoNLTK3joQL7fXdPWUGWCp8srWpxzJ8LD4aNMmsrjA/s/7sNbAAdhffRwwA6diuZfeYscZ6MlURUtrSx3iAuNV33kmhuyYimlmXstbfs/nIJVI5OfcVexPKzHK5O9DikXApAzbf/YACz0OebOcxnzh6+rQw9+XWwRtARcK3tViMhxqnEu4PHROmj1sNmLZLJqCniwN91J2iry7BAx2Zoyvvw7vd7Sw9LddaM+j2XHhSf21250sNMn/9R6beUlkWQgPci8mU51rnqBffbOJnvVh7QCTLssoMTgKRrgxb+oZbSsKLLQO/621ZcTY9rzC74w2kZWJTS7nx5G/0KQkwXP4NGRSTXYg3/6TcwT7LefQiJpWB2z92zT1sp5lPhtpNneqrtFFnirplfP5coeelRSlTEbHDwbHSX1LfHU7A5WHjf7oEHvn2hMhdgTlvGt4vL7rXiy9p8GWjcudGxZs+/WNs8CCkZd8j2gVvSRQEmNNtCd/U3jmq+o2VncJjBhetJ7eCyvKOAMwcCLHE0zleX77mXVtq7UVLXrcypxIbVjJAIko8y71fATyrRomcijS7Sgw==&#34; | base64 --decode | keybase pgp decrypt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  EOT
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">keybase_password_pgp_message = {
+</span></span><span class="line"><span class="cl">  &#34;Accounting&#34; = &lt;&lt;-EOT
+</span></span><span class="line"><span class="cl">  -----BEGIN PGP MESSAGE-----
+</span></span><span class="line"><span class="cl">  Version: Keybase OpenPGP v2.0.76
+</span></span><span class="line"><span class="cl">  Comment: https://keybase.io/crypto
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  wcFMA4U4ylYlNYTfAQ/+KLtNeJqOqK/V3pNdcRh9nvyDw/huJfaYF7Ab/YdKqLKNVySBqc6HY8xedmER5Wn78RlG962/f772u8UlQN4XCOjOLjyOaNL8K0tkeoSVg+XXPx2qJO9Myc1d+74rG57biUD26XpwfS7+ryIjaHf+NzjisExZy2mgiMIzzAlfqTzRAc+jYP11wZcyFGwOe9pMq6BJy7FH5935ndVgNLCgYtSjgIV5b5kWQ3SDr0E9egAHnoAcHs8mni71x7OL7OCc/bS3nJSLz1jRkMoukWyQQ3+lM7Nwi36NSJneIKxW5f7lSxr7Bx+W3mx6gZgb18yRVIwbVW5iDFsAQOFb0zOHUf8tm3tAQ0F79Yeqy9sfLCfUUjVpCENEJe5FtwJkI8EbHKe8mGnYA4dbHaCkIDgVa8TZ4mdXl7yVZx0adlkKFIS48niwPHxMErZYqnRBitUCGdaH0bHcpPcnSVolLljZmXZUrntMjIEb9FGYbgl6hOiRF9MR3RQL5DNmpS7uSqU7V6TyhVbAOJO2oR01Z7hXdAMxZ54O+h06jN7fzvLrUSMWvUz/wp+JJnIDYNwu75Dvicn6NmXrP3fH3M8xmYIEPhpSvOldNzB4DMqQdD6tN+DphFFyvFwuLnWKWKOY+pbNXkd5q0H3A69owxgsONoOL1JqjZgOdcLtWTq+g9XqU5XSRQGo1ei5Ctv2f5yAHZuI2smwJkTA88SuyZqJNwRixw5OPpUDOuWxhK6xftsN7M1/TnioX8Ch3RTow7H0dvMFFD3ocvjG4A==
+</span></span><span class="line"><span class="cl">  -----END PGP MESSAGE-----
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  EOT
+</span></span><span class="line"><span class="cl">  &#34;Administrator&#34; = &lt;&lt;-EOT
+</span></span><span class="line"><span class="cl">  -----BEGIN PGP MESSAGE-----
+</span></span><span class="line"><span class="cl">  Version: Keybase OpenPGP v2.0.76
+</span></span><span class="line"><span class="cl">  Comment: https://keybase.io/crypto
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  wcFMA4U4ylYlNYTfAQ/+JcRNkO9SxMm9U196p2WuuXdSWo9ooktKJMp3q4Xf5xMG5z/ccphl5+fVDmkp2Pr76UJ9NmiBw8rzScFUEU4U+xZepNojSdN/rmZPWB6PKCdJMyItw6HOnn7OSa0i1arr0PHaC0bpVs4Bc+9Oqtw1SuU8uvwBpCeM+h33qOROnvKnGgvOHV2Zk1XcgT+sg7xMTv8q77KePoNLTK3joQL7fXdPWUGWCp8srWpxzJ8LD4aNMmsrjA/s/7sNbAAdhffRwwA6diuZfeYscZ6MlURUtrSx3iAuNV33kmhuyYimlmXstbfs/nIJVI5OfcVexPKzHK5O9DikXApAzbf/YACz0OebOcxnzh6+rQw9+XWwRtARcK3tViMhxqnEu4PHROmj1sNmLZLJqCniwN91J2iry7BAx2Zoyvvw7vd7Sw9LddaM+j2XHhSf21250sNMn/9R6beUlkWQgPci8mU51rnqBffbOJnvVh7QCTLssoMTgKRrgxb+oZbSsKLLQO/621ZcTY9rzC74w2kZWJTS7nx5G/0KQkwXP4NGRSTXYg3/6TcwT7LefQiJpWB2z92zT1sp5lPhtpNneqrtFFnirplfP5coeelRSlTEbHDwbHSX1LfHU7A5WHjf7oEHvn2hMhdgTlvGt4vL7rXiy9p8GWjcudGxZs+/WNs8CCkZd8j2gVvSRQEmNNtCd/U3jmq+o2VncJjBhetJ7eCyvKOAMwcCLHE0zleX77mXVtq7UVLXrcypxIbVjJAIko8y71fATyrRomcijS7Sgw==
+</span></span><span class="line"><span class="cl">  -----END PGP MESSAGE-----
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  EOT
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">keybase_secret_key_decrypt_command = {
+</span></span><span class="line"><span class="cl">  &#34;Accounting&#34; = tostring(null)
+</span></span><span class="line"><span class="cl">  &#34;Administrator&#34; = &lt;&lt;-EOT
+</span></span><span class="line"><span class="cl">  echo &#34;wcFMA4U4ylYlNYTfARAAivQzF+bh6N6OH/3a1S7XQCrIceoLn9EXsc8Gr0p09TVieSqwwv1RojaCULjYXYu5UnxRFwaavN+ULxrl2c4hRBIMgNEAo1Nxy16vfDEj4W7S9l+yA/TU3ewbs8WqKHIFrO8+AcjxUV4Ol5cmziDu70UR0H1/f0w7lqC/s36Zqa1Rz5Mb1n7ATLfs4jiPDQiFlr+E6gSe+I23sAQqdDS/WEbwAVz6o2B9mvs+OznNzeDoTwd7nE2ca+jYDZKjEjD6+qfDAnVzftwSrJIb2yJYlKIeSKJLC9loEQk2wdR5fkKrPg//9S4gYQJjzkwWyJAQsc6AuOPZXjqVe5yV9EpG2r0938G/acR3SEjt53ckXjh6Fi0/EgOjfeTVMO0EH6Se/vurdXBRyMggTieyN76Ts8nnn32GBldTZBUgWTL1Udj6B9ueqFCFuB8LFGNNNoHYjp3hAeGEQdtgI9TQ9r+jRDKpO8zcDoRMFK7wv4DJ31Nl/aS++a8nFEwJp7D5XkiSPbJ9JE1MwvuufldAHqr8iRbt3LmKeB4qC3TFbIhNWY4gs2VZ5LTepIn18sQfQ4f5s9o1lpem4yQw2XeEA7Fd1sPVypVeOj4z8Y080duGES896LiGpsAZdQ3bm/RiuIMLSabArgWCP/0LgrOQU8SwrIdN3k4682nw41KVnhjY2IDSWQHfEUCTNkgNfdj8v7FiD/OHX5G6VX/NAOwiAQ7Qh9u6UOmyAVY3QTjgVYEF4+oUyX+zZWprhhJkvHRDTTTNqozxVBfbYqrKTxSa00MRwAFIwQJh3xXbvmlF&#34; | base64 --decode | keybase pgp decrypt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  EOT
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">keybase_secret_key_pgp_message = {
+</span></span><span class="line"><span class="cl">  &#34;Accounting&#34; = tostring(null)
+</span></span><span class="line"><span class="cl">  &#34;Administrator&#34; = &lt;&lt;-EOT
+</span></span><span class="line"><span class="cl">  -----BEGIN PGP MESSAGE-----
+</span></span><span class="line"><span class="cl">  Version: Keybase OpenPGP v2.0.76
+</span></span><span class="line"><span class="cl">  Comment: https://keybase.io/crypto
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  wcFMA4U4ylYlNYTfARAAivQzF+bh6N6OH/3a1S7XQCrIceoLn9EXsc8Gr0p09TVieSqwwv1RojaCULjYXYu5UnxRFwaavN+ULxrl2c4hRBIMgNEAo1Nxy16vfDEj4W7S9l+yA/TU3ewbs8WqKHIFrO8+AcjxUV4Ol5cmziDu70UR0H1/f0w7lqC/s36Zqa1Rz5Mb1n7ATLfs4jiPDQiFlr+E6gSe+I23sAQqdDS/WEbwAVz6o2B9mvs+OznNzeDoTwd7nE2ca+jYDZKjEjD6+qfDAnVzftwSrJIb2yJYlKIeSKJLC9loEQk2wdR5fkKrPg//9S4gYQJjzkwWyJAQsc6AuOPZXjqVe5yV9EpG2r0938G/acR3SEjt53ckXjh6Fi0/EgOjfeTVMO0EH6Se/vurdXBRyMggTieyN76Ts8nnn32GBldTZBUgWTL1Udj6B9ueqFCFuB8LFGNNNoHYjp3hAeGEQdtgI9TQ9r+jRDKpO8zcDoRMFK7wv4DJ31Nl/aS++a8nFEwJp7D5XkiSPbJ9JE1MwvuufldAHqr8iRbt3LmKeB4qC3TFbIhNWY4gs2VZ5LTepIn18sQfQ4f5s9o1lpem4yQw2XeEA7Fd1sPVypVeOj4z8Y080duGES896LiGpsAZdQ3bm/RiuIMLSabArgWCP/0LgrOQU8SwrIdN3k4682nw41KVnhjY2IDSWQHfEUCTNkgNfdj8v7FiD/OHX5G6VX/NAOwiAQ7Qh9u6UOmyAVY3QTjgVYEF4+oUyX+zZWprhhJkvHRDTTTNqozxVBfbYqrKTxSa00MRwAFIwQJh3xXbvmlF
+</span></span><span class="line"><span class="cl">  -----END PGP MESSAGE-----
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  EOT
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>這時嘗試在使用 terraform plan，會無法取得 state s3 bucket</p>
+<ul>
+<li>因為 access key 已經重建，現在 terraform 使用舊的 access key 連 s3 會 404 not found</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt plan
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Remote state S3 bucket chechia-root-ap-northeast-1-terraform-state does not exist or you don&#39;t have permissions to access it. Would you like Terragrunt to create it? (y/n) n
+</span></span><span class="line"><span class="cl">ERRO[0004] remote state S3 bucket chechia-root-ap-northeast-1-terraform-state does not exist or you don&#39;t have permissions to access it
+</span></span><span class="line"><span class="cl">ERRO[0004] Unable to determine underlying exit code, so Terragrunt will exit with error code 1
+</span></span></code></pre></div><p>取得 output 後，一樣做 gpg decrypt 取得</p>
+<ul>
+<li>password</li>
+<li>access key</li>
+</ul>
+<p>完成後使用 aws-vault 移除舊的 profile + credential，再從新匯入 access key</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault remove terraform-30day-root-iam-user
+</span></span><span class="line"><span class="cl">Delete credentials for profile &#34;terraform-30day-root-iam-user&#34;? (y|N) y
+</span></span><span class="line"><span class="cl">Deleted credentials.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">aws-vault add terraform-30day-root-iam-user
+</span></span><span class="line"><span class="cl">Enter Access Key ID:
+</span></span><span class="line"><span class="cl">Enter Secret Access Key:
+</span></span><span class="line"><span class="cl">Added credentials to profile &#34;terraform-30day-root-iam-user&#34; in vault
+</span></span></code></pre></div><p>完成後就可以正常使用 aws-vault plan 了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt plan
+</span></span></code></pre></div><p>上面的變更我們的 PR 如下</p>
+<ul>
+<li><a href="https://github.com/chechiachang/terragrunt-infrastructure-modules/pull/3" target="_blank" rel="noopener">terragrunt-infrastructure-modules PR</a></li>
+<li><a href="https://github.com/chechiachang/terragrunt-infrastructure-live-example/pull/3" target="_blank" rel="noopener">terragrunt-infrastructure-live-example PR</a></li>
+</ul>
+<h3 id="todo-與進度">TODO 與進度</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 透過 root account 設定一組 IAM User</li>
+<li><input checked="" disabled="" type="checkbox"> 透過 root account 設定多個 aws child accounts</li>
+<li><input checked="" disabled="" type="checkbox"> root 中設定 IAM User
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 將手動產生的 Administrator 的 IAM User import terraform 中</li>
+<li><input checked="" disabled="" type="checkbox"> 補上 root account IAM Policy</li>
+<li><input checked="" disabled="" type="checkbox"> 補上 root account IAM Group</li>
+<li><input checked="" disabled="" type="checkbox"> reset root account IAM user login profile &amp; pgp key</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> security 中設定 IAM User
+<ul>
+<li><input disabled="" type="checkbox"> security 設定 password policy</li>
+<li><input disabled="" type="checkbox"> security 設定 MFA policy</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> security 中設定 IAM Policy &amp; Group</li>
+<li><input disabled="" type="checkbox"> dev 中設定 IAM role</li>
+<li><input disabled="" type="checkbox"> 允許 security assume dev IAM role</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/en/tag/terraform/">terraform</a>
+  
+  <a class="badge badge-light" href="/en/tag/iac/">iac</a>
+  
+  <a class="badge badge-light" href="/en/tag/aws/">aws</a>
+  
+  <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/">鐵人賽2022</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator%2F&amp;text=Reset&#43;Iam&#43;User&#43;Administrator" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator%2F&amp;t=Reset&#43;Iam&#43;User&#43;Administrator" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Reset%20Iam%20User%20Administrator&amp;body=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator%2F&amp;title=Reset&#43;Iam&#43;User&#43;Administrator" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Reset&#43;Iam&#43;User&#43;Administrator%20https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fen%2Fpost%2F2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator%2F&amp;title=Reset&#43;Iam&#43;User&#43;Administrator" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="Che-Chia Chang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">Che-Chia Chang</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">My research interests include Site Reliability Engineering, DevOps, Container and Kubernetes.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/en/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: 2023年9月11日 --><html lang="zh-Hant" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="張哲嘉" />
+
+
+
+
+
+  
+
+<meta name="description" content="2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。" />
+
+
+
+  <link rel="alternate" hreflang="en" href="https://chechia.net/en/post/2019-09-25-kafka-operation-scripts/" />
+
+<link rel="alternate" hreflang="zh-Hant" href="https://chechia.net/zh-hant/post/2019-09-25-kafka-operation-scripts/" />
+<link rel="canonical" href="https://chechia.net/zh-hant/post/2019-09-25-kafka-operation-scripts/" />
+
+
+
+  <link rel="manifest" href="/zh-hant/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Che-Chia Chang" />
+<meta property="og:url" content="https://chechia.net/zh-hant/post/2019-09-25-kafka-operation-scripts/" />
+<meta property="og:title" content="Kafka Operation Scripts | Che-Chia Chang" />
+<meta property="og:description" content="2020 It邦幫忙鐵人賽 系列文章
+ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2019-09-25T22:50:32&#43;08:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2019-09-25T22:50:32&#43;08:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chechia.net/zh-hant/post/2019-09-25-kafka-operation-scripts/"
+  },
+  "headline": "Kafka Operation Scripts",
+  
+  "datePublished": "2019-09-25T22:50:32+08:00",
+  "dateModified": "2019-09-25T22:50:32+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "張哲嘉"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Che-Chia Chang",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "2020 It邦幫忙鐵人賽 系列文章\nELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服務的各項數據 監測 Google Kubernetes Engine 的各項數據 是否選擇 ELK 作為解決方案 使用 logstash pipeline 做數據前處理 Elasticsearch 日常維護：數據清理，效能調校，永久儲存 Debug ELK stack on GCP Kafka HA on Kubernetes(6) Deploy kafka-ha Kafka Introduction kafka 基本使用 kafka operation scripts 集群內部的 HA topology 集群內部的 HA 細節 Prometheus Metrics Exporter 很重要 效能調校 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Kafka Operation Scripts | Che-Chia Chang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="37788bcddae4226839899d43afcb10ad" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>搜尋</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="關閉"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="搜尋..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="搜尋...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/zh-hant/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="切換導航">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/zh-hant/">Che-Chia Chang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/zh-hant/#talks"><span>演講</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/zh-hant/#posts"><span>發文</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/zh-hant/#projects"><span>專案</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/c.c.leather/" target="_blank" rel="noopener"><span>皮件</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://www.instagram.com/dive.with.cat.coach/" target="_blank" rel="noopener"><span>水肺</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+              
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="https://mvp.microsoft.com/zh-TW/mvp/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener"><span>微軟MVP</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://github.com/chechiachang" data-toggle="tooltip" data-placement="bottom" title="查看我的Github" target="_blank" rel="noopener" aria-label="查看我的Github">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://www.facebook.com/engineer.from.scratch" data-toggle="tooltip" data-placement="bottom" title="追蹤我的Facebook粉絲專頁" target="_blank" rel="noopener" aria-label="追蹤我的Facebook粉絲專頁">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="搜尋"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="顯示選項">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>明亮</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>暗黑</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>自動</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link " data-toggle="dropdown"
+             aria-haspopup="true" aria-label="語言">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>中文 (繁體)</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://chechia.net/en/post/2019-09-25-kafka-operation-scripts/">
+              <span>English</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Kafka Operation Scripts</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    9月 25, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/kafka/">kafka</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><a href="https://ithelp.ithome.com.tw/2020ironman" target="_blank" rel="noopener">2020 It邦幫忙鐵人賽</a> 系列文章</p>
+<ul>
+<li>ELK Stack
+<ul>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-15-self-host-elk-stack-on-gcp/">Self-host ELK stack on GCP</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-15-secure-elk-stack/">Secure ELK Stask</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-18-monitoring-gce-with-elk/">監測 Google Compute Engine 上服務的各項數據</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-19-monitoring-gke-with-elk/">監測 Google Kubernetes Engine 的各項數據</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-18-elastic-or-not-elastic/">是否選擇 ELK 作為解決方案</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-21-logstash-on-gke/">使用 logstash pipeline 做數據前處理</a></li>
+<li>Elasticsearch 日常維護：數據清理，效能調校，永久儲存</li>
+<li>Debug ELK stack on GCP</li>
+</ul>
+</li>
+<li>Kafka HA on Kubernetes(6)
+<ul>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-22-kafka-deployment-on-kubernetes/">Deploy kafka-ha</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-23-kafka-introduction/">Kafka Introduction</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-24-kafka-basic-usage/">kafka 基本使用</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-25-kafka-operation-scripts/">kafka operation scripts</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-25-kafka-ha-topology/">集群內部的 HA topology</a></li>
+<li><a href="https://chechia.net/zh-hant/post/2019-09-26-kafka-ha-continued/">集群內部的 HA 細節</a></li>
+<li>Prometheus Metrics Exporter 很重要</li>
+<li>效能調校</li>
+</ul>
+</li>
+</ul>
+<p>由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。</p>
+<p>寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。</p>
+<p>對我的文章有興趣，歡迎到我的網站上 <a href="https://chechia.net" target="_blank" rel="noopener">https://chechia.net</a> 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg" alt="Exausted Cat Face" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<hr>
+<h1 id="摘要">摘要</h1>
+<ul>
+<li>從 Zookeeper 獲取資訊</li>
+<li>取得並處理 topic</li>
+<li>benchmark kafka</li>
+</ul>
+<h1 id="zookeeper">zookeeper</h1>
+<p>zookeeper 是 kafka 的分散式協調系統，在 kafka 上多個節點間需要協調的內容，例如：彼此節點的ID，位置與當前狀態，或是跨節點 topic 的設定與狀態。取名叫做 zookeeper 就是在協調混亂的分散式系統，,裡面各種不同種類的服務都要協調，象個動物園管理員。<a href="https://zookeeper.apache.org/doc/r3.3.3/zookeeperAdmin.html" target="_blank" rel="noopener">Zookeeper 的官方文件</a> 有更詳細的說明。</p>
+<p>Kafka 的節點資訊，與當前狀態，是放在 zookeeper 上，我們可以透過以下指令取得</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 首先先取得 zkCli 的 cli，這個只有連進任何一台 zookeeper 內部都有
+</span></span><span class="line"><span class="cl">kubectl exec -it kafka-0-zookeeper-0 --container kafka-broker bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 由於是在 Pod 內部，直接 localhost 詢問本地
+</span></span><span class="line"><span class="cl">/usr/bin/zkCli.sh -server localhost:2181
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Connecting to localhost:2181
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,089 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,096 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=kafka-0-zookeeper-0.kafka-0-zookeeper-headless.default.svc.cluster.local
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,096 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_131
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/usr/bin/../build/classes:/usr/bin/../build/lib/*.jar:/usr/bin/../share/zookeeper/zookeeper-3.4.10.jar:/usr/bin/../share/zookeeper/slf4j-log4j12-1.6.1.jar:/usr/bin/../share/zookeeper/slf4j-api-1.6.1.jar:/usr/bin/../share/zookeeper/netty-3.10.5.Final.jar:/usr/bin/../share/zookeeper/log4j-1.2.16.jar:/usr/bin/../share/zookeeper/jline-0.9.94.jar:/usr/bin/../src/java/lib/*.jar:/usr/bin/../etc/zookeeper:
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,100 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd64
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=4.14.127+
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,101 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=zookeeper
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,102 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/home/zookeeper
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,102 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,105 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=localhost:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@42110406
+</span></span><span class="line"><span class="cl">Welcome to ZooKeeper!
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,160 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1032] - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+</span></span><span class="line"><span class="cl">JLine support is enabled
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,374 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@876] - Socket connection established to localhost/127.0.0.1:2181, initiating session
+</span></span><span class="line"><span class="cl">2019-09-25 15:02:36,393 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1299] - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x16d67baf1310001, negotiated timeout = 30000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">WATCHER::
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">WatchedEvent state:SyncConnected type:None path:null
+</span></span><span class="line"><span class="cl">[zk: localhost:2181(CONNECTED) 0]
+</span></span></code></pre></div><p>取得 kafka broker 資料</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># List root Nodes
+</span></span><span class="line"><span class="cl">$ ls /
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[cluster, controller, controller_epoch, brokers, zookeeper, admin, isr_change_notification, consumers, log_dir_event_notification, latest_producer_id_block, config]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Brokers 的資料節點
+</span></span><span class="line"><span class="cl">$ ls /brokers
+</span></span><span class="line"><span class="cl">[ids, topics, seqid]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># List /brokers/ids 得到三個 kafka broker
+</span></span><span class="line"><span class="cl">$ ls /brokers/ids
+</span></span><span class="line"><span class="cl">[0, 1, 2]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 列出所有 topic 名稱
+</span></span><span class="line"><span class="cl">ls /brokers/topics
+</span></span><span class="line"><span class="cl">[ticker]
+</span></span></code></pre></div><p>ticker 是上篇範利用到的 topic</p>
+<p>簡單來說，zookeeper 存放這些狀態與 topic 的 metadata</p>
+<ul>
+<li>儲存核心的狀態與資料，特別是 broker 萬一掛掉，也還需要維持的資料</li>
+<li>協調工作，例如協助 broker 處理 quorum，紀錄 partition master 等</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 離開 zkCli
+</span></span><span class="line"><span class="cl">quit
+</span></span></code></pre></div><h1 id="kafka">Kafka</h1>
+<p>這邊一樣先連線進去一台 broker，取得 kafka binary</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl exec -it kafka-0-0 --container kafka-broker bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ls /usr/bin/ | grep kafka
+</span></span><span class="line"><span class="cl">kafka-acls
+</span></span><span class="line"><span class="cl">kafka-broker-api-versions
+</span></span><span class="line"><span class="cl">kafka-configs
+</span></span><span class="line"><span class="cl">kafka-console-consumer
+</span></span><span class="line"><span class="cl">kafka-console-producer
+</span></span><span class="line"><span class="cl">kafka-consumer-groups
+</span></span><span class="line"><span class="cl">kafka-consumer-perf-test
+</span></span><span class="line"><span class="cl">kafka-delegation-tokens
+</span></span><span class="line"><span class="cl">kafka-delete-records
+</span></span><span class="line"><span class="cl">kafka-dump-log
+</span></span><span class="line"><span class="cl">kafka-log-dirs
+</span></span><span class="line"><span class="cl">kafka-mirror-maker
+</span></span><span class="line"><span class="cl">kafka-preferred-replica-election
+</span></span><span class="line"><span class="cl">kafka-producer-perf-test
+</span></span><span class="line"><span class="cl">kafka-reassign-partitions
+</span></span><span class="line"><span class="cl">kafka-replica-verification
+</span></span><span class="line"><span class="cl">kafka-run-class
+</span></span><span class="line"><span class="cl">kafka-server-start
+</span></span><span class="line"><span class="cl">kafka-server-stop
+</span></span><span class="line"><span class="cl">kafka-streams-application-reset
+</span></span><span class="line"><span class="cl">kafka-topics
+</span></span><span class="line"><span class="cl">kafka-verifiable-consumer
+</span></span><span class="line"><span class="cl">kafka-verifiable-producer
+</span></span></code></pre></div><p>很多工具，我們這邊只會看其中幾個</p>
+<h3 id="topic-資訊">topic 資訊</h3>
+<p>Topic 的資訊，跟 zookeeper 要</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># List topics
+</span></span><span class="line"><span class="cl">/usr/bin/kafka-topics --list --zookeeper kafka-0-zookeeper
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ticker
+</span></span></code></pre></div><h3 id="操作-message">操作 message</h3>
+<p>從 topic 取得 message</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># This will create a new console-consumer and start consuming message to stdout
+</span></span><span class="line"><span class="cl">/usr/bin/kafka-console-consumer \
+</span></span><span class="line"><span class="cl">--bootstrap-server localhost:9092 \
+</span></span><span class="line"><span class="cl">--topic engine_topic_soundwave_USD \
+</span></span><span class="line"><span class="cl">--timeout 0 \
+</span></span><span class="line"><span class="cl">--from-beginning
+</span></span></code></pre></div><p>如果 ticker 那個 example pod 還在執行，這邊就會收到 ticker 的每秒 message</p>
+<p>如果沒有，也可以開啟另一個 broker 的連線</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl exec -it kafka-0-1 --container kafka-broker bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 使用 producer 的 console 連入，topic 把 message 塞進去
+</span></span><span class="line"><span class="cl">/usr/bin/kafka-console-producer \
+</span></span><span class="line"><span class="cl">--broker-list localhost:9092\
+</span></span><span class="line"><span class="cl"> --topic ticker
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tick [enter]
+</span></span><span class="line"><span class="cl">tick [enter]
+</span></span></code></pre></div><p>kafka-console-consumer 那個 terminal 就會收到 message</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tick
+</span></span><span class="line"><span class="cl">tick
+</span></span></code></pre></div><p>當然也可以使用 consumer group</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Use consumer to check ticker topics
+</span></span><span class="line"><span class="cl">/usr/bin/kafka-console-consumer \
+</span></span><span class="line"><span class="cl">--bootstrap-server localhost:9092 \
+</span></span><span class="line"><span class="cl">--topic ticker \
+</span></span><span class="line"><span class="cl">--group test
+</span></span></code></pre></div><p>有做過上面的操作產生 consumer group，就可以透過 consumer API，取得 consumer group 狀態</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Check consumer group
+</span></span><span class="line"><span class="cl">/usr/bin/kafka-consumer-groups \
+</span></span><span class="line"><span class="cl">--bootstrap-server localhost:9092 \
+</span></span><span class="line"><span class="cl">--group ticker \
+</span></span><span class="line"><span class="cl">--describe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Consumer group &#39;test&#39; has no active members.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+</span></span><span class="line"><span class="cl">ticker          0          23              23              0               -               -               -
+</span></span></code></pre></div><h1 id="topic-設定操作">Topic 設定操作</h1>
+<p><a href="https://kafka.apache.org/documentation/#topicconfigs" target="_blank" rel="noopener">Topic 設定文件</a> 在此</p>
+<p>這邊透過 kafka-configs 從 zookeeper 取得 topic 設定，這邊的 max.message.bytes，是這個 topic 每個 message 的最大上限。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/usr/bin/kafka-configs --zookeeper kafka-0-zookeeper:2181 --describe max.message.bytes --entity-type topics
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Configs for topic &#39;__consumer_offsets&#39; are segment.bytes=104857600,cleanup.policy=compact,compression.type=producer
+</span></span><span class="line"><span class="cl">Configs for topic &#39;ticker&#39; are
+</span></span></code></pre></div><p><code>__consumer__offsets</code> 是系統的 topic ，紀錄目前 consumer 讀取的位置。</p>
+<p>ticker 沒有設定，就是 producer 當初產生 topic 時沒有指定，使用 default 值</p>
+<p>由於我們公司的使用情境常常會超過，所以可以檢查 producer app 那端送出的 message 大小，在比較這邊的設定。當然現在 ticker 的範例，只有一個 0-60 的數值，並不會超過。這個可以在 helm install 的時候，使用 value.yaml 傳入時更改。</p>
+<p>不喜歡這個值，可以更改，這邊增加到 16MB</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">TOPIC=ticker
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/usr/bin/kafka-configs \
+</span></span><span class="line"><span class="cl">  --zookeeper kafka-3-zookeeper:2181 \
+</span></span><span class="line"><span class="cl">  --entity-type topics \
+</span></span><span class="line"><span class="cl">  --alter \
+</span></span><span class="line"><span class="cl">  --entity-name ${TOPIC} \
+</span></span><span class="line"><span class="cl">  --add-config max.message.bytes=16000000
+</span></span></code></pre></div><h1 id="benchmark">Benchmark</h1>
+<p>使用內建工具跑 benchmark</p>
+<p>Producer</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/usr/bin/kafka-producer-perf-test \
+</span></span><span class="line"><span class="cl">  --num-records 100 \
+</span></span><span class="line"><span class="cl">  --record-size 100 \
+</span></span><span class="line"><span class="cl">  --topic performance-test \
+</span></span><span class="line"><span class="cl">  --throughput 100 \
+</span></span><span class="line"><span class="cl">  --producer-props bootstrap.servers=kafka:9092 max.in.flight.requests.per.connection=5 batch.size=100 compression.type=none
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">100 records sent, 99.108028 records/sec (0.01 MB/sec), 26.09 ms avg latency, 334.00 ms max latency, 5 ms 50th, 70 ms 95th, 334 ms 99th, 334 ms 99.9th.
+</span></span></code></pre></div><p>Consumer</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/usr/bin/kafka-consumer-perf-test \
+</span></span><span class="line"><span class="cl">  --messages 100 \
+</span></span><span class="line"><span class="cl">  --broker-list=kafka:9092 \
+</span></span><span class="line"><span class="cl">  --topic performance-test \
+</span></span><span class="line"><span class="cl">  --group performance-test \
+</span></span><span class="line"><span class="cl">  --num-fetch-threads 1
+</span></span></code></pre></div>
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
+  
+  <a class="badge badge-light" href="/zh-hant/tag/kafka/">kafka</a>
+  
+  <a class="badge badge-light" href="/zh-hant/tag/kubernetes/">kubernetes</a>
+  
+  <a class="badge badge-light" href="/zh-hant/tag/ithome/">ithome</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2019-09-25-kafka-operation-scripts%2F&amp;text=Kafka&#43;Operation&#43;Scripts" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2019-09-25-kafka-operation-scripts%2F&amp;t=Kafka&#43;Operation&#43;Scripts" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=Kafka%20Operation%20Scripts&amp;body=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2019-09-25-kafka-operation-scripts%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2019-09-25-kafka-operation-scripts%2F&amp;title=Kafka&#43;Operation&#43;Scripts" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Kafka&#43;Operation&#43;Scripts%20https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2019-09-25-kafka-operation-scripts%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2019-09-25-kafka-operation-scripts%2F&amp;title=Kafka&#43;Operation&#43;Scripts" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <a href="https://chechia.net/"><img class="avatar mr-3 avatar-circle" src="https://s.gravatar.com/avatar/e56eaaf62e2112055827c197b938d620?s=200" alt="張哲嘉"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://chechia.net/">張哲嘉</a></h5>
+      <h6 class="card-subtitle">Site Reliability Engineer</h6>
+      <p class="card-text">我的研究領域包括網站可靠性工程、DevOps、Container和Kubernetes。</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/zh-hant/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/chechiachang" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.facebook.com/engineer.from.scratch" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/che-chia-chang-92194a4a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/zh-hant/js/wowchemy.min.29bb000facffd3af35e773e640a66a6f.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">引用</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> 複製
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> 下載
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

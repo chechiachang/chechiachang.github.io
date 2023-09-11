@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>crd | Che-Chia Chang</title>
+    <link>https://chechia.net/zh-hant/category/crd/</link>
+      <atom:link href="https://chechia.net/zh-hant/category/crd/index.xml" rel="self" type="application/rss+xml" />
+    <description>crd</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Sun, 13 Oct 2019 22:03:08 +0800</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>crd</title>
+      <link>https://chechia.net/zh-hant/category/crd/</link>
+    </image>
+    
+    <item>
+      <title>Kubernetes Custom Resource Deployment</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resource-deployment/</link>
+      <pubDate>Sun, 13 Oct 2019 22:03:08 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resource-deployment/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;CRD 內容&lt;/li&gt;
+&lt;li&gt;Deploy CRD&lt;/li&gt;
+&lt;li&gt;Use custom resource&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;recap&#34;&gt;Recap&lt;/h1&gt;
+&lt;p&gt;在上次的 cert-manager 內容中我們走過 cert-manager 的安裝步驟，其中有一個步驟是 apply cert-manager 的 manigests 檔案 &lt;code&gt;*.yaml&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/jetstack/cert-manager/tree/release-0.11/deploy/manifests&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ git clone https://github.com/jetstack/cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ git checkout release-0.11
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ ls deploy/manifest
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00-crds.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;01-namespace.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BUILD.bazel	
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;README.md	
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm-values.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我們快速看一下這個 00-crds.yaml，這個 yaml 非常長，直接&lt;a href=&#34;https://github.com/jetstack/cert-manager/blob/release-0.11/deploy/manifests/00-crds.yaml#L1786&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;跳到 certificates.certmanager.k8s.io&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;希望看 golang 源碼文件的話，可以搭配&lt;a href=&#34;https://godoc.org/k8s.io/apiextensions-apiserver/pkg/apis/apiextensions#CustomResourceDefinitionSpec&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;godoc.org/k8s.io/apiextensions&lt;/a&gt; 來閱讀，更能理解 definition。&lt;/p&gt;
+&lt;p&gt;在看之前先注意幾件事，CRD 內除了 schema 外，還定義了許多不同情境的使用資料。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CRD 內定義了 custom resource 的資料儲存 .spec.validation.openAPIV3Schema，使用 custom resource 會透過 validator 驗證&lt;/li&gt;
+&lt;li&gt;.openAPIV3Schema 內定義了 .spec，以及 rumtime 中紀錄 .status 的資料
+&lt;ul&gt;
+&lt;li&gt;controller 可以把狀態 sync 到 custom resource 的 .status 中紀錄&lt;/li&gt;
+&lt;li&gt;controller 可以比對 .spec 與 .status 來決定是否要 sync 以及如何 sync&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;CRD 內定義了與 server 以及 client 互動的方式，
+&lt;ul&gt;
+&lt;li&gt;names 中定義各種使用情境的 custom resource 名稱&lt;/li&gt;
+&lt;li&gt;additionalPrinterColumns 中添加 kubectl 中的顯示內容&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 這邊使用的是 v1beta1 的 API (deprecated at v1.16) ，新版開發建議使用 apiextension.k8s.io/v1 的 api
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: apiextensions.k8s.io/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: CustomResourceDefinition
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  creationTimestamp: null
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: certificates.cert-manager.io
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 使用 kubectl 會額外顯示的資訊內容，透過 jsonpath 去 parse 顯示
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  additionalPrinterColumns:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - JSONPath: .status.conditions[?(@.type==&amp;#34;Ready&amp;#34;)].status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: Ready
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - JSONPath: .spec.secretName
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: Secret
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - JSONPath: .spec.issuerRef.name
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: Issuer
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    priority: 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - JSONPath: .status.conditions[?(@.type==&amp;#34;Ready&amp;#34;)].message
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: Status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    priority: 1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - JSONPath: .metadata.creationTimestamp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    description: CreationTimestamp is a timestamp representing the server time when
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      this object was created. It is not guaranteed to be set in happens-before order
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      across separate operations. Clients may not set this value. It is represented
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      in RFC3339 form and is in UTC.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: Age
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    type: date
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  group: cert-manager.io
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 定義 CRD 在不同情境下使用的名稱
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  names:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kind: Certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    listKind: CertificateList
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    plural: certificates
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    shortNames:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - cert
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - certs
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    singular: certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  scope: Namespaced
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  subresources:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    status: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  validation:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // openAPIV3Schema 中是 custom resource 實際操作會使用的內容
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // properties 使用 . .description .type ，分別定義名稱，描述，檢查型別
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    openAPIV3Schema:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      description: Certificate is a type to represent a Certificate from ACME
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      properties:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        apiVersion:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          description: &amp;#39;APIVersion defines the versioned schema of this representation
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            of an object. Servers should convert recognized schemas to the latest
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        kind:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          description: &amp;#39;Kind is a string value representing the REST resource this
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            object represents. Servers may infer this from the endpoint the client
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        // custom resource runtime 中的 metadata
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          type: object
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        // custom resource 使用時的 spec，定義 custom resoure 的 desired status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        // custom controller 監測 custom resource 的 current status，這邊的資料完全視 controller 實作來產生，如果沒有實作 sync status，也可以沒有資料
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        status:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      type: object
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 這個是 CRD 物件的 version，可以定義多個不同 version 的 CRD，調用時需要註明版本
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  version: v1alpha2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  versions:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - name: v1alpha2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    served: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    storage: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 這個是 CRD 物件的 status，描述 CRD 部署到 API server 的狀態，例如 CRD 儲存適用 configmap 的儲存空間，這邊顯示在 API server 上的儲存狀態。不要跟 custom resource 的 status 弄混了
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;status:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  acceptedNames:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kind: &amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    plural: &amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  conditions: []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  storedVersions: []
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;helm-values.yaml 與 01-namespace.yaml 很單純，前者是使用 helm 部署的可設定參數，預設只有 kubernetes resources，後者則是為之後的 cert-manager 元件新增一個 kubernetes namespace。&lt;/p&gt;
+&lt;h1 id=&#34;小結-crd-內容-apiextensionsv1beta1&#34;&gt;小結 CRD 內容 (apiextensions/v1beta1)&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;CRD 顯示名稱，內容&lt;/li&gt;
+&lt;li&gt;CRD spec 驗證
+&lt;ul&gt;
+&lt;li&gt;custom resource&lt;/li&gt;
+&lt;li&gt;custom resource schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;CRD 自身部署狀態&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;部署&#34;&gt;部署&lt;/h1&gt;
+&lt;p&gt;部署相較定義本身就非常簡單，直接 kubectl apply 到 kubernetes 上&lt;/p&gt;
+&lt;h1 id=&#34;使用-custom-resource&#34;&gt;使用 custom resource&lt;/h1&gt;
+&lt;p&gt;有了 CRD，我們便可以使用 CRUD API，互動模式與其他 build-in kubernetes resources 相同，只是內容會照 CRD 上的定義調整&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get certificates.certmanager.k8s.io
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get certificates
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get certs --all-namespaces
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get cert -n cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAMESPACE          NAME                READY   SECRET              AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cert-manager       ingress-nginx-tls   True    ingress-nginx-tls   221d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這邊看到的內容可能會有些落差，因為我當初用的版本比較舊，但內容大同小異。&lt;/p&gt;
+&lt;p&gt;底下的 describe 內容已經跟上面的 CRD 版本差太多，對不起來了。但我也懶得再佈一組，還要重做 dnsName 與 authotization challenge&lt;/p&gt;
+&lt;p&gt;直接讓大家感受一下舊版的內容XD&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ kubectl describe cert ingress-nginx-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Name:         ingress-nginx-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Namespace:    cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;API Version:  certmanager.k8s.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Kind:         Certificate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Creation Timestamp:  2019-03-06T06:48:26Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Generation:          4
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Owner References:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    API Version:           extensions/v1beta1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Block Owner Deletion:  true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Controller:            true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Kind:                  Ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Name:                  ingress-nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Self Link:               /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/ingress-nginx-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Acme:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Config:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      Domains:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        chechiachang.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      Http 01:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        Ingress:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        Ingress Class:  nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Dns Names:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    chechiachang.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Issuer Ref:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Kind:       ClusterIssuer
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Name:       letsencrypt-prod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Secret Name:  ingress-nginx-tls
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 當前的 status，controller sync 上來
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// controller 會比對 .spec 與 .status，判斷是否需要做事，ex. renew
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Status:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Acme:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Order:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      URL:  https://acme-v02.api.letsencrypt.org/acme/order/*
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Conditions:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Last Transition Time:  2019-09-02T03:52:03Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Message:               Certificate renewed successfully
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Reason:                CertRenewed
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Status:                True
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Type:                  Ready
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Last Transition Time:  2019-09-02T03:52:01Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Message:               Order validated
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Reason:                OrderValidated
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Status:                False
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Type:                  ValidateFailed
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Events:                    &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;想要新增，可以回去看 &lt;a href=&#34;https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html#verifying-the-installation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;cert-manager tutorial&lt;/a&gt;，這個是新版的文件&lt;/p&gt;
+&lt;p&gt;當然，不爽這個 cert resource 也可以幹掉&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ kubectl delete cert ingress-nginx-tls -n cert-manager
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上&lt;/p&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;簡介 CRD 與 CRD 內容&lt;/li&gt;
+&lt;li&gt;操作 custom resource&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Custom Resources Basic</title>
+      <link>https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/</link>
+      <pubDate>Sun, 13 Oct 2019 17:28:12 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/2020ironman&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 It邦幫忙鐵人賽&lt;/a&gt; 系列文章&lt;/p&gt;
+&lt;p&gt;這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nginx Ingress (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/&#34;&gt;Deploy Nginx Ingress Controller&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-config/&#34;&gt;Configure Nginx Ingress&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cert-manager (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-10-cert-manager-deployment/&#34;&gt;Deploy cert-manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-11-cert-manager-how-it-work/&#34;&gt;How cert-manager work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-12-cert-manager-complete-workflow/&#34;&gt;Cert-manager complete workflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kubernetes CRD &amp;amp; Operator-sdk (3)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Introduction about custom resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/&#34;&gt;Deployment &amp;amp; Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。&lt;/p&gt;
+&lt;p&gt;寫文章真的是體力活，覺得我的文章還有參考價值，請左邊幫我點讚按個喜歡，右上角幫我按個追縱，底下歡迎留言討論。給我一點繼續走下去的動力。&lt;/p&gt;
+&lt;p&gt;對我的文章有興趣，歡迎到我的網站上 &lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt; 閱讀其他技術文章，有任何謬誤也請各方大德直接聯繫我，感激不盡。&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://d32l83enj9u8rg.cloudfront.net/wp-content/uploads/iStock-966846550-cat-overheating-simonkr-1-940x470.jpg&#34; alt=&#34;Exausted Cat Face&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;custom resources&lt;/li&gt;
+&lt;li&gt;custom controllers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;簡介-custom-resources&#34;&gt;簡介 custom resources&lt;/h1&gt;
+&lt;p&gt;Kubernetes 預先定義許多 resource ，這些 resource 是 &lt;a href=&#34;https://kubernetes.io/docs/reference/using-api/api-overview/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kubernetes API&lt;/a&gt; 預先設置的 &lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API objects&lt;/a&gt;，例如 kubernetes pods resource 包含許多 pods 物件。&lt;/p&gt;
+&lt;p&gt;Custom resoure 則是透過擴充 kubernetes API ，讓自定義的物件也可以在 kubernetes 上使用。上篇 cert-manager 就使用了許多 custom resource，這些 resource 在一般安裝的 kubernetes 上沒有安裝，需要安裝 custom resource difinition，向 kubernetes cluster 定義新的 custom resource。例如 certificates.certmanager.k8s.io 就是 cert-manager 自定義的資源，用來代表產生 x509 certificate 的內容。&lt;/p&gt;
+&lt;p&gt;越來越多的 kubernetes core 方法，如今也使用 custom resources 來定義，讓 kubernetes 核心元件更加模組化。&lt;/p&gt;
+&lt;p&gt;custom resource 可以在運行中的 kubernetes 集群中註冊 (registration) ，也可以動態註銷，custom resource 並不會影響集群本身的運作。只要向 kubernetes 註冊完 custom resource，就可以透過 API 與 kubectl 控制 custom resource，就像操作 Pod resource 一樣。&lt;/p&gt;
+&lt;h1 id=&#34;custom-controllers&#34;&gt;Custom controllers&lt;/h1&gt;
+&lt;p&gt;custom resource 一但註冊，就可以依據 resource 的 CRD (custom resource definition) 來操作，因次可以儲存客製化的資料內容。然而在很多情形，我們並不只要 custom resource 來讀寫，而是希望 custom resource 能執行定義的工作，如同 Pod resource 可以在 kubernetes 集群上控制 Pod，在 Pod resource 上描述的 desired state kubernetes 會透過定義在 Pod API 中的 sync 邏輯，來達到 current state 與 desired state 的平衡。&lt;/p&gt;
+&lt;p&gt;我們希望 custom resource 也能做到上述的功能，提供 declarative API，讓使用者不需編寫完整的程式邏輯，只要透過控制 custom resource，就可以透過 controller 內定義的邏輯，來實現 desired state。使用者只需要專注在控制 custom resource 上的 desired state，讓 controller 處理細節實作。&lt;/p&gt;
+&lt;p&gt;例如：我們在 cert-manager 中設定 certificates.certmanager.k8s.io 資源，來描述我們希望取得 x509 certificate 的 desired state，但我們在 certificates.certmanager 上面沒有寫『透過 Let&amp;rsquo;s Encrypt 取得 x509 certificate』的實現邏輯，仍然能透過 cert-manager 產生 x509 certiticate，因為 cert-manager 內部已經定義 certificates.certmanager.k8s.io 的 custom controller。&lt;/p&gt;
+&lt;p&gt;基本的 custom resource 操作&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;註冊 custom resource definition，讓 kubernetes API 看得懂 custom resource
+&lt;ul&gt;
+&lt;li&gt;不然 API 會回覆 error: the server doesn&amp;rsquo;t have a resource type&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;有 CRD 便可以 apply custom resource 到集群中&lt;/li&gt;
+&lt;li&gt;部署 custom controller，監測 custom resource 的 desired state 內容，並實現達到 desired state 的業務邏輯
+&lt;ul&gt;
+&lt;li&gt;沒有 custom controller，custom resource 就只是可以 apply 與 update 的資料儲存結構，沒有 cert-manager 中 controller 的邏輯，也還是生不出 x509 certificate。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl get chechiachang
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;error: the server doesn&amp;#39;t have a resource type &amp;#34;chechiachang&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;custom controller 也可以跟其他的 kubernetes resource 互動，例如 cert-manager 在產生 certificate 的時候，會把產生的 certificate 檔案放在 secret 中，cert-manager 會依據 order 中定義的 lifecycle ，持續檢查 certificate 的有效性，如果接近過期，則會觸發新的一輪 order。&lt;/p&gt;
+&lt;p&gt;我們也可以寫一個操作 Configmap 與 Deployment Resource 的 custom controller，來進行 deploymnet 的 Image 更新。&lt;/p&gt;
+&lt;h1 id=&#34;我需要-custom-resource-嗎&#34;&gt;我需要 custom resource 嗎&lt;/h1&gt;
+&lt;p&gt;kubernetes 在&lt;a href=&#34;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#should-i-add-a-custom-resource-to-my-kubernetes-cluster&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;should I add custom resource&lt;/a&gt; 有列表分析該不該使用 custom resource ，將你的 API 邏輯整合到 kubernetes API 上。幾個判斷參考:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API 是 &lt;a href=&#34;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#declarative-apis&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;declarative model&lt;/a&gt;，如果不是可能不適合跟 kubernetes API 整合，獨立成為一個自己運行的服務即可&lt;/li&gt;
+&lt;li&gt;需要使用 kubernetes&lt;/li&gt;
+&lt;li&gt;需要使用 kubectl 控制&lt;/li&gt;
+&lt;li&gt;API 需要使用 &lt;a href=&#34;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#common-features&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kubernetes 支援的功能&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;正哉開發全新功能，因為整合舊的服務到 kubernetes API 工程浩大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;也許-configmapsecret-就可以解決&#34;&gt;也許 configmap/secret 就可以解決&lt;/h1&gt;
+&lt;p&gt;如果只是需要將資料儲存在 kubernetes 上，有一個 build-int 的 kubernetes resource 很適合，就是 configmap。可以瘀考以下條件，判斷是否 configmap 搭配能監看 configmap 的 controller 就可以達成需求。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;已經有完整的 config file，例如 mysql.cnf, nginx.conf&amp;hellip;&lt;/li&gt;
+&lt;li&gt;主要用途是把檔案掛載到 Pod 中的 process 使用&lt;/li&gt;
+&lt;li&gt;使用時的格式，是整個檔案放在 Pod 中，或是使用環境變數塞到 Pod 裡面，而不是透過 kubernetes API 存取 (ex 使用 kubectl)&lt;/li&gt;
+&lt;li&gt;更新 configmpa 時更新 Pod，會比更新 custom resource 時更新 Pod 容易&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果使用 CRD 或 Aggregated kubernetes API，大多符合下列條件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 kubernetes libraries 與客戶端 (ex kubectl) 操作 custom resource&lt;/li&gt;
+&lt;li&gt;需要 top level 的 kubernetes 支援，例如可以 kubectl get cheachiachang&lt;/li&gt;
+&lt;li&gt;自動化 kubernetes 物件&lt;/li&gt;
+&lt;li&gt;需要用到 .spec, .status, .metadata，這些比較 desired state 與 currenty state 的功能&lt;/li&gt;
+&lt;li&gt;需要抽象類別來管理一群 controlled resource&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;custom-resource-definition&#34;&gt;Custom Resource Definition&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Custom Resoure Definition&lt;/a&gt; 讓使用者可以定義 custom resource，定義 custom resource 的格式包括名稱與 data schema，然後交給 kubernetes API 去處理 custom resource 的儲存。&lt;/p&gt;
+&lt;p&gt;也就是說，透過 CRD 我們不用寫 custom resource 的 API，例如 cert-manager 不用寫 certificates.certmanager.k8s.io 的 API，而是向 kubernetes API server 註冊 CRD，讓 kubernetes API server 看得懂 custom source 的定義，並且直接使用 kubernetes API server，進行 custom resource 的 CRUD。&lt;/p&gt;
+&lt;p&gt;我們可以透過 kubectl (API server) 操作 certificates.certmanager.k8s.io，這個請求也是送到 kubernetes API server。&lt;/p&gt;
+&lt;h1 id=&#34;api-server-aggregation&#34;&gt;API server aggregation&lt;/h1&gt;
+&lt;p&gt;能夠透過註冊 CRD ，就可以使用原來的 kubernetes API 來進行 CRUD ，是因為 kubernetes API 對於普通的 API 操作提供泛型 (generic) 介面，直接使用 CRUD 的邏輯。&lt;/p&gt;
+&lt;p&gt;由於是 kubernetes Aggregated API ，所有 kubernetes 的 clients 都一起兼容新註冊的 custom resource，不用在 API 要定義，在冊戶端也要定義。註冊完的 custom resource definition，可以直接透過 kubectl 存取。&lt;/p&gt;
+&lt;h1 id=&#34;小結&#34;&gt;小結&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;custom resource 簡介&lt;/li&gt;
+&lt;li&gt;custom resource 使用的情境與條件&lt;/li&gt;
+&lt;li&gt;custom resource definition 與 Aggregated API&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
