@@ -38,7 +38,7 @@
       <link>https://chechia.net/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/</link>
       <pubDate>Wed, 13 Sep 2023 23:42:26 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/</guid>
-      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;http://localhost:1313/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;day-03初探-dynamic-secret-與-aws-整合&#34;&gt;Day 03：初探 Dynamic Secret 與 AWS 整合&lt;/h1&gt;
 </description>
@@ -49,7 +49,7 @@
       <link>https://chechia.net/zh-hant/post/2023-09-14-vault-workshop-secret-engine/</link>
       <pubDate>Wed, 13 Sep 2023 22:42:26 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-14-vault-workshop-secret-engine/</guid>
-      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;http://localhost:1313/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;day-03細探-secret-engine-秘密引擎&#34;&gt;Day 03：細探 Secret Engine 秘密引擎&lt;/h1&gt;
 &lt;h3 id=&#34;什麼是秘密引擎&#34;&gt;什麼是秘密引擎？&lt;/h3&gt;
@@ -238,7 +238,7 @@
       <link>https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/</link>
       <pubDate>Wed, 13 Sep 2023 21:42:26 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/</guid>
-      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;http://localhost:1313/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;day-02-準備執行一個本地開發用途的-vault&#34;&gt;Day 02 準備：執行一個本地開發用途的 Vault&lt;/h1&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;準備工作&#34;&gt;準備工作&lt;/h3&gt;
@@ -468,7 +468,7 @@
       <link>https://chechia.net/zh-hant/post/2023-09-12-vault-workshop-introduction/</link>
       <pubDate>Tue, 12 Sep 2023 20:35:19 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-12-vault-workshop-introduction/</guid>
-      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;http://localhost:1313/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;day-01-前言從零開始的-hashicorp-vault-workshop&#34;&gt;Day 01 前言：從零開始的 Hashicorp Vault Workshop&lt;/h1&gt;
 &lt;p&gt;從零開始 workshop 系列已經做了四年，內容包含 k8s, terraform, aws 等。&lt;/p&gt;
 &lt;p&gt;深深覺得要學習一個工具，還是要動手做。&lt;/p&gt;
