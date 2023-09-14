@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://chechia.net/en/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/</loc>
-    <lastmod>2023-09-26T13:20:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -16,22 +16,8 @@
                 href="https://chechia.net/en/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/"
                 />
   </url><url>
-    <loc>https://chechia.net/en/event/</loc>
-    <lastmod>2023-09-26T13:20:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-Hant"
-                href="https://chechia.net/zh-hant/event/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://chechia.net/en/event/"
-                />
-  </url><url>
     <loc>https://chechia.net/en/tag/aws/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -45,7 +31,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/categories/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -59,7 +45,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2023-05-10-hashicorp-comminity-presentation-vault-introduction/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -73,7 +59,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/iac/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -86,22 +72,8 @@
                 href="https://chechia.net/en/tag/iac/"
                 />
   </url><url>
-    <loc>https://chechia.net/en/post/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-Hant"
-                href="https://chechia.net/zh-hant/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://chechia.net/en/post/"
-                />
-  </url><url>
     <loc>https://chechia.net/en/tags/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -115,7 +87,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/vault/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -129,7 +101,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/vault/</loc>
-    <lastmod>2023-05-10T12:19:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -143,7 +115,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -157,7 +129,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/terraform/</loc>
-    <lastmod>2022-09-25T20:39:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -171,7 +143,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/terraform/</loc>
-    <lastmod>2022-09-25T20:39:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -185,7 +157,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-25-14th-ithome-ironman-iac-aws-workshop-11-aws-github-action-ci-cd/</loc>
-    <lastmod>2022-09-25T20:39:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -199,7 +171,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/</loc>
-    <lastmod>2022-09-25T20:39:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -213,7 +185,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/</loc>
-    <lastmod>2022-09-21T22:55:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -227,7 +199,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-09-terraform-module-and-password-security/</loc>
-    <lastmod>2022-09-21T00:01:14+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -241,7 +213,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-19-14th-ithome-ironman-iac-aws-workshop-08-reset-iam-user-administrator/</loc>
-    <lastmod>2022-09-20T23:56:47+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -255,7 +227,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-18-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/</loc>
-    <lastmod>2022-09-20T18:30:06+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -269,7 +241,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-17-14th-ithome-ironman-iac-aws-workshop-06-provision-iam-group-policy/</loc>
-    <lastmod>2022-09-20T10:39:37+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -283,7 +255,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-16-14th-ithome-ironman-iac-aws-workshop-05-provision-iam-user/</loc>
-    <lastmod>2022-09-19T11:59:27+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -297,7 +269,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-15-14th-ithome-ironman-iac-aws-workshop-04-aws-multi-account-structure/</loc>
-    <lastmod>2022-09-18T09:35:25+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -311,7 +283,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-14-14th-ithome-ironman-iac-aws-workshop-03-provision-aws-account/</loc>
-    <lastmod>2022-09-16T17:16:21+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -325,7 +297,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-13-14th-ithome-ironman-iac-aws-workshop-02-aws-account-structure/</loc>
-    <lastmod>2022-09-15T17:16:21+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -339,7 +311,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-09-12-14th-ithome-ironman-iac-aws-workshop-01-introduction/</loc>
-    <lastmod>2022-09-12T14:31:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -353,7 +325,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/devops/</loc>
-    <lastmod>2022-06-09T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -367,7 +339,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-06-09-ithome-devopsday-2022-proposal-introduce-policy-as-code-for-terraform-/</loc>
-    <lastmod>2022-06-09T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -381,7 +353,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/pac/</loc>
-    <lastmod>2022-06-09T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -395,7 +367,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/technology/</loc>
-    <lastmod>2022-06-09T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -409,7 +381,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2022-05-21-coscup-proposal-operating-time-series-database-in-k8s/</loc>
-    <lastmod>2022-05-21T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -423,7 +395,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/kubernetes/</loc>
-    <lastmod>2022-05-21T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -437,7 +409,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2021-11-16-ithome-cloud-summit-vault/</loc>
-    <lastmod>2021-11-16T01:04:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -451,7 +423,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2021-09-01-ithome-ironman-go/</loc>
-    <lastmod>2021-09-01T12:25:06+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -465,7 +437,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/kubernetes/</loc>
-    <lastmod>2021-09-01T12:25:06+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -479,7 +451,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2021/</loc>
-    <lastmod>2021-09-01T12:25:06+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -493,7 +465,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2021-05-13-devops-taiwan-33-hashicorp-vault-for-kubernetes-apps/</loc>
-    <lastmod>2021-05-13T16:29:26+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -507,7 +479,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-10-07-terraform-infrastructure-as-code-atlantis/</loc>
-    <lastmod>2020-10-07T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -521,7 +493,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2020/</loc>
-    <lastmod>2020-10-07T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -535,7 +507,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-10-06-terraform-infrastructure-as-code-terragrunt/</loc>
-    <lastmod>2020-10-06T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -549,7 +521,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/</loc>
-    <lastmod>2020-10-05T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -563,7 +535,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-10-04-terraform-infrastructure-as-code-backend/</loc>
-    <lastmod>2020-10-04T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -577,7 +549,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-10-03-terraform-infrastructure-as-code-automation/</loc>
-    <lastmod>2020-10-03T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -591,7 +563,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-10-02-terraform-infrastructure-as-code-repository-example/</loc>
-    <lastmod>2020-10-02T11:15:48+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -605,7 +577,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/gcp/</loc>
-    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -619,7 +591,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-26-gcp-preemptible-instance-kubernetes/</loc>
-    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -633,7 +605,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/preemptible/</loc>
-    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -647,7 +619,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/spot-instance/</loc>
-    <lastmod>2020-09-26T17:24:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -661,7 +633,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-26-gcp-preemptible-instance-introduction/</loc>
-    <lastmod>2020-09-26T11:03:40+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -675,7 +647,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-25-gcp-preemptible-instance-resource-calculation/</loc>
-    <lastmod>2020-09-25T12:22:02+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -689,7 +661,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-24-gcp-preemptible-instance-requirement/</loc>
-    <lastmod>2020-09-24T13:39:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -703,7 +675,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-23-gcp-preemptible-instance-speficication/</loc>
-    <lastmod>2020-09-23T16:23:14+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -717,7 +689,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/</loc>
-    <lastmod>2020-09-22T14:39:00+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -731,7 +703,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-21-gcp-preemptible-instance/</loc>
-    <lastmod>2020-09-21T09:22:17+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -745,7 +717,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/borg/</loc>
-    <lastmod>2020-09-12T13:50:52+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -759,7 +731,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-12-borg-omega-and-kubernetes/</loc>
-    <lastmod>2020-09-12T13:50:52+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -773,7 +745,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-08-26-borg-omega-and-kubernetes-tldr/</loc>
-    <lastmod>2020-08-26T13:50:52+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -787,7 +759,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/google/</loc>
-    <lastmod>2020-08-26T13:50:52+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -801,7 +773,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-08-19-season-review/</loc>
-    <lastmod>2020-08-19T10:01:31+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -815,7 +787,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/murmur/</loc>
-    <lastmod>2020-08-19T10:01:31+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -829,7 +801,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-06-15-terraform-infrastructure-as-code-transcript/</loc>
-    <lastmod>2020-07-15T10:58:56+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -843,7 +815,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-06-14-terraform-infrastructure-as-code/</loc>
-    <lastmod>2020-06-14T16:46:09+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -857,7 +829,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-12-31-say-goodbye-2019/</loc>
-    <lastmod>2019-12-31T18:38:51+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -871,7 +843,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/distributed-system/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -885,7 +857,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/distributed-system/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -899,7 +871,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/golang/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -913,7 +885,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/golang/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -927,7 +899,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/lecture/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -941,7 +913,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/mit/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -955,7 +927,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-12-16-mit-6.824-distributed-system/</loc>
-    <lastmod>2019-12-16T23:46:46+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -969,7 +941,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-11-08-blockchain-atomic-swap/</loc>
-    <lastmod>2019-11-08T08:03:30+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -983,7 +955,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/atomic-swap/</loc>
-    <lastmod>2019-11-08T08:03:30+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -997,7 +969,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/blockchain/</loc>
-    <lastmod>2019-11-08T08:03:30+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1011,7 +983,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/blockchain/</loc>
-    <lastmod>2019-11-08T08:03:30+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1025,7 +997,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/bep3/</loc>
-    <lastmod>2019-10-22T10:35:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1039,7 +1011,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/binance/</loc>
-    <lastmod>2019-10-22T10:35:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1053,7 +1025,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-22-blockchain-bep3-atomic-swap/</loc>
-    <lastmod>2019-10-22T10:35:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1067,7 +1039,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/erc-20/</loc>
-    <lastmod>2019-10-22T10:35:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1081,7 +1053,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/ethereum/</loc>
-    <lastmod>2019-10-22T10:35:20+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1095,7 +1067,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/slides/2019-10-18-kafka-on-k8s/</loc>
-    <lastmod>2019-10-18T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1109,7 +1081,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/kafka/</loc>
-    <lastmod>2019-10-18T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1123,7 +1095,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/slides/</loc>
-    <lastmod>2019-10-18T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1137,7 +1109,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-15-kubernetes-custom-resource-with-operator-sdk/</loc>
-    <lastmod>2019-10-15T17:28:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1151,7 +1123,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/crd/</loc>
-    <lastmod>2019-10-13T22:03:08+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1165,7 +1137,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/crd/</loc>
-    <lastmod>2019-10-13T22:03:08+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1179,7 +1151,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-13-kubernetes-custom-resource-deployment/</loc>
-    <lastmod>2019-10-13T22:03:08+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1193,7 +1165,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/</loc>
-    <lastmod>2019-10-13T22:03:08+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1207,7 +1179,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-13-kubernetes-custom-resources-basic/</loc>
-    <lastmod>2019-10-13T17:28:12+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1221,7 +1193,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-12-cert-manager-complete-workflow/</loc>
-    <lastmod>2019-10-12T17:41:25+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1235,7 +1207,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/cert-manager/</loc>
-    <lastmod>2019-10-12T17:41:25+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1249,7 +1221,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/cert-manager/</loc>
-    <lastmod>2019-10-12T17:41:25+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1263,7 +1235,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-11-cert-manager-how-it-work/</loc>
-    <lastmod>2019-10-11T11:24:34+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1277,7 +1249,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-10-cert-manager-deployment/</loc>
-    <lastmod>2019-10-10T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1291,7 +1263,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/ingress/</loc>
-    <lastmod>2019-10-08T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1305,7 +1277,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-08-kubernetes-nginx-ingress-controller/</loc>
-    <lastmod>2019-10-08T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1319,7 +1291,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-08-kubernetes-nginx-ingress-config/</loc>
-    <lastmod>2019-10-08T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1333,7 +1305,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/nginx/</loc>
-    <lastmod>2019-10-08T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1347,7 +1319,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/nginx/</loc>
-    <lastmod>2019-10-08T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1361,7 +1333,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/ithome/</loc>
-    <lastmod>2019-10-07T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1375,7 +1347,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/prometheus/</loc>
-    <lastmod>2019-10-07T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1389,7 +1361,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/prometheus/</loc>
-    <lastmod>2019-10-07T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1403,7 +1375,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-07-prometheus-kube-state-metrics-exporter/</loc>
-    <lastmod>2019-10-07T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1417,7 +1389,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-06-prometheus-exporter-library-redis-exporter/</loc>
-    <lastmod>2019-10-06T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1431,7 +1403,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-04-prometheus-deployment-on-kubernetes/</loc>
-    <lastmod>2019-10-04T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1445,7 +1417,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-04-prometheus-deploy-grafana/</loc>
-    <lastmod>2019-10-04T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1459,7 +1431,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-04-prometheus-scrape/</loc>
-    <lastmod>2019-10-04T08:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1473,7 +1445,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/redis/</loc>
-    <lastmod>2019-10-03T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1487,7 +1459,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/redis/</loc>
-    <lastmod>2019-10-03T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1501,7 +1473,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-03-redis-ha-failure-recovery/</loc>
-    <lastmod>2019-10-03T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1515,7 +1487,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/haproxy/</loc>
-    <lastmod>2019-10-02T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1529,7 +1501,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-10-02-redis-ha-on-haproxy/</loc>
-    <lastmod>2019-10-02T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1543,7 +1515,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-30-redis-ha-topology/</loc>
-    <lastmod>2019-09-30T16:12:10+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1557,7 +1529,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-29-redis-ha-sentinel/</loc>
-    <lastmod>2019-09-29T17:14:38+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1571,7 +1543,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-28-redis-ha-deployment/</loc>
-    <lastmod>2019-09-28T15:14:23+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1585,7 +1557,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/kafka/</loc>
-    <lastmod>2019-09-26T22:50:32+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1599,7 +1571,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-26-kafka-ha-continued/</loc>
-    <lastmod>2019-09-26T22:50:32+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1613,7 +1585,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-25-kafka-ha-topology/</loc>
-    <lastmod>2019-09-25T22:50:32+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1627,7 +1599,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-25-kafka-operation-scripts/</loc>
-    <lastmod>2019-09-25T22:50:32+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1641,7 +1613,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-24-kafka-basic-usage/</loc>
-    <lastmod>2019-09-24T21:59:49+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1655,7 +1627,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-23-kafka-introduction/</loc>
-    <lastmod>2019-09-23T21:59:49+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1669,7 +1641,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-23-kafka-helm-configuration/</loc>
-    <lastmod>2019-09-23T21:55:29+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1683,7 +1655,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-22-kafka-deployment-on-kubernetes/</loc>
-    <lastmod>2019-09-22T09:58:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1697,7 +1669,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/elasticsearch/</loc>
-    <lastmod>2019-09-21T15:22:23+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1711,7 +1683,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/elasticsearch/</loc>
-    <lastmod>2019-09-21T15:22:23+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1725,7 +1697,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/logstash/</loc>
-    <lastmod>2019-09-21T15:22:23+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1739,7 +1711,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-21-logstash-on-gke/</loc>
-    <lastmod>2019-09-21T15:22:23+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1753,7 +1725,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/filebeat/</loc>
-    <lastmod>2019-09-19T17:06:29+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1767,7 +1739,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/fluentd/</loc>
-    <lastmod>2019-09-19T17:06:29+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1781,7 +1753,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/logstash/</loc>
-    <lastmod>2019-09-19T17:06:29+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1795,7 +1767,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-19-monitoring-gke-with-elk/</loc>
-    <lastmod>2019-09-19T17:06:29+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1809,7 +1781,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-18-monitoring-gce-with-elk/</loc>
-    <lastmod>2019-09-18T19:10:50+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1823,7 +1795,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-18-elastic-or-not-elastic/</loc>
-    <lastmod>2019-09-18T18:51:40+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1837,7 +1809,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/certificate/</loc>
-    <lastmod>2019-09-17T10:15:36+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1851,7 +1823,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/certificate/</loc>
-    <lastmod>2019-09-17T10:15:36+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1865,7 +1837,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/tls/</loc>
-    <lastmod>2019-09-17T10:15:36+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1879,7 +1851,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-17-x.509-certificate/</loc>
-    <lastmod>2019-09-17T10:15:36+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1893,7 +1865,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-15-secure-elk-stack/</loc>
-    <lastmod>2019-09-15T23:00:33+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1907,7 +1879,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-15-self-host-elk-stack-on-gcp/</loc>
-    <lastmod>2019-09-15T11:43:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1921,7 +1893,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-09-09-ithome-ironman-challenge/</loc>
-    <lastmod>2019-09-09T16:56:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1935,7 +1907,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2020-09-09-ithome-ironman-challenge/</loc>
-    <lastmod>2019-09-09T16:56:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1949,7 +1921,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/elk/</loc>
-    <lastmod>2019-09-09T16:56:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1963,7 +1935,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/%E9%90%B5%E4%BA%BA2019/</loc>
-    <lastmod>2019-09-09T16:56:03+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1977,7 +1949,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/ibm-q-experience/</loc>
-    <lastmod>2019-06-02T10:21:37+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -1991,7 +1963,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-06-02-journey-to-quantum-computing/</loc>
-    <lastmod>2019-06-02T10:21:37+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2005,7 +1977,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/quantum-computing/</loc>
-    <lastmod>2019-06-02T10:21:37+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2019,7 +1991,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/quantum-computing/</loc>
-    <lastmod>2019-06-02T10:21:37+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2033,7 +2005,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/tutorial/</loc>
-    <lastmod>2019-06-02T10:21:37+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2047,7 +2019,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/istio/</loc>
-    <lastmod>2019-05-06T18:12:15+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2061,7 +2033,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/istio/</loc>
-    <lastmod>2019-05-06T18:12:15+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2075,7 +2047,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-05-06-service-mesh-for-microservice-on-kubernetes/</loc>
-    <lastmod>2019-05-06T18:12:15+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2089,7 +2061,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/cd/</loc>
-    <lastmod>2019-04-19T12:15:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2103,7 +2075,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/ci/</loc>
-    <lastmod>2019-04-19T12:15:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2117,7 +2089,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/devops/</loc>
-    <lastmod>2019-04-19T12:15:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2131,7 +2103,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/jenkins/</loc>
-    <lastmod>2019-04-19T12:15:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2145,7 +2117,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/category/jenkins/</loc>
-    <lastmod>2019-04-19T12:15:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2159,7 +2131,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2019-04-19-jenkins-x-on-kubernetes/</loc>
-    <lastmod>2019-04-19T12:15:41+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2173,7 +2145,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/container/</loc>
-    <lastmod>2018-10-06T12:07:00+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2187,7 +2159,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/cri/</loc>
-    <lastmod>2018-10-06T12:07:00+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2201,7 +2173,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/docker/</loc>
-    <lastmod>2018-10-06T12:07:00+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2215,7 +2187,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/post/2018-10-06-kubernetes-container-runtime-interface/</loc>
-    <lastmod>2018-10-06T12:07:00+08:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2229,7 +2201,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/tag/azure/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2243,7 +2215,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2257,7 +2229,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/project/terraform-30-days/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2271,6 +2243,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/admin/</loc>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2281,6 +2254,20 @@
                 rel="alternate"
                 hreflang="en-us"
                 href="https://chechia.net/en/admin/"
+                />
+  </url><url>
+    <loc>https://chechia.net/en/post/</loc>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-Hant"
+                href="https://chechia.net/zh-hant/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://chechia.net/en/post/"
                 />
   </url><url>
     <loc>https://chechia.net/en/publication_types/</loc>
@@ -2297,6 +2284,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/en/publication/</loc>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -2307,6 +2295,20 @@
                 rel="alternate"
                 hreflang="en-us"
                 href="https://chechia.net/en/publication/"
+                />
+  </url><url>
+    <loc>https://chechia.net/en/event/</loc>
+    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-Hant"
+                href="https://chechia.net/zh-hant/event/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://chechia.net/en/event/"
                 />
   </url>
 </urlset>

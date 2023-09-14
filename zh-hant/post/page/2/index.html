@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月11日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月14日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -323,8 +323,6 @@
 <meta property="og:title" content="Posts | Che-Chia Chang" />
 <meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
-  
-    <meta property="og:updated_time" content="2023-05-10T12:19:02&#43;08:00" />
   
 
 
@@ -827,6 +825,204 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2022-09-15-14th-ithome-ironman-iac-aws-workshop-04-aws-multi-account-structure/" >AWS Multi-Accounts Structure</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2022-09-15-14th-ithome-ironman-iac-aws-workshop-04-aws-multi-account-structure/"  class="summary-link">
+      <div class="article-style">
+        昨天設定了多個 aws organization accounts，但我們還沒有說明為什麼要這樣做
+今天會先講 Gruntwork 提出的 Production-Grade Design: multi-account security strategy
+拆分多個 account 的用意 多 account 下如何統一管理 IAM User access control 與安全性控管 iThome 鐵人賽好讀版
+賽後文章會整理放到個人的部落格上 http://chechia.net/
+追蹤粉專可以收到文章的主動推播
+Production-grade Design IAM Gruntwork 提出的 Production-Grade Design: multi-account security strategy，我們這邊一一講解
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/terraform/">terraform</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2022-09-14-14th-ithome-ironman-iac-aws-workshop-03-provision-aws-account/" >Provision Child AWS Accounts</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2022-09-14-14th-ithome-ironman-iac-aws-workshop-03-provision-aws-account/"  class="summary-link">
+      <div class="article-style">
+        今天要使用 terraform 設定 AWS account structure
+iThome 鐵人賽好讀版
+賽後文章會整理放到個人的部落格上 http://chechia.net/
+追蹤粉專可以收到文章的主動推播
+&ndash;
+Provision AWS Account
+今天要把 aws account 設定完成，並且開始使用 live-repository 來搭建 aws 元件
+我們自己的 module repository 開一個權限的 repository fork 我自幹的 modules repository terragrunt-infrastructure-modules https://github.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/terraform/">terraform</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/post/2022-09-13-14th-ithome-ironman-iac-aws-workshop-02-aws-account-structure/" >AWS Account Struture</a>
     </div>
 
@@ -862,8 +1058,10 @@ AWS Account structure AWS account structure 是 AWS IAM 提供的 feature 之一
     
     
       
+          最近更新於
+      
     
-    9月 15, 2022
+    9月 11, 2023
   </span>
   
 
@@ -959,8 +1157,10 @@ AWS 為例，實現 production framework 的最佳實踐的 30 天 workshop
     
     
       
+          最近更新於
+      
     
-    9月 12, 2022
+    9月 11, 2023
   </span>
   
 
@@ -1052,8 +1252,10 @@ Description Terraform 是一個很棒的 Infrastructure as Code 的工具，能�
     
     
       
+          最近更新於
+      
     
-    6月 9, 2022
+    9月 11, 2023
   </span>
   
 
@@ -1145,8 +1347,10 @@ Description Influxdb 為市占最高的 time series DBMS 之一，使用上與 R
     
     
       
+          最近更新於
+      
     
-    5月 21, 2022
+    9月 11, 2023
   </span>
   
 
@@ -1239,8 +1443,10 @@ Description Influxdb 為市占最高的 time series DBMS 之一，使用上與 R
     
     
       
+          最近更新於
+      
     
-    11月 16, 2021
+    9月 11, 2023
   </span>
   
 
@@ -1333,8 +1539,10 @@ Day 01 - 引言：Terraform 是個好東西。
     
     
       
+          最近更新於
+      
     
-    9月 1, 2021
+    9月 11, 2023
   </span>
   
 
@@ -1426,8 +1634,10 @@ https://github.com/chechiachang/terraform-azure https://github.com/chechiachang/
     
     
       
+          最近更新於
+      
     
-    5月 13, 2021
+    9月 11, 2023
   </span>
   
 
@@ -1514,192 +1724,10 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
     
     
       
-    
-    10月 7, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/terraform/">terraform</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2020-10-06-terraform-infrastructure-as-code-terragrunt/" >Terraform Infrastructure as Code: Terragrunt</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2020-10-06-terraform-infrastructure-as-code-terragrunt/"  class="summary-link">
-      <div class="article-style">
-        This article is part of 從零開始的 Infrastructu as Code: Terraform
-Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification.
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
+          最近更新於
       
     
-    10月 6, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/terraform/">terraform</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/" >Terraform Infrastructure as Code: Recommended Practices</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/"  class="summary-link">
-      <div class="article-style">
-        This article is part of 從零開始的 Infrastructu as Code: Terraform
-Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification.
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    10月 5, 2020
+    9月 11, 2023
   </span>
   
 
