@@ -239,6 +239,53 @@
 
 
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYR8JCDGM9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-QYR8JCDGM9', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+
+
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSBJFRS');
+</script>
 
 
 
@@ -276,7 +323,7 @@
 
   
 
-<meta name="description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." />
+<meta name="description" content="A SRE" />
 
 
 
@@ -315,13 +362,13 @@
 
 <meta property="twitter:card" content="summary" />
 
-  <meta property="twitter:site" content="@wowchemy" />
-  <meta property="twitter:creator" content="@wowchemy" />
+  <meta property="twitter:site" content="@chechiachang" />
+  <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/category/vault/" />
 <meta property="og:title" content="vault | Che-Chia Chang" />
-<meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+<meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
     <meta property="og:updated_time" content="2023-10-25T13:20:00&#43;00:00" />
@@ -942,14 +989,17 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/" >Vault Workshop Get Started</a>
+      <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/" >Vault Workshop 03: Secret Engine</a>
     </div>
 
     
-    <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/"  class="summary-link">
+    <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/"  class="summary-link">
       <div class="article-style">
-        Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-會需要安裝以下
+        Day 03：細探 Secret Engine 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+chatGPT 本段內容使用 chatGPT-3.5 翻譯 https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-secrets-engines 內容，並由筆者人工校驗
+base context
+我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與您對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。不要使用敬語，請用你取代您。 result correction
+部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary 修正下列翻譯：秘密改為私鑰，數據改為資料，數據庫改為資料庫，數據改為資料，訪問改為存取，源代碼改為原始碼。 
       </div>
     </a>
     
@@ -983,6 +1033,103 @@
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/" >Vault Workshop 02: Get Started</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/"  class="summary-link">
+      <div class="article-style">
+        Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+準備工作 在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：
+步驟1：下載 Vault Binary
+首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。
+https://developer.hashicorp.com/vault/downloads
+MacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault
+下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    9月 13, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 閱讀時間（分鐘）
   </span>
   
 
@@ -1068,8 +1215,10 @@
     
     
       
+          最近更新於
+      
     
-    9月 12, 2023
+    9月 14, 2023
   </span>
   
 

@@ -239,6 +239,53 @@
 
 
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYR8JCDGM9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-QYR8JCDGM9', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+
+
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSBJFRS');
+</script>
 
 
 
@@ -276,7 +323,7 @@
 
   
 
-<meta name="description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." />
+<meta name="description" content="A SRE" />
 
 
 
@@ -315,13 +362,13 @@
 
 <meta property="twitter:card" content="summary" />
 
-  <meta property="twitter:site" content="@wowchemy" />
-  <meta property="twitter:creator" content="@wowchemy" />
+  <meta property="twitter:site" content="@chechiachang" />
+  <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/tag/iac/" />
 <meta property="og:title" content="iac | Che-Chia Chang" />
-<meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+<meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
     <meta property="og:updated_time" content="2023-10-25T13:20:00&#43;00:00" />
@@ -807,6 +854,101 @@
   
 
   
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2022-09-18-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/" >Reset Iam User</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2022-09-18-14th-ithome-ironman-iac-aws-workshop-07-reset-iam-user/"  class="summary-link">
+      <div class="article-style">
+        昨天我們建立 IAM Group 與 policy，並說明 policy 管理原則。
+然而昨天最後創建 user 時，我們關閉了 create_login_profile = false 的選項 這是為了避免當前的登入機制被覆蓋掉，影響 root account Administrator 的使用 更改 login 方式，在某些極端的情形下，有可能讓 Administrator 自己覆蓋自己的 login 設定後，讓自己無法登入 如果你是管理員，在更改 admin 帳號的權限與登入設定時，一定要多加注意
+如果不幸改壞，無法登入，就只能再去找出 root account root user 帳號來解救了 如果是 root account root user 把自己的 login 改壞，就會很痛苦，要請 aws support 來救你 本日進度
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/terraform/">terraform</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
   
     
 
@@ -1647,100 +1789,6 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     3 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/terraform/">terraform</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/" >Terraform Infrastructure as Code: Recommended Practices</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2020-10-05-terraform-infrastructure-as-code-recommended-practices/"  class="summary-link">
-      <div class="article-style">
-        This article is part of 從零開始的 Infrastructu as Code: Terraform
-Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker transcript Presentation Check my website chechia.net for other blog. Follow my page to get notification.
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
   </span>
   
 

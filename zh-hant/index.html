@@ -255,6 +255,53 @@
 
 
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYR8JCDGM9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-QYR8JCDGM9', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+
+
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSBJFRS');
+</script>
 
 
 
@@ -292,7 +339,7 @@
 
   
 
-<meta name="description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." />
+<meta name="description" content="A SRE" />
 
 
 
@@ -331,13 +378,13 @@
 
 <meta property="twitter:card" content="summary" />
 
-  <meta property="twitter:site" content="@wowchemy" />
-  <meta property="twitter:creator" content="@wowchemy" />
+  <meta property="twitter:site" content="@chechiachang" />
+  <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/" />
 <meta property="og:title" content="Che-Chia Chang" />
-<meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+<meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
     <meta property="og:updated_time" content="2022-10-24T00:00:00&#43;00:00" />
@@ -1623,14 +1670,17 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/" >Vault Workshop Get Started</a>
+      <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/" >Vault Workshop 03: Secret Engine</a>
     </div>
 
     
-    <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/"  class="summary-link">
+    <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/"  class="summary-link">
       <div class="article-style">
-        Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-會需要安裝以下
+        Day 03：細探 Secret Engine 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+chatGPT 本段內容使用 chatGPT-3.5 翻譯 https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-secrets-engines 內容，並由筆者人工校驗
+base context
+我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與您對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。不要使用敬語，請用你取代您。 result correction
+部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary 修正下列翻譯：秘密改為私鑰，數據改為資料，數據庫改為資料庫，數據改為資料，訪問改為存取，源代碼改為原始碼。 
       </div>
     </a>
     
@@ -1664,6 +1714,103 @@
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/" >Vault Workshop 02: Get Started</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/"  class="summary-link">
+      <div class="article-style">
+        Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+準備工作 在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：
+步驟1：下載 Vault Binary
+首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。
+https://developer.hashicorp.com/vault/downloads
+MacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault
+下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    9月 13, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 閱讀時間（分鐘）
   </span>
   
 
@@ -1749,8 +1896,10 @@
     
     
       
+          最近更新於
+      
     
-    9月 12, 2023
+    9月 14, 2023
   </span>
   
 
@@ -1988,99 +2137,6 @@ Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool
 </div>
 
   
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/" >Aws Cross Account Delegation &amp; pre-commit hook</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/"  class="summary-link">
-      <div class="article-style">
-        TODO 與進度 root 中設定 IAM User aws cross account iam role delegation root account MFA policy (Optional) Cloudtrail (Optional) terraform aws config security 中設定 IAM User security 設定 password policy security 設定 MFA policy security 中設定 IAM Policy &amp; Group dev 中設定 IAM role 允許 security assume dev IAM role iThome 鐵人賽好讀版
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/terraform/">terraform</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
 
   
   
@@ -2238,102 +2294,102 @@ Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool
         
         
         
-        <a href="/zh-hant/tag/aws/" style="font-size:1.860700180930079rem">aws</a>
+        <a href="/zh-hant/tag/aws/" style="font-size:1.789525540422014rem">aws</a>
       
         
         
         
-        <a href="/zh-hant/tag/borg/" style="font-size:0.8rem">borg</a>
+        <a href="/zh-hant/tag/cert-manager/" style="font-size:0.8rem">cert-manager</a>
       
         
         
         
-        <a href="/zh-hant/tag/cert-manager/" style="font-size:0.9703043469508827rem">cert-manager</a>
+        <a href="/zh-hant/tag/devops/" style="font-size:1.5227719271552087rem">devops</a>
       
         
         
         
-        <a href="/zh-hant/tag/devops/" style="font-size:1.6206696852539746rem">devops</a>
+        <a href="/zh-hant/tag/elasticsearch/" style="font-size:0.9468051070238409rem">elasticsearch</a>
       
         
         
         
-        <a href="/zh-hant/tag/elasticsearch/" style="font-size:1.1024026611036946rem">elasticsearch</a>
+        <a href="/zh-hant/tag/gcp/" style="font-size:1.4028234209122443rem">gcp</a>
       
         
         
         
-        <a href="/zh-hant/tag/gcp/" style="font-size:1.5127375037306818rem">gcp</a>
+        <a href="/zh-hant/tag/iac/" style="font-size:2.05627915368882rem">iac</a>
       
         
         
         
-        <a href="/zh-hant/tag/iac/" style="font-size:2.078388853717974rem">iac</a>
+        <a href="/zh-hant/tag/ithome/" style="font-size:1.789525540422014rem">ithome</a>
       
         
         
         
-        <a href="/zh-hant/tag/ithome/" style="font-size:1.860700180930079rem">ithome</a>
+        <a href="/zh-hant/tag/kafka/" style="font-size:1.3335072265336112rem">kafka</a>
       
         
         
         
-        <a href="/zh-hant/tag/kafka/" style="font-size:1.4503653383030919rem">kafka</a>
+        <a href="/zh-hant/tag/kubernetes/" style="font-size:2.4874682809123794rem">kubernetes</a>
       
         
         
         
-        <a href="/zh-hant/tag/kubernetes/" style="font-size:2.488723696344961rem">kubernetes</a>
+        <a href="/zh-hant/tag/logstash/" style="font-size:0.9468051070238409rem">logstash</a>
       
         
         
         
-        <a href="/zh-hant/tag/logstash/" style="font-size:1.1024026611036946rem">logstash</a>
+        <a href="/zh-hant/tag/preemptible/" style="font-size:1.1681686302662118rem">preemptible</a>
       
         
         
         
-        <a href="/zh-hant/tag/preemptible/" style="font-size:1.3015902018375134rem">preemptible</a>
+        <a href="/zh-hant/tag/prometheus/" style="font-size:0.9468051070238409rem">prometheus</a>
       
         
         
         
-        <a href="/zh-hant/tag/prometheus/" style="font-size:1.1024026611036946rem">prometheus</a>
+        <a href="/zh-hant/tag/redis/" style="font-size:1.0667536132668056rem">redis</a>
       
         
         
         
-        <a href="/zh-hant/tag/redis/" style="font-size:1.2103348426269873rem">redis</a>
+        <a href="/zh-hant/tag/spot-instance/" style="font-size:1.1681686302662118rem">spot-instance</a>
       
         
         
         
-        <a href="/zh-hant/tag/spot-instance/" style="font-size:1.3015902018375134rem">spot-instance</a>
+        <a href="/zh-hant/tag/terraform/" style="font-size:2.1032916745231764rem">terraform</a>
       
         
         
         
-        <a href="/zh-hant/tag/terraform/" style="font-size:2.122259887091488rem">terraform</a>
+        <a href="/zh-hant/tag/vault/" style="font-size:1.1681686302662118rem">vault</a>
       
         
         
         
-        <a href="/zh-hant/tag/vault/" style="font-size:1.2103348426269873rem">vault</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/" style="font-size:2.1255953480674528rem">鐵人賽2019</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/" style="font-size:2.1631028420337737rem">鐵人賽2019</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2020/" style="font-size:1.6695770341790497rem">鐵人賽2020</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2020/" style="font-size:1.7527679994067862rem">鐵人賽2020</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/" style="font-size:1.4655275459664034rem">鐵人賽2022</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/" style="font-size:1.5691599905092675rem">鐵人賽2022</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" style="font-size:0.8rem">鐵人賽2023</a>
       
     </div>
   

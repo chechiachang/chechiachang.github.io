@@ -239,6 +239,53 @@
 
 
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYR8JCDGM9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-QYR8JCDGM9', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+
+
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSBJFRS');
+</script>
 
 
 
@@ -276,7 +323,7 @@
 
   
 
-<meta name="description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." />
+<meta name="description" content="A SRE" />
 
 
 
@@ -313,13 +360,13 @@
 
 <meta property="twitter:card" content="summary" />
 
-  <meta property="twitter:site" content="@wowchemy" />
-  <meta property="twitter:creator" content="@wowchemy" />
+  <meta property="twitter:site" content="@chechiachang" />
+  <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/404.html" />
 <meta property="og:title" content="404 Page not found | Che-Chia Chang" />
-<meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+<meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
 
@@ -772,7 +819,9 @@
     
       <li><a href="/zh-hant/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/">DevOpsDay: HashiCorp Vault 自建金鑰管理最佳入坑姿勢</a></li>
     
-      <li><a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/">Vault Workshop Get Started</a></li>
+      <li><a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/">Vault Workshop 03: Secret Engine</a></li>
+    
+      <li><a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/">Vault Workshop 02: Get Started</a></li>
     
       <li><a href="/zh-hant/post/2023-09-12-vault-workshop-introduction/">Vault Workshop 01: Introduction</a></li>
     
@@ -785,8 +834,6 @@
       <li><a href="/zh-hant/post/2022-09-25-14th-ithome-ironman-iac-aws-workshop-11-aws-github-action-ci-cd/">Terraform Github Action CI/CD</a></li>
     
       <li><a href="/zh-hant/post/2022-09-21-14th-ithome-ironman-iac-aws-workshop-10-aws-cross-account-delegation-and-pre-commit-hook/">Aws Cross Account Delegation &amp; pre-commit hook</a></li>
-    
-      <li><a href="/zh-hant/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-09-terraform-module-and-password-security/">Modules and password security</a></li>
     
   </ul>
   

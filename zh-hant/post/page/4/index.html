@@ -239,6 +239,53 @@
 
 
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYR8JCDGM9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-QYR8JCDGM9', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+
+
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSBJFRS');
+</script>
 
 
 
@@ -276,7 +323,7 @@
 
   
 
-<meta name="description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." />
+<meta name="description" content="A SRE" />
 
 
 
@@ -315,13 +362,13 @@
 
 <meta property="twitter:card" content="summary" />
 
-  <meta property="twitter:site" content="@wowchemy" />
-  <meta property="twitter:creator" content="@wowchemy" />
+  <meta property="twitter:site" content="@chechiachang" />
+  <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/post/" />
 <meta property="og:title" content="Posts | Che-Chia Chang" />
-<meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+<meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
 
@@ -803,6 +850,100 @@
   
 
   
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-09-23-gcp-preemptible-instance-speficication/" >Gcp Preemptible Instance Speficication</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-09-23-gcp-preemptible-instance-speficication/"  class="summary-link">
+      <div class="article-style">
+        先占虛擬機終止流程 (Preemption process) 子曰：未知生焉知死。但做工程師要反過來，考量最差情形，也就是要知道應用可能如何死去。不知道應用可能怎麼死，別說你知道應用活得好好的，大概想表達這麼意思。
+這對先占虛擬機來說特別重要，一般應用面對的機器故障或是機器終止，在使用先占西你幾的狀況下，變成每日的必然，因此，需要對應用的終止情境，與終止流程有更精細的掌控。如同前幾篇所說的，先占虛擬機會被公有雲收回，但收回的時候不會突然機器就 ben 不見，會有一個固定的流程。
+如果你的應用已經帶有可容錯的機制，能夠承受機器突然變不見，服務還好好的，仍然要花時間理解這邊的流程，藉此精算每天虛擬機的終止與替換：應用會有什麼反應，會產生多少衝擊，稍後可以量化服務的影響。例如
+應用重啟初始化時 cpu memory 突然拉高 承受節點錯誤後的復原流程，需要消耗額外算力。例如需要從上個 checkpoint 接續做，需要去讀取資料造成 IO，或是資料需要做 rebalance &hellip;等等 如果你的應用需要有 graceful shutdown 的機制，那你務必要細心理解這邊的步驟。並仔細安排安全下樁的步驟。又或是無法保證在先占虛擬機回收的作業時限內，完成優雅終止，需要考慮其他可能的實作解法。
+這邊有幾個面向要注意
+GCP 如何終止先占節點 GCP 移除節點對 GKE 、以及執行中應用的影響 GKE 集群如何應對的節點失效 GCP 自動調度補足新的先占節點 GKE 集群如何應對節點補足 三個重點
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
   
     
 
@@ -1674,100 +1815,6 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
 
 
     </div>
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-11-08-blockchain-atomic-swap/" >Ablockchain Atomic Swap</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-11-08-blockchain-atomic-swap/"  class="summary-link">
-      <div class="article-style">
-        https://en.bitcoin.it/wiki/Atomic_swap
-Algorithm 2 pay txs and 2 claim tx claim txs are singed at first, locked with time 2 pay txs are encrypted by x, affects only when x is reveal on the network Initialization A: random number x
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/blockchain/">blockchain</a></span>
-  
-
-</div>
-
-      
-    </div>
-
     
 
   </div>

@@ -239,6 +239,53 @@
 
 
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QYR8JCDGM9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-QYR8JCDGM9', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+
+
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSBJFRS');
+</script>
 
 
 
@@ -277,7 +324,12 @@
   
 
 <meta name="description" content="Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-會需要安裝以下" />
+準備工作 在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：
+步驟1：下載 Vault Binary
+首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。
+https://developer.hashicorp.com/vault/downloads
+MacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault
+下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問" />
 
 
 
@@ -314,14 +366,19 @@
 
 <meta property="twitter:card" content="summary" />
 
-  <meta property="twitter:site" content="@wowchemy" />
-  <meta property="twitter:creator" content="@wowchemy" />
+  <meta property="twitter:site" content="@chechiachang" />
+  <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/" />
-<meta property="og:title" content="Vault Workshop Get Started | Che-Chia Chang" />
+<meta property="og:title" content="Vault Workshop 02: Get Started | Che-Chia Chang" />
 <meta property="og:description" content="Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-會需要安裝以下" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
+準備工作 在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：
+步驟1：下載 Vault Binary
+首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。
+https://developer.hashicorp.com/vault/downloads
+MacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault
+下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
     <meta
@@ -358,7 +415,7 @@
     "@type": "WebPage",
     "@id": "https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/"
   },
-  "headline": "Vault Workshop Get Started",
+  "headline": "Vault Workshop 02: Get Started",
   
   "datePublished": "2023-09-13T21:42:26+08:00",
   "dateModified": "2023-09-13T21:42:26+08:00",
@@ -370,13 +427,13 @@
   
   "publisher": {
     "@type": "Organization",
-    "name": "Che-Chia Chang",
+    "name": "chechia-net",
     "logo": {
       "@type": "ImageObject",
       "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
-  "description": "Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground\n會需要安裝以下"
+  "description": "Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground\n準備工作 在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：\n步驟1：下載 Vault Binary\n首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。\nhttps://developer.hashicorp.com/vault/downloads\nMacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault\n下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問"
 }
 </script>
 
@@ -398,7 +455,7 @@
 
 
   
-  <title>Vault Workshop Get Started | Che-Chia Chang</title>
+  <title>Vault Workshop 02: Get Started | Che-Chia Chang</title>
 
   
   
@@ -418,7 +475,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="433c92a14e179f01a9f0bc4a80cc6d58" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="ad2a1383e84754656adf59306e7b8928" >
 
   
   
@@ -824,7 +881,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Vault Workshop Get Started</h1>
+  <h1>Vault Workshop 02: Get Started</h1>
 
   
 
@@ -852,7 +909,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 閱讀時間（分鐘）
+    4 閱讀時間（分鐘）
   </span>
   
 
@@ -886,7 +943,225 @@
     <div class="article-style">
       <h1 id="day-02-準備執行一個本地開發用途的-vault">Day 02 準備：執行一個本地開發用途的 Vault</h1>
 <p>整篇 Workshop 會使用的範例與原始碼，放在 <a href="http://chechia.net/zh-hant/#projects" target="_blank" rel="noopener">Github Repository: vault-playground</a></p>
-<p>會需要安裝以下</p>
+<h3 id="準備工作">準備工作</h3>
+<p>在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：</p>
+<p>步驟1：下載 Vault Binary</p>
+<p>首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。</p>
+<p><a href="https://developer.hashicorp.com/vault/downloads" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/downloads</a></p>
+<ul>
+<li><a href="https://releases.hashicorp.com/vault/1.14.3/vault_1.14.3_darwin_amd64.zip" target="_blank" rel="noopener">MacOS amd64</a></li>
+<li><a href="https://releases.hashicorp.com/vault/1.14.3/vault_1.14.3_darwin_arm64.zip" target="_blank" rel="noopener">MacOS arm64</a></li>
+<li><a href="https://releases.hashicorp.com/vault/1.14.3/vault_1.14.3_linux_amd64.zip" target="_blank" rel="noopener">Linux</a></li>
+</ul>
+<p>步驟2：安裝Vault</p>
+<p>下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問</p>
+<p>筆者使用的是 Mac M1，使用以下指令進行安裝</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">wget https://releases.hashicorp.com/vault/1.14.3/vault_1.14.3_darwin_arm64.zip
+</span></span><span class="line"><span class="cl">unzip vault_1.14.3_darwin_arm64.zip
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo mv vault /usr/local/bin/vault
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Vault v1.14.3 (56debfa71653e72433345f23cd26276bc90629ce), built 2023-09-11T21:23:55Z
+</span></span></code></pre></div><p>你不需要使用最新版本的 Vault 也可以完成這次 workshop</p>
+<h3 id="啟動-vault-server">啟動 Vault server</h3>
+<p>使用以下指令在本地啟動 Vault Server。請確保 Vault 伺服器已正確啟動，並且未出現錯誤消息。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault server -dev
+</span></span></code></pre></div><p>使用 -dev 選項可以啟動Vault的開發模式，該模式不需要身份驗證即可運行Vault。</p>
+<h3 id="確認vault運行">確認Vault運行</h3>
+<p>打開你的瀏覽器，瀏覽到 http://127.0.0.1:8200</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_4ab2b9254ee45e74c042f87706145df3.webp 400w,
+               /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_00fcb225ed09f103b35f33ade5547650.webp 760w,
+               /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_4ab2b9254ee45e74c042f87706145df3.webp"
+               width="760"
+               height="727"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>或者使用 curl 命令發送 GET 請求：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl http://127.0.0.1:8200/v1/sys/health | jq
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;initialized&#34;: true,
+</span></span><span class="line"><span class="cl">  &#34;sealed&#34;: false,
+</span></span><span class="line"><span class="cl">  &#34;standby&#34;: false,
+</span></span><span class="line"><span class="cl">  &#34;performance_standby&#34;: false,
+</span></span><span class="line"><span class="cl">  &#34;replication_performance_mode&#34;: &#34;disabled&#34;,
+</span></span><span class="line"><span class="cl">  &#34;replication_dr_mode&#34;: &#34;disabled&#34;,
+</span></span><span class="line"><span class="cl">  &#34;server_time_utc&#34;: 1694693898,
+</span></span><span class="line"><span class="cl">  &#34;version&#34;: &#34;1.14.3&#34;,
+</span></span><span class="line"><span class="cl">  &#34;cluster_name&#34;: &#34;vault-cluster-3273d150&#34;,
+</span></span><span class="line"><span class="cl">  &#34;cluster_id&#34;: &#34;a32d555e-3346-0757-1d57-21e2f646aaf3&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>如果Vault正常運行，你應該會收到一個包含Vault訊息的JSON response。</p>
+<p>也可使用 Vault Binary 來存取 Vault API</p>
+<p>export Vault Server 的 http endpoint (我們尚未啟動 tls listener，所以沒有 https endpoint)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">export VAULT_ADDR=&#39;http://127.0.0.1:8200&#39;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault status
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Key             Value
+</span></span><span class="line"><span class="cl">---             -----
+</span></span><span class="line"><span class="cl">Seal Type       shamir
+</span></span><span class="line"><span class="cl">Initialized     true
+</span></span><span class="line"><span class="cl">Sealed          false
+</span></span><span class="line"><span class="cl">Total Shares    1
+</span></span><span class="line"><span class="cl">Threshold       1
+</span></span><span class="line"><span class="cl">Version         1.14.3
+</span></span><span class="line"><span class="cl">Build Date      2023-09-11T21:23:55Z
+</span></span><span class="line"><span class="cl">Storage Type    inmem
+</span></span><span class="line"><span class="cl">Cluster Name    vault-cluster-3273d150
+</span></span><span class="line"><span class="cl">Cluster ID      a32d555e-3346-0757-1d57-21e2f646aaf3
+</span></span><span class="line"><span class="cl">HA Enabled      false
+</span></span></code></pre></div><p>可以看到本地的 Vault server</p>
+<ul>
+<li>已初始化</li>
+<li>已解封</li>
+<li>版本</li>
+<li>未啟用 HA</li>
+</ul>
+<p>也可以使用 Vault Binary 中的 operator 指令檢測</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault operator members
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Host Name                     API Address              Cluster Address           Active Node    Version    Upgrade Version    Redundancy Zone    Last Echo
+</span></span><span class="line"><span class="cl">---------                     -----------              ---------------           -----------    -------    ---------------    ---------------    ---------
+</span></span><span class="line"><span class="cl">CheChias-MacBook-Pro.local    http://127.0.0.1:8200    https://127.0.0.1:8201    true           1.14.3     n/a                n/a                n/a
+</span></span></code></pre></div><h3 id="初始化vault">初始化Vault</h3>
+<p>在開發模式下運行的Vault可能不需要初始化，但如果你使用的是 production 模式，請參考Vault的官方文檔，進行初始化和設置。</p>
+<p>Vault server 在 dev 模式下啟動後，會自動產生一隻單一個 unseal key，與一把 Root Token。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">WARNING! dev mode is enabled! In this mode, Vault runs entirely in-memory
+</span></span><span class="line"><span class="cl">and starts unsealed with a single unseal key. The root token is already
+</span></span><span class="line"><span class="cl">authenticated to the CLI, so you can immediately begin using Vault.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You may need to set the following environment variables:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    $ export VAULT_ADDR=&#39;http://127.0.0.1:8200&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The unseal key and root token are displayed below in case you want to
+</span></span><span class="line"><span class="cl">seal/unseal the Vault or re-authenticate.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Unseal Key: JbKrVzhH4VO14nPBRvWE1qxJz9CVhnOFJT0pYLsx9LU=
+</span></span><span class="line"><span class="cl">Root Token: hvs.0pmmzGSZ8S7w8vP2E4sm7SqE
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Development mode should NOT be used in production installations!
+</span></span></code></pre></div><p>你可以使用 vault operator 指令，嘗試 seal Vault server</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault operator seal
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Success! Vault is sealed.
+</span></span></code></pre></div><p>再次檢查 status</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault status
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Key                Value
+</span></span><span class="line"><span class="cl">---                -----
+</span></span><span class="line"><span class="cl">Seal Type          shamir
+</span></span><span class="line"><span class="cl">Initialized        true
+</span></span><span class="line"><span class="cl">Sealed             true
+</span></span><span class="line"><span class="cl">Total Shares       1
+</span></span><span class="line"><span class="cl">Threshold          1
+</span></span><span class="line"><span class="cl">Unseal Progress    0/1
+</span></span><span class="line"><span class="cl">Unseal Nonce       n/a
+</span></span><span class="line"><span class="cl">Version            1.14.3
+</span></span><span class="line"><span class="cl">Build Date         2023-09-11T21:23:55Z
+</span></span><span class="line"><span class="cl">Storage Type       inmem
+</span></span><span class="line"><span class="cl">HA Enabled         false
+</span></span></code></pre></div><p>顯示為密鑰密封（Sealed）狀態</p>
+<p>你可以使用 vault operator 解封 Vault</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault operator unseal JbKrVzhH4VO14nPBRvWE1qxJz9CVhnOFJT0pYLsx9LU=
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Key             Value
+</span></span><span class="line"><span class="cl">---             -----
+</span></span><span class="line"><span class="cl">Seal Type       shamir
+</span></span><span class="line"><span class="cl">Initialized     true
+</span></span><span class="line"><span class="cl">Sealed          false
+</span></span><span class="line"><span class="cl">Total Shares    1
+</span></span><span class="line"><span class="cl">Threshold       1
+</span></span><span class="line"><span class="cl">Version         1.14.3
+</span></span><span class="line"><span class="cl">Build Date      2023-09-11T21:23:55Z
+</span></span><span class="line"><span class="cl">Storage Type    inmem
+</span></span><span class="line"><span class="cl">Cluster Name    vault-cluster-3273d150
+</span></span><span class="line"><span class="cl">Cluster ID      a32d555e-3346-0757-1d57-21e2f646aaf3
+</span></span><span class="line"><span class="cl">HA Enabled      false
+</span></span></code></pre></div><p>顯示為解封狀態</p>
+<h3 id="密鑰安全">密鑰安全</h3>
+<p>本 workshop 中使用的 vault server / seal key / root token 都是測試用途的暫時性存在，筆者寫完文章後，這些 server 與密鑰早已經清理完畢，所以沒有資安風險。</p>
+<p>為了示範方便，workshop 會以明碼 plain text 形式表現</p>
+<p>如果你是在公司的 production 環境使用，務必要確保密鑰的安全</p>
+<ul>
+<li>不要在 local 電腦上存放 token 或 seal key</li>
+<li>不要在沒有密碼學與資安檢測的平台上儲存 token 或 seal key</li>
+<li>不要透過通訊軟體(ex. slack) 明碼傳送 token 或 seal key
+&hellip;</li>
+</ul>
+<p>你可能會問，本地不能存，遠端也不能存，也不能隨意傳送給同事，那應該如何協作與管理？</p>
+<p>在後面的 workshop 內容會與大家一一示範解說</p>
+<h3 id="dev-模式">Dev 模式</h3>
+<p>你可以關閉執行 vault server 的 terminal session 來關閉 vault server</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault server -dev
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ctrl + c
+</span></span></code></pre></div><p><a href="https://developer.hashicorp.com/vault/docs/concepts/dev-server" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/docs/concepts/dev-server</a></p>
+<p>&ldquo;Dev&rdquo; 伺服器模式</p>
+<p>dev 模式的伺服器不需要進一步的設定，且你本地的 vault CLI 已經被認證。這使得使用 Vault 或啟動用於開發的 Vault instance 變得容易。Vault 的每一個功能在 &ldquo;dev&rdquo; 模式中都是可用的。-dev flag 只是將很多設置簡化為不安全的默認值。</p>
+<p>警告：永遠、永遠、永遠不要在生產環境中運行 &ldquo;dev&rdquo; 模式伺服器。這是不安全的，且每次重新啟動都會丟失資料（因為它將資料存儲在記憶體中）。它僅供開發或實驗使用。</p>
+<h3 id="dev-模式特性">dev 模式特性</h3>
+<p>dev 伺服器的屬性（有些可以使用命令行 flag 或指定配置文件來覆寫）：</p>
+<p>初始化且未封印: 伺服器將自動初始化且未封印。你不需要使用 vault operator unseal。它立即可用。</p>
+<p>記憶體存儲: 所有資料（加密後）都存儲在記憶體中。Vault 伺服器不需要任何檔案權限。</p>
+<p>綁定到本地地址而不使用 TLS: 伺服器正在監聽 127.0.0.1:8200（默認的伺服器地址）而不使用 TLS。</p>
+<p>自動認證: 伺服器存儲了你的 root access token，所以 vault CLI 存取已經準備好。如果你透過 API 存取 Vault，你需要使用打印出的 token 進行認證。</p>
+<p>單一解封鑰匙: 伺服器使用單一的 unseal key 進行初始化。Vault 已經是解封的，但如果你想嘗試 seal/unseal，那麼只需要輸出的單一鑰匙。</p>
+<p>安裝 key value storage: 在 secret/ 處安裝了一個 v2 KV secret engine。請注意 v1 KV 有所不同。如果你想使用 v1，使用此旗標 -dev-kv-v1。</p>
+<h3 id="第一次存取-vault-資料">第一次存取 vault 資料</h3>
+<p>建立通用 Key-Value 存儲： 使用以下命令在 Vault 中創建通用的 Key-Value 存儲。在這個例子中，我們將使用 secrets 作為存儲的路徑，你可以根據你的需求自行命名存儲路徑：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault kv put secret/mysecrets username=admin password=secretpassword
+</span></span></code></pre></div><p>這個命令將在 Vault 中創建一個 Key-Value 存儲，其中包含一對 Key value pair，分別是 username 和 password。</p>
+<p>檢索存儲的值： 你可以使用以下命令檢索存儲中的值：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault kv get secret/mysecrets
+</span></span></code></pre></div><p>這個命令將返回存儲中的所有 Key Value pair。</p>
+<p>更新存儲的值： 如果你需要更新存儲中的值，可以使用以下命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault kv put secret/mysecrets password=newsecretpassword
+</span></span></code></pre></div><p>這個命令將更新存儲中的 password 鍵的值。</p>
+<p>刪除存儲的值： 若要刪除存儲中的值，可以使用以下命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault kv delete secret/mysecrets
+</span></span></code></pre></div><p>這個命令將刪除整個存儲路徑及其內容</p>
+<h3 id="關於-kv-v2">關於 kv-v2</h3>
+<p>dev 模式下，Vault server 自動在 secret/ 處安裝了一個 v2 KV secret engine</p>
+<p>Vault中的不同秘密引擎（Secret Engine）提供了不同的功能和特性。本次 workshop 會以最新，功能也最多元的 kv-v2 Secret Engine 為主。</p>
+<p>以下是三種常見的秘密引擎（generic、kv v1 和 kv v2）之間的主要區別：</p>
+<h3 id="generic-secrets-engine通用秘密引擎">Generic Secrets Engine（通用秘密引擎）</h3>
+<p>特性： 通用秘密引擎是你的最簡單的引擎之一，它允許你存儲和檢索通用的 Key Value Secret，這些 Secret 不需要特定的結構或格式。</p>
+<p>用法： 通用秘密引擎適用於簡單的秘密存儲需求，其中 Secret 可以是任何形式的數據。你可以使用通用秘密引擎來存儲API金鑰、密碼、配置信息等。</p>
+<h3 id="key-value-kv-version-1-secrets-enginekv-v1-秘密引擎">Key-Value (KV) Version 1 Secrets Engine（KV v1 秘密引擎）</h3>
+<p>特性： KV v1秘密引擎引入了一個有層次結構的鍵值存儲，允許你組織和版本控制儲存的 Secret。它具有 Secret 版本控制功能，可以保存多個版本的 Secret。</p>
+<p>用法： KV v1引擎適用於需要有組織結構並希望保留秘密版本的情況。它可以用於存儲配置信息、TLS證書、API金鑰等。</p>
+<h3 id="key-value-kv-version-2-secrets-enginekv-v2-秘密引擎">Key-Value (KV) Version 2 Secrets Engine（KV v2 秘密引擎）</h3>
+<p>特性： KV v2秘密引擎是KV v1的進化版本，它引入了更強大的特性，如可配置的 Secret Data type（如字符串、list 和 dict），並可設置的多版本的 Secret 存儲。</p>
+<p>用法： KV v2引擎適用於更複雜的秘密管理需求，其中秘密可能具有不同的數據類型，並且需要更靈活的版本管理。它也用於配置信息、TLS證書、API金鑰等。</p>
+<p>總結來說，通用秘密引擎適用於簡單的秘密存儲，而KV v1和KV v2秘密引擎適用於更複雜的秘密管理需求，具有更多的組織和版本控制功能。在選擇引擎時，請考慮你的具體需求和Vault的配置。通常，KV v2引擎是較新和更靈活的選擇，但根據你的情況，也可以考慮使用其他引擎。</p>
+<h3 id="dev-使用情境">dev 使用情境</h3>
+<p>dev 伺服器應該用於實驗 Vault 的功能，例如不同的認證方法、Secret engine、audit device 等。</p>
+<p>除了實驗，dev 伺服器對於開發環境的自動化非常容易。</p>
+<h3 id="小結">小結</h3>
+<p>通過執行這些步驟，你可以確保本地安裝的 Vault Binary 正常運行。</p>
+<p>請注意，Vault的實際配置和使用將根據你的需求和環境而有所不同，這些步驟主要用於確保Vault的基本功能正常運行。在 production 環境中，你需要更多的配置和安全性措施。</p>
 
     </div>
 
@@ -927,7 +1202,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;text=Vault&#43;Workshop&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;text=Vault&#43;Workshop&#43;02%3A&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -944,7 +1219,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;t=Vault&#43;Workshop&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;t=Vault&#43;Workshop&#43;02%3A&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -963,7 +1238,7 @@
         
       
       <li>
-        <a href="mailto:?subject=Vault%20Workshop%20Get%20Started&amp;body=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=Vault%20Workshop%2002%3A%20Get%20Started&amp;body=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -980,7 +1255,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;title=Vault&#43;Workshop&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;title=Vault&#43;Workshop&#43;02%3A&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -997,7 +1272,7 @@
       
       
       <li>
-        <a href="whatsapp://send?text=Vault&#43;Workshop&#43;Get&#43;Started%20https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=Vault&#43;Workshop&#43;02%3A&#43;Get&#43;Started%20https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1014,7 +1289,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;title=Vault&#43;Workshop&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fchechia.net%2Fzh-hant%2Fpost%2F2023-09-13-vault-workshop-get-started%2F&amp;title=Vault&#43;Workshop&#43;02%3A&#43;Get&#43;Started" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
