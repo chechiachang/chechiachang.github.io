@@ -146,8 +146,8 @@
                 href="https://chechia.net/zh-hant/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/"
                 />
   </url><url>
-    <loc>https://chechia.net/zh-hant/post/2023-09-14-vault-workshop-secret-engine/</loc>
-    <lastmod>2023-09-13T22:42:26+08:00</lastmod>
+    <loc>https://chechia.net/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/</loc>
+    <lastmod>2023-09-13T23:42:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/workshop/</loc>
@@ -156,6 +156,10 @@
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/</loc>
     <lastmod>2023-09-14T19:53:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://chechia.net/zh-hant/post/2023-09-14-vault-workshop-secret-engine/</loc>
+    <lastmod>2023-09-13T22:42:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/</loc>

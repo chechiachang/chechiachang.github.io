@@ -1670,17 +1670,15 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/" >Vault Workshop 03: Secret Engine</a>
+      <a href="/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/" >Vault Workshop 04: Dynamic Secret with AWS</a>
     </div>
 
     
-    <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/"  class="summary-link">
+    <a href="/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/"  class="summary-link">
       <div class="article-style">
-        Day 03：細探 Secret Engine 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-chatGPT 本段內容使用 chatGPT-3.5 翻譯 https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-secrets-engines 內容，並由筆者人工校驗
-base context
-我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與您對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。不要使用敬語，請用你取代您。 result correction
-部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary 修正下列翻譯：秘密改為私鑰，數據改為資料，數據庫改為資料庫，數據改為資料，訪問改為存取，源代碼改為原始碼。 
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 03：初探 Dynamic Secret 與 AWS 整合 
       </div>
     </a>
     
@@ -1765,19 +1763,115 @@ base context
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/" >Vault Workshop 03: Secret Engine</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 03：細探 Secret Engine 秘密引擎 什麼是秘密引擎？ 秘密引擎是Vault的組件，用於存儲、生成或加密秘密。在前面的內容中，你使用了Key/Value v2 秘密引擎來存儲數據。一些秘密引擎，比如鍵/值秘密引擎，僅僅是用來存儲和讀取數據的。其他秘密引擎則連接到其他服務並根據需求生成動態憑證。還有一些秘密引擎提供加密作為服務。
+前面的內容中，默認情況下，key/value v2 秘密引擎已啟用，並準備在 secret/ 下接收請求，因為我們在-dev 模式下啟動了Vault Server。
+在底下我們使用 kv v1 做簡單的範例。
+mount path 建議在使用 KV v2 秘密引擎時，使用可選的 -mount flag 語法，例如
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    9月 13, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/" >Vault Workshop 02: Get Started</a>
     </div>
 
     
     <a href="/zh-hant/post/2023-09-13-vault-workshop-get-started/"  class="summary-link">
       <div class="article-style">
-        Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+Day 02 準備：執行一個本地開發用途的 Vault 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
 準備工作 在開始進行 Vault 30 天 workshop 之前，有一些準備工作需要完成：
 步驟1：下載 Vault Binary
 首先，你需要下載HashiCorp Vault的最新版本。你可以在HashiCorp的官方網站上找到Vault的下載鏈接。請確保下載適用於你操作系統的版本。
 https://developer.hashicorp.com/vault/downloads
 MacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault
-下載完成後，根據你的操作系統進行安裝。對於大多數Linux和Unix系統，你c可以通過解壓縮壓縮文件來安裝Vault。將Vault Binary文件移至你的PATH中，以便在終端中輕鬆訪問
       </div>
     </a>
     
@@ -1868,12 +1962,13 @@ MacOS amd64 MacOS arm64 Linux 步驟2：安裝Vault
     
     <a href="/zh-hant/post/2023-09-12-vault-workshop-introduction/"  class="summary-link">
       <div class="article-style">
-        Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop 系列已經做了四年，內容包含 k8s, terraform, aws 等。
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop 系列已經做了四年，內容包含 k8s, terraform, aws 等。
 深深覺得要學習一個工具，還是要動手做。
-所以有了 30 天手把手 workshop 系列文，讓有興趣教處的朋友，能以相對低的門檻入門。
+所以有了 30 天手把手 workshop 系列文，讓有興趣接觸的朋友，能以相對低的門檻入門。
 關於內容
 無基礎的手把手的基礎教學 完整的範例，提供原始程式碼，也提供 production 的經驗與範例 官方最新文件繁中翻譯 (chatGPT based) 建議讀者務必跟著操作，不要只是看過
-其他文章 https://chechia.net/
+其他文章 https://chechia.
       </div>
     </a>
     
@@ -2023,103 +2118,6 @@ webbase link (online)
   <span class="middot-divider"></span>
   <span class="article-categories">
     <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2022-09-25-14th-ithome-ironman-iac-aws-workshop-11-aws-github-action-ci-cd/" >Terraform Github Action CI/CD</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2022-09-25-14th-ithome-ironman-iac-aws-workshop-11-aws-github-action-ci-cd/"  class="summary-link">
-      <div class="article-style">
-        AWS cross account delegation 依舊 WIP，今天延續昨天內容，使用 github action 做 terraform module 的 CI/CD
-iThome 鐵人賽好讀版
-賽後文章會整理放到個人的部落格上 http://chechia.net/
-追蹤粉專可以收到文章的主動推播
-Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool checks 到 CI/CD 中，加強 code 的品質控管
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/terraform/">terraform</a></span>
   
 
 </div>
@@ -2319,7 +2317,7 @@ Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool
         
         
         
-        <a href="/zh-hant/tag/iac/" style="font-size:2.05627915368882rem">iac</a>
+        <a href="/zh-hant/tag/iac/" style="font-size:2.0802052580430184rem">iac</a>
       
         
         
@@ -2364,12 +2362,12 @@ Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool
         
         
         
-        <a href="/zh-hant/tag/terraform/" style="font-size:2.1032916745231764rem">terraform</a>
+        <a href="/zh-hant/tag/terraform/" style="font-size:2.1255953480674528rem">terraform</a>
       
         
         
         
-        <a href="/zh-hant/tag/vault/" style="font-size:1.1681686302662118rem">vault</a>
+        <a href="/zh-hant/tag/vault/" style="font-size:1.2560183138884031rem">vault</a>
       
         
         
@@ -2389,7 +2387,7 @@ Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" style="font-size:0.8rem">鐵人賽2023</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" style="font-size:0.9468051070238409rem">鐵人賽2023</a>
       
     </div>
   
