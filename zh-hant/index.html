@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月15日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月16日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -1670,15 +1670,15 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/" >Vault Workshop 04: Dynamic Secret with AWS</a>
+      <a href="/zh-hant/post/2023-09-16-vault-workshop-dynamic-secret-with-aws/" >Vault Workshop 05: Dynamic Secret with AWS</a>
     </div>
 
     
-    <a href="/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/"  class="summary-link">
+    <a href="/zh-hant/post/2023-09-16-vault-workshop-dynamic-secret-with-aws/"  class="summary-link">
       <div class="article-style">
         如果你希望追蹤最新的草稿，請見鐵人賽2023
 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-Day 03：初探 Dynamic Secret 與 AWS 整合 
+Day 05：Dynamic Secret 與 AWS 整合 
       </div>
     </a>
     
@@ -1701,8 +1701,6 @@ Day 03：初探 Dynamic Secret 與 AWS 整合
     
     
       
-          最近更新於
-      
     
     9月 14, 2023
   </span>
@@ -1714,6 +1712,104 @@ Day 03：初探 Dynamic Secret 與 AWS 整合
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-15-vault-workshop-secret-engine-kv-v2/" >Vault Workshop 04: Secret Engine KV V2</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-15-vault-workshop-secret-engine-kv-v2/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 04：Secret Engine KV V2 KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。
+key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 value，它們將被轉換為字串。但是，你可以通過從JSON文件中將key-value pair寫入Vault，或使用HTTP API來保留非字串 value。
+此秘密引擎遵照ACL policy中，創建(create)和更新(update)權限之間的設定。它還支持patch功能，用於表示部分更新(patch)，而更新功能(update)則表示完全覆蓋。
+設置 大多數秘密引擎必須在執行其功能之前事先配置。這些步驟通常由操作人員或配置管理工具完成。
+啟用v2 kv秘密引擎：
+啟動一個乾淨的本地的開發模式 Vault Server，全新的 Vault Server 包含底下預設啟用的引擎
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    9月 14, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 閱讀時間（分鐘）
   </span>
   
 
@@ -1802,7 +1898,7 @@ mount path 建議在使用 KV v2 秘密引擎時，使用可選的 -mount flag �
           最近更新於
       
     
-    9月 14, 2023
+    9月 16, 2023
   </span>
   
 
@@ -2040,107 +2136,6 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
 </div>
 
   
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-05-10-hashicorp-comminity-presentation-vault-introduction/" >Hashicorp Comminity Presentation Vault Introduction</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2023-05-10-hashicorp-comminity-presentation-vault-introduction/"  class="summary-link">
-      <div class="article-style">
-        target group 金融客戶 vault 4/15 上架
-accupass 5/10 (Wed) 11:00-12:00
-webbase link (online)
-10:30 上線設備測試
-11:00 Ming 開場
-11:05 主講
-12:00 Q&amp;A (留言)
-當天錄影會上線
-演講大綱 基本介紹 vault 架構 企業需求 self-host 複雜的 policy 用例 demo aws auth k8s auth policy 當天提供 github example Q&amp;A (10mins) 內容 演講主題：Hashicorp vault 雲端地端通吃的私鑰管理平台
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
 
   
   
@@ -2298,102 +2293,102 @@ webbase link (online)
         
         
         
-        <a href="/zh-hant/tag/aws/" style="font-size:1.789525540422014rem">aws</a>
+        <a href="/zh-hant/tag/aws/" style="font-size:1.7223728092691357rem">aws</a>
       
         
         
         
-        <a href="/zh-hant/tag/cert-manager/" style="font-size:0.8rem">cert-manager</a>
+        <a href="/zh-hant/tag/devops/" style="font-size:1.4304061381164708rem">devops</a>
       
         
         
         
-        <a href="/zh-hant/tag/devops/" style="font-size:1.5227719271552087rem">devops</a>
+        <a href="/zh-hant/tag/elasticsearch/" style="font-size:0.8rem">elasticsearch</a>
       
         
         
         
-        <a href="/zh-hant/tag/elasticsearch/" style="font-size:0.9468051070238409rem">elasticsearch</a>
+        <a href="/zh-hant/tag/gcp/" style="font-size:1.2991203210337785rem">gcp</a>
       
         
         
         
-        <a href="/zh-hant/tag/gcp/" style="font-size:1.4028234209122443rem">gcp</a>
+        <a href="/zh-hant/tag/iac/" style="font-size:2.0657955377265385rem">iac</a>
       
         
         
         
-        <a href="/zh-hant/tag/iac/" style="font-size:2.0802052580430184rem">iac</a>
+        <a href="/zh-hant/tag/ithome/" style="font-size:1.7223728092691357rem">ithome</a>
       
         
         
         
-        <a href="/zh-hant/tag/ithome/" style="font-size:1.789525540422014rem">ithome</a>
+        <a href="/zh-hant/tag/kafka/" style="font-size:1.2232524882353577rem">kafka</a>
       
         
         
         
-        <a href="/zh-hant/tag/kafka/" style="font-size:1.3335072265336112rem">kafka</a>
+        <a href="/zh-hant/tag/kubernetes/" style="font-size:2.486283806014753rem">kubernetes</a>
       
         
         
         
-        <a href="/zh-hant/tag/kubernetes/" style="font-size:2.4874682809123794rem">kubernetes</a>
+        <a href="/zh-hant/tag/logstash/" style="font-size:0.8rem">logstash</a>
       
         
         
         
-        <a href="/zh-hant/tag/logstash/" style="font-size:0.9468051070238409rem">logstash</a>
+        <a href="/zh-hant/tag/preemptible/" style="font-size:1.0422863938156195rem">preemptible</a>
       
         
         
         
-        <a href="/zh-hant/tag/preemptible/" style="font-size:1.1681686302662118rem">preemptible</a>
+        <a href="/zh-hant/tag/prometheus/" style="font-size:0.8rem">prometheus</a>
       
         
         
         
-        <a href="/zh-hant/tag/prometheus/" style="font-size:0.9468051070238409rem">prometheus</a>
+        <a href="/zh-hant/tag/redis/" style="font-size:0.9312858170826923rem">redis</a>
       
         
         
         
-        <a href="/zh-hant/tag/redis/" style="font-size:1.0667536132668056rem">redis</a>
+        <a href="/zh-hant/tag/spot-instance/" style="font-size:1.0422863938156195rem">spot-instance</a>
       
         
         
         
-        <a href="/zh-hant/tag/spot-instance/" style="font-size:1.1681686302662118rem">spot-instance</a>
+        <a href="/zh-hant/tag/terraform/" style="font-size:2.1138185567671277rem">terraform</a>
       
         
         
         
-        <a href="/zh-hant/tag/terraform/" style="font-size:2.1255953480674528rem">terraform</a>
+        <a href="/zh-hant/tag/vault/" style="font-size:1.2232524882353577rem">vault</a>
       
         
         
         
-        <a href="/zh-hant/tag/vault/" style="font-size:1.2560183138884031rem">vault</a>
+        <a href="/zh-hant/tag/workshop/" style="font-size:0.8rem">workshop</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/" style="font-size:2.1255953480674528rem">鐵人賽2019</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/" style="font-size:2.0902073132202217rem">鐵人賽2019</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2020/" style="font-size:1.6695770341790497rem">鐵人賽2020</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2020/" style="font-size:1.5910869921864434rem">鐵人賽2020</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/" style="font-size:1.4655275459664034rem">鐵人賽2022</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2022/" style="font-size:1.3677511239511218rem">鐵人賽2022</a>
       
         
         
         
-        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" style="font-size:0.9468051070238409rem">鐵人賽2023</a>
+        <a href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" style="font-size:0.9312858170826923rem">鐵人賽2023</a>
       
     </div>
   

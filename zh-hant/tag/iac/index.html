@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月15日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月16日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -989,15 +989,15 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/" >Vault Workshop 04: Dynamic Secret with AWS</a>
+      <a href="/zh-hant/post/2023-09-16-vault-workshop-dynamic-secret-with-aws/" >Vault Workshop 05: Dynamic Secret with AWS</a>
     </div>
 
     
-    <a href="/zh-hant/post/2023-09-15-vault-workshop-dynamic-secret-with-aws/"  class="summary-link">
+    <a href="/zh-hant/post/2023-09-16-vault-workshop-dynamic-secret-with-aws/"  class="summary-link">
       <div class="article-style">
         如果你希望追蹤最新的草稿，請見鐵人賽2023
 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-Day 03：初探 Dynamic Secret 與 AWS 整合 
+Day 05：Dynamic Secret 與 AWS 整合 
       </div>
     </a>
     
@@ -1020,8 +1020,6 @@ Day 03：初探 Dynamic Secret 與 AWS 整合
     
     
       
-          最近更新於
-      
     
     9月 14, 2023
   </span>
@@ -1033,6 +1031,104 @@ Day 03：初探 Dynamic Secret 與 AWS 整合
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-15-vault-workshop-secret-engine-kv-v2/" >Vault Workshop 04: Secret Engine KV V2</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-15-vault-workshop-secret-engine-kv-v2/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 04：Secret Engine KV V2 KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。
+key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 value，它們將被轉換為字串。但是，你可以通過從JSON文件中將key-value pair寫入Vault，或使用HTTP API來保留非字串 value。
+此秘密引擎遵照ACL policy中，創建(create)和更新(update)權限之間的設定。它還支持patch功能，用於表示部分更新(patch)，而更新功能(update)則表示完全覆蓋。
+設置 大多數秘密引擎必須在執行其功能之前事先配置。這些步驟通常由操作人員或配置管理工具完成。
+啟用v2 kv秘密引擎：
+啟動一個乾淨的本地的開發模式 Vault Server，全新的 Vault Server 包含底下預設啟用的引擎
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    9月 14, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 閱讀時間（分鐘）
   </span>
   
 
@@ -1121,7 +1217,7 @@ mount path 建議在使用 KV v2 秘密引擎時，使用可選的 -mount flag �
           最近更新於
       
     
-    9月 14, 2023
+    9月 16, 2023
   </span>
   
 
@@ -1672,102 +1768,6 @@ Terraform Github Action Jobs 我們可以在 terraform repository 中增加 tool
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/terraform/">terraform</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-09-terraform-module-and-password-security/" >Modules and password security</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2022-09-20-14th-ithome-ironman-iac-aws-workshop-09-terraform-module-and-password-security/"  class="summary-link">
-      <div class="article-style">
-        使用 aws module 的好處 為何許多開源的 terraform module 內部使用的都是其他的 module，而不是從 resource 單位開始？
-Terraform 官方文件，如何建立 module
-如何建立一個 module
-根據最常出現的使用情劇與需求 專注於業務的需求與抽象，雃後把實作(terraform resource) 在 module 中組合實作出來 module 也需要考慮 resource 之間的 architecture 也要考慮到觀禮是否方便？使用上是否安全？ ex. 我們需求是產生一個 IAM User
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 閱讀時間（分鐘）
   </span>
   
 
