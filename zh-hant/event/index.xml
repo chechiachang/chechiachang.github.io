@@ -38,7 +38,21 @@
       <link>https://chechia.net/zh-hant/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/</link>
       <pubDate>Tue, 26 Sep 2023 13:20:00 +0000</pubDate>
       <guid>https://chechia.net/zh-hant/talk/devopsday-hashicorp-vault-%E8%87%AA%E5%BB%BA%E9%87%91%E9%91%B0%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%85%A5%E5%9D%91%E5%A7%BF%E5%8B%A2/</guid>
-      <description></description>
+      <description>&lt;p&gt;HashiCorp Vault 自建金鑰管理最佳入坑姿勢&lt;/p&gt;
+&lt;p&gt;本次演講從導入 HashiCorp Vault 作為起點，直接提供實務上經驗，分享建議的設定與路上可能有的雷。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Vault 入坑的困難&lt;/li&gt;
+&lt;li&gt;Vault + Terraform 一入坑就 IaC&lt;/li&gt;
+&lt;li&gt;mount path + role + policy 命名與管理&lt;/li&gt;
+&lt;li&gt;升級與維護&lt;/li&gt;
+&lt;li&gt;會依據企業需求提供實際用例 demo，當天提供 github code example&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;中階&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;預期聽眾是有 Vault 使用經驗，希望能更有效率管理 Vault 的人&lt;/li&gt;
+&lt;li&gt;不會講太多基本功能介紹 vault 介紹&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
   </channel>
