@@ -264,7 +264,7 @@
       <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;day-06authentication&#34;&gt;Day 06：Authentication&lt;/h1&gt;
+&lt;h1 id=&#34;day-05authentication&#34;&gt;Day 05：Authentication&lt;/h1&gt;
 &lt;p&gt;在前面的文章中，你已經創建了第一個秘密，了解了秘密引擎，並在以開發模式啟動的 Vault 服務器中探索了動態秘密。&lt;/p&gt;
 &lt;p&gt;接下來的內容中，我們將深入研究使用 Vault token 和 GitHub 憑證進行身份驗證。&lt;/p&gt;
 &lt;h3 id=&#34;token-身份驗證&#34;&gt;Token 身份驗證&lt;/h3&gt;
