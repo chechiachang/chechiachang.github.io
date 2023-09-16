@@ -324,6 +324,7 @@
   
 
 <meta name="description" content="如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
 Day 04：Secret Engine KV V2 KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。
 key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 value，它們將被轉換為字串。但是，你可以通過從JSON文件中將key-value pair寫入Vault，或使用HTTP API來保留非字串 value。
@@ -374,6 +375,7 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
 <meta property="og:url" content="https://chechia.net/zh-hant/post/2023-09-15-vault-workshop-secret-engine-kv-v2/" />
 <meta property="og:title" content="Vault Workshop 04: Secret Engine KV V2 | Che-Chia Chang" />
 <meta property="og:description" content="如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
 整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
 Day 04：Secret Engine KV V2 KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。
 key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 value，它們將被轉換為字串。但是，你可以通過從JSON文件中將key-value pair寫入Vault，或使用HTTP API來保留非字串 value。
@@ -389,7 +391,7 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
     />
   
   
-    <meta property="article:modified_time" content="2023-09-16T12:58:04&#43;08:00">
+    <meta property="article:modified_time" content="2023-09-16T23:05:12&#43;08:00">
   
 
 
@@ -420,7 +422,7 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
   "headline": "Vault Workshop 04: Secret Engine KV V2",
   
   "datePublished": "2023-09-14T00:42:26+08:00",
-  "dateModified": "2023-09-16T12:58:04+08:00",
+  "dateModified": "2023-09-16T23:05:12+08:00",
   
   "author": {
     "@type": "Person",
@@ -435,7 +437,7 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
       "url": "https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
-  "description": "如果你希望追蹤最新的草稿，請見鐵人賽2023\n整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground\nDay 04：Secret Engine KV V2 KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。\nkey 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 value，它們將被轉換為字串。但是，你可以通過從JSON文件中將key-value pair寫入Vault，或使用HTTP API來保留非字串 value。\n此秘密引擎遵照ACL policy中，創建(create)和更新(update)權限之間的設定。它還支持patch功能，用於表示部分更新(patch)，而更新功能(update)則表示完全覆蓋。\n設置 大多數秘密引擎必須在執行其功能之前事先配置。這些步驟通常由操作人員或配置管理工具完成。\n啟用v2 kv秘密引擎：\n啟動一個乾淨的本地的開發模式 Vault Server，全新的 Vault Server 包含底下預設啟用的引擎"
+  "description": "如果你希望追蹤最新的草稿，請見鐵人賽2023\n本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證\n整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground\nDay 04：Secret Engine KV V2 KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。\nkey 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 value，它們將被轉換為字串。但是，你可以通過從JSON文件中將key-value pair寫入Vault，或使用HTTP API來保留非字串 value。\n此秘密引擎遵照ACL policy中，創建(create)和更新(update)權限之間的設定。它還支持patch功能，用於表示部分更新(patch)，而更新功能(update)則表示完全覆蓋。\n設置 大多數秘密引擎必須在執行其功能之前事先配置。這些步驟通常由操作人員或配置管理工具完成。\n啟用v2 kv秘密引擎：\n啟動一個乾淨的本地的開發模式 Vault Server，全新的 Vault Server 包含底下預設啟用的引擎"
 }
 </script>
 
@@ -946,6 +948,7 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
 
     <div class="article-style">
       <p>如果你希望追蹤最新的草稿，請見<a href="https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" target="_blank" rel="noopener">鐵人賽2023</a></p>
+<p>本 workshop 也接受網友的許願清單，<a href="https://ithelp.ithome.com.tw/articles/10317378" target="_blank" rel="noopener">如果有興趣的題目可於第一篇底下留言</a>，筆者會盡力實現，但不做任何保證</p>
 <p>整篇 Workshop 會使用的範例與原始碼，放在 <a href="http://chechia.net/zh-hant/#projects" target="_blank" rel="noopener">Github Repository: vault-playground</a></p>
 <h1 id="day-04secret-engine-kv-v2">Day 04：Secret Engine KV V2</h1>
 <p>KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。</p>

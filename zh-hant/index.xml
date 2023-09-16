@@ -56,14 +56,493 @@
     </item>
     
     <item>
-      <title>Vault Workshop 05: Dynamic Secret with AWS</title>
-      <link>https://chechia.net/zh-hant/post/2023-09-16-vault-workshop-dynamic-secret-with-aws/</link>
-      <pubDate>Thu, 14 Sep 2023 01:42:26 +0800</pubDate>
-      <guid>https://chechia.net/zh-hant/post/2023-09-16-vault-workshop-dynamic-secret-with-aws/</guid>
+      <title>Vault Workshop 06: Github Auth method</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-17-vault-workshop-authentication-github/</link>
+      <pubDate>Thu, 14 Sep 2023 02:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-17-vault-workshop-authentication-github/</guid>
       <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;day-05dynamic-secret-與-aws-整合&#34;&gt;Day 05：Dynamic Secret 與 AWS 整合&lt;/h1&gt;
-</description>
+&lt;h1 id=&#34;day-06github-auth-method&#34;&gt;Day 06：Github auth method&lt;/h1&gt;
+&lt;h3 id=&#34;不需要使用-root-token-的-auth-method-github&#34;&gt;不需要使用 root token 的 auth method: github&lt;/h3&gt;
+&lt;p&gt;Vault 支援用於人員使用者的身份驗證方法。GitHub 身份驗證，使用戶可以通過提供他們的 GitHub 憑證來驗證 Vault，並收到一個 Vault token。&lt;/p&gt;
+&lt;p&gt;簡單來說，github organization &lt;a href=&#34;https://github.com/chechia-net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia-net&lt;/a&gt;，可以設定適當的權限給成員 chechiachang，讓 chechiachang 可以透過 github 取得有權限的 token。&lt;/p&gt;
+&lt;p&gt;注意&lt;/p&gt;
+&lt;p&gt;在練習中所描述的這種身份驗證方法，需要你擁有 GitHub、屬於 GitHub org 中的一個 team ，並生成了具有 &lt;code&gt;read:org&lt;/code&gt; scope 的 GitHub personal access token。你可以於 github 創建一個 free plan 的 org，並設定一個 team，然後透過個人 Settings / Developer Settings 來產生一把具有 &lt;code&gt;read:org&lt;/code&gt; 權限的 personal access token&lt;/p&gt;
+&lt;h3 id=&#34;啟用-github-auth-method&#34;&gt;啟用 github auth method&lt;/h3&gt;
+&lt;p&gt;你可以使用下列指令，在 path=github/ 下啟用 GitHub 身份驗證方法。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;VAULT_TOKEN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault auth &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; github
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;這個指令使用 root token 設定 auth method，也是整個 github auth methods 中，唯一需要用到 root token 設定的地方，而且只需要設定一次&lt;/p&gt;
+&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! Enabled github auth method at: github/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server log 顯示 credential backend 已啟用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-16T21:40:10.444+0800 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: enabled credential backend: &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;github/ &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;github &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以下列指令，列出所有的 auth methods&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault auth list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Path       Type      Accessor                Description                Version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;----       ----      --------                -----------                -------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;github/    github    auth_github_9bc96e5f    n/a                        n/a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token/     token     auth_token_b7984c52     token based credentials    n/a
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;github 身份驗證方法已啟用，並位於路徑 auth/github/。&lt;/p&gt;
+&lt;h3 id=&#34;設定-github-auth-method&#34;&gt;設定 github auth method&lt;/h3&gt;
+&lt;p&gt;此身份驗證方法需要你在配置中設置 GitHub organization。GitHub organization中，維護了一個允許與 Vault 驗證的使用者列表。&lt;/p&gt;
+&lt;p&gt;設置 GitHub 身份驗證的組織。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault write auth/github/config &lt;span class=&#34;nv&#34;&gt;organization&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;chechia-net
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! Data written to: auth/github/config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;現在，chechia-net GitHub 組織中的所有使用者都可以進行身份驗證。&lt;/p&gt;
+&lt;h3 id=&#34;設定-github-auth-method給不同-team-不同的-policy&#34;&gt;設定 github auth method，給不同 team 不同的 policy&lt;/h3&gt;
+&lt;p&gt;GitHub 組織可以定義團隊(team)。每個團隊可能可以在組織維護的所有 repository 中執行不同的操作。這些團隊也可能需要訪問 Vault 內的特定密碼。&lt;/p&gt;
+&lt;p&gt;配置 GitHub sre 團隊的身份驗證，以獲得 default 和 application 兩個 policy的授權。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault write auth/github/map/teams/sre &lt;span class=&#34;nv&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;default,application
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! Data written to: auth/github/map/teams/sre
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;GitHub sre 團隊中 chechia-net 組織的成員，將使用 default 和 application policy 進行身份驗證和授權。&lt;/p&gt;
+&lt;p&gt;備註：application policy 尚未在 Vault 中定義。在該策略定義之前，Vault 仍然允許使用者進行身份驗證，但會產生警告。&lt;/p&gt;
+&lt;p&gt;你可以使用指令顯示 Vault 啟用的所有身份驗證方法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault auth list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;回傳顯示兩個 auth methods，github/ 與 token/&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Path       Type      Accessor                Description                Version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;----       ----      --------                -----------                -------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;github/    github    auth_github_9bc96e5f    n/a                        n/a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token/     token     auth_token_b7984c52     token based credentials    n/a
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;使用-github-auth-method-login&#34;&gt;使用 github auth method login&lt;/h3&gt;
+&lt;p&gt;使用 help 指令來了解 github auth method 的說明&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault auth &lt;span class=&#34;nb&#34;&gt;help&lt;/span&gt; github
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Usage: vault login -method&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;github &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;CONFIG &lt;span class=&#34;nv&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;V...&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  The GitHub auth method allows users to authenticate using a GitHub
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  personal access token. Users can generate a personal access token from the
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  settings page on their GitHub account.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# GitHub 身份驗證方法允許使用者使用 GitHub personal access token進行身份驗證。使用者可以從其 GitHub Settings -&amp;gt; Developer Settings -&amp;gt; Personal access tokens (classic) 生成個人訪問令牌。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  Authenticate using a GitHub token:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      $ vault login -method&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;github &lt;span class=&#34;nv&#34;&gt;token&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;abcd1234
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Configuration:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;mount&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;lt;string&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      Path where the GitHub credential method is mounted. This is usually
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      provided via the -path flag in the &lt;span class=&#34;s2&#34;&gt;&amp;#34;vault login&amp;#34;&lt;/span&gt; command, but it can be
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      specified here as well. If specified here, it takes precedence over the
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      value &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; -path. The default value is &lt;span class=&#34;s2&#34;&gt;&amp;#34;github&amp;#34;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# GitHub 憑證方法掛載的路徑。通常透過 &amp;#34;vault login&amp;#34; 指令的 -path flag 提供，但這裡也可以指定。如果在這裡指定，則優先於 -path 的值。預設的路徑值為 &amp;#34;github&amp;#34;。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;token&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;lt;string&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      GitHub personal access token to use &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; authentication. If not provided,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      Vault will prompt &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; the value.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 用於身份驗證的 GitHub personal access token。如果未提供，Vault 將提示輸入此值。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;輸出顯示了使用 GitHub 方法進行 login 的例子。該方法要求必須定義該方法，並由使用者提供 GitHub personal access token。&lt;/p&gt;
+&lt;p&gt;由於你將嘗試使用身份驗證方法進行登錄，請確保在此 shell session 中未設置 VAULT_TOKEN 環境變數，因為其值將優先於你從 Vault 獲取的任何 token。&lt;/p&gt;
+&lt;p&gt;取消設定該環境變數。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; VAULT_TOKEN
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;嘗試使用 github auth methods 登入&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login -method&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;github
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，使用者使用 github personal access token，取得有效的 vault token&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;token 格式不同&lt;/li&gt;
+&lt;li&gt;token 的效期為 768h，短效期 token 的曝險程度較低&lt;/li&gt;
+&lt;li&gt;這個 token 的 policy 權限只有 default policy&lt;/li&gt;
+&lt;li&gt;metadata 是 github 回傳的，vault 中並沒有建立 username=chechiachang 的資料
+&lt;ul&gt;
+&lt;li&gt;org 是 chechia-net&lt;/li&gt;
+&lt;li&gt;username 是 chechiachang&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GitHub Personal Access Token (will be hidden):
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! You are now authenticated. The token information displayed below
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;is already stored in the token helper. You do NOT need to run &amp;#34;vault login&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;again. Future Vault requests will automatically use this token.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                    Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                    -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token                  hvs.CAESIBMsgvXNDOE6n4ZLMWZ_3GH4oC2A0G3cVtCTwOtrq6igGh4KHGh2cy5OYzBRV3hmMU4xR3ZkWHhzODJuRHRncU0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_accessor         lKVpMawotXg1fXcgRvpAOAwQ
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_duration         768h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_renewable        true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_policies         [&amp;#34;default&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity_policies      []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies               [&amp;#34;default&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_meta_org         chechia-net
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_meta_username    chechiachang
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;當未提供 GitHub personal access token 給命令時，Vault CLI 會提示使用者輸入。&lt;/p&gt;
+&lt;p&gt;如果提供了有效的 GitHub personal access token，則使用者將成功登錄 vault，並且輸出會顯示一個 Vault token。使用者可以使用這個 Vault token，直到該 token 被撤銷或其有效期超過了 token_duration。&lt;/p&gt;
+&lt;p&gt;你可以使用 vault token lookup 來檢視當前的 token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault token lookup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，顯示使用中的 token，使用的 path 與 methods 是 github/，效期 ttl 在倒數中逐漸減少 767h54m27s&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                 Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                 -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;accessor            lKVpMawotXg1fXcgRvpAOAwQ
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;creation_time       1694873434
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;creation_ttl        768h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;display_name        github-chechiachang
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;entity_id           5d8af1ab-53a2-e1c5-61bf-bb0b6c7d190f
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;expire_time         2023-10-18T22:10:34.812089+08:00
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;explicit_max_ttl    0s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;id                  hvs.CAESIBMsgvXNDOE6n4ZLMWZ_3GH4oC2A0G3cVtCTwOtrq6igGh4KHGh2cy5OYzBRV3hmMU4xR3ZkWHhzODJuRHRncU0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;issue_time          2023-09-16T22:10:34.812099+08:00
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;meta                map[org:chechia-net username:chechiachang]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;num_uses            0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;orphan              true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;path                auth/github/login
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies            [default]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;renewable           true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ttl                 767h54m27s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;type                service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;記得我們建立 team 的 policy = default + application 嗎？你可以在 github 上把 user 加入到 team/sre&lt;/p&gt;
+&lt;p&gt;例如我們把 chechiachang 加入到 org/chechia-net 的 team/sre&lt;/p&gt;
+&lt;p&gt;當前登入 session 權限尚未更新，我們直接重新登入一次&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login -method&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;github
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，可以看見登入後的 policy 權限增加成為 default + application&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GitHub Personal Access Token (will be hidden):
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! You are now authenticated. The token information displayed below
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;is already stored in the token helper. You do NOT need to run &amp;#34;vault login&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;again. Future Vault requests will automatically use this token.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                    Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                    -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token                  hvs.CAESIIR3XBwj27kCOI76Qm01RmWigR8IraYW4daHOptol0VBGh4KHGh2cy44aEh4dE05UVdraG9hNmFWUURRRFBRcmE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_accessor         6DbsDizOenhCuWMmUWspTZwp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_duration         768h
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_renewable        true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_policies         [&amp;#34;application&amp;#34; &amp;#34;default&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity_policies      []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies               [&amp;#34;application&amp;#34; &amp;#34;default&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_meta_org         chechia-net
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_meta_username    chechiachang
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上是透過 github/ auth methods&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;管理者設定 github/ method config&lt;/li&gt;
+&lt;li&gt;使用者 chechiachang，使用 github/ method login&lt;/li&gt;
+&lt;li&gt;使用的權限管理是依照 github org / team 來管理，vault 並沒有紀錄 team 與使用者資料&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;清理移除-auth-methods&#34;&gt;清理：移除 auth methods&lt;/h3&gt;
+&lt;p&gt;使用 root token 再次進行登錄。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Token (will be hidden):
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! You are now authenticated. The token information displayed below
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;is already stored in the token helper. You do NOT need to run &amp;#34;vault login&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;again. Future Vault requests will automatically use this token.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                  Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                  -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token                hvs.J80wvFtkQqwg4ihuIm1mmjoh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_accessor       DaI1V1rq9tKZX5EaO4AfMI26
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_duration       ∞
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_renewable      false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_policies       [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity_policies    []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies             [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用以下指令撤銷 github/ auth methods 產生的 token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault token revoke -mode path auth/github
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! Revoked token &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; it existed&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server log，對於 auth/github 路徑的所有登錄生成的令牌都已被撤銷。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-16T22:25:06.793+0800 [INFO]  expiration: revoked lease: lease_id=auth/github/login/h71720c9bc6fed61d459da4b172dc518a6d55b1dd33c70103cf0b12eb42d7741a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-16T22:25:06.793+0800 [INFO]  expiration: revoked lease: lease_id=auth/github/login/hd2b110a8eda38814ac0e3ba7ccb926e75205c5065480c9c2675ae5f2860f9f97
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所有身份驗證方法，除了 token 身份驗證方法，都可以被停用。&lt;/p&gt;
+&lt;p&gt;停用 github 身份驗證方法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault auth disable github
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! Disabled the auth method &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; it existed&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; at: github/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server log&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-16T22:27:42.040+0800 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: disabled credential backend: &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;auth/github/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所有使用此身份驗證方法進行登錄生成的token都已被撤銷。&lt;/p&gt;
+&lt;h3 id=&#34;清理-github&#34;&gt;清理 github&lt;/h3&gt;
+&lt;p&gt;如果有建立 org / team / github personal access token 的話，記得移除他&lt;/p&gt;
+&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-authentication&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-authentication&lt;/a&gt;
+&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/auth/github&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/auth/github&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vault Workshop 05: Authentication</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-16-vault-workshop-authentication/</link>
+      <pubDate>Thu, 14 Sep 2023 01:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-16-vault-workshop-authentication/</guid>
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;day-06authentication&#34;&gt;Day 06：Authentication&lt;/h1&gt;
+&lt;p&gt;在前面的文章中，你已經創建了第一個秘密，了解了秘密引擎，並在以開發模式啟動的 Vault 服務器中探索了動態秘密。&lt;/p&gt;
+&lt;p&gt;接下來的內容中，我們將深入研究使用 Vault token 和 GitHub 憑證進行身份驗證。&lt;/p&gt;
+&lt;h3 id=&#34;token-身份驗證&#34;&gt;Token 身份驗證&lt;/h3&gt;
+&lt;p&gt;Token 身份驗證已自動啟用。當你啟動開發模式服務器時，輸出顯示了 Root token。Vault CLI 從 &lt;code&gt;$VAULT_TOKEN&lt;/code&gt; 環境變數中讀取 Root token。這個根 token 可以在 Vault 內執行任何操作，因為它被分配了 Root policy 權限。允許的權限中包含創建新的 token。&lt;/p&gt;
+&lt;p&gt;現在，讓我們創建一個新的 token。&lt;/p&gt;
+&lt;p&gt;啟動全新的 dev Vault Server&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault server -dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，server log 回傳 dev 模式的警告&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;WARNING! dev mode is enabled! In this mode, Vault runs entirely in-memory
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;and starts unsealed with a single unseal key. The root token is already
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;authenticated to the CLI, so you can immediately begin using Vault.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 警告！已啟用開發模式！在此模式下，Vault完全運行在內存中，使用單個unseal key解封。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# root token已被CLI驗證，因此你可以立即開始使用Vault。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;You may need to set the following environment variables:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    $ export VAULT_ADDR=&amp;#39;http://127.0.0.1:8200&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 以下顯示了unseal key 和 root token，以防你想要封存/解封Vault，或重新進行身份驗證。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    The unseal key and root token are displayed below in case you want to
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    seal/unseal the Vault or re-authenticate.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# dev 模式預設配置的 unseal key 與 root token
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Unseal Key: QDUAuY7Kltsc/3bVwUYF39u8aEFgWNRs/1D5yxFtim4=
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Root Token: hvs.J30e53uuKDhrWVttCvK0DJaN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 開發模式絕不應在生產安裝中使用！
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Development mode should NOT be used in production installations!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;依據提示 export 需要的變數&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;export VAULT_ADDR=&amp;#39;http://127.0.0.1:8200&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在 dev mode 下，未使用 token 也可以存取 Vault Server 中的資料，這是因為 vault server 在啟用時，預設使用 token helper，將 root token 寫入到 local filesystem&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/commands/token-helper&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vault token helper 說明&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;你可以使用以下指令，檢查儲存於本地的 vault token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ~/.vault-token
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hvs.J30e53uuKDhrWVttCvK0DJaN%
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault CLI 自動取用本地儲存的 root token，所以已經自動完成 authentication，不用額外進行 authentication，也可以使用 Vault&lt;/p&gt;
+&lt;p&gt;使用 Vault 時，須額外注意本地儲存的 token&lt;/p&gt;
+&lt;h3 id=&#34;避免-dev-模式下儲存-root-token&#34;&gt;避免 dev 模式下儲存 root token&lt;/h3&gt;
+&lt;p&gt;Vault dev server 自動寫入 root token，讓開發 Vault 功能時十分便利。然而在資訊安全的領域，便利往往代表著風險。在非 dev Server 環境中，我們會嚴格控制所有 token 的曝險程度，特別是 root token，根本不該被 print 出，當然也萬萬不能儲存在本地電腦。&lt;/p&gt;
+&lt;p&gt;依據你的開發需求，你可能不希望 dev 模式下，long-live 永久有效的 root token 儲存在本地電腦中，你可以使用 -dev-no-store-token flag 來避免 Vault dev server 暴露 root token。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault server -dev -dev-no-store-token
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;WARNING! dev mode is enabled! In this mode, Vault runs entirely in-memory
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;and starts unsealed with a single unseal key. The root token is already
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;authenticated to the CLI, so you can immediately begin using Vault.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;You may need to &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; the following environment variables:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    $ &lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;VAULT_ADDR&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;http://127.0.0.1:8200&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;The unseal key and root token are displayed below in &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; you want to
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;seal/unseal the Vault or re-authenticate.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key: hNi8T3YctTZrLYlKezLAJttfiF97D1Vy7Tq+HMM3y9w&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Root Token: hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Development mode should NOT be used in production installations!
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以檢查本地使否有儲存的的 vault token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ~/.vault-token
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat: /Users/che-chia/.vault-token: No such file or directory
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然後試圖在沒有 .vault-token 的狀態下，存取 Vault Server&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault secrets list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，沒有合法的 access token，Vault server 回傳 403 權限被拒&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault secrets list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Error listing secrets engines: Error making API request.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;URL: GET http://127.0.0.1:8200/v1/sys/mounts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Code: 403. Errors:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;* permission denied
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;authentication&#34;&gt;Authentication&lt;/h3&gt;
+&lt;p&gt;你可以使用 vault dev Server log 中回傳的 root token 來存取 Vault server&lt;/p&gt;
+&lt;p&gt;你可以將 token 在寫回 .vault-token，這是最方便，也最危險&lt;/p&gt;
+&lt;p&gt;建議：永遠不要儲存 root token 在本地電腦上。非常容易遺忘自己本地有儲存 root token。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; hvs.qCqY9ZO3oNS6VrrKMHp89KYv &amp;gt; ~/.vault-token
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另一個方式是使用環境變數 &lt;code&gt;VAULT_TOKEN&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;VAULT_TOKEN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;hvs.qCqY9ZO3oNS6VrrKMHp89KYv vault secrets list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面是在 CLI 前面插入環境變數，下面是 export &lt;code&gt;VAULT_TOKEN&lt;/code&gt; 到當前 session 的環境變數&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;VAULT_TOKEN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault secrets list
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Path          Type         Accessor              Description
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;----          ----         --------              -----------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cubbyhole/    cubbyhole    cubbyhole_9cc57bcf    per-token private secret storage
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity/     identity     identity_41faabef     identity store
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;secret/       kv           kv_fca914b5           key/value secret storage
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sys/          system       system_5dd83198       system endpoints used &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; control, policy and debugging
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以檢查目前環境變數中，與 Vault 有關的 env&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;env &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep VAULT
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;VAULT_ADDR&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;http://127.0.0.1:8200
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;VAULT_TOKEN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;當然，&lt;code&gt;VAULT_TOKEN&lt;/code&gt; 的存在時間越久，token 曝險的機率就越高。&lt;/p&gt;
+&lt;p&gt;也很容易忘記 &lt;code&gt;VAULT_TOKEN&lt;/code&gt; 有存在的環境變數。&lt;/p&gt;
+&lt;h3 id=&#34;vault-token-雷點&#34;&gt;VAULT TOKEN 雷點&lt;/h3&gt;
+&lt;p&gt;workshop 至今，你目前只有一台 vault dev server，而且裡面並沒有任何的機密資料，這個 vault server 可以隨時拋棄。&lt;/p&gt;
+&lt;p&gt;然而，在實務上，Vault 管理員手上可能會有多個 Vault server 需要管理。&lt;/p&gt;
+&lt;p&gt;想像你有 dev / stag / prod 的 server，某一天你正在 dev 開發一個新功能，由於本地有 &lt;code&gt;VAULT_TOKEN&lt;/code&gt; 與 &lt;code&gt;VAULT_ADDR&lt;/code&gt;，你不疑有他的在這台 server 上運行許多測試的指令，包含新增一對測試 secret，刪刪改改現有的 secret。&lt;/p&gt;
+&lt;p&gt;然後你的本能忽然覺得怪怪的，我沒有設置任何 vault env，為何可以直接存取 dev server？&lt;/p&gt;
+&lt;p&gt;你拉出 env 看，發現是 production server 的 addr + token，上次進入 production server 時的 session，還存有有效的 addr 與 token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;VAULT_ADDR&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;http://vault.prod.chechia.net
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;VAULT_TOKEN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;this-is-prod-token
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你麻煩大了&lt;/p&gt;
+&lt;p&gt;心得：永遠不要儲存長效期的 token 在本地。本 workshop 會不斷地強調，提醒各種操作中的資安風險，請各位學習過程中就養成良好習慣，以免方便一時，遺憾終身。&lt;/p&gt;
+&lt;h3 id=&#34;root-token&#34;&gt;root token&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/concepts/tokens#root-tokens&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/concepts/tokens#root-tokens&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;root token是附帶root policy的token。root token可以在Vault中執行任何操作。任何操作。&lt;/p&gt;
+&lt;p&gt;此外，它們是Vault中唯一可以設置為永不過期，且無需進行任何續訂的 token 類型。由於 root token 權限如此大，Vault 設計上刻意讓創建root token 很困難；實際上只有三種方法可以創建root token：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 vault operator init 時生成的初始root token - 此token不會過期&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用另一個root token 創建 root token。這點有個限制：使用有限期的root token，無法創建永不過期的root token&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在擁有 unseal keys quorum的權限下，使用 vault operator generate-root 來創建root token&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;root token在開發中很有用，但在 production 環境中應該非常謹慎使用。&lt;/p&gt;
+&lt;p&gt;事實上，Vault團隊建議 root token 只能進行必要的初始設置，通常是設置身份驗證方法(auth method)，和必要的 policy，以允許管理員獲取更有限的token。或是緊急情況下使用root token，並在不再需要時立即撤銷(revoke)。&lt;/p&gt;
+&lt;p&gt;如果需要新的root token，可以使用 operator generate-root 指令，使用相關的 API endpoint即時生成。&lt;/p&gt;
+&lt;p&gt;同時，當root token處於活動狀態時，建議團隊中提供多人一起協作，共同檢查 terminal session，養成一種良好的安全實踐。這樣多人可以驗證使用root token執行的任務，以及這些任務完成後，立即撤銷了該token。&lt;/p&gt;
+&lt;h3 id=&#34;使用-root-token-產生-short-live-token&#34;&gt;使用 root token 產生 short-live token&lt;/h3&gt;
+&lt;p&gt;root token 預設配置 root policy，我們可以產生權限較小的 token，並指配置最小必要權限(least privilege)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;VAULT_TOKEN=hvs.qCqY9ZO3oNS6VrrKMHp89KYv vault token create
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                  Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                  -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token                hvs.FbAeXWmXGAeCCCV0G04kjBIp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_accessor       rPOOSI06WGnFo9MVOvS8luhn
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_duration       ∞
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_renewable      false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_policies       [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity_policies    []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies             [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;已創建token，輸出中以key value的表格描述了此token。創建的token在此處顯示為 hvs.FbAeXWmXGAeCCCV0G04kjBIp&lt;/p&gt;
+&lt;p&gt;此token是root token的子token，並且預設情況下，它會繼承其 parent token的policy 權限。&lt;/p&gt;
+&lt;p&gt;token是核心身份驗證方法(core auth method)。你可以使用生成的token來 login Vault，只需在提示時複製並粘貼即可。&lt;/p&gt;
+&lt;p&gt;你可以使用以下指令登入 vault&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在回傳的輸入令中輸入新產生的 child token hvs.FbAeXWmXGAeCCCV0G04kjBIp&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;WARNING! The VAULT_TOKEN environment variable is set! The value of this
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;variable will take precedence&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; this is unwanted please &lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; VAULT_TOKEN or
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;update its value accordingly.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 警告！已設置 VAULT_TOKEN 環境變數！此變數的值將優先考慮；如果不需要此設置，請取消設置 VAULT TOKEN 或相應地更新其值。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由於在前面的操作中，環境變數中仍帶有 &lt;code&gt;VAULT_TOKEN&lt;/code&gt;，而且是更高權限的永不過期 root token，vault CLI 偵測到 VAULT TOKEN env，跳出警告。&lt;/p&gt;
+&lt;p&gt;你可以透過以下指令清除 &lt;code&gt;VAULT_TOKEN&lt;/code&gt; 環境變數&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; VAULT_TOKEN
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然後再次執行 vault login，在回傳的輸入令中輸入新產生的 child token hvs.FbAeXWmXGAeCCCV0G04kjBIp&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，顯示成功登入，並回傳 token 的相關訊息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Token (will be hidden):
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! You are now authenticated. The token information displayed below
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;is already stored in the token helper. You do NOT need to run &amp;#34;vault login&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;again. Future Vault requests will automatically use this token.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                  Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                  -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token                hvs.FbAeXWmXGAeCCCV0G04kjBIp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_accessor       rPOOSI06WGnFo9MVOvS8luhn
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_duration       ∞
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_renewable      false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_policies       [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity_policies    []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies             [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此token是root token的子token，繼承其 parent token的policy 權限，也就是 root。本身是無效期限制的永久 root token。&lt;/p&gt;
+&lt;p&gt;在創建一把 token，此時由於 vault login，進入登入狀態，token 已經存在本地中&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault token create
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，第二隻 token 為 hvs.FDjvyRFXoVC6DF5tYvLCQVFG。每一隻 token 都是不重複的。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                  Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                  -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token                hvs.FDjvyRFXoVC6DF5tYvLCQVFG
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_accessor       gLe7IrUMUq4eb2pZWVdUhbHv
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_duration       ∞
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_renewable      false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;token_policies       [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;identity_policies    []
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;policies             [&amp;#34;root&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;revoke-撤銷-token&#34;&gt;revoke 撤銷 token&lt;/h3&gt;
+&lt;p&gt;當我們不再需要使用 token 時，最好盡快撤銷 revoke token&lt;/p&gt;
+&lt;p&gt;目前的 token 樹狀結構&lt;/p&gt;
+&lt;p&gt;初始 root token (啟動 dev Server 時預設產生的)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;child: hvs.FbAeXWmXGAeCCCV0G04kjBIp
+&lt;ul&gt;
+&lt;li&gt;grandchild: hvs.FDjvyRFXoVC6DF5tYvLCQVFG&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;你可以使用指令，撤銷第一把產生的 token (child)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault token revoke hvs.FbAeXWmXGAeCCCV0G04kjBIp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;CLI output，顯示 token 已經撤銷&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Success! Revoked token &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; it existed&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同時，vault server log 紀錄 revoked lease&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-16T21:29:21.464+0800 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  expiration: revoked lease: &lt;span class=&#34;nv&#34;&gt;lease_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;auth/token/create/hf153f5e80ed722f6816f592032a43906a5606a889bab4c13ff3368c9a1b95b69
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;還記得我們是使用地一把產生的 token (child) login 的嗎？目前的登入當然也隨著 token 失效，嘗試存取回傳 403 權限被拒&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zed&#34; data-lang=&#34;zed&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;vault&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;secrets&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;listing&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;secrets&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;engines&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;making&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;API&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;URL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GET&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//127.0.0.1:8200/v1/sys/mounts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;403&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Errors&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;permission&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;denied&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;嘗試重新 login，使用地一把產生的 token (child) 一樣被拒&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zed&#34; data-lang=&#34;zed&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Token&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;will&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;be&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hidden&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;authenticating&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;looking&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;up&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;token&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;making&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;API&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;URL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GET&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//127.0.0.1:8200/v1/auth/token/lookup-self
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;403&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Errors&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;permission&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;denied&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;撤銷token 時，也會一併撤銷使用這把 token 產生的子 token (grandchild)&lt;/p&gt;
+&lt;p&gt;嘗試重新 login，使用第二把產生的 token (grandchild) 一樣被拒&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zed&#34; data-lang=&#34;zed&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Token&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;will&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;be&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hidden&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;authenticating&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;looking&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;up&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;token&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;making&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;API&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;URL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GET&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//127.0.0.1:8200/v1/auth/token/lookup-self
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;403&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Errors&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;permission&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;denied&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;為何總是要使用-root-token&#34;&gt;為何總是要使用 root token&lt;/h3&gt;
+&lt;p&gt;上面講了 vault 核心的 token auth method，相信讀者一定有一個奇怪的感覺&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最開始 login 需要 token&lt;/li&gt;
+&lt;li&gt;產生 token 在去產生新的 token&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;這樣產生 token 的 admin 不就需要將 token 先傳給使用者，使用者才能登入嗎？這樣傳遞 token 的行為，不是反而增加更大的曝險。&lt;/p&gt;
+&lt;p&gt;這樣真的有比一般使用 username password 登入的方法更安全嗎？&lt;/p&gt;
+&lt;p&gt;上面的想法都是有道理的，也就是說，光使用 token auth methods 是無法滿足我們的安全需求。這些安全需求，需要使用其他 auth method 方法來解決，而 vault 強大之處便是支援的許多 auth method，將 vault 的安全建立在其他更穩定的服務上，例如 github / aws / azure / gcp / kubernetes 等。&lt;/p&gt;
+&lt;p&gt;下一篇，我們就來實作 github auth method。&lt;/p&gt;
+&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-authentication&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-authentication&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -72,6 +551,7 @@
       <pubDate>Thu, 14 Sep 2023 00:42:26 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-15-vault-workshop-secret-engine-kv-v2/</guid>
       <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;day-04secret-engine-kv-v2&#34;&gt;Day 04：Secret Engine KV V2&lt;/h1&gt;
 &lt;p&gt;KV秘密引擎，用於在Vault的已配置物理Storage中，存儲任意秘密。&lt;/p&gt;
@@ -569,6 +1049,7 @@
       <pubDate>Wed, 13 Sep 2023 22:42:26 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-14-vault-workshop-secret-engine/</guid>
       <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;day-03細探-secret-engine-秘密引擎&#34;&gt;Day 03：細探 Secret Engine 秘密引擎&lt;/h1&gt;
 &lt;h3 id=&#34;什麼是秘密引擎&#34;&gt;什麼是秘密引擎？&lt;/h3&gt;
@@ -756,6 +1237,7 @@
       <pubDate>Wed, 13 Sep 2023 21:42:26 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/</guid>
       <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;h1 id=&#34;day-02-準備執行一個本地開發用途的-vault&#34;&gt;Day 02 準備：執行一個本地開發用途的 Vault&lt;/h1&gt;
 &lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;準備工作&#34;&gt;準備工作&lt;/h3&gt;
@@ -986,6 +1468,7 @@
       <pubDate>Tue, 12 Sep 2023 20:35:19 +0800</pubDate>
       <guid>https://chechia.net/zh-hant/post/2023-09-12-vault-workshop-introduction/</guid>
       <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;h1 id=&#34;day-01-前言從零開始的-hashicorp-vault-workshop&#34;&gt;Day 01 前言：從零開始的 Hashicorp Vault Workshop&lt;/h1&gt;
 &lt;p&gt;從零開始 workshop 系列已經做了四年，內容包含 k8s, terraform, aws 等。&lt;/p&gt;
 &lt;p&gt;深深覺得要學習一個工具，還是要動手做。&lt;/p&gt;
@@ -1004,6 +1487,26 @@
 &lt;li&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/users/20120327/ironman/4057&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2021 鐵人賽: Terraform Workshop - Infrastructure as Code for Public Cloud&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2020/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2020 鐵人賽: Kubernetes X DevOps X 從零開始導入工具 X 需求分析&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2019 鐵人賽: Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;預定內容與許願清單&#34;&gt;預定內容與許願清單&lt;/h1&gt;
+&lt;p&gt;本 workshop 預計有底下內容&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Day 01 前言：從零開始的 Hashicorp Vault Workshop&lt;/li&gt;
+&lt;li&gt;Day 02 準備：執行一個本地開發用途的 Vault&lt;/li&gt;
+&lt;li&gt;Day 03：細探 Secret Engine 秘密引擎&lt;/li&gt;
+&lt;li&gt;Day 04：Secret Engine KV V2&lt;/li&gt;
+&lt;li&gt;Day 05：Authentication&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;github auth method&lt;/li&gt;
+&lt;li&gt;Dynamic Secrets&lt;/li&gt;
+&lt;li&gt;tls certificate management&lt;/li&gt;
+&lt;li&gt;Infrastructure as Code for Vault&lt;/li&gt;
+&lt;li&gt;Vault Kuberntes integration&lt;/li&gt;
+&lt;li&gt;Azure integration&lt;/li&gt;
+&lt;li&gt;AWS integration&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/concepts/tokens#root-tokens&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;token in detail&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;關於翻譯工具-chatgpt&#34;&gt;關於翻譯工具 chatGPT&lt;/h3&gt;
 &lt;p&gt;本系列文章大量使用 chatGPT 翻譯官方文章。目的是使用最新版官方文件內容，提供第一手且精準的資料給讀者，但又能降低非母語讀者得學習門檻。&lt;/p&gt;
