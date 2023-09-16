@@ -387,7 +387,7 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
     />
   
   
-    <meta property="article:modified_time" content="2023-09-14T23:56:38&#43;08:00">
+    <meta property="article:modified_time" content="2023-09-16T12:57:41&#43;08:00">
   
 
 
@@ -418,7 +418,7 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
   "headline": "Vault Workshop 01: Introduction",
   
   "datePublished": "2023-09-12T20:35:19+08:00",
-  "dateModified": "2023-09-14T23:56:38+08:00",
+  "dateModified": "2023-09-16T12:57:41+08:00",
   
   "author": {
     "@type": "Person",
@@ -475,7 +475,7 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="f1ea4a058b3c2ba2dac2d99ffb48d7af" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="65feca0329c2cf52a51a072f2efd39dd" >
 
   
   
@@ -902,7 +902,7 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
           最近更新於
       
     
-    9月 14, 2023
+    9月 16, 2023
   </span>
   
 
@@ -978,17 +978,17 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
 <a href="https://developer.hashicorp.com/vault/docs/what-is-vault" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/docs/what-is-vault</a>
 內容，並由筆者人工校驗</p>
 <p>base context</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與您對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。不要使用敬語，請用你取代您。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。不要使用敬語，請用你取代您。
 </span></span></code></pre></div><p>result correction</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">修正下列翻譯：秘密改為私鑰，數據改為資料，數據庫改為資料庫，數據改為資料，訪問改為存取，源代碼改為原始碼。
 </span></span></code></pre></div><h3 id="what-is-vault-1">What is Vault?</h3>
-<p>HashiCorp Vault 是一套基於身份的私鑰和加密管理系統。所謂的&quot;私鑰&quot;，是您希望嚴格控制存取的資訊，例如 API key、密碼和certificate。Vault 提供加密服務，並透過認證和授權方法進行管控。使用 Vault 的使用者介面、命令列介面或 HTTP API，可以安全地儲存和管理私鑰及其他敏感資料，並能嚴格控制（限制）其存取權，並可進行 audit。</p>
+<p>HashiCorp Vault 是一套基於身份的私鑰和加密管理系統。所謂的&quot;私鑰&quot;，是你希望嚴格控制存取的資訊，例如 API key、密碼和certificate。Vault 提供加密服務，並透過認證和授權方法進行管控。使用 Vault 的使用者介面、命令列介面或 HTTP API，可以安全地儲存和管理私鑰及其他敏感資料，並能嚴格控制（限制）其存取權，並可進行 audit。</p>
 <p>現代系統需要存取大量的私鑰，包括資料庫憑證、外部服務的 API key、面向服務的架構通訊憑證等。了解誰正在存取哪些私鑰可能相當困難，尤其當這種存取可能因平台而異。而在此基礎上加入key rolling、安全儲存和詳細的audit trail，若無自訂的解決方案幾乎是不可能的。這正是 Vault 發揮作用的地方。</p>
 <p>Vault 會驗證並授權客戶端（用戶、機器、應用程序）在提供他們存取秘密或儲存的敏感資料之前。</p>
 <h3 id="vault-如何運作">Vault 如何運作：</h3>
-<p>Vault 主要使用 token，且 token 與客戶端的 policy 相關聯。每一 policy 都是基於 path-based 的，policy rule 限制每個客戶端對於每一 path 的行動和存取能力。使用 Vault，您可以手動建立 token 並指派給您的客戶端，或客戶端可以登入並獲得 token。下面的插圖顯示了 Vault 的核心工作流程。</p>
+<p>Vault 主要使用 token，且 token 與客戶端的 policy 相關聯。每一 policy 都是基於 path-based 的，policy rule 限制每個客戶端對於每一 path 的行動和存取能力。使用 Vault，你可以手動建立 token 並指派給你的客戶端，或客戶端可以登入並獲得 token。下面的插圖顯示了 Vault 的核心工作流程。</p>
 <p>
 
 
@@ -1041,13 +1041,13 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
 <p>現今的大多數企業都有憑證散布在其組織中。密碼、API 金鑰和憑證存儲在明文中、應用源代碼、配置文件和其他位置。由於這些憑證存在於各處，因此可能很難真正知道誰有存取和授權權限。明文中的憑證也增加了內部和外部攻擊者進行惡意攻擊的可能性。</p>
 <p>考慮到這些挑戰，Vault 被設計出來。Vault 採取所有這些憑證並集中管理，這樣他們就只在一個位置定義，從而減少了憑證的不必要暴露。但 Vault 更進一步，確保用戶、應用程序和系統都被認證並明確授權存取資源，同時也提供一個審計跟踪，捕捉並保留客戶端操作的歷史記錄。</p>
 <h3 id="vault-的主要功能包括">Vault 的主要功能包括</h3>
-<p>安全的秘密存儲：可以在 Vault 中存儲任意的金鑰/值秘密。Vault 在將這些秘密寫入持久性存儲之前會對其進行加密，因此獲取原始存儲並不足以存取您的秘密。Vault 可以寫入磁盤、Consul 等。</p>
+<p>安全的秘密存儲：可以在 Vault 中存儲任意的金鑰/值秘密。Vault 在將這些秘密寫入持久性存儲之前會對其進行加密，因此獲取原始存儲並不足以存取你的秘密。Vault 可以寫入磁盤、Consul 等。</p>
 <p>動態秘密：Vault 可以為某些系統即時生成秘密，例如 AWS 或 SQL 數據庫。例如，當應用程序需要存取 S3 桶時，它會要求 Vault 提供憑證，Vault 將即時生成具有有效權限的 AWS 密鑰對。在創建這些動態秘密後，Vault 也會在租期到期後自動撤銷它們。</p>
 <p>數據加密：Vault 可以在不存儲數據的情況下加密和解密數據。這允許安全團隊定義加密參數，並允許開發人員將加密數據存儲在如 SQL 數據庫之類的地方，而不必設計他們自己的加密方法。</p>
 <p>租賃和續期：Vault 中的所有秘密都有一個與之相關的租期。在租期結束時，Vault 會自動撤銷該秘密。客戶端可以通過內置的續期 API 來續租。</p>
 <p>撤銷：Vault 具有內置的秘密撤銷支援。Vault 不僅可以撤銷單一的秘密，還可以撤銷秘密樹，例如由特定用戶讀取的所有秘密，或特定類型的所有秘密。撤銷在金鑰滾動以及在入侵情況下鎖定系統時都很有幫助。</p>
 <h3 id="什麼是-hcp-vault">什麼是 HCP Vault？</h3>
-<p>HashiCorp Cloud Platform (HCP) Vault 是 Vault 的託管版本，由 HashiCorp 運營，使組織能夠快速啟動並運行。HCP Vault 使用與自託管的 Vault 相同的二進制文件，這意味著您將擁有一致的用戶體驗。您可以使用相同的 Vault 客戶端與 HCP Vault 通信，就像您使用自託管的 Vault 一樣。請參考 HCP Vault 文檔以獲得更多資訊。</p>
+<p>HashiCorp Cloud Platform (HCP) Vault 是 Vault 的託管版本，由 HashiCorp 運營，使組織能夠快速啟動並運行。HCP Vault 使用與自託管的 Vault 相同的二進制文件，這意味著你將擁有一致的用戶體驗。你可以使用相同的 Vault 客戶端與 HCP Vault 通信，就像你使用自託管的 Vault 一樣。請參考 HCP Vault 文檔以獲得更多資訊。</p>
 
     </div>
 
@@ -1068,6 +1068,8 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
   <a class="badge badge-light" href="/zh-hant/tag/terraform/">terraform</a>
   
   <a class="badge badge-light" href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/">鐵人賽2023</a>
+  
+  <a class="badge badge-light" href="/zh-hant/tag/chatgpt/">chatgpt</a>
   
 </div>
 
