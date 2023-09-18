@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月16日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月18日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -989,6 +989,104 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-18-vault-workshop-policy-and-approle/" >Vault Workshop 07: Policy &amp; approle</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-18-vault-workshop-policy-and-approle/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 07: Policy &amp; Approle 在 Vault 中，策略（Policies）控制著使用者可以訪問的資源。在上一篇身份驗證中，你已經學到了身份驗證方法(authentication method)。而這一節是關於授權(Authorization)，也就是合法的用戶登入後，應該能夠取得怎樣的權限。
+在身份驗證方面，Vault 提供了多種啟用和使用的選項或方法。Vault 在授權和 policy 方面也使用相同的設計。所有身份驗證方法都將登入者的身份 map 回與 Vault 配置的核心 policy。
+準備環境 在 vault 官方網站文件中，Hashicorp 官方準備了 https://instruqt.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 18, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/post/2023-09-17-vault-workshop-authentication-github/" >Vault Workshop 06: Github Auth method</a>
     </div>
 
@@ -1025,7 +1123,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -1123,7 +1221,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -1224,7 +1322,7 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -1322,7 +1420,7 @@ Day 03：細探 Secret Engine 秘密引擎 什麼是秘密引擎？ 秘密引擎
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -1521,7 +1619,7 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -1714,106 +1812,19 @@ webbase link (online)
 </div>
 
   
-    
-
-
-
-
-
-
-
-
-
-
-
-
 
   
 
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2021-11-16-ithome-cloud-summit-vault/" >2021 11 16 Ithome Cloud Summit Vault</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2021-11-16-ithome-cloud-summit-vault/"  class="summary-link">
-      <div class="article-style">
-        各位好
-關於這個 QRcode
-每次上台前，我都會想要帶什麼樣的內容給觀眾，讓觀眾值得花 30 分鐘在底下聽。後來就習慣先發表一篇文章，把對觀眾有幫助的資源包成一包：
-首先是完整投影片：https://slides.com/chechiac&hellip;/terraform-introduction-a56697 逐字講稿：(最後校稿中） 然而只有本次演講內容，回去可能還是不太容易操作。所以這次附上使用 Terraform 一鍵部署 vault 的 Github Repository：https://github.com/&hellip;/southe&hellip;/chechia_net/vault/singleton 如果不熟 Terraform，再附上 30 天手把手 Terraform 教學文章，只要願意花時間，全篇中文一個月帶你上手 Terraform。 IThome 鐵人賽好讀版：https://ithelp.ithome.com.tw/users/20120327/ironman/4057 Github Repository 完整版：https://github.com/&hellip;/terraform-30&hellip;/tree/main/lecture/zh 如果遇到問題還是需要找人發問，所以再推薦兩個社群，可以來這邊發問，要找我本人也找得到。甚至只是加入潛水不講話，都可以被動吸收許多新知。 Cloud Native Taiwan User Group https://t.
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
   
-  
-
-  
-  <span class="article-date">
+<nav class="mt-1">
+  <ul class="pagination justify-content-center">
     
     
-      
-          最近更新於
-      
+    <li class="page-item"><a class="page-link" href="/zh-hant/tag/vault/page/2/">&raquo;</a></li>
     
-    9月 11, 2023
-  </span>
-  
+  </ul>
+</nav>
 
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    5 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/technology/">Technology</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-
-  
-
-  
 
 </div>
   </div>

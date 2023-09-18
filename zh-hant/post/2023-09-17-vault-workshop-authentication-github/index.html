@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月16日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月18日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -383,7 +383,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
     />
   
   
-    <meta property="article:modified_time" content="2023-09-16T23:05:51&#43;08:00">
+    <meta property="article:modified_time" content="2023-09-18T23:08:00&#43;08:00">
   
 
 
@@ -414,7 +414,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
   "headline": "Vault Workshop 06: Github Auth method",
   
   "datePublished": "2023-09-14T02:42:26+08:00",
-  "dateModified": "2023-09-16T23:05:51+08:00",
+  "dateModified": "2023-09-18T23:08:00+08:00",
   
   "author": {
     "@type": "Person",
@@ -898,7 +898,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -950,7 +950,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
 <p>在練習中所描述的這種身份驗證方法，需要你擁有 GitHub、屬於 GitHub org 中的一個 team ，並生成了具有 <code>read:org</code> scope 的 GitHub personal access token。你可以於 github 創建一個 free plan 的 org，並設定一個 team，然後透過個人 Settings / Developer Settings 來產生一把具有 <code>read:org</code> 權限的 personal access token</p>
 <h3 id="啟用-github-auth-method">啟用 github auth method</h3>
 <p>你可以使用下列指令，在 path=github/ 下啟用 GitHub 身份驗證方法。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY...9KYv
 </span></span><span class="line"><span class="cl">vault auth <span class="nb">enable</span> github
 </span></span></code></pre></div><p>這個指令使用 root token 設定 auth method，也是整個 github auth methods 中，唯一需要用到 root token 設定的地方，而且只需要設定一次</p>
 <p>output</p>
@@ -1044,7 +1044,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Key                    Value
 </span></span><span class="line"><span class="cl">---                    -----
-</span></span><span class="line"><span class="cl">token                  hvs.CAESIBMsgvXNDOE6n4ZLMWZ_3GH4oC2A0G3cVtCTwOtrq6igGh4KHGh2cy5OYzBRV3hmMU4xR3ZkWHhzODJuRHRncU0
+</span></span><span class="line"><span class="cl">token                  hvs.CAESI...ncU0
 </span></span><span class="line"><span class="cl">token_accessor         lKVpMawotXg1fXcgRvpAOAwQ
 </span></span><span class="line"><span class="cl">token_duration         768h
 </span></span><span class="line"><span class="cl">token_renewable        true
@@ -1067,7 +1067,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
 </span></span><span class="line"><span class="cl">entity_id           5d8af1ab-53a2-e1c5-61bf-bb0b6c7d190f
 </span></span><span class="line"><span class="cl">expire_time         2023-10-18T22:10:34.812089+08:00
 </span></span><span class="line"><span class="cl">explicit_max_ttl    0s
-</span></span><span class="line"><span class="cl">id                  hvs.CAESIBMsgvXNDOE6n4ZLMWZ_3GH4oC2A0G3cVtCTwOtrq6igGh4KHGh2cy5OYzBRV3hmMU4xR3ZkWHhzODJuRHRncU0
+</span></span><span class="line"><span class="cl">id                  hvs.CAESI...ncU0
 </span></span><span class="line"><span class="cl">issue_time          2023-09-16T22:10:34.812099+08:00
 </span></span><span class="line"><span class="cl">meta                map[org:chechia-net username:chechiachang]
 </span></span><span class="line"><span class="cl">num_uses            0
@@ -1090,7 +1090,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Key                    Value
 </span></span><span class="line"><span class="cl">---                    -----
-</span></span><span class="line"><span class="cl">token                  hvs.CAESIIR3XBwj27kCOI76Qm01RmWigR8IraYW4daHOptol0VBGh4KHGh2cy44aEh4dE05UVdraG9hNmFWUURRRFBRcmE
+</span></span><span class="line"><span class="cl">token                  hvs.CAES...RcmE
 </span></span><span class="line"><span class="cl">token_accessor         6DbsDizOenhCuWMmUWspTZwp
 </span></span><span class="line"><span class="cl">token_duration         768h
 </span></span><span class="line"><span class="cl">token_renewable        true
@@ -1117,7 +1117,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Key                  Value
 </span></span><span class="line"><span class="cl">---                  -----
-</span></span><span class="line"><span class="cl">token                hvs.J80wvFtkQqwg4ihuIm1mmjoh
+</span></span><span class="line"><span class="cl">token                hvs.J80w...mjoh
 </span></span><span class="line"><span class="cl">token_accessor       DaI1V1rq9tKZX5EaO4AfMI26
 </span></span><span class="line"><span class="cl">token_duration       ∞
 </span></span><span class="line"><span class="cl">token_renewable      false
@@ -1151,7 +1151,7 @@ Day 06：Github auth method 不需要使用 root token 的 auth method: github V
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">不要使用敬語，翻譯結果中若出現&#34;您&#34;，請用&#34;你&#34;取代&#34;您&#34;。
 </span></span></code></pre></div><p>result correction</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">修正下列翻譯：將 &#34;數據&#34; 改為 &#34;資料&#34;，將 &#34;數據庫&#34; 改為 &#34;資料庫&#34;，將 &#34;數據&#34; 改為 &#34;資料&#34;，將 &#34;訪問&#34; 改為 &#34;存取&#34;，將 &#34;源代碼&#34; 改為 &#34;原始碼&#34;，將 &#34;信息&#34; 改為 &#34;資訊&#34;，將 &#34;命令&#34; 改為 &#34;指令&#34;，將 &#34;禁用&#34; 改為 &#34;停用&#34;，將 &#34;默認&#34; 改為 &#34;預設&#34;。
 </span></span></code></pre></div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月16日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月18日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -385,7 +385,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
     />
   
   
-    <meta property="article:modified_time" content="2023-09-16T23:05:35&#43;08:00">
+    <meta property="article:modified_time" content="2023-09-18T23:08:00&#43;08:00">
   
 
 
@@ -416,7 +416,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
   "headline": "Vault Workshop 05: Authentication",
   
   "datePublished": "2023-09-14T01:42:26+08:00",
-  "dateModified": "2023-09-16T23:05:35+08:00",
+  "dateModified": "2023-09-18T23:08:00+08:00",
   
   "author": {
     "@type": "Person",
@@ -900,7 +900,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
           最近更新於
       
     
-    9月 16, 2023
+    9月 18, 2023
   </span>
   
 
@@ -971,7 +971,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># dev 模式預設配置的 unseal key 與 root token
 </span></span><span class="line"><span class="cl">    Unseal Key: QDUAuY7Kltsc/3bVwUYF39u8aEFgWNRs/1D5yxFtim4=
-</span></span><span class="line"><span class="cl">    Root Token: hvs.J30e53uuKDhrWVttCvK0DJaN
+</span></span><span class="line"><span class="cl">    Root Token: hvs.J30e...0DJaN
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># 開發模式絕不應在生產安裝中使用！
 </span></span><span class="line"><span class="cl">    Development mode should NOT be used in production installations!
@@ -982,7 +982,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 <p>你可以使用以下指令，檢查儲存於本地的 vault token</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat ~/.vault-token
 </span></span></code></pre></div><p>output</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hvs.J30e53uuKDhrWVttCvK0DJaN%
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hvs.J30e...0DJaN%
 </span></span></code></pre></div><p>vault CLI 自動取用本地儲存的 root token，所以已經自動完成 authentication，不用額外進行 authentication，也可以使用 Vault</p>
 <p>使用 Vault 時，須額外注意本地儲存的 token</p>
 <h3 id="避免-dev-模式下儲存-root-token">避免 dev 模式下儲存 root token</h3>
@@ -1002,7 +1002,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </span></span><span class="line"><span class="cl">seal/unseal the Vault or re-authenticate.
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Unseal Key: hNi8T3YctTZrLYlKezLAJttfiF97D1Vy7Tq+HMM3y9w<span class="o">=</span>
-</span></span><span class="line"><span class="cl">Root Token: hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+</span></span><span class="line"><span class="cl">Root Token: hvs.qCqY...p89KYv
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Development mode should NOT be used in production installations!
 </span></span></code></pre></div><p>你可以檢查本地使否有儲存的的 vault token</p>
@@ -1023,11 +1023,11 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 <p>你可以使用 vault dev Server log 中回傳的 root token 來存取 Vault server</p>
 <p>你可以將 token 在寫回 .vault-token，這是最方便，也最危險</p>
 <p>建議：永遠不要儲存 root token 在本地電腦上。非常容易遺忘自己本地有儲存 root token。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> hvs.qCqY9ZO3oNS6VrrKMHp89KYv &gt; ~/.vault-token
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> hvs.qCqY...p89KYv &gt; ~/.vault-token
 </span></span></code></pre></div><p>另一個方式是使用環境變數 <code>VAULT_TOKEN</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY9ZO3oNS6VrrKMHp89KYv vault secrets list
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY...p89KYv vault secrets list
 </span></span></code></pre></div><p>上面是在 CLI 前面插入環境變數，下面是 export <code>VAULT_TOKEN</code> 到當前 session 的環境變數</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY...p89KYv
 </span></span><span class="line"><span class="cl">vault secrets list
 </span></span></code></pre></div><p>output</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Path          Type         Accessor              Description
@@ -1040,7 +1040,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">env <span class="p">|</span> grep VAULT
 </span></span></code></pre></div><p>output</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">VAULT_ADDR</span><span class="o">=</span>http://127.0.0.1:8200
-</span></span><span class="line"><span class="cl"><span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY9ZO3oNS6VrrKMHp89KYv
+</span></span><span class="line"><span class="cl"><span class="nv">VAULT_TOKEN</span><span class="o">=</span>hvs.qCqY...p89KYv
 </span></span></code></pre></div><p>當然，<code>VAULT_TOKEN</code> 的存在時間越久，token 曝險的機率就越高。</p>
 <p>也很容易忘記 <code>VAULT_TOKEN</code> 有存在的環境變數。</p>
 <h3 id="vault-token-雷點">VAULT TOKEN 雷點</h3>
@@ -1074,23 +1074,23 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 <p>同時，當root token處於活動狀態時，建議團隊中提供多人一起協作，共同檢查 terminal session，養成一種良好的安全實踐。這樣多人可以驗證使用root token執行的任務，以及這些任務完成後，立即撤銷了該token。</p>
 <h3 id="使用-root-token-產生-short-live-token">使用 root token 產生 short-live token</h3>
 <p>root token 預設配置 root policy，我們可以產生權限較小的 token，並指配置最小必要權限(least privilege)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">VAULT_TOKEN=hvs.qCqY9ZO3oNS6VrrKMHp89KYv vault token create
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">VAULT_TOKEN=hvs.qCqY...p89KYv vault token create
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Key                  Value
 </span></span><span class="line"><span class="cl">---                  -----
-</span></span><span class="line"><span class="cl">token                hvs.FbAeXWmXGAeCCCV0G04kjBIp
+</span></span><span class="line"><span class="cl">token                hvs.FbAeX...kjBIp
 </span></span><span class="line"><span class="cl">token_accessor       rPOOSI06WGnFo9MVOvS8luhn
 </span></span><span class="line"><span class="cl">token_duration       ∞
 </span></span><span class="line"><span class="cl">token_renewable      false
 </span></span><span class="line"><span class="cl">token_policies       [&#34;root&#34;]
 </span></span><span class="line"><span class="cl">identity_policies    []
 </span></span><span class="line"><span class="cl">policies             [&#34;root&#34;]
-</span></span></code></pre></div><p>已創建token，輸出中以key value的表格描述了此token。創建的token在此處顯示為 hvs.FbAeXWmXGAeCCCV0G04kjBIp</p>
+</span></span></code></pre></div><p>已創建token，輸出中以key value的表格描述了此token。創建的token在此處顯示為 hvs.FbAeX&hellip;kjBIp</p>
 <p>此token是root token的子token，並且預設情況下，它會繼承其 parent token的policy 權限。</p>
 <p>token是核心身份驗證方法(core auth method)。你可以使用生成的token來 login Vault，只需在提示時複製並粘貼即可。</p>
 <p>你可以使用以下指令登入 vault</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vault login
-</span></span></code></pre></div><p>在回傳的輸入令中輸入新產生的 child token hvs.FbAeXWmXGAeCCCV0G04kjBIp</p>
+</span></span></code></pre></div><p>在回傳的輸入令中輸入新產生的 child token hvs.FbAeX&hellip;kjBIp</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">WARNING! The VAULT_TOKEN environment variable is set! The value of this
 </span></span><span class="line"><span class="cl">variable will take precedence<span class="p">;</span> <span class="k">if</span> this is unwanted please <span class="nb">unset</span> VAULT_TOKEN or
@@ -1100,7 +1100,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </span></span></code></pre></div><p>由於在前面的操作中，環境變數中仍帶有 <code>VAULT_TOKEN</code>，而且是更高權限的永不過期 root token，vault CLI 偵測到 VAULT TOKEN env，跳出警告。</p>
 <p>你可以透過以下指令清除 <code>VAULT_TOKEN</code> 環境變數</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">unset</span> VAULT_TOKEN
-</span></span></code></pre></div><p>然後再次執行 vault login，在回傳的輸入令中輸入新產生的 child token hvs.FbAeXWmXGAeCCCV0G04kjBIp</p>
+</span></span></code></pre></div><p>然後再次執行 vault login，在回傳的輸入令中輸入新產生的 child token hvs.FbAeX&hellip;kjBIp</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vault login
 </span></span></code></pre></div><p>output，顯示成功登入，並回傳 token 的相關訊息</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Token (will be hidden):
@@ -1111,7 +1111,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Key                  Value
 </span></span><span class="line"><span class="cl">---                  -----
-</span></span><span class="line"><span class="cl">token                hvs.FbAeXWmXGAeCCCV0G04kjBIp
+</span></span><span class="line"><span class="cl">token                hvs.FbAeX...kjBIp
 </span></span><span class="line"><span class="cl">token_accessor       rPOOSI06WGnFo9MVOvS8luhn
 </span></span><span class="line"><span class="cl">token_duration       ∞
 </span></span><span class="line"><span class="cl">token_renewable      false
@@ -1121,10 +1121,10 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </span></span></code></pre></div><p>此token是root token的子token，繼承其 parent token的policy 權限，也就是 root。本身是無效期限制的永久 root token。</p>
 <p>在創建一把 token，此時由於 vault login，進入登入狀態，token 已經存在本地中</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vault token create
-</span></span></code></pre></div><p>output，第二隻 token 為 hvs.FDjvyRFXoVC6DF5tYvLCQVFG。每一隻 token 都是不重複的。</p>
+</span></span></code></pre></div><p>output，第二隻 token 為 hvs.FDjvyRFXo&hellip;QVFG。每一隻 token 都是不重複的。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Key                  Value
 </span></span><span class="line"><span class="cl">---                  -----
-</span></span><span class="line"><span class="cl">token                hvs.FDjvyRFXoVC6DF5tYvLCQVFG
+</span></span><span class="line"><span class="cl">token                hvs.FDjvyRFXo...QVFG
 </span></span><span class="line"><span class="cl">token_accessor       gLe7IrUMUq4eb2pZWVdUhbHv
 </span></span><span class="line"><span class="cl">token_duration       ∞
 </span></span><span class="line"><span class="cl">token_renewable      false
@@ -1136,14 +1136,14 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 <p>目前的 token 樹狀結構</p>
 <p>初始 root token (啟動 dev Server 時預設產生的)</p>
 <ul>
-<li>child: hvs.FbAeXWmXGAeCCCV0G04kjBIp
+<li>child: hvs.FbAeX&hellip;kjBIp
 <ul>
-<li>grandchild: hvs.FDjvyRFXoVC6DF5tYvLCQVFG</li>
+<li>grandchild: hvs.FDjvyRFXo&hellip;QVFG</li>
 </ul>
 </li>
 </ul>
 <p>你可以使用指令，撤銷第一把產生的 token (child)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vault token revoke hvs.FbAeXWmXGAeCCCV0G04kjBIp
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vault token revoke hvs.FbAeX...kjBIp
 </span></span></code></pre></div><p>CLI output，顯示 token 已經撤銷</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Success! Revoked token <span class="o">(</span><span class="k">if</span> it existed<span class="o">)</span>
 </span></span></code></pre></div><p>同時，vault server log 紀錄 revoked lease</p>
@@ -1197,7 +1197,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">不要使用敬語，翻譯結果中若出現&#34;您&#34;，請用&#34;你&#34;取代&#34;您&#34;。
 </span></span></code></pre></div><p>result correction</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成英文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">修正下列翻譯：將 &#34;數據&#34; 改為 &#34;資料&#34;，將 &#34;數據庫&#34; 改為 &#34;資料庫&#34;，將 &#34;數據&#34; 改為 &#34;資料&#34;，將 &#34;訪問&#34; 改為 &#34;存取&#34;，將 &#34;源代碼&#34; 改為 &#34;原始碼&#34;，將 &#34;信息&#34; 改為 &#34;資訊&#34;，將 &#34;命令&#34; 改為 &#34;指令&#34;，將 &#34;禁用&#34; 改為 &#34;停用&#34;，將 &#34;默認&#34; 改為 &#34;預設&#34;。
 </span></span></code></pre></div>
