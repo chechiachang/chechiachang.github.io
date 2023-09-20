@@ -5,12 +5,429 @@
     <link>https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/</link>
       <atom:link href="https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/index.xml" rel="self" type="application/rss+xml" />
     <description>鐵人賽2023</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Thu, 14 Sep 2023 03:42:26 +0800</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Thu, 14 Sep 2023 04:42:26 +0800</lastBuildDate>
     <image>
       <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>鐵人賽2023</title>
       <link>https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/</link>
     </image>
+    
+    <item>
+      <title>Vault Workshop 08: Vault in Docker and Initialization</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-19-vault-workshop-docker-and-initialization/</link>
+      <pubDate>Thu, 14 Sep 2023 04:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-19-vault-workshop-docker-and-initialization/</guid>
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;day-08-vault-in-docker-and-initialization&#34;&gt;Day 08: Vault in Docker and Initialization&lt;/h1&gt;
+&lt;h3 id=&#34;vault-in-container&#34;&gt;Vault in container&lt;/h3&gt;
+&lt;p&gt;前幾天我們使用 vault dev Server 來啟用測試用的 Vault server。&lt;/p&gt;
+&lt;p&gt;在 production 環境我們不會使用 dev Server。Vault 提供許多安裝方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以使用 binary 直接安裝在VM上&lt;/li&gt;
+&lt;li&gt;也可以透過 hashicorp/vault official docker image，在container 環境中執行&lt;/li&gt;
+&lt;li&gt;或是使用 hashicorp official helm chart，安裝在kuberntes上&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;使用範例-repository&#34;&gt;使用範例 repository&lt;/h3&gt;
+&lt;p&gt;你可以使用筆者準備的範例 repository &lt;a href=&#34;https://github.com/chechiachang/vault-playground&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/chechiachang/vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone git@github.com:chechiachang/vault-playground.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; deploy/00-docker-dev/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以使用下列指令啟動 vault in docker&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;並使用 -v flag 來掛載 ./config/ volume 到 container 中的 /vault/config.d/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run --cap-add&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;IPC_LOCK &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --volume ./vault/config/:/vault/config.d &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --volume ./vault/file/:/vault/file &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --volume ./vault/logs/:/vault/logs &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 8200:8200 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --name vault_1 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -d &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  hashicorp/vault:1.14.3 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  vault server -config&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/vault/config.d/vault.hcl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然後使用 docker logs 指令檢視 vault server log&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker logs -f vault_1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;==&lt;/span&gt;&amp;gt; Vault server configuration:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Administrative Namespace:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             Api Address: https://0.0.0.0:8200
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                     Cgo: disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;         Cluster Address: https://0.0.0.0:8201
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Environment Variables: GODEBUG, GOTRACEBACK, HOME, HOSTNAME, NAME, PATH, PWD, SHLVL, VERSION
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              Go Version: go1.20.8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              Listener 1: tcp &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;addr: &lt;span class=&#34;s2&#34;&gt;&amp;#34;0.0.0.0:8200&amp;#34;&lt;/span&gt;, cluster address: &lt;span class=&#34;s2&#34;&gt;&amp;#34;0.0.0.0:8201&amp;#34;&lt;/span&gt;, max_request_duration: &lt;span class=&#34;s2&#34;&gt;&amp;#34;1m30s&amp;#34;&lt;/span&gt;, max_request_size: &lt;span class=&#34;s2&#34;&gt;&amp;#34;33554432&amp;#34;&lt;/span&gt;, tls: &lt;span class=&#34;s2&#34;&gt;&amp;#34;disabled&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;               Log Level:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   Mlock: supported: true, enabled: &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;           Recovery Mode: &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                 Storage: file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                 Version: Vault v1.14.3, built 2023-09-11T21:23:55Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             Version Sha: &lt;span class=&#34;nv&#34;&gt;56debfa71653e72433345f23cd26276bc90629ce&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;==&lt;/span&gt;&amp;gt; Vault server started! Log data will stream in below:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:38:25.914Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  proxy environment: &lt;span class=&#34;nv&#34;&gt;http_proxy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;https_proxy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;no_proxy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:38:25.920Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: Initializing version &lt;span class=&#34;nb&#34;&gt;history&lt;/span&gt; cache &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; core
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你會發現，vault server 不是以 dev server 的狀態啟動的，需要進行額外的初始化設定&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;VAULT_ADDR&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;http://127.0.0.1:8200&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;檢查 vault status&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault status
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，顯示一個上未初始化的 vault server 與其 storage backend &amp;ldquo;filesyste&amp;rdquo;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以在 ./vault/config/vault.hcl 上看到我們使用新的 Storage Backend &amp;ldquo;file&amp;rdquo; 設定&lt;/li&gt;
+&lt;li&gt;vault server 的 storage backend 目前是 sealed 狀態
+&lt;ul&gt;
+&lt;li&gt;不是 vault server sealed，而是沒有提供 vault server 初始化設定 / unseal keys，所以 vault server 無法解密 storage backend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Seal Type          shamir
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Initialized        &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Sealed             &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Total Shares       &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Threshold          &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Progress    0/0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Nonce       n/a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Version            1.14.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Build Date         2023-09-11T21:23:55Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Storage Type       file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;HA Enabled         &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;storage-backend-filesystem&#34;&gt;Storage Backend: filesystem&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/configuration/storage/filesystem&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/configuration/storage/filesystem&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;filesystem storage backend將 Vault 的資料存儲在文件系統上，使用標準的目錄結構。&lt;/p&gt;
+&lt;p&gt;它可以用於持久的Single Server情況，或者在本地開發時，耐久性不是關鍵問題的情況下使用。&lt;/p&gt;
+&lt;p&gt;filesystem storage backend 不支援高可用性 - 檔案系統後端不支援高可用性。&lt;/p&gt;
+&lt;p&gt;filesystem storage backend 由HashiCorp 官方支援 - 檔案系統後端是由 HashiCorp 官方支援維護的。&lt;/p&gt;
+&lt;h3 id=&#34;初始化-vault&#34;&gt;初始化 Vault&lt;/h3&gt;
+&lt;p&gt;初始化是配置 Vault 的過程。僅對第一次使用在 Vault server 上的 Backend 上執行一次。在高可用(HA)模式下運行時，這僅在每個叢集(Vault Cluster)中執行一次，而不是每台Server。&lt;/p&gt;
+&lt;p&gt;在初始化期間，將生成加密金鑰、創建 unseal keys，並創建 init root token。&lt;/p&gt;
+&lt;p&gt;初始化不需身份驗證，僅適用於全新的 Vault，有資料存在的 Storage Backend 無法用初始化解鎖。&lt;/p&gt;
+&lt;p&gt;要初始化 Vault，使用以下命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault operator init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key 1: 9AYJ...kNCn
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key 2: RqDx...odRU
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key 3: uHUv...lws4
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key 4: f+KD...aHgL
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key 5: AKyF...e6vd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Initial Root Token: hvs.8yU3...7esX
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Vault initialized with &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; key shares and a key threshold of 3. Please securely
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;distribute the key shares printed above. When the Vault is re-sealed,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;restarted, or stopped, you must supply at least &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; of these keys to unseal it
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;before it can start servicing requests.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Vault 使用了 5 個金鑰份額encryption key share和 3 的 key threshold 進行初始化。請安全地分發上面的金鑰份額。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 當 Vault 被重新密封、重新啟動或停止時，你必須提供至少 3 個這些金鑰來對其進行解封，然後它才能開始處理請求。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Vault does not store the generated root key. Without at least &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; keys to
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;reconstruct the root key, Vault will remain permanently sealed!
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Vault 不存儲生成的根金鑰。如果沒有至少 3 個金鑰來重建根金鑰，Vault 將保持永久密封！&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;It is possible to generate new unseal keys, provided you have a quorum of
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;existing unseal keys shares. See &lt;span class=&#34;s2&#34;&gt;&amp;#34;vault operator rekey&amp;#34;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; more information.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 如果你有足夠的現有解封金鑰份額，則可以生成新的解封金鑰。有關更多信息，請參閱 &amp;#34;vault operator rekey&amp;#34;。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;初始化過程輸出了兩個非常重要的信息：解封金鑰和 init root token。這是唯一一次 Vault 顯示這些資料。&lt;/p&gt;
+&lt;p&gt;為了這個入門課程，請將這些金鑰保存在某個地方，然後繼續進行操作。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Vault backend storage 認 key 不認人，請收好這五隻 unseal key，放置在五個不同安全的地方&lt;/li&gt;
+&lt;li&gt;有 3/5 的 unseal key 就能重建 encryption key，也就是能夠解密 storage backend&lt;/li&gt;
+&lt;li&gt;可以用 3/5 unseal key 產生 root token &lt;code&gt;vault operator generate-root&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;換句話說，unseal key 是比 root 還大的超級管理員 key&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;在實際的部署情況下，你永遠不應該將這些金鑰保存在一起。
+&lt;ul&gt;
+&lt;li&gt;你可能會使用 Vault 的 PGP 和 Keybase.io 支援，使用使用者的 PGP 金鑰加密每個解封金鑰。&lt;/li&gt;
+&lt;li&gt;這可以防止單個人擁有所有的解封金鑰。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;vault server log，可以看到 vault server 開始進行初始化流程&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:47:05.113Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: security barrier not initialized
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:47:05.117Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: seal configuration missing, not initialized
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.506Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: security barrier not initialized
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.512Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: seal configuration missing, not initialized
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.521Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: security barrier not initialized
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.557Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: security barrier initialized: &lt;span class=&#34;nv&#34;&gt;stored&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;shares&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;threshold&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.589Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: post-unseal setup starting
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.609Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: loaded wrapping token key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.609Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully setup plugin catalog: plugin-directory&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.613Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: no mounts&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; adding default mount table
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.629Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;cubbyhole &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;cubbyhole/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.631Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;system &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sys/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.631Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;identity &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;identity/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.686Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;token &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;token/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.696Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  rollback: starting rollback manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.697Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: restoring leases
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.698Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  expiration: lease restore &lt;span class=&#34;nb&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.713Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  identity: entities restored
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.714Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  identity: groups restored
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.720Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: usage gauge collection is disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:28.733Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: Recorded vault version: vault &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.14.3 upgrade &lt;span class=&#34;nv&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;2023-09-20 14:03:28.720230178 +0000 UTC&amp;#34;&lt;/span&gt; build &lt;span class=&#34;nv&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;2023-09-11T21:23:55Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:29.120Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: post-unseal setup &lt;span class=&#34;nb&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:29.146Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: root token generated
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:29.146Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: pre-seal teardown starting
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:29.146Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  rollback: stopping rollback manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:03:29.146Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: pre-seal teardown &lt;span class=&#34;nb&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以在這時檢視 ./vault/file 裡面的內容，./vault/file 在 &lt;code&gt;vault operator init&lt;/code&gt; 前是空白的&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -al ./vault/file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，可以看到 ./vault/file 內已經初始化 filesystem storage backend 的內容&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;core
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;logical
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sys
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以檢視 ./vault/file/* 內的檔案內容，會發現內容都是 json 相容格式，而且都經過加密&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在正常的條件下，沒有 unseal key 的人，是無法在有效時間內解鎖這些 filesystem 中的內容，內容還是受到保護&lt;/li&gt;
+&lt;li&gt;這並不代表你可以隨意放置 filesystem storage backend 的內容
+&lt;ul&gt;
+&lt;li&gt;例如將他 commit 到 repository 中(vault-playground 已經添加 .gitignore)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;請選擇安全，經過 vault 資安團隊測試過的 backend，來保障資料安全與可用程度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;unseal&#34;&gt;Unseal&lt;/h3&gt;
+&lt;p&gt;每個初始化的 Vault Server 都始於密封狀態。根據配置，Vault 可以訪問 storage backend，但它無法讀取其中的任何資料，因為它不知道如何解密它。教會 Vault 如何解密數據稱為解封(unseal) Vault。&lt;/p&gt;
+&lt;p&gt;每次 Vault 開始運行時都必須進行解封。可以通過 API 和命令行來執行解封操作。&lt;/p&gt;
+&lt;p&gt;要解封 Vault，你必須擁有解封金鑰的閾值數量(threshold)。在上面的輸出中，請注意 &amp;ldquo;key threshold&amp;rdquo; 是 3。這意味著要解封 Vault，你需要 5 個生成的金鑰中的 3 個。&lt;/p&gt;
+&lt;p&gt;注意&lt;/p&gt;
+&lt;p&gt;Vault 不存儲任何解封金鑰片段(key share)。Vault 使用一種稱為 Shamir&amp;rsquo;s Secret Sharing 的算法來將 root encryption key 分成片段(share)。只有擁有threshold數量的金鑰，才能將其重建，最終訪問你的資料。&lt;/p&gt;
+&lt;p&gt;開始解封 Vault：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault operator unseal
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;will be hidden&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key                Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---                -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Seal Type          shamir
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Initialized        &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Sealed             &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Total Shares       &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Threshold          &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Progress    1/3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Nonce       9d03a4e0-bb4f-cfd5-326b-5afb55fdce53
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Version            1.14.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Build Date         2023-09-11T21:23:55Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Storage Type       file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;HA Enabled         &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;繼續操作，輸入3/5把 unseal key 就可順利解封 storage backend&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;will be hidden&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Key             Value
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---             -----
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Seal Type       shamir
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Initialized     &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Sealed          &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Total Shares    &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Threshold       &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Version         1.14.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Build Date      2023-09-11T21:23:55Z
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Storage Type    file
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Cluster Name    vault-cluster-f90273e8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Cluster ID      5ecc63c9-11eb-c384-355d-dffea2dd6484
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;HA Enabled      &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server log，成功解封後&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.077Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core.cluster-listener.tcp: starting listener: &lt;span class=&#34;nv&#34;&gt;listener_address&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0.0.0.0:8201
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.078Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core.cluster-listener: serving cluster requests: &lt;span class=&#34;nv&#34;&gt;cluster_listen_address&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=[&lt;/span&gt;::&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;:8201
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.089Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: post-unseal setup starting
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.115Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: loaded wrapping token key
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.115Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully setup plugin catalog: plugin-directory&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.127Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;system &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;sys/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.128Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;identity &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;identity/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.128Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;cubbyhole &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;cubbyhole/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.148Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: successfully mounted: &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;token &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;v1.14.3+builtin.vault&amp;#34;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;token/ &lt;span class=&#34;nv&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ID: root. Path: &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.154Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  rollback: starting rollback manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.154Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: restoring leases
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.156Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  expiration: lease restore &lt;span class=&#34;nb&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.158Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  identity: entities restored
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.159Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  identity: groups restored
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.166Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: usage gauge collection is disabled
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.178Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: post-unseal setup &lt;span class=&#34;nb&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T14:57:17.178Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: vault is unsealed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;hashicorp-vault-docker&#34;&gt;Hashicorp Vault docker&lt;/h3&gt;
+&lt;p&gt;使用容器(container) 前需要查閱 image 的官方說明 &lt;a href=&#34;https://hub.docker.com/r/hashicorp/vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://hub.docker.com/r/hashicorp/vault&lt;/a&gt;，幾件事情要注意&lt;/p&gt;
+&lt;p&gt;Base Image 是選擇使用 Alpine，比起其他 linux distributions 具有相對較小的安全風險，但功能足夠用於開發和測試。&lt;/p&gt;
+&lt;p&gt;Vault 始終在 dumb-init 下運行，將 process 與 SIG 傳遞給容器中運行的所有process。&lt;/p&gt;
+&lt;p&gt;使用的 Binary 由 HashiCorp 構建，並使用 GPG 金鑰簽名，因此你可以驗證Binary。&lt;/p&gt;
+&lt;p&gt;在不帶任何參數的情況下運行 Vault，容器將為你提供一個處於dev mode的 Vault Server。&lt;/p&gt;
+&lt;p&gt;容器公開了兩個可選的volume：&lt;/p&gt;
+&lt;p&gt;/vault/logs，用於寫入 audit log。預設情況下，這裡不會寫入任何內容；必須在Vault config 中啟用文件audit backend。&lt;/p&gt;
+&lt;p&gt;/vault/file，用於在使用資料storage plugin時，將資料寫入persistency。預設情況下，這裡不寫入任何內容（dev mode使用 in-memory storage）；在啟動容器之前，必須在 Vault 的配置中啟用文件 data storagebackend。&lt;/p&gt;
+&lt;p&gt;容器在 /vault/config 設置了一個 Vault 配置目錄，Server 將通過volume，載入這裡放置的任何 hcl 或 json config file。或者，也可以通過通過環境變數 &lt;code&gt;VAULT_LOCAL_CONFIG&lt;/code&gt; 傳遞配置 json 來添加config。&lt;/p&gt;
+&lt;h3 id=&#34;vault-configuration&#34;&gt;Vault configuration&lt;/h3&gt;
+&lt;p&gt;如同前面說明，透過 &lt;code&gt;--volume ./config/:/vault/config.d&lt;/code&gt; flag 將 ./config/vault.hcl 設定檔案掛載進容器中&lt;/p&gt;
+&lt;p&gt;你可以檢視目前的 vault server configuration，是以 vault.hcl 格式表示&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat ./config/vault.hcl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，在這裡可以設置 vault server 的啟動參數&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;配置一個 listener &amp;ldquo;tcp&amp;rdquo;，監聽容器內 0.0.0.0:8200 進來的 request&lt;/li&gt;
+&lt;li&gt;由於 &lt;code&gt;docker run&lt;/code&gt; 也設定 &lt;code&gt;-p 8200:8200&lt;/code&gt; 將主機網路的 8200 port bind 到容器的 8200 port，讓我們可以在主機網路中存取 vault。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ui&lt;/span&gt;            &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;disable_mlock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;api_addr&lt;/span&gt;      &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://0.0.0.0:8200&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;default_lease_ttl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;168h&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;max_lease_ttl&lt;/span&gt;     &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;720h&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;storage &lt;span class=&#34;s2&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;/vault/file&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;listener &lt;span class=&#34;s2&#34;&gt;&amp;#34;tcp&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;address&lt;/span&gt;     &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;0.0.0.0:8200&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nv&#34;&gt;tls_disable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;操作-vault&#34;&gt;操作 Vault&lt;/h3&gt;
+&lt;p&gt;Vault in Docker 使用起來與透過 binary 執行的 dev server 一樣。&lt;/p&gt;
+&lt;p&gt;你可以參照前幾天文章的內容，對 vault server 進行操做，也算是做個練習&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault login
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault secrets list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault secrets &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; -version&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; -path&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;chechia-net kv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在後面的內容，我們會用更有效率的方式管理，設定 vault&lt;/p&gt;
+&lt;h3 id=&#34;關閉-vault-container&#34;&gt;關閉 vault container&lt;/h3&gt;
+&lt;p&gt;你可以使用以下指令關閉 vault容器&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker stop vault_1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output，server 接受到後會進行 docker 封鎖&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;==&lt;/span&gt;&amp;gt; Vault shutdown triggered
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.627Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: marked as sealed
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.627Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: pre-seal teardown starting
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.627Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  rollback: stopping rollback manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.628Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: pre-seal teardown &lt;span class=&#34;nb&#34;&gt;complete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.628Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: stopping cluster listeners
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.628Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core.cluster-listener: forwarding rpc listeners stopped
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.641Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core.cluster-listener: rpc listeners successfully shut down
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.641Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: cluster listeners successfully shut down
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T13:06:28.641Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: vault is sealed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果有啟用 storage backend 的話，vault 資料或留存在 storage &amp;ldquo;file&amp;rdquo; 上，重啟不會如 dev server in-memory storage 一樣，被清空&lt;/p&gt;
+&lt;h3 id=&#34;vault-operator&#34;&gt;vault operator&lt;/h3&gt;
+&lt;p&gt;你可以使用 vault operator 指令來做更多 vault cluster 相關的操作&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault operator -h
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以使用下列指令產生新的 root token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault operator generate-root -generate-otp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;A One-Time-Password has been generated &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; you and is shown in the OTP field.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;You will need this value to decode the resulting root token, so keep it safe.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Nonce         13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Started       &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Progress      0/3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Complete      &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;OTP           eYr...cMqx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;OTP Length    &lt;span class=&#34;m&#34;&gt;28&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server log 顯示開始產生 root&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T15:12:08.633Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: root generation initialized: &lt;span class=&#34;nv&#34;&gt;nonce&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用 -otp flag，並輸入 unseal key&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault operator generate-root -otp&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Operation nonce: 13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;will be hidden&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Nonce       13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Started     &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Progress    1/3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Complete    &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;持續輸入 3/5 unseal keys，直到取得 encoded token&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Operation nonce: 13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Unseal Key &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;will be hidden&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Nonce            13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Started          &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Progress         3/3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Complete         &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Encoded Token    DS8B...MdGw
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用 otp + encoded token 來進行 decode&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault operator generate-root &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -decode&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;DS8B...MdGw&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -otp&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;eYr1...cMqx&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hvs.bDKG...Pnlc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server log 顯示逞生 root 完成&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2023-09-20T15:15:40.541Z &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;INFO&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;  core: root generation finished: &lt;span class=&#34;nv&#34;&gt;nonce&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;13ed8986-7b01-323c-0d06-2c32536fb8c1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;NOTE: 第一把 init root token 還是有效，加上後來生成的第二把，現在有兩把常效期的 root token&lt;/p&gt;
+&lt;h3 id=&#34;清空&#34;&gt;清空&lt;/h3&gt;
+&lt;p&gt;你可以刪除 ./vault/file/，完全清除 vault server 使用的 filesystem storage backend&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf ./vault/file/*
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vault server 本身幾乎是無狀態，清除 storage backend 後就什麼也不剩了&lt;/p&gt;
+&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-deploy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-deploy&lt;/a&gt;
+&lt;a href=&#34;https://hub.docker.com/r/hashicorp/vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://hub.docker.com/r/hashicorp/vault&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vault Workshop 09: Vault HA</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-20-vault-workshop-ha-docker/</link>
+      <pubDate>Thu, 14 Sep 2023 04:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-20-vault-workshop-ha-docker/</guid>
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;day-09-deploy-with-docker&#34;&gt;Day 09: Deploy with Docker&lt;/h1&gt;
+&lt;h3 id=&#34;vault-configuration&#34;&gt;Vault configuration&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/install&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/install&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vault Workshop 10: Deploy with Docker</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/</link>
+      <pubDate>Thu, 14 Sep 2023 04:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/</guid>
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;day-09-deploy-with-docker&#34;&gt;Day 09: Deploy with Docker&lt;/h1&gt;
+&lt;h3 id=&#34;local-with-docker&#34;&gt;Local with Docker&lt;/h3&gt;
+&lt;h3 id=&#34;minikube&#34;&gt;minikube&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;r=https://api.github.com/repos/kubernetes/minikube/releases
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -LO $(curl -s $r | grep -o &amp;#39;http.*download/v.*beta.*/minikube-darwin-arm64&amp;#39; | head -n1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo install minikube-darwin-arm64 /usr/local/bin/minikube
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;如何選擇-vm-or-docker-or-kubernetes&#34;&gt;如何選擇 VM or Docker or Kubernetes&lt;/h3&gt;
+&lt;p&gt;假議題&lt;/p&gt;
+&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/install&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/install&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Vault Workshop 07: Policy &amp; approle</title>
@@ -1863,11 +2280,25 @@
 &lt;li&gt;Day 05：Authentication&lt;/li&gt;
 &lt;li&gt;Day 06: Github auth method&lt;/li&gt;
 &lt;li&gt;Day 07: Policy&lt;/li&gt;
+&lt;li&gt;Day 08: Docker and Initialization&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Dynamic Secrets&lt;/li&gt;
 &lt;li&gt;tls certificate management&lt;/li&gt;
+&lt;li&gt;configuration&lt;/li&gt;
+&lt;li&gt;docker
+&lt;ul&gt;
+&lt;li&gt;initialization&lt;/li&gt;
+&lt;li&gt;ha&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;storage backend
+&lt;ul&gt;
+&lt;li&gt;filesystem&lt;/li&gt;
+&lt;li&gt;postgresql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Infrastructure as Code for Vault
 &lt;ul&gt;
 &lt;li&gt;deploy&lt;/li&gt;

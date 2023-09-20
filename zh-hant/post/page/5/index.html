@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月18日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月20日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -872,6 +872,288 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-09-12-borg-omega-and-kubernetes/" >Borg Omega and Kubernetes Translation 全文翻譯</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-09-12-borg-omega-and-kubernetes/"  class="summary-link">
+      <div class="article-style">
+        前言 這是原文完整版本。太長不讀 (TL;DR) 請見Borg Omega and Kubernetes 前世今生摘要
+原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+摘要 在 container 技術夯起來前，Google 已經做了 container 十幾年，過程中發展出需三套容器管理系統。雖然每一代系統的開發需求不同，但每一代都深受上一代影響。這篇文章描述 Google 開發這些系統時，學到的經驗。
+第一套 container management 系統是 Borg，為了管理 1. 長期執行的服務 2. 批次的短期工作 (batch job)，原本分別是由 Babysitter 與 Global Work Queue 兩套系統分開管理。後者的架構深刻影響 Borg，但 Global Work Queue 專注於 batch job。兩套系統都在 Linux control groups 之前。Borg 將上述兩種應用放在共享的機器上，來增加資源的使用率，以節省成本。這種共享基於支援 container 的 Linux Kernel (Google 也貢獻許多 Linux kernel container 程式碼)，提供更好的隔離 (isolation) 給延遲敏感的使用者服務 (latency-sentitive user-facing services)，以及消耗大量 cpu 的 batch 程式。
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-08-26-borg-omega-and-kubernetes-tldr/" >Borg Omega and Kubernetes TLDR 摘要翻譯</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-08-26-borg-omega-and-kubernetes-tldr/"  class="summary-link">
+      <div class="article-style">
+        這是原文翻譯的太長不讀 (TL;DR) 版本。完整翻譯請見Borg Omega and Kubernetes 前世今生浩文完整翻譯
+原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+前言 Borg 以前就有應用管理系統，那時還沒有 Linux control group Borg 是第一套統一的 container-management system Borg 仍被大規模的使用，有許多功能而且非常堅固 Omega 繼承 Borg 上成功的設計，並希望改進 Borg 的生態系 Kubernetes 開源 透過 REST API 溝通 client 應用開發導向，著重於開發者的需求，希望能簡單的部署複雜的系統 Container Google 使用 Container 來提昇 utilization 把 batch jobs 跟預留資源的服務 (user-facing app) 放在一起，使用閒置時的資源跑 batch job 現代 container 的定義是 runtime-isolation 與 image Application-oriented infrastructure container 使用久了，不只滿足 utilization 的需求 資料中心從機器導向變成應用導向 Container 封裝環境，把機器與 OS 的依賴抽象化 應用不依賴 部署流程 runtime infrastrcture Container scope 在應用上，專注在應用管理而不是機器管理 Application environment cgroup, chroot, namespace 原本的目的是為了保護應用，不被其他應用影響 混合使用可以在應用與 OS 間產生抽象層，解耦 app 與 OS 提供完全相同的部署環境，避免切換環境(ex.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-08-19-season-review/" >2020 08 Season Review</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-08-19-season-review/"  class="summary-link">
+      <div class="article-style">
+        季中回顧
+這一季開了很多新坑，卻來不及寫文章填上
+完成的有 Terraform 的基礎與實務導入經驗
+正在趕工的有 hashicorp vault，Gitops，與 tls。
+其中 GitOps 已經有強者我朋友 Hwchiu 巨巨填坑了，我這邊就會偷懶跳過。友情連結
+剩下的希望本季結束前能填完(掩面)
+已填坑 從零開始導入 Terraform DevOps Taiwan Meetup iThome Cloud Summit 新坑，碼農正在耕田，挖坑自己跳 hashicorp vault install basic operation Sign &amp; manage x509 certificate with pki secret engine 填坑中，文章尚未完成 aws
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/murmur/">murmur</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/post/2020-06-15-terraform-infrastructure-as-code-transcript/" >Terraform Infrastructure as Code Transcript</a>
     </div>
 
@@ -1522,291 +1804,6 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
   
 
   
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-10-13-kubernetes-custom-resource-deployment/" >Kubernetes Custom Resource Deployment</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-10-13-kubernetes-custom-resource-deployment/"  class="summary-link">
-      <div class="article-style">
-        2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
-Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/crd/">crd</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/" >Kubernetes Custom Resources Basic</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-10-13-kubernetes-custom-resources-basic/"  class="summary-link">
-      <div class="article-style">
-        2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
-Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/crd/">crd</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-10-12-cert-manager-complete-workflow/" >Cert Manager Complete Workflow</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-10-12-cert-manager-complete-workflow/"  class="summary-link">
-      <div class="article-style">
-        2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
-Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/cert-manager/">cert-manager</a></span>
   
 
 </div>

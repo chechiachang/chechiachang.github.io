@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月18日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年9月20日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -369,7 +369,7 @@
 <meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
-    <meta property="og:updated_time" content="2023-09-14T03:42:26&#43;08:00" />
+    <meta property="og:updated_time" content="2023-09-14T04:42:26&#43;08:00" />
   
 
 
@@ -836,6 +836,298 @@
   
 
   
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-19-vault-workshop-docker-and-initialization/" >Vault Workshop 08: Vault in Docker and Initialization</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-19-vault-workshop-docker-and-initialization/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 08: Vault in Docker and Initialization Vault in container 前幾天我們使用 vault dev Server 來啟用測試用的 Vault server。
+在 production 環境我們不會使用 dev Server。Vault 提供許多安裝方法
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 20, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a>, <a href="/zh-hant/category/docker/">docker</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-20-vault-workshop-ha-docker/" >Vault Workshop 09: Vault HA</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-20-vault-workshop-ha-docker/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 09: Deploy with Docker Vault configuration chatGPT 本段部分內容使用 chatGPT-3.5 翻譯 https://developer.hashicorp.com/vault/docs/install 內容，並由筆者人工校驗
+base context
+我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。 很重要：不要使用敬語，翻譯結果中若出現&#34;您&#34;，請用&#34;你&#34;取代&#34;您&#34;。 result correction
+部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。 修正下列翻譯：將 &#34;數據&#34; 改為 &#34;資料&#34;，將 &#34;數據庫&#34; 改為 &#34;資料庫&#34;，將 &#34;數據&#34; 改為 &#34;資料&#34;，將 &#34;訪問&#34; 改為 &#34;存取&#34;，將 &#34;源代碼&#34; 改為 &#34;原始碼&#34;，將 &#34;信息&#34; 改為 &#34;資訊&#34;，將 &#34;命令&#34; 改為 &#34;指令&#34;，將 &#34;禁用&#34; 改為 &#34;停用&#34;，將 &#34;默認&#34; 改為 &#34;預設&#34;。 
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 20, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a>, <a href="/zh-hant/category/docker/">docker</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/" >Vault Workshop 10: Deploy with Docker</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day 09: Deploy with Docker Local with Docker minikube r=https://api.github.com/repos/kubernetes/minikube/releases curl -LO $(curl -s $r | grep -o &#39;http.*download/v.*beta.*/minikube-darwin-arm64&#39; | head -n1) sudo install minikube-darwin-arm64 /usr/local/bin/minikube 如何選擇 VM or Docker or Kubernetes 假議題
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 20, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a>, <a href="/zh-hant/category/docker/">docker</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
   
     
 
@@ -1488,7 +1780,7 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
           最近更新於
       
     
-    9月 18, 2023
+    9月 20, 2023
   </span>
   
 
@@ -1528,62 +1820,19 @@ Day 01 前言：從零開始的 Hashicorp Vault Workshop 從零開始 workshop �
 </div>
 
   
-    
-
-
-
-
-
-
-  
-  
-
-
-  
-
-
-
-
-
-
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="https://github.com/chechiachang/vault-playground" target="_blank" rel="noopener">從零開始的 30 天 Hashicorp Vault Workshop</a>
-    </div>
-
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-      
-      <a href="https://github.com/chechiachang/vault-playground" target="_blank" rel="noopener">
-        <img src="/zh-hant/project/vault-playground/featured_hu0533df8c600b6ebf5e775c57536fef00_434591_150x0_resize_q75_h2_lanczos.webp" height="78" width="150"
-            alt="從零開始的 30 天 Hashicorp Vault Workshop" loading="lazy">
-      </a>
-    
-  </div>
-</div>
 
   
 
   
+<nav class="mt-1">
+  <ul class="pagination justify-content-center">
+    
+    
+    <li class="page-item"><a class="page-link" href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/page/2/">&raquo;</a></li>
+    
+  </ul>
+</nav>
 
-  
 
 </div>
   </div>
