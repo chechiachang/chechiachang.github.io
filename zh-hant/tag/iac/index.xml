@@ -34,6 +34,517 @@
     </item>
     
     <item>
+      <title>DevOpsDay: HashiCorp Vault 自建金鑰管理最佳入坑姿勢</title>
+      <link>https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/</link>
+      <pubDate>Thu, 21 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/</guid>
+      <description>
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;background.jpg&#34;
+  &gt;
+
+&lt;h3 id=&#34;去找吧我把所有財寶都放在那裡&#34;&gt;去找吧！我把所有財寶都放在那裡！&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;投影片，speaker notes&lt;/li&gt;
+&lt;li&gt;example github repository&lt;/li&gt;
+&lt;li&gt;30 days terraform workshop&lt;/li&gt;
+&lt;li&gt;其他文章 DevOps / Kubernetes / Vault&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;Q1: 有過使用 hashicorp vault 的人請舉手&lt;/p&gt;
+&lt;p&gt;沒使用過的人不是這個 session 的目標聽眾，可以 QR code 拍下來去聽別場。例如對面同題材的session
+QR code 有投影片，範例 github repo，投影片裡還有講稿，所以我今天在這裡的用處就是念稿，真的可以 qrcode 拍了回家看&lt;/p&gt;
+&lt;p&gt;Q2: 有使用過 infrastructure as code / terraform 的人請舉手&lt;/p&gt;
+&lt;p&gt;有使用 vault 但是沒有使用 IaC 的朋友，才是這場 session 的主要受眾&lt;/p&gt;
+&lt;p&gt;Q3: 有使用 iac deploy vault stack，或是有使用 iac / vcs 管理 vault 內的 policy 的人請舉手&lt;/p&gt;
+&lt;p&gt;這些人可以出去吃零食，今天講的內容你們都會了，我沒什麼東西可以跟你們分享&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;background.jpg&#34;
+  &gt;
+
+&lt;h2 id=&#34;hashicorp-vault&#34;&gt;HashiCorp Vault&lt;/h2&gt;
+&lt;h2 id=&#34;自建金鑰管理最佳實踐&#34;&gt;自建金鑰管理最佳實踐&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt; | &lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vault 鐵人賽 workshop&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  s
+標題有稍微修改
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;about me&#34; srcset=&#34;
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_e417eec7e7a8490233a5f244ea106c42.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_12a09867edd8370d5a4cd5564f097279.webp 760w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_e417eec7e7a8490233a5f244ea106c42.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;375&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/zh-hant/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;About Me&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;outline-prod-ready&#34;&gt;Outline: prod-ready&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;terraform deployment IaC
+&lt;ul&gt;
+&lt;li&gt;on aws / azure / gcp / k8s&lt;/li&gt;
+&lt;li&gt;get-started&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;terraform configuration IaC
+&lt;ul&gt;
+&lt;li&gt;secret backends / auth method / role / policy /audit&lt;/li&gt;
+&lt;li&gt;gitflow / tested / automation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  manage vault infra &amp;amp; vault configuration from a aspect of devops
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;vault-基礎的學習資源&#34;&gt;Vault 基礎的學習資源&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Vault + Kubernetes 請出門左轉DE會議室(Now)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1iex9lm89OCIR8IAoD1RPe4vcW--bcKBmMHoixDybqP8/edit?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2023-05-10 雲端地端通吃的私鑰管理平台&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vault 鐵人賽 30- day workshop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/vault-playground&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;範例 Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;production-deploy-checklisthttpsdeveloperhashicorpcomvaulttutorialskuberneteskubernetes-raft-deployment-guideproduction-deployment-checklist&#34;&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-raft-deployment-guide#production-deployment-checklist&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;production deploy checklist&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;End-to-End TLS&lt;/li&gt;
+&lt;li&gt;Single Tenancy&lt;/li&gt;
+&lt;li&gt;Enable Auditing&lt;/li&gt;
+&lt;li&gt;Immutable Upgrades&lt;/li&gt;
+&lt;li&gt;Upgrade Frequently&lt;/li&gt;
+&lt;li&gt;Restrict Storage Access&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;infrastructure-as-code&#34;&gt;Infrastructure as Code&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Deploy
+&lt;ul&gt;
+&lt;li&gt;(多環境)測試&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;HA
+&lt;ul&gt;
+&lt;li&gt;storage backend&lt;/li&gt;
+&lt;li&gt;load balancer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;維護：改 config，升級更新，監控，scheduled failover&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;要如何達成上面這些事情？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;需要 get started&lt;/li&gt;
+&lt;li&gt;大量的測試&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_9f383f9419bbc426efb073535d07bb90.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_e189cd499d567e542a61c269d1655dda.webp 760w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_9f383f9419bbc426efb073535d07bb90.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;415&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.terraform.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.terraform.io/&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;deploy-on-public-cloud&#34;&gt;Deploy on public cloud&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/hashicorp/terraform-aws-vault&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault-starter&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/hashicorp/terraform-aws-vault-starter&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-azurerm-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/hashicorp/terraform-azurerm-vault&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terraform-google-modules/terraform-google-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/terraform-google-modules/terraform-google-vault&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  在公有雲 deploy Vault，雲服務商有提供既有的terraform module
+不一定要照單全收，可以試著架起測試環境，然後調整terraform module，成為適合自己產品的架構
+調整架構需要考量的點，底下分析
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;deploy-terraform-aws-vaulthttpsgithubcomhashicorpterraform-aws-vault&#34;&gt;Deploy &lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;terraform-aws-vault&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://github.com/hashicorp/terraform-aws-vault/blob/master/_docs/architecture.png?raw=true&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  hashicorp 官方提供的 terraform-aws-vault 是一個不錯的開始
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;terraform-aws-vaulthttpsgithubcomhashicorpterraform-aws-vault&#34;&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;terraform-aws-vault&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ELB -&amp;gt; AWS Autoscaling Group -&amp;gt; EC2&lt;/li&gt;
+&lt;li&gt;Backend: consul cluster&lt;/li&gt;
+&lt;li&gt;Vault AMI&lt;/li&gt;
+&lt;li&gt;security group&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault/blob/master/test/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;tested&lt;/a&gt; by hashicorp with &lt;a href=&#34;https://github.com/gruntwork-io/terratest&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;terratest&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  goto &lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/hashicorp/terraform-aws-vault&lt;/a&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;terraform-aws-vaulthttpsgithubcomhashicorpterraform-aws-vault-1&#34;&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;terraform-aws-vault&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ae456b396f746fd2b64cf6415e38c5df.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_c450b16c6a48d50aa7bc746acdb4b8a6.webp 760w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ae456b396f746fd2b64cf6415e38c5df.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;384&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;如何使用&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以參考 main.tf 範例&lt;/li&gt;
+&lt;li&gt;可以檢視 ./modules 內說明逐步操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;terraform-aws-vault-starterhttpsgithubcomhashicorpterraform-aws-vault-starter&#34;&gt;&lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault-starter&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;terraform-aws-vault-starter&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ELB -&amp;gt; AWS Autoscaling Group -&amp;gt; EC2&lt;/li&gt;
+&lt;li&gt;security group&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/concepts/integrated-storage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Integrated storage (raft)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  goto &lt;a href=&#34;https://github.com/hashicorp/terraform-aws-vault-starter&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/hashicorp/terraform-aws-vault-starter&lt;/a&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;integrated-storage&#34;&gt;Integrated storage&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;goto &lt;a href=&#34;https://developer.hashicorp.com/vault/docs/internals/integrated-storage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;integrated-storage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Raft Consensus protocol
+&lt;ul&gt;
+&lt;li&gt;出incident要有辦法解&lt;/li&gt;
+&lt;li&gt;stateful server&lt;/li&gt;
+&lt;li&gt;備份，管理(資料遷移) util 工具未必夠成熟&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;選一個會維護的&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/configuration/storage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;storage&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/configuration/storage/dynamodb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DynamoDB&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/configuration/storage/mysql&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MySQL&lt;/a&gt; / &lt;a href=&#34;https://developer.hashicorp.com/vault/docs/configuration/storage/postgresql&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PostgreSQL&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  注意storage是否能夠為維護，重啟，備份
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;on-kubernetes&#34;&gt;On Kubernetes&lt;/h2&gt;
+&lt;p&gt;argocd + vault helm chart&lt;/p&gt;
+&lt;p&gt;server 與 injector 建議分開兩個 argocd applicatoin / helm release獨立deploy&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/vault-helm/blob/main/values.yaml#L357&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;server&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;選一個會維護的&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/configuration/storage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;storage backend&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/vault-helm/blob/main/values.yaml#L46&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;injector&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;goto &lt;a href=&#34;https://github.com/hashicorp/vault-helm/blob/main/values.yaml#L357&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/hashicorp/vault-helm/blob/main/values.yaml#L357&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;注意server 是否 ha&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;deploy-on-kuberneteshttpsdeveloperhashicorpcomvaulttutorialskuberneteskubernetes-raft-deployment-guide&#34;&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-raft-deployment-guide&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Deploy On Kubernetes&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;warning&#34; srcset=&#34;
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_8f5dde8ddcc13e3e54037d2244da90ac.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_e8c6254ba1ebf4ad920e34f8d89ffe5d.webp 760w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_8f5dde8ddcc13e3e54037d2244da90ac.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;229&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;secure your k8s&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;goto &lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;FAQ: on VM or on K8s?
+問題不是 vault 在 VM 上安全，還是在 k8s 上安全
+而是團隊能不能 secure 底下的 infra，如果熟 VM 就會覺得 VM 好做
+secure k8s 是 VM + k8s 都要&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;回到-outline-prod-ready&#34;&gt;回到 Outline: prod-ready&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;terraform configuration IaC
+&lt;ul&gt;
+&lt;li&gt;auth method / config / role&lt;/li&gt;
+&lt;li&gt;secret mounts&lt;/li&gt;
+&lt;li&gt;policy
+&lt;ul&gt;
+&lt;li&gt;team / people&lt;/li&gt;
+&lt;li&gt;application / service account&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;audit log&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;vault-configuration-iac&#34;&gt;Vault Configuration IaC&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;VCS / PR reviewed&lt;/li&gt;
+&lt;li&gt;well-formed / linted / no-typo&lt;/li&gt;
+&lt;li&gt;multiple env: dev, stag, prod&lt;/li&gt;
+&lt;li&gt;programable / reusable: 標準化，可重複使用的 code&lt;/li&gt;
+&lt;li&gt;tested
+&lt;ul&gt;
+&lt;li&gt;可以為 terraform code 寫測試&lt;/li&gt;
+&lt;li&gt;可以寫整合測試腳本測試 vault dev server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;automation&lt;/li&gt;
+&lt;li&gt;auditable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;version control 有多重要？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有 / 沒有 review 的 code 品質，天差地遠&lt;/li&gt;
+&lt;li&gt;分享團隊知識，分享變更資訊&lt;/li&gt;
+&lt;li&gt;避免最雷的同事出包，全 team 的效能瓶頸&lt;/li&gt;
+&lt;li&gt;change management 對於 vault 內的的更改要最嚴格控制
+&lt;ul&gt;
+&lt;li&gt;沒有『誒是誰改了這個我怎麼不知道』這回事&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Linter / formated 是工作效率的根本&lt;/p&gt;
+&lt;p&gt;多環境測試&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有安全的測試環境，才能促進團隊創新&lt;/li&gt;
+&lt;li&gt;有 / 沒有 經過完整環境測試的 release 品質，天差地遠&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Programable / Reusable&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;variable / for loop&lt;/li&gt;
+&lt;li&gt;reusable module / don&amp;rsquo;t repeat your self&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;tested policy code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;policy as code&lt;/li&gt;
+&lt;li&gt;terratest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;automation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;gitflow&lt;/li&gt;
+&lt;li&gt;secured admin access only to workflow. developer don&amp;rsquo;t have admin access.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;auditable&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;audit in code / review&lt;/li&gt;
+&lt;li&gt;live server generate audit log&lt;/li&gt;
+&lt;li&gt;外部稽核&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;hashicorp-official-tutorialhttpsdeveloperhashicorpcomvaulttutorialspoliciespolicieswrite-a-policy&#34;&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/policies/policies#write-a-policy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hashicorp official tutorial&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tee admin-policy.hcl &amp;lt;&amp;lt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Read system health check
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;path &amp;#34;sys/health&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  capabilities = [&amp;#34;read&amp;#34;, &amp;#34;sudo&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# List existing policies
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;path &amp;#34;sys/policies/acl&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  capabilities = [&amp;#34;list&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  configure vault policy with CLI
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault policy write admin admin-policy.hcl
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault policy list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault policy read admin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  CLI 管理很不方便
+沒有 aggregated list view
+查錯時需要耗費大量 api call 列出 policy 查表
+透過 IaC sync policy code to server
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;questions&#34;&gt;Questions?&lt;/h1&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Vault Workshop 10: Deploy with Docker</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/</link>
+      <pubDate>Thu, 14 Sep 2023 06:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/</guid>
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;day-09-deploy-with-docker&#34;&gt;Day 09: Deploy with Docker&lt;/h1&gt;
+&lt;h3 id=&#34;local-with-docker&#34;&gt;Local with Docker&lt;/h3&gt;
+&lt;h3 id=&#34;minikube&#34;&gt;minikube&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;r=https://api.github.com/repos/kubernetes/minikube/releases
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -LO $(curl -s $r | grep -o &amp;#39;http.*download/v.*beta.*/minikube-darwin-arm64&amp;#39; | head -n1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo install minikube-darwin-arm64 /usr/local/bin/minikube
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;如何選擇-vm-or-docker-or-kubernetes&#34;&gt;如何選擇 VM or Docker or Kubernetes&lt;/h3&gt;
+&lt;p&gt;假議題&lt;/p&gt;
+&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/install&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/install&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vault Workshop 09: Vault HA</title>
+      <link>https://chechia.net/zh-hant/post/2023-09-20-vault-workshop-ha-docker/</link>
+      <pubDate>Thu, 14 Sep 2023 05:42:26 +0800</pubDate>
+      <guid>https://chechia.net/zh-hant/post/2023-09-20-vault-workshop-ha-docker/</guid>
+      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
+&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;day-09-deploy-with-docker&#34;&gt;Day 09: Deploy with Docker&lt;/h1&gt;
+&lt;h3 id=&#34;vault-configuration&#34;&gt;Vault configuration&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
+&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
+&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/install&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/install&lt;/a&gt;
+內容，並由筆者人工校驗&lt;/p&gt;
+&lt;p&gt;base context&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
       <title>Vault Workshop 08: Vault in Docker and Initialization</title>
       <link>https://chechia.net/zh-hant/post/2023-09-19-vault-workshop-docker-and-initialization/</link>
       <pubDate>Thu, 14 Sep 2023 04:42:26 +0800</pubDate>
@@ -382,62 +893,6 @@
 &lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
 &lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-deploy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-deploy&lt;/a&gt;
 &lt;a href=&#34;https://hub.docker.com/r/hashicorp/vault&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://hub.docker.com/r/hashicorp/vault&lt;/a&gt;
-內容，並由筆者人工校驗&lt;/p&gt;
-&lt;p&gt;base context&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Vault Workshop 09: Vault HA</title>
-      <link>https://chechia.net/zh-hant/post/2023-09-20-vault-workshop-ha-docker/</link>
-      <pubDate>Thu, 14 Sep 2023 04:42:26 +0800</pubDate>
-      <guid>https://chechia.net/zh-hant/post/2023-09-20-vault-workshop-ha-docker/</guid>
-      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
-&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;day-09-deploy-with-docker&#34;&gt;Day 09: Deploy with Docker&lt;/h1&gt;
-&lt;h3 id=&#34;vault-configuration&#34;&gt;Vault configuration&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
-&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
-&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/install&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/install&lt;/a&gt;
-內容，並由筆者人工校驗&lt;/p&gt;
-&lt;p&gt;base context&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;很重要：不要使用敬語，翻譯結果中若出現&amp;#34;您&amp;#34;，請用&amp;#34;你&amp;#34;取代&amp;#34;您&amp;#34;。
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result correction&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;部分英文內容為專有名詞，產生的繁體中文翻譯結果中，這些名詞維持英文，不需要翻譯成中文：key，value，certificate，token，policy，policy rule，path，path-based，key rolling，audit，audit trail，plain text，key value，Consul，S3 bucket，Leasing，Renewal，binary，prefix，instance，metadata。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;修正下列翻譯：將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;數據庫&amp;#34; 改為 &amp;#34;資料庫&amp;#34;，將 &amp;#34;數據&amp;#34; 改為 &amp;#34;資料&amp;#34;，將 &amp;#34;訪問&amp;#34; 改為 &amp;#34;存取&amp;#34;，將 &amp;#34;源代碼&amp;#34; 改為 &amp;#34;原始碼&amp;#34;，將 &amp;#34;信息&amp;#34; 改為 &amp;#34;資訊&amp;#34;，將 &amp;#34;命令&amp;#34; 改為 &amp;#34;指令&amp;#34;，將 &amp;#34;禁用&amp;#34; 改為 &amp;#34;停用&amp;#34;，將 &amp;#34;默認&amp;#34; 改為 &amp;#34;預設&amp;#34;。
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Vault Workshop 10: Deploy with Docker</title>
-      <link>https://chechia.net/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/</link>
-      <pubDate>Thu, 14 Sep 2023 04:42:26 +0800</pubDate>
-      <guid>https://chechia.net/zh-hant/post/2023-09-21-vault-workshop-deploy-on-kubernetes/</guid>
-      <description>&lt;p&gt;如果你希望追蹤最新的草稿，請見&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鐵人賽2023&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本 workshop 也接受網友的許願清單，&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10317378&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;如果有興趣的題目可於第一篇底下留言&lt;/a&gt;，筆者會盡力實現，但不做任何保證&lt;/p&gt;
-&lt;p&gt;整篇 Workshop 會使用的範例與原始碼，放在 &lt;a href=&#34;http://chechia.net/zh-hant/#projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github Repository: vault-playground&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;day-09-deploy-with-docker&#34;&gt;Day 09: Deploy with Docker&lt;/h1&gt;
-&lt;h3 id=&#34;local-with-docker&#34;&gt;Local with Docker&lt;/h3&gt;
-&lt;h3 id=&#34;minikube&#34;&gt;minikube&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;r=https://api.github.com/repos/kubernetes/minikube/releases
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -LO $(curl -s $r | grep -o &amp;#39;http.*download/v.*beta.*/minikube-darwin-arm64&amp;#39; | head -n1)
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo install minikube-darwin-arm64 /usr/local/bin/minikube
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;如何選擇-vm-or-docker-or-kubernetes&#34;&gt;如何選擇 VM or Docker or Kubernetes&lt;/h3&gt;
-&lt;p&gt;假議題&lt;/p&gt;
-&lt;h3 id=&#34;chatgpt&#34;&gt;chatGPT&lt;/h3&gt;
-&lt;p&gt;本段部分內容使用 chatGPT-3.5 翻譯
-&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/install&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/install&lt;/a&gt;
 內容，並由筆者人工校驗&lt;/p&gt;
 &lt;p&gt;base context&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;我希望你能充當一名繁體中文翻譯，拼寫修正者和改進者。我將用英文與程式語言與你對話，你將翻譯它，並以已糾正且改進的版本回答，以繁體中文表達。我希望你能用更美麗和優雅、高級的繁體中文詞語和句子替換我簡化的詞語和句子。保持意義不變。我只希望你回答糾正和改進，不要寫解釋。
