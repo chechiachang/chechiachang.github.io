@@ -303,7 +303,7 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;integrated-storage&#34;&gt;Integrated storage&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;goto &lt;a href=&#34;https://developer.hashicorp.com/vault/docs/internals/integrated-storage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;integrated-storage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/internals/integrated-storage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;integrated-storage&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Raft Consensus protocol
 &lt;ul&gt;
 &lt;li&gt;出incident要有辦法解&lt;/li&gt;
