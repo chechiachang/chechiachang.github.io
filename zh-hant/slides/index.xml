@@ -15,16 +15,9 @@
 &lt;section data-noprocess data-shortcode-slide
   
       
-      data-background-image=&#34;background.jpg&#34;
+      data-background-image=&#34;onepiece.jpg&#34;
   &gt;
 
-&lt;h3 id=&#34;去找吧我把所有財寶都放在那裡&#34;&gt;去找吧！我把所有財寶都放在那裡！&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;投影片，speaker notes&lt;/li&gt;
-&lt;li&gt;example github repository&lt;/li&gt;
-&lt;li&gt;30 days terraform workshop&lt;/li&gt;
-&lt;li&gt;其他文章 DevOps / Kubernetes / Vault&lt;/li&gt;
-&lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   &lt;p&gt;Q1: 有過使用 hashicorp vault 的人請舉手&lt;/p&gt;
 &lt;p&gt;沒使用過的人不是這個 session 的目標聽眾，可以 QR code 拍下來去聽別場。例如對面同題材的session
@@ -80,18 +73,30 @@ QR code 有投影片，範例 github repo，投影片裡還有講稿，所以我
 &lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://chechia.net/zh-hant/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;About Me&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;outline-prod-ready&#34;&gt;Outline: prod-ready&lt;/h2&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;background.jpg&#34;
+  &gt;
+
+&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
+&lt;h3 id=&#34;from-dev-to-prod-ready&#34;&gt;from dev to prod-ready&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;terraform deployment IaC
 &lt;ul&gt;
 &lt;li&gt;on aws / azure / gcp / k8s&lt;/li&gt;
-&lt;li&gt;get-started&lt;/li&gt;
+&lt;li&gt;如何開始&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;terraform configuration IaC
 &lt;ul&gt;
-&lt;li&gt;secret backends / auth method / role / policy /audit&lt;/li&gt;
-&lt;li&gt;gitflow / tested / automation&lt;/li&gt;
+&lt;li&gt;IaC everything
+&lt;ul&gt;
+&lt;li&gt;secret backends / auth method / role / policy / audit &amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;工作流程自動化 gitflow / tested / automation&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -101,11 +106,18 @@ QR code 有投影片，範例 github repo，投影片裡還有講稿，所以我
 &lt;hr&gt;
 &lt;h2 id=&#34;vault-基礎的學習資源&#34;&gt;Vault 基礎的學習資源&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Vault + Kubernetes 請出門左轉DE會議室(Now)&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1iex9lm89OCIR8IAoD1RPe4vcW--bcKBmMHoixDybqP8/edit?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2023-05-10 雲端地端通吃的私鑰管理平台&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vault 鐵人賽 30- day workshop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2023 鐵人賽: vault 10- day workshop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/users/20120327/ironman/4057&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2021 鐵人賽: terraform 30 day workshop&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/vault-playground&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;範例 Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;同一時間，Vault + Kubernetes 請出門對面DE會議室&lt;/li&gt;
 &lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;不會講 vault 的基礎操作，但如果你需要學習資源，你可以來這邊找
+第一個 google slides 是我在其他場合的演講，適合第一次接觸 vault，或是正在評估是否要導入 vault 的團隊&lt;/p&gt;
+&lt;p&gt;第二個今年的 ithome 2023鐵人賽，我寫的內容就是 vault workshop，雖然寫到第十篇就因故停更，但前面 1-8 篇剛好是 vault 操作基礎，使用 chatgpt 翻譯 vault official tutorial，也是適合第一次使用 vault 的人&lt;/p&gt;
+&lt;p&gt;第三個是如果沒接觸過 infrastructure as code IaC，這個也是鐵人賽的 30 day workshop，這個有完賽佳作&lt;/p&gt;
+&lt;/aside&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;production-deploy-checklisthttpsdeveloperhashicorpcomvaulttutorialskuberneteskubernetes-raft-deployment-guideproduction-deployment-checklist&#34;&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-raft-deployment-guide#production-deployment-checklist&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;production deploy checklist&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
@@ -117,29 +129,43 @@ QR code 有投影片，範例 github repo，投影片裡還有講稿，所以我
 &lt;li&gt;Restrict Storage Access&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;進入 production 前的維運問題&lt;/p&gt;
+&lt;p&gt;vault 官方建議的 prod checklist
+大多需要定期更新，維護，而非一勞永逸一次性作業&lt;/p&gt;
+&lt;p&gt;例如 end-to-end TLS certificate 需要管理與更新&lt;/p&gt;
+&lt;p&gt;auditing 對 vault 的存取紀錄需要安全的輸出，並且能夠檢核。設定做一次就可以生效。但是實務上未來會需要不斷的根據外部稽核需求調整&lt;/p&gt;
+&lt;p&gt;immutable upgrades 指的是當你使用 vault server 與 storage backend，vault server 本身是 immutable 的，你可以自己使用 official binary build VM Image (ex. aws ami)，或是透過 container image release 來更新&lt;/p&gt;
+&lt;p&gt;upgrade frequently，但要做的安全，而且有效率，最好是做到半自動化或是全自動化，如果沒有 IaC 會比較耗工&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;infrastructure-as-code&#34;&gt;Infrastructure as Code&lt;/h2&gt;
+&lt;p&gt;導入 IaC ，做到頻繁且安全的 vault 更新，但同時又要有效率甚至全自動化&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Deploy
-&lt;ul&gt;
-&lt;li&gt;(多環境)測試&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;HA
-&lt;ul&gt;
-&lt;li&gt;storage backend&lt;/li&gt;
-&lt;li&gt;load balancer&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;維護：改 config，升級更新，監控，scheduled failover&lt;/li&gt;
+&lt;li&gt;multiple env: dev, stag, prod&lt;/li&gt;
+&lt;li&gt;programable / reusable: 標準化，可重複使用的 code&lt;/li&gt;
+&lt;li&gt;tested infrastructure&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;要如何達成上面這些事情？&lt;/p&gt;
+  &lt;p&gt;以 vault 為目標
+維運 vault 的第一目標：安全第一，不求高效能，但是追求安全
+是我們要將 deploy / release / upgrade vault 中的風險降到最低&lt;/p&gt;
+&lt;p&gt;infra: 升級 vault 版本，調整 VM / container，調整 load balancer，除錯
+config: 更改 auth-method / policy&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;需要 get started&lt;/li&gt;
-&lt;li&gt;大量的測試&lt;/li&gt;
+&lt;li&gt;policy 容易改壞但無法及時發現，要用時才發現權限壞了&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;如何開始-iac-for-vault&#34;&gt;如何開始 IaC for Vault&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;immutable Vault server&lt;/li&gt;
+&lt;li&gt;storage backend&lt;/li&gt;
+&lt;li&gt;load balancer&lt;/li&gt;
+&lt;li&gt;security group / firewall rule&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  IaC 好棒，那有沒有什麼資源可以幫助我們開始 deploy IaC Vault
+答案是有的
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;p&gt;
@@ -443,6 +469,7 @@ secure k8s 是 VM + k8s 都要&lt;/p&gt;
   configure vault policy with CLI
 &lt;/aside&gt;
 &lt;hr&gt;
+&lt;h2 id=&#34;hashicorp-official-tutorialhttpsdeveloperhashicorpcomvaulttutorialspoliciespolicieswrite-a-policy-1&#34;&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/policies/policies#write-a-policy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hashicorp official tutorial&lt;/a&gt;&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault policy write admin admin-policy.hcl
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault policy list
@@ -455,7 +482,123 @@ secure k8s 是 VM + k8s 都要&lt;/p&gt;
 透過 IaC sync policy code to server
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+&lt;h2 id=&#34;how-to-use&#34;&gt;How to use&lt;/h2&gt;
+&lt;p&gt;prerequisites: vault, terraform, terragrunt&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone git@github.com:chechiachang/vault-playground.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd vault-playground/usage/03-terraform-lives/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terragrunt init
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terragrunt plan
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  terraform 與 terragrunt 我的部落格上都有許多介紹文章，ithome 鐵人賽也有 30day workshop
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;vcs--pr-review&#34;&gt;VCS &amp;amp; PR review&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;local lint with &lt;a href=&#34;https://github.com/antonbabenko/pre-commit-terraform#terraform_fmt&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;git pre-commit hook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;PR
+&lt;ul&gt;
+&lt;li&gt;lint check&lt;/li&gt;
+&lt;li&gt;pipeline module test &lt;code&gt;terraform test&lt;/code&gt; on github action&lt;/li&gt;
+&lt;li&gt;integration test against vault dev server&lt;/li&gt;
+&lt;li&gt;review&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;merge / automation
+&lt;ul&gt;
+&lt;li&gt;apply to dev environment automatically&lt;/li&gt;
+&lt;li&gt;release candidate tag will apply to stag automatically&lt;/li&gt;
+&lt;li&gt;release tag will push to pre-production and production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;multiple-environment&#34;&gt;Multiple environment&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;dev -&amp;gt; stag -&amp;gt; prod 環境很接近
+&lt;ul&gt;
+&lt;li&gt;IaC + config as code&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;搭設新環境只需1分鐘(VM)，甚至數秒(container)，可以進行大量的測試&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;test&#34;&gt;Test&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;IaC code 可以使用 &lt;code&gt;terraform test&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;config as code 可以使用 &lt;code&gt;terraform test&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;live infrastructure 可以使用 terratest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;test-examplehttpsgithubcomchechiachangvault-playgroundtreemasterusage03-terraform-modulessecret_backendkv_v2&#34;&gt;Test &lt;a href=&#34;https://github.com/chechiachang/vault-playground/tree/master/usage/03-terraform-modules/secret_backend/kv_v2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Example&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;resource &amp;#34;test_assertions&amp;#34; &amp;#34;main&amp;#34; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  component = &amp;#34;main&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  equal &amp;#34;mount_path&amp;#34; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    description = &amp;#34;default mount_path is ${local.mount_path}&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    got         = local.mount_path
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    want        = local.mount_path
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  equal &amp;#34;max_versions&amp;#34; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    description = &amp;#34;default max_versions is 10&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    got         = local.max_versions
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    want        = 10
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  equal &amp;#34;delete_version_after&amp;#34; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    description = &amp;#34;default delete_version_after is 10&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    got         = local.delete_version_after
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    want        = 12600
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  這個 module 只是一個 kv engine，所以隨手寫了一個簡單的 test
+Demo 我在本地隨手跑一下測試
+當你使用 terraform 時間夠久，使用規模越大時，會有復雜的 module，這時有寫測試的 module 就是天差地遠
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;policy-as-code-for-vault&#34;&gt;Policy as code for vault&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;vault ACL 是基於 path 設定權限&lt;/li&gt;
+&lt;li&gt;當policy有成千上萬條，彼此可能會 conflict&lt;/li&gt;
+&lt;li&gt;policy 的 policy
+&lt;ul&gt;
+&lt;li&gt;高高層次的(公司的資安政策)透過 policy as code 定義&lt;/li&gt;
+&lt;li&gt;寫到 vault policy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.openpolicyagent.org/docs/latest/#1-download-opa&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Policy Agent (OPA)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/tutorials/policies/sentinel#endpoint-governing-policies-egps&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Sentinel(Vault Enterprise): EGP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;gitflow--automation&#34;&gt;Gitflow &amp;amp; automation&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;PR
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.runatlantis.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;atlantis&lt;/a&gt; run terraform plan&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;PR merged&lt;/li&gt;
+&lt;li&gt;PR apply
+&lt;ul&gt;
+&lt;li&gt;apply to dev environment automatically with gitflow&lt;/li&gt;
+&lt;li&gt;release candidate tag will apply to stag automatically&lt;/li&gt;
+&lt;li&gt;release tag will push to pre-production and production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  goto &lt;a href=&#34;https://www.runatlantis.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.runatlantis.io/&lt;/a&gt;
+PR comment 下會有針對 dev environemtn plan 的結果
+使用 github webhook，可以直接在 PR approved 後，命令 atlantis 直接 apply 到 dev server
+避免使用工程師 local machine 存取遠端環境，避免工程師取得管理員權限，避免人為操作失誤造成的 incident
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 IaC deploy vault，並依照團隊需求逐步調整 infra&lt;/li&gt;
+&lt;li&gt;使用 IaC 管理 vault 內部一切 config&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;questions&#34;&gt;Questions?&lt;/h1&gt;
 </description>
