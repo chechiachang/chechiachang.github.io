@@ -5,7 +5,430 @@
     <link>https://chechia.net/zh-hant/slides/</link>
       <atom:link href="https://chechia.net/zh-hant/slides/index.xml" rel="self" type="application/rss+xml" />
     <description>Slides</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Thu, 21 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>zh-Hant</language><lastBuildDate>Mon, 23 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes Summit: Resource as Code for Kubernetes: Stop kubectl apply</title>
+      <link>https://chechia.net/zh-hant/slides/2023-10-25-k8s-resource-as-code/</link>
+      <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/slides/2023-10-25-k8s-resource-as-code/</guid>
+      <description>
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;onepiece.jpg&#34;
+  &gt;
+
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;Q1: 有過使用 kubernetes 的人請舉手&lt;/p&gt;
+&lt;p&gt;Q2: 有過使用 argocd 的人請舉手&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;hashicorp-vault&#34;&gt;HashiCorp Vault&lt;/h2&gt;
+&lt;h2 id=&#34;自建金鑰管理最佳實踐&#34;&gt;自建金鑰管理最佳實踐&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt; | &lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vault 鐵人賽 workshop&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  s
+標題有稍微修改
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
+&lt;p&gt;Manage Kubernetes Objects in Gitflow&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kubectl&lt;/li&gt;
+&lt;li&gt;helm chart&lt;/li&gt;
+&lt;li&gt;argocd (gitflow)
+&lt;ul&gt;
+&lt;li&gt;applicationset&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;test&lt;/li&gt;
+&lt;li&gt;delivery&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;最後做個小結&lt;/p&gt;
+&lt;p&gt;首先會講 kubectl create / apply&lt;/p&gt;
+&lt;p&gt;導入 helm chart，來打包 k8s objects 變成一個完整地發布單位&lt;/p&gt;
+&lt;p&gt;argocd 走 gitflow 來發布&lt;/p&gt;
+&lt;p&gt;然後在 workflow 裡加入測試，確保 k8s objects 的交付品質&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;kubectl&#34;&gt;Kubectl&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative commands 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create deployment nginx --image nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative object configuration 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create -f nginx.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Declarative object configuration
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -R -f configs/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;kubectl 應該是所有人學 k8s 的第一個工具
+作為官方的 cli 工具，kunectl 非常強大，可以控制幾乎大部分 k8s 的 api，也能對幾乎所有 k8s object 進行操作&lt;/p&gt;
+&lt;p&gt;kubectl 這麼好用，那為何不繼續用下去？&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;kubectl.jpg&#34;
+  &gt;
+
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;首先，如同官方文件所描述，kubectl 的使用上，也有各種不同方法。ie. kubectl 交在不同人手上，使用方式是不同的
+官方文件描述&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Imperative commands 指令式&lt;/li&gt;
+&lt;li&gt;Imperative object configuration 指令物件&lt;/li&gt;
+&lt;li&gt;Declarative object configuration 宣告物件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;kubectl create deployment nginx，一行命令告訴 k8s 你要 create deployment&lt;/p&gt;
+&lt;p&gt;kubectl create -f nginx.yaml，使用者選擇要 create / apply / delete 而 nginx.yaml 裡面描述一個 nginx deployment 物件&lt;/p&gt;
+&lt;p&gt;kubectl apply -f -R nginx/，使用者描述一個或多個物件，描述物件的狀態。apply 時，由 kubectl 決定要對 object 執行，create / update / delete&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;issue&#34;&gt;Issue&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative commands 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create deployment nginx --image nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative object configuration 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create -f nginx.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Declarative object configuration
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -R -f configs/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  &lt;ol&gt;
+&lt;li&gt;的問題很明顯，不能 diff
+2.3. 會有一個基礎的 spec，關於 deployment/nginx，因此可以在&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;重點&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;change review / diff&lt;/li&gt;
+&lt;li&gt;source record other than live&lt;/li&gt;
+&lt;li&gt;template，一個可重複使用的樣版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2.3. 的問題，你必須對 object 夠了解，才寫得出完整沒 bug 的 spec yaml&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;聽起來是最完整的，他的問題就是要如何維持 local file 與 live 連結，或是說 sync
+這個有使用 argocd 的人可能就會比較有感覺&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大家有興趣可以去看官方描述的內容，這裡不贅述&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;issue-1&#34;&gt;Issue&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;change review / diff before apply&lt;/li&gt;
+&lt;li&gt;source of live record&lt;/li&gt;
+&lt;li&gt;template / repetitive apply&lt;/li&gt;
+&lt;li&gt;sync local to live&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;ul&gt;
+&lt;li&gt;change review / diff before apply&lt;/li&gt;
+&lt;li&gt;source of live record&lt;/li&gt;
+&lt;li&gt;template / repetitive apply&lt;/li&gt;
+&lt;li&gt;sync local to live&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;declarative-object-configuration&#34;&gt;Declarative object configuration&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── deployment.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── ingress.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── service.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;redis
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── deployment.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── ingress.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── service.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;microservice-a b c ...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  為了 change review，通常會走向 3. Declarative object configuration，可能會長這樣
+一個 git repository
+裡面有多個 directory，描述每一組服務所需要的資源
+使用 kubectl 一次 apply 整個 directory，所以 local file 基本上也反應 live object
+有 local file，很自然而然就會想要放到版本控制，例如 git，這樣又可以走 gitflow
+PR -&amp;gt; review -&amp;gt; merged -&amp;gt; apply master / release tag
+&lt;/aside&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;helm.jpg&#34;
+  &gt;
+
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;有人在 2014 年前用過 k8s 嗎？&lt;/p&gt;
+&lt;p&gt;古早時期，要用個 redis 還要自己包 service / ingress / deployment，先去 dockerhub 找 redis，然後依據 readme 自己包 deployment，自己測試看 redis 會不會動&lt;/p&gt;
+&lt;p&gt;現在應該沒有人會因為要去使用 redis 或是 mysql，自己跑去寫 k8s object 了吧&lt;/p&gt;
+&lt;p&gt;helm v2.0-alpha 2016&lt;/p&gt;
+&lt;p&gt;現在有 helm + chart&lt;/p&gt;
+&lt;p&gt;如果只是使用低三方開源的 helm chart，社群幫你維護 service / ingress / deployment&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;提供完整的功能，透過 value.yaml 控制&lt;/li&gt;
+&lt;li&gt;經過測試&lt;/li&gt;
+&lt;li&gt;issue tracking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;helm-chart&#34;&gt;Helm chart&lt;/h3&gt;
+&lt;p&gt;k8s object 的開發，打包，測試，release&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;k8s 十分強大，享受 orchestration&lt;/li&gt;
+&lt;li&gt;k8s object 變得太複雜&lt;/li&gt;
+&lt;li&gt;標準化 template，release + upgrade&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;chart 作為一個 k8s object 的 release / artifact，有開發流程，版本控管，測試，完整的發佈&lt;/p&gt;
+&lt;p&gt;app 本身，例如 redis，當然是整個應用的核心。但要能夠在 k8s 執行，並正確地享受 k8s orchestration 的好處，k8s object 非常的重要&lt;/p&gt;
+&lt;p&gt;甚至，k8s object 複雜度已經遠遠超過過去在 vm 上跑一個 redis，兜一個 systemd unit 就可以跑起來&lt;/p&gt;
+&lt;p&gt;k8s object 需要 release / version，才能做 object 的固定版本 apply，upgrade 生版，有問題 rollback&lt;/p&gt;
+&lt;p&gt;在 k8s 上要跑得穩邊的十分閫難，透過社群來維護大部分通運的第三方服務&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;helm-chart-library&#34;&gt;Helm Chart Library&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm repo list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                      	URL
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bitnami                   	https://charts.bitnami.com/bitnami
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;argocd                    	https://argoproj.github.io/argo-helm
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chaos-mesh                	https://charts.chaos-mesh.org
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  在 k8s 上要跑得穩邊的十分閫難，透過社群來維護大部分通運的第三方服務
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;helm-生態系&#34;&gt;helm 生態系&lt;/h3&gt;
+&lt;p&gt;helmfile&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;repositories:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  url: https://argoproj.github.io/argo-helm
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helmDefaults:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  kubeContext: general
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  #verify: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  wait: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  timeout: 300
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;context: general
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;releases:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  chart: argocd/argo-cd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  version: 5.31.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  values:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - values/argocd.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: redis
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: mysql
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/cdwv/awesome-helm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/cdwv/awesome-helm&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;更高層級的封裝&#34;&gt;更高層級的封裝&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;api-services
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── mysql
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── ingress -&amp;gt; nlb
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;daemon-services
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── redis
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── mysql
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── kafka
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;可以再進行更高層級的封裝&lt;/p&gt;
+&lt;p&gt;重複性的服務，例如每個 microservice 都需要
+例如我有一百個 api service group，都是 restful api，都需要 ingress / service / nginx 等等&lt;/p&gt;
+&lt;p&gt;底下的元件標準化，降低維護成本&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;統一版本，醫病維護，升級，退版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例如 daemon service，底下依賴 queue / redis / db&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;微服務&#34;&gt;微服務&lt;/h3&gt;
+&lt;p&gt;微服務不是問題，微服務底下的 k8s object 才是問題&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以快速，標準化的產生經過測試，微服務單元&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;issues&#34;&gt;Issues&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;V change review / diff before apply&lt;/li&gt;
+&lt;li&gt;source of live record&lt;/li&gt;
+&lt;li&gt;V template / repetitive apply&lt;/li&gt;
+&lt;li&gt;sync local to live&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  version control / gitflow
+helm template
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;argo-cd---declarative-gitops-cd-for-kubernetes&#34;&gt;Argo CD - Declarative GitOps CD for Kubernetes&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://argo-cd.readthedocs.io/en/stable/assets/argocd-ui.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;why-argo-cd&#34;&gt;Why Argo CD?&lt;/h3&gt;
+&lt;p&gt;Application definitions, configurations, and environments should be declarative and version controlled. Application deployment and lifecycle management should be automated, auditable, and easy to understand.&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;application 應該是明確宣告的，清楚描述，並且有版本控管
+描述 application 本身，復機的設定 secret / configmap
+environment 也應該是圈告式的&lt;/p&gt;
+&lt;p&gt;application 的部署與 lifecycle 管理，都應該是自動化，可以稽核，而且好理解
+標準化，自動化
+UI 圖像描述，一目瞭然。但事實上如果有做到&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;argo-cd&#34;&gt;Argo CD&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;gitflow / git repository&lt;/li&gt;
+&lt;li&gt;argocd application sync file from repository&lt;/li&gt;
+&lt;li&gt;argocd controller 自動化的確保 sync
+&lt;ul&gt;
+&lt;li&gt;un-sync 自動化處理&lt;/li&gt;
+&lt;li&gt;無法 sync 時通知&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;gitflow
+k8s object 的 change 是需要 PR review 的，不是想改就 kubectl apply 下去
+k8s object 的品質把關，來自高品質的 review&lt;/p&gt;
+&lt;p&gt;能夠直接掌握 live object，透過 editor 檢查 git repository，或是透過 argocd UI 檢視&lt;/p&gt;
+&lt;p&gt;local file 等於 live object
+在複雜的環境裡很重要，ex. k8s 內有成千上百個 helm release，可以用 editor 檢視 local file
+不然要透過 k8s 去打 api&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;api call 也是資源啊，能省則省&lt;/li&gt;
+&lt;li&gt;editor 更直覺快速&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;helm template 有提供許多語法，可以有系統化的產生重複的 k8s object
+ex. 可以跑 for loop / for each
+這個在 IaC 或是 resource as code 的 xxx as code 都十分有利&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;applicationset&#34;&gt;applicationset&lt;/h3&gt;
+&lt;p&gt;generator&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;重複性的服務，例如每個 microservice 都需要&lt;/p&gt;
+&lt;p&gt;可以再進行更高層級的封裝&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;cluster-wide-的-k8s-object&#34;&gt;cluster-wide 的 k8s object&lt;/h3&gt;
+&lt;p&gt;cluster-wide 的 k8s object 也很適合&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 helm template helper 來管理 value.yaml label / annotation / env / &amp;hellip;&lt;/li&gt;
+&lt;li&gt;namespace&lt;/li&gt;
+&lt;li&gt;rbac&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;cluster-wide 的 k8s object 也很適合塞進 argocd 管理&lt;/p&gt;
+&lt;p&gt;例如 cluster access control，復雜的 rbac rule，也很適合整理成為 helm chart&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以輕鬆實現 user -&amp;gt; rule 多對多&lt;/li&gt;
+&lt;li&gt;可以快速增減 user group&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;issues-1&#34;&gt;Issues&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;V change review / diff before apply&lt;/li&gt;
+&lt;li&gt;V source of live record&lt;/li&gt;
+&lt;li&gt;V template / repetitive apply&lt;/li&gt;
+&lt;li&gt;V sync local to live&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-multi-hybrid-cluster&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;multiple k8s
+&lt;ul&gt;
+&lt;li&gt;dev / stag / prod&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;hybrid k8s
+&lt;ul&gt;
+&lt;li&gt;bare metal / public cloud&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;由於 k8s 內部的 component 都已經標準化，可以很輕易地複製測試過的 component
+dev 測試 PR branch，staging 跑 release candicate，production 選擇經過測試的 release&lt;/p&gt;
+&lt;p&gt;能夠確保 dev / stag / prod 的 k8s object 是完全相同的&lt;/p&gt;
+&lt;p&gt;hybrid 環境管理，某些 k8s 元件應該安裝在哪些 cluster 上&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;aws ingress controller / csi driver / cni node daemonsets&lt;/li&gt;
+&lt;li&gt;local nginx-ingress controller&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-multi-hybrid-cluster-1&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;applicationset&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://argocd-applicationset.readthedocs.io/en/stable/Generators-Cluster/#label-selector&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;argocd cluster generator Label selector&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-test&#34;&gt;More Issues: Test&lt;/h3&gt;
+&lt;p&gt;要不要測試，是個問題&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;測試 k8s object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  infra-test provider 應該都測完了
+要測的是 k8s object 的功能是否符合預期
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-test-1&#34;&gt;More Issues: Test&lt;/h3&gt;
+&lt;p&gt;如果可以標準化 application&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;api-service / daemon-service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;工具&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ansible playbook&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-test-2&#34;&gt;More Issues: Test&lt;/h3&gt;
+&lt;p&gt;&lt;del&gt;Test&lt;/del&gt; Monitoring&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;prometheus rule with helm chart&lt;/li&gt;
+&lt;li&gt;ServiceMonitor&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  helm release 一個 api-services
+api service 有 /metrics endpoint
+透過 ServiceMonitor 來持續性的紀錄 metrics
+透過 PrometheusRule 來設定異常 metrics 的告警
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-test-3&#34;&gt;More Issues: Test&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;stress-test / load test&lt;/li&gt;
+&lt;li&gt;chaos-engineering&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  如果
+&lt;/aside&gt;
+</description>
+    </item>
+    
     <item>
       <title>DevOpsDay: HashiCorp Vault 自建金鑰管理最佳入坑姿勢</title>
       <link>https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/</link>

@@ -30,6 +30,8 @@
 &lt;/ul&gt;
 &lt;p&gt;當服務的 app code base 都已經用 chart 打包，使用 vcs 管理後，為何依賴的 k8s resource (namespace, secret, label, crd, &amp;hellip;) 不需要推上 vcs 管理的？&lt;/p&gt;
 &lt;p&gt;本次演講集合幾個管理 k8s 的範例，將 k8s resource 以 code 管理，推上 vcs，並使用 argoCD, secret operator, &amp;hellip; 等工具進行管理，來讓避免低級的人工操作錯誤，降低團隊整體失誤率，並降低 k8s admin 管理的成本，提高管理效率&lt;/p&gt;
+&lt;h1 id=&#34;target-group&#34;&gt;target group&lt;/h1&gt;
+&lt;p&gt;Kubernetes User who want to increase performance in k8s management&lt;/p&gt;
 </description>
     </item>
     

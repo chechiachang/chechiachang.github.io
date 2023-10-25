@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年9月26日 --><html lang="zh-Hant" >
+<!-- Last Published: 2023年10月25日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -930,7 +930,11 @@
 
 
 
-
+  
+  <a class="btn btn-outline-primary btn-page-header btn-sm" href="/zh-hant/slides/2023-10-25-k8s-resource-as-code/" target="_blank">
+    投影片
+  </a>
+  
 
 
 
@@ -963,6 +967,106 @@
         <img src="/zh-hant/talk/kubernetes-summit-resource-as-code-for-kubernetes-stop-kubectl-apply/featured_hu0533df8c600b6ebf5e775c57536fef00_375369_150x0_resize_q75_h2_lanczos.webp" height="88" width="150"
             alt="Kubernetes Summit: Resource as Code for Kubernetes: Stop kubectl apply" loading="lazy">
       </a>
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2023-10-10-vault-workshop-integrated-storage/" >Vault Workshop ??: Integrated Storage</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2023-10-10-vault-workshop-integrated-storage/"  class="summary-link">
+      <div class="article-style">
+        如果你希望追蹤最新的草稿，請見鐵人賽2023
+本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
+整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
+Day ??: Integrated Backend 集成存儲
+Vault 支援多種存儲選項，用於持久存儲 Vault 資訊。自 Vault 1.4 起，提供了整合式存儲選項。此存儲後端不依賴於任何第三方系統，實現高可用性語義，支援企業複製功能，並提供備份/還原工作流。
+該選項將 Vault 的數據存儲在服務器的文件系統上，並使用共識協議將數據複製到集群中的每個服務器。有關整合式存儲內部的更多信息，請參閱整合式存儲內部文檔。此外，配置文檔可以幫助配置 Vault 以使用整合式存儲。
+以下各節將詳細介紹如何使用整合式存儲操作 Vault。
+服務器間通信 一旦節點加入到彼此，它們開始使用 Vault 的叢集端口進行 mTLS 通信。叢集端口的默認值為 8201。TLS 信息在加入時交換，並按一定的節奏進行輪換。
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 26, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a>, <a href="/zh-hant/category/docker/">docker</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
     
   </div>
 </div>
@@ -1744,104 +1848,6 @@ key 名稱必須始終是字符串。如果你直接通過CLI編寫非字串 val
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     6 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/" >Vault Workshop 03: Secret Engine</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2023-09-14-vault-workshop-secret-engine/"  class="summary-link">
-      <div class="article-style">
-        如果你希望追蹤最新的草稿，請見鐵人賽2023
-本 workshop 也接受網友的許願清單，如果有興趣的題目可於第一篇底下留言，筆者會盡力實現，但不做任何保證
-整篇 Workshop 會使用的範例與原始碼，放在 Github Repository: vault-playground
-Day 03：細探 Secret Engine 秘密引擎 什麼是秘密引擎？ 秘密引擎是Vault的組件，用於存儲、生成或加密秘密。在前面的內容中，你使用了Key/Value v2 秘密引擎來存儲數據。一些秘密引擎，比如鍵/值秘密引擎，僅僅是用來存儲和讀取數據的。其他秘密引擎則連接到其他服務並根據需求生成動態憑證。還有一些秘密引擎提供加密作為服務。
-前面的內容中，默認情況下，key/value v2 秘密引擎已啟用，並準備在 secret/ 下接收請求，因為我們在-dev 模式下啟動了Vault Server。
-在底下我們使用 kv v1 做簡單的範例。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 18, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 閱讀時間（分鐘）
   </span>
   
 
