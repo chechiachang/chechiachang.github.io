@@ -67,8 +67,9 @@
   >
 
 <aside class="notes">
-  <p>Q1: 有過使用 kubernetes 的人請舉手</p>
-<p>Q2: 有過使用 argocd 的人請舉手</p>
+  Q1: 有過使用 kubernetes 的人請舉手
+Q2: 有過使用 helm 跟 argocd 的人請舉手
+Q3: k8s object 走 gitflow 管理的比例有超過 9 成的
 </aside>
 
     </section>
@@ -80,12 +81,10 @@
     <section>
     
       
-<h2 id="hashicorp-vault">HashiCorp Vault</h2>
-<h2 id="自建金鑰管理最佳實踐">自建金鑰管理最佳實踐</h2>
-<p><a href="https://chechia.net/" target="_blank" rel="noopener">Che Chia Chang</a> | <a href="https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/" target="_blank" rel="noopener">Vault 鐵人賽 workshop</a></p>
+<h3 id="resource-as-code-for-k8s-object">Resource as Code for K8s Object</h3>
+<h3 id="如何管理-k8s-object">如何管理 k8s object</h3>
+<p><a href="https://chechia.net/" target="_blank" rel="noopener">Che Chia Chang</a></p>
 <aside class="notes">
-  s
-標題有稍微修改
 </aside>
 
     </section>
@@ -108,11 +107,11 @@
 </ul>
 </li>
 <li>test</li>
-<li>delivery</li>
 </ul>
 <aside class="notes">
-  <p>最後做個小結</p>
-<p>首先會講 kubectl create / apply</p>
+  <p>今天的內容前半部像是講古</p>
+<p>首先會講 kubectl create / apply
+kubectl 使用，然後官方有提醒我們使用 kubectl 管理 k8s object 時的 trade-off，這些 trade-off 我們可以使用其他的工具來彌補</p>
 <p>導入 helm chart，來打包 k8s objects 變成一個完整地發布單位</p>
 <p>argocd 走 gitflow 來發布</p>
 <p>然後在 workflow 裡加入測試，確保 k8s objects 的交付品質</p>
@@ -138,9 +137,8 @@
 </span></span><span class="line"><span class="cl">kubectl apply -R -f configs/
 </span></span></code></pre></div><p><a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques</a></p>
 <aside class="notes">
-  <p>kubectl 應該是所有人學 k8s 的第一個工具
-作為官方的 cli 工具，kunectl 非常強大，可以控制幾乎大部分 k8s 的 api，也能對幾乎所有 k8s object 進行操作</p>
-<p>kubectl 這麼好用，那為何不繼續用下去？</p>
+  kubectl 應該是所有人學 k8s 的第一個工具
+作為官方的 cli 工具，kunectl 非常強大，可以控制幾乎大部分 k8s 的 api，也能對幾乎所有 k8s object 進行操作
 </aside>
 
     </section>
@@ -189,7 +187,8 @@
 </span></span><span class="line"><span class="cl"># Declarative object configuration
 </span></span><span class="line"><span class="cl">kubectl apply -R -f configs/
 </span></span></code></pre></div><aside class="notes">
-  <ol>
+  <p>kubectl 這麼好用，那為何不繼續用下去？</p>
+<ol>
 <li>的問題很明顯，不能 diff
 2.3. 會有一個基礎的 spec，關於 deployment/nginx，因此可以在</li>
 </ol>
@@ -324,12 +323,19 @@ PR -&gt; review -&gt; merged -&gt; apply master / release tag
 <h3 id="helm-chart-library">Helm Chart Library</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">helm repo list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">NAME                      	URL
-</span></span><span class="line"><span class="cl">bitnami                   	https://charts.bitnami.com/bitnami
-</span></span><span class="line"><span class="cl">argocd                    	https://argoproj.github.io/argo-helm
-</span></span><span class="line"><span class="cl">chaos-mesh                	https://charts.chaos-mesh.org
+</span></span><span class="line"><span class="cl">NAME       URL
+</span></span><span class="line"><span class="cl">bitnami    https://charts.bitnami.com/bitnami
+</span></span><span class="line"><span class="cl">argocd     https://argoproj.github.io/argo-helm
+</span></span><span class="line"><span class="cl">chaos-mesh https://charts.chaos-mesh.org
 </span></span></code></pre></div><aside class="notes">
-  在 k8s 上要跑得穩邊的十分閫難，透過社群來維護大部分通運的第三方服務
+  <p>k8s objects 能動很簡單，但要跑得穩又能享受 orchestration 的便利，十分困難
+透過社群來維護大部分通運的第三方服務，透過單一 value.yaml</p>
+<p>社群維護的 chart 不是就一勞永逸</p>
+<ul>
+<li>不熱門的 chart</li>
+<li>特殊需求時，還是需要 fork chart 回來自己維護</li>
+</ul>
+<p>但無論如何，都是大幅降低維運的複雜度</p>
 </aside>
 
     </section>
@@ -342,7 +348,7 @@ PR -&gt; review -&gt; merged -&gt; apply master / release tag
     
       
 <h3 id="helm-生態系">helm 生態系</h3>
-<p>helmfile</p>
+<p>ex. helmfile</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">repositories:
 </span></span><span class="line"><span class="cl">- name: argocd
 </span></span><span class="line"><span class="cl">  url: https://argoproj.github.io/argo-helm
@@ -428,8 +434,10 @@ PR -&gt; review -&gt; merged -&gt; apply master / release tag
 <li>sync local to live</li>
 </ul>
 <aside class="notes">
-  version control / gitflow
-helm template
+  <p>version control / gitflow</p>
+<p>helm template 有提供許多語法，可以有系統化的產生重複的 k8s object
+ex. 可以跑 for loop / for each
+這個在 IaC 或是 resource as code 的 xxx as code 都十分有利</p>
 </aside>
 
     </section>
@@ -516,9 +524,6 @@ k8s object 的品質把關，來自高品質的 review</p>
 <li>api call 也是資源啊，能省則省</li>
 <li>editor 更直覺快速</li>
 </ul>
-<p>helm template 有提供許多語法，可以有系統化的產生重複的 k8s object
-ex. 可以跑 for loop / for each
-這個在 IaC 或是 resource as code 的 xxx as code 都十分有利</p>
 </aside>
 
     </section>
@@ -531,12 +536,61 @@ ex. 可以跑 for loop / for each
     
       
 <h3 id="applicationset">applicationset</h3>
-<p>generator</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></div><aside class="notes">
-  <p>重複性的服務，例如每個 microservice 都需要</p>
-<p>可以再進行更高層級的封裝</p>
+<p><a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Git/" target="_blank" rel="noopener">git generator</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: argoproj.io/v1alpha1
+</span></span><span class="line"><span class="cl">kind: ApplicationSet
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: general-argocd
+</span></span><span class="line"><span class="cl">  namespace: argocd
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  generators:
+</span></span><span class="line"><span class="cl">  - git:
+</span></span><span class="line"><span class="cl">      repoURL: https://github.com/chechiachang/azure-argo
+</span></span><span class="line"><span class="cl">      revision: master
+</span></span><span class="line"><span class="cl">      directories:
+</span></span><span class="line"><span class="cl">      - path: clusters/dev/dev-general/argocd/*
+</span></span><span class="line"><span class="cl">  template:
+</span></span><span class="line"><span class="cl">    metadata:
+</span></span><span class="line"><span class="cl">      name: &#39;dev-general-argocd-{{path.basename}}&#39;
+</span></span><span class="line"><span class="cl">      labels:
+</span></span><span class="line"><span class="cl">        environment: dev
+</span></span><span class="line"><span class="cl">        type: infra
+</span></span><span class="line"><span class="cl">        function: argocd
+</span></span><span class="line"><span class="cl">        cluster: dev-general
+</span></span><span class="line"><span class="cl">    spec:
+</span></span><span class="line"><span class="cl">      project: default
+</span></span><span class="line"><span class="cl">      syncPolicy:
+</span></span><span class="line"><span class="cl">        automated:
+</span></span><span class="line"><span class="cl">          prune: true
+</span></span><span class="line"><span class="cl">      source:
+</span></span><span class="line"><span class="cl">        repoURL: https://github.com/chechiachang/azure-argo
+</span></span><span class="line"><span class="cl">        targetRevision: master
+</span></span><span class="line"><span class="cl">        path: &#39;clusters/dev/dev-general/argocd/{{path.basename}}&#39;
+</span></span><span class="line"><span class="cl">      destination:
+</span></span><span class="line"><span class="cl">        server: https://kubernetes.default.svc
+</span></span><span class="line"><span class="cl">        namespace: argocd
+</span></span></code></pre></div><aside class="notes">
 </aside>
 
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="applicationset-1">applicationset</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dev-general
+</span></span><span class="line"><span class="cl">├── default/redis
+</span></span><span class="line"><span class="cl">├── default/mysql
+</span></span><span class="line"><span class="cl">├── default/my-app
+</span></span><span class="line"><span class="cl">├── nginx-ingress/nginx-ingress
+</span></span><span class="line"><span class="cl">└── argocd/argocd
+</span></span><span class="line"><span class="cl">stag-general
+</span></span><span class="line"><span class="cl">prod-general
+</span></span></code></pre></div>
     </section>
     
 
@@ -623,8 +677,58 @@ dev 測試 PR branch，staging 跑 release candicate，production 選擇經過�
       
 <h3 id="more-issues-multi-hybrid-cluster-1">More Issues: multi-hybrid cluster</h3>
 <ul>
+<li><a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/" target="_blank" rel="noopener">argocd cluster generator</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kind: ApplicationSet
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: aws-cni
+</span></span><span class="line"><span class="cl">  namespace: kube-system
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  generators:
+</span></span><span class="line"><span class="cl">  - clusters:
+</span></span><span class="line"><span class="cl">      selector:
+</span></span><span class="line"><span class="cl">        matchLabels:
+</span></span><span class="line"><span class="cl">          eks: true
+</span></span><span class="line"><span class="cl">          #bare-metal: true
+</span></span><span class="line"><span class="cl">          staging: true
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="more-issues-multi-hybrid-cluster-2">More Issues: multi-hybrid cluster</h3>
+<ul>
+<li><a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/" target="_blank" rel="noopener">argocd cluster generator</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-eks-1
+</span></span><span class="line"><span class="cl">├── aws cni
+</span></span><span class="line"><span class="cl">├── aws ingress controller
+</span></span><span class="line"><span class="cl">└── nginx-ingress controller
+</span></span><span class="line"><span class="cl">bare-metal-1
+</span></span><span class="line"><span class="cl">├── cilium
+</span></span><span class="line"><span class="cl">├── bare-metal ingress
+</span></span><span class="line"><span class="cl">└── nginx-ingress controller
+</span></span></code></pre></div><aside class="notes">
+  多座 cluster
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="more-issues-multi-hybrid-cluster-3">More Issues: multi-hybrid cluster</h3>
+<ul>
 <li>applicationset</li>
-<li><a href="https://argocd-applicationset.readthedocs.io/en/stable/Generators-Cluster/#label-selector" target="_blank" rel="noopener">argocd cluster generator Label selector</a></li>
 </ul>
 
     </section>
@@ -637,13 +741,20 @@ dev 測試 PR branch，staging 跑 release candicate，production 選擇經過�
     
       
 <h3 id="more-issues-test">More Issues: Test</h3>
-<p>要不要測試，是個問題</p>
+<p>k8s object 需不需要測試</p>
 <ul>
-<li>測試 k8s object</li>
+<li>infra-test (bare-metal / self-hosted)</li>
+<li>release (helm chart)</li>
+<li>live status</li>
+<li>stress / load test / chaos engineering</li>
 </ul>
 <aside class="notes">
-  infra-test provider 應該都測完了
-要測的是 k8s object 的功能是否符合預期
+  <p>k8s object 需不需要測試，覺得需要測試的請舉手</p>
+<p>k8s object 需不需要測試，就跟這個投影片一樣
+有時間就講一下，沒時間就跳過吧</p>
+<p>infra-test provider 應該都測完了
+要測的是 k8s object 的功能是否符合預期</p>
+<p>當然，有測試的 helm releae 與沒測試的 helm release 也是天差地遠</p>
 </aside>
 
     </section>
@@ -655,16 +766,38 @@ dev 測試 PR branch，staging 跑 release candicate，production 選擇經過�
     <section>
     
       
-<h3 id="more-issues-test-1">More Issues: Test</h3>
-<p>如果可以標準化 application</p>
+<h3 id="test-ansible-playbook">Test: ansible playbook</h3>
 <ul>
-<li>api-service / daemon-service</li>
-</ul>
-<p>工具</p>
+<li>測試 apply 後 k8s object 的 status
 <ul>
-<li>ansible playbook</li>
+<li>ingress 是否 ready</li>
+<li>endpoint 是否有產生</li>
 </ul>
-
+</li>
+<li>可以先測
+<ul>
+<li>networking (ingress / svc)</li>
+<li>storage (csi / pvc)</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- name: Test nginx deployment
+</span></span><span class="line"><span class="cl">  hosts: {{ host }}
+</span></span><span class="line"><span class="cl">  gather_facts: no
+</span></span><span class="line"><span class="cl">  vars:
+</span></span><span class="line"><span class="cl">    deployment_name: &#34;nginx&#34;
+</span></span><span class="line"><span class="cl">  tasks:
+</span></span><span class="line"><span class="cl">  - name: Get deployment status
+</span></span><span class="line"><span class="cl">    shell: kubectl get deployment {{ deployment_name }} -o=jsonpath=&#39;{.status.readyReplicas}&#39;
+</span></span><span class="line"><span class="cl">    register: deployment_status
+</span></span><span class="line"><span class="cl">    failed_when: deployment_status.rc != 0
+</span></span><span class="line"><span class="cl">  - name: Verify deployment is running
+</span></span><span class="line"><span class="cl">    assert:
+</span></span><span class="line"><span class="cl">      that:
+</span></span><span class="line"><span class="cl">        - deployment_status.stdout != &#39;null&#39;
+</span></span><span class="line"><span class="cl">        - deployment_status.stdout != &#39;0&#39;
+</span></span><span class="line"><span class="cl">      fail_msg: &#39;Deployment {{ deployment_name }} is not running.&#39;
+</span></span></code></pre></div>
     </section>
     
 
@@ -674,7 +807,7 @@ dev 測試 PR branch，staging 跑 release candicate，production 選擇經過�
     <section>
     
       
-<h3 id="more-issues-test-2">More Issues: Test</h3>
+<h3 id="more-issues-test-1">More Issues: Test</h3>
 <p><del>Test</del> Monitoring</p>
 <ul>
 <li>prometheus rule with helm chart</li>
@@ -696,14 +829,40 @@ api service 有 /metrics endpoint
     <section>
     
       
-<h3 id="more-issues-test-3">More Issues: Test</h3>
+<h3 id="more-issues-test-2">More Issues: Test</h3>
 <ul>
-<li>stress-test / load test</li>
-<li>chaos-engineering</li>
+<li>stress-test / load test
+<ul>
+<li>k6</li>
+</ul>
+</li>
+<li>chaos-engineering
+<ul>
+<li><a href="https://chaos-mesh.org/" target="_blank" rel="noopener">https://chaos-mesh.org/</a></li>
+<li><a href="https://github.com/asobti/kube-monkey" target="_blank" rel="noopener">https://github.com/asobti/kube-monkey</a></li>
+</ul>
+</li>
 </ul>
 <aside class="notes">
-  如果
 </aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="summary">Summary</h3>
+<ul>
+<li>kubectl + gitflow</li>
+<li>helm chart</li>
+<li>argocd: applicationset / generator</li>
+<li>test</li>
+</ul>
+<p>Q &amp; A</p>
 
     </section>
     

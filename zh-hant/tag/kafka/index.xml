@@ -25,16 +25,15 @@
   &gt;
 
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;Q1: 有過使用 kubernetes 的人請舉手&lt;/p&gt;
-&lt;p&gt;Q2: 有過使用 argocd 的人請舉手&lt;/p&gt;
+  Q1: 有過使用 kubernetes 的人請舉手
+Q2: 有過使用 helm 跟 argocd 的人請舉手
+Q3: k8s object 走 gitflow 管理的比例有超過 9 成的
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;hashicorp-vault&#34;&gt;HashiCorp Vault&lt;/h2&gt;
-&lt;h2 id=&#34;自建金鑰管理最佳實踐&#34;&gt;自建金鑰管理最佳實踐&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt; | &lt;a href=&#34;https://chechia.net/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vault 鐵人賽 workshop&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;resource-as-code-for-k8s-object&#34;&gt;Resource as Code for K8s Object&lt;/h3&gt;
+&lt;h3 id=&#34;如何管理-k8s-object&#34;&gt;如何管理 k8s object&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt;&lt;/p&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  s
-標題有稍微修改
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
@@ -48,11 +47,11 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;test&lt;/li&gt;
-&lt;li&gt;delivery&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;最後做個小結&lt;/p&gt;
-&lt;p&gt;首先會講 kubectl create / apply&lt;/p&gt;
+  &lt;p&gt;今天的內容前半部像是講古&lt;/p&gt;
+&lt;p&gt;首先會講 kubectl create / apply
+kubectl 使用，然後官方有提醒我們使用 kubectl 管理 k8s object 時的 trade-off，這些 trade-off 我們可以使用其他的工具來彌補&lt;/p&gt;
 &lt;p&gt;導入 helm chart，來打包 k8s objects 變成一個完整地發布單位&lt;/p&gt;
 &lt;p&gt;argocd 走 gitflow 來發布&lt;/p&gt;
 &lt;p&gt;然後在 workflow 裡加入測試，確保 k8s objects 的交付品質&lt;/p&gt;
@@ -69,9 +68,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -R -f configs/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques&lt;/a&gt;&lt;/p&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;kubectl 應該是所有人學 k8s 的第一個工具
-作為官方的 cli 工具，kunectl 非常強大，可以控制幾乎大部分 k8s 的 api，也能對幾乎所有 k8s object 進行操作&lt;/p&gt;
-&lt;p&gt;kubectl 這麼好用，那為何不繼續用下去？&lt;/p&gt;
+  kubectl 應該是所有人學 k8s 的第一個工具
+作為官方的 cli 工具，kunectl 非常強大，可以控制幾乎大部分 k8s 的 api，也能對幾乎所有 k8s object 進行操作
 &lt;/aside&gt;
 &lt;hr&gt;
 
@@ -104,7 +102,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Declarative object configuration
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -R -f configs/
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  &lt;ol&gt;
+  &lt;p&gt;kubectl 這麼好用，那為何不繼續用下去？&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;的問題很明顯，不能 diff
 2.3. 會有一個基礎的 spec，關於 deployment/nginx，因此可以在&lt;/li&gt;
 &lt;/ol&gt;
@@ -196,16 +195,23 @@ PR -&amp;gt; review -&amp;gt; merged -&amp;gt; apply master / release tag
 &lt;h3 id=&#34;helm-chart-library&#34;&gt;Helm Chart Library&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm repo list
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME                      	URL
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bitnami                   	https://charts.bitnami.com/bitnami
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;argocd                    	https://argoproj.github.io/argo-helm
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chaos-mesh                	https://charts.chaos-mesh.org
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME       URL
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bitnami    https://charts.bitnami.com/bitnami
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;argocd     https://argoproj.github.io/argo-helm
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chaos-mesh https://charts.chaos-mesh.org
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  在 k8s 上要跑得穩邊的十分閫難，透過社群來維護大部分通運的第三方服務
+  &lt;p&gt;k8s objects 能動很簡單，但要跑得穩又能享受 orchestration 的便利，十分困難
+透過社群來維護大部分通運的第三方服務，透過單一 value.yaml&lt;/p&gt;
+&lt;p&gt;社群維護的 chart 不是就一勞永逸&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不熱門的 chart&lt;/li&gt;
+&lt;li&gt;特殊需求時，還是需要 fork chart 回來自己維護&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但無論如何，都是大幅降低維運的複雜度&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;helm-生態系&#34;&gt;helm 生態系&lt;/h3&gt;
-&lt;p&gt;helmfile&lt;/p&gt;
+&lt;p&gt;ex. helmfile&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;repositories:
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: argocd
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  url: https://argoproj.github.io/argo-helm
@@ -264,8 +270,10 @@ PR -&amp;gt; review -&amp;gt; merged -&amp;gt; apply master / release tag
 &lt;li&gt;sync local to live&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  version control / gitflow
-helm template
+  &lt;p&gt;version control / gitflow&lt;/p&gt;
+&lt;p&gt;helm template 有提供許多語法，可以有系統化的產生重複的 k8s object
+ex. 可以跑 for loop / for each
+這個在 IaC 或是 resource as code 的 xxx as code 都十分有利&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;argo-cd---declarative-gitops-cd-for-kubernetes&#34;&gt;Argo CD - Declarative GitOps CD for Kubernetes&lt;/h3&gt;
@@ -325,18 +333,55 @@ k8s object 的品質把關，來自高品質的 review&lt;/p&gt;
 &lt;li&gt;api call 也是資源啊，能省則省&lt;/li&gt;
 &lt;li&gt;editor 更直覺快速&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;helm template 有提供許多語法，可以有系統化的產生重複的 k8s object
-ex. 可以跑 for loop / for each
-這個在 IaC 或是 resource as code 的 xxx as code 都十分有利&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;applicationset&#34;&gt;applicationset&lt;/h3&gt;
-&lt;p&gt;generator&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;重複性的服務，例如每個 microservice 都需要&lt;/p&gt;
-&lt;p&gt;可以再進行更高層級的封裝&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Git/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;git generator&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: argoproj.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ApplicationSet
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: general-argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  generators:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - git:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      repoURL: https://github.com/chechiachang/azure-argo
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      revision: master
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      directories:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - path: clusters/dev/dev-general/argocd/*
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  template:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      name: &amp;#39;dev-general-argocd-{{path.basename}}&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      labels:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        environment: dev
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        type: infra
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        function: argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        cluster: dev-general
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      project: default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      syncPolicy:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        automated:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          prune: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      source:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        repoURL: https://github.com/chechiachang/azure-argo
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        targetRevision: master
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        path: &amp;#39;clusters/dev/dev-general/argocd/{{path.basename}}&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      destination:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        server: https://kubernetes.default.svc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        namespace: argocd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;applicationset-1&#34;&gt;applicationset&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dev-general
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── default/redis
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── default/mysql
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── default/my-app
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── nginx-ingress/nginx-ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── argocd/argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;stag-general
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;prod-general
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;cluster-wide-的-k8s-object&#34;&gt;cluster-wide 的 k8s object&lt;/h3&gt;
 &lt;p&gt;cluster-wide 的 k8s object 也很適合&lt;/p&gt;
 &lt;ul&gt;
@@ -387,31 +432,92 @@ dev 測試 PR branch，staging 跑 release candicate，production 選擇經過�
 &lt;hr&gt;
 &lt;h3 id=&#34;more-issues-multi-hybrid-cluster-1&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;argocd cluster generator&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ApplicationSet
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: aws-cni
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: kube-system
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  generators:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - clusters:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      selector:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        matchLabels:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          eks: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          #bare-metal: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          staging: true
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-multi-hybrid-cluster-2&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;argocd cluster generator&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;aws-eks-1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── aws cni
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── aws ingress controller
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── nginx-ingress controller
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bare-metal-1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── cilium
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── bare-metal ingress
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── nginx-ingress controller
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+  多座 cluster
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;more-issues-multi-hybrid-cluster-3&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
+&lt;ul&gt;
 &lt;li&gt;applicationset&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://argocd-applicationset.readthedocs.io/en/stable/Generators-Cluster/#label-selector&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;argocd cluster generator Label selector&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;more-issues-test&#34;&gt;More Issues: Test&lt;/h3&gt;
-&lt;p&gt;要不要測試，是個問題&lt;/p&gt;
+&lt;p&gt;k8s object 需不需要測試&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;測試 k8s object&lt;/li&gt;
+&lt;li&gt;infra-test (bare-metal / self-hosted)&lt;/li&gt;
+&lt;li&gt;release (helm chart)&lt;/li&gt;
+&lt;li&gt;live status&lt;/li&gt;
+&lt;li&gt;stress / load test / chaos engineering&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  infra-test provider 應該都測完了
-要測的是 k8s object 的功能是否符合預期
+  &lt;p&gt;k8s object 需不需要測試，覺得需要測試的請舉手&lt;/p&gt;
+&lt;p&gt;k8s object 需不需要測試，就跟這個投影片一樣
+有時間就講一下，沒時間就跳過吧&lt;/p&gt;
+&lt;p&gt;infra-test provider 應該都測完了
+要測的是 k8s object 的功能是否符合預期&lt;/p&gt;
+&lt;p&gt;當然，有測試的 helm releae 與沒測試的 helm release 也是天差地遠&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;test-ansible-playbook&#34;&gt;Test: ansible playbook&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;測試 apply 後 k8s object 的 status
+&lt;ul&gt;
+&lt;li&gt;ingress 是否 ready&lt;/li&gt;
+&lt;li&gt;endpoint 是否有產生&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;可以先測
+&lt;ul&gt;
+&lt;li&gt;networking (ingress / svc)&lt;/li&gt;
+&lt;li&gt;storage (csi / pvc)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: Test nginx deployment
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  hosts: {{ host }}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  gather_facts: no
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    deployment_name: &amp;#34;nginx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  tasks:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - name: Get deployment status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    shell: kubectl get deployment {{ deployment_name }} -o=jsonpath=&amp;#39;{.status.readyReplicas}&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    register: deployment_status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    failed_when: deployment_status.rc != 0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - name: Verify deployment is running
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    assert:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      that:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - deployment_status.stdout != &amp;#39;null&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - deployment_status.stdout != &amp;#39;0&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      fail_msg: &amp;#39;Deployment {{ deployment_name }} is not running.&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;more-issues-test-1&#34;&gt;More Issues: Test&lt;/h3&gt;
-&lt;p&gt;如果可以標準化 application&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;api-service / daemon-service&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;工具&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ansible playbook&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-test-2&#34;&gt;More Issues: Test&lt;/h3&gt;
 &lt;p&gt;&lt;del&gt;Test&lt;/del&gt; Monitoring&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;prometheus rule with helm chart&lt;/li&gt;
@@ -424,14 +530,31 @@ api service 有 /metrics endpoint
 透過 PrometheusRule 來設定異常 metrics 的告警
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;more-issues-test-3&#34;&gt;More Issues: Test&lt;/h3&gt;
+&lt;h3 id=&#34;more-issues-test-2&#34;&gt;More Issues: Test&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;stress-test / load test&lt;/li&gt;
-&lt;li&gt;chaos-engineering&lt;/li&gt;
+&lt;li&gt;stress-test / load test
+&lt;ul&gt;
+&lt;li&gt;k6&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;chaos-engineering
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chaos-mesh.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chaos-mesh.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/asobti/kube-monkey&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/asobti/kube-monkey&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  如果
 &lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;kubectl + gitflow&lt;/li&gt;
+&lt;li&gt;helm chart&lt;/li&gt;
+&lt;li&gt;argocd: applicationset / generator&lt;/li&gt;
+&lt;li&gt;test&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Q &amp;amp; A&lt;/p&gt;
 </description>
     </item>
     
