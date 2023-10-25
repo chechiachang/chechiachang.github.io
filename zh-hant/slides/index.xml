@@ -19,9 +19,8 @@
   &gt;
 
 &lt;aside class=&#34;notes&#34;&gt;
-  Q1: 有過使用 kubernetes 的人請舉手
-Q2: 有過使用 helm 跟 argocd 的人請舉手
-Q3: k8s object 走 gitflow 管理的比例有超過 9 成的
+  Q1: 有過使用 helm 跟 argocd 的人請舉手
+Q2: k8s object 走 gitflow 管理的比例有超過 9 成的
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;resource-as-code-for-k8s-object&#34;&gt;Resource as Code for K8s Object&lt;/h3&gt;
