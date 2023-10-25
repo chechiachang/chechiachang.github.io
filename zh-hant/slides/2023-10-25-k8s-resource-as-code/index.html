@@ -280,7 +280,8 @@ PR -&gt; review -&gt; merged -&gt; apply master / release tag
 <p>現在有 helm + chart</p>
 <p>如果只是使用低三方開源的 helm chart，社群幫你維護 service / ingress / deployment</p>
 <ul>
-<li>提供完整的功能，透過 value.yaml 控制</li>
+<li>提供基本的 default value，預設就跑得起來</li>
+<li>跑得起來後，跑得好，能使用 k8s orchestration 提供完整的功能，透過 value.yaml 控制</li>
 <li>經過測試</li>
 <li>issue tracking</li>
 </ul>
@@ -391,7 +392,8 @@ PR -&gt; review -&gt; merged -&gt; apply master / release tag
 </span></span><span class="line"><span class="cl">├── mysql
 </span></span><span class="line"><span class="cl">└── kafka
 </span></span></code></pre></div><aside class="notes">
-  <p>可以再進行更高層級的封裝</p>
+  <p>底下的依賴標準化，依據穩定的 release 發布之後
+可以再進行更高層級的封裝</p>
 <p>重複性的服務，例如每個 microservice 都需要
 例如我有一百個 api service group，都是 restful api，都需要 ingress / service / nginx 等等</p>
 <p>底下的元件標準化，降低維護成本</p>
@@ -448,7 +450,8 @@ ex. 可以跑 for loop / for each
     <section>
     
       
-<h3 id="argo-cd---declarative-gitops-cd-for-kubernetes">Argo CD - Declarative GitOps CD for Kubernetes</h3>
+<h3 id="argo-cd">Argo CD</h3>
+<p><a href="https://argo-cd.readthedocs.io/en/stable/" target="_blank" rel="noopener">Declarative GitOps CD for Kubernetes</a></p>
 <p>
 
 
@@ -484,11 +487,11 @@ ex. 可以跑 for loop / for each
 <p>Application definitions, configurations, and environments should be declarative and version controlled. Application deployment and lifecycle management should be automated, auditable, and easy to understand.</p>
 <aside class="notes">
   <p>application 應該是明確宣告的，清楚描述，並且有版本控管
-描述 application 本身，復機的設定 secret / configmap
-environment 也應該是圈告式的</p>
+描述 application 本身，附帶的設定 secret / configmap
+environment 也應該是宣告式的</p>
 <p>application 的部署與 lifecycle 管理，都應該是自動化，可以稽核，而且好理解
 標準化，自動化
-UI 圖像描述，一目瞭然。但事實上如果有做到</p>
+UI 圖像描述，一目瞭然。但事實上如果有做到講 local file 推到版本控制，光是使用 editor 也可以做到一目瞭然</p>
 </aside>
 
     </section>
@@ -500,7 +503,7 @@ UI 圖像描述，一目瞭然。但事實上如果有做到</p>
     <section>
     
       
-<h3 id="argo-cd">Argo CD</h3>
+<h3 id="argo-cd-1">Argo CD</h3>
 <ul>
 <li>gitflow / git repository</li>
 <li>argocd application sync file from repository</li>
@@ -512,13 +515,16 @@ UI 圖像描述，一目瞭然。但事實上如果有做到</p>
 </li>
 </ul>
 <aside class="notes">
-  <p>gitflow
-k8s object 的 change 是需要 PR review 的，不是想改就 kubectl apply 下去
-k8s object 的品質把關，來自高品質的 review</p>
+  <p>gitflow</p>
+<ul>
+<li>k8s object 的 change 是需要 PR review 的，不是想改就 kubectl apply 下去</li>
+<li>k8s object 的品質把關，來自高品質的 review</li>
+<li>針對 cluster 上的變更都有管控</li>
+</ul>
 <p>能夠直接掌握 live object，透過 editor 檢查 git repository，或是透過 argocd UI 檢視</p>
 <p>local file 等於 live object
-在複雜的環境裡很重要，ex. k8s 內有成千上百個 helm release，可以用 editor 檢視 local file
-不然要透過 k8s 去打 api</p>
+在複雜的環境裡很重要，ex. k8s 內有成千上百個 helm release，可以用 editor 檢視 local file</p>
+<p>不然要透過 k8s 去打 api</p>
 <ul>
 <li>api call 也是資源啊，能省則省</li>
 <li>editor 更直覺快速</li>
@@ -569,6 +575,9 @@ k8s object 的品質把關，來自高品質的 review</p>
 </span></span><span class="line"><span class="cl">        server: https://kubernetes.default.svc
 </span></span><span class="line"><span class="cl">        namespace: argocd
 </span></span></code></pre></div><aside class="notes">
+  <p>argocd 除了 sync 以外還提供的許多功能</p>
+<p>applicationset 定義一組 set，可以透過 generator 迭代的產生大量的 application
+ex. 一次 deploy 一群 redis</p>
 </aside>
 
     </section>
@@ -608,7 +617,7 @@ k8s object 的品質把關，來自高品質的 review</p>
 </ul>
 <aside class="notes">
   <p>cluster-wide 的 k8s object 也很適合塞進 argocd 管理</p>
-<p>例如 cluster access control，復雜的 rbac rule，也很適合整理成為 helm chart</p>
+<p>例如 cluster access control，複雜的 rbac rule，也很適合整理成為 helm chart</p>
 <ul>
 <li>可以輕鬆實現 user -&gt; rule 多對多</li>
 <li>可以快速增減 user group</li>
