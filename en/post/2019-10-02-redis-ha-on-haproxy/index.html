@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: October 25, 2023 --><html lang="en-us" >
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: April 24, 2024 --><html lang="en-us" >
 
 
 <head>
@@ -10,7 +10,7 @@
   
   
   
-    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
   
 
   
@@ -70,14 +70,14 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
   
     
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
     
 
     
@@ -212,7 +212,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
 
   
   
@@ -306,6 +306,7 @@
 
 
 
+
   
   
   
@@ -366,6 +367,12 @@
   <meta property="twitter:site" content="@chechiachang" />
   <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/en/post/2019-10-02-redis-ha-on-haproxy/" />
 <meta property="og:title" content="Redis Ha HAProxy | Che-Chia Chang" />
@@ -478,7 +485,7 @@
   
   
   
-  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -932,7 +939,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/redis/">redis</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">Kubernetes</a>, <a href="/en/category/redis/">Redis</a></span>
   
 
 </div>
@@ -1115,33 +1122,33 @@
 <li>開幾個 port</li>
 </ul>
 <p>看一下 service</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kind: Service
-</span></span><span class="line"><span class="cl">apiVersion: v1
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: haproxy-service
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  sessionAffinity: ClientIP
-</span></span><span class="line"><span class="cl">  sessionAffinityConfig:
-</span></span><span class="line"><span class="cl">    clientIP:
-</span></span><span class="line"><span class="cl">      timeoutSeconds: 10800 # 3 hr
-</span></span><span class="line"><span class="cl">  selector:
-</span></span><span class="line"><span class="cl">    app: haproxy
-</span></span><span class="line"><span class="cl">  ports:
-</span></span><span class="line"><span class="cl">    - name: http
-</span></span><span class="line"><span class="cl">      protocol: TCP
-</span></span><span class="line"><span class="cl">      port: 8000
-</span></span><span class="line"><span class="cl">    - name: https
-</span></span><span class="line"><span class="cl">      protocol: TCP
-</span></span><span class="line"><span class="cl">      port: 9000
-</span></span><span class="line"><span class="cl">    - name: stats
-</span></span><span class="line"><span class="cl">      protocol: TCP
-</span></span><span class="line"><span class="cl">      port: 26999
-</span></span><span class="line"><span class="cl">    - name: redis
-</span></span><span class="line"><span class="cl">      protocol: TCP
-</span></span><span class="line"><span class="cl">      port: 6379
-</span></span><span class="line"><span class="cl">    - name: redis-exporter
-</span></span><span class="line"><span class="cl">      protocol: TCP
-</span></span><span class="line"><span class="cl">      port: 8404
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">kind</span><span class="p">:</span> <span class="n">Service</span>
+</span></span><span class="line"><span class="cl"><span class="n">apiVersion</span><span class="p">:</span> <span class="n">v1</span>
+</span></span><span class="line"><span class="cl"><span class="n">metadata</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">name</span><span class="p">:</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">spec</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sessionAffinity</span><span class="p">:</span> <span class="n">ClientIP</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sessionAffinityConfig</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">clientIP</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">timeoutSeconds</span><span class="p">:</span> <span class="mi">10800</span> <span class="c1"># 3 hr</span>
+</span></span><span class="line"><span class="cl">  <span class="n">selector</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="p">:</span> <span class="n">haproxy</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ports</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">http</span>
+</span></span><span class="line"><span class="cl">      <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">      <span class="n">port</span><span class="p">:</span> <span class="mi">8000</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl">      <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">      <span class="n">port</span><span class="p">:</span> <span class="mi">9000</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">stats</span>
+</span></span><span class="line"><span class="cl">      <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">      <span class="n">port</span><span class="p">:</span> <span class="mi">26999</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">redis</span>
+</span></span><span class="line"><span class="cl">      <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">      <span class="n">port</span><span class="p">:</span> <span class="mi">6379</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">redis</span><span class="o">-</span><span class="n">exporter</span>
+</span></span><span class="line"><span class="cl">      <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">      <span class="n">port</span><span class="p">:</span> <span class="mi">8404</span>
 </span></span></code></pre></div><ul>
 <li>很單純，就是把幾個 port 接出來</li>
 <li>把 sessionAffinity 開起來
@@ -1160,45 +1167,45 @@
 </span></span><span class="line"><span class="cl">haproxy-56d94f857f-vhz8b                                 1/1     Running     0          47d
 </span></span></code></pre></div><h1 id="haproxy-config">HAProxy Config</h1>
 <p>看一下 haproxy.cfg</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># https://cbonte.github.io/haproxy-dconv/2.0/configuration.html
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># https://cbonte.github.io/haproxy-dconv/2.0/configuration.html</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># https://github.com/prometheus/haproxy_exporter
-</span></span><span class="line"><span class="cl"># https://www.haproxy.com/blog/haproxy-exposes-a-prometheus-metrics-endpoint/
-</span></span><span class="line"><span class="cl"># curl http://localhost:8404/metrics
-</span></span><span class="line"><span class="cl"># curl http://localhost:8404/stats
-</span></span><span class="line"><span class="cl">frontend stats
-</span></span><span class="line"><span class="cl"> mode http
-</span></span><span class="line"><span class="cl"> timeout client 30s
-</span></span><span class="line"><span class="cl"> bind *:8404
-</span></span><span class="line"><span class="cl"> option http-use-htx
-</span></span><span class="line"><span class="cl"> http-request use-service prometheus-exporter if { path /metrics }
-</span></span><span class="line"><span class="cl"> stats enable
-</span></span><span class="line"><span class="cl"> stats uri /stats
-</span></span><span class="line"><span class="cl"> stats refresh 10s
+</span></span><span class="line"><span class="cl"><span class="c1"># https://github.com/prometheus/haproxy_exporter</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># https://www.haproxy.com/blog/haproxy-exposes-a-prometheus-metrics-endpoint/</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># curl http://localhost:8404/metrics</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># curl http://localhost:8404/stats</span>
+</span></span><span class="line"><span class="cl"><span class="n">frontend</span> <span class="n">stats</span>
+</span></span><span class="line"><span class="cl"> <span class="n">mode</span> <span class="n">http</span>
+</span></span><span class="line"><span class="cl"> <span class="n">timeout</span> <span class="n">client</span> <span class="mi">30</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl"> <span class="n">bind</span> <span class="o">*</span><span class="p">:</span><span class="mi">8404</span>
+</span></span><span class="line"><span class="cl"> <span class="n">option</span> <span class="n">http</span><span class="o">-</span><span class="n">use</span><span class="o">-</span><span class="n">htx</span>
+</span></span><span class="line"><span class="cl"> <span class="n">http</span><span class="o">-</span><span class="n">request</span> <span class="n">use</span><span class="o">-</span><span class="n">service</span> <span class="n">prometheus</span><span class="o">-</span><span class="n">exporter</span> <span class="k">if</span> <span class="p">{</span> <span class="n">path</span> <span class="o">/</span><span class="n">metrics</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> <span class="n">stats</span> <span class="n">enable</span>
+</span></span><span class="line"><span class="cl"> <span class="n">stats</span> <span class="n">uri</span> <span class="o">/</span><span class="n">stats</span>
+</span></span><span class="line"><span class="cl"> <span class="n">stats</span> <span class="n">refresh</span> <span class="mi">10</span><span class="n">s</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Redis
-</span></span><span class="line"><span class="cl">frontend redis_gate
-</span></span><span class="line"><span class="cl"> mode tcp
-</span></span><span class="line"><span class="cl"> timeout client 7d
-</span></span><span class="line"><span class="cl"> bind 0.0.0.0:6379 name redis
-</span></span><span class="line"><span class="cl"> default_backend redis_servers
+</span></span><span class="line"><span class="cl"><span class="c1"># Redis</span>
+</span></span><span class="line"><span class="cl"><span class="n">frontend</span> <span class="n">redis_gate</span>
+</span></span><span class="line"><span class="cl"> <span class="n">mode</span> <span class="n">tcp</span>
+</span></span><span class="line"><span class="cl"> <span class="n">timeout</span> <span class="n">client</span> <span class="mi">7</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl"> <span class="n">bind</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">6379</span> <span class="n">name</span> <span class="n">redis</span>
+</span></span><span class="line"><span class="cl"> <span class="n">default_backend</span> <span class="n">redis_servers</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">backend redis_servers
-</span></span><span class="line"><span class="cl"> mode tcp
-</span></span><span class="line"><span class="cl"> timeout connect 3s
-</span></span><span class="line"><span class="cl"> timeout server 7d
-</span></span><span class="line"><span class="cl"> option tcp-check
-</span></span><span class="line"><span class="cl"> tcp-check connect
-</span></span><span class="line"><span class="cl"> tcp-check send AUTH\ &#34;${REDIS_PASSWORD}&#34;\r\n
-</span></span><span class="line"><span class="cl"> tcp-check send PING\r\n
-</span></span><span class="line"><span class="cl"> tcp-check expect string PONG
-</span></span><span class="line"><span class="cl"> tcp-check send info\ replication\r\n
-</span></span><span class="line"><span class="cl"> tcp-check expect string role:master
-</span></span><span class="line"><span class="cl"> tcp-check send QUIT\r\n
-</span></span><span class="line"><span class="cl"> tcp-check expect string +OK
-</span></span><span class="line"><span class="cl"> server R1 redis-2-redis-ha-announce-0:6379 check inter 1s
-</span></span><span class="line"><span class="cl"> server R2 redis-2-redis-ha-announce-1:6379 check inter 1s
-</span></span><span class="line"><span class="cl"> server R3 redis-2-redis-ha-announce-2:6379 check inter 1s
+</span></span><span class="line"><span class="cl"><span class="n">backend</span> <span class="n">redis_servers</span>
+</span></span><span class="line"><span class="cl"> <span class="n">mode</span> <span class="n">tcp</span>
+</span></span><span class="line"><span class="cl"> <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">3</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl"> <span class="n">timeout</span> <span class="n">server</span> <span class="mi">7</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl"> <span class="n">option</span> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">connect</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">send</span> <span class="n">AUTH</span>\ <span class="s2">&#34;${REDIS_PASSWORD}&#34;</span>\<span class="n">r</span>\<span class="n">n</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">send</span> <span class="n">PING</span>\<span class="n">r</span>\<span class="n">n</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">expect</span> <span class="n">string</span> <span class="n">PONG</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">send</span> <span class="n">info</span>\ <span class="n">replication</span>\<span class="n">r</span>\<span class="n">n</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">expect</span> <span class="n">string</span> <span class="n">role</span><span class="p">:</span><span class="n">master</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">send</span> <span class="n">QUIT</span>\<span class="n">r</span>\<span class="n">n</span>
+</span></span><span class="line"><span class="cl"> <span class="n">tcp</span><span class="o">-</span><span class="n">check</span> <span class="n">expect</span> <span class="n">string</span> <span class="o">+</span><span class="n">OK</span>
+</span></span><span class="line"><span class="cl"> <span class="n">server</span> <span class="n">R1</span> <span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">announce</span><span class="o">-</span><span class="mi">0</span><span class="p">:</span><span class="mi">6379</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">1</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl"> <span class="n">server</span> <span class="n">R2</span> <span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">announce</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">6379</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">1</span><span class="n">s</span>
+</span></span><span class="line"><span class="cl"> <span class="n">server</span> <span class="n">R3</span> <span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">announce</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="mi">6379</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">1</span><span class="n">s</span>
 </span></span></code></pre></div><ul>
 <li>兩個 frontend，吃前端 (client) 來的 request
 <ul>
@@ -1258,13 +1265,13 @@
   
   <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
   
-  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  <a class="badge badge-light" href="/en/tag/kubernetes/">Kubernetes</a>
   
-  <a class="badge badge-light" href="/en/tag/redis/">redis</a>
+  <a class="badge badge-light" href="/en/tag/redis/">Redis</a>
   
-  <a class="badge badge-light" href="/en/tag/ithome/">ithome</a>
+  <a class="badge badge-light" href="/en/tag/ithome/">Ithome</a>
   
-  <a class="badge badge-light" href="/en/tag/haproxy/">haproxy</a>
+  <a class="badge badge-light" href="/en/tag/haproxy/">Haproxy</a>
   
 </div>
 
@@ -1592,7 +1599,7 @@
 
   
   <p class="powered-by copyright-license-text">
-    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1623,7 +1630,7 @@
       
       
       
-      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
     
   </p>
 </footer>
@@ -1635,7 +1642,7 @@
   
 
 
-<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+<script src="/js/vendor-bundle.min.ff7771056d34ad9f2de2d8f6a466e748.js"></script>
 
 
 
@@ -1728,7 +1735,7 @@
   
 
 
-<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+<script src="/en/js/wowchemy.min.0d344310ba75ea019adb1e7aa1de0b6a.js"></script>
 
 
 
@@ -1764,7 +1771,7 @@
 </div>
 
 
-  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 

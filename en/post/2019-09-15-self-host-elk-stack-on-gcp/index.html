@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: October 25, 2023 --><html lang="en-us" >
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: April 24, 2024 --><html lang="en-us" >
 
 
 <head>
@@ -10,7 +10,7 @@
   
   
   
-    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
   
 
   
@@ -70,14 +70,14 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
   
     
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
     
 
     
@@ -212,7 +212,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
 
   
   
@@ -306,6 +306,7 @@
 
 
 
+
   
   
   
@@ -366,6 +367,12 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   <meta property="twitter:site" content="@chechiachang" />
   <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/en/post/2019-09-15-self-host-elk-stack-on-gcp/" />
 <meta property="og:title" content="Self-host ELK stack - Installation | Che-Chia Chang" />
@@ -478,7 +485,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
   
   
-  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -932,7 +939,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/elasticsearch/">elasticsearch</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">Kubernetes</a>, <a href="/en/category/elasticsearch/">Elasticsearch</a></span>
   
 
 </div>
@@ -1075,15 +1082,15 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 </span></span><span class="line"><span class="cl">sudo apt-get update
 </span></span><span class="line"><span class="cl">sudo apt-get install elasticsearch
 </span></span></code></pre></div><p>安裝完後路徑長這樣</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/etc/elasticsearch
-</span></span><span class="line"><span class="cl">/etc/elasticsearch/elasticsearch.yml
-</span></span><span class="line"><span class="cl">/etc/elasticsearch/jvm.options
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">elasticsearch</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">.</span><span class="n">yml</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">/</span><span class="n">jvm</span><span class="o">.</span><span class="n">options</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Utility
-</span></span><span class="line"><span class="cl">/usr/share/elasticsearch/bin/
+</span></span><span class="line"><span class="cl"><span class="c1"># Utility</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Log
-</span></span><span class="line"><span class="cl">/var/log/elasticsearch/elasticsearch.log
+</span></span><span class="line"><span class="cl"><span class="c1"># Log</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">.</span><span class="n">log</span>
 </span></span></code></pre></div><p>有需要也可以複寫設定檔，把 log 也移到 /mnt/disks/elk/elasticsearch/logs</p>
 <h3 id="服務控制">服務控制</h3>
 <p>透過 systemd 管理，我們可以用 systemctl 控制，
@@ -1121,7 +1128,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 </span></span><span class="line"><span class="cl">sudo systemctl start elasticsearch.service
 </span></span><span class="line"><span class="cl">sudo systemctl status elasticsearch.service
 </span></span></code></pre></div><p>看一下 log，確定服務有在正常工作</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tail -f /var/log/elasticsearch/elasticsearch.log
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">.</span><span class="n">log</span>
 </span></span></code></pre></div><p>在 node 上試打 Elasticsearch API</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ curl localhost:9200
 </span></span><span class="line"><span class="cl">
@@ -1178,51 +1185,51 @@ http://10.140.0.10/app/monitoring#</p>
 </span></span><span class="line"><span class="cl">sudo apt-get install filebeat
 </span></span></code></pre></div><p>預設的 filebeat.yml 設定檔案不是完整的，請到官網下載完整版，但官網沒給檔案連結(慘)，只有網頁版 <a href="https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/beats/filebeat/7.3/filebeat-reference-yml.html</a></p>
 <p>我們上 github 把她載下來</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-v" data-lang="v"><span class="line"><span class="cl"><span class="err">$</span> <span class="nv">wget</span> <span class="nv">https</span><span class="p">:</span><span class="c1">//raw.githubusercontent.com/elastic/beats/v7.3.1/filebeat/filebeat.reference.yml
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">$</span> <span class="nv">sudo</span> <span class="nv">mv</span> <span class="nv">filebeat</span><span class="o">-</span><span class="nv">reference</span><span class="o">-</span><span class="nv">y</span>
-</span></span><span class="line"><span class="cl"><span class="err">$</span> <span class="nv">sudo</span> <span class="nv">vim</span> <span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">filebeat</span><span class="o">/</span><span class="nv">filebeat</span><span class="p">.</span><span class="nv">yml</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ wget https://raw.githubusercontent.com/elastic/beats/v7.3.1/filebeat/filebeat.reference.yml
+</span></span><span class="line"><span class="cl">$ sudo mv filebeat-reference-y
+</span></span><span class="line"><span class="cl">$ sudo vim /etc/filebeat/filebeat.yml
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">#</span> <span class="nc">Enable</span> <span class="nv">elasticsearch</span> <span class="kn">module</span> <span class="nv">and</span> <span class="nv">kibana</span> <span class="kn">module</span> <span class="nv">to</span> <span class="nv">process</span> <span class="nv">metrics</span> <span class="nv">of</span> <span class="nv">localhost</span> <span class="nv">elasticsearch</span> <span class="o">&amp;</span> <span class="nv">kibana</span>
-</span></span><span class="line"><span class="cl"><span class="nv">filebeat</span><span class="p">.</span><span class="nl">modules</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="kn">module</span><span class="p">:</span> <span class="nv">elasticsearch</span>
-</span></span><span class="line"><span class="cl">  <span class="o">#</span> <span class="nc">Server</span> <span class="nv">log</span>
-</span></span><span class="line"><span class="cl">  <span class="nl">server</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">enabled</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"># Enable elasticsearch module and kibana module to process metrics of localhost elasticsearch &amp; kibana
+</span></span><span class="line"><span class="cl">filebeat.modules:
+</span></span><span class="line"><span class="cl">- module: elasticsearch
+</span></span><span class="line"><span class="cl">  # Server log
+</span></span><span class="line"><span class="cl">  server:
+</span></span><span class="line"><span class="cl">    enabled: true
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="kn">module</span><span class="p">:</span> <span class="nv">kibana</span>
-</span></span><span class="line"><span class="cl">  <span class="o">#</span> <span class="nc">All</span> <span class="nv">logs</span>
-</span></span><span class="line"><span class="cl">  <span class="nl">log</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="nv">enabled</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">- module: kibana
+</span></span><span class="line"><span class="cl">  # All logs
+</span></span><span class="line"><span class="cl">  log:
+</span></span><span class="line"><span class="cl">    enabled: true
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">#</span> <span class="nc">The</span> <span class="nv">name</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">added</span> <span class="nv">to</span> <span class="nv">metadata</span>
-</span></span><span class="line"><span class="cl"><span class="nv">name</span><span class="p">:</span> <span class="nv">filebeat</span><span class="o">-</span><span class="nv">elk</span>
-</span></span><span class="line"><span class="cl"><span class="nl">fields</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">env</span><span class="p">:</span> <span class="nv">elk</span>
+</span></span><span class="line"><span class="cl"># The name will be added to metadata
+</span></span><span class="line"><span class="cl">name: filebeat-elk
+</span></span><span class="line"><span class="cl">fields:
+</span></span><span class="line"><span class="cl">  env: elk
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">#</span> <span class="nc">Add</span> <span class="nv">additional</span> <span class="nv">cloud_metadata</span> <span class="nv">since</span> <span class="nv">we</span><span class="s1">&#39;re on GCP
-</span></span></span><span class="line"><span class="cl"><span class="s1">processors:
-</span></span></span><span class="line"><span class="cl"><span class="s1">- add_cloud_metadata: ~
-</span></span></span><span class="line"><span class="cl"><span class="s1">
-</span></span></span><span class="line"><span class="cl"><span class="s1"># Output to elasticsearch
-</span></span></span><span class="line"><span class="cl"><span class="s1">output.elasticsearch:
-</span></span></span><span class="line"><span class="cl"><span class="s1">  enabled: true
-</span></span></span><span class="line"><span class="cl"><span class="s1">  hosts: [&#34;localhost:9200&#34;]
-</span></span></span><span class="line"><span class="cl"><span class="s1">  protocol: &#34;http&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  username: &#34;elastic&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  password: 
-</span></span></span><span class="line"><span class="cl"><span class="s1">
-</span></span></span><span class="line"><span class="cl"><span class="s1"># Configure kibana with filebeat: add template, dashboards, etc...
-</span></span></span><span class="line"><span class="cl"><span class="s1">setup.kibana:
-</span></span></span><span class="line"><span class="cl"><span class="s1">  host: &#34;localhost:5601&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  protocol: &#34;http&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  username: &#34;elastic&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s1">  password: 
-</span></span></span></code></pre></div><p>啟動 filebeat</p>
+</span></span><span class="line"><span class="cl"># Add additional cloud_metadata since we&#39;re on GCP
+</span></span><span class="line"><span class="cl">processors:
+</span></span><span class="line"><span class="cl">- add_cloud_metadata: ~
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Output to elasticsearch
+</span></span><span class="line"><span class="cl">output.elasticsearch:
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span><span class="line"><span class="cl">  hosts: [&#34;localhost:9200&#34;]
+</span></span><span class="line"><span class="cl">  protocol: &#34;http&#34;
+</span></span><span class="line"><span class="cl">  username: &#34;elastic&#34;
+</span></span><span class="line"><span class="cl">  password: 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Configure kibana with filebeat: add template, dashboards, etc...
+</span></span><span class="line"><span class="cl">setup.kibana:
+</span></span><span class="line"><span class="cl">  host: &#34;localhost:5601&#34;
+</span></span><span class="line"><span class="cl">  protocol: &#34;http&#34;
+</span></span><span class="line"><span class="cl">  username: &#34;elastic&#34;
+</span></span><span class="line"><span class="cl">  password: 
+</span></span></code></pre></div><p>啟動 filebeat</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl start filebeat
 </span></span></code></pre></div><p>看一下 log，filebeat 會開始收集 elasticsearch 的 log 與 metrics，可以在 log 上看到收集的狀況。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ sudo journalctl -fu filebeat
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">sudo</span> <span class="n">journalctl</span> <span class="o">-</span><span class="n">fu</span> <span class="n">filebeat</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Sep 15 06:28:50 elk filebeat[9143]: 2019-09-15T06:28:50.176Z        INFO        [monitoring]        log/log.go:145        Non-zero metrics in the last 30s        {&#34;monitoring&#34;: {&#34;metrics&#34;: {&#34;beat&#34;:{&#34;cpu&#34;:{&#34;system&#34;:{&#34;ticks&#34;:1670860,&#34;time&#34;:{&#34;ms&#34;:66}},&#34;total&#34;:{&#34;ticks&#34;:6964660,&#34;time&#34;:{&#34;ms&#34;:336},&#34;value&#34;:6964660},&#34;user&#34;:{&#34;ticks&#34;:5293800,&#34;time&#34;:{&#34;ms&#34;:270}}},&#34;handles&#34;:{&#34;limit&#34;:{&#34;hard&#34;:4096,&#34;soft&#34;:1024},&#34;open&#34;:11},&#34;info&#34;:{&#34;ephemeral_id&#34;:&#34;62fd4bfa-1949-4356-9615-338ca6a95075&#34;,&#34;uptime&#34;:{&#34;ms&#34;:786150373}},&#34;memstats&#34;:{&#34;gc_next&#34;:7681520,&#34;memory_alloc&#34;:4672576,&#34;memory_total&#34;:457564560376,&#34;rss&#34;:-32768},&#34;runtime&#34;:{&#34;goroutines&#34;:98}},&#34;filebeat&#34;:{&#34;events&#34;:{&#34;active&#34;:-29,&#34;added&#34;:1026,&#34;done&#34;:1055},&#34;harvester&#34;:{&#34;open_files&#34;:4,&#34;running&#34;:4}},&#34;libbeat&#34;:{&#34;config&#34;:{&#34;module&#34;:{&#34;running&#34;:0}},&#34;output&#34;:{&#34;events&#34;:{&#34;acked&#34;:1055,&#34;active&#34;:-50,&#34;batches&#34;:34,&#34;total&#34;:1005},&#34;read&#34;:{&#34;bytes&#34;:248606},&#34;write&#34;:{&#34;bytes&#34;:945393}},&#34;pipeline&#34;:{&#34;clients&#34;:9,&#34;events&#34;:{&#34;active&#34;:32,&#34;published&#34;:1026,&#34;total&#34;:1026},&#34;queue&#34;:{&#34;acked&#34;:1055}}},&#34;registrar&#34;:{&#34;states&#34;:{&#34;current&#34;:34,&#34;update&#34;:1055},&#34;writes&#34;:{&#34;success&#34;:35,&#34;total&#34;:35}},&#34;system&#34;:{&#34;load&#34;:{&#34;1&#34;:1.49,&#34;15&#34;:0.94,&#34;5&#34;:1.15,&#34;norm&#34;:{&#34;1&#34;:0.745,&#34;15&#34;:0.47,&#34;5&#34;:0.575}}}}}}
+</span></span><span class="line"><span class="cl"><span class="n">Sep</span> <span class="mi">15</span> <span class="mi">06</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mi">50</span> <span class="n">elk</span> <span class="n">filebeat</span><span class="p">[</span><span class="mi">9143</span><span class="p">]:</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">15</span><span class="n">T06</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mf">50.176</span><span class="n">Z</span>        <span class="n">INFO</span>        <span class="p">[</span><span class="n">monitoring</span><span class="p">]</span>        <span class="nb">log</span><span class="o">/</span><span class="nb">log</span><span class="o">.</span><span class="n">go</span><span class="p">:</span><span class="mi">145</span>        <span class="n">Non</span><span class="o">-</span><span class="n">zero</span> <span class="n">metrics</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">last</span> <span class="mi">30</span><span class="n">s</span>        <span class="p">{</span><span class="s2">&#34;monitoring&#34;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;metrics&#34;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;beat&#34;</span><span class="p">:{</span><span class="s2">&#34;cpu&#34;</span><span class="p">:{</span><span class="s2">&#34;system&#34;</span><span class="p">:{</span><span class="s2">&#34;ticks&#34;</span><span class="p">:</span><span class="mi">1670860</span><span class="p">,</span><span class="s2">&#34;time&#34;</span><span class="p">:{</span><span class="s2">&#34;ms&#34;</span><span class="p">:</span><span class="mi">66</span><span class="p">}},</span><span class="s2">&#34;total&#34;</span><span class="p">:{</span><span class="s2">&#34;ticks&#34;</span><span class="p">:</span><span class="mi">6964660</span><span class="p">,</span><span class="s2">&#34;time&#34;</span><span class="p">:{</span><span class="s2">&#34;ms&#34;</span><span class="p">:</span><span class="mi">336</span><span class="p">},</span><span class="s2">&#34;value&#34;</span><span class="p">:</span><span class="mi">6964660</span><span class="p">},</span><span class="s2">&#34;user&#34;</span><span class="p">:{</span><span class="s2">&#34;ticks&#34;</span><span class="p">:</span><span class="mi">5293800</span><span class="p">,</span><span class="s2">&#34;time&#34;</span><span class="p">:{</span><span class="s2">&#34;ms&#34;</span><span class="p">:</span><span class="mi">270</span><span class="p">}}},</span><span class="s2">&#34;handles&#34;</span><span class="p">:{</span><span class="s2">&#34;limit&#34;</span><span class="p">:{</span><span class="s2">&#34;hard&#34;</span><span class="p">:</span><span class="mi">4096</span><span class="p">,</span><span class="s2">&#34;soft&#34;</span><span class="p">:</span><span class="mi">1024</span><span class="p">},</span><span class="s2">&#34;open&#34;</span><span class="p">:</span><span class="mi">11</span><span class="p">},</span><span class="s2">&#34;info&#34;</span><span class="p">:{</span><span class="s2">&#34;ephemeral_id&#34;</span><span class="p">:</span><span class="s2">&#34;62fd4bfa-1949-4356-9615-338ca6a95075&#34;</span><span class="p">,</span><span class="s2">&#34;uptime&#34;</span><span class="p">:{</span><span class="s2">&#34;ms&#34;</span><span class="p">:</span><span class="mi">786150373</span><span class="p">}},</span><span class="s2">&#34;memstats&#34;</span><span class="p">:{</span><span class="s2">&#34;gc_next&#34;</span><span class="p">:</span><span class="mi">7681520</span><span class="p">,</span><span class="s2">&#34;memory_alloc&#34;</span><span class="p">:</span><span class="mi">4672576</span><span class="p">,</span><span class="s2">&#34;memory_total&#34;</span><span class="p">:</span><span class="mi">457564560376</span><span class="p">,</span><span class="s2">&#34;rss&#34;</span><span class="p">:</span><span class="o">-</span><span class="mi">32768</span><span class="p">},</span><span class="s2">&#34;runtime&#34;</span><span class="p">:{</span><span class="s2">&#34;goroutines&#34;</span><span class="p">:</span><span class="mi">98</span><span class="p">}},</span><span class="s2">&#34;filebeat&#34;</span><span class="p">:{</span><span class="s2">&#34;events&#34;</span><span class="p">:{</span><span class="s2">&#34;active&#34;</span><span class="p">:</span><span class="o">-</span><span class="mi">29</span><span class="p">,</span><span class="s2">&#34;added&#34;</span><span class="p">:</span><span class="mi">1026</span><span class="p">,</span><span class="s2">&#34;done&#34;</span><span class="p">:</span><span class="mi">1055</span><span class="p">},</span><span class="s2">&#34;harvester&#34;</span><span class="p">:{</span><span class="s2">&#34;open_files&#34;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="s2">&#34;running&#34;</span><span class="p">:</span><span class="mi">4</span><span class="p">}},</span><span class="s2">&#34;libbeat&#34;</span><span class="p">:{</span><span class="s2">&#34;config&#34;</span><span class="p">:{</span><span class="s2">&#34;module&#34;</span><span class="p">:{</span><span class="s2">&#34;running&#34;</span><span class="p">:</span><span class="mi">0</span><span class="p">}},</span><span class="s2">&#34;output&#34;</span><span class="p">:{</span><span class="s2">&#34;events&#34;</span><span class="p">:{</span><span class="s2">&#34;acked&#34;</span><span class="p">:</span><span class="mi">1055</span><span class="p">,</span><span class="s2">&#34;active&#34;</span><span class="p">:</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="s2">&#34;batches&#34;</span><span class="p">:</span><span class="mi">34</span><span class="p">,</span><span class="s2">&#34;total&#34;</span><span class="p">:</span><span class="mi">1005</span><span class="p">},</span><span class="s2">&#34;read&#34;</span><span class="p">:{</span><span class="s2">&#34;bytes&#34;</span><span class="p">:</span><span class="mi">248606</span><span class="p">},</span><span class="s2">&#34;write&#34;</span><span class="p">:{</span><span class="s2">&#34;bytes&#34;</span><span class="p">:</span><span class="mi">945393</span><span class="p">}},</span><span class="s2">&#34;pipeline&#34;</span><span class="p">:{</span><span class="s2">&#34;clients&#34;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s2">&#34;events&#34;</span><span class="p">:{</span><span class="s2">&#34;active&#34;</span><span class="p">:</span><span class="mi">32</span><span class="p">,</span><span class="s2">&#34;published&#34;</span><span class="p">:</span><span class="mi">1026</span><span class="p">,</span><span class="s2">&#34;total&#34;</span><span class="p">:</span><span class="mi">1026</span><span class="p">},</span><span class="s2">&#34;queue&#34;</span><span class="p">:{</span><span class="s2">&#34;acked&#34;</span><span class="p">:</span><span class="mi">1055</span><span class="p">}}},</span><span class="s2">&#34;registrar&#34;</span><span class="p">:{</span><span class="s2">&#34;states&#34;</span><span class="p">:{</span><span class="s2">&#34;current&#34;</span><span class="p">:</span><span class="mi">34</span><span class="p">,</span><span class="s2">&#34;update&#34;</span><span class="p">:</span><span class="mi">1055</span><span class="p">},</span><span class="s2">&#34;writes&#34;</span><span class="p">:{</span><span class="s2">&#34;success&#34;</span><span class="p">:</span><span class="mi">35</span><span class="p">,</span><span class="s2">&#34;total&#34;</span><span class="p">:</span><span class="mi">35</span><span class="p">}},</span><span class="s2">&#34;system&#34;</span><span class="p">:{</span><span class="s2">&#34;load&#34;</span><span class="p">:{</span><span class="s2">&#34;1&#34;</span><span class="p">:</span><span class="mf">1.49</span><span class="p">,</span><span class="s2">&#34;15&#34;</span><span class="p">:</span><span class="mf">0.94</span><span class="p">,</span><span class="s2">&#34;5&#34;</span><span class="p">:</span><span class="mf">1.15</span><span class="p">,</span><span class="s2">&#34;norm&#34;</span><span class="p">:{</span><span class="s2">&#34;1&#34;</span><span class="p">:</span><span class="mf">0.745</span><span class="p">,</span><span class="s2">&#34;15&#34;</span><span class="p">:</span><span class="mf">0.47</span><span class="p">,</span><span class="s2">&#34;5&#34;</span><span class="p">:</span><span class="mf">0.575</span><span class="p">}}}}}}</span>
 </span></span></code></pre></div><p>如果數據都有送出，就可以回到 kibana 的頁面，看一下目前這個 elasticsearch 集群，有開啟 monitoring 功能的元件們，是否都有正常工作。</p>
 <p>http://10.140.0.10/app/monitoring#</p>
 <p>頁面長得像這樣</p>
@@ -1272,15 +1279,15 @@ http://10.140.0.10/app/monitoring#</p>
   
   <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
   
-  <a class="badge badge-light" href="/en/tag/gcp/">gcp</a>
+  <a class="badge badge-light" href="/en/tag/gcp/">Gcp</a>
   
-  <a class="badge badge-light" href="/en/tag/tls/">tls</a>
+  <a class="badge badge-light" href="/en/tag/tls/">Tls</a>
   
-  <a class="badge badge-light" href="/en/tag/elasticsearch/">elasticsearch</a>
+  <a class="badge badge-light" href="/en/tag/elasticsearch/">Elasticsearch</a>
   
-  <a class="badge badge-light" href="/en/tag/devops/">devops</a>
+  <a class="badge badge-light" href="/en/tag/devops/">Devops</a>
   
-  <a class="badge badge-light" href="/en/tag/logstash/">logstash</a>
+  <a class="badge badge-light" href="/en/tag/logstash/">Logstash</a>
   
 </div>
 
@@ -1608,7 +1615,7 @@ http://10.140.0.10/app/monitoring#</p>
 
   
   <p class="powered-by copyright-license-text">
-    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1639,7 +1646,7 @@ http://10.140.0.10/app/monitoring#</p>
       
       
       
-      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
     
   </p>
 </footer>
@@ -1651,7 +1658,7 @@ http://10.140.0.10/app/monitoring#</p>
   
 
 
-<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+<script src="/js/vendor-bundle.min.ff7771056d34ad9f2de2d8f6a466e748.js"></script>
 
 
 
@@ -1744,7 +1751,7 @@ http://10.140.0.10/app/monitoring#</p>
   
 
 
-<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+<script src="/en/js/wowchemy.min.0d344310ba75ea019adb1e7aa1de0b6a.js"></script>
 
 
 
@@ -1780,7 +1787,7 @@ http://10.140.0.10/app/monitoring#</p>
 </div>
 
 
-  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 

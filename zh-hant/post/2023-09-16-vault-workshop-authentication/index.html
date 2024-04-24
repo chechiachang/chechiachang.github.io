@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年10月25日 --><html lang="zh-Hant" >
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: 2024年4月24日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -10,7 +10,7 @@
   
   
   
-    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
   
 
   
@@ -70,14 +70,14 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
   
     
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
     
 
     
@@ -212,7 +212,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
 
   
   
@@ -306,6 +306,7 @@
 
 
 
+
   
   
   
@@ -368,6 +369,12 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
   <meta property="twitter:site" content="@chechiachang" />
   <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/post/2023-09-16-vault-workshop-authentication/" />
 <meta property="og:title" content="Vault Workshop 05: Authentication | Che-Chia Chang" />
@@ -484,7 +491,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
   
   
   
-  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -922,7 +929,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">vault</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/vault/">Vault</a></span>
   
 
 </div>
@@ -953,30 +960,30 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 <p>啟動全新的 dev Vault Server</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vault server -dev
 </span></span></code></pre></div><p>output，server log 回傳 dev 模式的警告</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">WARNING! dev mode is enabled! In this mode, Vault runs entirely in-memory
-</span></span><span class="line"><span class="cl">and starts unsealed with a single unseal key. The root token is already
-</span></span><span class="line"><span class="cl">authenticated to the CLI, so you can immediately begin using Vault.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">WARNING</span><span class="o">!</span> <span class="n">dev</span> <span class="n">mode</span> <span class="n">is</span> <span class="n">enabled</span><span class="o">!</span> <span class="n">In</span> <span class="n">this</span> <span class="n">mode</span><span class="p">,</span> <span class="n">Vault</span> <span class="n">runs</span> <span class="n">entirely</span> <span class="ow">in</span><span class="o">-</span><span class="n">memory</span>
+</span></span><span class="line"><span class="cl"><span class="ow">and</span> <span class="n">starts</span> <span class="n">unsealed</span> <span class="n">with</span> <span class="n">a</span> <span class="n">single</span> <span class="n">unseal</span> <span class="n">key</span><span class="o">.</span> <span class="n">The</span> <span class="n">root</span> <span class="n">token</span> <span class="n">is</span> <span class="n">already</span>
+</span></span><span class="line"><span class="cl"><span class="n">authenticated</span> <span class="n">to</span> <span class="n">the</span> <span class="n">CLI</span><span class="p">,</span> <span class="n">so</span> <span class="n">you</span> <span class="n">can</span> <span class="n">immediately</span> <span class="n">begin</span> <span class="n">using</span> <span class="n">Vault</span><span class="o">.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># 警告！已啟用開發模式！在此模式下，Vault完全運行在內存中，使用單個unseal key解封。
-</span></span><span class="line"><span class="cl"># root token已被CLI驗證，因此你可以立即開始使用Vault。
+</span></span><span class="line"><span class="cl"><span class="c1"># 警告！已啟用開發模式！在此模式下，Vault完全運行在內存中，使用單個unseal key解封。</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># root token已被CLI驗證，因此你可以立即開始使用Vault。</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">You may need to set the following environment variables:
+</span></span><span class="line"><span class="cl"><span class="n">You</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">set</span> <span class="n">the</span> <span class="n">following</span> <span class="n">environment</span> <span class="n">variables</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    $ export VAULT_ADDR=&#39;http://127.0.0.1:8200&#39;
+</span></span><span class="line"><span class="cl">    <span class="o">$</span> <span class="k">export</span> <span class="n">VAULT_ADDR</span><span class="o">=</span><span class="s1">&#39;http://127.0.0.1:8200&#39;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># 以下顯示了unseal key 和 root token，以防你想要封存/解封Vault，或重新進行身份驗證。
+</span></span><span class="line"><span class="cl"><span class="c1"># 以下顯示了unseal key 和 root token，以防你想要封存/解封Vault，或重新進行身份驗證。</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    The unseal key and root token are displayed below in case you want to
-</span></span><span class="line"><span class="cl">    seal/unseal the Vault or re-authenticate.
+</span></span><span class="line"><span class="cl">    <span class="n">The</span> <span class="n">unseal</span> <span class="n">key</span> <span class="ow">and</span> <span class="n">root</span> <span class="n">token</span> <span class="n">are</span> <span class="n">displayed</span> <span class="n">below</span> <span class="ow">in</span> <span class="k">case</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal</span><span class="o">/</span><span class="n">unseal</span> <span class="n">the</span> <span class="n">Vault</span> <span class="ow">or</span> <span class="n">re</span><span class="o">-</span><span class="n">authenticate</span><span class="o">.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># dev 模式預設配置的 unseal key 與 root token
-</span></span><span class="line"><span class="cl">    Unseal Key: QDUAuY7Kltsc/3bVwUYF39u8aEFgWNRs/1D5yxFtim4=
-</span></span><span class="line"><span class="cl">    Root Token: hvs.J30e...0DJaN
+</span></span><span class="line"><span class="cl"><span class="c1"># dev 模式預設配置的 unseal key 與 root token</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Unseal</span> <span class="n">Key</span><span class="p">:</span> <span class="n">QDUAuY7Kltsc</span><span class="o">/</span><span class="mi">3</span><span class="n">bVwUYF39u8aEFgWNRs</span><span class="o">/</span><span class="mi">1</span><span class="n">D5yxFtim4</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Root</span> <span class="n">Token</span><span class="p">:</span> <span class="n">hvs</span><span class="o">.</span><span class="n">J30e</span><span class="o">...</span><span class="mi">0</span><span class="n">DJaN</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># 開發模式絕不應在生產安裝中使用！
-</span></span><span class="line"><span class="cl">    Development mode should NOT be used in production installations!
+</span></span><span class="line"><span class="cl"><span class="c1"># 開發模式絕不應在生產安裝中使用！</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Development</span> <span class="n">mode</span> <span class="n">should</span> <span class="n">NOT</span> <span class="n">be</span> <span class="n">used</span> <span class="ow">in</span> <span class="n">production</span> <span class="n">installations</span><span class="o">!</span>
 </span></span></code></pre></div><p>依據提示 export 需要的變數</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">export VAULT_ADDR=&#39;http://127.0.0.1:8200&#39;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">export</span> <span class="n">VAULT_ADDR</span><span class="o">=</span><span class="s1">&#39;http://127.0.0.1:8200&#39;</span>
 </span></span></code></pre></div><p>在 dev mode 下，未使用 token 也可以存取 Vault Server 中的資料，這是因為 vault server 在啟用時，預設使用 token helper，將 root token 寫入到 local filesystem</p>
 <p><a href="https://developer.hashicorp.com/vault/docs/commands/token-helper" target="_blank" rel="noopener">Vault token helper 說明</a></p>
 <p>你可以使用以下指令，檢查儲存於本地的 vault token</p>
@@ -1211,17 +1218,17 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/zh-hant/tag/vault/">vault</a>
+  <a class="badge badge-light" href="/zh-hant/tag/vault/">Vault</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/iac/">iac</a>
+  <a class="badge badge-light" href="/zh-hant/tag/iac/">Iac</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/workshop/">workshop</a>
+  <a class="badge badge-light" href="/zh-hant/tag/workshop/">Workshop</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/terraform/">terraform</a>
+  <a class="badge badge-light" href="/zh-hant/tag/terraform/">Terraform</a>
   
   <a class="badge badge-light" href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2023/">鐵人賽2023</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/chatgpt/">chatgpt</a>
+  <a class="badge badge-light" href="/zh-hant/tag/chatgpt/">Chatgpt</a>
   
 </div>
 
@@ -1534,7 +1541,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 
   
   <p class="powered-by copyright-license-text">
-    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1565,7 +1572,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
       
       
       
-      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+      由<a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a>支持發布——免費<a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">開源</a>網站，為創作者賦能。
     
   </p>
 </footer>
@@ -1577,7 +1584,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
   
 
 
-<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+<script src="/js/vendor-bundle.min.ff7771056d34ad9f2de2d8f6a466e748.js"></script>
 
 
 
@@ -1670,7 +1677,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
   
 
 
-<script src="/zh-hant/js/wowchemy.min.29bb000facffd3af35e773e640a66a6f.js"></script>
+<script src="/zh-hant/js/wowchemy.min.e1f3203a692cdb371a297015af58c507.js"></script>
 
 
 
@@ -1706,7 +1713,7 @@ Token 身份驗證 Token 身份驗證已自動啟用。當你啟動開發模式�
 </div>
 
 
-  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 

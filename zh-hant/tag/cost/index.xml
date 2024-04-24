@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cost | Che-Chia Chang</title>
+    <link>https://chechia.net/zh-hant/tag/cost/</link>
+      <atom:link href="https://chechia.net/zh-hant/tag/cost/index.xml" rel="self" type="application/rss+xml" />
+    <description>Cost</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Fri, 26 Apr 2024 13:20:00 +0000</lastBuildDate>
+    <image>
+      <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Cost</title>
+      <link>https://chechia.net/zh-hant/tag/cost/</link>
+    </image>
+    
+    <item>
+      <title>SRE Conference: Cloud Infrastructure Saving Engineering  雲端省錢工程</title>
+      <link>https://chechia.net/zh-hant/talk/sre-conference-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</link>
+      <pubDate>Fri, 26 Apr 2024 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/sre-conference-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</guid>
+      <description>&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
+&lt;p&gt;Title: SRE Conference: Cloud Infrastructure Saving Engineering 雲端省錢工程&lt;/p&gt;
+&lt;p&gt;使用 AWS 與 Kubernetes 就是要花錢，如何省錢？
+合理的設定資源，不僅省錢，還提升整體服務穩定度？
+既有服務已經存在，如何逐步改變，降低成本？&lt;/p&gt;
+&lt;p&gt;本次演講以實務的範例，分享幾個節省雲端開銷的方法，包含：導入 spot instance，成本計算與預測工具，動態資源調整HPA與VPA，saving plan&amp;hellip;，並分享如何改變文化，提高團隊的成本意識，實際的降低開銷&lt;/p&gt;
+&lt;h1 id=&#34;target-group&#34;&gt;Target group&lt;/h1&gt;
+&lt;p&gt;AWS &amp;amp; Kubernetes User who want to decrease overall cost of infrastructure&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;導入工具：有哪些工具可以使用&lt;/li&gt;
+&lt;li&gt;分析現況：精算各團隊與各專案成本&lt;/li&gt;
+&lt;li&gt;改變現況：從既有的架構中，找尋可以節省成本的地方&lt;/li&gt;
+&lt;li&gt;改善流程：有效率的維持省錢 workflow&lt;/li&gt;
+&lt;li&gt;改變文化：持續性低維持新服務與舊服務的合理成本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
+&lt;p&gt;Che-Chia Chang，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
+Microsoft 最有價值從業人員 MVP。&lt;/p&gt;
+&lt;p&gt;目前為 Golang Taiwan Meetup Organizer，常出現於 CNTUG，DevOps Taipei，GDG Taipei， Golang Taipei Meetup。&lt;/p&gt;
+&lt;p&gt;Che-Chia Chang, an SRE specialize in container and Kubernetes operation. An active member of CNTUG, DevOps Taipei, GDS Taipei, Golang Taiwan Meetup.
+Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2023 DevOpsDay&lt;/li&gt;
+&lt;li&gt;2023 Ithome Kubernetes Summit&lt;/li&gt;
+&lt;li&gt;2022 COSCUP&lt;/li&gt;
+&lt;li&gt;2022 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2021 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2020 DevOps Taiwan Meetup #26 - 從零開始導入 Terraform&lt;/li&gt;
+&lt;li&gt;2020 Cloud Native Taiwan 年末聚會&lt;/li&gt;
+&lt;li&gt;2020 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2019 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Ithome Kubernetes Summit&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: October 25, 2023 --><html lang="en-us" >
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: April 24, 2024 --><html lang="en-us" >
 
 
 <head>
@@ -10,7 +10,7 @@
   
   
   
-    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
   
 
   
@@ -70,14 +70,14 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
   
     
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
     
 
     
@@ -212,7 +212,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
 
   
   
@@ -306,6 +306,7 @@
 
 
 
+
   
   
   
@@ -366,6 +367,12 @@ ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engi
   <meta property="twitter:site" content="@chechiachang" />
   <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/en/post/2019-09-24-kafka-basic-usage/" />
 <meta property="og:title" content="Kafka-basic-usage | Che-Chia Chang" />
@@ -478,7 +485,7 @@ ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engi
   
   
   
-  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -932,7 +939,7 @@ ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engi
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">kubernetes</a>, <a href="/en/category/kafka/">kafka</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/en/category/kubernetes/">Kubernetes</a>, <a href="/en/category/kafka/">Kafka</a></span>
   
 
 </div>
@@ -1011,80 +1018,80 @@ ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engi
 </ul>
 <h1 id="kubernetes-中連線-kafka">kubernetes 中連線 kafka</h1>
 <p>先看一看 kafka pods</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ kubectl get pods --selector=&#39;app=kafka&#39;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">--</span><span class="n">selector</span><span class="o">=</span><span class="s1">&#39;app=kafka&#39;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">NAME        READY   STATUS    RESTARTS   AGE
-</span></span><span class="line"><span class="cl">kafka-1-0   1/1     Running   1          26d
-</span></span><span class="line"><span class="cl">kafka-1-1   1/1     Running   0          26d
-</span></span><span class="line"><span class="cl">kafka-1-2   1/1     Running   0          26d
+</span></span><span class="line"><span class="cl"><span class="n">NAME</span>        <span class="n">READY</span>   <span class="n">STATUS</span>    <span class="n">RESTARTS</span>   <span class="n">AGE</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">1</span>          <span class="mi">26</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">26</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">26</span><span class="n">d</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">$ kubectl get pods -l &#39;app=zookeeper&#39;
+</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">-</span><span class="n">l</span> <span class="s1">&#39;app=zookeeper&#39;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">NAME                  READY   STATUS    RESTARTS   AGE
-</span></span><span class="line"><span class="cl">kafka-1-zookeeper-0   1/1     Running   0          26d
-</span></span><span class="line"><span class="cl">kafka-1-zookeeper-1   1/1     Running   0          26d
-</span></span><span class="line"><span class="cl">kafka-1-zookeeper-2   1/1     Running   0          26d
+</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                  <span class="n">READY</span>   <span class="n">STATUS</span>    <span class="n">RESTARTS</span>   <span class="n">AGE</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">zookeeper</span><span class="o">-</span><span class="mi">0</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">26</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">zookeeper</span><span class="o">-</span><span class="mi">1</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">26</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">zookeeper</span><span class="o">-</span><span class="mi">2</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">26</span><span class="n">d</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">$ kubectl get pods -l &#39;app=kafka-exporter&#39;
+</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">-</span><span class="n">l</span> <span class="s1">&#39;app=kafka-exporter&#39;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">NAME                               READY   STATUS    RESTARTS   AGE
-</span></span><span class="line"><span class="cl">kafka-1-exporter-88786d84b-z954z   1/1     Running   5          26d
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl describe pods kafka-1-0
+</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                               <span class="n">READY</span>   <span class="n">STATUS</span>    <span class="n">RESTARTS</span>   <span class="n">AGE</span>
+</span></span><span class="line"><span class="cl"><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="mi">88786</span><span class="n">d84b</span><span class="o">-</span><span class="n">z954z</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">5</span>          <span class="mi">26</span><span class="n">d</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">pods</span> <span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Name:           kafka-1-0
-</span></span><span class="line"><span class="cl">Namespace:      default
-</span></span><span class="line"><span class="cl">Priority:       0
-</span></span><span class="line"><span class="cl">Node:           gke-chechiachang-pool-1-e4622744-wcq0/10.140.15.212
-</span></span><span class="line"><span class="cl">Labels:         app=kafka
-</span></span><span class="line"><span class="cl">                controller-revision-hash=kafka-1-69986d7477
-</span></span><span class="line"><span class="cl">                release=kafka-1
-</span></span><span class="line"><span class="cl">                statefulset.kubernetes.io/pod-name=kafka-1-0
-</span></span><span class="line"><span class="cl">Annotations:    kubernetes.io/limit-ranger: LimitRanger plugin set: cpu request for container kafka-broker
-</span></span><span class="line"><span class="cl">Status:         Running
-</span></span><span class="line"><span class="cl">IP:             10.12.6.178
-</span></span><span class="line"><span class="cl">Controlled By:  StatefulSet/kafka-1
-</span></span><span class="line"><span class="cl">Containers:
-</span></span><span class="line"><span class="cl">  kafka-broker:
-</span></span><span class="line"><span class="cl">    Image:         confluentinc/cp-kafka:5.0.1
-</span></span><span class="line"><span class="cl">    Port:          9092/TCP
-</span></span><span class="line"><span class="cl">    Host Port:     0/TCP
-</span></span><span class="line"><span class="cl">    Command:
-</span></span><span class="line"><span class="cl">      sh
-</span></span><span class="line"><span class="cl">      -exc
-</span></span><span class="line"><span class="cl">      unset KAFKA_PORT &amp;&amp; \
-</span></span><span class="line"><span class="cl">      export KAFKA_BROKER_ID=${POD_NAME##*-} &amp;&amp; \
-</span></span><span class="line"><span class="cl">      export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${POD_IP}:9092 &amp;&amp; \
-</span></span><span class="line"><span class="cl">      exec /etc/confluent/docker/run
+</span></span><span class="line"><span class="cl"><span class="n">Name</span><span class="p">:</span>           <span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Namespace</span><span class="p">:</span>      <span class="n">default</span>
+</span></span><span class="line"><span class="cl"><span class="n">Priority</span><span class="p">:</span>       <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="ne">Node</span><span class="p">:</span>           <span class="n">gke</span><span class="o">-</span><span class="n">chechiachang</span><span class="o">-</span><span class="n">pool</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">e4622744</span><span class="o">-</span><span class="n">wcq0</span><span class="o">/</span><span class="mf">10.140</span><span class="o">.</span><span class="mf">15.212</span>
+</span></span><span class="line"><span class="cl"><span class="n">Labels</span><span class="p">:</span>         <span class="n">app</span><span class="o">=</span><span class="n">kafka</span>
+</span></span><span class="line"><span class="cl">                <span class="n">controller</span><span class="o">-</span><span class="n">revision</span><span class="o">-</span><span class="nb">hash</span><span class="o">=</span><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">69986</span><span class="n">d7477</span>
+</span></span><span class="line"><span class="cl">                <span class="n">release</span><span class="o">=</span><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                <span class="n">statefulset</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">pod</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Annotations</span><span class="p">:</span>    <span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">limit</span><span class="o">-</span><span class="n">ranger</span><span class="p">:</span> <span class="n">LimitRanger</span> <span class="n">plugin</span> <span class="n">set</span><span class="p">:</span> <span class="n">cpu</span> <span class="n">request</span> <span class="k">for</span> <span class="n">container</span> <span class="n">kafka</span><span class="o">-</span><span class="n">broker</span>
+</span></span><span class="line"><span class="cl"><span class="n">Status</span><span class="p">:</span>         <span class="n">Running</span>
+</span></span><span class="line"><span class="cl"><span class="ne">IP</span><span class="p">:</span>             <span class="mf">10.12</span><span class="o">.</span><span class="mf">6.178</span>
+</span></span><span class="line"><span class="cl"><span class="n">Controlled</span> <span class="n">By</span><span class="p">:</span>  <span class="n">StatefulSet</span><span class="o">/</span><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Containers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">kafka</span><span class="o">-</span><span class="n">broker</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">Image</span><span class="p">:</span>         <span class="n">confluentinc</span><span class="o">/</span><span class="n">cp</span><span class="o">-</span><span class="n">kafka</span><span class="p">:</span><span class="mf">5.0</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Port</span><span class="p">:</span>          <span class="mi">9092</span><span class="o">/</span><span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Host</span> <span class="n">Port</span><span class="p">:</span>     <span class="mi">0</span><span class="o">/</span><span class="n">TCP</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">sh</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span><span class="n">exc</span>
+</span></span><span class="line"><span class="cl">      <span class="n">unset</span> <span class="n">KAFKA_PORT</span> <span class="o">&amp;&amp;</span> \
+</span></span><span class="line"><span class="cl">      <span class="k">export</span> <span class="n">KAFKA_BROKER_ID</span><span class="o">=$</span><span class="p">{</span><span class="n">POD_NAME</span><span class="c1">##*-} &amp;&amp; \</span>
+</span></span><span class="line"><span class="cl">      <span class="k">export</span> <span class="n">KAFKA_ADVERTISED_LISTENERS</span><span class="o">=</span><span class="n">PLAINTEXT</span><span class="p">:</span><span class="o">//$</span><span class="p">{</span><span class="n">POD_IP</span><span class="p">}:</span><span class="mi">9092</span> <span class="o">&amp;&amp;</span> \
+</span></span><span class="line"><span class="cl">      <span class="n">exec</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">confluent</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">run</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    Requests:
-</span></span><span class="line"><span class="cl">      cpu:      100m
-</span></span><span class="line"><span class="cl">    Liveness:   exec [sh -ec /usr/bin/jps | /bin/grep -q SupportedKafka] delay=30s timeout=5s period=10s #success=1 #failure=3
-</span></span><span class="line"><span class="cl">    Readiness:  tcp-socket :kafka delay=30s timeout=5s period=10s #success=1 #failure=3
-</span></span><span class="line"><span class="cl">    Environment:
-</span></span><span class="line"><span class="cl">      POD_IP:                                   (v1:status.podIP)
-</span></span><span class="line"><span class="cl">      POD_NAME:                                kafka-1-0 (v1:metadata.name)
-</span></span><span class="line"><span class="cl">      POD_NAMESPACE:                           default (v1:metadata.namespace)
-</span></span><span class="line"><span class="cl">      KAFKA_HEAP_OPTS:                         -Xmx4G -Xms1G
-</span></span><span class="line"><span class="cl">      KAFKA_ZOOKEEPER_CONNECT:                 kafka-1-zookeeper:2181
-</span></span><span class="line"><span class="cl">      KAFKA_LOG_DIRS:                          /opt/kafka/data/logs
-</span></span><span class="line"><span class="cl">      KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE:  false
-</span></span><span class="line"><span class="cl">      KAFKA_DEFAULT_REPLICATION_FACTOR:        3
-</span></span><span class="line"><span class="cl">      KAFKA_MESSAGE_MAX_BYTES:                 16000000
-</span></span><span class="line"><span class="cl">      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:  1
-</span></span><span class="line"><span class="cl">      KAFKA_JMX_PORT:                          5555
-</span></span><span class="line"><span class="cl">    Mounts:
-</span></span><span class="line"><span class="cl">      /opt/kafka/data from datadir (rw)
-</span></span><span class="line"><span class="cl">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-2tm8c (ro)
-</span></span><span class="line"><span class="cl">Conditions:
-</span></span><span class="line"><span class="cl">Volumes:
-</span></span><span class="line"><span class="cl">  datadir:
-</span></span><span class="line"><span class="cl">    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
-</span></span><span class="line"><span class="cl">    ClaimName:  datadir-kafka-1-0
-</span></span><span class="line"><span class="cl">    ReadOnly:   false
-</span></span><span class="line"><span class="cl">  default-token-2tm8c:
-</span></span><span class="line"><span class="cl">    Type:        Secret (a volume populated by a Secret)
-</span></span><span class="line"><span class="cl">    SecretName:  default-token-2tm8c
-</span></span><span class="line"><span class="cl">    Optional:    false
+</span></span><span class="line"><span class="cl">    <span class="n">Requests</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">cpu</span><span class="p">:</span>      <span class="mi">100</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Liveness</span><span class="p">:</span>   <span class="n">exec</span> <span class="p">[</span><span class="n">sh</span> <span class="o">-</span><span class="n">ec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">jps</span> <span class="o">|</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">grep</span> <span class="o">-</span><span class="n">q</span> <span class="n">SupportedKafka</span><span class="p">]</span> <span class="n">delay</span><span class="o">=</span><span class="mi">30</span><span class="n">s</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="n">s</span> <span class="n">period</span><span class="o">=</span><span class="mi">10</span><span class="n">s</span> <span class="c1">#success=1 #failure=3</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Readiness</span><span class="p">:</span>  <span class="n">tcp</span><span class="o">-</span><span class="n">socket</span> <span class="p">:</span><span class="n">kafka</span> <span class="n">delay</span><span class="o">=</span><span class="mi">30</span><span class="n">s</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="n">s</span> <span class="n">period</span><span class="o">=</span><span class="mi">10</span><span class="n">s</span> <span class="c1">#success=1 #failure=3</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">Environment</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">POD_IP</span><span class="p">:</span>                                   <span class="p">(</span><span class="n">v1</span><span class="p">:</span><span class="n">status</span><span class="o">.</span><span class="n">podIP</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">POD_NAME</span><span class="p">:</span>                                <span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span> <span class="p">(</span><span class="n">v1</span><span class="p">:</span><span class="n">metadata</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">POD_NAMESPACE</span><span class="p">:</span>                           <span class="n">default</span> <span class="p">(</span><span class="n">v1</span><span class="p">:</span><span class="n">metadata</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_HEAP_OPTS</span><span class="p">:</span>                         <span class="o">-</span><span class="n">Xmx4G</span> <span class="o">-</span><span class="n">Xms1G</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_ZOOKEEPER_CONNECT</span><span class="p">:</span>                 <span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">zookeeper</span><span class="p">:</span><span class="mi">2181</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_LOG_DIRS</span><span class="p">:</span>                          <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">kafka</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">logs</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE</span><span class="p">:</span>  <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_DEFAULT_REPLICATION_FACTOR</span><span class="p">:</span>        <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_MESSAGE_MAX_BYTES</span><span class="p">:</span>                 <span class="mi">16000000</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR</span><span class="p">:</span>  <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">      <span class="n">KAFKA_JMX_PORT</span><span class="p">:</span>                          <span class="mi">5555</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Mounts</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">kafka</span><span class="o">/</span><span class="n">data</span> <span class="n">from</span> <span class="n">datadir</span> <span class="p">(</span><span class="n">rw</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">secrets</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">serviceaccount</span> <span class="n">from</span> <span class="n">default</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="mi">2</span><span class="n">tm8c</span> <span class="p">(</span><span class="n">ro</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Conditions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">Volumes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">datadir</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Type</span><span class="p">:</span>       <span class="n">PersistentVolumeClaim</span> <span class="p">(</span><span class="n">a</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">a</span> <span class="n">PersistentVolumeClaim</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">same</span> <span class="n">namespace</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ClaimName</span><span class="p">:</span>  <span class="n">datadir</span><span class="o">-</span><span class="n">kafka</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadOnly</span><span class="p">:</span>   <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">  <span class="n">default</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="mi">2</span><span class="n">tm8c</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Type</span><span class="p">:</span>        <span class="n">Secret</span> <span class="p">(</span><span class="n">a</span> <span class="n">volume</span> <span class="n">populated</span> <span class="n">by</span> <span class="n">a</span> <span class="n">Secret</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SecretName</span><span class="p">:</span>  <span class="n">default</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="mi">2</span><span class="n">tm8c</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Optional</span><span class="p">:</span>    <span class="bp">false</span>
 </span></span></code></pre></div><p>講幾個重點：</p>
 <ul>
 <li>這邊跑起來的是 kafka-broker，接收 producer 與 consumer 來的 request</li>
@@ -1218,11 +1225,11 @@ zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與
   
   <a class="badge badge-light" href="/en/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
   
-  <a class="badge badge-light" href="/en/tag/kafka/">kafka</a>
+  <a class="badge badge-light" href="/en/tag/kafka/">Kafka</a>
   
-  <a class="badge badge-light" href="/en/tag/kubernetes/">kubernetes</a>
+  <a class="badge badge-light" href="/en/tag/kubernetes/">Kubernetes</a>
   
-  <a class="badge badge-light" href="/en/tag/ithome/">ithome</a>
+  <a class="badge badge-light" href="/en/tag/ithome/">Ithome</a>
   
 </div>
 
@@ -1550,7 +1557,7 @@ zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與
 
   
   <p class="powered-by copyright-license-text">
-    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1581,7 +1588,7 @@ zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與
       
       
       
-      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
     
   </p>
 </footer>
@@ -1593,7 +1600,7 @@ zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與
   
 
 
-<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+<script src="/js/vendor-bundle.min.ff7771056d34ad9f2de2d8f6a466e748.js"></script>
 
 
 
@@ -1686,7 +1693,7 @@ zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與
   
 
 
-<script src="/en/js/wowchemy.min.84c084b46df0dd24d4ca9f1b0f059c1f.js"></script>
+<script src="/en/js/wowchemy.min.0d344310ba75ea019adb1e7aa1de0b6a.js"></script>
 
 
 
@@ -1722,7 +1729,7 @@ zookeeper 與 exporter 我們這邊先掠過不談，到專章講高可用性與
 </div>
 
 
-  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 

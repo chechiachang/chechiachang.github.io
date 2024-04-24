@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
-<!-- Last Published: 2023年10月25日 --><html lang="zh-Hant" >
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: 2024年4月24日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -10,7 +10,7 @@
   
   
   
-    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
   
 
   
@@ -70,14 +70,14 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
   
     
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
     
 
     
@@ -212,7 +212,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.042e26407c9e383d96a1f26d6787c686.css" />
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
 
   
   
@@ -306,6 +306,7 @@
 
 
 
+
   
   
   
@@ -366,6 +367,12 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   <meta property="twitter:site" content="@chechiachang" />
   <meta property="twitter:creator" content="@chechiachang" />
 <meta property="twitter:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/post/2019-09-21-logstash-on-gke/" />
 <meta property="og:title" content="Logstash on GKE | Che-Chia Chang" />
@@ -478,7 +485,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
   
   
-  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -932,7 +939,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/elasticsearch/">elasticsearch</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">Kubernetes</a>, <a href="/zh-hant/category/elasticsearch/">Elasticsearch</a></span>
   
 
 </div>
@@ -1106,79 +1113,79 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 </span></span></code></pre></div><p>設定 Input 來源，是 beat 從 5044 進來</p>
 <h3 id="filter">Filter</h3>
 <p>接下來一大段是 filter，每個 filter 中間的 block 都是一個 plugin，logstash 支援非常多有趣的 plugin ，處理不同來源的工作，<a href="https://www.elastic.co/guide/en/logstash/7.3/filter-plugins.html" target="_blank" rel="noopener">細節請看這篇</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">filter {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">filter</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  # Ignore data from other source in case filebeat input is incorrectly configured.
-</span></span><span class="line"><span class="cl">  if [kubernetes][container][name] == &#34;nginx-ingress-controller&#34; {
+</span></span><span class="line"><span class="cl">  <span class="c1"># Ignore data from other source in case filebeat input is incorrectly configured.</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">[</span><span class="n">kubernetes</span><span class="p">][</span><span class="n">container</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;nginx-ingress-controller&#34;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Parse message with grok
-</span></span><span class="line"><span class="cl">    # Use grok debugger in kibana -&gt; dev_tools -&gt; grok_debugger
-</span></span><span class="line"><span class="cl">    grok {
-</span></span><span class="line"><span class="cl">      match =&gt; { &#34;message&#34; =&gt; &#34;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \&#34;%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}\&#34; %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \&#34;%{DATA:[nginx][access][referrer]}\&#34; \&#34;%{DATA:[nginx][access][agent]}\&#34; %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&#34; }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parse message with grok</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Use grok debugger in kibana -&gt; dev_tools -&gt; grok_debugger</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">match</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="s2">&#34;message&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;%{IPORHOST:[nginx][access][remote_ip]} - \[%{IPORHOST:[nginx][access][remote_ip_list]}\] - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] </span><span class="se">\&#34;</span><span class="s2">%{WORD:[nginx][access][method]} %{DATA:[nginx][access][request_url]} HTTP/%{NUMBER:[nginx][access][http_version]}</span><span class="se">\&#34;</span><span class="s2"> %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} </span><span class="se">\&#34;</span><span class="s2">%{DATA:[nginx][access][referrer]}</span><span class="se">\&#34;</span><span class="s2"> </span><span class="se">\&#34;</span><span class="s2">%{DATA:[nginx][access][agent]}</span><span class="se">\&#34;</span><span class="s2"> %{NUMBER:[nginx][access][request_length]} %{NUMBER:[nginx][access][request_time]} \[%{DATA:[nginx][access][proxy_upstream_name]}\] %{DATA:[nginx][access][upstream_addr]} %{NUMBER:[nginx][access][upstream_response_length]} %{NUMBER:[nginx][access][upstream_response_time]} %{NUMBER:[nginx][access][upstream_status]} %{DATA:[nginx][access][req_id]}&#34;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Match url parameters if has params
-</span></span><span class="line"><span class="cl">    grok {
-</span></span><span class="line"><span class="cl">      match =&gt; { &#34;[nginx][access][request_url]&#34; =&gt; &#34;%{DATA:[nginx][access][url]}\?%{DATA:[nginx][access][url_params]}&#34; }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Match url parameters if has params</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">match</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="s2">&#34;[nginx][access][request_url]&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;%{DATA:[nginx][access][url]}\?%{DATA:[nginx][access][url_params]}&#34;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Remove and add fields
-</span></span><span class="line"><span class="cl">    mutate {
-</span></span><span class="line"><span class="cl">      remove_field =&gt; &#34;[nginx][access][request_url]&#34;
-</span></span><span class="line"><span class="cl">      add_field =&gt; { &#34;read_timestamp&#34; =&gt; &#34;%{@timestamp}&#34; }
-</span></span><span class="line"><span class="cl">      # Add fileset.module:nginx to fit nginx dashboard
-</span></span><span class="line"><span class="cl">      add_field =&gt; { &#34;[fileset][module]&#34; =&gt; &#34;nginx&#34;}
-</span></span><span class="line"><span class="cl">      add_field =&gt; { &#34;[fileset][name]&#34; =&gt; &#34;access&#34;}
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove and add fields</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mutate</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][request_url]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">add_field</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="s2">&#34;read_timestamp&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;%{@timestamp}&#34;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># Add fileset.module:nginx to fit nginx dashboard</span>
+</span></span><span class="line"><span class="cl">      <span class="n">add_field</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="s2">&#34;[fileset][module]&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;nginx&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="n">add_field</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="s2">&#34;[fileset][name]&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;access&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Parse date string into timestamp
-</span></span><span class="line"><span class="cl">    date {
-</span></span><span class="line"><span class="cl">      match =&gt; [ &#34;[nginx][access][time]&#34;, &#34;dd/MMM/YYYY:H:m:s Z&#34; ]
-</span></span><span class="line"><span class="cl">      remove_field =&gt; &#34;[nginx][access][time]&#34;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parse date string into timestamp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">date</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">match</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s2">&#34;[nginx][access][time]&#34;</span><span class="p">,</span> <span class="s2">&#34;dd/MMM/YYYY:H:m:s Z&#34;</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl">      <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][time]&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Split url_parameters with &amp;
-</span></span><span class="line"><span class="cl">    # /api?uuid=123&amp;query=456 
-</span></span><span class="line"><span class="cl">    # become 
-</span></span><span class="line"><span class="cl">    # nginx.access.url_params.uuid=123 nginx.access.url_params.query=456
-</span></span><span class="line"><span class="cl">    kv {
-</span></span><span class="line"><span class="cl">      source =&gt; &#34;[nginx][access][url_params]&#34;
-</span></span><span class="line"><span class="cl">      field_split =&gt; &#34;&amp;&#34;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Split url_parameters with &amp;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># /api?uuid=123&amp;query=456 </span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># become </span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># nginx.access.url_params.uuid=123 nginx.access.url_params.query=456</span>
+</span></span><span class="line"><span class="cl">    <span class="n">kv</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">source</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][url_params]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">field_split</span> <span class="o">=&gt;</span> <span class="s2">&#34;&amp;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Parse useragent
-</span></span><span class="line"><span class="cl">    useragent {
-</span></span><span class="line"><span class="cl">      source =&gt; &#34;[nginx][access][agent]&#34;
-</span></span><span class="line"><span class="cl">      target =&gt; &#34;[nginx][access][user_agent]&#34;
-</span></span><span class="line"><span class="cl">      remove_field =&gt; &#34;[nginx][access][agent]&#34;
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parse useragent</span>
+</span></span><span class="line"><span class="cl">    <span class="n">useragent</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">source</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][agent]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">target</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][user_agent]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][agent]&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Search remote_ip with GeoIP database, output geoip information for map drawing
-</span></span><span class="line"><span class="cl">    geoip {
-</span></span><span class="line"><span class="cl">      source =&gt; &#34;[nginx][access][remote_ip]&#34;
-</span></span><span class="line"><span class="cl">      target =&gt; &#34;[nginx][access][geoip]&#34;
-</span></span><span class="line"><span class="cl">      #fields =&gt; [&#34;country_name&#34;,&#34;city_name&#34;,&#34;real_region_name&#34;,&#34;latitude&#34;,&#34;longitude&#34;,&#34;ip&#34;,&#34;location&#34;]
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># Search remote_ip with GeoIP database, output geoip information for map drawing</span>
+</span></span><span class="line"><span class="cl">    <span class="n">geoip</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">source</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][remote_ip]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">target</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][geoip]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">#fields =&gt; [&#34;country_name&#34;,&#34;city_name&#34;,&#34;real_region_name&#34;,&#34;latitude&#34;,&#34;longitude&#34;,&#34;ip&#34;,&#34;location&#34;]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # ==============
-</span></span><span class="line"><span class="cl">    # Remove message to reduce data
-</span></span><span class="line"><span class="cl">    # ==============
-</span></span><span class="line"><span class="cl">    if [nginx][access][url] {
-</span></span><span class="line"><span class="cl">      mutate {
-</span></span><span class="line"><span class="cl">        # source:/var/lib/docker/containers/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109-json.log
-</span></span><span class="line"><span class="cl">        remove_field =&gt; &#34;[source]&#34;
-</span></span><span class="line"><span class="cl">        # Origin message
-</span></span><span class="line"><span class="cl">        remove_field =&gt; &#34;[message]&#34;
-</span></span><span class="line"><span class="cl">        #add_field =&gt; { &#34;[nginx][access][message]&#34; =&gt; &#34;[message]&#34;}
-</span></span><span class="line"><span class="cl">        remove_field =&gt; &#34;[nginx][access][message]&#34;
-</span></span><span class="line"><span class="cl">        # url_params:client_id=1d5ffd378296c154d3e32e5890d6f4eb&amp;timestamp=1546849955&amp;nonce=9a52e3e6283f2a9263e5301b6724e2c0d723def860c4724c9121470152a42318
-</span></span><span class="line"><span class="cl">        remove_field =&gt; &#34;[nginx][access][url_params]&#34;
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    <span class="c1"># ==============</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove message to reduce data</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ==============</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">[</span><span class="n">nginx</span><span class="p">][</span><span class="n">access</span><span class="p">][</span><span class="n">url</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">mutate</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># source:/var/lib/docker/containers/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109/6e608bfc0a437c038a1dbdf2e3d28619648b58a1d1ac58635f8178fc5f871109-json.log</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[source]&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Origin message</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[message]&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#add_field =&gt; { &#34;[nginx][access][message]&#34; =&gt; &#34;[message]&#34;}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][message]&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># url_params:client_id=1d5ffd378296c154d3e32e5890d6f4eb&amp;timestamp=1546849955&amp;nonce=9a52e3e6283f2a9263e5301b6724e2c0d723def860c4724c9121470152a42318</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remove_field</span> <span class="o">=&gt;</span> <span class="s2">&#34;[nginx][access][url_params]&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  } # nginx-ingress-controller
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="c1"># nginx-ingress-controller</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">} # filter
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c1"># filter</span>
 </span></span></code></pre></div><h3 id="grok">Grok</h3>
 <p><a href="https://www.elastic.co/guide/en/logstash/7.3/plugins-filters-grok.html" target="_blank" rel="noopener">Grok 本身的文件</a>又是一大段，個人建議各路大德，如果要使用，請直接搜尋人家配置好的設定，不要自己寫</p>
 <p>真的要寫的話要善用工具</p>
@@ -1239,11 +1246,11 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
   <a class="badge badge-light" href="/zh-hant/tag/%E9%90%B5%E4%BA%BA%E8%B3%BD2019/">鐵人賽2019</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/elasticsearch/">elasticsearch</a>
+  <a class="badge badge-light" href="/zh-hant/tag/elasticsearch/">Elasticsearch</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/devops/">devops</a>
+  <a class="badge badge-light" href="/zh-hant/tag/devops/">Devops</a>
   
-  <a class="badge badge-light" href="/zh-hant/tag/logstash/">logstash</a>
+  <a class="badge badge-light" href="/zh-hant/tag/logstash/">Logstash</a>
   
 </div>
 
@@ -1556,7 +1563,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 
   
   <p class="powered-by copyright-license-text">
-    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1587,7 +1594,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
       
       
       
-      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+      由<a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a>支持發布——免費<a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">開源</a>網站，為創作者賦能。
     
   </p>
 </footer>
@@ -1599,7 +1606,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
 
 
-<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
+<script src="/js/vendor-bundle.min.ff7771056d34ad9f2de2d8f6a466e748.js"></script>
 
 
 
@@ -1692,7 +1699,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
 
 
-<script src="/zh-hant/js/wowchemy.min.29bb000facffd3af35e773e640a66a6f.js"></script>
+<script src="/zh-hant/js/wowchemy.min.e1f3203a692cdb371a297015af58c507.js"></script>
 
 
 
@@ -1728,7 +1735,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 </div>
 
 
-  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 

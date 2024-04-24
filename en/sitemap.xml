@@ -2242,20 +2242,6 @@
                 href="https://chechia.net/en/project/terraform-30-days/"
                 />
   </url><url>
-    <loc>https://chechia.net/en/admin/</loc>
-    <lastmod>2023-09-11T22:33:54+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-Hant"
-                href="https://chechia.net/zh-hant/admin/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://chechia.net/en/admin/"
-                />
-  </url><url>
     <loc>https://chechia.net/en/post/</loc>
     <lastmod>2023-09-11T22:33:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
