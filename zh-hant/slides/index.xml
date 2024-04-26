@@ -19,537 +19,528 @@
   &gt;
 
 &lt;aside class=&#34;notes&#34;&gt;
-  Q1: 有過使用 helm 跟 argocd 的人請舉手
-Q2: k8s object 走 gitflow 管理的比例有超過 9 成的
+  投影片跟講稿我都放在我的網站上，如果有興趣可以參考
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;resource-as-code-for-k8s-object&#34;&gt;Resource as Code for K8s Object&lt;/h3&gt;
-&lt;h3 id=&#34;如何管理-k8s-object&#34;&gt;如何管理 k8s object&lt;/h3&gt;
+&lt;h3 id=&#34;cost-management-of-cloud-kubernetes&#34;&gt;Cost Management of Cloud Kubernetes&lt;/h3&gt;
+&lt;h3 id=&#34;雲端k8s省錢工程&#34;&gt;雲端K8s省錢工程&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt;&lt;/p&gt;
 &lt;aside class=&#34;notes&#34;&gt;
+  兩個關鍵字：雲端 / k8s
+如果你有在使用公有雲，而且有在跑 k8s，你是這篇演講的最主要對象
+如果你是私有雲 k8s，或是其他的雲端服務，有一些相通的概念，會有一些參考價值
+如果你是地端的機器，雖然概念相同，但成本控制的做法完全是另外一個故事，你可以當午休時間的故事聽聽看
 &lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;about-me&#34;&gt;About Me&lt;/h3&gt;
+&lt;h3 id=&#34;che-chia-chang&#34;&gt;Che Chia Chang&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;SRE @ &lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Microsoft MVP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;個人部落格&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;presentation and speaker notes&lt;/li&gt;
+&lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
-&lt;p&gt;Manage Kubernetes Objects in Gitflow&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;kubectl&lt;/li&gt;
-&lt;li&gt;helm chart&lt;/li&gt;
-&lt;li&gt;argocd (gitflow)
-&lt;ul&gt;
-&lt;li&gt;applicationset&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;test&lt;/li&gt;
+&lt;li&gt;Cost on Public Cloud&lt;/li&gt;
+&lt;li&gt;K8s Compute Resource Management&lt;/li&gt;
+&lt;li&gt;Monitoring&lt;/li&gt;
+&lt;li&gt;Cost Analysis and Prediction&lt;/li&gt;
+&lt;li&gt;Resource Recommendation&lt;/li&gt;
+&lt;li&gt;Saving Plan&lt;/li&gt;
+&lt;li&gt;Spot Instance&lt;/li&gt;
+&lt;li&gt;HPA / VPA&lt;/li&gt;
+&lt;li&gt;Q&amp;amp;A&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;今天的內容前半部像是講古&lt;/p&gt;
-&lt;p&gt;首先會講 kubectl create / apply
-kubectl 使用，然後官方有提醒我們使用 kubectl 管理 k8s object 時的 trade-off，這些 trade-off 我們可以使用其他的工具來彌補&lt;/p&gt;
-&lt;p&gt;導入 helm chart，來打包 k8s objects 變成一個完整地發布單位&lt;/p&gt;
-&lt;p&gt;argocd 走 gitflow 來發布&lt;/p&gt;
-&lt;p&gt;然後在 workflow 裡加入測試，確保 k8s objects 的交付品質&lt;/p&gt;
+  &lt;p&gt;這是我們今天的大綱&lt;/p&gt;
+&lt;p&gt;我們會先講一下在公有雲上的成本
+然後講一下 k8s 的運算資源管理
+接著講一下監控，為何成本控管的基礎是監控
+如何使用工具成本分析，未來成本預測
+然後使用工具建議合適的資源
+最後講實務上要如何降低成本，例如 saving plan / spot instance / HPA / VPA，依照執行的難度排序，有時間的話也會講如何從無到有開始進行&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;kubectl&#34;&gt;Kubectl&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative commands 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create deployment nginx --image nginx
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative object configuration 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create -f nginx.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Declarative object configuration
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -R -f configs/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/#management-techniques&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;cost-on-public-cloud&#34;&gt;Cost on Public Cloud&lt;/h3&gt;
+&lt;p&gt;open your cloud billing&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Compute Resource (cpu, memory)&lt;/li&gt;
+&lt;li&gt;Storage (Disk, EBS, S3&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;Database (Compute Resource + Storage)&lt;/li&gt;
+&lt;li&gt;Networking&lt;/li&gt;
+&lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  kubectl 應該是所有人學 k8s 的第一個工具
-作為官方的 cli 工具，kunectl 非常強大，可以控制幾乎大部分 k8s 的 api，也能對幾乎所有 k8s object 進行操作
+  有在使用公有雲的人，把公有雲的 billing 帳單打開來看，可能看到的大概是這幾個項目
+當然因為不同團隊的服務不同，可能會有一些出入，但如果你的公司的產品是 web service，應該會有這幾個項目
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;todays-topic&#34;&gt;Today&amp;rsquo;s topic&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Today&amp;rsquo;s topic&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Compute Resource&lt;/li&gt;
+&lt;li&gt;cpu &amp;amp; memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Maybe next time&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storage (Disk, EBS, S3&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;Database (Compute Resource + Storage)&lt;/li&gt;
+&lt;li&gt;Networking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;Storage 不太好說省就省，因為你的資料量就在那邊，放不下就是要再買，所以 storage 的成本控制，可能是在資料的使用上，例如資料的壓縮，或是資料的備份，或是資料的存取方式，這些是另外一個故事
+使用公有雲的服務，基本上 storage 都是依據使用的大小計價，而且需多服務都可以動態增長，例如動態增加 disk&lt;/p&gt;
+&lt;p&gt;Storage / Database / Networking 這幾個項目，我們下集再來談&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;cost-on-public-cloud-1&#34;&gt;Cost on Public Cloud&lt;/h3&gt;
+&lt;p&gt;CPU / memory intense web service&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RESTful api&lt;/li&gt;
+&lt;li&gt;long-connetion service&lt;/li&gt;
+&lt;li&gt;business logic&lt;/li&gt;
+&lt;li&gt;save state to disk / database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;如果你跟敝社一樣是 web service，那麼 cpu / memory 可能是你最大的一筆成本&lt;/p&gt;
+&lt;p&gt;你需要足夠運算能力 serve 客戶，不管是支持用戶的request，進行商業邏輯的運算，然後把運算完成的狀態回傳給客戶，或是存在資料庫中，每一個動作都需要算力&lt;/p&gt;
+&lt;p&gt;足夠的 cpu 跟 memory，不是越多越好，而是足夠，不會浪費，也不會因為不足而影響服務品質
+我們要省錢，就要從這裡下手&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;尋找多餘的算力&#34;&gt;尋找多餘的算力&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;已有足夠的 cpu / memory，多給也不會增加服務品質的多餘算力&lt;/li&gt;
+&lt;li&gt;多少才是夠？&lt;/li&gt;
+&lt;li&gt;減去多少 cpu / memory，依然不改變服務品質&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;多少才是夠？這是一個複雜的問題，實務上通常使用 SLA / SLO 來衡量服務品質，然後根據服務品質的要求，來設定 cpu / memory 的配額&lt;/p&gt;
+&lt;p&gt;我們今天要做的是成本優化，白話的說是降低 cpu / memory 的設定配額，但是我們不能降低到影響服務品質
+甚至退一百步，防守性的來說，我們不希望因為降低 cpu / memory 的設定配額，為了省錢而導致負面的結果，甚至為服務的穩定度背鍋。&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;維持slo&#34;&gt;維持SLO&lt;/h3&gt;
+&lt;p&gt;以維持各個服務元件的 SLO為前提，降低 cpu / memory 使用量&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;維持個個服務元件的 SLO
+是一個很好的指標，如果你的服務是 99.9% 的 SLA，那麼你的服務就要保證 99.9% 的時間都是正常運作的，那麼你的 cpu / memory 就要足夠支持這個 SLA&lt;/p&gt;
+&lt;p&gt;談 SLO 之前，你要先知道你的服務的 SLA 是多少，你要先知道當前的狀態是多少
+這個在稍後的 monitoring 會提到，為什麼監控是成本管理的基礎&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;基於-slo-的成本調降&#34;&gt;基於 SLO 的成本調降&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;負載穩定的元件，可以抓過去 30d 的 p99 cpu time 或 p99 memory usage + buffer&lt;/li&gt;
+&lt;li&gt;負載不穩定的元件，例如 cpu usage 與受活躍用戶數量正比，需要搭配 HPA 水平拓展&lt;/li&gt;
+&lt;li&gt;負載不穩定的元件，但又不能水平拓展，例如 stateful service，可以考慮 VPA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  負載穩定的元件，固定吃多少 cpu / memory，他的附載不太容易隨外部因素波動的服務，可以抓過去 30d 的 p99 cpu time 或 p99 memory usage + buffer，然後降低 cpu / memory 的設定配額
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;小結成本控管的基本概念&#34;&gt;小結：成本控管的基本概念&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;尋找服務中多餘算力&lt;/li&gt;
+&lt;li&gt;以維持 SLO 為前提&lt;/li&gt;
+&lt;li&gt;降低 cpu / memory 使用量&lt;/li&gt;
+&lt;li&gt;依據元件負載特性，選擇適當的調降方式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;background-knowledge&#34;&gt;Background Knowledge&lt;/h3&gt;
+&lt;h3 id=&#34;k8s-cpu--memory-managementhttpskubernetesiodocsconceptsconfigurationmanage-resources-containers&#34;&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s cpu / memory management&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;k8s 如何管理 workload 的 cpu 與 memory&lt;/li&gt;
+&lt;li&gt;調降多少會影響服務品質&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;這裡面再講一下 k8s 如何管理 cpu / memory&lt;/p&gt;
+&lt;p&gt;這邊的重點是，怎麼樣的調整會影響到服務品質，那我們做成本控制的時候，就不要去踩到這個底線&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;how-k8s-manage-cpu--memoryhttpskubernetesiodocsconceptsconfigurationmanage-resources-containershow-pods-with-resource-limits-are-run&#34;&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#how-pods-with-resource-limits-are-run&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;How k8s manage cpu / memory&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;scheduler 依據 cpu / memory request 調度 pod&lt;/li&gt;
+&lt;li&gt;container runtime 設定 cgroup
+&lt;ul&gt;
+&lt;li&gt;cpu 使用量依據 request 佔 node 比例分配&lt;/li&gt;
+&lt;li&gt;控制 cpu 用量不超過 limit&lt;/li&gt;
+&lt;li&gt;memory 使用 limit，超過 limit 會被 oomkill，並依據設定重啟&lt;/li&gt;
+&lt;li&gt;當前 node memory 不足時，會依據 pod request Evict pod&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  文件講得很清楚
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;上面都是概念底下進實作&#34;&gt;上面都是概念，底下進實作&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;monitoring&#34;&gt;Monitoring&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Monitoring 是 cost management 的基礎&lt;/li&gt;
+&lt;li&gt;沒有 monitoring 就沒有 p99 cpu time / p99 memory usage，也沒有 SLI/SLO&lt;/li&gt;
+&lt;li&gt;如果沒有 monitoring 先補 monitoring&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  如果沒有 monitoring，上面的兩大前提都不存在
+目前的 cpu / memory usage，runtime utilization 的資料
+目前SLO，調降之後新的SLO
 &lt;/aside&gt;
 &lt;hr&gt;
 
 &lt;section data-noprocess data-shortcode-slide
   
       
-      data-background-image=&#34;kubectl.jpg&#34;
+      data-background-image=&#34;grafana-dashboard.png&#34;
+  &gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;monitoring-調整前&#34;&gt;Monitoring: 調整前&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;過去的 p99 資源用量&lt;/li&gt;
+&lt;li&gt;目前的效能表現&lt;/li&gt;
+&lt;li&gt;多餘的算力 = (分配的 resource - p99)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;做之前要能評估做完大概能省多少
+例如評估完後&lt;/p&gt;
+&lt;p&gt;如果評估完發現省不了什麼錢，那當然團隊就不一定要做這件事&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;monitoring-調整後&#34;&gt;Monitoring: 調整後&lt;/h3&gt;
+&lt;p&gt;調整前後比較&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;資源用量&lt;/li&gt;
+&lt;li&gt;目前的效能表現&lt;/li&gt;
+&lt;li&gt;確定沒有改壞東西&lt;/li&gt;
+&lt;li&gt;有改壞，要有及時的 alert&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  如果你改壞了，及時的 alert 會救你一命
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;monitoring-tools&#34;&gt;Monitoring Tools&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://prometheus.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;prometheus.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;prometheus.png&#34;
   &gt;
 
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;首先，如同官方文件所描述，kubectl 的使用上，也有各種不同方法。ie. kubectl 交在不同人手上，使用方式是不同的
-官方文件描述&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Imperative commands 指令式&lt;/li&gt;
-&lt;li&gt;Imperative object configuration 指令物件&lt;/li&gt;
-&lt;li&gt;Declarative object configuration 宣告物件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;kubectl create deployment nginx，一行命令告訴 k8s 你要 create deployment&lt;/p&gt;
-&lt;p&gt;kubectl create -f nginx.yaml，使用者選擇要 create / apply / delete 而 nginx.yaml 裡面描述一個 nginx deployment 物件&lt;/p&gt;
-&lt;p&gt;kubectl apply -f -R nginx/，使用者描述一個或多個物件，描述物件的狀態。apply 時，由 kubectl 決定要對 object 執行，create / update / delete&lt;/p&gt;
+  &lt;p&gt;大家都知道 prometheus 是什麼嗎？&lt;/p&gt;
+&lt;p&gt;知道的人請舉個手
+不知道的我很簡單說一下&lt;/p&gt;
+&lt;p&gt;我們想要知道一個 pod 會需要花多少 cpu / memory，你就把它跑起來，然後去紀錄跑起來的 pod 用了多少 cpu / memory，然後根據時間統計，你就可以拉出一張圖，看到這個 pod 用了多少 cpu / memory
+你的 kubelet / cadvisor / container runtime 會知道你的 container 的 cpu / memory 使用量，包含 request &amp;amp; limit 然後是否有 throttling 或是 oomkill，這些資訊都會被 prometheus 收集起來，然後你可以透過其他工具，例如 kubecost 看到這些資訊&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;issue&#34;&gt;Issue&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative commands 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create deployment nginx --image nginx
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Imperative object configuration 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl create -f nginx.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Declarative object configuration
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl apply -R -f configs/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;kubectl 這麼好用，那為何不繼續用下去？&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;的問題很明顯，不能 diff
-2.3. 會有一個基礎的 spec，關於 deployment/nginx，因此可以在&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;重點&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;change review / diff&lt;/li&gt;
-&lt;li&gt;source record other than live&lt;/li&gt;
-&lt;li&gt;template，一個可重複使用的樣版&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;2.3. 的問題，你必須對 object 夠了解，才寫得出完整沒 bug 的 spec yaml&lt;/p&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;聽起來是最完整的，他的問題就是要如何維持 local file 與 live 連結，或是說 sync
-這個有使用 argocd 的人可能就會比較有感覺&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;大家有興趣可以去看官方描述的內容，這裡不贅述&lt;/p&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;grafana-cpu-usage.png&#34;
+  &gt;
+
+&lt;p&gt;&lt;a href=&#34;https://grafana.com/grafana/dashboards/17375-k8s-resource-monitoring/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://grafana.com/grafana/dashboards/17375-k8s-resource-monitoring/&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  這是 prometheus 收集的資料，vm 的 resource 使用量的 grafana dashboard
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;issue-1&#34;&gt;Issue&lt;/h3&gt;
+&lt;h3 id=&#34;cost-analysis-and-prediction&#34;&gt;Cost Analysis and Prediction&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;change review / diff before apply&lt;/li&gt;
-&lt;li&gt;source of live record&lt;/li&gt;
-&lt;li&gt;template / repetitive apply&lt;/li&gt;
-&lt;li&gt;sync local to live&lt;/li&gt;
+&lt;li&gt;有了 prometheus 後，我們知道短期/長期的資源使用狀況&lt;/li&gt;
+&lt;li&gt;要把資源使用轉成成本，需要一個成本計算工具&lt;/li&gt;
+&lt;li&gt;評估是否要做成本精簡，能夠減少多少錢&lt;/li&gt;
+&lt;li&gt;管理上的考量：投資人力成本，與預期回報&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;ul&gt;
-&lt;li&gt;change review / diff before apply&lt;/li&gt;
-&lt;li&gt;source of live record&lt;/li&gt;
-&lt;li&gt;template / repetitive apply&lt;/li&gt;
-&lt;li&gt;sync local to live&lt;/li&gt;
-&lt;/ul&gt;
+  &lt;p&gt;政治上的考量，做成本節省需要時間跟人力資源
+有一個精準的成本分析，節省空間估算的工具十分有說服力&lt;/p&gt;
+&lt;p&gt;有這些資料，才可以科學化決策要不要做，該怎麼做
+做之前就能評估做完大概能省多少&lt;/p&gt;
+&lt;p&gt;如果評估完發現省不了什麼錢，那當然團隊就不一定要做這件事&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;declarative-object-configuration&#34;&gt;Declarative object configuration&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nginx
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── deployment.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── ingress.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── service.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;redis
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── deployment.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── ingress.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── service.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;microservice-a b c ...
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  為了 change review，通常會走向 3. Declarative object configuration，可能會長這樣
-一個 git repository
-裡面有多個 directory，描述每一組服務所需要的資源
-使用 kubectl 一次 apply 整個 directory，所以 local file 基本上也反應 live object
-有 local file，很自然而然就會想要放到版本控制，例如 git，這樣又可以走 gitflow
-PR -&amp;gt; review -&amp;gt; merged -&amp;gt; apply master / release tag
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;有人在 2014 年前用過 k8s 嗎？&lt;/p&gt;
-&lt;p&gt;古早時期，要用個 redis 還要自己包 service / ingress / deployment，先去 dockerhub 找 redis，然後依據 readme 自己包 deployment，自己測試看 redis 會不會動&lt;/p&gt;
-&lt;p&gt;現在應該沒有人會因為要去使用 redis 或是 mysql，自己跑去寫 k8s object 了吧&lt;/p&gt;
-&lt;p&gt;helm v2.0-alpha 2016&lt;/p&gt;
-&lt;p&gt;現在有 helm + chart&lt;/p&gt;
-&lt;p&gt;如果只是使用低三方開源的 helm chart，社群幫你維護 service / ingress / deployment&lt;/p&gt;
+&lt;h3 id=&#34;cost-analysis--billing&#34;&gt;Cost Analysis:  billing&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;提供基本的 default value，預設就跑得起來&lt;/li&gt;
-&lt;li&gt;跑得起來後，跑得好，能使用 k8s orchestration 提供完整的功能，透過 value.yaml 控制&lt;/li&gt;
-&lt;li&gt;經過測試&lt;/li&gt;
-&lt;li&gt;issue tracking&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;helm-chart&#34;&gt;Helm chart&lt;/h3&gt;
-&lt;p&gt;k8s object 的開發，打包，測試，release&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;k8s 十分強大，享受 orchestration&lt;/li&gt;
-&lt;li&gt;k8s object 變得太複雜&lt;/li&gt;
-&lt;li&gt;標準化 template，release + upgrade&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;chart 作為一個 k8s object 的 release / artifact，有開發流程，版本控管，測試，完整的發佈&lt;/p&gt;
-&lt;p&gt;app 本身，例如 redis，當然是整個應用的核心。但要能夠在 k8s 執行，並正確地享受 k8s orchestration 的好處，k8s object 非常的重要&lt;/p&gt;
-&lt;p&gt;甚至，k8s object 複雜度已經遠遠超過過去在 vm 上跑一個 redis，兜一個 systemd unit 就可以跑起來&lt;/p&gt;
-&lt;p&gt;k8s object 需要 release / version，才能做 object 的固定版本 apply，upgrade 生版，有問題 rollback&lt;/p&gt;
-&lt;p&gt;在 k8s 上要跑得穩邊的十分閫難，透過社群來維護大部分通運的第三方服務&lt;/p&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;helm-chart-library&#34;&gt;Helm Chart Library&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helm repo list
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NAME       URL
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bitnami    https://charts.bitnami.com/bitnami
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;argocd     https://argoproj.github.io/argo-helm
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chaos-mesh https://charts.chaos-mesh.org
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;k8s objects 能動很簡單，但要跑得穩又能享受 orchestration 的便利，十分困難
-透過社群來維護大部分通運的第三方服務，透過單一 value.yaml&lt;/p&gt;
-&lt;p&gt;社群維護的 chart 不是就一勞永逸&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不熱門的 chart&lt;/li&gt;
-&lt;li&gt;特殊需求時，還是需要 fork chart 回來自己維護&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;但無論如何，都是大幅降低維運的複雜度&lt;/p&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;helm-生態系&#34;&gt;helm 生態系&lt;/h3&gt;
-&lt;p&gt;ex. helmfile&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;repositories:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  url: https://argoproj.github.io/argo-helm
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;helmDefaults:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  kubeContext: general
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  #verify: true
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  wait: true
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  timeout: 300
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;context: general
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;releases:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  chart: argocd/argo-cd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  version: 5.31.0
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  values:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - values/argocd.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: redis
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- name: mysql
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/cdwv/awesome-helm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/cdwv/awesome-helm&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;更高層級的封裝&#34;&gt;更高層級的封裝&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;api-services
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── nginx
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── mysql
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── ingress -&amp;gt; nlb
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;daemon-services
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── redis
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── mysql
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── kafka
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;底下的依賴標準化，依據穩定的 release 發布之後
-可以再進行更高層級的封裝&lt;/p&gt;
-&lt;p&gt;重複性的服務，例如每個 microservice 都需要
-例如我有一百個 api service group，都是 restful api，都需要 ingress / service / nginx 等等&lt;/p&gt;
-&lt;p&gt;底下的元件標準化，降低維護成本&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;統一版本，醫病維護，升級，退版&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;例如 daemon service，底下依賴 queue / redis / db&lt;/p&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;微服務&#34;&gt;微服務&lt;/h3&gt;
-&lt;p&gt;微服務不是問題，微服務底下的 k8s object 才是問題&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;可以快速，標準化的產生經過測試，微服務單元&lt;/li&gt;
+&lt;li&gt;各家公有元都有自己的費用計算工具&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/en-us/products/cost-management&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Azure Cost Management&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aws.amazon.com/aws-cost-management/aws-cost-explorer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AWS Cost Explorer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/billing/docs/how-to/cost-breakdown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GCP Cost Breakdown&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;issues&#34;&gt;Issues&lt;/h3&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;azure-cost-management.jpeg&#34;
+  &gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;cost-analysis-cloud-billing&#34;&gt;Cost Analysis: Cloud billing&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;V change review / diff before apply&lt;/li&gt;
-&lt;li&gt;source of live record&lt;/li&gt;
-&lt;li&gt;V template / repetitive apply&lt;/li&gt;
-&lt;li&gt;sync local to live&lt;/li&gt;
+&lt;li&gt;計算長時間的費用趨勢&lt;/li&gt;
+&lt;li&gt;適合當作成本精簡後的成果回報&lt;/li&gt;
+&lt;li&gt;不適合當做調整的依據&lt;/li&gt;
+&lt;li&gt;時間計算較長，反饋時間長，不及時，項目不夠精細&lt;/li&gt;
+&lt;li&gt;有無更即時的成本分析工具？&lt;/li&gt;
 &lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;version control / gitflow&lt;/p&gt;
-&lt;p&gt;helm template 有提供許多語法，可以有系統化的產生重複的 k8s object
-ex. 可以跑 for loop / for each
-這個在 IaC 或是 resource as code 的 xxx as code 都十分有利&lt;/p&gt;
-&lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;argo-cd&#34;&gt;Argo CD&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Declarative GitOps CD for Kubernetes&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://argo-cd.readthedocs.io/en/stable/assets/argocd-ui.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;why-argo-cd&#34;&gt;Why Argo CD?&lt;/h3&gt;
-&lt;p&gt;Application definitions, configurations, and environments should be declarative and version controlled. Application deployment and lifecycle management should be automated, auditable, and easy to understand.&lt;/p&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;application 應該是明確宣告的，清楚描述，並且有版本控管
-描述 application 本身，附帶的設定 secret / configmap
-environment 也應該是宣告式的&lt;/p&gt;
-&lt;p&gt;application 的部署與 lifecycle 管理，都應該是自動化，可以稽核，而且好理解
-標準化，自動化
-UI 圖像描述，一目瞭然。但事實上如果有做到講 local file 推到版本控制，光是使用 editor 也可以做到一目瞭然&lt;/p&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;argo-cd-1&#34;&gt;Argo CD&lt;/h3&gt;
+&lt;h3 id=&#34;cost-analysis-kubecost--opencosthttpsdocskubecostcomusing-kubecost&#34;&gt;Cost Analysis: &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;gitflow / git repository&lt;/li&gt;
-&lt;li&gt;argocd application sync file from repository&lt;/li&gt;
-&lt;li&gt;argocd controller 自動化的確保 sync
+&lt;li&gt;有提供 UI&lt;/li&gt;
+&lt;li&gt;基於 prometheus&lt;/li&gt;
+&lt;li&gt;可以針對 allocation 做成本分析 &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cost Allocation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;可以透過 cloud provider 去撈雲端的使用資料&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;kubecost.jpeg&#34;
+  &gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;recommedation-tools&#34;&gt;Recommedation Tools&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;un-sync 自動化處理&lt;/li&gt;
-&lt;li&gt;無法 sync 時通知&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/robusta-dev/krr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/robusta-dev/krr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost Savings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VPA recommendator&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;recommedation-tools-kubecost--opencost-savingshttpsdocskubecostcomusing-kubecostnavigating-the-kubecost-uisavings&#34;&gt;Recommedation Tools: &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost Savings&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;設定 target utilization
+&lt;ul&gt;
+&lt;li&gt;dev 80%+&lt;/li&gt;
+&lt;li&gt;prod 60%&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;gitflow&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;k8s object 的 change 是需要 PR review 的，不是想改就 kubectl apply 下去&lt;/li&gt;
-&lt;li&gt;k8s object 的品質把關，來自高品質的 review&lt;/li&gt;
-&lt;li&gt;針對 cluster 上的變更都有管控&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;能夠直接掌握 live object，透過 editor 檢查 git repository，或是透過 argocd UI 檢視&lt;/p&gt;
-&lt;p&gt;local file 等於 live object
-在複雜的環境裡很重要，ex. k8s 內有成千上百個 helm release，可以用 editor 檢視 local file&lt;/p&gt;
-&lt;p&gt;不然要透過 k8s 去打 api&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;api call 也是資源啊，能省則省&lt;/li&gt;
-&lt;li&gt;editor 更直覺快速&lt;/li&gt;
-&lt;/ul&gt;
+  根據服務品質的要求，以及公司政策去做設定
+SLA/SLO
+開發與測試環境，在不影響工作的前提，都可以拉到 overcommit
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;applicationset&#34;&gt;applicationset&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Git/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;git generator&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: argoproj.io/v1alpha1
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ApplicationSet
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: general-argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  generators:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - git:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      repoURL: https://github.com/chechiachang/azure-argo
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      revision: master
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      directories:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - path: clusters/dev/dev-general/argocd/*
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  template:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    metadata:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      name: &amp;#39;dev-general-argocd-{{path.basename}}&amp;#39;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      labels:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        environment: dev
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        type: infra
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        function: argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        cluster: dev-general
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    spec:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      project: default
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      syncPolicy:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        automated:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          prune: true
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      source:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        repoURL: https://github.com/chechiachang/azure-argo
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        targetRevision: master
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        path: &amp;#39;clusters/dev/dev-general/argocd/{{path.basename}}&amp;#39;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      destination:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        server: https://kubernetes.default.svc
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        namespace: argocd
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;argocd 除了 sync 以外還提供的許多功能&lt;/p&gt;
-&lt;p&gt;applicationset 定義一組 set，可以透過 generator 迭代的產生大量的 application
-ex. 一次 deploy 一群 redis&lt;/p&gt;
-&lt;/aside&gt;
+&lt;h3 id=&#34;recommedation-tools-krr&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/robusta-dev/krr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/robusta-dev/krr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;applicationset-1&#34;&gt;applicationset&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dev-general
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── default/redis
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── default/mysql
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── default/my-app
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── nginx-ingress/nginx-ingress
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── argocd/argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;stag-general
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;prod-general
+&lt;h3 id=&#34;recommedation-tools-krr-1&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl port-forward svc/prometheus 9090
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/robusta-dev/krr.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;source .venv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python krr.py simple -p http://127.0.0.1:9090 --mem-min 10 --cpu-min 10 --history_duration 720 -q
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;h3 id=&#34;cluster-wide-的-k8s-object&#34;&gt;cluster-wide 的 k8s object&lt;/h3&gt;
-&lt;p&gt;cluster-wide 的 k8s object 也很適合&lt;/p&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;krr.jpeg&#34;
+  &gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;recommedation-tools-krr-2&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;使用 helm template helper 來管理 value.yaml label / annotation / env / &amp;hellip;&lt;/li&gt;
-&lt;li&gt;namespace&lt;/li&gt;
-&lt;li&gt;rbac&lt;/li&gt;
+&lt;li&gt;根據 krr 計算的結果，手動調整&lt;/li&gt;
+&lt;li&gt;有一些工具有提供自動調整 ex VPA&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;cluster-wide 的 k8s object 也很適合塞進 argocd 管理&lt;/p&gt;
-&lt;p&gt;例如 cluster access control，複雜的 rbac rule，也很適合整理成為 helm chart&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;可以輕鬆實現 user -&amp;gt; rule 多對多&lt;/li&gt;
-&lt;li&gt;可以快速增減 user group&lt;/li&gt;
-&lt;/ul&gt;
+  &lt;p&gt;自動工具比手動需要考量更多因素，這個我們稍候 VPA 再提&lt;/p&gt;
+&lt;p&gt;請詳閱工具說明再服用&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;issues-1&#34;&gt;Issues&lt;/h3&gt;
+&lt;h3 id=&#34;recommedation-tools-vpa-recommendatorhttpsgithubcomkubernetesautoscalerblobmastervertical-pod-autoscalerpkgrecommenderreadmemd&#34;&gt;Recommedation Tools: &lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VPA recommendator&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;V change review / diff before apply&lt;/li&gt;
-&lt;li&gt;V source of live record&lt;/li&gt;
-&lt;li&gt;V template / repetitive apply&lt;/li&gt;
-&lt;li&gt;V sync local to live&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-multi-hybrid-cluster&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;multiple k8s
-&lt;ul&gt;
-&lt;li&gt;dev / stag / prod&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;hybrid k8s
-&lt;ul&gt;
-&lt;li&gt;bare metal / public cloud&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;需要先知道 VPA 是什麼&lt;/li&gt;
+&lt;li&gt;直接安裝在 k8s cluster 內&lt;/li&gt;
+&lt;li&gt;透過 Prometheus 資料，推薦適當的資源&lt;/li&gt;
+&lt;li&gt;可以自動化推薦資源，調整運行中的 pod，依照設定重啟 pod &lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/README.md#quick-start&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VPA mode&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;需要可以參考 &lt;a href=&#34;https://github.com/cowboysysop/charts/tree/master/charts/vertical-pod-autoscaler&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;helm chart&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;由於 k8s 內部的 component 都已經標準化，可以很輕易地複製測試過的 component
-dev 測試 PR branch，staging 跑 release candicate，production 選擇經過測試的 release&lt;/p&gt;
-&lt;p&gt;能夠確保 dev / stag / prod 的 k8s object 是完全相同的&lt;/p&gt;
-&lt;p&gt;hybrid 環境管理，某些 k8s 元件應該安裝在哪些 cluster 上&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;aws ingress controller / csi driver / cni node daemonsets&lt;/li&gt;
-&lt;li&gt;local nginx-ingress controller&lt;/li&gt;
-&lt;/ul&gt;
+  krr 是可以無腦用的工具，但是 VPA 就不是了
+請設定 VPA mode Off
+請務必需要研究一下在使用
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;more-issues-multi-hybrid-cluster-1&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
+&lt;h3 id=&#34;剛上手的做法&#34;&gt;剛上手的做法&lt;/h3&gt;
+&lt;p&gt;沒時間細部研究研究元件的行為，直接調整 request 與 limit&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;argocd cluster generator&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ApplicationSet
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: aws-cni
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: kube-system
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  generators:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - clusters:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      selector:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        matchLabels:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          eks: true
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          #bare-metal: true
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          staging: true
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-multi-hybrid-cluster-2&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;argocd cluster generator&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;aws-eks-1
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── aws cni
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── aws ingress controller
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── nginx-ingress controller
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;bare-metal-1
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── cilium
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├── bare-metal ingress
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└── nginx-ingress controller
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
-  多座 cluster
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-multi-hybrid-cluster-3&#34;&gt;More Issues: multi-hybrid cluster&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;applicationset&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-test&#34;&gt;More Issues: Test&lt;/h3&gt;
-&lt;p&gt;k8s object 需不需要測試&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;infra-test (bare-metal / self-hosted)&lt;/li&gt;
-&lt;li&gt;release (helm chart)&lt;/li&gt;
-&lt;li&gt;live status&lt;/li&gt;
-&lt;li&gt;stress / load test / chaos engineering&lt;/li&gt;
+&lt;li&gt;先調降 request，不動 limit，對服務衝擊較小&lt;/li&gt;
+&lt;li&gt;用抓比例的方式動態調整，例如目前 request 距離 p99 request 差距 1000Mi，你先收 500Mi 回來試個水溫&lt;/li&gt;
+&lt;li&gt;p99 直接使用 tool 計算，細節在後面&lt;/li&gt;
+&lt;li&gt;測試環境先行，有信心在上 production&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  &lt;p&gt;k8s object 需不需要測試，覺得需要測試的請舉手&lt;/p&gt;
-&lt;p&gt;k8s object 需不需要測試，就跟這個投影片一樣
-有時間就講一下，沒時間就跳過吧&lt;/p&gt;
-&lt;p&gt;infra-test provider 應該都測完了
-要測的是 k8s object 的功能是否符合預期&lt;/p&gt;
-&lt;p&gt;當然，有測試的 helm releae 與沒測試的 helm release 也是天差地遠&lt;/p&gt;
+  &lt;p&gt;如果你第一次做，但對服務元件沒有熟到這種程度，這是比較安全的做法
+公司規模大服務元件複雜，身為 SRE 你只能仰賴 metrics 來判斷服務品質是否受影響，但很多複雜的服務，以及不熟悉的服務，會很難評估&lt;/p&gt;
+&lt;p&gt;先調降 request，提升單一 node 上的 pod 數量，然後觀察服務品質，如果服務品質沒有受到影響，那麼你可以進一步調降 limit
+市場喊價，先喊個一半，在看能繼續壓到什麼程度&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;test-ansible-playbook&#34;&gt;Test: ansible playbook&lt;/h3&gt;
+&lt;h3 id=&#34;小結&#34;&gt;小結&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;測試 apply 後 k8s object 的 status
-&lt;ul&gt;
-&lt;li&gt;ingress 是否 ready&lt;/li&gt;
-&lt;li&gt;endpoint 是否有產生&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;可以先測
-&lt;ul&gt;
-&lt;li&gt;networking (ingress / svc)&lt;/li&gt;
-&lt;li&gt;storage (csi / pvc)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Test&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nginx&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;hosts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;host&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;gather_facts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;no&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;vars&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;deployment_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;nginx&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;tasks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Get&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;shell&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;kubectl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment_name&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;jsonpath&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;{.status.readyReplicas}&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;register&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment_status&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;failed_when&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment_status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rc&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Verify&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;assert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;n&#34;&gt;that&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment_status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stdout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;null&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deployment_status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stdout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;0&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;n&#34;&gt;fail_msg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Deployment {{ deployment_name }} is not running.&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-test-1&#34;&gt;More Issues: Test&lt;/h3&gt;
-&lt;p&gt;&lt;del&gt;Test&lt;/del&gt; Monitoring&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;prometheus rule with helm chart&lt;/li&gt;
-&lt;li&gt;ServiceMonitor&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  helm release 一個 api-services
-api service 有 /metrics endpoint
-透過 ServiceMonitor 來持續性的紀錄 metrics
-透過 PrometheusRule 來設定異常 metrics 的告警
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;more-issues-test-2&#34;&gt;More Issues: Test&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;stress-test / load test
-&lt;ul&gt;
-&lt;li&gt;k6&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;chaos-engineering
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chaos-mesh.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chaos-mesh.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/asobti/kube-monkey&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/asobti/kube-monkey&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;收集目前資源使用資料&lt;/li&gt;
+&lt;li&gt;轉化成公有雲的成本&lt;/li&gt;
+&lt;li&gt;透過 tool 建議適當的資源&lt;/li&gt;
+&lt;li&gt;根據服務品質的要求，調降 cpu / memory&lt;/li&gt;
+&lt;li&gt;回頭檢查 SLO 是否有受到影響&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;hpa&#34;&gt;HPA&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;kubectl + gitflow&lt;/li&gt;
-&lt;li&gt;helm chart&lt;/li&gt;
-&lt;li&gt;argocd: applicationset / generator&lt;/li&gt;
-&lt;li&gt;test&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s/horizontal-pod-autoscale&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;使用 HPA 在成本精簡的意義：因為外部因素改變負載的元件&lt;/li&gt;
+&lt;li&gt;低負載時不要開太多，高負載時自動加開 pod&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Q &amp;amp; A&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;hpa-考量&#34;&gt;HPA: 考量&lt;/h3&gt;
+&lt;p&gt;元件是否能夠水平拓展&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;啟動的 liveness check / readiness check&lt;/li&gt;
+&lt;li&gt;laod balancer&lt;/li&gt;
+&lt;li&gt;需要持續調整 scale up / down 的條件與 time windows&lt;/li&gt;
+&lt;li&gt;scale up 對依賴服務的 loading 會有影響 ex. 後面的 db&lt;/li&gt;
+&lt;li&gt;退場機制，要如何安全的中斷連線，紀錄 state&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;要能安全地進出場&lt;/p&gt;
+&lt;p&gt;進場，pod readiness / liveness
+loading 增加時 scale up time windows
+scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
+&lt;p&gt;loading 降低時 scale down 是否會影響服務&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;vpa&#34;&gt;VPA&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/README.md#quick-start&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s/autoscaler/vertical-pod-autoscaler&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;不能水平拓展，只好先垂直拓展&lt;/li&gt;
+&lt;li&gt;調整資源，有可能會重啟 pod / container&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/blog/2023/05/12/in-place-pod-resize-alpha/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubernetes 1.27: In-place Resource Resize for Kubernetes Pods (alpha)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes/kubernetes/issues/122760&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;In-Place Pod Resource Resizing always restarts pod&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;如果你的 workload 然後不適合做 HPA，但可以接受 resize 後重啟，那可以試試VPA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  1.27 你可以把 InPlacePodVerticalScaling feature gate 開起來
+他不保證 resize 後不會重啟 pod，還是要看你的 container runtime 支援程度
+請先在測試環境中玩一玩
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;saving-plan--ri&#34;&gt;Saving Plan / RI&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS Saving Plan / RI&lt;/li&gt;
+&lt;li&gt;GCP Committed Use Discount&lt;/li&gt;
+&lt;li&gt;Azure Reservation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;Saving Plan / RI 是一種長期的合約，你可以跟雲端服務商簽約，保證你會用多少資源，然後雲端服務商會給你一個折扣
+七折上下，很適合長期使用的客戶&lt;/p&gt;
+&lt;p&gt;有 monitoring + prediction，基本上可以確定你會用多少資源，這時候就可以考慮 saving plan / RI&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;spot-instance&#34;&gt;Spot Instance&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/en-us/products/virtual-machines/spot&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;azure spot vm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aws.amazon.com/ec2/spot/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;aws spot intance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/spot-vms&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;gcp spot vm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;帳面上最高可省 90%&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;spot-instance-1&#34;&gt;Spot Instance&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;超便宜，打一折&lt;/li&gt;
+&lt;li&gt;多餘的算力&lt;/li&gt;
+&lt;li&gt;interruption，不保證使用&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aws.amazon.com/ec2/spot/instance-advisor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://aws.amazon.com/ec2/spot/instance-advisor/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  因為一折真的很香，一折是有點拼，但打個 3 折還是很有機會
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;spot-instance-分類-workload&#34;&gt;Spot Instance: 分類 workload&lt;/h3&gt;
+&lt;p&gt;interruption 直接影響服務品質的就不宜&lt;/p&gt;
+&lt;p&gt;不影響服務品質的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stateless&lt;/li&gt;
+&lt;li&gt;batch job&lt;/li&gt;
+&lt;li&gt;將 worklaod 從 monolithic 拆分成小的 batch job&lt;/li&gt;
+&lt;li&gt;測試環境 dev / stag&lt;/li&gt;
+&lt;li&gt;CI/CD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  &lt;p&gt;乍看之下幾個小時~24hr 內會被重啟，好像是犧牲了服務品質，但如果你的服務是可以容忍 interruption 的，例如 batch job，那麼 spot instance 就是一個很好的選擇&lt;/p&gt;
+&lt;p&gt;將 worklaod 從 monolithic 拆分成小的 batch job，例如你是 api server 處理一個 request 會有很多步驟，你可以把這些步驟拆分成小的 batch job，然後用 queue 串接，這樣你的 api server 就可以用 spot instance 來跑，然後你的 batch job 用 spot instance 跑，這樣你的服務就可以省很多錢&lt;/p&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;小結-1&#34;&gt;小結&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;krr 工具調整資源&lt;/li&gt;
+&lt;li&gt;HPA 做水平擴展&lt;/li&gt;
+&lt;li&gt;VPA 自動化調整資源&lt;/li&gt;
+&lt;li&gt;saving plan / RI 長期合約打七折&lt;/li&gt;
+&lt;li&gt;spot instance 打一折&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;展望&#34;&gt;展望&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;cost awareness development&lt;/li&gt;
+&lt;li&gt;find-grade optimization&lt;/li&gt;
+&lt;li&gt;automation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  有了資源預測系統，可以在開發階段就將資源使用回饋給開發團隊
+根據不同服務元件的品質要求，做更細緻的資源管控
+自動化調整，讓人力可以專注在更重要的事情上
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;小結-2&#34;&gt;小結&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;cpu / memory&lt;/li&gt;
+&lt;li&gt;監測是基礎&lt;/li&gt;
+&lt;li&gt;依據監測做預測&lt;/li&gt;
+&lt;li&gt;開始調整&lt;/li&gt;
+&lt;li&gt;長期合約打七折&lt;/li&gt;
+&lt;li&gt;spot instance 打一折&lt;/li&gt;
+&lt;li&gt;HPA / VPA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;感謝&#34;&gt;感謝&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;presentation and speaker notes &lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin 職缺&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;公司福利不錯，業務成長中，想一起共事，歡迎找我聊&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
