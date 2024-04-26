@@ -598,6 +598,38 @@
     
     
     
+      
+
+<section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image="kubecost-allocation.jpeg"
+  >
+
+<p><a href="https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation" target="_blank" rel="noopener">https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation</a></p>
+
+    </section>
+    
+
+    
+    
+    
+      
+
+<section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image="kubecost-efficiency.png"
+  >
+
+<p><a href="https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation/efficiency-idle" target="_blank" rel="noopener">https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation/efficiency-idle</a></p>
+
+    </section>
+    
+
+    
+    
+    
     <section>
     
       
@@ -644,6 +676,8 @@ SLA/SLO
 <h3 id="recommedation-tools-krr">Recommedation Tools: KRR</h3>
 <ul>
 <li><a href="https://github.com/robusta-dev/krr" target="_blank" rel="noopener">https://github.com/robusta-dev/krr</a></li>
+<li>免安裝，不影響 k8s 本身</li>
+<li>使用外部工具讀取 prometheus 資料</li>
 </ul>
 
     </section>
@@ -660,8 +694,15 @@ SLA/SLO
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">git clone https://github.com/robusta-dev/krr.git
 </span></span><span class="line"><span class="cl">source .venv/bin/activate
-</span></span><span class="line"><span class="cl">python krr.py simple -p http://127.0.0.1:9090 --mem-min 10 --cpu-min 10 --history_duration 720 -q
-</span></span></code></pre></div>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">python krr.py simple \
+</span></span><span class="line"><span class="cl">  -p http://127.0.0.1:9090 \
+</span></span><span class="line"><span class="cl">  --mem-min 10 \
+</span></span><span class="line"><span class="cl">  --cpu-min 10 \
+</span></span><span class="line"><span class="cl">  --history_duration 720 -q
+</span></span></code></pre></div><aside class="notes">
+</aside>
+
     </section>
     
 
@@ -718,6 +759,31 @@ SLA/SLO
 請設定 VPA mode Off
 請務必需要研究一下在使用
 </aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="recommedation-tools-比較">Recommedation Tools: 比較</h3>
+<ul>
+<li>
+<p>kubecost 需要 helm install，krr 不需要</p>
+</li>
+<li>
+<p>kubecost 產生一個漂亮的 UI，krr 產生 command line 報表</p>
+</li>
+<li>
+<p>VPA 需要 helm install，並且會需要 cluster 權限</p>
+</li>
+<li>
+<p>VPA 可以做到自動化調整，邏輯更複雜，有侵入性，設定有問題會出事</p>
+</li>
+</ul>
 
     </section>
     

@@ -320,6 +320,24 @@
   &gt;
 
 &lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;kubecost-allocation.jpeg&#34;
+  &gt;
+
+&lt;p&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;kubecost-efficiency.png&#34;
+  &gt;
+
+&lt;p&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation/efficiency-idle&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation/efficiency-idle&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;recommedation-tools&#34;&gt;Recommedation Tools&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/robusta-dev/krr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/robusta-dev/krr&lt;/a&gt;&lt;/li&gt;
@@ -345,6 +363,8 @@ SLA/SLO
 &lt;h3 id=&#34;recommedation-tools-krr&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/robusta-dev/krr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/robusta-dev/krr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;免安裝，不影響 k8s 本身&lt;/li&gt;
+&lt;li&gt;使用外部工具讀取 prometheus 資料&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;recommedation-tools-krr-1&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
@@ -352,8 +372,15 @@ SLA/SLO
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/robusta-dev/krr.git
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;source .venv/bin/activate
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python krr.py simple -p http://127.0.0.1:9090 --mem-min 10 --cpu-min 10 --history_duration 720 -q
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;python krr.py simple \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -p http://127.0.0.1:9090 \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  --mem-min 10 \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  --cpu-min 10 \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  --history_duration 720 -q
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
 
 &lt;section data-noprocess data-shortcode-slide
   
@@ -385,6 +412,22 @@ SLA/SLO
 請設定 VPA mode Off
 請務必需要研究一下在使用
 &lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;recommedation-tools-比較&#34;&gt;Recommedation Tools: 比較&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kubecost 需要 helm install，krr 不需要&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;kubecost 產生一個漂亮的 UI，krr 產生 command line 報表&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VPA 需要 helm install，並且會需要 cluster 權限&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VPA 可以做到自動化調整，邏輯更複雜，有侵入性，設定有問題會出事&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;剛上手的做法&#34;&gt;剛上手的做法&lt;/h3&gt;
 &lt;p&gt;沒時間細部研究研究元件的行為，直接調整 request 與 limit&lt;/p&gt;
