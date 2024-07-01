@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://chechia.net/zh-hant/tag/aws/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -17,11 +17,11 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/category/aws/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/categories/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -35,11 +35,19 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/cost/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</loc>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</loc>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/iac/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -53,7 +61,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/kubernetes/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -67,7 +75,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/category/kubernetes/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -80,12 +88,8 @@
                 href="https://chechia.net/zh-hant/category/kubernetes/"
                 />
   </url><url>
-    <loc>https://chechia.net/zh-hant/talk/sre-conference-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>https://chechia.net/zh-hant/tags/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -99,7 +103,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/terraform/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -113,7 +117,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/vault/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -126,8 +130,30 @@
                 href="https://chechia.net/zh-hant/tag/vault/"
                 />
   </url><url>
+    <loc>https://chechia.net/zh-hant/category/vault/</loc>
+    <lastmod>2024-08-03T13:20:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://chechia.net/en/category/vault/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-Hant"
+                href="https://chechia.net/zh-hant/category/vault/"
+                />
+  </url><url>
+    <loc>https://chechia.net/zh-hant/post/2024-04-27-contribute-to-k8s/</loc>
+    <lastmod>2024-04-27T18:18:43+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://chechia.net/zh-hant/talk/sre-conference-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</loc>
+    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>https://chechia.net/zh-hant/tag/kafka/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-04-26T13:56:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -141,7 +167,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-04-26T13:56:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -155,26 +181,12 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/2024-04-26-saving-money-on-cloud-k8s/</loc>
-    <lastmod>2024-04-26T13:35:05+08:00</lastmod>
+    <lastmod>2024-04-26T13:56:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/talk/kubernetes-summit-resource-as-code-for-kubernetes-stop-kubectl-apply/</loc>
     <lastmod>2024-04-24T12:20:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://chechia.net/zh-hant/category/vault/</loc>
-    <lastmod>2024-04-24T12:20:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://chechia.net/en/category/vault/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-Hant"
-                href="https://chechia.net/zh-hant/category/vault/"
-                />
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/2023-10-25-k8s-resource-as-code/</loc>
     <lastmod>2023-10-25T12:49:53+08:00</lastmod>

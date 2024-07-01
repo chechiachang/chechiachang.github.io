@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: 2024年4月26日 --><html lang="zh-Hant" >
+<!-- Last Published: 2024年7月1日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -879,6 +879,99 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/" >Gcp Preemptible Instance Requirement Distributed</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/"  class="summary-link">
+      <div class="article-style">
+        我們以下幾個需求：
+執行短期的 batch job 執行長期的 user-facing API server 執行長期的 stateful 資料庫、儲存庫 該不該在 Kubernetes 上面跑 database？
+TL;DR ，如果你剛開始考慮這件事，通常的答案都是否定的
+等等，我們這邊不是討論該不該上 Kuberentes ，而是該不該使用先占虛擬機吧。然而由於先占虛擬機節點的諸多限制，光憑先占虛擬機並不適合跑任何持久性的儲存庫。我們這邊仰賴 Kubernetes 的網路功能 (e.g. 服務發現)，與自動管理 (e.g. health check，HPA，auto-scaler)，基於先占虛擬機，建構高可用性的服務架構，來支撐高可用，且有狀態的的儲存庫。
+應用是否適合部署到 Kubernetes 上，可以看這篇 Google Blog: To run or not to run a database on Kubernetes: What to consider，如果大家有興趣，再留言告訴我，我再進行中文翻譯。
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/post/2020-09-21-gcp-preemptible-instance/" >Gcp Preemptible Instance</a>
     </div>
 
@@ -1217,7 +1310,7 @@ Kubernetes 是一個很好的例子：例如：有人說「Kubernetes 可以省�
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/murmur/">Murmur</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/murmur/">murmur</a></span>
   
 
 </div>
@@ -1311,7 +1404,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">Kubernetes</a>, <a href="/zh-hant/category/terraform/">Terraform</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/terraform/">terraform</a></span>
   
 
 </div>
@@ -1405,7 +1498,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">Kubernetes</a>, <a href="/zh-hant/category/terraform/">Terraform</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/terraform/">terraform</a></span>
   
 
 </div>
@@ -1498,7 +1591,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/murmur/">Murmur</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/murmur/">murmur</a></span>
   
 
 </div>
@@ -1591,7 +1684,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/golang/">Golang</a>, <a href="/zh-hant/category/distributed-system/">Distributed-System</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/golang/">golang</a>, <a href="/zh-hant/category/distributed-system/">distributed-system</a></span>
   
 
 </div>
@@ -1721,100 +1814,7 @@ Algorithm 2 pay txs and 2 claim tx claim txs are singed at first, locked with ti
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/blockchain/">Blockchain</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-10-22-blockchain-bep3-atomic-swap/" >Blockchain Bep3 Atomic Swap</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-10-22-blockchain-bep3-atomic-swap/"  class="summary-link">
-      <div class="article-style">
-        BEP3 Atomic Swap Binance 在 BEP3: HTLC and Atomic Peg 提到，BEP 即將在 binance chain 上支援原生的 Hash Timer Locked Transfer (HTLT) ，這使跨鏈的原子性交換 (atomic swap) 變得可行，透過 HTLC 在兩邊的鏈上鎖住 (peg) tokens，然後只有在執行交換的時候，透過 hash 交換，一次執行雙邊的交易。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    14 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/blockchain/">Blockchain</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/blockchain/">blockchain</a></span>
   
 
 </div>
@@ -1946,7 +1946,7 @@ Algorithm 2 pay txs and 2 claim tx claim txs are singed at first, locked with ti
   
 
 
-<script src="/js/vendor-bundle.min.ff7771056d34ad9f2de2d8f6a466e748.js"></script>
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
 
 
 
@@ -2039,7 +2039,7 @@ Algorithm 2 pay txs and 2 claim tx claim txs are singed at first, locked with ti
   
 
 
-<script src="/zh-hant/js/wowchemy.min.e1f3203a692cdb371a297015af58c507.js"></script>
+<script src="/zh-hant/js/wowchemy.min.c1296fcfda1f6e2549c8cd4fe453ac58.js"></script>
 
 
 
@@ -2075,7 +2075,7 @@ Algorithm 2 pay txs and 2 claim tx claim txs are singed at first, locked with ti
 </div>
 
 
-  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
 
 
 

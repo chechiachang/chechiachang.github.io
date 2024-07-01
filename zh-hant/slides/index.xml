@@ -1197,10 +1197,10 @@ QR code 有投影片，範例 github repo，投影片裡還有講稿，所以我
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;about me&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_e417eec7e7a8490233a5f244ea106c42.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_a826cb8a1f9363599e5e8d88f429c741.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_12a09867edd8370d5a4cd5564f097279.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_e417eec7e7a8490233a5f244ea106c42.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_a826cb8a1f9363599e5e8d88f429c741.webp&#34;
                width=&#34;760&#34;
                height=&#34;375&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
@@ -1322,10 +1322,10 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_9f383f9419bbc426efb073535d07bb90.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_cd152b37515ce88ecfe22bb89732e1eb.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_e189cd499d567e542a61c269d1655dda.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_9f383f9419bbc426efb073535d07bb90.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_cd152b37515ce88ecfe22bb89732e1eb.webp&#34;
                width=&#34;760&#34;
                height=&#34;415&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
@@ -1409,10 +1409,10 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ae456b396f746fd2b64cf6415e38c5df.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ef06ff20a91d12ef790520e08d48f011.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_c450b16c6a48d50aa7bc746acdb4b8a6.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ae456b396f746fd2b64cf6415e38c5df.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ef06ff20a91d12ef790520e08d48f011.webp&#34;
                width=&#34;760&#34;
                height=&#34;384&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
@@ -1493,10 +1493,10 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;warning&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_8f5dde8ddcc13e3e54037d2244da90ac.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_534df9aed4be45d2564ce1c6ee999ac5.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_e8c6254ba1ebf4ad920e34f8d89ffe5d.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_8f5dde8ddcc13e3e54037d2244da90ac.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_534df9aed4be45d2564ce1c6ee999ac5.webp&#34;
                width=&#34;760&#34;
                height=&#34;229&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;

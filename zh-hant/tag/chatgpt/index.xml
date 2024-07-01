@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Chatgpt | Che-Chia Chang</title>
+    <title>chatgpt | Che-Chia Chang</title>
     <link>https://chechia.net/zh-hant/tag/chatgpt/</link>
       <atom:link href="https://chechia.net/zh-hant/tag/chatgpt/index.xml" rel="self" type="application/rss+xml" />
-    <description>Chatgpt</description>
+    <description>chatgpt</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Tue, 10 Oct 2023 04:42:26 +0800</lastBuildDate>
     <image>
       <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>Chatgpt</title>
+      <title>chatgpt</title>
       <link>https://chechia.net/zh-hant/tag/chatgpt/</link>
     </image>
     
@@ -2126,10 +2126,10 @@
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
-               /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_4ab2b9254ee45e74c042f87706145df3.webp 400w,
+               /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_ac4c786d0584f508ccabd14fff1ea09c.webp 400w,
                /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_00fcb225ed09f103b35f33ade5547650.webp 760w,
                /zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_4ab2b9254ee45e74c042f87706145df3.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/post/2023-09-13-vault-workshop-get-started/vault-ui_hu0533df8c600b6ebf5e775c57536fef00_59568_ac4c786d0584f508ccabd14fff1ea09c.webp&#34;
                width=&#34;760&#34;
                height=&#34;727&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
