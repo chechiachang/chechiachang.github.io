@@ -63,7 +63,7 @@
 <section data-noprocess data-shortcode-slide
   
       
-      data-background-image="onepiece.jpg"
+      data-background-image="onepiece.png"
   >
 
 <aside class="notes">
@@ -79,8 +79,7 @@
     <section>
     
       
-<h3 id="cloud-infrastructure-saving-engineering">Cloud Infrastructure Saving Engineering</h3>
-<h3 id="雲端省錢工程">雲端省錢工程</h3>
+<h3 id="雲端k8s省錢工程">雲端K8s省錢工程</h3>
 <p><a href="https://chechia.net/" target="_blank" rel="noopener">Che Chia Chang</a></p>
 <aside class="notes">
   兩個關鍵字：雲端 / k8s
@@ -98,9 +97,9 @@
     <section>
     
       
-<h3 id="about-me">About Me</h3>
-<h3 id="che-chia-chang">Che Chia Chang</h3>
+<h3 id="關於我">關於我</h3>
 <ul>
+<li>Che Chia Chang</li>
 <li>SRE @ <a href="https://www.linkedin.com/company/maicoin/jobs/" target="_blank" rel="noopener">Maicoin</a></li>
 <li><a href="https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener">Microsoft MVP</a></li>
 <li>個人部落格<a href="https://chechia.net/" target="_blank" rel="noopener">chechia.net</a></li>
@@ -117,15 +116,15 @@
     <section>
     
       
-<h3 id="outline">Outline</h3>
+<h3 id="大綱">大綱</h3>
 <ul>
-<li>Cost on Public Cloud</li>
-<li>K8s Compute Resource Management</li>
-<li>Monitoring</li>
-<li>Cost Analysis and Prediction</li>
-<li>Resource Recommendation</li>
+<li>公有雲的費用</li>
+<li>節省算力成本</li>
+<li>監控是成本控管的基礎</li>
+<li>導入成本分析與預測工具</li>
+<li>自動化資源使用建議</li>
 <li>Saving Plan/Committed Usage</li>
-<li>Spot Instance</li>
+<li>Spot Instance 與微服務</li>
 <li>Autoscaling: HPA / VPA</li>
 <li>Q&amp;A</li>
 </ul>
@@ -148,16 +147,16 @@
     <section>
     
       
-<h3 id="motivation">Motivation</h3>
+<h3 id="動機">動機</h3>
 <ul>
 <li>公司希望賺錢，節省成本</li>
 <li>團隊希望控制成本</li>
-<li>個人 Credit 團隊 Impact</li>
+<li>個人產生 Credit 與團隊 Impact</li>
 </ul>
 <aside class="notes">
   團隊而言，成本控制是一個很重要的議題，因為成本控制是一個很直接的影響公司獲利的方式
 個人，如果為公司節省超過個人的薪水，那公司聘用你就是淨賺
-職涯上履歷很好看
+節省公司雲端成本 50% 職涯上履歷很好看
 </aside>
 
     </section>
@@ -169,13 +168,12 @@
     <section>
     
       
-<h3 id="cost-on-public-cloud">Cost on Public Cloud</h3>
-<p>open your cloud billing</p>
+<h3 id="公有雲的費用">公有雲的費用</h3>
+<p>打開公有雲的 billing</p>
 <ul>
-<li>Compute Resource (cpu, memory)</li>
-<li>Storage (Disk, EBS, S3&hellip;)</li>
-<li>Database (Compute Resource + Storage)</li>
-<li>Networking</li>
+<li>算力成本 Compute Resource (cpu, memory)</li>
+<li>儲存成本 Storage (Disk, EBS, S3&hellip;)</li>
+<li>網路 Networking</li>
 </ul>
 <aside class="notes">
   有在使用公有雲的人，把公有雲的 billing 帳單打開來看，可能看到的大概是這幾個項目
@@ -191,23 +189,10 @@
     <section>
     
       
-<h3 id="todays-topic">Today&rsquo;s topic</h3>
+<h3 id="今天只會講這個算力成本">今天只會講這個算力成本</h3>
 <ul>
-<li>
-<p>Today&rsquo;s topic</p>
-<ul>
-<li>Compute Resource</li>
-<li>cpu &amp; memory</li>
-</ul>
-</li>
-<li>
-<p>Maybe next time</p>
-<ul>
-<li>Storage (Disk, EBS, S3&hellip;)</li>
-<li>Database (Compute Resource + Storage)</li>
-<li>Networking</li>
-</ul>
-</li>
+<li>算力成本 Compute Resource (cpu, memory)</li>
+<li>今天只會講這個</li>
 </ul>
 <aside class="notes">
   <p>Storage 不太好說省就省，因為你的資料量就在那邊，放不下就是要再買，所以 storage 的成本控制，可能是在資料的使用上，例如資料的壓縮，或是資料的備份，或是資料的存取方式，這些是另外一個故事
@@ -224,13 +209,14 @@
     <section>
     
       
-<h3 id="cost-on-public-cloud-1">Cost on Public Cloud</h3>
-<p>CPU / memory intense web service</p>
+<h3 id="算力成本">算力成本</h3>
+<p>網頁服務的微服務系統，都需要算力</p>
 <ul>
-<li>RESTful api</li>
-<li>long-connetion service</li>
-<li>business logic</li>
-<li>save state to disk / database</li>
+<li>api server</li>
+<li>cronjob</li>
+<li>business logic job</li>
+<li>database
+如需節省，也可以從這裡下手</li>
 </ul>
 <aside class="notes">
   <p>如果你跟敝社一樣是 web service，那麼 cpu / memory 可能是你最大的一筆成本</p>
@@ -325,7 +311,6 @@
     <section>
     
       
-<h3 id="background-knowledge">Background Knowledge</h3>
 <h3 id="k8s-cpu--memory-managementhttpskubernetesiodocsconceptsconfigurationmanage-resources-containers"><a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers" target="_blank" rel="noopener">k8s cpu / memory management</a></h3>
 <p><a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/configuration/manage-resources-containers</a></p>
 <ul>
@@ -382,16 +367,21 @@
     <section>
     
       
-<h3 id="monitoring">Monitoring</h3>
+<h3 id="monitoring-監控是成本控管的基礎">Monitoring 監控是成本控管的基礎</h3>
 <ul>
-<li>Monitoring 是 cost management 的基礎</li>
-<li>沒有 monitoring 就沒有 p99 cpu time / p99 memory usage，也沒有 SLI/SLO</li>
-<li>如果沒有 monitoring 先補 monitoring</li>
+<li>監測是成本控管的基礎</li>
+<li>沒有監測就沒有 p99 cpu time / memory usage，也沒有 SLI/SLO</li>
+<li>沒有檢測下做成本精簡，會碰壞服務</li>
+<li>如果沒有監測先補檢測</li>
 </ul>
 <aside class="notes">
-  如果沒有 monitoring，上面的兩大前提都不存在
+  <p>如果沒有 monitoring，上面的兩大前提都不存在
 目前的 cpu / memory usage，runtime utilization 的資料
-目前SLO，調降之後新的SLO
+目前SLO，調降之後新的SLO</p>
+<p>沒有檢測下，還是可以做成本精簡
+然而要馬兒好又要而不吃草，今天如果把 cpu / memory 降下來，有可能會餓到服務
+cpu throttling / memory oomkill，這些都是可能發生的事情
+會碰壞服務</p>
 </aside>
 
     </section>
@@ -418,11 +408,16 @@
     <section>
     
       
-<h3 id="monitoring-調整前">Monitoring: 調整前</h3>
+<h3 id="監測調整前設定目標基準線">監測：調整前設定目標基準線</h3>
 <ul>
-<li>過去的 p99 資源用量</li>
-<li>目前的效能表現</li>
+<li>設定節省目標：ex. 過去 3 個月的 p99 資源用量
+<ul>
+<li>99% 的時間，memory 使用量都在這條線以下</li>
+<li>99% 的時間，cpu throttling 在這條線以下</li>
+</ul>
+</li>
 <li>多餘的算力 = (分配的 resource - p99)</li>
+<li>那如果我們把 cpu / memory 降低到 p99 / p99.9 服務品質會受到影響嗎？</li>
 </ul>
 <aside class="notes">
   <p>做之前要能評估做完大概能省多少
@@ -436,19 +431,33 @@
     
     
     
+      
+
+<section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image="grafana-cpu-dashboard.png"
+  >
+
+
+    </section>
+    
+
+    
+    
+    
     <section>
     
       
-<h3 id="monitoring-調整後">Monitoring: 調整後</h3>
-<p>調整前後比較</p>
+<h3 id="監測-調整後">監測: 調整後</h3>
 <ul>
-<li>資源用量</li>
-<li>目前的效能表現</li>
-<li>確定沒有改壞東西</li>
-<li>有改壞，要有及時的 alert</li>
+<li>資源用量是否有變化</li>
+<li>確定沒有改壞東西，有壞要有及時的 alert</li>
+<li>效能表現：有可能沒壞，但是變很慢</li>
 </ul>
 <aside class="notes">
-  如果你改壞了，及時的 alert 會救你一命
+  <p>如果你改壞了，及時的 alert 會救你一命</p>
+<p>performance 監測很重要</p>
 </aside>
 
     </section>
@@ -460,7 +469,7 @@
     <section>
     
       
-<h3 id="monitoring-tools">Monitoring Tools</h3>
+<h3 id="推薦監測工具">推薦監測工具</h3>
 <ul>
 <li><a href="https://prometheus.io/" target="_blank" rel="noopener">prometheus.io</a></li>
 <li><a href="https://docs.kubecost.com/using-kubecost" target="_blank" rel="noopener">Kubecost / Opencost</a></li>
@@ -516,7 +525,7 @@
     <section>
     
       
-<h3 id="cost-analysis-and-prediction">Cost Analysis and Prediction</h3>
+<h3 id="導入成本分析與預測工具">導入成本分析與預測工具</h3>
 <ul>
 <li>有了 prometheus 後，我們知道短期/長期的資源使用狀況</li>
 <li>要把資源使用轉成成本，需要一個成本計算工具</li>
@@ -540,9 +549,9 @@
     <section>
     
       
-<h3 id="cost-analysis--billing">Cost Analysis:  billing</h3>
+<h3 id="成本分析">成本分析</h3>
 <ul>
-<li>各家公有元都有自己的費用計算工具</li>
+<li>VM 可以用各家公有雲的費用計算工具</li>
 <li><a href="https://azure.microsoft.com/en-us/products/cost-management" target="_blank" rel="noopener">Azure Cost Management</a></li>
 <li><a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/" target="_blank" rel="noopener">AWS Cost Explorer</a></li>
 <li><a href="https://cloud.google.com/billing/docs/how-to/cost-breakdown" target="_blank" rel="noopener">GCP Cost Breakdown</a></li>
@@ -572,7 +581,7 @@
     <section>
     
       
-<h3 id="cost-analysis-cloud-billing">Cost Analysis: Cloud billing</h3>
+<h3 id="成本分析公有雲-billing">成本分析：公有雲 billing</h3>
 <ul>
 <li>計算長時間的費用趨勢</li>
 <li>適合當作成本精簡後的成果回報</li>
@@ -590,7 +599,7 @@
     <section>
     
       
-<h3 id="cost-analysis-kubecost--opencosthttpsdocskubecostcomusing-kubecost">Cost Analysis: <a href="https://docs.kubecost.com/using-kubecost/" target="_blank" rel="noopener">Kubecost / Opencost</a></h3>
+<h3 id="成本分析-kubecost--opencosthttpsdocskubecostcomusing-kubecost">成本分析: <a href="https://docs.kubecost.com/using-kubecost/" target="_blank" rel="noopener">Kubecost / Opencost</a></h3>
 <ul>
 <li>有提供 UI</li>
 <li>基於 prometheus</li>
@@ -654,7 +663,7 @@
     <section>
     
       
-<h3 id="recommedation-tools">Recommedation Tools</h3>
+<h3 id="推薦工具">推薦工具</h3>
 <ul>
 <li><a href="https://github.com/robusta-dev/krr" target="_blank" rel="noopener">https://github.com/robusta-dev/krr</a></li>
 <li><a href="https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings" target="_blank" rel="noopener">Kubecost / Opencost Savings</a></li>
@@ -670,10 +679,11 @@
     <section>
     
       
-<h3 id="recommedation-tools-kubecost--opencost-savingshttpsdocskubecostcomusing-kubecostnavigating-the-kubecost-uisavings">Recommedation Tools: <a href="https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings" target="_blank" rel="noopener">Kubecost / Opencost Savings</a></h3>
+<h3 id="推薦工具-kubecost--opencost-savingshttpsdocskubecostcomusing-kubecostnavigating-the-kubecost-uisavings">推薦工具: <a href="https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings" target="_blank" rel="noopener">Kubecost / Opencost Savings</a></h3>
 <ul>
 <li>設定 target utilization
 <ul>
+<li>request / allocatable</li>
 <li>dev 80%+</li>
 <li>prod 60%</li>
 </ul>
@@ -694,7 +704,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="recommedation-tools-krr">Recommedation Tools: KRR</h3>
+<h3 id="推薦工具-krr">推薦工具: KRR</h3>
 <ul>
 <li><a href="https://github.com/robusta-dev/krr" target="_blank" rel="noopener">https://github.com/robusta-dev/krr</a></li>
 <li>免安裝，不影響 k8s 本身</li>
@@ -710,7 +720,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="recommedation-tools-krr-1">Recommedation Tools: KRR</h3>
+<h3 id="推薦工具-krr-1">推薦工具: KRR</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl port-forward svc/prometheus 9090
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">git clone https://github.com/robusta-dev/krr.git
@@ -748,7 +758,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="recommedation-tools-krr-2">Recommedation Tools: KRR</h3>
+<h3 id="推薦工具-krr-2">推薦工具: KRR</h3>
 <ul>
 <li>根據 krr 計算的結果，手動調整</li>
 <li>有一些工具有提供自動調整 ex VPA</li>
@@ -767,7 +777,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="recommedation-tools-vpa-recommendatorhttpsgithubcomkubernetesautoscalerblobmastervertical-pod-autoscalerpkgrecommenderreadmemd">Recommedation Tools: <a href="https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md" target="_blank" rel="noopener">VPA recommendator</a></h3>
+<h3 id="推薦工具-vpa-recommendatorhttpsgithubcomkubernetesautoscalerblobmastervertical-pod-autoscalerpkgrecommenderreadmemd">推薦工具: <a href="https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md" target="_blank" rel="noopener">VPA recommendator</a></h3>
 <ul>
 <li>需要先知道 VPA 是什麼</li>
 <li>直接安裝在 k8s cluster 內</li>
@@ -790,7 +800,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="recommedation-tools-比較">Recommedation Tools: 比較</h3>
+<h3 id="推薦工具-比較">推薦工具: 比較</h3>
 <ul>
 <li>
 <p>kubecost 需要 helm install，krr 不需要</p>
@@ -859,7 +869,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="hpa">HPA</h3>
+<h3 id="自動拓展hpa">自動拓展：HPA</h3>
 <ul>
 <li><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" target="_blank" rel="noopener">k8s/horizontal-pod-autoscale</a></li>
 <li>使用 HPA 在成本精簡的意義：因為外部因素改變負載的元件</li>
@@ -875,7 +885,7 @@ SLA/SLO
     <section>
     
       
-<h3 id="hpa-考量">HPA: 考量</h3>
+<h3 id="自動拓展hpa-的考量">自動拓展：HPA 的考量</h3>
 <p>元件是否能夠水平拓展</p>
 <ul>
 <li>啟動的 liveness check / readiness check</li>
@@ -901,7 +911,7 @@ scale out 對後方服務的影響，是否會出現新的瓶頸</p>
     <section>
     
       
-<h3 id="vpa">VPA</h3>
+<h3 id="自動拓展vpa">自動拓展：VPA</h3>
 <ul>
 <li><a href="https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/README.md#quick-start" target="_blank" rel="noopener">k8s/autoscaler/vertical-pod-autoscaler</a></li>
 <li>不能水平拓展，只好先垂直拓展</li>
@@ -929,7 +939,7 @@ scale out 對後方服務的影響，是否會出現新的瓶頸</p>
 <ul>
 <li>AWS Saving Plan / RI</li>
 <li>GCP Committed Use Discount</li>
-<li>Azure Reservation</li>
+<li>Azure Saving Plan / Reservation</li>
 </ul>
 <aside class="notes">
   <p>Saving Plan / RI 是一種長期的合約，你可以跟雲端服務商簽約，保證你會用多少資源，然後雲端服務商會給你一個折扣
@@ -983,9 +993,8 @@ scale out 對後方服務的影響，是否會出現新的瓶頸</p>
     <section>
     
       
-<h3 id="spot-instance-分類-workload">Spot Instance: 分類 workload</h3>
-<p>interruption 直接影響服務品質的就不宜</p>
-<p>不影響服務品質的</p>
+<h3 id="spot-instance-如何開始">Spot Instance: 如何開始</h3>
+<p>重啟不影響服務品質的</p>
 <ul>
 <li>stateless</li>
 <li>batch job</li>
@@ -1027,9 +1036,9 @@ scale out 對後方服務的影響，是否會出現新的瓶頸</p>
       
 <h3 id="展望">展望</h3>
 <ul>
-<li>cost awareness development</li>
-<li>find-grade optimization</li>
-<li>automation</li>
+<li>運行成本轉達給開發團隊 cost awareness development</li>
+<li>根據各團隊制定精簡計畫 find-grade optimization</li>
+<li>成本管理自動化 automation</li>
 </ul>
 <aside class="notes">
   有了資源預測系統，可以在開發階段就將資源使用回饋給開發團隊
@@ -1078,6 +1087,16 @@ scale out 對後方服務的影響，是否會出現新的瓶頸</p>
 <p>公司福利不錯，業務成長中，想一起共事，歡迎找我聊</p>
 </li>
 </ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
 
     </section>
     

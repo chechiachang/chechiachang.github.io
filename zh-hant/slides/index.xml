@@ -15,15 +15,14 @@
 &lt;section data-noprocess data-shortcode-slide
   
       
-      data-background-image=&#34;onepiece.jpg&#34;
+      data-background-image=&#34;onepiece.png&#34;
   &gt;
 
 &lt;aside class=&#34;notes&#34;&gt;
   投影片跟講稿我都放在我的網站上，如果有興趣可以參考
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;cloud-infrastructure-saving-engineering&#34;&gt;Cloud Infrastructure Saving Engineering&lt;/h3&gt;
-&lt;h3 id=&#34;雲端省錢工程&#34;&gt;雲端省錢工程&lt;/h3&gt;
+&lt;h3 id=&#34;雲端k8s省錢工程&#34;&gt;雲端K8s省錢工程&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt;&lt;/p&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   兩個關鍵字：雲端 / k8s
@@ -32,9 +31,9 @@
 如果你是地端的機器，雖然概念相同，但成本控制的做法完全是另外一個故事，你可以當午休時間的故事聽聽看
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;about-me&#34;&gt;About Me&lt;/h3&gt;
-&lt;h3 id=&#34;che-chia-chang&#34;&gt;Che Chia Chang&lt;/h3&gt;
+&lt;h3 id=&#34;關於我&#34;&gt;關於我&lt;/h3&gt;
 &lt;ul&gt;
+&lt;li&gt;Che Chia Chang&lt;/li&gt;
 &lt;li&gt;SRE @ &lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Microsoft MVP&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;個人部落格&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/li&gt;
@@ -42,15 +41,15 @@
 &lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
+&lt;h3 id=&#34;大綱&#34;&gt;大綱&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;Cost on Public Cloud&lt;/li&gt;
-&lt;li&gt;K8s Compute Resource Management&lt;/li&gt;
-&lt;li&gt;Monitoring&lt;/li&gt;
-&lt;li&gt;Cost Analysis and Prediction&lt;/li&gt;
-&lt;li&gt;Resource Recommendation&lt;/li&gt;
+&lt;li&gt;公有雲的費用&lt;/li&gt;
+&lt;li&gt;節省算力成本&lt;/li&gt;
+&lt;li&gt;監控是成本控管的基礎&lt;/li&gt;
+&lt;li&gt;導入成本分析與預測工具&lt;/li&gt;
+&lt;li&gt;自動化資源使用建議&lt;/li&gt;
 &lt;li&gt;Saving Plan/Committed Usage&lt;/li&gt;
-&lt;li&gt;Spot Instance&lt;/li&gt;
+&lt;li&gt;Spot Instance 與微服務&lt;/li&gt;
 &lt;li&gt;Autoscaling: HPA / VPA&lt;/li&gt;
 &lt;li&gt;Q&amp;amp;A&lt;/li&gt;
 &lt;/ul&gt;
@@ -64,48 +63,34 @@
 最後講實務上要如何降低成本，例如 saving plan / spot instance / HPA / VPA，依照執行的難度排序，有時間的話也會講如何從無到有開始進行&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;motivation&#34;&gt;Motivation&lt;/h3&gt;
+&lt;h3 id=&#34;動機&#34;&gt;動機&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;公司希望賺錢，節省成本&lt;/li&gt;
 &lt;li&gt;團隊希望控制成本&lt;/li&gt;
-&lt;li&gt;個人 Credit 團隊 Impact&lt;/li&gt;
+&lt;li&gt;個人產生 Credit 與團隊 Impact&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   團隊而言，成本控制是一個很重要的議題，因為成本控制是一個很直接的影響公司獲利的方式
 個人，如果為公司節省超過個人的薪水，那公司聘用你就是淨賺
-職涯上履歷很好看
+節省公司雲端成本 50% 職涯上履歷很好看
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;cost-on-public-cloud&#34;&gt;Cost on Public Cloud&lt;/h3&gt;
-&lt;p&gt;open your cloud billing&lt;/p&gt;
+&lt;h3 id=&#34;公有雲的費用&#34;&gt;公有雲的費用&lt;/h3&gt;
+&lt;p&gt;打開公有雲的 billing&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Compute Resource (cpu, memory)&lt;/li&gt;
-&lt;li&gt;Storage (Disk, EBS, S3&amp;hellip;)&lt;/li&gt;
-&lt;li&gt;Database (Compute Resource + Storage)&lt;/li&gt;
-&lt;li&gt;Networking&lt;/li&gt;
+&lt;li&gt;算力成本 Compute Resource (cpu, memory)&lt;/li&gt;
+&lt;li&gt;儲存成本 Storage (Disk, EBS, S3&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;網路 Networking&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   有在使用公有雲的人，把公有雲的 billing 帳單打開來看，可能看到的大概是這幾個項目
 當然因為不同團隊的服務不同，可能會有一些出入，但如果你的公司的產品是 web service，應該會有這幾個項目
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;todays-topic&#34;&gt;Today&amp;rsquo;s topic&lt;/h3&gt;
+&lt;h3 id=&#34;今天只會講這個算力成本&#34;&gt;今天只會講這個算力成本&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Today&amp;rsquo;s topic&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Compute Resource&lt;/li&gt;
-&lt;li&gt;cpu &amp;amp; memory&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Maybe next time&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Storage (Disk, EBS, S3&amp;hellip;)&lt;/li&gt;
-&lt;li&gt;Database (Compute Resource + Storage)&lt;/li&gt;
-&lt;li&gt;Networking&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;算力成本 Compute Resource (cpu, memory)&lt;/li&gt;
+&lt;li&gt;今天只會講這個&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   &lt;p&gt;Storage 不太好說省就省，因為你的資料量就在那邊，放不下就是要再買，所以 storage 的成本控制，可能是在資料的使用上，例如資料的壓縮，或是資料的備份，或是資料的存取方式，這些是另外一個故事
@@ -113,13 +98,14 @@
 &lt;p&gt;Storage / Database / Networking 這幾個項目，我們下集再來談&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;cost-on-public-cloud-1&#34;&gt;Cost on Public Cloud&lt;/h3&gt;
-&lt;p&gt;CPU / memory intense web service&lt;/p&gt;
+&lt;h3 id=&#34;算力成本&#34;&gt;算力成本&lt;/h3&gt;
+&lt;p&gt;網頁服務的微服務系統，都需要算力&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;RESTful api&lt;/li&gt;
-&lt;li&gt;long-connetion service&lt;/li&gt;
-&lt;li&gt;business logic&lt;/li&gt;
-&lt;li&gt;save state to disk / database&lt;/li&gt;
+&lt;li&gt;api server&lt;/li&gt;
+&lt;li&gt;cronjob&lt;/li&gt;
+&lt;li&gt;business logic job&lt;/li&gt;
+&lt;li&gt;database
+如需節省，也可以從這裡下手&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   &lt;p&gt;如果你跟敝社一樣是 web service，那麼 cpu / memory 可能是你最大的一筆成本&lt;/p&gt;
@@ -169,7 +155,6 @@
 &lt;aside class=&#34;notes&#34;&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;background-knowledge&#34;&gt;Background Knowledge&lt;/h3&gt;
 &lt;h3 id=&#34;k8s-cpu--memory-managementhttpskubernetesiodocsconceptsconfigurationmanage-resources-containers&#34;&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s cpu / memory management&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/concepts/configuration/manage-resources-containers&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -199,16 +184,21 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;上面都是概念底下進實作&#34;&gt;上面都是概念，底下進實作&lt;/h3&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;monitoring&#34;&gt;Monitoring&lt;/h3&gt;
+&lt;h3 id=&#34;monitoring-監控是成本控管的基礎&#34;&gt;Monitoring 監控是成本控管的基礎&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;Monitoring 是 cost management 的基礎&lt;/li&gt;
-&lt;li&gt;沒有 monitoring 就沒有 p99 cpu time / p99 memory usage，也沒有 SLI/SLO&lt;/li&gt;
-&lt;li&gt;如果沒有 monitoring 先補 monitoring&lt;/li&gt;
+&lt;li&gt;監測是成本控管的基礎&lt;/li&gt;
+&lt;li&gt;沒有監測就沒有 p99 cpu time / memory usage，也沒有 SLI/SLO&lt;/li&gt;
+&lt;li&gt;沒有檢測下做成本精簡，會碰壞服務&lt;/li&gt;
+&lt;li&gt;如果沒有監測先補檢測&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  如果沒有 monitoring，上面的兩大前提都不存在
+  &lt;p&gt;如果沒有 monitoring，上面的兩大前提都不存在
 目前的 cpu / memory usage，runtime utilization 的資料
-目前SLO，調降之後新的SLO
+目前SLO，調降之後新的SLO&lt;/p&gt;
+&lt;p&gt;沒有檢測下，還是可以做成本精簡
+然而要馬兒好又要而不吃草，今天如果把 cpu / memory 降下來，有可能會餓到服務
+cpu throttling / memory oomkill，這些都是可能發生的事情
+會碰壞服務&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
 
@@ -219,11 +209,16 @@
   &gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;monitoring-調整前&#34;&gt;Monitoring: 調整前&lt;/h3&gt;
+&lt;h3 id=&#34;監測調整前設定目標基準線&#34;&gt;監測：調整前設定目標基準線&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;過去的 p99 資源用量&lt;/li&gt;
-&lt;li&gt;目前的效能表現&lt;/li&gt;
+&lt;li&gt;設定節省目標：ex. 過去 3 個月的 p99 資源用量
+&lt;ul&gt;
+&lt;li&gt;99% 的時間，memory 使用量都在這條線以下&lt;/li&gt;
+&lt;li&gt;99% 的時間，cpu throttling 在這條線以下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;多餘的算力 = (分配的 resource - p99)&lt;/li&gt;
+&lt;li&gt;那如果我們把 cpu / memory 降低到 p99 / p99.9 服務品質會受到影響嗎？&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   &lt;p&gt;做之前要能評估做完大概能省多少
@@ -231,19 +226,26 @@
 &lt;p&gt;如果評估完發現省不了什麼錢，那當然團隊就不一定要做這件事&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;monitoring-調整後&#34;&gt;Monitoring: 調整後&lt;/h3&gt;
-&lt;p&gt;調整前後比較&lt;/p&gt;
+
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;grafana-cpu-dashboard.png&#34;
+  &gt;
+
+&lt;hr&gt;
+&lt;h3 id=&#34;監測-調整後&#34;&gt;監測: 調整後&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;資源用量&lt;/li&gt;
-&lt;li&gt;目前的效能表現&lt;/li&gt;
-&lt;li&gt;確定沒有改壞東西&lt;/li&gt;
-&lt;li&gt;有改壞，要有及時的 alert&lt;/li&gt;
+&lt;li&gt;資源用量是否有變化&lt;/li&gt;
+&lt;li&gt;確定沒有改壞東西，有壞要有及時的 alert&lt;/li&gt;
+&lt;li&gt;效能表現：有可能沒壞，但是變很慢&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  如果你改壞了，及時的 alert 會救你一命
+  &lt;p&gt;如果你改壞了，及時的 alert 會救你一命&lt;/p&gt;
+&lt;p&gt;performance 監測很重要&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;monitoring-tools&#34;&gt;Monitoring Tools&lt;/h3&gt;
+&lt;h3 id=&#34;推薦監測工具&#34;&gt;推薦監測工具&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://prometheus.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;prometheus.io&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost&lt;/a&gt;&lt;/li&gt;
@@ -276,7 +278,7 @@
   這是 prometheus 收集的資料，vm 的 resource 使用量的 grafana dashboard
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;cost-analysis-and-prediction&#34;&gt;Cost Analysis and Prediction&lt;/h3&gt;
+&lt;h3 id=&#34;導入成本分析與預測工具&#34;&gt;導入成本分析與預測工具&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;有了 prometheus 後，我們知道短期/長期的資源使用狀況&lt;/li&gt;
 &lt;li&gt;要把資源使用轉成成本，需要一個成本計算工具&lt;/li&gt;
@@ -291,9 +293,9 @@
 &lt;p&gt;如果評估完發現省不了什麼錢，那當然團隊就不一定要做這件事&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;cost-analysis--billing&#34;&gt;Cost Analysis:  billing&lt;/h3&gt;
+&lt;h3 id=&#34;成本分析&#34;&gt;成本分析&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;各家公有元都有自己的費用計算工具&lt;/li&gt;
+&lt;li&gt;VM 可以用各家公有雲的費用計算工具&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/en-us/products/cost-management&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Azure Cost Management&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://aws.amazon.com/aws-cost-management/aws-cost-explorer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AWS Cost Explorer&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://cloud.google.com/billing/docs/how-to/cost-breakdown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GCP Cost Breakdown&lt;/a&gt;&lt;/li&gt;
@@ -307,7 +309,7 @@
   &gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;cost-analysis-cloud-billing&#34;&gt;Cost Analysis: Cloud billing&lt;/h3&gt;
+&lt;h3 id=&#34;成本分析公有雲-billing&#34;&gt;成本分析：公有雲 billing&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;計算長時間的費用趨勢&lt;/li&gt;
 &lt;li&gt;適合當作成本精簡後的成果回報&lt;/li&gt;
@@ -316,7 +318,7 @@
 &lt;li&gt;有無更即時的成本分析工具？&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;cost-analysis-kubecost--opencosthttpsdocskubecostcomusing-kubecost&#34;&gt;Cost Analysis: &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;成本分析-kubecost--opencosthttpsdocskubecostcomusing-kubecost&#34;&gt;成本分析: &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;有提供 UI&lt;/li&gt;
 &lt;li&gt;基於 prometheus&lt;/li&gt;
@@ -350,17 +352,18 @@
 
 &lt;p&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation/efficiency-idle&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/cost-allocation/efficiency-idle&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools&#34;&gt;Recommedation Tools&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具&#34;&gt;推薦工具&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/robusta-dev/krr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/robusta-dev/krr&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost Savings&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VPA recommendator&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools-kubecost--opencost-savingshttpsdocskubecostcomusing-kubecostnavigating-the-kubecost-uisavings&#34;&gt;Recommedation Tools: &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost Savings&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具-kubecost--opencost-savingshttpsdocskubecostcomusing-kubecostnavigating-the-kubecost-uisavings&#34;&gt;推薦工具: &lt;a href=&#34;https://docs.kubecost.com/using-kubecost/navigating-the-kubecost-ui/savings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kubecost / Opencost Savings&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;設定 target utilization
 &lt;ul&gt;
+&lt;li&gt;request / allocatable&lt;/li&gt;
 &lt;li&gt;dev 80%+&lt;/li&gt;
 &lt;li&gt;prod 60%&lt;/li&gt;
 &lt;/ul&gt;
@@ -372,14 +375,14 @@ SLA/SLO
 開發與測試環境，在不影響工作的前提，都可以拉到 overcommit
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools-krr&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具-krr&#34;&gt;推薦工具: KRR&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/robusta-dev/krr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/robusta-dev/krr&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;免安裝，不影響 k8s 本身&lt;/li&gt;
 &lt;li&gt;使用外部工具讀取 prometheus 資料&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools-krr-1&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具-krr-1&#34;&gt;推薦工具: KRR&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kubectl port-forward svc/prometheus 9090
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/robusta-dev/krr.git
@@ -401,7 +404,7 @@ SLA/SLO
   &gt;
 
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools-krr-2&#34;&gt;Recommedation Tools: KRR&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具-krr-2&#34;&gt;推薦工具: KRR&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;根據 krr 計算的結果，手動調整&lt;/li&gt;
 &lt;li&gt;有一些工具有提供自動調整 ex VPA&lt;/li&gt;
@@ -411,7 +414,7 @@ SLA/SLO
 &lt;p&gt;請詳閱工具說明再服用&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools-vpa-recommendatorhttpsgithubcomkubernetesautoscalerblobmastervertical-pod-autoscalerpkgrecommenderreadmemd&#34;&gt;Recommedation Tools: &lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VPA recommendator&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具-vpa-recommendatorhttpsgithubcomkubernetesautoscalerblobmastervertical-pod-autoscalerpkgrecommenderreadmemd&#34;&gt;推薦工具: &lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/pkg/recommender/README.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VPA recommendator&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;需要先知道 VPA 是什麼&lt;/li&gt;
 &lt;li&gt;直接安裝在 k8s cluster 內&lt;/li&gt;
@@ -425,7 +428,7 @@ SLA/SLO
 請務必需要研究一下在使用
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;recommedation-tools-比較&#34;&gt;Recommedation Tools: 比較&lt;/h3&gt;
+&lt;h3 id=&#34;推薦工具-比較&#34;&gt;推薦工具: 比較&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;kubecost 需要 helm install，krr 不需要&lt;/p&gt;
@@ -467,14 +470,14 @@ SLA/SLO
 &lt;aside class=&#34;notes&#34;&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;hpa&#34;&gt;HPA&lt;/h3&gt;
+&lt;h3 id=&#34;自動拓展hpa&#34;&gt;自動拓展：HPA&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s/horizontal-pod-autoscale&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;使用 HPA 在成本精簡的意義：因為外部因素改變負載的元件&lt;/li&gt;
 &lt;li&gt;低負載時不要開太多，高負載時自動加開 pod&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;hpa-考量&#34;&gt;HPA: 考量&lt;/h3&gt;
+&lt;h3 id=&#34;自動拓展hpa-的考量&#34;&gt;自動拓展：HPA 的考量&lt;/h3&gt;
 &lt;p&gt;元件是否能夠水平拓展&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;啟動的 liveness check / readiness check&lt;/li&gt;
@@ -491,7 +494,7 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
 &lt;p&gt;loading 降低時 scale down 是否會影響服務&lt;/p&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;vpa&#34;&gt;VPA&lt;/h3&gt;
+&lt;h3 id=&#34;自動拓展vpa&#34;&gt;自動拓展：VPA&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/README.md#quick-start&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s/autoscaler/vertical-pod-autoscaler&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;不能水平拓展，只好先垂直拓展&lt;/li&gt;
@@ -510,7 +513,7 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;AWS Saving Plan / RI&lt;/li&gt;
 &lt;li&gt;GCP Committed Use Discount&lt;/li&gt;
-&lt;li&gt;Azure Reservation&lt;/li&gt;
+&lt;li&gt;Azure Saving Plan / Reservation&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   &lt;p&gt;Saving Plan / RI 是一種長期的合約，你可以跟雲端服務商簽約，保證你會用多少資源，然後雲端服務商會給你一個折扣
@@ -537,9 +540,8 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
   因為一折真的很香，一折是有點拼，但打個 3 折還是很有機會
 &lt;/aside&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;spot-instance-分類-workload&#34;&gt;Spot Instance: 分類 workload&lt;/h3&gt;
-&lt;p&gt;interruption 直接影響服務品質的就不宜&lt;/p&gt;
-&lt;p&gt;不影響服務品質的&lt;/p&gt;
+&lt;h3 id=&#34;spot-instance-如何開始&#34;&gt;Spot Instance: 如何開始&lt;/h3&gt;
+&lt;p&gt;重啟不影響服務品質的&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;stateless&lt;/li&gt;
 &lt;li&gt;batch job&lt;/li&gt;
@@ -563,9 +565,9 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;展望&#34;&gt;展望&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;cost awareness development&lt;/li&gt;
-&lt;li&gt;find-grade optimization&lt;/li&gt;
-&lt;li&gt;automation&lt;/li&gt;
+&lt;li&gt;運行成本轉達給開發團隊 cost awareness development&lt;/li&gt;
+&lt;li&gt;根據各團隊制定精簡計畫 find-grade optimization&lt;/li&gt;
+&lt;li&gt;成本管理自動化 automation&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   有了資源預測系統，可以在開發階段就將資源使用回饋給開發團隊
@@ -596,6 +598,7 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
 &lt;p&gt;公司福利不錯，業務成長中，想一起共事，歡迎找我聊&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
 </description>
     </item>
     
