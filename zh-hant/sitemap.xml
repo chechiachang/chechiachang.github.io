@@ -2,10 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://chechia.net/zh-hant/post/2024-04-27-contribute-to-k8s/</loc>
-    <lastmod>2024-07-01T10:15:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>https://chechia.net/zh-hant/tag/aws/</loc>
     <lastmod>2024-04-24T12:25:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -37,6 +33,10 @@
                 hreflang="zh-Hant"
                 href="https://chechia.net/zh-hant/categories/"
                 />
+  </url><url>
+    <loc>https://chechia.net/zh-hant/talk/cloud-summit-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</loc>
+    <lastmod>2024-04-24T12:20:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/cost/</loc>
     <lastmod>2024-04-24T12:25:35+08:00</lastmod>
@@ -84,10 +84,6 @@
                 href="https://chechia.net/zh-hant/category/kubernetes/"
                 />
   </url><url>
-    <loc>https://chechia.net/zh-hant/talk/sre-conference-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</loc>
-    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>https://chechia.net/zh-hant/tags/</loc>
     <lastmod>2024-04-26T13:56:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -129,6 +125,14 @@
                 hreflang="zh-Hant"
                 href="https://chechia.net/zh-hant/tag/vault/"
                 />
+  </url><url>
+    <loc>https://chechia.net/zh-hant/post/2024-04-27-contribute-to-k8s/</loc>
+    <lastmod>2024-07-01T10:15:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://chechia.net/zh-hant/talk/sre-conference-cloud-infrastructure-saving-engineering-%E9%9B%B2%E7%AB%AF%E7%9C%81%E9%8C%A2%E5%B7%A5%E7%A8%8B/</loc>
+    <lastmod>2024-04-24T12:25:35+08:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/kafka/</loc>
     <lastmod>2024-04-26T13:56:11+08:00</lastmod>
