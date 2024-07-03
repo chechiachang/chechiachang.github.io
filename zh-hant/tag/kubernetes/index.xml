@@ -5,124 +5,12 @@
     <link>https://chechia.net/zh-hant/tag/kubernetes/</link>
       <atom:link href="https://chechia.net/zh-hant/tag/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <description>kubernetes</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Sat, 03 Aug 2024 13:20:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Fri, 26 Apr 2024 13:20:00 +0000</lastBuildDate>
     <image>
       <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>kubernetes</title>
       <link>https://chechia.net/zh-hant/tag/kubernetes/</link>
     </image>
-    
-    <item>
-      <title>Hashicorp: managed database credentials with Hashicorp Vault</title>
-      <link>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</link>
-      <pubDate>Sat, 03 Aug 2024 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/secrets/databases&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/secrets/databases&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;database 帳號密碼管理的難題&lt;/li&gt;
-&lt;li&gt;簡介 Vault 與 database secret engine&lt;/li&gt;
-&lt;li&gt;在 vault 中設定 database secret engine&lt;/li&gt;
-&lt;li&gt;vault 在需要時自動產生資料庫帳號密碼&lt;/li&gt;
-&lt;li&gt;vault 透過安全來源認證 app 身份(使用 k8s service account 與 public cloud 認證(aws iam role))&lt;/li&gt;
-&lt;li&gt;完成 app 連線至 database 的工作週期&lt;/li&gt;
-&lt;li&gt;monitoring / audit：vault audit log + prometheus / grafana dashboard / alert manager&lt;/li&gt;
-&lt;li&gt;範例：如何使用 terraform 設定 vault 與 database secret engine&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;cons&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;not able to aquire the credentials if vault is down&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
-&lt;h1 id=&#34;target-group&#34;&gt;Target group&lt;/h1&gt;
-&lt;p&gt;有資料庫管理需求的工程師，想要學習如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，如何安全的傳遞密碼，並安全地連線到資料庫。&lt;/p&gt;
-&lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
-&lt;p&gt;Che-Chia Chang，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
-Microsoft 最有價值從業人員 MVP。&lt;/p&gt;
-&lt;p&gt;目前為 Golang Taiwan Meetup Organizer，常出現於 CNTUG，DevOps Taipei，GDG Taipei， Golang Taipei Meetup。&lt;/p&gt;
-&lt;p&gt;Che-Chia Chang, an SRE specialize in container and Kubernetes operation. An active member of CNTUG, DevOps Taipei, GDS Taipei, Golang Taiwan Meetup.
-Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2023 DevOpsDay&lt;/li&gt;
-&lt;li&gt;2023 Ithome Kubernetes Summit&lt;/li&gt;
-&lt;li&gt;2022 COSCUP&lt;/li&gt;
-&lt;li&gt;2022 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2021 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2020 DevOps Taiwan Meetup #26 - 從零開始導入 Terraform&lt;/li&gt;
-&lt;li&gt;2020 Cloud Native Taiwan 年末聚會&lt;/li&gt;
-&lt;li&gt;2020 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2019 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2018 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2018 Ithome Kubernetes Summit&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hashicorp: managed database credentials with Hashicorp Vault</title>
-      <link>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</link>
-      <pubDate>Sat, 03 Aug 2024 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/secrets/databases&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/secrets/databases&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;authentication
-&lt;ul&gt;
-&lt;li&gt;(cloud) aws iam role&lt;/li&gt;
-&lt;li&gt;k8s service account&lt;/li&gt;
-&lt;li&gt;VM role -&amp;gt; AWS sts&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;access database credentials in vault&lt;/li&gt;
-&lt;li&gt;connect to database&lt;/li&gt;
-&lt;li&gt;monitoring / audit&lt;/li&gt;
-&lt;li&gt;misc
-&lt;ul&gt;
-&lt;li&gt;username prefix&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;cons&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;not able to aquire the credentials if vault is down&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
-&lt;p&gt;title: COSCUP: Cost Management for Cloud K8s 雲端K8s省錢從打折到骨折&lt;/p&gt;
-&lt;p&gt;使用 AWS 與 Kubernetes 運算就是要 cpu 與 memory，如何為公司省錢，省出職位的價值。
-合理的設定資源，不僅省錢，還提升整體服務穩定度。
-既有服務已經存在，如何逐步改變，降低成本。&lt;/p&gt;
-&lt;p&gt;本次演講以實務的範例，分享幾個節省雲端開銷的方法，包含：成本計算與預測，導入 spot instance，動態資源調整HPA與VPA，saving plan&amp;hellip;，並分享如何改變文化，提高團隊的成本意識，實際的降低開銷&lt;/p&gt;
-&lt;h1 id=&#34;target-group&#34;&gt;Target group&lt;/h1&gt;
-&lt;p&gt;AWS &amp;amp; Kubernetes User who want to decrease overall cost of infrastructure&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;導入工具：有哪些工具可以使用&lt;/li&gt;
-&lt;li&gt;分析現況：精算各團隊與各專案成本&lt;/li&gt;
-&lt;li&gt;改變現況：從既有的架構中，找尋可以節省成本的地方&lt;/li&gt;
-&lt;li&gt;改善流程：有效率的維持省錢 workflow&lt;/li&gt;
-&lt;li&gt;改變文化：持續性低維持新服務與舊服務的合理成本&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
-&lt;p&gt;Che-Chia Chang，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
-Microsoft 最有價值從業人員 MVP。&lt;/p&gt;
-&lt;p&gt;目前為 Golang Taiwan Meetup Organizer，常出現於 CNTUG，DevOps Taipei，GDG Taipei， Golang Taipei Meetup。&lt;/p&gt;
-&lt;p&gt;Che-Chia Chang, an SRE specialize in container and Kubernetes operation. An active member of CNTUG, DevOps Taipei, GDS Taipei, Golang Taiwan Meetup.
-Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2023 DevOpsDay&lt;/li&gt;
-&lt;li&gt;2023 Ithome Kubernetes Summit&lt;/li&gt;
-&lt;li&gt;2022 COSCUP&lt;/li&gt;
-&lt;li&gt;2022 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2021 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2020 DevOps Taiwan Meetup #26 - 從零開始導入 Terraform&lt;/li&gt;
-&lt;li&gt;2020 Cloud Native Taiwan 年末聚會&lt;/li&gt;
-&lt;li&gt;2020 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2019 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2018 Ithome Cloud Summit&lt;/li&gt;
-&lt;li&gt;2018 Ithome Kubernetes Summit&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
     
     <item>
       <title>SRE Conference: Cloud Infrastructure Saving Engineering  雲端省錢工程</title>
@@ -1381,10 +1269,10 @@ QR code 有投影片，範例 github repo，投影片裡還有講稿，所以我
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;about me&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_a826cb8a1f9363599e5e8d88f429c741.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_e417eec7e7a8490233a5f244ea106c42.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_12a09867edd8370d5a4cd5564f097279.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_a826cb8a1f9363599e5e8d88f429c741.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/about-me_hu0533df8c600b6ebf5e775c57536fef00_311608_e417eec7e7a8490233a5f244ea106c42.webp&#34;
                width=&#34;760&#34;
                height=&#34;375&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
@@ -1506,10 +1394,10 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_cd152b37515ce88ecfe22bb89732e1eb.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_9f383f9419bbc426efb073535d07bb90.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_e189cd499d567e542a61c269d1655dda.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_cd152b37515ce88ecfe22bb89732e1eb.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/deliver-iac_hu0533df8c600b6ebf5e775c57536fef00_243366_9f383f9419bbc426efb073535d07bb90.webp&#34;
                width=&#34;760&#34;
                height=&#34;415&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
@@ -1593,10 +1481,10 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ef06ff20a91d12ef790520e08d48f011.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ae456b396f746fd2b64cf6415e38c5df.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_c450b16c6a48d50aa7bc746acdb4b8a6.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ef06ff20a91d12ef790520e08d48f011.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/terraform-aws-vault_hu0533df8c600b6ebf5e775c57536fef00_310936_ae456b396f746fd2b64cf6415e38c5df.webp&#34;
                width=&#34;760&#34;
                height=&#34;384&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
@@ -1677,10 +1565,10 @@ config: 更改 auth-method / policy&lt;/p&gt;
 &lt;figure  &gt;
   &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
     &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;warning&#34; srcset=&#34;
-               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_534df9aed4be45d2564ce1c6ee999ac5.webp 400w,
+               /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_8f5dde8ddcc13e3e54037d2244da90ac.webp 400w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_e8c6254ba1ebf4ad920e34f8d89ffe5d.webp 760w,
                /zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_534df9aed4be45d2564ce1c6ee999ac5.webp&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2023-09-26-devopsday-2023-vault/k8s-security-warning_hu0533df8c600b6ebf5e775c57536fef00_141847_8f5dde8ddcc13e3e54037d2244da90ac.webp&#34;
                width=&#34;760&#34;
                height=&#34;229&#34;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
