@@ -883,6 +883,99 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/" >Gcp Preemptible Instance Requirement Distributed</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-09-22-gcp-preemptible-instance-requirement-distributed/"  class="summary-link">
+      <div class="article-style">
+        我們以下幾個需求：
+執行短期的 batch job 執行長期的 user-facing API server 執行長期的 stateful 資料庫、儲存庫 該不該在 Kubernetes 上面跑 database？
+TL;DR ，如果你剛開始考慮這件事，通常的答案都是否定的
+等等，我們這邊不是討論該不該上 Kuberentes ，而是該不該使用先占虛擬機吧。然而由於先占虛擬機節點的諸多限制，光憑先占虛擬機並不適合跑任何持久性的儲存庫。我們這邊仰賴 Kubernetes 的網路功能 (e.g. 服務發現)，與自動管理 (e.g. health check，HPA，auto-scaler)，基於先占虛擬機，建構高可用性的服務架構，來支撐高可用，且有狀態的的儲存庫。
+應用是否適合部署到 Kubernetes 上，可以看這篇 Google Blog: To run or not to run a database on Kubernetes: What to consider，如果大家有興趣，再留言告訴我，我再進行中文翻譯。
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/post/2020-09-21-gcp-preemptible-instance/" >Gcp Preemptible Instance</a>
     </div>
 
@@ -1706,101 +1799,6 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
   <span class="middot-divider"></span>
   <span class="article-reading-time">
     2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/cert-manager/">cert-manager</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-10-11-cert-manager-how-it-work/" >Cert Manager How It Work</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-10-11-cert-manager-how-it-work/"  class="summary-link">
-      <div class="article-style">
-        2020 It邦幫忙鐵人賽 系列文章
-這邊改了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
-Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 閱讀時間（分鐘）
   </span>
   
 
