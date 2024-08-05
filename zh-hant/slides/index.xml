@@ -603,6 +603,57 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
     </item>
     
     <item>
+      <title>Kubernetes Summit: Upgrade A VM Based Cluster</title>
+      <link>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</link>
+      <pubDate>Mon, 01 Jul 2024 12:45:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</guid>
+      <description>
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;onepiece.png&#34;
+  &gt;
+
+&lt;aside class=&#34;notes&#34;&gt;
+  投影片跟講稿我都放在我的網站上，如果有興趣可以參考
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;upgrade-a-vm-based-cluster&#34;&gt;Upgrade A VM Based Cluster&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;關於我&#34;&gt;關於我&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Che Chia Chang&lt;/li&gt;
+&lt;li&gt;SRE @ &lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Microsoft MVP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;個人部落格&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;presentation and speaker notes&lt;/li&gt;
+&lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;大綱&#34;&gt;大綱&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Overview: Official doc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Preflight Check: API Version&lt;/li&gt;
+&lt;li&gt;etcd&lt;/li&gt;
+&lt;li&gt;kube-apiserver&lt;/li&gt;
+&lt;li&gt;kube-controller-manager&lt;/li&gt;
+&lt;li&gt;kube-scheduler&lt;/li&gt;
+&lt;li&gt;Q&amp;amp;A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>SRE Conference: Cloud Infrastructure Saving Engineering  雲端省錢工程</title>
       <link>https://chechia.net/zh-hant/slides/2024-04-26-saving-money-on-cloud-k8s/</link>
       <pubDate>Tue, 26 Mar 2024 00:00:00 +0000</pubDate>
