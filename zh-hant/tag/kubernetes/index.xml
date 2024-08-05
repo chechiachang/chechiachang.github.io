@@ -5,12 +5,139 @@
     <link>https://chechia.net/zh-hant/tag/kubernetes/</link>
       <atom:link href="https://chechia.net/zh-hant/tag/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <description>kubernetes</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Sat, 03 Aug 2024 13:20:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Wed, 23 Oct 2024 13:20:00 +0000</lastBuildDate>
     <image>
       <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>kubernetes</title>
       <link>https://chechia.net/zh-hant/tag/kubernetes/</link>
     </image>
+    
+    <item>
+      <title>Kubernetes Summit: Get started with Etcd &amp; Kubernetes</title>
+      <link>https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/</link>
+      <pubDate>Wed, 23 Oct 2024 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/</guid>
+      <description>&lt;h1 id=&#34;工作坊內容&#34;&gt;工作坊內容&lt;/h1&gt;
+&lt;h3 id=&#34;上方投影片連結&#34;&gt;上方投影片連結&lt;/h3&gt;
+&lt;h3 id=&#34;httpsgithubcomchechiachangetcd-playground&#34;&gt;&lt;a href=&#34;https://github.com/chechiachang/etcd-playground&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/chechiachang/etcd-playground&lt;/a&gt;&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;workshop&#34;&gt;Workshop&lt;/h1&gt;
+&lt;p&gt;Get started with Etcd &amp;amp; Kubernetes / 手把手搭建 Etcd 與 K8s&lt;/p&gt;
+&lt;h3 id=&#34;outline&#34;&gt;Outline&lt;/h3&gt;
+&lt;p&gt;Etcd 是 Kubernetes 的重要元件之一，本次工作坊將帶領觀眾初探 Etcd，包含安裝，設定，以及操作。並藉由本地的 Etcd 來架設一個最簡單的 Kubernetes Cluster。&lt;/p&gt;
+&lt;p&gt;預計內容：環境設定，Etcd 設定與部署，Etcd 基礎操作，部署 kube-apiserver / kube-controller-manager / kube-scheduler，使用 kubectl 操作 Kubernetes Cluster。讓參與者透過本次工作坊，可以有操作 k8s control plane 的經驗，更了解 Etcd 的基本操作，以及了解 Kubernetes 的基本架構。&lt;/p&gt;
+&lt;p&gt;（規劃中）本次工作坊會提供參與者一個簡單的環境，讓參與者可以透過遠端操作來了解 Etcd 的基本操作。參與者必備個人筆電，透過 SSH 操控遠端機器。&lt;/p&gt;
+&lt;p&gt;必備知識：Linux 操作基本知識，Docker 操作基本知識，會使用 SSH 連線 / Bash / docker。
+工作坊時間不多，現場不會細講概念問題，參與者需要事前預習基本概念 &lt;a href=&#34;https://etcd.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/&lt;/a&gt; 與 &lt;a href=&#34;http://play.etcd.io/play&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://play.etcd.io/play&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
+&lt;p&gt;Che-Chia Chang，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
+Microsoft 最有價值從業人員 MVP。&lt;/p&gt;
+&lt;p&gt;目前為 Golang Taiwan Meetup Organizer，常出現於 CNTUG，DevOps Taipei，GDG Taipei， Golang Taipei Meetup。&lt;/p&gt;
+&lt;p&gt;Che-Chia Chang, an SRE specialize in container and Kubernetes operation. An active member of CNTUG, DevOps Taipei, GDS Taipei, Golang Taiwan Meetup.
+Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2024 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2024 SRE Conference&lt;/li&gt;
+&lt;li&gt;2023 DevOpsDay Taipei&lt;/li&gt;
+&lt;li&gt;2023 Kubernetes Summit&lt;/li&gt;
+&lt;li&gt;2022 COSCUP&lt;/li&gt;
+&lt;li&gt;2022 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2021 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2020 DevOps Taiwan Meetup #26 - 從零開始導入 Terraform&lt;/li&gt;
+&lt;li&gt;2020 Cloud Native Taiwan 年末聚會&lt;/li&gt;
+&lt;li&gt;2020 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2019 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Kubernetes Summit&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Summit: Upgrade A VM Based Cluster</title>
+      <link>https://chechia.net/zh-hant/talk/kubernetes-summit-upgrade-a-vm-based-cluster/</link>
+      <pubDate>Wed, 23 Oct 2024 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/kubernetes-summit-upgrade-a-vm-based-cluster/</guid>
+      <description>&lt;h1 id=&#34;presentation&#34;&gt;Presentation&lt;/h1&gt;
+&lt;p&gt;Upgrade A VM Based Clustermin&lt;/p&gt;
+&lt;h3 id=&#34;target-group-收穫&#34;&gt;Target group 收穫&lt;/h3&gt;
+&lt;p&gt;本次演講會講解升級操作，但不侷限在具體步驟，而是希望能講解更多 k8s 架構與設計，讓觀眾有以下收穫：如何升級 Kubernetes Cluster 的版本，升級時應考量的事項有哪些，有什麼工具可以協助升級流程，透過升級更了解 Kubernetes 的架構&lt;/p&gt;
+&lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
+&lt;p&gt;Che-Chia Chang，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
+Microsoft 最有價值從業人員 MVP。&lt;/p&gt;
+&lt;p&gt;目前為 Golang Taiwan Meetup Organizer，常出現於 CNTUG，DevOps Taipei，GDG Taipei， Golang Taipei Meetup。&lt;/p&gt;
+&lt;p&gt;Che-Chia Chang, an SRE specialize in container and Kubernetes operation. An active member of CNTUG, DevOps Taipei, GDS Taipei, Golang Taiwan Meetup.
+Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2024 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2024 SRE Conference&lt;/li&gt;
+&lt;li&gt;2023 DevOpsDay Taipei&lt;/li&gt;
+&lt;li&gt;2023 Kubernetes Summit&lt;/li&gt;
+&lt;li&gt;2022 COSCUP&lt;/li&gt;
+&lt;li&gt;2022 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2021 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2020 DevOps Taiwan Meetup #26 - 從零開始導入 Terraform&lt;/li&gt;
+&lt;li&gt;2020 Cloud Native Taiwan 年末聚會&lt;/li&gt;
+&lt;li&gt;2020 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2019 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Kubernetes Summit&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Summit: Upgrade A VM Based Cluster</title>
+      <link>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</link>
+      <pubDate>Sun, 04 Aug 2024 12:45:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</guid>
+      <description>
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;onepiece.png&#34;
+  &gt;
+
+&lt;aside class=&#34;notes&#34;&gt;
+  投影片跟講稿我都放在我的網站上，如果有興趣可以參考
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;upgrade-a-vm-based-cluster&#34;&gt;Upgrade A VM Based Cluster&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;關於我&#34;&gt;關於我&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Che Chia Chang&lt;/li&gt;
+&lt;li&gt;SRE @ &lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Microsoft MVP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;個人部落格&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;presentation and speaker notes&lt;/li&gt;
+&lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;大綱&#34;&gt;大綱&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Overview: Official doc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Preflight Check: API Version&lt;/li&gt;
+&lt;li&gt;etcd&lt;/li&gt;
+&lt;li&gt;kube-apiserver&lt;/li&gt;
+&lt;li&gt;kube-controller-manager&lt;/li&gt;
+&lt;li&gt;kube-scheduler&lt;/li&gt;
+&lt;li&gt;Q&amp;amp;A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Hashicorp: managed database credentials with Hashicorp Vault</title>
@@ -695,57 +822,6 @@ scale out 對後方服務的影響，是否會出現新的瓶頸&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Kubernetes Summit: Upgrade A VM Based Cluster</title>
-      <link>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</link>
-      <pubDate>Mon, 01 Jul 2024 12:45:00 +0000</pubDate>
-      <guid>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</guid>
-      <description>
-&lt;section data-noprocess data-shortcode-slide
-  
-      
-      data-background-image=&#34;onepiece.png&#34;
-  &gt;
-
-&lt;aside class=&#34;notes&#34;&gt;
-  投影片跟講稿我都放在我的網站上，如果有興趣可以參考
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;upgrade-a-vm-based-cluster&#34;&gt;Upgrade A VM Based Cluster&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Che Chia Chang&lt;/a&gt;&lt;/p&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;關於我&#34;&gt;關於我&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Che Chia Chang&lt;/li&gt;
-&lt;li&gt;SRE @ &lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Microsoft MVP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;個人部落格&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;presentation and speaker notes&lt;/li&gt;
-&lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;大綱&#34;&gt;大綱&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Overview: Official doc&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Preflight Check: API Version&lt;/li&gt;
-&lt;li&gt;etcd&lt;/li&gt;
-&lt;li&gt;kube-apiserver&lt;/li&gt;
-&lt;li&gt;kube-controller-manager&lt;/li&gt;
-&lt;li&gt;kube-scheduler&lt;/li&gt;
-&lt;li&gt;Q&amp;amp;A&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
