@@ -130,7 +130,7 @@
     <lastmod>2024-08-05T15:28:17+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</loc>
+    <loc>https://chechia.net/zh-hant/slides/2024-10-24-etcd-workshop/</loc>
     <lastmod>2024-08-05T15:28:17+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -147,6 +147,10 @@
                 hreflang="zh-Hant"
                 href="https://chechia.net/zh-hant/slides/"
                 />
+  </url><url>
+    <loc>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</loc>
+    <lastmod>2024-08-05T15:28:17+08:00</lastmod>
+    <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</loc>
     <lastmod>2024-07-03T12:26:33+08:00</lastmod>

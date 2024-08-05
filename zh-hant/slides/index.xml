@@ -5,7 +5,71 @@
     <link>https://chechia.net/zh-hant/slides/</link>
       <atom:link href="https://chechia.net/zh-hant/slides/index.xml" rel="self" type="application/rss+xml" />
     <description>Slides</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Sun, 04 Aug 2024 12:45:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Mon, 05 Aug 2024 00:45:00 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes Summit: Get started with Etcd &amp; Kubernetes</title>
+      <link>https://chechia.net/zh-hant/slides/2024-10-24-etcd-workshop/</link>
+      <pubDate>Mon, 05 Aug 2024 00:45:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/slides/2024-10-24-etcd-workshop/</guid>
+      <description>
+&lt;section data-noprocess data-shortcode-slide
+  
+      
+      data-background-image=&#34;onepiece.png&#34;
+  &gt;
+
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;workshop-get-started-with-etcd--kubernetes&#34;&gt;Workshop: Get started with Etcd &amp;amp; Kubernetes&lt;/h3&gt;
+&lt;h3 id=&#34;手把手搭建-etcd-與-k8s-工作坊&#34;&gt;手把手搭建 Etcd 與 K8s 工作坊&lt;/h3&gt;
+&lt;p&gt;Che Chia Chang
+&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net/&lt;/a&gt;&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;關於我&#34;&gt;關於我&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Che Chia Chang&lt;/li&gt;
+&lt;li&gt;SRE @ &lt;a href=&#34;https://www.linkedin.com/company/maicoin/jobs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maicoin&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Microsoft MVP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;個人部落格&lt;a href=&#34;https://chechia.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chechia.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;presentation and speaker notes&lt;/li&gt;
+&lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;大綱&#34;&gt;大綱&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;公有雲的費用&lt;/li&gt;
+&lt;li&gt;Q&amp;amp;A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://etcd.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;http://play.etcd.io/play&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://play.etcd.io/play&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/guessi/docker-compose-etcd/blob/master/docker-compose.yml&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/guessi/docker-compose-etcd/blob/master/docker-compose.yml&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jpetazzo/container.training/blob/main/compose/simple-k8s-control-plane/docker-compose.yaml&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/jpetazzo/container.training/blob/main/compose/simple-k8s-control-plane/docker-compose.yaml&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/07-bootstrapping-etcd.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/07-bootstrapping-etcd.md&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>Kubernetes Summit: Upgrade A VM Based Cluster</title>
       <link>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</link>

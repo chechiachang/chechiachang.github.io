@@ -883,6 +883,126 @@
   <div class="media-body">
 
     <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/slides/2023-10-25-k8s-resource-as-code/" >Kubernetes Summit: Resource as Code for Kubernetes: Stop kubectl apply</a>
+    </div>
+
+    
+    <a href="/zh-hant/slides/2023-10-25-k8s-resource-as-code/"  class="summary-link">
+      <div class="article-style">
+        將 k8s resource 以 code 管理，推上 vcs，並使用 argoCD, secret operator 等工具進行管理，來讓避免低級的人工操作錯誤，降低團隊整體失誤率，並降低 k8s admin 管理的成本，提高管理效率
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    10月 25, 2023
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+    <div class="btn-links">
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+    </div>
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
       <a href="/zh-hant/slides/2023-09-26-devopsday-2023-vault/" >DevOpsDay: HashiCorp Vault 自建金鑰管理最佳入坑姿勢</a>
     </div>
 
@@ -1720,97 +1840,6 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   <span class="middot-divider"></span>
   <span class="article-categories">
     <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/terraform/">terraform</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2020-09-26-gcp-preemptible-instance-kubernetes/" >Gcp Preemptible Instance Kubernetes</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2020-09-26-gcp-preemptible-instance-kubernetes/"  class="summary-link">
-      <div class="article-style">
-        先占虛擬機與 Kubernetes 在 GCP 使用先占虛擬機，會需要面對先占虛擬機的額外限制
-資料中心會 (可預期或不可預期地) 終止先占虛擬機 先占虛擬機不能自動重啟，而是會被資料中心終止後回收 GCP 不保證有足夠的先占虛擬機 節點的終止會造成額外的維運成本，例如
-管理多個節點，容忍先占虛擬機的移除，自動補充新的先占虛擬機 管理多個應用複本，節點終止時，維護整體應用的可用性 將移除節點上的應用，重新排程到其他可用節點 動態維護應用複本的服務發現 (Service Discovery) 與服務端點 (Endpoints) 意思是應用關閉重啟後，換了一個新 IP，還要能持續存取應用。舊的 IP 要主動失效 配合應用的健康檢查 (Health Check) 與可用檢查 (Readiness Check)，再分配網路流量 這些需求，必須要有自動化的管理工具，是不可能人工管理的，想像你手上使用 100 個先占節點，平均每天會有 10% - 15% 的先占節點被資料中心回收，維運需要
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
   
 
 </div>
