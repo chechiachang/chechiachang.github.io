@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: 2024年8月5日 --><html lang="zh-Hant" >
+<!-- Last Published: 2024年8月22日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -362,7 +362,7 @@
 
   <meta property="twitter:site" content="@chechiachang" />
   <meta property="twitter:creator" content="@chechiachang" />
-<meta property="twitter:image" content="https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured.png" />
+<meta property="twitter:image" content="https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured.jpg" />
 
 
 
@@ -372,7 +372,7 @@
 <meta property="og:site_name" content="Che-Chia Chang" />
 <meta property="og:url" content="https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/" />
 <meta property="og:title" content="Hashicorp: managed database credentials with Hashicorp Vault | Che-Chia Chang" />
-<meta property="og:description" content="分享如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，以及如何連線到資料庫，監控與審查。" /><meta property="og:image" content="https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured.png" /><meta property="og:locale" content="zh-Hant" />
+<meta property="og:description" content="分享如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，以及如何連線到資料庫，監控與審查。" /><meta property="og:image" content="https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured.jpg" /><meta property="og:locale" content="zh-Hant" />
 
   
     <meta
@@ -422,12 +422,12 @@
   
   
   "image": [
-    "https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured.png"
+    "https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured.jpg"
   ],
   
-  "startDate": "2024-08-03T13:20:00Z",
+  "startDate": "2024-08-28T11:00:00Z",
   
-  "endDate": "2024-08-04T14:00:00Z",
+  "endDate": "2024-08-28T12:00:00Z",
   
   
   "performer": {
@@ -952,7 +952,7 @@
 
 
   
-  <a class="btn btn-outline-primary btn-page-header" href="/zh-hant/slides/2024-04-26-saving-money-on-cloud-k8s/" target="_blank">
+  <a class="btn btn-outline-primary btn-page-header" href="/zh-hant/slides/2024-08-28-hashicorp-vault-database/" target="_blank">
     投影片
   </a>
   
@@ -969,11 +969,8 @@
   
   
     
-    
-      
-    
   
-  <a class="btn btn-outline-primary btn-page-header" href="/" >
+  <a class="btn btn-outline-primary btn-page-header" href="https://www.omniwaresoft.com.tw/all-events/aicloud-webinar-20240814-0828/" target="_blank" rel="noopener">
     <i class="fa fa-calendar mr-1"></i>活動連結</a>
 
   
@@ -1011,9 +1008,9 @@
 </div>
 
 
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 478px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 360px;">
   <div style="position: relative">
-    <img src="/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured_hu0fdb41ced49e3410d3cf0715400a8c0d_334640_605cc2ed274882ed12d855fc9b564e80.webp" width="720" height="478" alt="" class="featured-image">
+    <img src="/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/featured_hu424024643c62f89e31d4296d3cbbd782_83845_90c0a12f48f2da0ebaceccec336cf4e3.webp" width="720" height="360" alt="" class="featured-image">
     
   </div>
 </div>
@@ -1033,7 +1030,7 @@
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">日期</div>
           <div class="col-12 col-md-9">
-            8月 3, 2024 1:20 PM &mdash; 8月 4, 2024 2:00 PM
+            8月 28, 2024 11:00 AM &mdash; 12:00 PM
           </div>
         </div>
       </div>
@@ -1048,9 +1045,9 @@
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">事件</div>
           <div class="col-12 col-md-9">
-            
+            <a href="https://www.omniwaresoft.com.tw/all-events/aicloud-webinar-20240814-0828/" target="_blank" rel="noopener">
             Hashicorp Vault 2024
-            
+            </a>
           </div>
         </div>
       </div>
@@ -1080,7 +1077,9 @@
     <div class="space-below"></div>
 
     <div class="article-style">
-      <p><a href="https://developer.hashicorp.com/vault/docs/secrets/databases" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/docs/secrets/databases</a></p>
+      <h1 id="info">Info</h1>
+<p>資料庫管理是一個很大的議題：如何管理資料庫的帳號密碼，如何精確的用戶設定權限，傳遞密碼給用戶，並自動化定期更新密碼。本場演講將分享如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，如何安全的傳遞密碼，並安全地連線到資料庫</p>
+<p>涵蓋以下內容：</p>
 <ul>
 <li>database 帳號密碼管理的難題</li>
 <li>簡介 Vault 與 database secret engine</li>
@@ -1091,12 +1090,6 @@
 <li>monitoring / audit：vault audit log + prometheus / grafana dashboard / alert manager</li>
 <li>範例：如何使用 terraform 設定 vault 與 database secret engine</li>
 </ul>
-<hr>
-<p>cons</p>
-<ul>
-<li>not able to aquire the credentials if vault is down</li>
-</ul>
-<h1 id="info">Info</h1>
 <h1 id="target-group">Target group</h1>
 <p>有資料庫管理需求的工程師，想要學習如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，如何安全的傳遞密碼，並安全地連線到資料庫。</p>
 <h1 id="author">Author</h1>

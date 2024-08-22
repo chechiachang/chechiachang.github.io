@@ -5,7 +5,7 @@
     <link>https://chechia.net/zh-hant/category/vault/</link>
       <atom:link href="https://chechia.net/zh-hant/category/vault/index.xml" rel="self" type="application/rss+xml" />
     <description>vault</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Sat, 03 Aug 2024 13:20:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>zh-Hant</language><lastBuildDate>Wed, 28 Aug 2024 11:00:00 +0000</lastBuildDate>
     <image>
       <url>https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>vault</title>
@@ -15,9 +15,11 @@
     <item>
       <title>Hashicorp: managed database credentials with Hashicorp Vault</title>
       <link>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</link>
-      <pubDate>Sat, 03 Aug 2024 13:20:00 +0000</pubDate>
+      <pubDate>Wed, 28 Aug 2024 11:00:00 +0000</pubDate>
       <guid>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://developer.hashicorp.com/vault/docs/secrets/databases&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://developer.hashicorp.com/vault/docs/secrets/databases&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
+&lt;p&gt;資料庫管理是一個很大的議題：如何管理資料庫的帳號密碼，如何精確的用戶設定權限，傳遞密碼給用戶，並自動化定期更新密碼。本場演講將分享如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，如何安全的傳遞密碼，並安全地連線到資料庫&lt;/p&gt;
+&lt;p&gt;涵蓋以下內容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;database 帳號密碼管理的難題&lt;/li&gt;
 &lt;li&gt;簡介 Vault 與 database secret engine&lt;/li&gt;
@@ -28,12 +30,6 @@
 &lt;li&gt;monitoring / audit：vault audit log + prometheus / grafana dashboard / alert manager&lt;/li&gt;
 &lt;li&gt;範例：如何使用 terraform 設定 vault 與 database secret engine&lt;/li&gt;
 &lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;cons&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;not able to aquire the credentials if vault is down&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
 &lt;h1 id=&#34;target-group&#34;&gt;Target group&lt;/h1&gt;
 &lt;p&gt;有資料庫管理需求的工程師，想要學習如何使用 Hashicorp Vault 管理資料庫的帳號密碼，並透過 AWS IAM Role 與 Kubernetes Service Account 進行驗證，如何安全的傳遞密碼，並安全地連線到資料庫。&lt;/p&gt;
 &lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
@@ -3123,6 +3119,41 @@ PR comment 下會有針對 dev environemtn plan 的結果
 &lt;p&gt;撤銷：Vault 具有內置的秘密撤銷支援。Vault 不僅可以撤銷單一的秘密，還可以撤銷秘密樹，例如由特定用戶讀取的所有秘密，或特定類型的所有秘密。撤銷在金鑰滾動以及在入侵情況下鎖定系統時都很有幫助。&lt;/p&gt;
 &lt;h3 id=&#34;什麼是-hcp-vault&#34;&gt;什麼是 HCP Vault？&lt;/h3&gt;
 &lt;p&gt;HashiCorp Cloud Platform (HCP) Vault 是 Vault 的託管版本，由 HashiCorp 運營，使組織能夠快速啟動並運行。HCP Vault 使用與自託管的 Vault 相同的二進制文件，這意味著你將擁有一致的用戶體驗。你可以使用相同的 Vault 客戶端與 HCP Vault 通信，就像你使用自託管的 Vault 一樣。請參考 HCP Vault 文檔以獲得更多資訊。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>HashiCorp Vault on AWS &amp; K8s - 雲端地端通吃的私鑰管理平台</title>
+      <link>https://chechia.net/zh-hant/talk/hashicorp-vault-on-aws-k8s-%E9%9B%B2%E7%AB%AF%E5%9C%B0%E7%AB%AF%E9%80%9A%E5%90%83%E7%9A%84%E7%A7%81%E9%91%B0%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Wed, 10 May 2023 11:00:00 +0000</pubDate>
+      <guid>https://chechia.net/zh-hant/talk/hashicorp-vault-on-aws-k8s-%E9%9B%B2%E7%AB%AF%E5%9C%B0%E7%AB%AF%E9%80%9A%E5%90%83%E7%9A%84%E7%A7%81%E9%91%B0%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/</guid>
+      <description>&lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
+&lt;p&gt;現代網路應用需要處理許多私密金鑰的管理，例如：user 的密碼、server 的資料、database 的資料、microservices 彼此 authentication&amp;hellip;。加上駭客團體猖獗，許多國內外知名企業紛紛遭駭，導致公司與使用者的損失。 如何系統化且自動化管理大量的私密資料，成為系統整體安全性的關鍵。&lt;/p&gt;
+&lt;p&gt;HashiCorp Vault 為一款開源的私密資料管理平台，除了保障系統安全性，比起市面上的其他管理工具，還有許多特點如：&lt;/p&gt;
+&lt;p&gt;不依賴外部服務，適合自行架設在內部公有雲/私有雲/傳統 server/Kubernetes/VM
+支援跨環境的應用，可以串連混合雲中的應用，作為私鑰認證的中心&lt;/p&gt;
+&lt;h1 id=&#34;target-group&#34;&gt;Target group&lt;/h1&gt;
+&lt;p&gt;本次活動將簡介 Hashicorp Vault，並以 AWS Cloud 與本地 Kubernetes 為例，提供幾個基本的操作範例，適合初次接觸 HashiCorp Vault 與尋找私鑰管理平台的團隊。&lt;/p&gt;
+&lt;h1 id=&#34;author&#34;&gt;Author&lt;/h1&gt;
+&lt;p&gt;Che-Chia Chang，專長的領域是後端開發，開發維運，容器化應用，以及Kubernetes開發管理。
+Microsoft 最有價值從業人員 MVP。&lt;/p&gt;
+&lt;p&gt;目前為 Golang Taiwan Meetup Organizer，常出現於 CNTUG，DevOps Taipei，GDG Taipei， Golang Taipei Meetup。&lt;/p&gt;
+&lt;p&gt;Che-Chia Chang, an SRE specialize in container and Kubernetes operation. An active member of CNTUG, DevOps Taipei, GDS Taipei, Golang Taiwan Meetup.
+Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2023 DevOpsDay&lt;/li&gt;
+&lt;li&gt;2023 Ithome Kubernetes Summit&lt;/li&gt;
+&lt;li&gt;2022 COSCUP&lt;/li&gt;
+&lt;li&gt;2022 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2021 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2020 DevOps Taiwan Meetup #26 - 從零開始導入 Terraform&lt;/li&gt;
+&lt;li&gt;2020 Cloud Native Taiwan 年末聚會&lt;/li&gt;
+&lt;li&gt;2020 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2019 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Ithome Cloud Summit&lt;/li&gt;
+&lt;li&gt;2018 Ithome Kubernetes Summit&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
