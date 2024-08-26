@@ -24,7 +24,7 @@
   <title>Hashicorp: managed database credentials with Hashicorp Vault | Che-Chia Chang</title>
 
   
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/sky.min.css">
 
   
   
@@ -79,8 +79,8 @@
     <section>
     
       
-<h3 id="managed-database-credentials">Managed Database Credentials</h3>
-<h3 id="with-hashicorp-vault">with Hashicorp Vault</h3>
+<p>Vault: Managed Database Credentials</p>
+<p>with Hashicorp Vault</p>
 <p><a href="https://chechia.net/" target="_blank" rel="noopener">Che Chia Chang</a></p>
 <aside class="notes">
 </aside>
@@ -94,14 +94,59 @@
     <section>
     
       
-<h3 id="關於我">關於我</h3>
+<p>About Me</p>
 <ul>
 <li>Che Chia Chang</li>
 <li>SRE @ <a href="https://www.linkedin.com/company/maicoin/jobs/" target="_blank" rel="noopener">Maicoin</a></li>
 <li><a href="https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener">Microsoft MVP</a></li>
-<li>個人部落格<a href="https://chechia.net/" target="_blank" rel="noopener">chechia.net</a></li>
-<li>presentation and speaker notes</li>
-<li><a href="https://ithelp.ithome.com.tw/users/20120327/ironman/6764" target="_blank" rel="noopener">從零開始學Vault手把手入門</a></li>
+<li><a href="https://chechia.net/" target="_blank" rel="noopener">chechia.net</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /media/mvp_huc01bc5a7b3b6fc804f96fcdc92de363e_32781_d6d605938b7a1c7fce3c5b400c9fc5d1.webp 400w,
+               /media/mvp_huc01bc5a7b3b6fc804f96fcdc92de363e_32781_ad9bd2dee793a0109cd1099b629c6ffc.webp 760w,
+               /media/mvp_huc01bc5a7b3b6fc804f96fcdc92de363e_32781_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/media/mvp_huc01bc5a7b3b6fc804f96fcdc92de363e_32781_d6d605938b7a1c7fce3c5b400c9fc5d1.webp"
+               width="20%"
+               height="20%"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>相關資源</p>
+<ul>
+<li><a href="https://github.com/chechiachang/vault-playground" target="_blank" rel="noopener">Demo 範例程式碼 https://github.com/chechiachang/vault-playground</a> <strong>Demo 用途，請充分理解後再使用</strong></li>
+<li><a href="https://chechia.net/" target="_blank" rel="noopener">今日投影片與講稿與其他資源 chechia.net</a></li>
+<li><a href="https://chechia.net/zh-hant/talk/hashicorp-vault-on-aws-k8s-%E9%9B%B2%E7%AB%AF%E5%9C%B0%E7%AB%AF%E9%80%9A%E5%90%83%E7%9A%84%E7%A7%81%E9%91%B0%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" target="_blank" rel="noopener">2023 Vault 雲端的端通吃的私鑰管理平台</a></li>
+<li><a href="https://ithelp.ithome.com.tw/users/20120327/ironman/4057" target="_blank" rel="noopener">從零開始學Terraform手把手入門</a></li>
 </ul>
 
     </section>
@@ -113,16 +158,16 @@
     <section>
     
       
-<h3 id="大綱">大綱</h3>
+<p>大綱</p>
 <ul>
-<li>database 帳號密碼管理的難題</li>
-<li>簡介 Vault 與 database secret engine</li>
-<li>在 vault 中設定 database secret engine</li>
-<li>vault 在需要時自動產生資料庫帳號密碼</li>
-<li>vault 透過安全來源認證 app 身份(使用 k8s service account 與 public cloud 認證(aws iam role))</li>
-<li>完成 app 連線至 database 的工作週期</li>
-<li>monitoring / audit：vault audit log + prometheus / grafana dashboard / alert manager</li>
-<li>範例：如何使用 terraform 設定 vault 與 database secret engine</li>
+<li>DB 帳號密碼管理的難題</li>
+<li>Vault DB <strong>secret engine</strong></li>
+<li>Demo 1 需要時自動產生資料庫帳號密碼</li>
+<li>Vault <strong>auth method</strong> 第三方認證身份</li>
+<li>Demo 2 github login and auth</li>
+<li>程式化權限管理與稽查</li>
+<li>Demo 3 <strong>terraform</strong> 設定 vault 與 DB secret engine</li>
+<li>(看時間) monitoring / audit</li>
 </ul>
 <aside class="notes">
 </aside>
@@ -136,10 +181,1051 @@
     <section>
     
       
-<h3 id="參考資料">參考資料</h3>
+<p>DB 帳號密碼管理的難題</p>
 <ul>
-<li><a href="https://developer.hashicorp.com/vault/docs/secrets/databases" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/docs/secrets/databases</a></li>
+<li>認證(Authentication)
+<ul>
+<li>密碼保管與暴露</li>
 </ul>
+</li>
+<li>授權(Authorization)</li>
+<li>密碼更新</li>
+</ul>
+<aside class="notes">
+  <p>認證可以更好
+授權可以更彈性方便
+密碼更新可以更頻繁
+密碼暴露風險可以被動控制</p>
+<p>重要程度第一考量是資訊安全
+第二是管理方便度，有沒有 utility 可以幫我們管理</p>
+<p>底下透過一個 user story 來說明這些難題</p>
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><strong>Authentication 認證</strong></p>
+<blockquote>
+<p>you are who you say you are</p>
+</blockquote>
+<p><strong>Authorization 授權</strong></p>
+<blockquote>
+<p>you are allowed to do what you are trying to do</p>
+</blockquote>
+<aside class="notes">
+  名詞解釋
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>User Story</p>
+<ul>
+<li>一個app，為app設定了一個資料庫</li>
+<li>資料庫存放app資料，只有app能存取資料</li>
+<li>使用<strong>帳號密碼</strong>認證，app可以存取資料庫</li>
+</ul>
+<p><strong>app(username=app, password) &gt; DB</strong></p>
+<p><strong>DB &gt; hi, app!</strong></p>
+<aside class="notes">
+  市面上有很多資料庫，都是使用帳號密碼來認證app的身份
+產生第一個難題，就是帳號密碼的存放與管理
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/認證</p>
+<p>對於資料庫來說，<strong>username=app</strong>的人，就是app</p>
+<ol>
+<li>有帳號密碼是否就相信他是app？</li>
+<li>有沒有賬號密碼以外的方式確認app的身份？</li>
+</ol>
+<aside class="notes">
+  然而這跟我們的 user story 還是有落差
+其中也隱藏資安風險
+我們很習慣使用帳號密碼來認證身份，但是隨著時代演進，駭客有更多方法取得帳號密碼
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/認證/密碼保管與暴露</p>
+<ul>
+<li>dba 需要開發db，手上有admin帳號密碼</li>
+<li>資安風險
+<ul>
+<li>開發機器安裝惡意軟體/側錄密碼</li>
+<li>帳號密碼被竊取</li>
+<li>員工分開私人與公司電腦</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">
+  駭客將開源的工具修改，增加後門，然後 release 給 admin
+夠過社交工程，讓 admin 不知不覺安裝了惡意軟體
+很開心拿來用，但是這個工具側錄了 admin 的帳號密碼
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/認證/密碼暴露</p>
+<ul>
+<li>更嚴謹的身份確認，更難被破解
+<ul>
+<li>ex Client Certificate Authentication</li>
+</ul>
+</li>
+<li>安全的存放密碼，避免密碼暴露</li>
+<li>更好的做法
+<ul>
+<li><strong>不要存放密碼，卻能使用密碼??</strong></li>
+<li>放在 Vault 裡面</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">
+  <p>以往我們沒有更好的方式來確認app的身份，所以只能使用帳號密碼
+針對密碼強度，現在有更好的方式來確認app的身份，例如 Client Certificate Authentication
+提供更嚴謹的身份確認，現在許多資料庫都支援 tls，可以透過tls來確認app的身份
+完整的認證，公正的 ca 簽發，certs 很難被暴力破解</p>
+<p>我們要面對的是另外一層的風險，就是密碼暴露
+就算你手上是有一個很強的密碼，但是你的開發機器被駭，密碼就被竊取了
+dba 手上有存 admin 帳號密碼的
+有用密碼管理器 1password ，有比較好，因為他幫你做加密與儲存，但也不能期待 1password 永不被駭
+如果你手上的密碼重要程度非常高，高過密碼工具可以承擔的風險，那你就要考慮使用更安全的方式來管理密碼</p>
+<p>有沒有可能 dba/sre 手上不要有帳號密碼，而是由內網的 vault 來管理帳號密碼</p>
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://developer.hashicorp.com/vault/docs/secrets/databases" target="_blank" rel="noopener">Vault DB secret engine</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /media/vault/secret-database-flow_hucf0bd76ccd01fc5e85e88f0f3b42ba2d_27443_502507e750ff3033786a4c5a2c85f82f.webp 400w,
+               /media/vault/secret-database-flow_hucf0bd76ccd01fc5e85e88f0f3b42ba2d_27443_a23c35c2ae98acc4f9cadfe7fd6beb09.webp 760w,
+               /media/vault/secret-database-flow_hucf0bd76ccd01fc5e85e88f0f3b42ba2d_27443_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/media/vault/secret-database-flow_hucf0bd76ccd01fc5e85e88f0f3b42ba2d_27443_502507e750ff3033786a4c5a2c85f82f.webp"
+               width="90%"
+               height="90%"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://developer.hashicorp.com/vault/docs/secrets/databases" target="_blank" rel="noopener">Vault DB secret engine</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://www.datocms-assets.com/2885/1576778435-vault-db.png?fit=max&amp;q=80&amp;w=2000" alt="" loading="lazy" data-zoomable width="90%" height="90%" /></div>
+  </div></figure>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://developer.hashicorp.com/vault/docs/secrets/databases" target="_blank" rel="noopener">Vault DB secret engine</a></p>
+<ul>
+<li>需要時自動產生DB使用者密碼</li>
+<li>短效期使用者與密碼 ex 1hr</li>
+<li>不延展自動到期，刪除使用者</li>
+<li>未完成工作可以自動延展</li>
+<li>app可以一直取得新使用者與密碼</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>User Story (v2)</p>
+<ul>
+<li>只有 vault 有 admin 密碼</li>
+<li>user 需要時，vault 動態產生<strong>短效期使用者與密碼</strong>
+<ul>
+<li>效期到自動刪除</li>
+</ul>
+</li>
+<li>使用 vault library 程式化連線 db
+<ul>
+<li>不在開發機器上存密碼</li>
+<li>不手動輸入密碼</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Vault DB secret engine 支援，沒支援可以自己寫 plugin</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /media/vault/vault-secrets-databases_hud58a0e525517570057b3257917594d7a_260292_bccbc9830daf05c67e809db386ca5ed3.webp 400w,
+               /media/vault/vault-secrets-databases_hud58a0e525517570057b3257917594d7a_260292_ea64439a37fc602255503ad4101d0742.webp 760w,
+               /media/vault/vault-secrets-databases_hud58a0e525517570057b3257917594d7a_260292_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/media/vault/vault-secrets-databases_hud58a0e525517570057b3257917594d7a_260292_bccbc9830daf05c67e809db386ca5ed3.webp"
+               width="90%"
+               height="90%"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 1: Vault DB secret engine</p>
+<p>Setup</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone git@github.com:chechiachang/vault-playground.git
+</span></span><span class="line"><span class="cl">cd vault-playground/deploy/04-docker-and-db/
+</span></span><span class="line"><span class="cl">docker-compose up -d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker ps
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker exec -it 04-docker-and-db-mariadb_1-1 bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker exec -it 04-docker-and-db-vault_1-1 sh
+</span></span><span class="line"><span class="cl">apk update &amp;&amp; apk add mysql-client
+</span></span><span class="line"><span class="cl">mysql -h mariadb_1 -u root -p
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 1: Vault DB secret engine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Connect</span> <span class="n">to</span> <span class="n">docker</span> <span class="n">vault</span>
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">VAULT_ADDR</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8200</span>
+</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">login</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">secrets</span> <span class="n">list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Configure</span> <span class="n">secret</span> <span class="n">engine</span> <span class="n">database</span> <span class="p">(</span><span class="n">terraform</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">secrets</span> <span class="n">list</span>
+</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">policy</span> <span class="n">list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cd</span> <span class="n">usage</span><span class="o">/</span><span class="mi">03</span><span class="o">-</span><span class="n">terraform</span><span class="o">-</span><span class="n">lives</span>
+</span></span><span class="line"><span class="cl"><span class="n">terragrunt</span> <span class="n">init</span>
+</span></span><span class="line"><span class="cl"><span class="n">terragrunt</span> <span class="n">apply</span>
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 1: Vault DB secret engine</p>
+<p>Use database secret engine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// root configure (already done by terraform)
+</span></span><span class="line"><span class="cl">vault secrets list
+</span></span><span class="line"><span class="cl">vault list localhost_mariadb/config
+</span></span><span class="line"><span class="cl">vault read localhost_mariadb/config/localhost_mariadb 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vault list localhost_mariadb/roles
+</span></span><span class="line"><span class="cl">vault read localhost_mariadb/roles/database_admin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vault policy list
+</span></span><span class="line"><span class="cl">vault policy read dba
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// create token for dba (will automatically done in Demo 2)
+</span></span><span class="line"><span class="cl">vault token create -policy=dba -display-name=dba -ttl=1h -use-limit=1
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 1: Vault DB secret engine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// auth as dba
+</span></span><span class="line"><span class="cl">vault login
+</span></span><span class="line"><span class="cl">vault policy list
+</span></span><span class="line"><span class="cl">vault read localhost_mariadb/creds/database_admin
+</span></span><span class="line"><span class="cl">mysql --sql -h localhost -u &lt;username&gt; -p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// do dba things
+</span></span><span class="line"><span class="cl">show databases;
+</span></span><span class="line"><span class="cl">select user from mysql.user;
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">exit
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>解決存放與取用，回到難題/認證</p>
+<p>對於資料庫來說，<strong>username=app</strong>的人，就是app</p>
+<ol>
+<li>有帳號密碼是否就相信他是app？</li>
+<li>有沒有賬號密碼以外的方式確認app的身份？</li>
+</ol>
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Vault 的解決方案</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /media/vault/vault-identity-based-security_hu402a17fe06332c2e538a5d7636449ecf_286984_5d4d45a23b78c7f8e80ae4846d3bc10f.webp 400w,
+               /media/vault/vault-identity-based-security_hu402a17fe06332c2e538a5d7636449ecf_286984_68081a16f8fb054125c67b67c563be91.webp 760w,
+               /media/vault/vault-identity-based-security_hu402a17fe06332c2e538a5d7636449ecf_286984_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/media/vault/vault-identity-based-security_hu402a17fe06332c2e538a5d7636449ecf_286984_5d4d45a23b78c7f8e80ae4846d3bc10f.webp"
+               width="90%"
+               height="90%"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/認證/Vault <strong>Auth method</strong></p>
+<p>Vault 仰賴外部可信第三方(trusted authority)</p>
+<ul>
+<li>user/app 透過第三方動態取得合法的身份</li>
+<li>aws / azure / gcp iam role / github / saml / LDAP &hellip;</li>
+</ul>
+<p>開發機器上沒有密碼，就不會因為機器被駭/側錄，造成密碼洩漏</p>
+<aside class="notes">
+  Vault 仰賴外部可信第三方(trusted authority)
+把local開發機器被駭的風險，轉移到其他更安全的地方
+aws / azure / gcp iam role / github / saml
+內網的Vault
+LDAP
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/認證/Vault Auth method/AWS</p>
+<ul>
+<li>IAM auth method</li>
+<li>EC2 auth method
+<ul>
+<li>透過 AWS API 去確認身份</li>
+<li>登入的 aws user / 合法的 iam role</li>
+<li>vault 透過 aws api 去核對身份</li>
+<li>核對正確，vault 提供短期 database credential 給 user / app</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://developer.hashicorp.com/vault/docs/auth/aws" target="_blank" rel="noopener">app 跑在 Ec2 上，使用 Ec2 做認證</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-08-28-hashicorp-vault-database/aws-auth-method_hu1b1088a0ba6f2509d5f251f49d805b90_161953_7ff24fbb2d3a1787febad7191f4de8ba.webp 400w,
+               /zh-hant/slides/2024-08-28-hashicorp-vault-database/aws-auth-method_hu1b1088a0ba6f2509d5f251f49d805b90_161953_b34a552ce4f4dfc84d2e66a752b4b84e.webp 760w,
+               /zh-hant/slides/2024-08-28-hashicorp-vault-database/aws-auth-method_hu1b1088a0ba6f2509d5f251f49d805b90_161953_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-08-28-hashicorp-vault-database/aws-auth-method_hu1b1088a0ba6f2509d5f251f49d805b90_161953_7ff24fbb2d3a1787febad7191f4de8ba.webp"
+               width="90%"
+               height="90%"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<aside class="notes">
+  <p>EC2 auth method
+如果你有使用 aws ec2，可以透過 aws api 來取得 iam role / ec2 metadata</p>
+<p>由於 database 本身的認證機制有限，我們可以透過 vault 來管理帳號密碼
+將登入的資安管理交給更嚴謹的第三方</p>
+<p>aws login 比單純 mysql login 安全，因為多了更多認證檢查
+access key / password / MFA
+ip 來源檢查
+ratelimit
+DDOS protection
+有問題時會有 audit log</p>
+<p>auth method 混搭
+可以面對不同的資安風險</p>
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://www.hashicorp.com/blog/dynamic-database-credentials-with-vault-and-kubernetes" target="_blank" rel="noopener">app 跑在 Kubernetes 上，使用 Service Account 做認證</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://www.datocms-assets.com/2885/1578078487-screen-shot-2020-01-03-at-19-07-14.png?fit=max&amp;q=80&amp;w=2000" alt="" loading="lazy" data-zoomable width="90%" height="90%" /></div>
+  </div></figure>
+
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<blockquote>
+<p>使用 Vault auth method，信任第三方取得身份
+從雙方查核，變成三方查核</p>
+</blockquote>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://developer.hashicorp.com/vault/docs/auth" target="_blank" rel="noopener">有支援的 auth method，可以自己搭配</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-08-28-hashicorp-vault-database/auth-methods_hu66061cce719dc6d5d1ccf40fb31e1212_513352_8db173cd34745c666206ef66a8a4b3e4.webp 400w,
+               /zh-hant/slides/2024-08-28-hashicorp-vault-database/auth-methods_hu66061cce719dc6d5d1ccf40fb31e1212_513352_8f1549438652c6fc209b8b5e6cd78328.webp 760w,
+               /zh-hant/slides/2024-08-28-hashicorp-vault-database/auth-methods_hu66061cce719dc6d5d1ccf40fb31e1212_513352_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-08-28-hashicorp-vault-database/auth-methods_hu66061cce719dc6d5d1ccf40fb31e1212_513352_8db173cd34745c666206ef66a8a4b3e4.webp"
+               width="90%"
+               height="90%"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<aside class="notes">
+  <ul>
+<li>user auth method
+<ul>
+<li>aws/gcp/azure iam role, github, saml, LDAP</li>
+<li>Login MFA</li>
+</ul>
+</li>
+<li>app使用auth method認證
+<ul>
+<li>aws/gcp/azure iam role (ec2 role)</li>
+<li>kubernetes api server (pod service account)</li>
+</ul>
+</li>
+</ul>
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>User Story (v3)</p>
+<ul>
+<li>只做一次：Vault 設定 DB secret engine</li>
+<li>user 本機不存放 DB 帳號密碼</li>
+<li>user/app 透過 Vault auth method
+<ul>
+<li>user aws iam role</li>
+<li>app k8s service account</li>
+</ul>
+</li>
+<li>user/app可以存取vault中的db帳號密碼</li>
+</ul>
+<p><strong>app &gt; trusted authority</strong></p>
+<p><strong>app &lt; (identity) &lt; trusted authority</strong></p>
+<p><strong>app &gt; (identity) &gt; vault &gt; trusted authority</strong></p>
+<p><strong>app &lt; (DB credential) &lt; vault</strong>&gt;</p>
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 2: Auth method</p>
+<p><a href="https://developer.hashicorp.com/vault/docs/auth/github" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/docs/auth/github</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// root 
+</span></span><span class="line"><span class="cl">vault policy list
+</span></span><span class="line"><span class="cl">vault policy read sre
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vault list auth/github-chechia-net/map/users
+</span></span><span class="line"><span class="cl">vault read auth/github-chechia-net/map/users/chechiachang
+</span></span><span class="line"><span class="cl">vault list auth/github-chechia-net/map/teams
+</span></span><span class="line"><span class="cl">vault read auth/github-chechia-net/map/teams/sre
+</span></span><span class="line"><span class="cl">vault auth help github-chechia-net
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// user (github login)
+</span></span><span class="line"><span class="cl">vault login -method=github -path=github-chechia-net token=$TOKEN
+</span></span><span class="line"><span class="cl">vault read localhost_mariadb/creds/database_admin
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 2: Auth method</p>
+<p><a href="https://developer.hashicorp.com/vault/docs/auth/aws" target="_blank" rel="noopener">https://developer.hashicorp.com/vault/docs/auth/aws</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// User login Public Cloud
+</span></span><span class="line"><span class="cl">aws-vault exec dev -- vault login -method=aws -path=aws=sre
+</span></span><span class="line"><span class="cl">gcloud ... vault login -method=gcp -path=gcp=sre
+</span></span><span class="line"><span class="cl">az login ... vault login -method=azure -path=azure=sre
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// app login k8s
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://developer.hashicorp.com/vault/docs/auth/kubernetes" target="_blank" rel="noopener">難題/認證/Vault Auth method/Kubernetes</a></p>
+<p><strong>app &gt; sa -&gt; k8s api server -&gt; vault -&gt; DB</strong></p>
+<ul>
+<li>使用 <a href="https://developer.hashicorp.com/vault/docs/platform/k8s/injector" target="_blank" rel="noopener">k8s vault injector</a></li>
+<li>app 跑在 Pod，Pod 取得 k8s service account 短期 jwt token</li>
+<li>app 透過 jwt token 給 vault 聲稱自己是 app
+<ul>
+<li>vault 使用 jwt token 與 k8s api server 核對 pod service account</li>
+<li>k8s 核對成功，vault 認為 app 是 k8s 中的 app</li>
+<li>vault 提供短期 database credential 給 app</li>
+</ul>
+</li>
+<li>app 使用短期 database credential 存取資料庫</li>
+</ul>
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/認證/Vault Auth method/小結</p>
+<ul>
+<li>本地存放 password 的風險</li>
+<li>如果有公有雲，存放雲端服務
+<ul>
+<li>通過檢驗且合規的安全系統</li>
+</ul>
+</li>
+<li>如果是地端，使用 vault 來管理帳號密碼
+<ul>
+<li>存放 admin</li>
+<li>動態產生 db user</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">
+  最容易被駭的，不是地端網路被打穿，而是 admin 的開發機器存放帳號密碼，被釣魚被側錄被竊取
+用了很好的防火牆，但是 admin 的開發機器存放帳號密碼，或是 1password
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>User Story (v?)</p>
+<p>需求會一直改變</p>
+<ol>
+<li>app 存取資料，變成</li>
+<li>app + admin + metabase 不同權限</li>
+</ol>
+<aside class="notes">
+  需求會一直改變，目前管理方式有足夠的彈性去面對需求的改變嗎？
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/授權</p>
+<p>MySQL 為例，使用 sql 管理授權</p>
+<p>user based access control</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">grant</span><span class="w"> </span><span class="k">write</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">mydb</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">app</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">grant</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">mydb</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">admin</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">grant</span><span class="w"> </span><span class="k">read</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">mydb</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">metabase</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w">
+</span></span></span></code></pre></div><p>role based access control</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="k">role</span><span class="w"> </span><span class="n">myrole</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">grant</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">mydb</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">myrole</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">grant</span><span class="w"> </span><span class="n">myrole</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">app</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/授權/Scale up</p>
+<ul>
+<li>Scale up，100 個 user x 100 個 database</li>
+<li>權限變更難 review</li>
+<li>變更授權的admin user權力很大，如何存放管理</li>
+</ul>
+<aside class="notes">
+  100 個 user，就要下 100 次 sql grant role
+100 個 database，就要下 x100 次 sql grant role
+有人離職再進來下 sql
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/授權/Scale up</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">resource</span> <span class="s2">&#34;mysql_role&#34; &#34;myrole&#34;</span> {
+</span></span><span class="line"><span class="cl"><span class="n">  for_each</span> <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">roles</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">  name</span>     <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">resource</span> <span class="s2">&#34;mysql_grant&#34; &#34;developer&#34;</span> {
+</span></span><span class="line"><span class="cl"><span class="n">  for_each</span>   <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">roles</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">  role</span>       <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
+</span></span><span class="line"><span class="cl"><span class="n">  database</span>   <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">value</span><span class="p">.</span><span class="k">database</span>
+</span></span><span class="line"><span class="cl"><span class="n">  privileges</span> <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">value</span><span class="p">.</span><span class="k">privilleges</span> <span class="err">//</span> <span class="p">[</span><span class="s2">&#34;SELECT&#34;, &#34;UPDATE&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><aside class="notes">
+  SQL 也可以寫 loop，也可以寫 unit test
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/授權/PR Review</p>
+<ul>
+<li>Terraform 管理 MySQL 授權</li>
+<li>Terraform 有比較好嗎？
+<ul>
+<li>程式化設定</li>
+<li>Reviewable / Testable code</li>
+</ul>
+</li>
+<li>請見<a href="https://ithelp.ithome.com.tw/users/20120327/ironman/4057" target="_blank" rel="noopener">從零開始學Terraform手把手入門</a></li>
+</ul>
+<aside class="notes">
+  <p>透過 terraform 來管理資料庫的授權，可以讓我們更方便的管理授權</p>
+<p>把 mysql admin username/password 放在雲端 ex. aws secret manager，透過 terraform 來取得帳號密碼</p>
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>難題/授權/Automation</p>
+<p>Vault 管理授權</p>
+<ul>
+<li>Or Vault + Terraform？</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault policy list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">database_admin
+</span></span><span class="line"><span class="cl">database_readonly
+</span></span><span class="line"><span class="cl">database_write
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vault policy read database_write
+</span></span><span class="line"><span class="cl">path &#34;chechia-net-myapp/database/database&#34; {
+</span></span><span class="line"><span class="cl">  capabilities = [&#34;create&#34;, &#34;read&#34;, &#34;update&#34;, &#34;patch&#34;, &#34;delete&#34;, &#34;list&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><aside class="notes">
+  很重要所以再說一次
+如果你有用雲端服務，可以考慮使用雲端服務來管理帳號密碼
+如果你是地端，可以考慮使用 vault 來管理帳號密碼
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 3: Terraform 設定 Vault 與 DB secret engine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// destroy
+</span></span><span class="line"><span class="cl">cd vault-playground/usage/03-terraform-lives
+</span></span><span class="line"><span class="cl">terragrunt destroy
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd vault-playground/deploy/04-docker-and-db/
+</span></span><span class="line"><span class="cl">docker-compose down
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// create new
+</span></span><span class="line"><span class="cl">docker-compose up -d
+</span></span><span class="line"><span class="cl">docker ps
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd vault-playground/usage/03-terraform-lives
+</span></span><span class="line"><span class="cl">terragrunt apply
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Demo 3: Terraform 設定 Vault 與 DB secret engine</p>
+<ul>
+<li>程式化權限控管
+<ul>
+<li>一鍵設定環境
+<ul>
+<li>CI/CD 測試
+<ul>
+<li>fmt, lint, unit test</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PR Review</li>
+</ul>
+</li>
+<li>Automation plan，apply
+<ul>
+<li>避免人工操作的失誤與風險</li>
+<li>DBA 不用密碼或 login，因為根本不連 prod DB</li>
+<li>incident 一鍵 roll back</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">
+  sql 也都能做，也都有工具在做，只是語言的性質導致這件事好不好做
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>總結</p>
+<ul>
+<li>Vault DB secret engine
+<ul>
+<li>管理資料庫帳號密碼</li>
+<li>動態產生 db user</li>
+</ul>
+</li>
+<li>Vault auth method
+<ul>
+<li>第三方認證身份</li>
+<li>Github / AWS IAM Role / Kubernetes Service Account</li>
+</ul>
+</li>
+<li>Vault + Terraform
+<ul>
+<li>程式化權限控管</li>
+<li>PR Review</li>
+<li>Automation plan，apply</li>
+</ul>
+</li>
+</ul>
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="qa">Q&amp;A</h3>
 
     </section>
     
