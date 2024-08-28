@@ -560,7 +560,8 @@ dba 手上有存 admin 帳號密碼的
 </span></span><span class="line"><span class="cl">vault policy read dba
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">// create token for dba (will automatically done in Demo 2)
-</span></span><span class="line"><span class="cl">vault token create -policy=dba -display-name=dba -ttl=1h -use-limit=1
+</span></span><span class="line"><span class="cl">vault token create -policy=dba -display-name=dba \
+</span></span><span class="line"><span class="cl">  -ttl=1h -use-limit=5
 </span></span></code></pre></div>
     </section>
     
