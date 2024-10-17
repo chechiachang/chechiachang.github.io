@@ -1032,7 +1032,12 @@ tab to auto complete&lt;/p&gt;
 &lt;h3 id=&#34;etcd-基礎操作-quiz&#34;&gt;Etcd 基礎操作: Quiz&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;重啟後，是否還能讀取到 foo 的值？為什麼？&lt;/li&gt;
-&lt;li&gt;請用50個字，描述你目前覺得 etcd 是什麼？&lt;/li&gt;
+&lt;li&gt;請用50個字，描述你目前覺得 etcd 是什麼？
+&lt;ul&gt;
+&lt;li&gt;把答案填到 &lt;a href=&#34;https://workshop.chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;workshop.chechia.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;不是考試，隨意發揮，重點在促進大家思考&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl put foo bar
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose down
@@ -1068,6 +1073,8 @@ tab to auto complete&lt;/p&gt;
 &lt;li&gt;卡住乃兵家常事，大俠請重新來過即可&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/op-guide/authentication/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/op-guide/authentication/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;加分題為自己加分authentication-1&#34;&gt;加分題為自己加分：authentication&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl role add
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl role grant-permission
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl user add
@@ -1117,10 +1124,11 @@ tab to auto complete&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;How to Add and Remove Members&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;移除一個 member&lt;/p&gt;
+&lt;hr&gt;
 &lt;ul&gt;
-&lt;li&gt;name: etcd-3&lt;/li&gt;
-&lt;li&gt;id: c3697a4fd7a20dcd&lt;/li&gt;
+&lt;li&gt;移除一個 member，name: etcd-3 id: c3697a4fd7a20dcd&lt;/li&gt;
+&lt;li&gt;添加回來&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#replacing-a-failed-etcd-member&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#replacing-a-failed-etcd-member&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl member remove
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl member remove c3697a4fd7a20dcd
@@ -1138,18 +1146,12 @@ tab to auto complete&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/op-guide/failures/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/op-guide/failures/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;etcd-clusters-quiz&#34;&gt;Etcd Clusters: Quiz&lt;/h3&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;什麼是 leader election？voting-member 與 leaner-member 有何不同？&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
 &lt;h3 id=&#34;閱讀資料-1&#34;&gt;閱讀資料&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/learning/design-learner/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/learning/design-learner/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;加分題為自己加分authentication-1&#34;&gt;加分題為自己加分：authentication&lt;/h3&gt;
+&lt;h3 id=&#34;加分題為自己加分authentication-2&#34;&gt;加分題為自己加分：authentication&lt;/h3&gt;
 &lt;p&gt;啟用 etcd cluster 的 tls，並讓 etcdcetl 透過 tls 連線&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/op-guide/clustering/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/op-guide/clustering/&lt;/a&gt;&lt;/li&gt;
@@ -1184,7 +1186,6 @@ tab to auto complete&lt;/p&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
 &lt;/aside&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/04-certificate-authority.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/04-certificate-authority.md&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;k8s-generatesh&#34;&gt;K8s: ./generate.sh&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/chechiachang/etcd-playground/blob/main/02-control-panel/certs/generate.sh&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;certs/generate.sh&lt;/a&gt; 有附上對應的 k8s-the-hard-way 的說明文件&lt;/p&gt;
@@ -1211,6 +1212,42 @@ tab to auto complete&lt;/p&gt;
 &lt;li&gt;呈 3.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;k8s-etcd-operations-for-k8s&#34;&gt;K8s: etcd operations for k8s&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#securing-etcd-clusters&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Securing etcd Clusters&lt;/a&gt; 放在加分題&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;k8s-etcd-backup-and-restore&#34;&gt;K8s: etcd backup and restore&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 確定 leader 與 raft index
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;etcdctl --write-out=table endpoint status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 備份
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker exec -it etcd-1 etcdctl snapshot save /etcd_data/snapshot.db
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls etcd1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;k8s-etcd-backup-and-restore-1&#34;&gt;K8s: etcd backup and restore&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;停止 k8s control plane (apiserver)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker stop kube-apiserver
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 恢復
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp etcd1/snapshot.db etcd2/snapshot.db
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp etcd1/snapshot.db etcd3/snapshot.db
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker exec -it etcd-1 etcdctl snapshot restore /etcd_data/snapshot.db
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker exec -it etcd-2 etcdctl snapshot restore /etcd_data/snapshot.db
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker exec -it etcd-3 etcdctl snapshot restore /etcd_data/snapshot.db
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;k8s-etcd-backup-and-restore-2&#34;&gt;K8s: etcd backup and restore&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#scaling-out-etcd-clusters&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#scaling-out-etcd-clusters&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;修改 01-cluster/docker-compose.yaml&lt;/li&gt;
+&lt;li&gt;調整底下 comment 中的部分&lt;/li&gt;
+&lt;li&gt;增加兩台 etcd member 到 cluster 中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;加分題為自己加分自己做-ca-and-tls-certs&#34;&gt;加分題為自己加分：自己做 ca and tls certs&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;閱讀 generate.sh 的 comment 部分網頁連結&lt;/li&gt;
@@ -1235,25 +1272,24 @@ tab to auto complete&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;回家自己找一台 linux 機器，跑完 k8s the hard way&lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
-&lt;p&gt;etcd&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;etcd
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://etcd.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/learning/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/learning/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://play.etcd.io/play&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://play.etcd.io/play&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;kubernetes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;kubernetes
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/components/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/concepts/overview/components/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;中文 &lt;a href=&#34;https://kubernetes.feisky.xyz/concepts/components/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.feisky.xyz/concepts/components/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/kelseyhightower/kubernetes-the-hard-way&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;examples&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/guessi/docker-compose-etcd/blob/master/docker-compose.yml&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/guessi/docker-compose-etcd/blob/master/docker-compose.yml&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jpetazzo/container.training/blob/main/compose/simple-k8s-control-plane/docker-compose.yaml&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/jpetazzo/container.training/blob/main/compose/simple-k8s-control-plane/docker-compose.yaml&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/07-bootstrapping-etcd.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/07-bootstrapping-etcd.md&lt;/a&gt;&lt;/li&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
