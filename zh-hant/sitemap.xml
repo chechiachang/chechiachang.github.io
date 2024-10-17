@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://chechia.net/zh-hant/tag/aws/</loc>
-    <lastmod>2024-08-22T22:29:19+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -17,7 +17,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/categories/</loc>
-    <lastmod>2024-08-28T10:14:39+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -31,11 +31,11 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/etcd/</loc>
-    <lastmod>2024-08-05T15:28:17+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/iac/</loc>
-    <lastmod>2024-08-22T22:29:19+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -49,7 +49,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/kubernetes/</loc>
-    <lastmod>2024-08-28T10:14:39+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -63,7 +63,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/category/kubernetes/</loc>
-    <lastmod>2024-08-28T10:14:39+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -77,7 +77,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/</loc>
-    <lastmod>2024-08-05T15:28:17+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/talk/kubernetes-summit-upgrade-a-vm-based-cluster/</loc>
@@ -85,7 +85,7 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tags/</loc>
-    <lastmod>2024-08-28T10:14:39+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -99,7 +99,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/terraform/</loc>
-    <lastmod>2024-08-22T22:29:19+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -127,7 +127,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/category/workshop/</loc>
-    <lastmod>2024-08-05T15:28:17+08:00</lastmod>
+    <lastmod>2024-10-16T20:31:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/talk/hashicorp-managed-database-credentials-with-hashicorp-vault/</loc>
@@ -153,7 +153,7 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/</loc>
-    <lastmod>2024-08-28T10:14:39+08:00</lastmod>
+    <lastmod>2024-10-16T20:28:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -167,7 +167,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/2024-10-24-etcd-workshop/</loc>
-    <lastmod>2024-08-05T15:28:17+08:00</lastmod>
+    <lastmod>2024-10-16T20:28:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/</loc>
