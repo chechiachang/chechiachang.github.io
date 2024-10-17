@@ -21,7 +21,7 @@
 
   <link rel="canonical" href="https://chechia.net/zh-hant/slides/2024-10-24-etcd-workshop/">
 
-  <title>Kubernetes Summit: Get started with Etcd &amp; Kubernetes | Che-Chia Chang</title>
+  <title>Kubernetes Summit: Get started with etcd &amp; Kubernetes | Che-Chia Chang</title>
 
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.min.css">
@@ -61,14 +61,17 @@
     
     <section>
     
-      <h3 id="workshop-get-started-with-etcd--kubernetes">Workshop: Get started with Etcd &amp; Kubernetes</h3>
+      <h3 id="etcd-workshop">etcd Workshop</h3>
+<h5 id="本次-workshop-以-hands-on-的方式進行累積操作經驗為主講解與說明為輔觀念內容有準備教材需要參與者自行閱讀">本次 workshop 以 hands-on 的方式進行，累積操作經驗為主，講解與說明為輔。觀念內容有準備教材，需要參與者自行閱讀</h5>
 <ul>
-<li>在 docker 中啟動 Etcd 與 k8s control plane</li>
-<li>使用 etcdctl 操作 etcd</li>
-<li>操作 etcd cluster</li>
-<li>在 docker 中啟動 k8s control plane</li>
-<li>使用 kubectl 操作 k8s control plane</li>
+<li>docker 啟動 etcd</li>
+<li>etcdctl 存取 etcd</li>
+<li>docker 啟動 etcd cluster</li>
+<li>docker 啟動 k8s control plane</li>
+<li>kubectl 存取 k8s control plane</li>
+<li>維運 k8s 所需的 etcd operation</li>
 </ul>
+<h5 id="參與者需要一台電腦可以上網能夠點滑鼠右鍵">參與者需要一台電腦，可以上網，能夠點滑鼠右鍵</h5>
 
     </section>
     
@@ -79,8 +82,8 @@
     <section>
     
       
-<h3 id="workshop-get-started-with-etcd--kubernetes-1">Workshop: Get started with Etcd &amp; Kubernetes</h3>
-<h3 id="手把手搭建-etcd-與-k8s-工作坊">手把手搭建 Etcd 與 K8s 工作坊</h3>
+<h3 id="etcd-workshop-1">etcd Workshop</h3>
+<h3 id="手把手搭建-etcd-與-k8s-工作坊">手把手搭建 etcd 與 K8s 工作坊</h3>
 <p>Che Chia Chang
 <a href="https://chechia.net/" target="_blank" rel="noopener">https://chechia.net/</a></p>
 <aside class="notes">
@@ -116,15 +119,12 @@
       
 <h3 id="大綱">大綱</h3>
 <ul>
-<li>Etcd 基礎操作</li>
-<li>Etcd Clusters 操作</li>
-<li>搭建 Kubernetes Cluster Control Plane
-<ul>
-<li>(Optional) Kubernetes the hard way</li>
-</ul>
-</li>
+<li>docker 啟動 etcd</li>
+<li>etcdctl 存取 etcd</li>
+<li>docker 啟動 etcd cluster</li>
+<li>docker 啟動 k8s control plane</li>
+<li>維運 k8s 所需的 etcd operation</li>
 <li>(Optional) 搭建 Worker Node</li>
-<li>Q&amp;A</li>
 </ul>
 <aside class="notes">
 </aside>
@@ -138,11 +138,15 @@
     <section>
     
       
-<h3 id="準備">準備</h3>
-<ol>
-<li>你有一台電腦，可以上網，能夠點滑鼠右鍵</li>
-<li>你會使用 bash 或 powershell terminal</li>
-</ol>
+<h3 id="如何進行-workshop">如何進行 workshop</h3>
+<ul>
+<li>講師會在台上帶頭影片的內容</li>
+<li>參與者在自己的機器上操作</li>
+<li>參與者可以跟台上的進度，也可以超前進度向後操作</li>
+<li>進度落後不太會影響後續操作，不必擔心</li>
+<li>加分題是重要但沒時間於今日完成的內容</li>
+<li>有很多問題也很正常，產生疑問也是工作坊的目的</li>
+</ul>
 
     </section>
     
@@ -153,12 +157,12 @@
     <section>
     
       
-<h3 id="存取機器">存取機器</h3>
+<h3 id="如何存取遠端vm">如何存取遠端VM</h3>
 <ol>
 <li>至<a href="https://workshop.chechia.net" target="_blank" rel="noopener">workshop.chechia.net</a> 領取一台 VM 並簽名</li>
 <li>從講師取得使用者名稱與密碼</li>
-<li>透過 url 連線至你的 VM</li>
-<li>下載教材（複製底下指令，滑鼠右鍵貼到 terminal）</li>
+<li>使用瀏覽器，透過 url 連線至你的 VM，輸入使用者名稱與密碼登入</li>
+<li>下載教材（滑鼠複製底下指令，滑鼠右鍵就能貼到 terminal 中）</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/chechiachang/etcd-playground.git
 </span></span></code></pre></div>
@@ -171,16 +175,19 @@
     <section>
     
       
-<h3 id="etcd-基礎操作-啟動一台-etcd">Etcd 基礎操作: 啟動一台 Etcd</h3>
+<h3 id="etcd-基礎操作-啟動一台-etcd">etcd 基礎操作: 啟動一台 etcd</h3>
+<p>一行一行執行底下指令，來啟動一台 etcd</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd etcd-playground
 </span></span><span class="line"><span class="cl">ls
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cd 00-prerequsites/
+</span></span><span class="line"><span class="cl">cat docker-compose.yaml 
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker compose up -d
 </span></span><span class="line"><span class="cl">docker ps
-</span></span><span class="line"><span class="cl">docker logs -f etcd-1
-</span></span></code></pre></div><p>ctrl + c to exit
-tab to auto complete</p>
+</span></span><span class="line"><span class="cl">docker logs -f etcd-0
+</span></span></code></pre></div><p>卡住時 ctrl + c to exit</p>
+<p>只領打一半可以按 tab auto complete</p>
 
     </section>
     
@@ -191,18 +198,38 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-基礎操作-etcdctl">Etcd 基礎操作: Etcdctl</h3>
-<p>請嘗試操作 <a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a> 中的幾個範例</p>
+<h3 id="etcd-基礎操作-etcdctl">etcd 基礎操作: etcdctl</h3>
+<p><a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a> 中的幾個範例</p>
 <ul>
 <li>Reading from etcd</li>
 <li>Writing to etcd</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl get foo
+</span></span><span class="line"><span class="cl">etcdctl put foo &#34;Hello World&#34;
+</span></span><span class="line"><span class="cl">etcdctl get foo
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="etcd-基礎操作-etcdctl-1">etcd 基礎操作: etcdctl</h3>
+<p>請嘗試操作 <a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a> 中的幾個範例</p>
+<ul>
 <li>How to get keys by prefix</li>
 <li>How to delete keys</li>
 <li>How to watch keys</li>
 <li>How to check Cluster status</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl get foo
-</span></span><span class="line"><span class="cl">etcdctl put foo &#34;Hello World&#34;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl del foo
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl put k1 value1
+</span></span><span class="line"><span class="cl">etcdctl put k2 value2
+</span></span><span class="line"><span class="cl">etcdctl del --prefix k
 </span></span></code></pre></div>
     </section>
     
@@ -213,9 +240,13 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-基礎操作-重啟-etcd">Etcd 基礎操作: 重啟 Etcd</h3>
-<p>透過以下 command 重啟 Etcd</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down
+<h3 id="etcd-基礎操作-重啟-etcd">etcd 基礎操作: 重啟 etcd</h3>
+<p>透過以下 command 重啟 etcd</p>
+<ul>
+<li><code>docker ps</code> 確認 etcd 是否還在運行</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker ps
+</span></span><span class="line"><span class="cl">docker compose down
 </span></span><span class="line"><span class="cl">docker ps
 </span></span><span class="line"><span class="cl">docker compose up -d
 </span></span></code></pre></div>
@@ -228,9 +259,9 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-基礎操作-quiz">Etcd 基礎操作: Quiz</h3>
+<h3 id="etcd-基礎操作-quiz">etcd 基礎操作: Quiz</h3>
 <ol>
-<li>重啟後，是否還能讀取到 foo 的值？為什麼？</li>
+<li>重啟 etcd 後，是否還能讀取到 foo 的值？為什麼？</li>
 <li>請用50個字，描述你目前覺得 etcd 是什麼？
 <ul>
 <li>把答案填到 <a href="https://workshop.chechia.net" target="_blank" rel="noopener">workshop.chechia.net</a></li>
@@ -252,18 +283,21 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-基礎操作-answer">Etcd 基礎操作: Answer</h3>
+<h3 id="etcd-基礎操作-answer">etcd 基礎操作: Answer</h3>
 <ol>
-<li>本 workshop 的 docker-compose.yml 中，Etcd 的資料是存放在本地的 etcd1 資料夾中，因此重啟後，資料不會遺失。透過以下指令可以清除 etcd1 資料夾中的資料</li>
+<li>本 workshop 的 docker-compose.yml 中，etcd 的資料是存放在本地的 etcd0 資料夾中，因此重啟後，資料不會遺失。透過以下指令可以清除 etcd0 資料夾中的資料</li>
 <li><a href="https://etcd.io/docs/v3.5/learning/why/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/learning/why/</a></li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd 00-prerequsites/
+</span></span><span class="line"><span class="cl">ls etcd0
+</span></span><span class="line"><span class="cl">ls etcd0/member
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">docker-compose down --volumes
-</span></span><span class="line"><span class="cl">rm -rf etcd1/*
+</span></span><span class="line"><span class="cl">docker compose down --volumes
+</span></span><span class="line"><span class="cl">rm -rf etcd0/*
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># 新的 etcd
-</span></span><span class="line"><span class="cl">docker-compose up -d
+</span></span><span class="line"><span class="cl">docker compose up -d
+</span></span><span class="line"><span class="cl">ls etcd0
 </span></span></code></pre></div>
     </section>
     
@@ -296,10 +330,12 @@ tab to auto complete</p>
 <li>使用 userA 寫入資料</li>
 <li>使用 userB 讀取資料</li>
 <li>關閉匿名存取</li>
-<li>卡住乃兵家常事，大俠請重新來過即可</li>
 <li><a href="https://etcd.io/docs/v3.5/op-guide/authentication/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/op-guide/authentication/</a></li>
 </ul>
-
+<h5 id="卡住乃兵家常事大俠請重新來過即可">卡住乃兵家常事，大俠請重新來過即可</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down --volumes
+</span></span><span class="line"><span class="cl">rm -rf etcd0/*
+</span></span></code></pre></div>
     </section>
     
 
@@ -326,11 +362,14 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-clusters-啟動多台-etcd">Etcd Clusters: 啟動多台 Etcd</h3>
+<h3 id="etcd-clusters-移除舊的-etcd">etcd Clusters: 移除舊的 etcd</h3>
 <ul>
-<li>先關閉 01-prerequsites 的 Etcd</li>
+<li>先關閉 01-prerequsites 的 etcd</li>
+<li>透過 <code>--volumes</code> 刪除 docker volume</li>
+<li>刪除 etcd local volume 資料夾</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down --volumes
+</span></span><span class="line"><span class="cl">rm -rf etcd0/*
 </span></span></code></pre></div>
     </section>
     
@@ -341,8 +380,11 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-clusters-啟動多台-etcd-1">Etcd Clusters: 啟動多台 Etcd</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">cd</span> <span class="mi">01</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span>
+<h3 id="etcd-clusters-啟動多台-etcd">etcd Clusters: 啟動多台 etcd</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">cd</span> <span class="o">../</span>
+</span></span><span class="line"><span class="cl"><span class="n">cd</span> <span class="mi">01</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="n">cat</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yaml</span> 
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
 </span></span><span class="line"><span class="cl"><span class="n">docker</span> <span class="n">ps</span>
 </span></span><span class="line"><span class="cl">
@@ -364,16 +406,19 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-clusters-操作">Etcd Clusters: 操作</h3>
+<h3 id="etcd-clusters-檢視狀態">etcd Clusters: 檢視狀態</h3>
 <p><a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a></p>
 <ul>
 <li>How to check Cluster status</li>
+<li>透過 <code>--help</code> 檢查每個欄位的意義</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl endpoint status
-</span></span><span class="line"><span class="cl"># 查詢 help 檢查每個欄位的意義
 </span></span><span class="line"><span class="cl">etcdctl endpoint status --help
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">etcdctl endpoint health
+</span></span><span class="line"><span class="cl">etcdctl endpoint health --help
 </span></span><span class="line"><span class="cl">etcdctl endpoint hashkv
+</span></span><span class="line"><span class="cl">etcdctl endpoint hashkv --help
 </span></span></code></pre></div>
     </section>
     
@@ -384,7 +429,12 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-clusters-member">Etcd Clusters: Member</h3>
+<h3 id="etcd-clusters-操作-member">etcd Clusters: 操作 Member</h3>
+<ul>
+<li>member 是 etcd cluster 中的一個節點</li>
+<li>leader 是 etcd cluster 中的一個 member</li>
+<li>透過 <code>move-leader</code> 指令，可以交接 leader</li>
+</ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl --write-out=table endpoint status
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker exec -it etcd-1 etcdctl move-leader 88d11e2649dad027
@@ -399,7 +449,7 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-clusters-member-1">Etcd Clusters: Member</h3>
+<h3 id="etcd-clusters-member">etcd Clusters: Member</h3>
 <p><a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a></p>
 <ul>
 <li>How to Add and Remove Members</li>
@@ -439,23 +489,11 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="etcd-clusters-network-partition-and-recovery">Etcd Clusters: network partition and recovery</h3>
-<ul>
-<li><a href="https://etcd.io/docs/v3.5/op-guide/failures/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/op-guide/failures/</a></li>
-</ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
 <h3 id="閱讀資料-1">閱讀資料</h3>
 <ul>
+<li><a href="https://etcd.io/docs/v3.5/faq/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/faq/</a></li>
 <li><a href="https://etcd.io/docs/v3.5/learning/design-learner/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/learning/design-learner/</a></li>
+<li><a href="https://etcd.io/docs/v3.5/learning/persistent-storage-files/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/learning/persistent-storage-files/</a></li>
 </ul>
 
     </section>
@@ -494,6 +532,7 @@ tab to auto complete</p>
 </span></span><span class="line"><span class="cl">./generate.sh
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cd ../
+</span></span><span class="line"><span class="cl">cat docker-compose.yaml
 </span></span><span class="line"><span class="cl">docker compose up -d
 </span></span><span class="line"><span class="cl">docker ps
 </span></span><span class="line"><span class="cl">docker logs kube-apiserver
@@ -510,6 +549,7 @@ tab to auto complete</p>
     
       
 <h3 id="k8s-kubectl">K8s: kubectl</h3>
+<p>kubectl 是 Kubernetes 的 CLI 工具，可以透過 kubectl 存取 k8s control plane</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl --kubeconfig=certs/admin.kubeconfig cluster-info
 </span></span><span class="line"><span class="cl">kubectl --kubeconfig=certs/admin.kubeconfig get all -A
 </span></span></code></pre></div>
@@ -525,10 +565,10 @@ tab to auto complete</p>
 <h3 id="k8s-the-hard-way">K8s: the hard way</h3>
 <p><a href="https://github.com/kelseyhightower/kubernetes-the-hard-way/tree/master" target="_blank" rel="noopener">kelseyhightower/kubernetes-the-hard-way</a> 是一個很棒的學習資源，可以讓你了解到 Kubernetes 的每個細節</p>
 <ul>
-<li>我沒辦法做得更好，但我們可以一起過一次裡面做了哪些事</li>
+<li>這次重點在於 etcd，我們只操作到 etcd 的部分</li>
+<li>k8s 的部分，在於 k8s 跟 etcd 的互動</li>
+<li>有功能的 k8s 還需要部署 node</li>
 </ul>
-<aside class="notes">
-</aside>
 
     </section>
     
@@ -543,7 +583,7 @@ tab to auto complete</p>
 <p><a href="https://github.com/chechiachang/etcd-playground/blob/main/02-control-panel/certs/generate.sh" target="_blank" rel="noopener">certs/generate.sh</a> 有附上對應的 k8s-the-hard-way 的說明文件</p>
 <ul>
 <li>ca 與 certs 是部署 k8s control plane 的必要檔案</li>
-<li>但非常花時間，本 workshop 會直接使用腳本產生配置</li>
+<li>非常花時間，本 workshop 會直接使用腳本產生</li>
 <li>加分題：鼓勵大家自己操作過一次 certs 的產生</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vi certs/generate.sh
@@ -558,11 +598,10 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="k8s-quiz">K8s: Quiz</h3>
-<ol start="3">
-<li>請簡述 etcd / apiserver / controller-manager / scheduler 的功能</li>
-<li>為何不同 component 中使用的 certs / kubeconfig 檔案不同？</li>
-</ol>
+<h3 id="k8s-認識-control-plane-components">K8s: 認識 control plane components</h3>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/overview/components/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/components/</a></li>
+</ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls apiserver
 </span></span><span class="line"><span class="cl">ls controller-manager
 </span></span><span class="line"><span class="cl">ls scheduler
@@ -576,24 +615,10 @@ tab to auto complete</p>
     <section>
     
       
-<h3 id="k8s-answer">K8s: Answer</h3>
-<ol start="3">
-<li><a href="https://kubernetes.io/docs/concepts/overview/components/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/components/</a></li>
-<li>呈 3.</li>
-</ol>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
 <h3 id="k8s-etcd-operations-for-k8s">K8s: etcd operations for k8s</h3>
-<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/</a></p>
+<p>k8s 官方文件中，從維運 k8s 角度，講述如何維運 etcd</p>
 <ul>
+<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/</a></li>
 <li><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#securing-etcd-clusters" target="_blank" rel="noopener">Securing etcd Clusters</a> 放在加分題</li>
 </ul>
 
@@ -607,10 +632,14 @@ tab to auto complete</p>
     
       
 <h3 id="k8s-etcd-backup-and-restore">K8s: etcd backup and restore</h3>
-<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 確定 leader 與 raft index
-</span></span><span class="line"><span class="cl">etcdctl --write-out=table endpoint status
-</span></span><span class="line"><span class="cl"># 備份
+<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster" target="_blank" rel="noopener">backing-up-an-etcd-cluster</a></p>
+<ul>
+<li>etcdctl 確定 leader 與 raft index</li>
+<li>向 leader node 發送 snapshot request</li>
+<li>輸出到 /etcd_data/snapshot.db，會顯示在 etcd1 資料夾中</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl --write-out=table endpoint status
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker exec -it etcd-1 etcdctl snapshot save /etcd_data/snapshot.db
 </span></span><span class="line"><span class="cl">ls etcd1
 </span></span></code></pre></div>
@@ -624,18 +653,22 @@ tab to auto complete</p>
     
       
 <h3 id="k8s-etcd-backup-and-restore-1">K8s: etcd backup and restore</h3>
-<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster</a></p>
+<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster" target="_blank" rel="noopener">restoring-an-etcd-cluster</a></p>
 <ul>
 <li>停止 k8s control plane (apiserver)</li>
+<li>複製 snapshot.db 到 etcd2 與 etcd3 資料夾中</li>
+<li>對每一個 etcd member 執行 restore</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker stop kube-apiserver
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># 恢復
 </span></span><span class="line"><span class="cl">cp etcd1/snapshot.db etcd2/snapshot.db
 </span></span><span class="line"><span class="cl">cp etcd1/snapshot.db etcd3/snapshot.db
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker exec -it etcd-1 etcdctl snapshot restore /etcd_data/snapshot.db
 </span></span><span class="line"><span class="cl">docker exec -it etcd-2 etcdctl snapshot restore /etcd_data/snapshot.db
 </span></span><span class="line"><span class="cl">docker exec -it etcd-3 etcdctl snapshot restore /etcd_data/snapshot.db
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl --write-out=table endpoint status
 </span></span></code></pre></div>
     </section>
     
@@ -647,13 +680,17 @@ tab to auto complete</p>
     
       
 <h3 id="k8s-etcd-backup-and-restore-2">K8s: etcd backup and restore</h3>
-<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#scaling-out-etcd-clusters" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#scaling-out-etcd-clusters</a></p>
+<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#scaling-out-etcd-clusters" target="_blank" rel="noopener">scaling-out-etcd-clusters</a></p>
 <ul>
 <li>修改 01-cluster/docker-compose.yaml</li>
-<li>調整底下 comment 中的部分</li>
+<li>調整底下 comment 中的部分，修改 ? 的地方</li>
 <li>增加兩台 etcd member 到 cluster 中</li>
 </ul>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl member list
+</span></span><span class="line"><span class="cl">etcdctl member add &lt;id&gt; --peer-urls=
+</span></span><span class="line"><span class="cl">etcdctl member list
+</span></span><span class="line"><span class="cl">docker compose up -d
+</span></span></code></pre></div>
     </section>
     
 
@@ -665,10 +702,12 @@ tab to auto complete</p>
       
 <h3 id="加分題為自己加分自己做-ca-and-tls-certs">加分題為自己加分：自己做 ca and tls certs</h3>
 <ul>
+<li>不使用 generate.sh 產生 certs，拉起 k8s control plane</li>
 <li>閱讀 generate.sh 的 comment 部分網頁連結</li>
 <li>將 generate.sh 的內容，到 terminal 中一段一段 copy paste 執行</li>
 </ul>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/chechiachang/etcd-playground.git
+</span></span></code></pre></div>
     </section>
     
 
@@ -700,20 +739,6 @@ tab to auto complete</p>
     
       
 <h3 id="optional-搭建-k8s-node">(Optional) 搭建 K8s Node</h3>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="後續">後續</h3>
-<ul>
-<li>回家自己找一台 linux 機器，跑完 k8s the hard way</li>
-</ul>
 
     </section>
     
