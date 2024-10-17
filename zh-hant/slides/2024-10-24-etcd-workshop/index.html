@@ -179,8 +179,8 @@
 </span></span><span class="line"><span class="cl">docker compose up -d
 </span></span><span class="line"><span class="cl">docker ps
 </span></span><span class="line"><span class="cl">docker logs -f etcd-1
-</span></span></code></pre></div><p>ctrl + c to exit</p>
-<p>tab to auto complete</p>
+</span></span></code></pre></div><p>ctrl + c to exit
+tab to auto complete</p>
 
     </section>
     
@@ -314,7 +314,7 @@
 <ul>
 <li>先關閉 01-prerequsites 的 Etcd</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down --volumes
 </span></span></code></pre></div>
     </section>
     
@@ -476,7 +476,7 @@
     <section>
     
       
-<h3 id="搭建-k8s-control-plane">搭建 K8s Control Plane</h3>
+<h3 id="k8s-搭建-k8s-control-plane">K8s: 搭建 K8s Control Plane</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd 02-k8s-control-plane/
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cd certs
@@ -585,6 +585,27 @@
 <ul>
 <li>閱讀 generate.sh 的 comment 部分網頁連結</li>
 <li>將 generate.sh 的內容，到 terminal 中一段一段 copy paste 執行</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="加分題為自己加分-增加-apiserver">加分題為自己加分: 增加 apiserver</h3>
+<ul>
+<li>更改 02-control-panel/docker-compose.yaml</li>
+<li>修改底下 comment 中的部分 kube-apiserver-1 的部分</li>
+<li>使用 docker compose up 啟動服務</li>
+<li>使用 kubectl 存取 kube-apiserver-1
+<ul>
+<li>需要修改 generate.sh，調整 certs/admin.kubeconfig</li>
+</ul>
+</li>
 </ul>
 
     </section>

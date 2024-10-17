@@ -132,8 +132,8 @@ Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose up -d
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker ps
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker logs -f etcd-1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ctrl + c to exit&lt;/p&gt;
-&lt;p&gt;tab to auto complete&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ctrl + c to exit
+tab to auto complete&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;etcd-基礎操作-etcdctl&#34;&gt;Etcd 基礎操作: Etcdctl&lt;/h3&gt;
 &lt;p&gt;請嘗試操作 &lt;a href=&#34;https://etcd.io/docs/v3.5/tutorials/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/tutorials/&lt;/a&gt; 中的幾個範例&lt;/p&gt;
@@ -204,7 +204,7 @@ Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;先關閉 01-prerequsites 的 Etcd&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose down
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose down --volumes
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;etcd-clusters-啟動多台-etcd-1&#34;&gt;Etcd Clusters: 啟動多台 Etcd&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;01&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cluster&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;
@@ -285,7 +285,7 @@ Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
 &lt;li&gt;docker compose 重啟服務&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;搭建-k8s-control-plane&#34;&gt;搭建 K8s Control Plane&lt;/h3&gt;
+&lt;h3 id=&#34;k8s-搭建-k8s-control-plane&#34;&gt;K8s: 搭建 K8s Control Plane&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd 02-k8s-control-plane/
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd certs
@@ -340,6 +340,18 @@ Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;閱讀 generate.sh 的 comment 部分網頁連結&lt;/li&gt;
 &lt;li&gt;將 generate.sh 的內容，到 terminal 中一段一段 copy paste 執行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;加分題為自己加分-增加-apiserver&#34;&gt;加分題為自己加分: 增加 apiserver&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;更改 02-control-panel/docker-compose.yaml&lt;/li&gt;
+&lt;li&gt;修改底下 comment 中的部分 kube-apiserver-1 的部分&lt;/li&gt;
+&lt;li&gt;使用 docker compose up 啟動服務&lt;/li&gt;
+&lt;li&gt;使用 kubectl 存取 kube-apiserver-1
+&lt;ul&gt;
+&lt;li&gt;需要修改 generate.sh，調整 certs/admin.kubeconfig&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;optional-搭建-k8s-node&#34;&gt;(Optional) 搭建 K8s Node&lt;/h3&gt;
