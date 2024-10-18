@@ -478,7 +478,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">rm -rf etcd3/member
 </span></span><span class="line"><span class="cl">docker start etcd-3
-</span></span><span class="line"><span class="cl">etcd member list
+</span></span><span class="line"><span class="cl">etcdctl member list
 </span></span></code></pre></div>
     </section>
     
@@ -526,7 +526,7 @@
     
       
 <h3 id="k8s-搭建-k8s-control-plane">K8s: 搭建 K8s Control Plane</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd 02-k8s-control-plane/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd 02-control-panel
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cd certs
 </span></span><span class="line"><span class="cl">./generate.sh
