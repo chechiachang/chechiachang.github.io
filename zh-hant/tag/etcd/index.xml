@@ -440,6 +440,7 @@ Microsoft Most Valuable Professional since 2020.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;optional-搭建-k8s-node&#34;&gt;(Optional) 搭建 K8s Node&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/09-bootstrapping-kubernetes-workers.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/09-bootstrapping-kubernetes-workers.md&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
 &lt;ul&gt;
