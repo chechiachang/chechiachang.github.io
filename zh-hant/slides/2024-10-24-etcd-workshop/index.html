@@ -162,6 +162,7 @@
 <li>至<a href="https://workshop.chechia.net" target="_blank" rel="noopener">workshop.chechia.net</a> 領取一台 VM 並簽名</li>
 <li>從講師取得使用者名稱與密碼</li>
 <li>使用瀏覽器，透過 url 連線至你的 VM，輸入使用者名稱與密碼登入</li>
+<li>Protocol: SSH，port 22，authentication type: password</li>
 <li>下載教材（滑鼠複製底下指令，滑鼠右鍵就能貼到 terminal 中）</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/chechiachang/etcd-playground.git
@@ -289,11 +290,11 @@
 <li><a href="https://etcd.io/docs/v3.5/learning/why/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/learning/why/</a></li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd 00-prerequsites/
-</span></span><span class="line"><span class="cl">ls etcd0
-</span></span><span class="line"><span class="cl">ls etcd0/member
+</span></span><span class="line"><span class="cl">sudo ls etcd0
+</span></span><span class="line"><span class="cl">sudo ls etcd0/member
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker compose down --volumes
-</span></span><span class="line"><span class="cl">rm -rf etcd0/*
+</span></span><span class="line"><span class="cl">sudo rm -rf etcd0/*
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># 新的 etcd
 </span></span><span class="line"><span class="cl">docker compose up -d
@@ -334,7 +335,7 @@
 </ul>
 <h5 id="卡住乃兵家常事大俠請重新來過即可">卡住乃兵家常事，大俠請重新來過即可</h5>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down --volumes
-</span></span><span class="line"><span class="cl">rm -rf etcd0/*
+</span></span><span class="line"><span class="cl">sudo rm -rf etcd0/*
 </span></span></code></pre></div>
     </section>
     
@@ -369,7 +370,7 @@
 <li>刪除 etcd local volume 資料夾</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose down --volumes
-</span></span><span class="line"><span class="cl">rm -rf etcd0/*
+</span></span><span class="line"><span class="cl">sudo rm -rf etcd0/*
 </span></span></code></pre></div>
     </section>
     
@@ -476,7 +477,7 @@
 </span></span><span class="line"><span class="cl">etcdctl member add c3697a4fd7a20dcd --peer-urls=&#34;http://etcd-3:2380&#34;
 </span></span><span class="line"><span class="cl">etcdctl member list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">rm -rf etcd3/member
+</span></span><span class="line"><span class="cl">sudo rm -rf etcd3/member
 </span></span><span class="line"><span class="cl">docker start etcd-3
 </span></span><span class="line"><span class="cl">etcdctl member list
 </span></span></code></pre></div>
