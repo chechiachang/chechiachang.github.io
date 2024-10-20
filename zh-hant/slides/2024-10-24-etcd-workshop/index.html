@@ -144,7 +144,7 @@
 <li>參與者在自己的機器上操作</li>
 <li>參與者可以跟台上的進度，也可以超前進度向後操作</li>
 <li>進度落後不太會影響後續操作，不必擔心</li>
-<li>加分題是重要但沒時間於今日完成的內容</li>
+<li>加分題是重要，但沒時間於今日完成的內容，請自行參考</li>
 <li>有很多問題也很正常，產生疑問也是工作坊的目的</li>
 </ul>
 
@@ -219,9 +219,34 @@
     
       
 <h3 id="etcd-基礎操作-etcdctl-1">etcd 基礎操作: etcdctl</h3>
-<p>請嘗試操作 <a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a> 中的幾個範例</p>
+<p><a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a> 中的幾個範例</p>
 <ul>
 <li>How to get keys by prefix</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl get --prefix &#34;&#34; 
+</span></span><span class="line"><span class="cl">etcdctl get &#34;&#34; --prefix --keys-only
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl put foo2 2
+</span></span><span class="line"><span class="cl">etcdctl put foo5 5
+</span></span><span class="line"><span class="cl">etcdctl put foo4 4
+</span></span><span class="line"><span class="cl">etcdctl put foo3 3
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl get foo --prefix --keys-only
+</span></span><span class="line"><span class="cl">etcdctl get foo --prefix --keys-only --sort-by=KEY --limit=5
+</span></span><span class="line"><span class="cl">etcdctl get foo --prefix --keys-only --sort-by=MODIFY --limit=5
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="etcd-基礎操作-etcdctl-2">etcd 基礎操作: etcdctl</h3>
+<p>請嘗試操作 <a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a> 中的幾個範例</p>
+<ul>
 <li>How to delete keys</li>
 <li>How to watch keys</li>
 <li>How to check Cluster status</li>
@@ -527,6 +552,43 @@
     
       
 <h3 id="k8s-搭建-k8s-control-plane">K8s: 搭建 K8s Control Plane</h3>
+<ul>
+<li>確定 etcd cluster 都正常運行
+<ul>
+<li>裡面沒有資料，有的話可以刪除，啟動新的 etcd</li>
+</ul>
+</li>
+<li>透過 docker 啟動 K8s Control Plane
+<ul>
+<li>kube-apiserver</li>
+<li>kube-controller-manager</li>
+<li>kube-scheduler</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl member list
+</span></span><span class="line"><span class="cl">docker ps -a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl get &#34;&#34; --prefix --keys-only
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="k8s-搭建-k8s-control-plane-1">K8s: 搭建 K8s Control Plane</h3>
+<ul>
+<li>透過底下指令，啟動 k8s control plane
+<ul>
+<li>這是一個極度簡化的 k8s control plane</li>
+<li>正式環境不會長這樣</li>
+</ul>
+</li>
+</ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd 02-control-panel
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cd certs
@@ -549,10 +611,89 @@
     <section>
     
       
+<p><a href="https://kubernetes.io/docs/concepts/overview/components/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/components/</a></p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
 <h3 id="k8s-kubectl">K8s: kubectl</h3>
-<p>kubectl 是 Kubernetes 的 CLI 工具，可以透過 kubectl 存取 k8s control plane</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl --kubeconfig=certs/admin.kubeconfig cluster-info
+<ul>
+<li>透過 etcdctl 檢查目前的 etcd 資料內容</li>
+<li>kubectl 是 Kubernetes 的 CLI 工具，可以透過 kubectl 存取 k8s control plane</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl get &#34;&#34; --prefix --keys-only
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl --kubeconfig=certs/admin.kubeconfig cluster-info
 </span></span><span class="line"><span class="cl">kubectl --kubeconfig=certs/admin.kubeconfig get all -A
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="k8s-data-in-etcd">K8s: data in etcd</h3>
+<ul>
+<li>使用 etcdctl 存取 k8s 的資料</li>
+<li>jq</li>
+<li>yq</li>
+<li>選幾個 <code>/registry</code> 的 key，探索更多 k8s 內容</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl get &#34;/&#34; --prefix --keys-only --sort-by=KEY
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl get /registry/namespaces/default -w json | jq
+</span></span><span class="line"><span class="cl">etcdctl get /registry/namespaces/default -w json | yq -P
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="k8s-data-in-etcd-1">K8s: data in etcd</h3>
+<p>k8s 運行時，會將資料存放在 etcd 中</p>
+<ul>
+<li>透過 kubectl create namespace workshop 創建一個 namespace</li>
+<li>透過 etcdctl 存取 workshop namespace 的資料</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl get &#34;/registry/namespaces&#34; --prefix --keys-only --sort-by=KEY
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl --kubeconfig=certs/admin.kubeconfig create namespace workshop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">etcdctl get /registry/namespaces/workshop -w json | yq -P
 </span></span></code></pre></div>
     </section>
     
