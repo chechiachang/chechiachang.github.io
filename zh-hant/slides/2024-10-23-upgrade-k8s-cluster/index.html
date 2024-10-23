@@ -59,27 +59,9 @@
     
     
     
-      
-<section data-noprocess data-shortcode-slide
-  
-      
-      data-background-image="onepiece.png"
-  >
-
-<aside class="notes">
-  投影片跟講稿我都放在我的網站上，如果有興趣可以參考
-</aside>
-
-    </section>
-    
-
-    
-    
-    
     <section>
     
-      
-<h3 id="upgrade-a-vm-based-cluster">Upgrade A VM Based Cluster</h3>
+      <h3 id="upgrade-a-vm-based-cluster">Upgrade A VM Based Cluster</h3>
 <p><a href="https://chechia.net/" target="_blank" rel="noopener">Che Chia Chang</a></p>
 <aside class="notes">
 </aside>
@@ -96,10 +78,10 @@
 <h3 id="關於我">關於我</h3>
 <ul>
 <li>Che Chia Chang</li>
-<li>SRE @ <a href="https://www.linkedin.com/company/maicoin/jobs/" target="_blank" rel="noopener">Maicoin</a></li>
+<li>SRE @ <a href="https://www.cake.me/companies/maicoin/jobs" target="_blank" rel="noopener">Maicoin</a></li>
 <li><a href="https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5" target="_blank" rel="noopener">Microsoft MVP</a></li>
-<li>個人部落格<a href="https://chechia.net/" target="_blank" rel="noopener">chechia.net</a></li>
-<li>presentation and speaker notes</li>
+<li>投影片與講稿都在 <a href="https://chechia.net/" target="_blank" rel="noopener">chechia.net</a></li>
+<li><a href="https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/" target="_blank" rel="noopener">Etcd Workshop</a></li>
 <li>鐵人賽 (Terraform / Vault 手把手入門)</li>
 </ul>
 
@@ -112,14 +94,25 @@
     <section>
     
       
-<h3 id="大綱">大綱</h3>
+<h3 id="were-hiring">We&rsquo;re hiring!</h3>
+<p><a href="https://www.cake.me/companies/maicoin/jobs" target="_blank" rel="noopener">https://www.cake.me/companies/maicoin/jobs</a></p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="故事">故事</h3>
 <ul>
-<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">Overview: Official doc</a></li>
-<li>Preflight Check: API Version</li>
-<li>etcd</li>
-<li>kube-apiserver</li>
-<li>kube-controller-manager</li>
-<li>kube-scheduler</li>
+<li>為何要 AWS 自架 K8s</li>
+<li>事前閱讀文件，規劃</li>
+<li>Upgrade Etcd</li>
+<li>Upgrade kube-apiserver / kube-controller-manager / kube-scheduler</li>
+<li>Upgrade Node</li>
 <li>Q&amp;A</li>
 </ul>
 <aside class="notes">
@@ -134,9 +127,376 @@
     <section>
     
       
+<h3 id="什麼是-vm-based-cluster">什麼是 VM-based Cluster</h3>
+<ul>
+<li>Managed Kubernetes Service (GKE, EKS, AKS)
+<ul>
+<li>公有雲託管 control plane，透過雲提供的介面控制</li>
+</ul>
+</li>
+<li>self-hosted Kubernetes
+<ul>
+<li>cloud formation template ec2 node</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="什麼是-vm-based-cluster-1">什麼是 VM-based Cluster</h3>
+<p>公有雲只提供 VM，自己用其它工具搭 K8s Components</p>
+<ul>
+<li>kubeadm, kops, kubespray / docker, containerd, cri-o / container or systemd / &hellip;</li>
+<li>自己管理 control plane，包含 etcd, apiserver, controller-manager, scheduler</li>
+<li>依需求選用公有雲提供的架構，ex VPC, ELB, EBS, S3, RDS, IAM, Route53, CloudWatch, CloudTrail, &hellip;</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>K8s components</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Self-hosted K8s</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://docs.aws.amazon.com/images/whitepapers/latest/overview-deployment-options/images/image6.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>Self-hosted control plane</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="self-hosted-k8s.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="所以為何要在aws上自架-k8s">所以為何要在AWS上自架 K8s？</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="因為-2016-年的時候沒有-eks">因為 2016 年的時候沒有 eks</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="因為-2016-年的時候沒有-eks-1">因為 2016 年的時候沒有 eks</h3>
+<ul>
+<li>2014/10/15 kubernetes v0.4 <a href="https://github.com/kubernetes/kubernetes/releases/tag/v0.4" target="_blank" rel="noopener">github</a></li>
+<li>2014/11/04 <a href="https://cloud.google.com/kubernetes-engine/docs/release-notes-archive#november_4_2014" target="_blank" rel="noopener">GKE release for 0.4.2</a></li>
+<li>當時有很多解決方案再提供 self-hosted k8s，基於這些方案，我們自己架了一個
+<ul>
+<li><a href="https://github.com/getamis/vishwakarma" target="_blank" rel="noopener">github.com/getamis/vishwakarma</a></li>
+</ul>
+</li>
+<li>2017/10/24 <a href="https://azure.microsoft.com/en-us/blog/introducing-azure-container-service-aks-managed-kubernetes-and-azure-container-registry-geo-replication/" target="_blank" rel="noopener">AKS generally available</a></li>
+<li>2018/06/05 <a href="https://aws.amazon.com/blogs/aws/amazon-eks-now-generally-available/" target="_blank" rel="noopener">EKS generally available</a></li>
+</ul>
+<aside class="notes">
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="self-hosted-control-plane">Self-hosted control plane</h3>
+<p>self-hosted control plane 其實不難，那時有很多成熟的解決方案</p>
+<ul>
+<li><a href="https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/" target="_blank" rel="noopener">k8s summit Etcd Workshop</a></li>
+<li>降低服務商依賴</li>
+<li>可以跨雲，跨地端，混合雲</li>
+<li>自訂化，換 VM disk image，CNI，CSI，Ingress Controller</li>
+<li>成本控制</li>
+</ul>
+<aside class="notes">
+  Self host 有一些好處
+壞處就是要自己做的東西很多
+隨著 cloud managed k8s 越做越好，自己架的理由越來越少
+這也是當初百家爭鳴的自架解決方案，現在只剩下幾個
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="結束背景開始升級">結束背景，開始升級</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="起飛前規劃">起飛前規劃</h3>
+<p>需要事前研究跟規劃</p>
+<ul>
+<li>確認目前版本與目標版本</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="需要升級的-k8s-components">需要升級的 K8s Components</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="etcd">etcd</h3>
+<p>一個健康的 etcd cluster 可以幾乎 zero downtime rolling upgrade</p>
+<p>如何確認 etcd 升版後是好的</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="apiserver">apiserver</h3>
+<h3 id="scheduler-and-controller-manager">scheduler and controller manager</h3>
+<h3 id="application-controllers">application controllers</h3>
+<h3 id="測試">測試</h3>
+<p>smoke testing</p>
+<ul>
+<li>直接驗證可行性</li>
+<li>針對有使用的功能或是重要功能做測試</li>
+<li>快速執行，早期發現問題
+<ul>
+<li>問題不是有問題，而是有問題太晚發現</li>
+</ul>
+</li>
+</ul>
+<h3 id="例如">例如</h3>
+<p>ingress controller</p>
+<ul>
+<li>測試腳本中測試 create / update / delete ingress</li>
+</ul>
+<h3 id="完整的多環境測試">完整的多環境測試</h3>
+<h3 id="好的監測">好的監測</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="infra">Infra</h3>
+<p>Vishwakarma</p>
+<p><a href="https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan" target="_blank" rel="noopener">https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan</a></p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="監測">監測</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">while true; do
+</span></span><span class="line"><span class="cl">    kubectl get pods -n kube-system; 
+</span></span><span class="line"><span class="cl">    sleep 2;
+</span></span><span class="line"><span class="cl">done
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="監測-1">監測</h3>
+<ul>
+<li>etcd dashboard</li>
+<li>k8s api dashboard</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="upgrade">Upgrade</h3>
+<ul>
+<li>選擇你的版號</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
 <h3 id="參考資料">參考資料</h3>
 <ul>
 <li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">Overview: Official doc</a></li>
 </ul>
 
     </section>
