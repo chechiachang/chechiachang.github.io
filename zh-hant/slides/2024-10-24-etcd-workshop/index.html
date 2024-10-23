@@ -412,7 +412,8 @@
     
       
 <h3 id="加分題為自己加分authentication-1">加分題為自己加分：authentication</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl role add
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 可能會用到的 cmd
+</span></span><span class="line"><span class="cl">etcdctl role add
 </span></span><span class="line"><span class="cl">etcdctl role grant-permission
 </span></span><span class="line"><span class="cl">etcdctl user add
 </span></span><span class="line"><span class="cl">etcdctl user list
@@ -861,14 +862,15 @@
     <section>
     
       
-<h3 id="k8s-etcd-backup-and-restore-2">K8s: etcd backup and restore</h3>
+<h3 id="加分題為自己加分增加-etcd-member">加分題為自己加分：增加 etcd member</h3>
 <p><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#scaling-out-etcd-clusters" target="_blank" rel="noopener">scaling-out-etcd-clusters</a></p>
 <ul>
 <li>修改 01-cluster/docker-compose.yaml</li>
 <li>調整底下 comment 中的部分，修改 ? 的地方</li>
 <li>增加兩台 etcd member 到 cluster 中</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">etcdctl member list
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 可能會用到的 cmd
+</span></span><span class="line"><span class="cl">etcdctl member list
 </span></span><span class="line"><span class="cl">etcdctl member add &lt;id&gt; --peer-urls=
 </span></span><span class="line"><span class="cl">etcdctl member list
 </span></span><span class="line"><span class="cl">docker compose up -d
@@ -888,8 +890,7 @@
 <li>閱讀 generate.sh 的 comment 部分網頁連結</li>
 <li>將 generate.sh 的內容，到 terminal 中一段一段 copy paste 執行</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/chechiachang/etcd-playground.git
-</span></span></code></pre></div>
+
     </section>
     
 
