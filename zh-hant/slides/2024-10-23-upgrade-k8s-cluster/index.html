@@ -438,37 +438,6 @@
     <section>
     
       
-<h3 id="supported-version-skew">Supported Version Skew</h3>
-<p><a href="https://kubernetes.io/releases/version-skew-policy/" target="_blank" rel="noopener">https://kubernetes.io/releases/version-skew-policy/</a></p>
-<ul>
-<li>kube-apiserver 彼此最多差 1 個小版號
-<ul>
-<li>1.30 升 1.31 過程可以無痛</li>
-</ul>
-</li>
-<li>controller manager, scheduler, cloud controller manager
-<ul>
-<li>(vs apiserver) 最多差 1 個小版號</li>
-<li>升級 apiserver 後，跟著升級同板</li>
-</ul>
-</li>
-<li>kubelet, kube-proxy
-<ul>
-<li>(vs apiserver) 最多差 3 個小版號</li>
-<li>apiserver 1.30 升 1.31 時，node 1.28, 1.29, 1.30 可以無痛</li>
-</ul>
-</li>
-</ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
 <h3 id="k8s-release-cycle--4-months">K8s Release Cycle ~ 4 months</h3>
 <p>
 
@@ -764,6 +733,17 @@
     <section>
     
       
+<h3 id="kube-apiserver">kube-apiserver</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
 <h3 id="apiserver-doc">apiserver doc</h3>
 <p>
 
@@ -801,7 +781,27 @@
     <section>
     
       
-<h3 id="apiserver-upgrade-doc">apiserver upgrade doc</h3>
+<h3 id="supported-version-skew">Supported Version Skew</h3>
+<p><a href="https://kubernetes.io/releases/version-skew-policy/" target="_blank" rel="noopener">https://kubernetes.io/releases/version-skew-policy/</a></p>
+<ul>
+<li>kube-apiserver 彼此最多差 1 個小版號
+<ul>
+<li>1.30 升 1.31 過程可以無痛</li>
+</ul>
+</li>
+<li>controller manager, scheduler, cloud controller manager
+<ul>
+<li>(vs apiserver) 最多差 1 個小版號</li>
+<li>升級 apiserver 後，跟著升級同板</li>
+</ul>
+</li>
+<li>kubelet, kube-proxy
+<ul>
+<li>(vs apiserver) 最多差 3 個小版號</li>
+<li>apiserver 1.30 升 1.31 時，node 1.28, 1.29, 1.30 可以無痛</li>
+</ul>
+</li>
+</ul>
 
     </section>
     
@@ -815,22 +815,7 @@
 <h3 id="api-deprecated">api deprecated</h3>
 <ul>
 <li><a href="https://kubernetes.io/docs/reference/using-api/deprecation-guide/" target="_blank" rel="noopener">Deprecated API Migration Guide</a></li>
-</ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="apiserver-api-dependent">apiserver api dependent</h3>
-<ul>
-<li>controller supported api version
-crd, webhook, admission controller, api server plugin
-controller</li>
+<li><a href="https://kubernetes.io/docs/reference/using-api/deprecation-policy/" target="_blank" rel="noopener">Deprecation policy</a></li>
 </ul>
 
     </section>
@@ -844,9 +829,55 @@ controller</li>
       
 <h3 id="使用工具掃描-k8s-resource">使用工具掃描 k8s resource</h3>
 <ul>
+<li>如何確認 app 的 k8s resource 有沒有使用到 deprecated API</li>
 <li><a href="https://github.com/doitintl/kube-no-trouble" target="_blank" rel="noopener">https://github.com/doitintl/kube-no-trouble</a></li>
-<li>加入到升級流程，自動化</li>
+<li>加入到升級流程，自動化
+<ul>
+<li>（沒升級的時候）週期性的掃描</li>
+<li>如果有 app 使用到 deprecated API，通知 app owner 提早更新</li>
+<li>升級前再掃描一次</li>
 </ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="kube-no-trouble">kube-no-trouble</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/kube-no-trouble_huae4424a7ba0c58768cc463bb0b5fb679_352975_5f8ff898c063224b5b8bd4b5d3a8e711.webp 400w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/kube-no-trouble_huae4424a7ba0c58768cc463bb0b5fb679_352975_a0b87251be297a9a21bc74efd5176e4f.webp 760w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/kube-no-trouble_huae4424a7ba0c58768cc463bb0b5fb679_352975_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/kube-no-trouble_huae4424a7ba0c58768cc463bb0b5fb679_352975_5f8ff898c063224b5b8bd4b5d3a8e711.webp"
+               width="760"
+               height="451"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
 
     </section>
     
@@ -900,7 +931,216 @@ controller</li>
     
       
 <h3 id="scheduler-and-controller-manager">scheduler and controller manager</h3>
-<h3 id="application-controllers">application controllers</h3>
+<ul>
+<li>如果是 master VM (api-server, scheduler, controller manager, cloud controller manager)
+<ul>
+<li>一起升級</li>
+<li>一起建立新版 VM</li>
+<li>一起移除舊版 VM</li>
+</ul>
+</li>
+<li>如果是其他方式 apply，依照對應的升級指令</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="依賴-k8s-api-的-app">依賴 k8s api 的 app</h3>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/architecture/controller/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/controller/</a></li>
+<li>許多 controller 會需要依賴特定的 k8s api
+<ul>
+<li>進而依賴特定版本的 k8s</li>
+</ul>
+</li>
+<li>會打 k8s api 的 app
+<ul>
+<li>自家寫的 app 有用 k8s <a href="https://github.com/kubernetes/client-go" target="_blank" rel="noopener">client-go</a></li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="app-升級檢查">app 升級檢查</h3>
+<ul>
+<li>掃描 k8s resource 使用的 api version 大部分掃得出來</li>
+<li>各 controller 的文件才會描述為何有版本依賴
+<ul>
+<li>以及如何升級 app controller 到新版的 k8s api</li>
+</ul>
+</li>
+<li>團隊應維護<strong>依賴 k8s api 的服務列表</strong>
+<ul>
+<li>或是使用工具 or script 快速列出 cluster 內部的服務</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://docs.nginx.com/nginx-ingress-controller/technical-specifications/" target="_blank" rel="noopener">https://docs.nginx.com/nginx-ingress-controller/technical-specifications/</a></p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller_hucf9b38e708dc650dbc3b047c0d0220b8_521288_3369f589e454621284e1b163a93cee54.webp 400w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller_hucf9b38e708dc650dbc3b047c0d0220b8_521288_19bbcde2d15f9dfcd645bda783e6b053.webp 760w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller_hucf9b38e708dc650dbc3b047c0d0220b8_521288_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller_hucf9b38e708dc650dbc3b047c0d0220b8_521288_3369f589e454621284e1b163a93cee54.webp"
+               width="760"
+               height="372"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p><a href="https://docs.nginx.com/nginx-ingress-controller/technical-specifications/" target="_blank" rel="noopener">https://docs.nginx.com/nginx-ingress-controller/technical-specifications/</a></p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller-support-version_hufbac6fd8436dc2c38d9f2e682a695f69_247330_65c4a048be66873d995726b0b6cb1534.webp 400w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller-support-version_hufbac6fd8436dc2c38d9f2e682a695f69_247330_c10047e257b9ad72be0e9309ef297c93.webp 760w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller-support-version_hufbac6fd8436dc2c38d9f2e682a695f69_247330_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/nginx-ingress-controller-support-version_hufbac6fd8436dc2c38d9f2e682a695f69_247330_65c4a048be66873d995726b0b6cb1534.webp"
+               width="760"
+               height="674"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="小結k8s-control-plane-升級">小結：k8s control plane 升級</h3>
+<ul>
+<li>etcd</li>
+<li>changelog</li>
+<li>apiserver
+<ul>
+<li>api deprecation</li>
+</ul>
+</li>
+<li>scheduler, controller manager</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="node-升級">Node 升級</h3>
+<ul>
+<li>kubelet, kube-proxy 升級本身不是問題</li>
+<li>需要搬移 worklaod</li>
+<li>有沒有 worklaod 依賴 k8s api (ex. <a href="https://github.com/kubernetes/client-go" target="_blank" rel="noopener">client-go</a>
+<ul>
+<li>有的話應該收錄上升級的服務列表，每次升級都需要檢查</li>
+<li>有直接與 k8s api 互動的 app，強烈建議要寫 unit test</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="需要搬移-worklaod">需要搬移 worklaod</h3>
+<ul>
+<li>建新拆舊</li>
+<li>準備一倍的空 node</li>
+<li>舊 node 打上 node taint，避免 worklaod 跑上去</li>
+<li>一步驟重啟 workload，</li>
+</ul>
+<p>dependency</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="node-升級-1">Node 升級</h3>
+<ul>
+<li>跨環境測試 workload</li>
+</ul>
 
     </section>
     
