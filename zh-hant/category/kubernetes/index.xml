@@ -1168,23 +1168,28 @@ DDOS protection
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo rm -rf etcd0/*
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;etcd-clusters-啟動多台-etcd&#34;&gt;etcd Clusters: 啟動多台 etcd&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;../&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;01&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cluster&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;cat&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;docker&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;compose&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yaml&lt;/span&gt; 
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd ../
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd 01-cluster/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat docker-compose.yaml 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;docker&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;compose&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;up&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;docker&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ps&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ENDPOINTS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endpoints&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ENDPOINTS&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endpoints&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ENDPOINTS&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;table&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ETCDCTL_ENDPOINTS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose up -d
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker ps
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;etcd-clusters-檢視狀態&#34;&gt;etcd Clusters: 檢視狀態&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;預設 etcdctl 會連線到 &amp;ndash;endpoints=[127.0.0.1:2379]&lt;/li&gt;
+&lt;li&gt;使用 &amp;ndash;endpoints 指定要連線到的 etcd&lt;/li&gt;
+&lt;li&gt;使用 export ETCDCTL_ENDPOINTS 指定要連線到的 etcd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endpoints&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://127.0.0.1:2379,http://127.0.0.1:2380&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endpoints&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ETCDCTL_ENDPOINTS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endpoints&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ETCDCTL_ENDPOINTS&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;etcdctl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endpoint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;etcd-clusters-檢視狀態-1&#34;&gt;etcd Clusters: 檢視狀態&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/tutorials/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/tutorials/&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;How to check Cluster status&lt;/li&gt;
@@ -1502,6 +1507,533 @@ mac 安裝以下工具&lt;/li&gt;
 &lt;li&gt;鐵人賽 (Terraform / Vault 手把手入門)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;今天的主題&#34;&gt;今天的主題&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;為何要 AWS 自架 K8s&lt;/li&gt;
+&lt;li&gt;升級事前閱讀文件與規劃&lt;/li&gt;
+&lt;li&gt;需要升級的元件&lt;/li&gt;
+&lt;li&gt;實際升級的步驟 -&amp;gt; SOP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;統整散落的資訊希望聽眾能夠藉此產生自己的升級-sop&#34;&gt;統整散落的資訊，希望聽眾能夠藉此產生自己的升級 SOP&lt;/h3&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;背景什麼是-vm-based-cluster&#34;&gt;背景：什麼是 VM-based Cluster&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Managed Kubernetes Service (GKE, EKS, AKS)
+&lt;ul&gt;
+&lt;li&gt;公有雲託管 control plane，透過雲提供的介面控制&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;self-hosted Kubernetes
+&lt;ul&gt;
+&lt;li&gt;cloud formation template ec2 node&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;Self-hosted K8s&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://docs.aws.amazon.com/images/whitepapers/latest/overview-deployment-options/images/image6.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;什麼是-vm-based-cluster&#34;&gt;什麼是 VM-based Cluster&lt;/h3&gt;
+&lt;p&gt;公有雲只提供 VM，自己用其它工具搭 K8s Components&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kubeadm, kops, kubespray / docker, containerd, cri-o / container or systemd / &amp;hellip;&lt;/li&gt;
+&lt;li&gt;自己管理 control plane，包含 etcd, apiserver, controller-manager, scheduler&lt;/li&gt;
+&lt;li&gt;依需求選用公有雲提供的架構，ex VPC, ELB, EBS, S3, RDS, IAM, Route53, CloudWatch, CloudTrail&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;Self-hosted control plane&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_eb8f55efbce8d718a4ef759ab3132d6a.webp 400w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_6e1c278b9cf5a58db30db69224462074.webp 760w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_eb8f55efbce8d718a4ef759ab3132d6a.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;428&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;所以為何要在aws上自架-k8s&#34;&gt;所以為何要在AWS上自架 K8s？&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;因為-2016-年的時候沒有-eks&#34;&gt;因為 2016 年的時候沒有 eks&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;2015--年有很多-self-hosted-k8s-解決方案&#34;&gt;2015- 年有很多 self-hosted k8s 解決方案&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;2014/10/15 kubernetes v0.4 &lt;a href=&#34;https://github.com/kubernetes/kubernetes/releases/tag/v0.4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;2014/11/04 &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/release-notes-archive#november_4_2014&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GKE release for 0.4.2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;當時有很多解決方案再提供 self-hosted k8s，基於這些方案，產生 VM-based k8s
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/getamis/vishwakarma&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github.com/getamis/vishwakarma&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;2017/10/24 &lt;a href=&#34;https://azure.microsoft.com/en-us/blog/introducing-azure-container-service-aks-managed-kubernetes-and-azure-container-registry-geo-replication/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AKS generally available&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;2018/06/05 &lt;a href=&#34;https://aws.amazon.com/blogs/aws/amazon-eks-now-generally-available/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;EKS generally available&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;self-hosted-control-plane&#34;&gt;Self-hosted control plane&lt;/h3&gt;
+&lt;p&gt;self-hosted control plane 其實不難，那時有很多成熟的解決方案&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s summit Etcd Workshop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;降低服務商依賴&lt;/li&gt;
+&lt;li&gt;可以跨雲，跨地端，混合雲&lt;/li&gt;
+&lt;li&gt;自訂化，換 VM disk image，CNI，CSI，Ingress Controller&lt;/li&gt;
+&lt;li&gt;成本控制&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;self-hosted-control-plane-壞處&#34;&gt;Self-hosted control plane: 壞處&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;團隊做的東西很多&lt;/li&gt;
+&lt;li&gt;工程師個人可以(必須)學到很多東西&lt;/li&gt;
+&lt;li&gt;cloud managed k8s 越做越好，自己架的理由越來越少&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;self-hosted-多了要升級的東西&#34;&gt;Self-hosted 多了要升級的東西&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;VM: based image / package / CVEs (不在今天的範圍)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/#manual-deployments&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s doc 建議的升級順序&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Etcd Cluster&lt;/li&gt;
+&lt;li&gt;Control Plane
+&lt;ul&gt;
+&lt;li&gt;apiserver&lt;/li&gt;
+&lt;li&gt;controller manager&lt;/li&gt;
+&lt;li&gt;scheduler&lt;/li&gt;
+&lt;li&gt;cloud controller manager&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;升級步驟&#34;&gt;升級步驟&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; alt=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;實際來看升級的步驟&#34;&gt;實際來看升級的步驟&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;實際升級的順序&#34;&gt;實際升級的順序&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;研究決定升版目標
+&lt;ul&gt;
+&lt;li&gt;必讀 K8s CHANGELOG / Urgent Upgrade Notes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;檢查 app 的版本依賴 (i.e 升 k8s 會壞的 app)
+&lt;ul&gt;
+&lt;li&gt;K8s resource API Deprecated&lt;/li&gt;
+&lt;li&gt;App Controllers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Etcd Cluster&lt;/li&gt;
+&lt;li&gt;Apiserver
+&lt;ul&gt;
+&lt;li&gt;Controller Manager&lt;/li&gt;
+&lt;li&gt;Scheduler&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Node (kubelet, kube-proxy, CNI agent)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;事前研究跟規劃&#34;&gt;事前研究跟規劃&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;確認目前版本&lt;/li&gt;
+&lt;li&gt;目標版本
+&lt;ul&gt;
+&lt;li&gt;升版的目的：(feature, EOL, &amp;hellip;)&lt;/li&gt;
+&lt;li&gt;元件彼此相容的版本&lt;/li&gt;
+&lt;li&gt;每個小版號 Release Cycle ~ 4 months&lt;/li&gt;
+&lt;li&gt;有重疊時間，所以大概是 3 個月出一版新的&lt;/li&gt;
+&lt;li&gt;path release ~ 8 months&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;supported-version-skew&#34;&gt;Supported Version Skew&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/releases/version-skew-policy/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/releases/version-skew-policy/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kube-apiserver 彼此最多差 1 個小版號
+&lt;ul&gt;
+&lt;li&gt;1.30 升 1.31 過程可以無痛&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;controller manager, scheduler, cloud controller manager
+&lt;ul&gt;
+&lt;li&gt;(vs apiserver) 最多差 1 個小版號&lt;/li&gt;
+&lt;li&gt;升級 apiserver 後，跟著升級同板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;kubelet, kube-proxy
+&lt;ul&gt;
+&lt;li&gt;(vs apiserver) 最多差 3 個小版號&lt;/li&gt;
+&lt;li&gt;apiserver 1.30 升 1.31 時，node 1.28, 1.29, 1.30 可以無痛&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;k8s-release-cycle--4-months&#34;&gt;K8s Release Cycle ~ 4 months&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/releases/release-cycle.jpg&#34; alt=&#34;https://kubernetes.io/images/releases/release-cycle.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;加上 ~ 8 months patch release&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/releases/release-lifecycle.jpg&#34; alt=&#34;https://kubernetes.io/images/releases/release-lifecycle.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;多久升級一次-k8s&#34;&gt;多久升級一次 k8s&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;每季更新一次
+&lt;ul&gt;
+&lt;li&gt;跟 feature，每次升 N+1 版&lt;/li&gt;
+&lt;li&gt;跟 EOL，每次升 N+1 版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;每年更，維持在 EOL 前，每次升 N+3 版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;升級變成-routine&#34;&gt;升級變成 routine&lt;/h3&gt;
+&lt;p&gt;更新 k8s 也不是短短幾天的工作，要有時間規劃，測試，檢查&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;與其是一個 task 更像是一個 routine 的工作&lt;/li&gt;
+&lt;li&gt;重點變成不是多久更新一次&lt;/li&gt;
+&lt;li&gt;而是如何&lt;strong&gt;有效率的完成routine&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;必讀文件-k8s-changelog&#34;&gt;必讀文件 K8s CHANGELOG&lt;/h3&gt;
+&lt;p&gt;Urgent Upgrade Notes (No, really, you MUST read this before you upgrade)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#urgent-upgrade-notes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CHANGELOG-1.31.md&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;最少要看 Urgent Upgrade Notes 跟 action required&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;不看真的不行嗎&#34;&gt;不看真的不行嗎？&lt;/h3&gt;
+&lt;p&gt;可以，流程會變成&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;k8s 升級上去&lt;/li&gt;
+&lt;li&gt;發現有東西壞掉，開始 debug&lt;/li&gt;
+&lt;li&gt;一路從 app, infra, k8s resource, 查到 k8s 上的問題&lt;/li&gt;
+&lt;li&gt;最後還是看了 CHANGELOG&lt;/li&gt;
+&lt;li&gt;你以後就會乖乖的把 CHANGELOG 看完&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;事前研究跟規劃-1&#34;&gt;事前研究跟規劃&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;了解 k8s release lifecycle&lt;/li&gt;
+&lt;li&gt;依據團隊政策設定更新週期&lt;/li&gt;
+&lt;li&gt;了解目前版本與目標版本的差異&lt;/li&gt;
+&lt;li&gt;上述工作轉為週期性的常態工作&lt;/li&gt;
+&lt;li&gt;加速升級的速度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;需要升級的-k8s-components&#34;&gt;需要升級的 K8s Components&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; alt=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;etcd-upgrade-官方文件&#34;&gt;Etcd Upgrade 官方文件&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://etcd.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;分散式 key-value store
+&lt;ul&gt;
+&lt;li&gt;可以 zero downtime rolling upgrade&lt;/li&gt;
+&lt;li&gt;可以 zero downtime rolling downgrade&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;etcd-upgrade-步驟&#34;&gt;Etcd Upgrade 步驟&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/upgrades/upgrade_3_5/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/upgrades/upgrade_3_5/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;etcd 在 minor version 升級時，可以 zero downtime rolling upgrade&lt;/li&gt;
+&lt;li&gt;維持 etcd cluster quorum&lt;/li&gt;
+&lt;li&gt;delete then add member (維持 quorum 先減後增）&lt;/li&gt;
+&lt;li&gt;保留 etcd data 與 endpoint ip，開回後直接上線&lt;/li&gt;
+&lt;li&gt;只需 sync delete -&amp;gt; add 中間的資料差&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;terraform-for-iac&#34;&gt;terraform for IaC&lt;/h3&gt;
+&lt;p&gt;要換的 etcd VM 可以拆解成 terraform module&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;VM -&amp;gt; EC2&lt;/li&gt;
+&lt;li&gt;base os -&amp;gt; AMI&lt;/li&gt;
+&lt;li&gt;data disk (etcd data) -&amp;gt; EBS&lt;/li&gt;
+&lt;li&gt;ip (etcd endpoint) -&amp;gt; ENI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;etcd binary -&amp;gt; S3&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;etcd config / flags -&amp;gt; launch template / cloud init&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;terraform-gitflow&#34;&gt;terraform gitflow&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;PR 改 binary etcd:v3.4.34 -&amp;gt; etcd:v3.5.4&lt;/li&gt;
+&lt;li&gt;PR review -&amp;gt; 自動 trigger terraform plan&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PR merge&lt;/strong&gt; -&amp;gt; 自動 apply dev / stag&lt;/li&gt;
+&lt;li&gt;自動化執行測試&lt;/li&gt;
+&lt;li&gt;Monitoring 監測一直都在&lt;/li&gt;
+&lt;li&gt;有問題: revert PR 自動 rollback&lt;/li&gt;
+&lt;li&gt;沒問題: &lt;strong&gt;人工確認上述步驟，開出 prod PR&lt;/strong&gt; -&amp;gt; 自動 apply prod&lt;/li&gt;
+&lt;li&gt;有問題: revert PR 自動 rollback&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;從專注完成升級變成專注在自動化流程&#34;&gt;從專注完成升級，變成專注在自動化流程&lt;/h5&gt;
+&lt;p&gt;其他 k8s 元件的管理也是同樣方式，將人工降到最低&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;etcd-upgrade-該注意&#34;&gt;Etcd Upgrade 該注意&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://etcd.io/docs/v3.5/op-guide/failures/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://etcd.io/docs/v3.5/op-guide/failures/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Majority of members are unreachable&lt;/li&gt;
+&lt;li&gt;Network partition&lt;/li&gt;
+&lt;li&gt;遵守 SOP 先減後增&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;apiserver-doc&#34;&gt;apiserver doc&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; alt=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;apiserver 小版號 rolling upgrade zero downtime&lt;/li&gt;
+&lt;li&gt;如果建立 k8s 時有用工具/平台，ex kubeadm, kops, kubespray，會有對應的升級指令&lt;/li&gt;
+&lt;li&gt;terraform 直接更換 apiserver 節點&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;apiserver-upgrade-doc&#34;&gt;apiserver upgrade doc&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;api-deprecated&#34;&gt;api deprecated&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/reference/using-api/deprecation-guide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Deprecated API Migration Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;apiserver-api-dependent&#34;&gt;apiserver api dependent&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;controller supported api version
+crd, webhook, admission controller, api server plugin
+controller&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;使用工具掃描-k8s-resource&#34;&gt;使用工具掃描 k8s resource&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/doitintl/kube-no-trouble&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/doitintl/kube-no-trouble&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;加入到升級流程，自動化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;產生新版-apiserver-vm&#34;&gt;產生新版 apiserver VM&lt;/h3&gt;
+&lt;p&gt;要換的 apiserver VM&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;VM -&amp;gt; EC2&lt;/li&gt;
+&lt;li&gt;base os -&amp;gt; AMI&lt;/li&gt;
+&lt;li&gt;Auto Scaling Group + Load balancer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;更新apiserver binary&lt;/strong&gt; -&amp;gt; S3 launch template / cloud formation&lt;/li&gt;
+&lt;li&gt;apiserver config / flags -&amp;gt; launch template / cloud init&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;移除舊版-apiserver-graceful-shutdown&#34;&gt;移除舊版 apiserver graceful shutdown&lt;/h3&gt;
+&lt;p&gt;load balancer -&amp;gt; auto scaling group -&amp;gt; EC2 instance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;透過 load balancer 的設定，確保 apiserver 有足夠的時間離線
+&lt;ul&gt;
+&lt;li&gt;request 都已處理完&lt;/li&gt;
+&lt;li&gt;load balancer 關閉連入&lt;/li&gt;
+&lt;li&gt;等待 graceful period，確認沒有 request&lt;/li&gt;
+&lt;li&gt;關閉服務，關閉 EC2 instance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;監測 apiserver 的 metrics，錯誤率提高自動告警&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;scheduler-and-controller-manager&#34;&gt;scheduler and controller manager&lt;/h3&gt;
+&lt;h3 id=&#34;application-controllers&#34;&gt;application controllers&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;跨環境測試&#34;&gt;跨環境測試&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;針對有使用的功能或是重要功能做測試&lt;/li&gt;
+&lt;li&gt;smoke testing 直接驗證可行性&lt;/li&gt;
+&lt;li&gt;快速執行，早期發現問題&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;升級有問題不是有問題太晚發現才是問題&#34;&gt;升級有問題不是有問題，太晚發現才是問題&lt;/h5&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;例如&#34;&gt;例如&lt;/h3&gt;
+&lt;p&gt;ingress controller&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;測試腳本中測試 create / update / delete ingress&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;完整的多環境測試&#34;&gt;完整的多環境測試&lt;/h3&gt;
+&lt;h3 id=&#34;好的監測&#34;&gt;好的監測&lt;/h3&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;infra&#34;&gt;Infra&lt;/h3&gt;
+&lt;p&gt;Vishwakarma&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;監測&#34;&gt;監測&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;while true; do
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kubectl get pods -n kube-system; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    sleep 2;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;done
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;監測-1&#34;&gt;監測&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;etcd dashboard&lt;/li&gt;
+&lt;li&gt;k8s api dashboard&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;K8s components&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; alt=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Overview: Official doc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;were-hiring&#34;&gt;We&amp;rsquo;re hiring!&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.cake.me/companies/maicoin/jobs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.cake.me/companies/maicoin/jobs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
@@ -1532,228 +2064,6 @@ mac 安裝以下工具&lt;/li&gt;
                loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
   &lt;/div&gt;&lt;/figure&gt;
 &lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;故事&#34;&gt;故事&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;為何要 AWS 自架 K8s&lt;/li&gt;
-&lt;li&gt;事前閱讀文件，規劃&lt;/li&gt;
-&lt;li&gt;Upgrade Etcd&lt;/li&gt;
-&lt;li&gt;Upgrade kube-apiserver / kube-controller-manager / kube-scheduler&lt;/li&gt;
-&lt;li&gt;Upgrade Node&lt;/li&gt;
-&lt;li&gt;Q&amp;amp;A&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;什麼是-vm-based-cluster&#34;&gt;什麼是 VM-based Cluster&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Managed Kubernetes Service (GKE, EKS, AKS)
-&lt;ul&gt;
-&lt;li&gt;公有雲託管 control plane，透過雲提供的介面控制&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;self-hosted Kubernetes
-&lt;ul&gt;
-&lt;li&gt;cloud formation template ec2 node&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;什麼是-vm-based-cluster-1&#34;&gt;什麼是 VM-based Cluster&lt;/h3&gt;
-&lt;p&gt;公有雲只提供 VM，自己用其它工具搭 K8s Components&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;kubeadm, kops, kubespray / docker, containerd, cri-o / container or systemd / &amp;hellip;&lt;/li&gt;
-&lt;li&gt;自己管理 control plane，包含 etcd, apiserver, controller-manager, scheduler&lt;/li&gt;
-&lt;li&gt;依需求選用公有雲提供的架構，ex VPC, ELB, EBS, S3, RDS, IAM, Route53, CloudWatch, CloudTrail, &amp;hellip;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;K8s components&lt;/p&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; alt=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Self-hosted K8s&lt;/p&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://docs.aws.amazon.com/images/whitepapers/latest/overview-deployment-options/images/image6.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Self-hosted control plane&lt;/p&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;self-hosted-k8s.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;所以為何要在aws上自架-k8s&#34;&gt;所以為何要在AWS上自架 K8s？&lt;/h3&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;因為-2016-年的時候沒有-eks&#34;&gt;因為 2016 年的時候沒有 eks&lt;/h3&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;因為-2016-年的時候沒有-eks-1&#34;&gt;因為 2016 年的時候沒有 eks&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;2014/10/15 kubernetes v0.4 &lt;a href=&#34;https://github.com/kubernetes/kubernetes/releases/tag/v0.4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;2014/11/04 &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/release-notes-archive#november_4_2014&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GKE release for 0.4.2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;當時有很多解決方案再提供 self-hosted k8s，基於這些方案，我們自己架了一個
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/getamis/vishwakarma&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github.com/getamis/vishwakarma&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;2017/10/24 &lt;a href=&#34;https://azure.microsoft.com/en-us/blog/introducing-azure-container-service-aks-managed-kubernetes-and-azure-container-registry-geo-replication/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AKS generally available&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;2018/06/05 &lt;a href=&#34;https://aws.amazon.com/blogs/aws/amazon-eks-now-generally-available/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;EKS generally available&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;self-hosted-control-plane&#34;&gt;Self-hosted control plane&lt;/h3&gt;
-&lt;p&gt;self-hosted control plane 其實不難，那時有很多成熟的解決方案&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/talk/kubernetes-summit-get-started-with-etcd-kubernetes/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;k8s summit Etcd Workshop&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;降低服務商依賴&lt;/li&gt;
-&lt;li&gt;可以跨雲，跨地端，混合雲&lt;/li&gt;
-&lt;li&gt;自訂化，換 VM disk image，CNI，CSI，Ingress Controller&lt;/li&gt;
-&lt;li&gt;成本控制&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  Self host 有一些好處
-壞處就是要自己做的東西很多
-隨著 cloud managed k8s 越做越好，自己架的理由越來越少
-這也是當初百家爭鳴的自架解決方案，現在只剩下幾個
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;結束背景開始升級&#34;&gt;結束背景，開始升級&lt;/h3&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;起飛前規劃&#34;&gt;起飛前規劃&lt;/h3&gt;
-&lt;p&gt;需要事前研究跟規劃&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;確認目前版本與目標版本&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;需要升級的-k8s-components&#34;&gt;需要升級的 K8s Components&lt;/h3&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; alt=&#34;https://kubernetes.io/images/docs/components-of-kubernetes.svg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;etcd&#34;&gt;etcd&lt;/h3&gt;
-&lt;p&gt;一個健康的 etcd cluster 可以幾乎 zero downtime rolling upgrade&lt;/p&gt;
-&lt;p&gt;如何確認 etcd 升版後是好的&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;apiserver&#34;&gt;apiserver&lt;/h3&gt;
-&lt;h3 id=&#34;scheduler-and-controller-manager&#34;&gt;scheduler and controller manager&lt;/h3&gt;
-&lt;h3 id=&#34;application-controllers&#34;&gt;application controllers&lt;/h3&gt;
-&lt;h3 id=&#34;測試&#34;&gt;測試&lt;/h3&gt;
-&lt;p&gt;smoke testing&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;直接驗證可行性&lt;/li&gt;
-&lt;li&gt;針對有使用的功能或是重要功能做測試&lt;/li&gt;
-&lt;li&gt;快速執行，早期發現問題
-&lt;ul&gt;
-&lt;li&gt;問題不是有問題，而是有問題太晚發現&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;例如&#34;&gt;例如&lt;/h3&gt;
-&lt;p&gt;ingress controller&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;測試腳本中測試 create / update / delete ingress&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;完整的多環境測試&#34;&gt;完整的多環境測試&lt;/h3&gt;
-&lt;h3 id=&#34;好的監測&#34;&gt;好的監測&lt;/h3&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;infra&#34;&gt;Infra&lt;/h3&gt;
-&lt;p&gt;Vishwakarma&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;監測&#34;&gt;監測&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;while true; do
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kubectl get pods -n kube-system; 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    sleep 2;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;done
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;h3 id=&#34;監測-1&#34;&gt;監測&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;etcd dashboard&lt;/li&gt;
-&lt;li&gt;k8s api dashboard&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;upgrade&#34;&gt;Upgrade&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;選擇你的版號&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;參考資料&#34;&gt;參考資料&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Overview: Official doc&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     

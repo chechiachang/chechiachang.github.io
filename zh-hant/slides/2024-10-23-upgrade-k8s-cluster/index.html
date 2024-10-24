@@ -94,36 +94,13 @@
     <section>
     
       
-<h3 id="were-hiring">We&rsquo;re hiring!</h3>
-<p><a href="https://www.cake.me/companies/maicoin/jobs" target="_blank" rel="noopener">https://www.cake.me/companies/maicoin/jobs</a></p>
-<p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img alt="" srcset="
-               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_9da35ea5399dd4b247c69c19f4c75987.webp 400w,
-               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_55917817014d7ac627b45f9c4a791867.webp 760w,
-               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
-               src="/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_9da35ea5399dd4b247c69c19f4c75987.webp"
-               width="400"
-               height="400"
-               loading="lazy" data-zoomable /></div>
-  </div></figure>
-</p>
+<h3 id="今天的主題">今天的主題</h3>
+<ul>
+<li>為何要 AWS 自架 K8s</li>
+<li>升級事前閱讀文件與規劃</li>
+<li>需要升級的元件</li>
+<li>實際升級的步驟 -&gt; SOP</li>
+</ul>
 
     </section>
     
@@ -134,15 +111,7 @@
     <section>
     
       
-<h3 id="故事">故事</h3>
-<ul>
-<li>為何要 AWS 自架 K8s</li>
-<li>事前閱讀文件，規劃</li>
-<li>Upgrade Etcd</li>
-<li>Upgrade kube-apiserver / kube-controller-manager / kube-scheduler</li>
-<li>Upgrade Node</li>
-<li>Q&amp;A</li>
-</ul>
+<h3 id="統整散落的資訊希望聽眾能夠藉此產生自己的升級-sop">統整散落的資訊，希望聽眾能夠藉此產生自己的升級 SOP</h3>
 <aside class="notes">
 </aside>
 
@@ -155,7 +124,7 @@
     <section>
     
       
-<h3 id="什麼是-vm-based-cluster">什麼是 VM-based Cluster</h3>
+<h3 id="背景什麼是-vm-based-cluster">背景：什麼是 VM-based Cluster</h3>
 <ul>
 <li>Managed Kubernetes Service (GKE, EKS, AKS)
 <ul>
@@ -168,55 +137,6 @@
 </ul>
 </li>
 </ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="什麼是-vm-based-cluster-1">什麼是 VM-based Cluster</h3>
-<p>公有雲只提供 VM，自己用其它工具搭 K8s Components</p>
-<ul>
-<li>kubeadm, kops, kubespray / docker, containerd, cri-o / container or systemd / &hellip;</li>
-<li>自己管理 control plane，包含 etcd, apiserver, controller-manager, scheduler</li>
-<li>依需求選用公有雲提供的架構，ex VPC, ELB, EBS, S3, RDS, IAM, Route53, CloudWatch, CloudTrail, &hellip;</li>
-</ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<p>K8s components</p>
-<p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
-  </div></figure>
-</p>
 
     </section>
     
@@ -259,6 +179,23 @@
     <section>
     
       
+<h3 id="什麼是-vm-based-cluster">什麼是 VM-based Cluster</h3>
+<p>公有雲只提供 VM，自己用其它工具搭 K8s Components</p>
+<ul>
+<li>kubeadm, kops, kubespray / docker, containerd, cri-o / container or systemd / &hellip;</li>
+<li>自己管理 control plane，包含 etcd, apiserver, controller-manager, scheduler</li>
+<li>依需求選用公有雲提供的架構，ex VPC, ELB, EBS, S3, RDS, IAM, Route53, CloudWatch, CloudTrail&hellip;</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
 <p>Self-hosted control plane</p>
 <p>
 
@@ -278,7 +215,14 @@
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="self-hosted-k8s.png" alt="" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_eb8f55efbce8d718a4ef759ab3132d6a.webp 400w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_6e1c278b9cf5a58db30db69224462074.webp 760w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/self-hosted-k8s_hu426d0c2559fd3fd4ffe742ab5f7664a0_303564_eb8f55efbce8d718a4ef759ab3132d6a.webp"
+               width="760"
+               height="428"
+               loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
 
@@ -313,11 +257,11 @@
     <section>
     
       
-<h3 id="因為-2016-年的時候沒有-eks-1">因為 2016 年的時候沒有 eks</h3>
+<h3 id="2015--年有很多-self-hosted-k8s-解決方案">2015- 年有很多 self-hosted k8s 解決方案</h3>
 <ul>
 <li>2014/10/15 kubernetes v0.4 <a href="https://github.com/kubernetes/kubernetes/releases/tag/v0.4" target="_blank" rel="noopener">github</a></li>
 <li>2014/11/04 <a href="https://cloud.google.com/kubernetes-engine/docs/release-notes-archive#november_4_2014" target="_blank" rel="noopener">GKE release for 0.4.2</a></li>
-<li>當時有很多解決方案再提供 self-hosted k8s，基於這些方案，我們自己架了一個
+<li>當時有很多解決方案再提供 self-hosted k8s，基於這些方案，產生 VM-based k8s
 <ul>
 <li><a href="https://github.com/getamis/vishwakarma" target="_blank" rel="noopener">github.com/getamis/vishwakarma</a></li>
 </ul>
@@ -346,12 +290,6 @@
 <li>自訂化，換 VM disk image，CNI，CSI，Ingress Controller</li>
 <li>成本控制</li>
 </ul>
-<aside class="notes">
-  Self host 有一些好處
-壞處就是要自己做的東西很多
-隨著 cloud managed k8s 越做越好，自己架的理由越來越少
-這也是當初百家爭鳴的自架解決方案，現在只剩下幾個
-</aside>
 
     </section>
     
@@ -362,21 +300,318 @@
     <section>
     
       
-<h3 id="結束背景開始升級">結束背景，開始升級</h3>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="起飛前規劃">起飛前規劃</h3>
-<p>需要事前研究跟規劃</p>
+<h3 id="self-hosted-control-plane-壞處">Self-hosted control plane: 壞處</h3>
 <ul>
-<li>確認目前版本與目標版本</li>
+<li>團隊做的東西很多</li>
+<li>工程師個人可以(必須)學到很多東西</li>
+<li>cloud managed k8s 越做越好，自己架的理由越來越少</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="self-hosted-多了要升級的東西">Self-hosted 多了要升級的東西</h3>
+<ul>
+<li>VM: based image / package / CVEs (不在今天的範圍)</li>
+<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/#manual-deployments" target="_blank" rel="noopener">k8s doc 建議的升級順序</a></li>
+<li>Etcd Cluster</li>
+<li>Control Plane
+<ul>
+<li>apiserver</li>
+<li>controller manager</li>
+<li>scheduler</li>
+<li>cloud controller manager</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="升級步驟">升級步驟</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="實際來看升級的步驟">實際來看升級的步驟</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="實際升級的順序">實際升級的順序</h3>
+<ul>
+<li>研究決定升版目標
+<ul>
+<li>必讀 K8s CHANGELOG / Urgent Upgrade Notes</li>
+</ul>
+</li>
+<li>檢查 app 的版本依賴 (i.e 升 k8s 會壞的 app)
+<ul>
+<li>K8s resource API Deprecated</li>
+<li>App Controllers</li>
+</ul>
+</li>
+<li>Etcd Cluster</li>
+<li>Apiserver
+<ul>
+<li>Controller Manager</li>
+<li>Scheduler</li>
+</ul>
+</li>
+<li>Node (kubelet, kube-proxy, CNI agent)</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="事前研究跟規劃">事前研究跟規劃</h3>
+<ul>
+<li>確認目前版本</li>
+<li>目標版本
+<ul>
+<li>升版的目的：(feature, EOL, &hellip;)</li>
+<li>元件彼此相容的版本</li>
+<li>每個小版號 Release Cycle ~ 4 months</li>
+<li>有重疊時間，所以大概是 3 個月出一版新的</li>
+<li>path release ~ 8 months</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="supported-version-skew">Supported Version Skew</h3>
+<p><a href="https://kubernetes.io/releases/version-skew-policy/" target="_blank" rel="noopener">https://kubernetes.io/releases/version-skew-policy/</a></p>
+<ul>
+<li>kube-apiserver 彼此最多差 1 個小版號
+<ul>
+<li>1.30 升 1.31 過程可以無痛</li>
+</ul>
+</li>
+<li>controller manager, scheduler, cloud controller manager
+<ul>
+<li>(vs apiserver) 最多差 1 個小版號</li>
+<li>升級 apiserver 後，跟著升級同板</li>
+</ul>
+</li>
+<li>kubelet, kube-proxy
+<ul>
+<li>(vs apiserver) 最多差 3 個小版號</li>
+<li>apiserver 1.30 升 1.31 時，node 1.28, 1.29, 1.30 可以無痛</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="k8s-release-cycle--4-months">K8s Release Cycle ~ 4 months</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/releases/release-cycle.jpg" alt="https://kubernetes.io/images/releases/release-cycle.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>加上 ~ 8 months patch release</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/releases/release-lifecycle.jpg" alt="https://kubernetes.io/images/releases/release-lifecycle.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="多久升級一次-k8s">多久升級一次 k8s</h3>
+<ul>
+<li>每季更新一次
+<ul>
+<li>跟 feature，每次升 N+1 版</li>
+<li>跟 EOL，每次升 N+1 版</li>
+</ul>
+</li>
+<li>每年更，維持在 EOL 前，每次升 N+3 版</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="升級變成-routine">升級變成 routine</h3>
+<p>更新 k8s 也不是短短幾天的工作，要有時間規劃，測試，檢查</p>
+<ul>
+<li>與其是一個 task 更像是一個 routine 的工作</li>
+<li>重點變成不是多久更新一次</li>
+<li>而是如何<strong>有效率的完成routine</strong></li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="必讀文件-k8s-changelog">必讀文件 K8s CHANGELOG</h3>
+<p>Urgent Upgrade Notes (No, really, you MUST read this before you upgrade)</p>
+<ul>
+<li><a href="https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#urgent-upgrade-notes" target="_blank" rel="noopener">CHANGELOG-1.31.md</a></li>
+<li>最少要看 Urgent Upgrade Notes 跟 action required</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="不看真的不行嗎">不看真的不行嗎？</h3>
+<p>可以，流程會變成</p>
+<ul>
+<li>k8s 升級上去</li>
+<li>發現有東西壞掉，開始 debug</li>
+<li>一路從 app, infra, k8s resource, 查到 k8s 上的問題</li>
+<li>最後還是看了 CHANGELOG</li>
+<li>你以後就會乖乖的把 CHANGELOG 看完</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="事前研究跟規劃-1">事前研究跟規劃</h3>
+<ul>
+<li>了解 k8s release lifecycle</li>
+<li>依據團隊政策設定更新週期</li>
+<li>了解目前版本與目標版本的差異</li>
+<li>上述工作轉為週期性的常態工作</li>
+<li>加速升級的速度</li>
 </ul>
 
     </section>
@@ -420,9 +655,16 @@
     <section>
     
       
-<h3 id="etcd">etcd</h3>
-<p>一個健康的 etcd cluster 可以幾乎 zero downtime rolling upgrade</p>
-<p>如何確認 etcd 升版後是好的</p>
+<h3 id="etcd-upgrade-官方文件">Etcd Upgrade 官方文件</h3>
+<ul>
+<li><a href="https://etcd.io/" target="_blank" rel="noopener">https://etcd.io/</a></li>
+<li>分散式 key-value store
+<ul>
+<li>可以 zero downtime rolling upgrade</li>
+<li>可以 zero downtime rolling downgrade</li>
+</ul>
+</li>
+</ul>
 
     </section>
     
@@ -433,20 +675,259 @@
     <section>
     
       
-<h3 id="apiserver">apiserver</h3>
-<h3 id="scheduler-and-controller-manager">scheduler and controller manager</h3>
-<h3 id="application-controllers">application controllers</h3>
-<h3 id="測試">測試</h3>
-<p>smoke testing</p>
+<h3 id="etcd-upgrade-步驟">Etcd Upgrade 步驟</h3>
+<p><a href="https://etcd.io/docs/v3.5/upgrades/upgrade_3_5/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/upgrades/upgrade_3_5/</a></p>
 <ul>
-<li>直接驗證可行性</li>
-<li>針對有使用的功能或是重要功能做測試</li>
-<li>快速執行，早期發現問題
+<li>etcd 在 minor version 升級時，可以 zero downtime rolling upgrade</li>
+<li>維持 etcd cluster quorum</li>
+<li>delete then add member (維持 quorum 先減後增）</li>
+<li>保留 etcd data 與 endpoint ip，開回後直接上線</li>
+<li>只需 sync delete -&gt; add 中間的資料差</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="terraform-for-iac">terraform for IaC</h3>
+<p>要換的 etcd VM 可以拆解成 terraform module</p>
 <ul>
-<li>問題不是有問題，而是有問題太晚發現</li>
+<li>VM -&gt; EC2</li>
+<li>base os -&gt; AMI</li>
+<li>data disk (etcd data) -&gt; EBS</li>
+<li>ip (etcd endpoint) -&gt; ENI</li>
+<li><strong>etcd binary -&gt; S3</strong></li>
+<li>etcd config / flags -&gt; launch template / cloud init</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="terraform-gitflow">terraform gitflow</h3>
+<ul>
+<li>PR 改 binary etcd:v3.4.34 -&gt; etcd:v3.5.4</li>
+<li>PR review -&gt; 自動 trigger terraform plan</li>
+<li><strong>PR merge</strong> -&gt; 自動 apply dev / stag</li>
+<li>自動化執行測試</li>
+<li>Monitoring 監測一直都在</li>
+<li>有問題: revert PR 自動 rollback</li>
+<li>沒問題: <strong>人工確認上述步驟，開出 prod PR</strong> -&gt; 自動 apply prod</li>
+<li>有問題: revert PR 自動 rollback</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h5 id="從專注完成升級變成專注在自動化流程">從專注完成升級，變成專注在自動化流程</h5>
+<p>其他 k8s 元件的管理也是同樣方式，將人工降到最低</p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="etcd-upgrade-該注意">Etcd Upgrade 該注意</h3>
+<p><a href="https://etcd.io/docs/v3.5/op-guide/failures/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/op-guide/failures/</a></p>
+<ul>
+<li>Majority of members are unreachable</li>
+<li>Network partition</li>
+<li>遵守 SOP 先減後增</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="apiserver-doc">apiserver doc</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<ul>
+<li>apiserver 小版號 rolling upgrade zero downtime</li>
+<li>如果建立 k8s 時有用工具/平台，ex kubeadm, kops, kubespray，會有對應的升級指令</li>
+<li>terraform 直接更換 apiserver 節點</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="apiserver-upgrade-doc">apiserver upgrade doc</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="api-deprecated">api deprecated</h3>
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/using-api/deprecation-guide/" target="_blank" rel="noopener">Deprecated API Migration Guide</a></li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="apiserver-api-dependent">apiserver api dependent</h3>
+<ul>
+<li>controller supported api version
+crd, webhook, admission controller, api server plugin
+controller</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="使用工具掃描-k8s-resource">使用工具掃描 k8s resource</h3>
+<ul>
+<li><a href="https://github.com/doitintl/kube-no-trouble" target="_blank" rel="noopener">https://github.com/doitintl/kube-no-trouble</a></li>
+<li>加入到升級流程，自動化</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="產生新版-apiserver-vm">產生新版 apiserver VM</h3>
+<p>要換的 apiserver VM</p>
+<ul>
+<li>VM -&gt; EC2</li>
+<li>base os -&gt; AMI</li>
+<li>Auto Scaling Group + Load balancer</li>
+<li><strong>更新apiserver binary</strong> -&gt; S3 launch template / cloud formation</li>
+<li>apiserver config / flags -&gt; launch template / cloud init</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="移除舊版-apiserver-graceful-shutdown">移除舊版 apiserver graceful shutdown</h3>
+<p>load balancer -&gt; auto scaling group -&gt; EC2 instance</p>
+<ul>
+<li>透過 load balancer 的設定，確保 apiserver 有足夠的時間離線
+<ul>
+<li>request 都已處理完</li>
+<li>load balancer 關閉連入</li>
+<li>等待 graceful period，確認沒有 request</li>
+<li>關閉服務，關閉 EC2 instance</li>
 </ul>
 </li>
+<li>監測 apiserver 的 metrics，錯誤率提高自動告警</li>
 </ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="scheduler-and-controller-manager">scheduler and controller manager</h3>
+<h3 id="application-controllers">application controllers</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="跨環境測試">跨環境測試</h3>
+<ul>
+<li>針對有使用的功能或是重要功能做測試</li>
+<li>smoke testing 直接驗證可行性</li>
+<li>快速執行，早期發現問題</li>
+</ul>
+<h5 id="升級有問題不是有問題太晚發現才是問題">升級有問題不是有問題，太晚發現才是問題</h5>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
 <h3 id="例如">例如</h3>
 <p>ingress controller</p>
 <ul>
@@ -507,10 +988,28 @@
     <section>
     
       
-<h3 id="upgrade">Upgrade</h3>
-<ul>
-<li>選擇你的版號</li>
-</ul>
+<p>K8s components</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
 
     </section>
     
@@ -526,6 +1025,46 @@
 <li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/</a></li>
 <li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">Overview: Official doc</a></li>
 </ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="were-hiring">We&rsquo;re hiring!</h3>
+<p><a href="https://www.cake.me/companies/maicoin/jobs" target="_blank" rel="noopener">https://www.cake.me/companies/maicoin/jobs</a></p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_9da35ea5399dd4b247c69c19f4c75987.webp 400w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_55917817014d7ac627b45f9c4a791867.webp 760w,
+               /zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/zh-hant/slides/2024-10-23-upgrade-k8s-cluster/we-re-hiring_hu7224f98eba3fbc175440ef1f6bf665c9_15949_9da35ea5399dd4b247c69c19f4c75987.webp"
+               width="400"
+               height="400"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
 
     </section>
     

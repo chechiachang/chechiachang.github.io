@@ -448,21 +448,12 @@
     
       
 <h3 id="etcd-clusters-啟動多台-etcd">etcd Clusters: 啟動多台 etcd</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">cd</span> <span class="o">../</span>
-</span></span><span class="line"><span class="cl"><span class="n">cd</span> <span class="mi">01</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="n">cat</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yaml</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd ../
+</span></span><span class="line"><span class="cl">cd 01-cluster/
+</span></span><span class="line"><span class="cl">cat docker-compose.yaml 
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">docker</span> <span class="n">ps</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="n">endpoint</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">ENDPOINTS</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="o">--</span><span class="n">endpoints</span> <span class="o">$</span><span class="n">ENDPOINTS</span> <span class="n">endpoint</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="o">--</span><span class="n">endpoints</span> <span class="o">$</span><span class="n">ENDPOINTS</span> <span class="n">endpoint</span> <span class="n">status</span> <span class="o">--</span><span class="n">write</span><span class="o">-</span><span class="n">out</span><span class="o">=</span><span class="n">table</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">ETCDCTL_ENDPOINTS</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&#34;</span>
+</span></span><span class="line"><span class="cl">docker compose up -d
+</span></span><span class="line"><span class="cl">docker ps
 </span></span></code></pre></div>
     </section>
     
@@ -474,6 +465,29 @@
     
       
 <h3 id="etcd-clusters-檢視狀態">etcd Clusters: 檢視狀態</h3>
+<ul>
+<li>預設 etcdctl 會連線到 &ndash;endpoints=[127.0.0.1:2379]</li>
+<li>使用 &ndash;endpoints 指定要連線到的 etcd</li>
+<li>使用 export ETCDCTL_ENDPOINTS 指定要連線到的 etcd</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="n">endpoint</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="o">--</span><span class="n">endpoints</span> <span class="s2">&#34;http://127.0.0.1:2379,http://127.0.0.1:2380&#34;</span> <span class="n">endpoint</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="o">--</span><span class="n">endpoints</span> <span class="s2">&#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&#34;</span> <span class="n">endpoint</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">ETCDCTL_ENDPOINTS</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:2379,http://127.0.0.1:2380,http://127.0.0.1:2381&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="o">--</span><span class="n">endpoints</span> <span class="o">$</span><span class="n">ETCDCTL_ENDPOINTS</span> <span class="n">endpoint</span> <span class="n">status</span>
+</span></span><span class="line"><span class="cl"><span class="n">etcdctl</span> <span class="n">endpoint</span> <span class="n">status</span>
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="etcd-clusters-檢視狀態-1">etcd Clusters: 檢視狀態</h3>
 <p><a href="https://etcd.io/docs/v3.5/tutorials/" target="_blank" rel="noopener">https://etcd.io/docs/v3.5/tutorials/</a></p>
 <ul>
 <li>How to check Cluster status</li>
