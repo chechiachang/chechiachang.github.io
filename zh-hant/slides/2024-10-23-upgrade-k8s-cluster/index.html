@@ -152,7 +152,6 @@
     <section>
     
       
-<p>Self-hosted K8s</p>
 <p>
 
 
@@ -171,7 +170,7 @@
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://docs.aws.amazon.com/images/whitepapers/latest/overview-deployment-options/images/image6.png" alt="" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://docs.aws.amazon.com/images/whitepapers/latest/overview-deployment-options/images/image6.png" alt="Self-hosted K8s" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
 
@@ -529,9 +528,10 @@
 <h3 id="升級變成-routine">升級變成 routine</h3>
 <p>更新 k8s 也不是短短幾天的工作，要有時間規劃，測試，檢查</p>
 <ul>
+<li>除了版本不同，每次要做的流程類似</li>
 <li>與其是一個 task 更像是一個 routine 的工作</li>
 <li>重點變成不是多久更新一次</li>
-<li>而是如何<strong>有效率的完成routine</strong></li>
+<li>而是幾然需要常做，該如何<strong>有效率(自動化)的完成升級</strong></li>
 </ul>
 
     </section>
@@ -559,7 +559,7 @@
     <section>
     
       
-<h3 id="不看真的不行嗎">不看真的不行嗎？</h3>
+<h3 id="不看-changelog-真的不行嗎">不看 CHANGELOG 真的不行嗎？</h3>
 <p>可以，流程會變成</p>
 <ul>
 <li>k8s 升級上去</li>
@@ -578,10 +578,10 @@
     <section>
     
       
-<h3 id="事前研究跟規劃-1">事前研究跟規劃</h3>
+<h3 id="升級事前研究跟規劃">升級事前研究跟規劃</h3>
 <ul>
 <li>了解 k8s release lifecycle</li>
-<li>依據團隊政策設定更新週期</li>
+<li>依據團隊政策，設定更新週期</li>
 <li>了解目前版本與目標版本的差異</li>
 <li>上述工作轉為週期性的常態工作</li>
 <li>加速升級的速度</li>
@@ -738,17 +738,6 @@
     
       
 <h3 id="kube-apiserver">kube-apiserver</h3>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="apiserver-doc">apiserver doc</h3>
 <p>
 
 
@@ -770,7 +759,20 @@
     <div class="w-100" ><img src="https://kubernetes.io/images/docs/components-of-kubernetes.svg" alt="https://kubernetes.io/images/docs/components-of-kubernetes.svg" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="apiserver-doc">apiserver doc</h3>
+<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/#manual-deployments" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/#manual-deployments</a></p>
 <ul>
+<li>先升級 kubectl</li>
 <li>apiserver 小版號 rolling upgrade zero downtime</li>
 <li>如果建立 k8s 時有用工具/平台，ex kubeadm, kops, kubespray，會有對應的升級指令</li>
 <li>terraform 直接更換 apiserver 節點</li>
