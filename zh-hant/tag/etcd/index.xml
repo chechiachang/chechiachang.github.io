@@ -546,6 +546,8 @@ mac 安裝以下工具&lt;/li&gt;
 &lt;li&gt;停止 k8s control plane (apiserver)&lt;/li&gt;
 &lt;li&gt;複製 snapshot.db 到 etcd2 與 etcd3 資料夾中&lt;/li&gt;
 &lt;li&gt;對每一個 etcd member 執行 restore&lt;/li&gt;
+&lt;li&gt;或是針對 leader 執行 restore&lt;/li&gt;
+&lt;li&gt;觀察 raft index 的變化&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker stop kube-apiserver
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;

@@ -99,7 +99,8 @@
 <li>為何要 AWS 自架 K8s</li>
 <li>升級事前閱讀文件與規劃</li>
 <li>需要升級的元件</li>
-<li>實際升級的步驟 -&gt; SOP</li>
+<li>實際升級的步驟</li>
+<li>自動化 k8s 升級</li>
 </ul>
 
     </section>
@@ -111,9 +112,13 @@
     <section>
     
       
-<h3 id="統整散落的資訊希望聽眾能夠藉此產生自己的升級-sop">統整散落的資訊，希望聽眾能夠藉此產生自己的升級 SOP</h3>
-<aside class="notes">
-</aside>
+<h3 id="今天的目的">今天的目的</h3>
+<ul>
+<li>統整散落的資訊</li>
+<li>升級需要考慮的事情</li>
+<li>可能哪些地方有雷，導致升級出錯</li>
+<li>產生自己團隊的升級 SOP</li>
+</ul>
 
     </section>
     
@@ -302,7 +307,7 @@
       
 <h3 id="self-hosted-control-plane-壞處">Self-hosted control plane: 壞處</h3>
 <ul>
-<li>團隊做的東西很多</li>
+<li>團隊多做一些事情</li>
 <li>工程師個人可以(必須)學到很多東西</li>
 <li>cloud managed k8s 越做越好，自己架的理由越來越少</li>
 </ul>
@@ -340,7 +345,6 @@
     <section>
     
       
-<h3 id="升級步驟">升級步驟</h3>
 <p>
 
 
@@ -834,6 +838,7 @@
 <li>加入到升級流程，自動化
 <ul>
 <li>（沒升級的時候）週期性的掃描</li>
+<li>app 開發的 CI 應該導入 <code>lint --kube-version</code></li>
 <li>如果有 app 使用到 deprecated API，通知 app owner 提早更新</li>
 <li>升級前再掃描一次</li>
 </ul>
@@ -1119,116 +1124,7 @@
     <section>
     
       
-<h3 id="需要搬移-worklaod">需要搬移 worklaod</h3>
-<ul>
-<li>建新拆舊</li>
-<li>準備一倍的空 node</li>
-<li>舊 node 打上 node taint，避免 worklaod 跑上去</li>
-<li>一步驟重啟 workload，</li>
-</ul>
-<p>dependency</p>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="node-升級-1">Node 升級</h3>
-<ul>
-<li>跨環境測試 workload</li>
-</ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="跨環境測試">跨環境測試</h3>
-<ul>
-<li>針對有使用的功能或是重要功能做測試</li>
-<li>smoke testing 直接驗證可行性</li>
-<li>快速執行，早期發現問題</li>
-</ul>
-<h5 id="升級有問題不是有問題太晚發現才是問題">升級有問題不是有問題，太晚發現才是問題</h5>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="例如">例如</h3>
-<p>ingress controller</p>
-<ul>
-<li>測試腳本中測試 create / update / delete ingress</li>
-</ul>
-<h3 id="完整的多環境測試">完整的多環境測試</h3>
-<h3 id="好的監測">好的監測</h3>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="infra">Infra</h3>
-<p>Vishwakarma</p>
-<p><a href="https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan" target="_blank" rel="noopener">https://github.com/getamis/vishwakarma/tree/master/examples/kubernetes-cluster-cilium-vxlan</a></p>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="監測">監測</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">while true; do
-</span></span><span class="line"><span class="cl">    kubectl get pods -n kube-system; 
-</span></span><span class="line"><span class="cl">    sleep 2;
-</span></span><span class="line"><span class="cl">done
-</span></span></code></pre></div>
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<h3 id="監測-1">監測</h3>
-<ul>
-<li>etcd dashboard</li>
-<li>k8s api dashboard</li>
-</ul>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<p>K8s components</p>
+<h3 id="node-升級簡單來說是建新拆舊">Node 升級簡單來說是建新拆舊</h3>
 <p>
 
 
@@ -1260,10 +1156,202 @@
     <section>
     
       
-<h3 id="參考資料">參考資料</h3>
+<h3 id="node-升級需要搬移-worklaod">Node 升級需要搬移 worklaod</h3>
+<p>開新的 node，舊的 node 上的 workload 需要轉移</p>
 <ul>
-<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/</a></li>
-<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">Overview: Official doc</a></li>
+<li>準備空 node</li>
+<li>舊 node 打上 node taint，避免 worklaod 跑上去</li>
+<li><strong>依序</strong>重啟 workload
+<ul>
+<li>app 彼此可能會有依賴關係，i.e. 重啟 a 時 b 會噴錯</li>
+<li>ex. backend + in-k8s redis</li>
+</ul>
+</li>
+<li>或是依照 node drain node</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="workload-retry">Workload retry</h3>
+<p>app 要實作 auto retry，來處理暫時斷線與達到 auto recovery</p>
+<ul>
+<li>重啟 workload 可能造成大量的重啟</li>
+<li>同時大量 connect + retry 有可能會打壞被依賴的服務
+<ul>
+<li>ex. backend + in-k8s redis，大量的 backend pod 同時重啟，會打壞 redis</li>
+</ul>
+</li>
+<li>所以還要實作 retry delay, timeout backoff</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="如何重啟有依賴的-workload">如何重啟有依賴的 Workload</h3>
+<p>依據團隊的目標而定</p>
+<ul>
+<li>ex 目標是最少整體重啟次數</li>
+<li>先重啟被依賴的服務 ex. redis</li>
+<li>在重啟依賴的服務 ex. backend</li>
+<li>考驗服務的 replication 數量是否足夠，能否支撐大量重啟</li>
+</ul>
+<h5 id="依序重啟-workload應該變成自動化的腳本">依序重啟 workload，應該變成自動化的腳本</h5>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="驗證">驗證</h3>
+<p>Workload 轉移到新版本，測試 worklaod 是否正常運作</p>
+<ul>
+<li>針對 worklaod 有設定 monitoring 與 metrics</li>
+<li>ex. cpu, memory 升級後增加太多，或是用的太少</li>
+<li>ex. api 在重啟過程中噴 5xx，5xx 的次數異常增加，自動 alert</li>
+<li>ex. api, websocket 錯誤比例增加</li>
+<li>ex. non 2xx 的 access log 量增加</li>
+</ul>
+<h5 id="與其說是測試更像是把持續監控做個更完整">與其說是測試，更像是把持續監控做個更完整</h5>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="升級後跨環境測試">升級後跨環境測試</h3>
+<p>在測試環境導入更多測試</p>
+<ul>
+<li>chaos engineering 在平時就持續注入 error，根據 scenario 設定 k8s 的反應
+<ul>
+<li>ex. chaos monkey, chaos mesh</li>
+</ul>
+</li>
+<li>load testing 測試 app 在新版本 k8s 上的效能
+<ul>
+<li>ex. <a href="https://github.com/grafana/k6" target="_blank" rel="noopener">https://github.com/grafana/k6</a></li>
+</ul>
+</li>
+<li>過去的 incident 的測試 script</li>
+</ul>
+<h5 id="不是為了升級導入這些測試而是因為有了這些測試讓升級更有信心">不是為了升級導入這些測試，而是因為有了這些測試，讓升級更有信心</h5>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h5 id="k8s-升級有問題不是有問題">K8s 升級有問題，不是有問題</h5>
+<h5 id="太晚發現才是問題">太晚發現才是問題</h5>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="好的監測是升級的保護傘">好的監測是升級的保護傘</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<p>怎麼知道 k8s 升級有沒有壞？用 kubectl 打看看</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">while true; do
+</span></span><span class="line"><span class="cl">    kubectl get pods -n kube-system; 
+</span></span><span class="line"><span class="cl">    sleep 2;
+</span></span><span class="line"><span class="cl">done
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="監測">監測</h3>
+<p>上面的各個步驟都仰賴監測自動告警</p>
+<ul>
+<li>元件壞了，要有監測紀錄</li>
+<li>重要元件壞了，要主動告警</li>
+<li>沒壞但是有異常變動，要主動告警</li>
+<li>出錯沒監測到，補上監測跟測試，再來一次，累積新版本的信心</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="監測參考工具">監測參考工具</h3>
+<ul>
+<li><a href="https://github.com/prometheus-operator/prometheus-operator" target="_blank" rel="noopener">prometheus-operator</a></li>
+<li>prometheus</li>
+<li>grafana</li>
+<li><a href="https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/dashboards" target="_blank" rel="noopener">kubernetes-mixin</a> alert, rule, dashboards
+<ul>
+<li><a href="https://samber.github.io/awesome-prometheus-alerts/" target="_blank" rel="noopener">https://samber.github.io/awesome-prometheus-alerts/</a></li>
+</ul>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="願景自動化-k8s-升級">願景：自動化 k8s 升級</h3>
+<p>今天討論的步驟，有哪些可以進一步再自動化的</p>
+<ul>
+<li>看 CHANGELOG，選定目標版本</li>
+<li>掃描服務 k8s api version</li>
+<li>排程升級的時間</li>
+<li>升級 etcd</li>
+<li>升級 kube-apiserver, scheduler, controller manager</li>
+<li>升級 node</li>
+<li>遷移 workload</li>
 </ul>
 
     </section>
@@ -1305,6 +1393,21 @@
                loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="參考資料">參考資料</h3>
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/" target="_blank" rel="noopener">Overview: Official doc</a></li>
+</ul>
 
     </section>
     
