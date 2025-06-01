@@ -42,7 +42,7 @@
 &lt;li&gt;安裝 docker&lt;/li&gt;
 &lt;li&gt;git clone github repository&lt;/li&gt;
 &lt;li&gt;啟動 docker 開發環境，下載 docker images&lt;/li&gt;
-&lt;li&gt;開啟瀏覽器，連線到 Jupyter Notebook&lt;/li&gt;
+&lt;li&gt;開啟瀏覽器，連線到 Jupyter Notebook，token &lt;code&gt;workshop1234!&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;在 Jupyter Notebook 中，安裝所需的 Python 套件&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/chechiachang/rag-workshop.git

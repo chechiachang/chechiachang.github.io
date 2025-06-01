@@ -3,15 +3,15 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://chechia.net/zh-hant/tag/ai/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/category/ai/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/categories/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -25,7 +25,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/devops/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -39,15 +39,15 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/generative/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/category/generative/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/kubernetes/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -61,11 +61,11 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/openai/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tags/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -79,11 +79,11 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/talk/workshop-rag%E6%89%93%E9%80%A0%E4%BC%81%E6%A5%ADai%E7%9F%A5%E8%AD%98%E5%BA%AB%E6%8A%8A%E4%B8%80%E7%94%B2%E5%AD%90%E5%8A%9F%E5%8A%9B%E5%82%B3%E7%B5%A6%E6%96%B0%E4%BA%BA/</loc>
-    <lastmod>2025-02-26T22:50:16+08:00</lastmod>
+    <lastmod>2025-06-01T23:30:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/category/devops/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:27:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -97,11 +97,11 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/rag/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:27:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:27:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <xhtml:link
                 rel="alternate"
@@ -115,7 +115,7 @@
                 />
   </url><url>
     <loc>https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/</loc>
-    <lastmod>2025-06-01T21:51:51+08:00</lastmod>
+    <lastmod>2025-06-01T23:27:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://chechia.net/zh-hant/tag/aws/</loc>
