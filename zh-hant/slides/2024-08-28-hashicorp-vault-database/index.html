@@ -522,20 +522,20 @@ dba 手上有存 admin 帳號密碼的
     
       
 <p>Demo 1: Vault DB secret engine</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Connect</span> <span class="n">to</span> <span class="n">docker</span> <span class="n">vault</span>
-</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">VAULT_ADDR</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8200</span>
-</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">login</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// Connect to docker vault
+</span></span><span class="line"><span class="cl">export VAULT_ADDR=http://127.0.0.1:8200
+</span></span><span class="line"><span class="cl">vault status
+</span></span><span class="line"><span class="cl">vault login
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">secrets</span> <span class="n">list</span>
+</span></span><span class="line"><span class="cl">vault secrets list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Configure</span> <span class="n">secret</span> <span class="n">engine</span> <span class="n">database</span> <span class="p">(</span><span class="n">terraform</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">secrets</span> <span class="n">list</span>
-</span></span><span class="line"><span class="cl"><span class="n">vault</span> <span class="n">policy</span> <span class="n">list</span>
+</span></span><span class="line"><span class="cl">// Configure secret engine database (terraform)
+</span></span><span class="line"><span class="cl">vault secrets list
+</span></span><span class="line"><span class="cl">vault policy list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">cd</span> <span class="n">usage</span><span class="o">/</span><span class="mi">03</span><span class="o">-</span><span class="n">terraform</span><span class="o">-</span><span class="n">lives</span>
-</span></span><span class="line"><span class="cl"><span class="n">terragrunt</span> <span class="n">init</span>
-</span></span><span class="line"><span class="cl"><span class="n">terragrunt</span> <span class="n">apply</span>
+</span></span><span class="line"><span class="cl">cd usage/03-terraform-lives
+</span></span><span class="line"><span class="cl">terragrunt init
+</span></span><span class="line"><span class="cl">terragrunt apply
 </span></span></code></pre></div>
     </section>
     

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1033,39 +1033,39 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
 <p>上述說明可能不太清楚，我們實際看範例，以<a href="https://github.com/chechiachang/terraform-playground" target="_blank" rel="noopener">前幾篇我們使用的範例 repository</a> 為例子，把 gcp 的資料夾目錄應該長這樣：</p>
 <p>可以很清楚見到底下幾個東西不斷重複
 由於 my-new-project, gke-playground, national-team-5g 三個專案是獨立的專案，各自可以獨立運行。但其實同屬於同公司的專案，可能許多內容都是重複的。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">tree</span> <span class="n">gcp</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tree gcp
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">gcp</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">Makefile</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">project</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">variable</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">gke</span><span class="o">-</span><span class="n">playground</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">variable</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">national</span><span class="o">-</span><span class="n">team</span><span class="o">-</span><span class="mi">5</span><span class="n">g</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">dev</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">variable</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">stag</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">variable</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">prod</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">variable</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">└──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">templates</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="err">└──</span> <span class="n">modules</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">gcp
+</span></span><span class="line"><span class="cl">├── README.md
+</span></span><span class="line"><span class="cl">├── Makefile
+</span></span><span class="line"><span class="cl">├── my-new-project/
+</span></span><span class="line"><span class="cl">│   ├── terraform.tf
+</span></span><span class="line"><span class="cl">│   ├── terraform.tfvars
+</span></span><span class="line"><span class="cl">│   ├── variable.tf
+</span></span><span class="line"><span class="cl">│   └── provider.tf
+</span></span><span class="line"><span class="cl">├── gke-playground/
+</span></span><span class="line"><span class="cl">│   ├── terraform.tf
+</span></span><span class="line"><span class="cl">│   ├── terraform.tfvars
+</span></span><span class="line"><span class="cl">│   ├── variable.tf
+</span></span><span class="line"><span class="cl">│   └── provider.tf
+</span></span><span class="line"><span class="cl">├── national-team-5g/
+</span></span><span class="line"><span class="cl">│   ├── dev
+</span></span><span class="line"><span class="cl">│   │   ├── terraform.tf
+</span></span><span class="line"><span class="cl">│   │   ├── terraform.tfvars
+</span></span><span class="line"><span class="cl">│   │   ├── variable.tf
+</span></span><span class="line"><span class="cl">│   │   └── provider.tf
+</span></span><span class="line"><span class="cl">│   ├── stag
+</span></span><span class="line"><span class="cl">│   │   ├── terraform.tf
+</span></span><span class="line"><span class="cl">│   │   ├── terraform.tfvars
+</span></span><span class="line"><span class="cl">│   │   ├── variable.tf
+</span></span><span class="line"><span class="cl">│   │   └── provider.tf
+</span></span><span class="line"><span class="cl">│   └── prod
+</span></span><span class="line"><span class="cl">│       ├── terraform.tf
+</span></span><span class="line"><span class="cl">│       ├── terraform.tfvars
+</span></span><span class="line"><span class="cl">│       ├── variable.tf
+</span></span><span class="line"><span class="cl">│       └── provider.tf
+</span></span><span class="line"><span class="cl">├── templates/
+</span></span><span class="line"><span class="cl">└── modules/
 </span></span></code></pre></div><p>可以很清楚見到底下幾個東西不斷重複</p>
 <ul>
 <li>provider.tf 這裡描述使用的 provider，這邊只有使用 gcp provider，所以是完全一樣重複</li>
@@ -1074,21 +1074,21 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
 <li>national-team-5g 的專案下，又各自拆分多個執行環境，每個環境獨立，所以又有許多重複的 code</li>
 </ul>
 <p>這邊的目的，是有系統化的處理這些重複的代碼</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">gcp</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>        <span class="c1"># gcp 共用的參數</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">terragrunt</span><span class="o">.</span><span class="n">hcl</span>          <span class="c1"># gcp 共用的程式碼</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">national</span><span class="o">-</span><span class="n">team</span><span class="o">-</span><span class="mi">5</span><span class="n">g</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>    <span class="c1"># national-team-5g 共用的參數</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">terragrunt</span><span class="o">.</span><span class="n">hcl</span>      <span class="c1"># national-team-5g 共用的程式碼</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">dev</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>  <span class="c1"># dev 的參數</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="n">terragrunt</span><span class="o">.</span><span class="n">hcl</span>    <span class="c1"># dev 環境自己的程式碼</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">staging</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>  <span class="c1"># staging 的參數</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="n">terragrunt</span><span class="o">.</span><span class="n">hcl</span>    <span class="c1"># staging 環境自己的程式碼</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">prod</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tfvars</span>  <span class="c1"># prod 的參數</span>
-</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">└──</span> <span class="n">terragrunt</span><span class="o">.</span><span class="n">hcl</span>    <span class="c1"># prod 環境自己的程式碼</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcp
+</span></span><span class="line"><span class="cl">├── terraform.tfvars        # gcp 共用的參數
+</span></span><span class="line"><span class="cl">├── terragrunt.hcl          # gcp 共用的程式碼
+</span></span><span class="line"><span class="cl">├── national-team-5g/
+</span></span><span class="line"><span class="cl">│   ├── terraform.tfvars    # national-team-5g 共用的參數
+</span></span><span class="line"><span class="cl">│   ├── terragrunt.hcl      # national-team-5g 共用的程式碼
+</span></span><span class="line"><span class="cl">│   ├── dev
+</span></span><span class="line"><span class="cl">│   │   ├── terraform.tfvars  # dev 的參數
+</span></span><span class="line"><span class="cl">│   │   └── terragrunt.hcl    # dev 環境自己的程式碼
+</span></span><span class="line"><span class="cl">│   ├── staging
+</span></span><span class="line"><span class="cl">│   │   ├── terraform.tfvars  # staging 的參數
+</span></span><span class="line"><span class="cl">│   │   └── terragrunt.hcl    # staging 環境自己的程式碼
+</span></span><span class="line"><span class="cl">│   └── prod
+</span></span><span class="line"><span class="cl">│       ├── terraform.tfvars  # prod 的參數
+</span></span><span class="line"><span class="cl">│       └── terragrunt.hcl    # prod 環境自己的程式碼
 </span></span></code></pre></div><p>差異非常多是吧，但這邊只是從資料目錄結構看，其實如果從 tf 檔案內部的程式碼看，裡面的代碼更是精簡到不行，用起來非常的爽XD</p>
 <h1 id="安裝">安裝</h1>
 <ul>
@@ -1112,26 +1112,26 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
 │       └── provider.tf</p>
 <p>例如</p>
 <p>national-team-5g/dev/provider.tf</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">provider</span> <span class="s2">&#34;google&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;~&gt;v3.25.0&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">credentials</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="k">var</span><span class="o">.</span><span class="n">credential_json</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">project</span> <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">project</span>
-</span></span><span class="line"><span class="cl">  <span class="n">region</span>  <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">region</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">provider &#34;google&#34; {
+</span></span><span class="line"><span class="cl">  version = &#34;~&gt;v3.25.0&#34;
+</span></span><span class="line"><span class="cl">  credentials = file(var.credential_json)
+</span></span><span class="line"><span class="cl">  project = var.project
+</span></span><span class="line"><span class="cl">  region  = var.region
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>改成</p>
 <p>national-team-5g/dev/terragrunt.hcl</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">generate</span> <span class="s2">&#34;provider&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">path</span>      <span class="o">=</span> <span class="s2">&#34;provider.tf&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">if_exists</span> <span class="o">=</span> <span class="s2">&#34;overwrite&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">contents</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
-</span></span><span class="line"><span class="cl"><span class="n">provider</span> <span class="s2">&#34;google&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;~&gt;v3.25.0&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">credentials</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="k">var</span><span class="o">.</span><span class="n">credential_json</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">project</span> <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">project</span>
-</span></span><span class="line"><span class="cl">  <span class="n">region</span>  <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">region</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">EOF</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">generate &#34;provider&#34; {
+</span></span><span class="line"><span class="cl">  path      = &#34;provider.tf&#34;
+</span></span><span class="line"><span class="cl">  if_exists = &#34;overwrite&#34;
+</span></span><span class="line"><span class="cl">  contents = &lt;&lt;EOF
+</span></span><span class="line"><span class="cl">provider &#34;google&#34; {
+</span></span><span class="line"><span class="cl">  version = &#34;~&gt;v3.25.0&#34;
+</span></span><span class="line"><span class="cl">  credentials = file(var.credential_json)
+</span></span><span class="line"><span class="cl">  project = var.project
+</span></span><span class="line"><span class="cl">  region  = var.region
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">EOF
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>執行</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd national-team-5g/dev
 </span></span><span class="line"><span class="cl">terragrunt plan
@@ -1524,7 +1524,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1567,7 +1567,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1660,7 +1660,7 @@ Get-started examples / SOP on Github Introducation to Terraform Iac: Speaker tra
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

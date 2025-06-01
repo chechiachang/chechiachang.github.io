@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1040,58 +1040,58 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 <li>打上 <code>reform.*</code> tag，讓下個 match 可以 收進去 pipeline 處理</li>
 <li>附帶 parse 出 time</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">containers</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">conf</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">containers.input.conf
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">source</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">type</span> <span class="n">tail</span>
-</span></span><span class="line"><span class="cl">  <span class="n">path</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">containers</span><span class="o">/*.</span><span class="n">log</span>
-</span></span><span class="line"><span class="cl">  <span class="n">pos_file</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">gcp</span><span class="o">-</span><span class="n">containers</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">pos</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># Tags at this point are in the format of:</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># reform.var.log.containers.&lt;POD_NAME&gt;_&lt;NAMESPACE_NAME&gt;_&lt;CONTAINER_NAME&gt;-&lt;CONTAINER_ID&gt;.log</span>
-</span></span><span class="line"><span class="cl">  <span class="n">tag</span> <span class="n">reform</span><span class="o">.*</span>
-</span></span><span class="line"><span class="cl">  <span class="n">read_from_head</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="n">parse</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="err">@</span><span class="n">type</span> <span class="n">multi_format</span>
-</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">      <span class="n">format</span> <span class="n">json</span>
-</span></span><span class="line"><span class="cl">      <span class="n">time_key</span> <span class="n">time</span>
-</span></span><span class="line"><span class="cl">      <span class="n">time_format</span> <span class="o">%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">dT</span><span class="o">%</span><span class="n">H</span><span class="p">:</span><span class="o">%</span><span class="n">M</span><span class="p">:</span><span class="o">%</span><span class="n">S</span><span class="o">.%</span><span class="n">NZ</span>
-</span></span><span class="line"><span class="cl">    <span class="o">&lt;/</span><span class="n">pattern</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">      <span class="n">format</span> <span class="o">/^</span><span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="n">time</span><span class="o">&gt;.+</span><span class="p">)</span> <span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="n">stdout</span><span class="o">|</span><span class="n">stderr</span><span class="p">)</span> <span class="p">[</span><span class="o">^</span> <span class="p">]</span><span class="o">*</span> <span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="nb">log</span><span class="o">&gt;.*</span><span class="p">)</span><span class="o">$/</span>
-</span></span><span class="line"><span class="cl">      <span class="n">time_format</span> <span class="o">%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">dT</span><span class="o">%</span><span class="n">H</span><span class="p">:</span><span class="o">%</span><span class="n">M</span><span class="p">:</span><span class="o">%</span><span class="n">S</span><span class="o">.%</span><span class="n">N</span><span class="o">%</span><span class="p">:</span><span class="n">z</span>
-</span></span><span class="line"><span class="cl">    <span class="o">&lt;/</span><span class="n">pattern</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="o">&lt;/</span><span class="n">parse</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">source</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">&lt;source&gt;
+</span></span><span class="line"><span class="cl">  @type tail
+</span></span><span class="line"><span class="cl">  path /var/log/containers/*.log
+</span></span><span class="line"><span class="cl">  pos_file /var/log/gcp-containers.log.pos
+</span></span><span class="line"><span class="cl">  # Tags at this point are in the format of:
+</span></span><span class="line"><span class="cl">  # reform.var.log.containers.&lt;POD_NAME&gt;_&lt;NAMESPACE_NAME&gt;_&lt;CONTAINER_NAME&gt;-&lt;CONTAINER_ID&gt;.log
+</span></span><span class="line"><span class="cl">  tag reform.*
+</span></span><span class="line"><span class="cl">  read_from_head true
+</span></span><span class="line"><span class="cl">  &lt;parse&gt;
+</span></span><span class="line"><span class="cl">    @type multi_format
+</span></span><span class="line"><span class="cl">    &lt;pattern&gt;
+</span></span><span class="line"><span class="cl">      format json
+</span></span><span class="line"><span class="cl">      time_key time
+</span></span><span class="line"><span class="cl">      time_format %Y-%m-%dT%H:%M:%S.%NZ
+</span></span><span class="line"><span class="cl">    &lt;/pattern&gt;
+</span></span><span class="line"><span class="cl">    &lt;pattern&gt;
+</span></span><span class="line"><span class="cl">      format /^(?&lt;time&gt;.+) (?&lt;stream&gt;stdout|stderr) [^ ]* (?&lt;log&gt;.*)$/
+</span></span><span class="line"><span class="cl">      time_format %Y-%m-%dT%H:%M:%S.%N%:z
+</span></span><span class="line"><span class="cl">    &lt;/pattern&gt;
+</span></span><span class="line"><span class="cl">  &lt;/parse&gt;
+</span></span><span class="line"><span class="cl">&lt;/source&gt;
 </span></span></code></pre></div><p>他這邊做一些 error handling，然後用 ruby (!) parse，這邊就真的太遠，細節大家可以 google ＸＤ。不過這邊使用的 pattern matching 我們後幾篇在 logstash pipeline 上，也會有機會提到，機制是類似的。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">filter</span> <span class="n">reform</span><span class="o">.**&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">type</span> <span class="n">parser</span>
-</span></span><span class="line"><span class="cl">  <span class="n">format</span> <span class="o">/^</span><span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="n">severity</span><span class="o">&gt;</span>\<span class="n">w</span><span class="p">)(</span><span class="err">?</span><span class="o">&lt;</span><span class="n">time</span><span class="o">&gt;</span>\<span class="n">d</span><span class="p">{</span><span class="mi">4</span><span class="p">}</span> <span class="p">[</span><span class="o">^</span>\<span class="n">s</span><span class="p">]</span><span class="o">*</span><span class="p">)</span>\<span class="n">s</span><span class="o">+</span><span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="n">pid</span><span class="o">&gt;</span>\<span class="n">d</span><span class="o">+</span><span class="p">)</span>\<span class="n">s</span><span class="o">+</span><span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="n">source</span><span class="o">&gt;</span><span class="p">[</span><span class="o">^</span> \<span class="p">]]</span><span class="o">+</span><span class="p">)</span>\<span class="p">]</span> <span class="p">(</span><span class="err">?</span><span class="o">&lt;</span><span class="nb">log</span><span class="o">&gt;.*</span><span class="p">)</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl">  <span class="n">reserve_data</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">suppress_parse_error_log</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">emit_invalid_record_to_error</span> <span class="bp">false</span>
-</span></span><span class="line"><span class="cl">  <span class="n">key_name</span> <span class="nb">log</span>
-</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">filter</span><span class="o">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;filter reform.**&gt;
+</span></span><span class="line"><span class="cl">  @type parser
+</span></span><span class="line"><span class="cl">  format /^(?&lt;severity&gt;\w)(?&lt;time&gt;\d{4} [^\s]*)\s+(?&lt;pid&gt;\d+)\s+(?&lt;source&gt;[^ \]]+)\] (?&lt;log&gt;.*)/
+</span></span><span class="line"><span class="cl">  reserve_data true
+</span></span><span class="line"><span class="cl">  suppress_parse_error_log true
+</span></span><span class="line"><span class="cl">  emit_invalid_record_to_error false
+</span></span><span class="line"><span class="cl">  key_name log
+</span></span><span class="line"><span class="cl">&lt;/filter&gt;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">match</span> <span class="n">reform</span><span class="o">.**&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">type</span> <span class="n">record_reformer</span>
-</span></span><span class="line"><span class="cl">  <span class="n">enable_ruby</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="n">record</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># Extract local_resource_id from tag for &#39;k8s_container&#39; monitored</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># resource. The format is:</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># &#39;k8s_container.&lt;namespace_name&gt;.&lt;pod_name&gt;.&lt;container_name&gt;&#39;.</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;logging.googleapis.com/local_resource_id&#34;</span> <span class="o">$</span><span class="p">{</span><span class="s2">&#34;k8s_container.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[1]}.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[0]}.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[2].rpartition(&#39;-&#39;)[0]}&#34;</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># Rename the field &#39;log&#39; to a more generic field &#39;message&#39;. This way the</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># fluent-plugin-google-cloud knows to flatten the field as textPayload</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># instead of jsonPayload after extracting &#39;time&#39;, &#39;severity&#39; and</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># &#39;stream&#39; from the record.</span>
-</span></span><span class="line"><span class="cl">    <span class="n">message</span> <span class="o">$</span><span class="p">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;log&#39;</span><span class="p">]}</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># If &#39;severity&#39; is not set, assume stderr is ERROR and stdout is INFO.</span>
-</span></span><span class="line"><span class="cl">    <span class="n">severity</span> <span class="o">$</span><span class="p">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;severity&#39;</span><span class="p">]</span> <span class="o">||</span> <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;stream&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;stderr&#39;</span> <span class="n">then</span> <span class="s1">&#39;ERROR&#39;</span> <span class="k">else</span> <span class="s1">&#39;INFO&#39;</span> <span class="n">end</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="o">&lt;/</span><span class="n">record</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">tag</span> <span class="o">$</span><span class="p">{</span><span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;stream&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;stderr&#39;</span> <span class="n">then</span> <span class="s1">&#39;raw.stderr&#39;</span> <span class="k">else</span> <span class="s1">&#39;raw.stdout&#39;</span> <span class="n">end</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="n">remove_keys</span> <span class="n">stream</span><span class="p">,</span><span class="nb">log</span>
-</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">match</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">&lt;match reform.**&gt;
+</span></span><span class="line"><span class="cl">  @type record_reformer
+</span></span><span class="line"><span class="cl">  enable_ruby true
+</span></span><span class="line"><span class="cl">  &lt;record&gt;
+</span></span><span class="line"><span class="cl">    # Extract local_resource_id from tag for &#39;k8s_container&#39; monitored
+</span></span><span class="line"><span class="cl">    # resource. The format is:
+</span></span><span class="line"><span class="cl">    # &#39;k8s_container.&lt;namespace_name&gt;.&lt;pod_name&gt;.&lt;container_name&gt;&#39;.
+</span></span><span class="line"><span class="cl">    &#34;logging.googleapis.com/local_resource_id&#34; ${&#34;k8s_container.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[1]}.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[0]}.#{tag_suffix[4].rpartition(&#39;.&#39;)[0].split(&#39;_&#39;)[2].rpartition(&#39;-&#39;)[0]}&#34;}
+</span></span><span class="line"><span class="cl">    # Rename the field &#39;log&#39; to a more generic field &#39;message&#39;. This way the
+</span></span><span class="line"><span class="cl">    # fluent-plugin-google-cloud knows to flatten the field as textPayload
+</span></span><span class="line"><span class="cl">    # instead of jsonPayload after extracting &#39;time&#39;, &#39;severity&#39; and
+</span></span><span class="line"><span class="cl">    # &#39;stream&#39; from the record.
+</span></span><span class="line"><span class="cl">    message ${record[&#39;log&#39;]}
+</span></span><span class="line"><span class="cl">    # If &#39;severity&#39; is not set, assume stderr is ERROR and stdout is INFO.
+</span></span><span class="line"><span class="cl">    severity ${record[&#39;severity&#39;] || if record[&#39;stream&#39;] == &#39;stderr&#39; then &#39;ERROR&#39; else &#39;INFO&#39; end}
+</span></span><span class="line"><span class="cl">  &lt;/record&gt;
+</span></span><span class="line"><span class="cl">  tag ${if record[&#39;stream&#39;] == &#39;stderr&#39; then &#39;raw.stderr&#39; else &#39;raw.stdout&#39; end}
+</span></span><span class="line"><span class="cl">  remove_keys stream,log
+</span></span><span class="line"><span class="cl">&lt;/match&gt;
 </span></span></code></pre></div><h3 id="ssh-進去逛">ssh 進去逛</h3>
 <p>想看機器上實際的 log 狀況，我們也可以直接 ssh 進去</p>
 <p>先透過 kubectl 看一下 pod</p>
@@ -1122,46 +1122,46 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 <h1 id="ssh-node-找-log">ssh node 找 log</h1>
 <p>ssh 進去後就可以到處來探險，順便看看 GKE 跑在機器上到底做了什麼事情。</p>
 <p>如果官方有出文件，可能可以不用進來看。各位大德有發現文件請留言跟我說。我個人很喜歡自己架集群起來連就去看，面對照官方文件上寫的東西，當然大部份時候都是文件沒有帶到，有很多發現。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">ls</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ ls /var/log
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">gcp</span><span class="o">-*-</span><span class="nb">log</span><span class="o">.</span><span class="n">pos</span>
-</span></span><span class="line"><span class="cl"><span class="n">kube</span><span class="o">-</span><span class="n">proxy</span><span class="o">.</span><span class="n">log</span>
-</span></span><span class="line"><span class="cl"><span class="n">containers</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="n">metrics</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="n">pods</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl">gcp-*-log.pos
+</span></span><span class="line"><span class="cl">kube-proxy.log
+</span></span><span class="line"><span class="cl">containers/
+</span></span><span class="line"><span class="cl">metrics/
+</span></span><span class="line"><span class="cl">pods/
+</span></span><span class="line"><span class="cl">...
 </span></span></code></pre></div><p>/var/log/containers 看一下，格式是 <code>pod_namespace_container</code> 這邊是 link 到 /var/log/pods/</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">containers</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ ls -al /var/log/containers
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">105</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="n">fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">-</span><span class="n">v3</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="n">st6cl_kube</span><span class="o">-</span><span class="n">system_fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">-</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">.</span><span class="n">log</span> <span class="o">-&gt;</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">pods</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">system_fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">-</span><span class="n">v3</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="n">st6cl_b76bed0b</span><span class="o">-</span><span class="n">bcd4</span><span class="o">-</span><span class="mf">11e9</span><span class="o">-</span><span class="n">a55c</span><span class="o">-</span><span class="mi">42010</span><span class="n">a8c0008</span><span class="o">/</span><span class="n">fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">/</span><span class="mf">0.</span><span class="n">log</span>
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 root root   105 Aug 12 07:42 fluentd-gcp-v3.2.0-st6cl_kube-system_fluentd-gcp-5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac.log -&gt; /var/log/pods/kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008/fluentd-gcp/0.log
 </span></span></code></pre></div><p>看到 pods 就覺得是你了，裡面有 pod 資料夾，格式是 <code>namespace_pod_uuid</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">ls</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">pods</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls /var/log/pods
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">default_pod</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">1234567890</span><span class="o">-</span><span class="n">fxxhp_uuid</span>
-</span></span><span class="line"><span class="cl"><span class="n">kube</span><span class="o">-</span><span class="n">system_fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">-</span><span class="n">v3</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="n">st6cl_b76bed0b</span><span class="o">-</span><span class="n">bcd4</span><span class="o">-</span><span class="mf">11e9</span><span class="o">-</span><span class="n">a55c</span><span class="o">-</span><span class="mi">42010</span><span class="n">a8c0008</span>
-</span></span><span class="line"><span class="cl"><span class="n">kube</span><span class="o">-</span><span class="n">system_heapster</span><span class="o">-</span><span class="n">v1</span><span class="o">.</span><span class="mf">6.0</span><span class="o">-</span><span class="n">beta</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span>
-</span></span><span class="line"><span class="cl"><span class="n">kube</span><span class="o">-</span><span class="n">system_kube</span><span class="o">-</span><span class="n">proxy</span><span class="o">-</span><span class="n">gke</span><span class="o">-</span>
-</span></span><span class="line"><span class="cl"><span class="n">kube</span><span class="o">-</span><span class="n">system_l7</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">backend</span><span class="o">-</span>
-</span></span><span class="line"><span class="cl"><span class="n">kube</span><span class="o">-</span><span class="n">system_prometheus</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">sd</span><span class="o">-</span>
+</span></span><span class="line"><span class="cl">default_pod-1-1234567890-fxxhp_uuid
+</span></span><span class="line"><span class="cl">kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008
+</span></span><span class="line"><span class="cl">kube-system_heapster-v1.6.0-beta.1-
+</span></span><span class="line"><span class="cl">kube-system_kube-proxy-gke-
+</span></span><span class="line"><span class="cl">kube-system_l7-default-backend-
+</span></span><span class="line"><span class="cl">kube-system_prometheus-to-sd-
 </span></span></code></pre></div><p>再進去有 container log，格式是 <code>pod_namespace_container.log</code>，也是 link</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">pods</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">system_fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">-</span><span class="n">v3</span><span class="o">.</span><span class="mf">2.0</span><span class="o">-</span><span class="n">st6cl_b76bed0b</span><span class="o">-</span><span class="n">bcd4</span><span class="o">-</span><span class="mf">11e9</span><span class="o">-</span><span class="n">a55c</span><span class="o">-</span><span class="mi">42010</span><span class="n">a8c0008</span><span class="o">/</span><span class="n">fluentd</span><span class="o">-</span><span class="n">gcp</span><span class="o">/</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls -al /var/log/pods/kube-system_fluentd-gcp-v3.2.0-st6cl_b76bed0b-bcd4-11e9-a55c-42010a8c0008/fluentd-gcp/
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">165</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="mf">0.</span><span class="n">log</span> <span class="o">-&gt;</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">-</span><span class="n">json</span><span class="o">.</span><span class="n">log</span>
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 root root  165 Aug 12 07:42 0.log -&gt; /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 </span></span></code></pre></div><p>最終 link 到</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">su</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo su
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">/</span>
-</span></span><span class="line"><span class="cl"><span class="n">total</span> <span class="mf">3.9</span><span class="n">M</span>
-</span></span><span class="line"><span class="cl"><span class="n">drwx</span><span class="o">------</span>  <span class="mi">4</span> <span class="n">root</span> <span class="n">root</span> <span class="mf">4.0</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="o">.</span>
-</span></span><span class="line"><span class="cl"><span class="n">drwx</span><span class="o">------</span> <span class="mi">92</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">20</span><span class="n">K</span> <span class="n">Sep</span> <span class="mi">18</span> <span class="mi">11</span><span class="p">:</span><span class="mi">28</span> <span class="o">..</span>
-</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">-----</span>  <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mf">3.8</span><span class="n">M</span> <span class="n">Sep</span> <span class="mi">18</span> <span class="mi">11</span><span class="p">:</span><span class="mi">29</span> <span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">-</span><span class="n">json</span><span class="o">.</span><span class="n">log</span>
-</span></span><span class="line"><span class="cl"><span class="n">drwx</span><span class="o">------</span>  <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mf">4.0</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="n">checkpoints</span>
-</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">rw</span><span class="o">-------</span>  <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mf">7.8</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="n">config</span><span class="o">.</span><span class="n">v2</span><span class="o">.</span><span class="n">json</span>
-</span></span><span class="line"><span class="cl"><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>  <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mf">2.3</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="n">hostconfig</span><span class="o">.</span><span class="n">json</span>
-</span></span><span class="line"><span class="cl"><span class="n">drwx</span><span class="o">------</span>  <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mf">4.0</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">12</span> <span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="n">mounts</span>
+</span></span><span class="line"><span class="cl">$ ls -alh /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/
+</span></span><span class="line"><span class="cl">total 3.9M
+</span></span><span class="line"><span class="cl">drwx------  4 root root 4.0K Aug 12 07:42 .
+</span></span><span class="line"><span class="cl">drwx------ 92 root root  20K Sep 18 11:28 ..
+</span></span><span class="line"><span class="cl">-rw-r-----  1 root root 3.8M Sep 18 11:29 5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
+</span></span><span class="line"><span class="cl">drwx------  2 root root 4.0K Aug 12 07:42 checkpoints
+</span></span><span class="line"><span class="cl">-rw-------  1 root root 7.8K Aug 12 07:42 config.v2.json
+</span></span><span class="line"><span class="cl">-rw-r--r--  1 root root 2.3K Aug 12 07:42 hostconfig.json
+</span></span><span class="line"><span class="cl">drwx------  2 root root 4.0K Aug 12 07:42 mounts
 </span></span></code></pre></div><p>頭尾偷喵一下，確定是我們在找的東西</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">head</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">-</span><span class="n">json</span><span class="o">.</span><span class="n">log</span>
-</span></span><span class="line"><span class="cl"><span class="n">tail</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">/</span><span class="mf">5e38</span><span class="n">c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac</span><span class="o">-</span><span class="n">json</span><span class="o">.</span><span class="n">log</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">head /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
+</span></span><span class="line"><span class="cl">tail /var/lib/docker/containers/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac/5e38c9b63c8d767091b122a9aa48c576a88cc20b4470d9ca18a820afa5c168ac-json.log
 </span></span></code></pre></div><p>這樣就找到我們的 log 了</p>
 <h1 id="小節">小節</h1>
 <ul>
@@ -1520,7 +1520,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1563,7 +1563,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1656,7 +1656,7 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

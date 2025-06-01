@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: 2024年10月24日 --><html lang="zh-Hant" >
+<!-- Last Published: 2025年6月1日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -1006,31 +1006,31 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
 <p>我們今天以 <a href="https://github.com/oliver006/redis_exporter" target="_blank" rel="noopener">Redis Exporter</a> 為例，研究一下外部的 exporter 是如何取得 redis 內部的 metrcs。</p>
 <p>Redis exporter 是用 golang 寫的一個小程式，總共算算才 1000 行，而且很多都是對 redis 內部 metrics 的清單，以及轉化成 prometheus metrics 的 tool functions，主要的邏輯非常簡單。我們簡單看一下源碼。</p>
 <p><a href="https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L386" target="_blank" rel="noopener">Collect</a> 是主要的收集邏輯，就是執行 scrapeRedisHost(ch) ，然後把收集到的資訊，使用 <a href="https://github.com/prometheus/client_golang" target="_blank" rel="noopener">Prometheus Go Client Library</a> 的工具將資料註冊成 prometheus metrics</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">e</span> <span class="o">*</span><span class="n">Exporter</span><span class="p">)</span> <span class="n">Collect</span><span class="p">(</span><span class="n">ch</span> <span class="n">chan</span><span class="o">&lt;-</span> <span class="n">prometheus</span><span class="o">.</span><span class="n">Metric</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">e</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">defer</span> <span class="n">e</span><span class="o">.</span><span class="n">Unlock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">e</span><span class="o">.</span><span class="n">totalScrapes</span><span class="o">.</span><span class="n">Inc</span><span class="p">()</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func (e *Exporter) Collect(ch chan&lt;- prometheus.Metric) {
+</span></span><span class="line"><span class="cl">	e.Lock()
+</span></span><span class="line"><span class="cl">	defer e.Unlock()
+</span></span><span class="line"><span class="cl">	e.totalScrapes.Inc()
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">redisAddr</span> <span class="o">!=</span> <span class="s2">&#34;&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">start</span> <span class="p">:</span><span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="k">var</span> <span class="n">up</span> <span class="n">float64</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">	if e.redisAddr != &#34;&#34; {
+</span></span><span class="line"><span class="cl">		start := time.Now().UnixNano()
+</span></span><span class="line"><span class="cl">		var up float64 = 1
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="err">從</span> <span class="n">host</span> <span class="n">scrape</span> <span class="err">資料，然後塞進</span> <span class="n">channel</span> <span class="n">streaming</span> <span class="err">出來。</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">scrapeRedisHost</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">up</span> <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">			<span class="n">e</span><span class="o">.</span><span class="n">registerConstMetricGauge</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="s2">&#34;exporter_last_scrape_error&#34;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">err</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">e</span><span class="o">.</span><span class="n">registerConstMetricGauge</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="s2">&#34;exporter_last_scrape_error&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    // 從 host scrape 資料，然後塞進 channel streaming 出來。
+</span></span><span class="line"><span class="cl">		if err := e.scrapeRedisHost(ch); err != nil {
+</span></span><span class="line"><span class="cl">			up = 0
+</span></span><span class="line"><span class="cl">			e.registerConstMetricGauge(ch, &#34;exporter_last_scrape_error&#34;, 1.0, fmt.Sprintf(&#34;%s&#34;, err))
+</span></span><span class="line"><span class="cl">		} else {
+</span></span><span class="line"><span class="cl">			e.registerConstMetricGauge(ch, &#34;exporter_last_scrape_error&#34;, 0, &#34;&#34;)
+</span></span><span class="line"><span class="cl">		}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="n">e</span><span class="o">.</span><span class="n">registerConstMetricGauge</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="s2">&#34;up&#34;</span><span class="p">,</span> <span class="n">up</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="n">e</span><span class="o">.</span><span class="n">registerConstMetricGauge</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="s2">&#34;exporter_last_scrape_duration_seconds&#34;</span><span class="p">,</span> <span class="n">float64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="mi">1000000000</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		e.registerConstMetricGauge(ch, &#34;up&#34;, up)
+</span></span><span class="line"><span class="cl">		e.registerConstMetricGauge(ch, &#34;exporter_last_scrape_duration_seconds&#34;, float64(time.Now().UnixNano()-start)/1000000000)
+</span></span><span class="line"><span class="cl">	}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">ch</span> <span class="o">&lt;-</span> <span class="n">e</span><span class="o">.</span><span class="n">totalScrapes</span>
-</span></span><span class="line"><span class="cl">	<span class="n">ch</span> <span class="o">&lt;-</span> <span class="n">e</span><span class="o">.</span><span class="n">scrapeDuration</span>
-</span></span><span class="line"><span class="cl">	<span class="n">ch</span> <span class="o">&lt;-</span> <span class="n">e</span><span class="o">.</span><span class="n">targetScrapeRequestErrors</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	ch &lt;- e.totalScrapes
+</span></span><span class="line"><span class="cl">	ch &lt;- e.scrapeDuration
+</span></span><span class="line"><span class="cl">	ch &lt;- e.targetScrapeRequestErrors
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>scrapeRedisHost 內部的主要邏輯，又集中在<a href="https://github.com/oliver006/redis_exporter/blob/master/exporter.go#L1144" target="_blank" rel="noopener">執行 Info</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  // 執行 info 
 </span></span><span class="line"><span class="cl">	infoAll, err := redis.String(doRedisCmd(c, &#34;INFO&#34;, &#34;ALL&#34;))
@@ -1043,41 +1043,41 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
 </span></span><span class="line"><span class="cl">	}
 </span></span></code></pre></div><p>也就是說當我們在 redis-cli 連入 redis 時，可以執行 Info command，取得 redis 內部的資訊，包含節點設店與狀態，集群設定，資料的統計數據等等。然後 exporter 這邊維護持續去向 redis 更新 info ，並且把 info data 轉化成 time series 的 metrcs，再透過 <a href="https://github.com/prometheus/client_golang/tree/master/prometheus/promhttp" target="_blank" rel="noopener">Prometheus Client promhttp</a> 提供的 http endpoint library，變成 http endpoint。</p>
 <p>首先看一下 <a href="https://redis.io/commands/info" target="_blank" rel="noopener">redis info command 的文件</a>，這邊有說明 info 的 option ，以及 option 各自提供的資料，包括 server 狀態，賀戶端連線狀況，系統資源，複本狀態等等。我們也可以自己透過 info 取得資料。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">po</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">redis</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ kubectl get po | grep redis
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mi">0</span>                                <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>     <span class="mi">0</span>          <span class="mi">11</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mi">1</span>                                <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>     <span class="mi">0</span>          <span class="mi">11</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mi">2</span>                                <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>     <span class="mi">0</span>          <span class="mi">11</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl">redis-2-redis-ha-server-0                                3/3     Running     0          11d
+</span></span><span class="line"><span class="cl">redis-2-redis-ha-server-1                                3/3     Running     0          11d
+</span></span><span class="line"><span class="cl">redis-2-redis-ha-server-2                                3/3     Running     0          11d
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">kubectl</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">redis</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">redis</span><span class="o">-</span><span class="n">ha</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mi">0</span>  <span class="n">sh</span>
-</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">redis</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">h</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">service</span>  <span class="o">-</span><span class="n">a</span> <span class="n">REDIS_PASSWORD</span>
-</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">service</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">$ kubectl exec -it redis-2-redis-ha-server-0  sh
+</span></span><span class="line"><span class="cl">$ redis-cli -h haproxy-service  -a REDIS_PASSWORD
+</span></span><span class="line"><span class="cl">$ haproxy-service:6379&gt;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">service</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">info</span> <span class="n">server</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Server</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis_version</span><span class="p">:</span><span class="mf">5.0</span><span class="o">.</span><span class="mi">5</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis_git_sha1</span><span class="p">:</span><span class="mi">00000000</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis_git_dirty</span><span class="p">:</span><span class="mi">0</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis_build_id</span><span class="p">:</span><span class="mi">4</span><span class="n">d072dc1c62d5672</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis_mode</span><span class="p">:</span><span class="n">standalone</span>
-</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="p">:</span><span class="n">Linux</span> <span class="mf">4.14</span><span class="o">.</span><span class="mi">127</span><span class="o">+</span> <span class="n">x86_64</span>
-</span></span><span class="line"><span class="cl"><span class="n">arch_bits</span><span class="p">:</span><span class="mi">64</span>
-</span></span><span class="line"><span class="cl"><span class="n">multiplexing_api</span><span class="p">:</span><span class="n">epoll</span>
-</span></span><span class="line"><span class="cl"><span class="n">atomicvar_api</span><span class="p">:</span><span class="n">atomic</span><span class="o">-</span><span class="n">builtin</span>
-</span></span><span class="line"><span class="cl"><span class="n">gcc_version</span><span class="p">:</span><span class="mf">8.3</span><span class="o">.</span><span class="mi">0</span>
-</span></span><span class="line"><span class="cl"><span class="n">process_id</span><span class="p">:</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl"><span class="n">run_id</span><span class="p">:</span><span class="mi">63</span><span class="n">a97460b7c3745577931dad406df9609c4e2464</span>
-</span></span><span class="line"><span class="cl"><span class="n">tcp_port</span><span class="p">:</span><span class="mi">6379</span>
-</span></span><span class="line"><span class="cl"><span class="n">uptime_in_seconds</span><span class="p">:</span><span class="mi">976082</span>
-</span></span><span class="line"><span class="cl"><span class="n">uptime_in_days</span><span class="p">:</span><span class="mi">11</span>
-</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl">$ haproxy-service:6379&gt; info server
+</span></span><span class="line"><span class="cl"># Server
+</span></span><span class="line"><span class="cl">redis_version:5.0.5
+</span></span><span class="line"><span class="cl">redis_git_sha1:00000000
+</span></span><span class="line"><span class="cl">redis_git_dirty:0
+</span></span><span class="line"><span class="cl">redis_build_id:4d072dc1c62d5672
+</span></span><span class="line"><span class="cl">redis_mode:standalone
+</span></span><span class="line"><span class="cl">os:Linux 4.14.127+ x86_64
+</span></span><span class="line"><span class="cl">arch_bits:64
+</span></span><span class="line"><span class="cl">multiplexing_api:epoll
+</span></span><span class="line"><span class="cl">atomicvar_api:atomic-builtin
+</span></span><span class="line"><span class="cl">gcc_version:8.3.0
+</span></span><span class="line"><span class="cl">process_id:1
+</span></span><span class="line"><span class="cl">run_id:63a97460b7c3745577931dad406df9609c4e2464
+</span></span><span class="line"><span class="cl">tcp_port:6379
+</span></span><span class="line"><span class="cl">uptime_in_seconds:976082
+</span></span><span class="line"><span class="cl">uptime_in_days:11
+</span></span><span class="line"><span class="cl">...
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">$</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">service</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">info</span> <span class="n">clients</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Clients</span>
-</span></span><span class="line"><span class="cl"><span class="n">connected_clients</span><span class="p">:</span><span class="mi">100</span>
-</span></span><span class="line"><span class="cl"><span class="n">client_recent_max_input_buffer</span><span class="p">:</span><span class="mi">2</span>
-</span></span><span class="line"><span class="cl"><span class="n">client_recent_max_output_buffer</span><span class="p">:</span><span class="mi">0</span>
-</span></span><span class="line"><span class="cl"><span class="n">blocked_clients</span><span class="p">:</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">$ haproxy-service:6379&gt; info clients
+</span></span><span class="line"><span class="cl"># Clients
+</span></span><span class="line"><span class="cl">connected_clients:100
+</span></span><span class="line"><span class="cl">client_recent_max_input_buffer:2
+</span></span><span class="line"><span class="cl">client_recent_max_output_buffer:0
+</span></span><span class="line"><span class="cl">blocked_clients:1
 </span></span></code></pre></div><p>Redis exporter 收集這些數據，透過 prometheus client library 把資料轉成 time series prometheus metrics。然後透過 library 放在 http enpoint 上。</p>
 <p>配合上次說過的 redis overview dashboard，可以直接在 Grafana 上使用</p>
 <p>
@@ -1442,7 +1442,7 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1485,7 +1485,7 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1578,7 +1578,7 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
   
 
 
-<script src="/zh-hant/js/wowchemy.min.c1296fcfda1f6e2549c8cd4fe453ac58.js"></script>
+<script src="/zh-hant/js/wowchemy.min.f5ce063f9bd2e47fdb1e51b445b2fb48.js"></script>
 
 
 

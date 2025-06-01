@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1010,13 +1010,13 @@ make project 是其中一個指令，幫忙創建資料夾、布置 Makefile 與
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cd my-new-project
 </span></span></code></pre></div><p>進入 my-new-project 下，可以看到裡面已經有一些檔案，我們首先要編輯的是這個 <code>terraform.tf</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">project</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">Makefile</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">└──</span> <span class="n">variables</span><span class="o">.</span><span class="n">tf</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">my-new-project
+</span></span><span class="line"><span class="cl">├── Makefile
+</span></span><span class="line"><span class="cl">├── provider.tf
+</span></span><span class="line"><span class="cl">├── terraform.tf
+</span></span><span class="line"><span class="cl">└── variables.tf
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">vim</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
+</span></span><span class="line"><span class="cl">vim terraform.tf
 </span></span></code></pre></div><h3 id="terraformtf-是-terraform-本身的設定">terraform.tf 是 terraform 本身的設定</h3>
 <p>這邊是 Terraform Backend 的設定，如果不知道什麼是 terraform backend 這個我們明天的文章會講。這邊使用的 backend 是 terraform 官方自家的 <a href="https://app.terraform.io" target="_blank" rel="noopener">terraform cloud</a>，可以在網站上</p>
 <ul>
@@ -1042,58 +1042,58 @@ make project 是其中一個指令，幫忙創建資料夾、布置 Makefile 與
 <p>terraform client 會把 tf 檔案拿來運算，透過 Provider ，將需求實際轉化成 API call ，然後送到公有雲或是其他目標。這邊就只講到這樣。</p>
 <p>provider 為了工作，可能會需要提供一些參數，例如 google 的 provider 會需要在這裡提供 credential_json 的路徑，請把它放在適合的地方，然後用絕對路徑指向 google</p>
 <p>NOTE: 不要 commit credential key 到 git repository 裡面。可以放到外層資料夾，或至少要 gitignore 掉。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">provider</span> <span class="s2">&#34;google&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;~&gt;v3.25.0&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">provider &#34;google&#34; {
+</span></span><span class="line"><span class="cl">  version = &#34;~&gt;v3.25.0&#34;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">credentials</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="k">var</span><span class="o">.</span><span class="n">credential_json</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  credentials = file(var.credential_json)
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">project</span> <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">project</span>
-</span></span><span class="line"><span class="cl">  <span class="n">region</span>  <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">region</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  project = var.project
+</span></span><span class="line"><span class="cl">  region  = var.region
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h3 id="variabletf-做參數的存放點">variable.tf 做參數的存放點</h3>
 <p>雖然上面 tf 檔案使用了 terraform / provider / variable ，但 terraform 掃描檔案時，檔名本身並不會影響。也就是說，參數你想擺哪就擺哪。不過上面是常見的命名慣例，這樣擺人類比較容易找得到。</p>
 <p>variable 這邊設定的參數，比較像是 arguments，也就是當其他位置的 tf 檔案，引用這個資料夾作為 module 的時候，作為參數輸入的 placeholder，其他 tf 檔案可以使用 variable 關鍵字定義的參數，例如: var.project，或是 provider.tf 裡的 var.credential_json。</p>
 <p>variable 關鍵字也可以定義 default 預設值，如果沒有定義 default，也沒有從外部傳入 argument，會在 validate 時造成 error。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Global</span>
-</span></span><span class="line"><span class="cl"><span class="n">variable</span> <span class="s2">&#34;project&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">type</span>    <span class="o">=</span> <span class="n">string</span>
-</span></span><span class="line"><span class="cl">  <span class="n">default</span> <span class="o">=</span> <span class="s2">&#34;myproject&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Global
+</span></span><span class="line"><span class="cl">variable &#34;project&#34; {
+</span></span><span class="line"><span class="cl">  type    = string
+</span></span><span class="line"><span class="cl">  default = &#34;myproject&#34;
+</span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">variable</span> <span class="s2">&#34;credential_json&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">type</span>    <span class="o">=</span> <span class="n">string</span>
-</span></span><span class="line"><span class="cl">  <span class="n">default</span> <span class="o">=</span> <span class="s2">&#34;../credentials/gke-playground-0423-aacf6a39cc3f.json&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">variable &#34;credential_json&#34; {
+</span></span><span class="line"><span class="cl">  type    = string
+</span></span><span class="line"><span class="cl">  default = &#34;../credentials/gke-playground-0423-aacf6a39cc3f.json&#34;
+</span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">variable</span> <span class="s2">&#34;region&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">type</span>    <span class="o">=</span> <span class="n">string</span>
-</span></span><span class="line"><span class="cl">  <span class="n">default</span> <span class="o">=</span> <span class="s2">&#34;asia-east1&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">variable &#34;region&#34; {
+</span></span><span class="line"><span class="cl">  type    = string
+</span></span><span class="line"><span class="cl">  default = &#34;asia-east1&#34;
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h3 id="create">Create</h3>
 <p>這裡我們試著創建一台 GCE，使用下列指令，會發現多了一個檔案 compute_instance.tf。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">NAME</span><span class="o">=</span><span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">gce</span> <span class="n">make</span> <span class="n">gce</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">NAME=my-new-gce make gce
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">project</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">Makefile</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">compute_instance</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">provider</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">terraform</span><span class="o">.</span><span class="n">tf</span>
-</span></span><span class="line"><span class="cl"><span class="err">└──</span> <span class="n">variables</span><span class="o">.</span><span class="n">tf</span>
+</span></span><span class="line"><span class="cl">my-new-project
+</span></span><span class="line"><span class="cl">├── Makefile
+</span></span><span class="line"><span class="cl">├── compute_instance.tf
+</span></span><span class="line"><span class="cl">├── provider.tf
+</span></span><span class="line"><span class="cl">├── terraform.tf
+</span></span><span class="line"><span class="cl">└── variables.tf
 </span></span></code></pre></div><p>內容大概是</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">module</span> <span class="s2">&#34;my-new-gce&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">source</span> <span class="o">=</span> <span class="s2">&#34;../modules/compute_instance&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">providers</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">google</span>      <span class="o">=</span> <span class="n">google</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">module &#34;my-new-gce&#34; {
+</span></span><span class="line"><span class="cl">  source = &#34;../modules/compute_instance&#34;
+</span></span><span class="line"><span class="cl">  providers = {
+</span></span><span class="line"><span class="cl">    google      = google
+</span></span><span class="line"><span class="cl">  }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">project</span>      <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">project</span>
-</span></span><span class="line"><span class="cl">  <span class="n">name</span>         <span class="o">=</span> <span class="s2">&#34;my-new-gce&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">image</span>        <span class="o">=</span> <span class="s2">&#34;https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-7-v20200429&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">machine_type</span> <span class="o">=</span> <span class="s2">&#34;n1-standard-1&#34;</span>
+</span></span><span class="line"><span class="cl">  project      = var.project
+</span></span><span class="line"><span class="cl">  name         = &#34;my-new-gce&#34;
+</span></span><span class="line"><span class="cl">  image        = &#34;https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-7-v20200429&#34;
+</span></span><span class="line"><span class="cl">  machine_type = &#34;n1-standard-1&#34;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">network</span>    <span class="o">=</span> <span class="s2">&#34;projects/${var.project}/global/networks/myproject&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">subnetwork</span> <span class="o">=</span> <span class="s2">&#34;projects/${var.project}/regions/asia-east1/subnetworks/myproject&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  network    = &#34;projects/${var.project}/global/networks/myproject&#34;
+</span></span><span class="line"><span class="cl">  subnetwork = &#34;projects/${var.project}/regions/asia-east1/subnetworks/myproject&#34;
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>module 關鍵字定義一組資源，<a href="https://github.com/chechiachang/terraform-playground/tree/master/gcp/modules/compute_instance" target="_blank" rel="noopener">具體的內容是這裡</a>，簡單來說可以把一堆 tf 檔案放在一塊，然後把需要的參數使用 variable.tf 拉出去，讓其他地方引用。</p>
 <p>source = &quot;&quot; 是實際引用的 module 來源</p>
 <p>底下是這個 module 需要用到的參數，例如 project, name, image, machine_type,&hellip; 等是 gce 這個 module 需要的參數。</p>
@@ -1462,7 +1462,7 @@ make project 是其中一個指令，幫忙創建資料夾、布置 Makefile 與
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1505,7 +1505,7 @@ make project 是其中一個指令，幫忙創建資料夾、布置 Makefile 與
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1598,7 +1598,7 @@ make project 是其中一個指令，幫忙創建資料夾、布置 Makefile 與
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1039,145 +1039,145 @@ root 中設定 IAM User 將手動產生的 Administrator 的 IAM User 加到 ter
 </ul>
 <p>增加 IAM User PR 的 commit 在此 <a href="https://github.com/chechiachang/terragrunt-infrastructure-modules/pull/1" target="_blank" rel="noopener">https://github.com/chechiachang/terragrunt-infrastructure-modules/pull/1</a></p>
 <p>於是我們試著執行 terraform plan</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">aws</span><span class="o">-</span><span class="n">vault</span> <span class="n">exec</span> <span class="n">terraform</span><span class="o">-</span><span class="mi">30</span><span class="n">day</span><span class="o">-</span><span class="n">root</span><span class="o">-</span><span class="n">iam</span><span class="o">-</span><span class="n">user</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">session</span>  <span class="o">--</span>  <span class="n">terragrunt</span> <span class="n">plan</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt plan
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Terraform</span> <span class="n">used</span> <span class="n">the</span> <span class="n">selected</span> <span class="n">providers</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">the</span> <span class="n">following</span> <span class="n">execution</span>
-</span></span><span class="line"><span class="cl"><span class="n">plan</span><span class="o">.</span> <span class="ne">Resource</span> <span class="n">actions</span> <span class="n">are</span> <span class="n">indicated</span> <span class="n">with</span> <span class="n">the</span> <span class="n">following</span> <span class="n">symbols</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">create</span>
+</span></span><span class="line"><span class="cl">Terraform used the selected providers to generate the following execution
+</span></span><span class="line"><span class="cl">plan. Resource actions are indicated with the following symbols:
+</span></span><span class="line"><span class="cl">  + create
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Terraform</span> <span class="n">will</span> <span class="n">perform</span> <span class="n">the</span> <span class="n">following</span> <span class="n">actions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">Terraform will perform the following actions:
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_group_with_policies_full_access.aws_iam_group.this[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_group&#34;</span> <span class="s2">&#34;this&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">arn</span>       <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>        <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">name</span>      <span class="o">=</span> <span class="s2">&#34;full-access&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">path</span>      <span class="o">=</span> <span class="s2">&#34;/&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">unique_id</span> <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_group_with_policies_full_access.aws_iam_group.this[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_group&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + arn       = (known after apply)
+</span></span><span class="line"><span class="cl">      + id        = (known after apply)
+</span></span><span class="line"><span class="cl">      + name      = &#34;full-access&#34;
+</span></span><span class="line"><span class="cl">      + path      = &#34;/&#34;
+</span></span><span class="line"><span class="cl">      + unique_id = (known after apply)
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_group_with_policies_full_access.aws_iam_group_membership.this[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_group_membership&#34;</span> <span class="s2">&#34;this&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">group</span> <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>    <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">name</span>  <span class="o">=</span> <span class="s2">&#34;full-access&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">users</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">          <span class="o">+</span> <span class="s2">&#34;Administrator&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_group_with_policies_full_access.aws_iam_group_membership.this[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_group_membership&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + group = (known after apply)
+</span></span><span class="line"><span class="cl">      + id    = (known after apply)
+</span></span><span class="line"><span class="cl">      + name  = &#34;full-access&#34;
+</span></span><span class="line"><span class="cl">      + users = [
+</span></span><span class="line"><span class="cl">          + &#34;Administrator&#34;,
+</span></span><span class="line"><span class="cl">        ]
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_group_with_policies_full_access.aws_iam_group_policy_attachment.custom_arns[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_group_policy_attachment&#34;</span> <span class="s2">&#34;custom_arns&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">group</span>      <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>         <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">policy_arn</span> <span class="o">=</span> <span class="s2">&#34;arn:aws:iam::aws:policy/AdministratorAccess&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_group_with_policies_full_access.aws_iam_group_policy_attachment.custom_arns[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_group_policy_attachment&#34; &#34;custom_arns&#34; {
+</span></span><span class="line"><span class="cl">      + group      = (known after apply)
+</span></span><span class="line"><span class="cl">      + id         = (known after apply)
+</span></span><span class="line"><span class="cl">      + policy_arn = &#34;arn:aws:iam::aws:policy/AdministratorAccess&#34;
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_group_with_policies_full_access.aws_iam_group_policy_attachment.iam_self_management[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_group_policy_attachment&#34;</span> <span class="s2">&#34;iam_self_management&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">group</span>      <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>         <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">policy_arn</span> <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_group_with_policies_full_access.aws_iam_group_policy_attachment.iam_self_management[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_group_policy_attachment&#34; &#34;iam_self_management&#34; {
+</span></span><span class="line"><span class="cl">      + group      = (known after apply)
+</span></span><span class="line"><span class="cl">      + id         = (known after apply)
+</span></span><span class="line"><span class="cl">      + policy_arn = (known after apply)
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_group_with_policies_full_access.aws_iam_policy.iam_self_management[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_policy&#34;</span> <span class="s2">&#34;iam_self_management&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">arn</span>         <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>          <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">name</span>        <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">name_prefix</span> <span class="o">=</span> <span class="s2">&#34;IAMSelfManagement-&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">path</span>        <span class="o">=</span> <span class="s2">&#34;/&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">policy</span>      <span class="o">=</span> <span class="n">jsonencode</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">              <span class="o">+</span> <span class="n">Statement</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                  <span class="o">+</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Action</span>   <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:UploadSigningCertificate&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:UploadSSHPublicKey&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:UpdateUser&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:UpdateLoginProfile&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:UpdateAccessKey&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:ResyncMFADevice&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:List*&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:Get*&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:GenerateServiceLastAccessedDetails&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:GenerateCredentialReport&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:EnableMFADevice&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:DeleteVirtualMFADevice&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:DeleteLoginProfile&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:DeleteAccessKey&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:CreateVirtualMFADevice&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:CreateLoginProfile&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:CreateAccessKey&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:ChangePassword&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">]</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Effect</span>   <span class="o">=</span> <span class="s2">&#34;Allow&#34;</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="ne">Resource</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;arn:aws:iam::706136188012:user/*/${aws:username}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;arn:aws:iam::706136188012:user/${aws:username}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;arn:aws:iam::706136188012:mfa/${aws:username}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">]</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Sid</span>      <span class="o">=</span> <span class="s2">&#34;AllowSelfManagement&#34;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">                  <span class="o">+</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Action</span>   <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:List*&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;iam:Get*&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">]</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Effect</span>   <span class="o">=</span> <span class="s2">&#34;Allow&#34;</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="ne">Resource</span> <span class="o">=</span> <span class="s2">&#34;*&#34;</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Sid</span>      <span class="o">=</span> <span class="s2">&#34;AllowIAMReadOnly&#34;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">                  <span class="o">+</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Action</span>    <span class="o">=</span> <span class="s2">&#34;iam:DeactivateMFADevice&#34;</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Condition</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="n">Bool</span>            <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                              <span class="o">+</span> <span class="s2">&#34;aws:MultiFactorAuthPresent&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span>
-</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="n">NumericLessThan</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                              <span class="o">+</span> <span class="s2">&#34;aws:MultiFactorAuthAge&#34;</span> <span class="o">=</span> <span class="s2">&#34;3600&#34;</span>
-</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Effect</span>    <span class="o">=</span> <span class="s2">&#34;Allow&#34;</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="ne">Resource</span>  <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;arn:aws:iam::706136188012:user/*/${aws:username}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;arn:aws:iam::706136188012:user/${aws:username}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                          <span class="o">+</span> <span class="s2">&#34;arn:aws:iam::706136188012:mfa/${aws:username}&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">]</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">+</span> <span class="n">Sid</span>       <span class="o">=</span> <span class="s2">&#34;AllowDeactivateMFADevice&#34;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">                <span class="p">]</span>
-</span></span><span class="line"><span class="cl">              <span class="o">+</span> <span class="n">Version</span>   <span class="o">=</span> <span class="s2">&#34;2012-10-17&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">policy_id</span>   <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">tags_all</span>    <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_group_with_policies_full_access.aws_iam_policy.iam_self_management[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_policy&#34; &#34;iam_self_management&#34; {
+</span></span><span class="line"><span class="cl">      + arn         = (known after apply)
+</span></span><span class="line"><span class="cl">      + id          = (known after apply)
+</span></span><span class="line"><span class="cl">      + name        = (known after apply)
+</span></span><span class="line"><span class="cl">      + name_prefix = &#34;IAMSelfManagement-&#34;
+</span></span><span class="line"><span class="cl">      + path        = &#34;/&#34;
+</span></span><span class="line"><span class="cl">      + policy      = jsonencode(
+</span></span><span class="line"><span class="cl">            {
+</span></span><span class="line"><span class="cl">              + Statement = [
+</span></span><span class="line"><span class="cl">                  + {
+</span></span><span class="line"><span class="cl">                      + Action   = [
+</span></span><span class="line"><span class="cl">                          + &#34;iam:UploadSigningCertificate&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:UploadSSHPublicKey&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:UpdateUser&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:UpdateLoginProfile&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:UpdateAccessKey&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:ResyncMFADevice&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:List*&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:Get*&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:GenerateServiceLastAccessedDetails&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:GenerateCredentialReport&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:EnableMFADevice&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:DeleteVirtualMFADevice&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:DeleteLoginProfile&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:DeleteAccessKey&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:CreateVirtualMFADevice&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:CreateLoginProfile&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:CreateAccessKey&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:ChangePassword&#34;,
+</span></span><span class="line"><span class="cl">                        ]
+</span></span><span class="line"><span class="cl">                      + Effect   = &#34;Allow&#34;
+</span></span><span class="line"><span class="cl">                      + Resource = [
+</span></span><span class="line"><span class="cl">                          + &#34;arn:aws:iam::706136188012:user/*/${aws:username}&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;arn:aws:iam::706136188012:user/${aws:username}&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;arn:aws:iam::706136188012:mfa/${aws:username}&#34;,
+</span></span><span class="line"><span class="cl">                        ]
+</span></span><span class="line"><span class="cl">                      + Sid      = &#34;AllowSelfManagement&#34;
+</span></span><span class="line"><span class="cl">                    },
+</span></span><span class="line"><span class="cl">                  + {
+</span></span><span class="line"><span class="cl">                      + Action   = [
+</span></span><span class="line"><span class="cl">                          + &#34;iam:List*&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;iam:Get*&#34;,
+</span></span><span class="line"><span class="cl">                        ]
+</span></span><span class="line"><span class="cl">                      + Effect   = &#34;Allow&#34;
+</span></span><span class="line"><span class="cl">                      + Resource = &#34;*&#34;
+</span></span><span class="line"><span class="cl">                      + Sid      = &#34;AllowIAMReadOnly&#34;
+</span></span><span class="line"><span class="cl">                    },
+</span></span><span class="line"><span class="cl">                  + {
+</span></span><span class="line"><span class="cl">                      + Action    = &#34;iam:DeactivateMFADevice&#34;
+</span></span><span class="line"><span class="cl">                      + Condition = {
+</span></span><span class="line"><span class="cl">                          + Bool            = {
+</span></span><span class="line"><span class="cl">                              + &#34;aws:MultiFactorAuthPresent&#34; = &#34;true&#34;
+</span></span><span class="line"><span class="cl">                            }
+</span></span><span class="line"><span class="cl">                          + NumericLessThan = {
+</span></span><span class="line"><span class="cl">                              + &#34;aws:MultiFactorAuthAge&#34; = &#34;3600&#34;
+</span></span><span class="line"><span class="cl">                            }
+</span></span><span class="line"><span class="cl">                        }
+</span></span><span class="line"><span class="cl">                      + Effect    = &#34;Allow&#34;
+</span></span><span class="line"><span class="cl">                      + Resource  = [
+</span></span><span class="line"><span class="cl">                          + &#34;arn:aws:iam::706136188012:user/*/${aws:username}&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;arn:aws:iam::706136188012:user/${aws:username}&#34;,
+</span></span><span class="line"><span class="cl">                          + &#34;arn:aws:iam::706136188012:mfa/${aws:username}&#34;,
+</span></span><span class="line"><span class="cl">                        ]
+</span></span><span class="line"><span class="cl">                      + Sid       = &#34;AllowDeactivateMFADevice&#34;
+</span></span><span class="line"><span class="cl">                    },
+</span></span><span class="line"><span class="cl">                ]
+</span></span><span class="line"><span class="cl">              + Version   = &#34;2012-10-17&#34;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        )
+</span></span><span class="line"><span class="cl">      + policy_id   = (known after apply)
+</span></span><span class="line"><span class="cl">      + tags_all    = (known after apply)
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_user[&#34;Administrator&#34;].aws_iam_user.this[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_user&#34;</span> <span class="s2">&#34;this&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">arn</span>           <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">force_destroy</span> <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>            <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">name</span>          <span class="o">=</span> <span class="s2">&#34;Administrator&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">path</span>          <span class="o">=</span> <span class="s2">&#34;/&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">tags_all</span>      <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">unique_id</span>     <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_user[&#34;Administrator&#34;].aws_iam_user.this[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_user&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + arn           = (known after apply)
+</span></span><span class="line"><span class="cl">      + force_destroy = true
+</span></span><span class="line"><span class="cl">      + id            = (known after apply)
+</span></span><span class="line"><span class="cl">      + name          = &#34;Administrator&#34;
+</span></span><span class="line"><span class="cl">      + path          = &#34;/&#34;
+</span></span><span class="line"><span class="cl">      + tags_all      = (known after apply)
+</span></span><span class="line"><span class="cl">      + unique_id     = (known after apply)
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1"># module.iam_user[&#34;Administrator&#34;].aws_iam_user_login_profile.this[0] will be created</span>
-</span></span><span class="line"><span class="cl">  <span class="o">+</span> <span class="n">resource</span> <span class="s2">&#34;aws_iam_user_login_profile&#34;</span> <span class="s2">&#34;this&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">encrypted_password</span>      <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">id</span>                      <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">key_fingerprint</span>         <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">password</span>                <span class="o">=</span> <span class="p">(</span><span class="n">known</span> <span class="n">after</span> <span class="n">apply</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">password_length</span>         <span class="o">=</span> <span class="mi">20</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">password_reset_required</span> <span class="o">=</span> <span class="bp">false</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">pgp_key</span>                 <span class="o">=</span> <span class="s2">&#34;keybase:alice&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">user</span>                    <span class="o">=</span> <span class="s2">&#34;Administrator&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  # module.iam_user[&#34;Administrator&#34;].aws_iam_user_login_profile.this[0] will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;aws_iam_user_login_profile&#34; &#34;this&#34; {
+</span></span><span class="line"><span class="cl">      + encrypted_password      = (known after apply)
+</span></span><span class="line"><span class="cl">      + id                      = (known after apply)
+</span></span><span class="line"><span class="cl">      + key_fingerprint         = (known after apply)
+</span></span><span class="line"><span class="cl">      + password                = (known after apply)
+</span></span><span class="line"><span class="cl">      + password_length         = 20
+</span></span><span class="line"><span class="cl">      + password_reset_required = false
+</span></span><span class="line"><span class="cl">      + pgp_key                 = &#34;keybase:alice&#34;
+</span></span><span class="line"><span class="cl">      + user                    = &#34;Administrator&#34;
+</span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Plan</span><span class="p">:</span> <span class="mi">7</span> <span class="n">to</span> <span class="n">add</span><span class="p">,</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">change</span><span class="p">,</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">destroy</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">Plan: 7 to add, 0 to change, 0 to destroy.
 </span></span></code></pre></div><p>會產生幾個東西</p>
 <ul>
 <li><code>module.iam_user[&quot;Administrator&quot;]</code> 是一個 module，裡頭產生 IAM User 與其他 resource
@@ -1221,8 +1221,8 @@ root 中設定 IAM User 將手動產生的 Administrator 的 IAM User 加到 ter
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># terraform import aws_iam_user.lb loadbalancer</span>
-</span></span><span class="line"><span class="cl"><span class="n">terraform</span> <span class="n">import</span> <span class="o">&lt;</span><span class="n">address</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># terraform import aws_iam_user.lb loadbalancer
+</span></span><span class="line"><span class="cl">terraform import &lt;address&gt; &lt;username&gt;
 </span></span></code></pre></div><p>這邊的 address 需要填入 plan 時預計產生的 resource <code>aws_iam_user</code></p>
 <ul>
 <li>也就是 <code>module.iam_user[&quot;Administrator&quot;].aws_iam_user.this[0]</code> 這個 address</li>
@@ -1248,18 +1248,18 @@ root 中設定 IAM User 將手動產生的 Administrator 的 IAM User 加到 ter
 </span></span><span class="line"><span class="cl"># module 可以在包其他 module，所以架構複雜的 terraform module，resource address 就愈來越長
 </span></span><span class="line"><span class="cl">module.&lt;module_name&gt;.module.&lt;module_name&gt;.aws_iam_user.&lt;iam_user_name&gt;.&lt;iam_user_index&gt;
 </span></span></code></pre></div><p>最上層的 resource 是 <code>module/iam_user[*]</code>，對應的 .tf code 是 <a href="">user.tf</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">module</span> <span class="s2">&#34;iam_user&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">source</span>   <span class="o">=</span> <span class="s2">&#34;terraform-aws-modules/iam/aws//modules/iam-user&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">for_each</span> <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">users</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">module &#34;iam_user&#34; {
+</span></span><span class="line"><span class="cl">  source   = &#34;terraform-aws-modules/iam/aws//modules/iam-user&#34;
+</span></span><span class="line"><span class="cl">  for_each = var.users
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">name</span>          <span class="o">=</span> <span class="n">each</span><span class="o">.</span><span class="n">key</span>
-</span></span><span class="line"><span class="cl">  <span class="n">force_destroy</span> <span class="o">=</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">  name          = each.key
+</span></span><span class="line"><span class="cl">  force_destroy = true
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">create_iam_user_login_profile</span> <span class="o">=</span> <span class="n">each</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">create_login_profile</span>
-</span></span><span class="line"><span class="cl">  <span class="n">create_iam_access_key</span>         <span class="o">=</span> <span class="n">each</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">create_access_keys</span>
-</span></span><span class="line"><span class="cl">  <span class="n">pgp_key</span>                       <span class="o">=</span> <span class="n">each</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">pgp_key</span>
-</span></span><span class="line"><span class="cl">  <span class="n">password_reset_required</span>       <span class="o">=</span> <span class="bp">false</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  create_iam_user_login_profile = each.value.create_login_profile
+</span></span><span class="line"><span class="cl">  create_iam_access_key         = each.value.create_access_keys
+</span></span><span class="line"><span class="cl">  pgp_key                       = each.value.pgp_key
+</span></span><span class="line"><span class="cl">  password_reset_required       = false
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><ul>
 <li><code>module/iam_user</code> 中包含了許多 terraform resource
 <ul>
@@ -1685,7 +1685,7 @@ root 中設定 IAM User 將手動產生的 Administrator 的 IAM User 加到 ter
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1728,7 +1728,7 @@ root 中設定 IAM User 將手動產生的 Administrator 的 IAM User 加到 ter
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1821,7 +1821,7 @@ root 中設定 IAM User 將手動產生的 Administrator 的 IAM User 加到 ter
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

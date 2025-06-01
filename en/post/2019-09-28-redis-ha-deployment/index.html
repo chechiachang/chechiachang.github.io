@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1109,27 +1109,27 @@ DON&rsquo;T DO THIS on PRODUCTION</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl run test-redis --image redis:5.0.5-alpine --command sleep 36000
 </span></span><span class="line"><span class="cl">kubectl exec -it test-redis-xxxxxxxxx-xxxxx sh
 </span></span></code></pre></div><p>Benchmark</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">redis</span><span class="o">-</span><span class="n">benchmark</span> <span class="o">--</span><span class="n">help</span>
-</span></span><span class="line"><span class="cl"><span class="n">redis</span><span class="o">-</span><span class="n">benchmark</span> \
-</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">h</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">service</span><span class="o">.</span><span class="n">local</span> \
-</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">p</span> <span class="mi">6379</span> \
-</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">c</span> <span class="mi">100</span> \
-</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">d</span> <span class="mi">30</span> \
-</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">n</span> <span class="mi">1000000</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">redis-benchmark --help
+</span></span><span class="line"><span class="cl">redis-benchmark \
+</span></span><span class="line"><span class="cl">  -h haproxy-service.local \
+</span></span><span class="line"><span class="cl">  -p 6379 \
+</span></span><span class="line"><span class="cl">  -c 100 \
+</span></span><span class="line"><span class="cl">  -d 30 \
+</span></span><span class="line"><span class="cl">  -n 1000000
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">======</span> <span class="n">MSET</span> <span class="p">(</span><span class="mi">10</span> <span class="n">keys</span><span class="p">)</span> <span class="o">======</span>
-</span></span><span class="line"><span class="cl"><span class="mi">100000</span> <span class="n">requests</span> <span class="n">completed</span> <span class="ow">in</span> <span class="mf">2.32</span> <span class="n">seconds</span>
-</span></span><span class="line"><span class="cl"><span class="mi">50</span> <span class="n">parallel</span> <span class="n">clients</span>
-</span></span><span class="line"><span class="cl"><span class="mi">3</span> <span class="n">bytes</span> <span class="n">payload</span>
-</span></span><span class="line"><span class="cl"><span class="n">keep</span> <span class="n">alive</span><span class="p">:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">====== MSET (10 keys) ======
+</span></span><span class="line"><span class="cl">100000 requests completed in 2.32 seconds
+</span></span><span class="line"><span class="cl">50 parallel clients
+</span></span><span class="line"><span class="cl">3 bytes payload
+</span></span><span class="line"><span class="cl">keep alive: 1
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="mf">85.37</span><span class="o">%</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="n">milliseconds</span>
-</span></span><span class="line"><span class="cl"><span class="mf">98.06</span><span class="o">%</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="n">milliseconds</span>
-</span></span><span class="line"><span class="cl"><span class="mf">99.18</span><span class="o">%</span> <span class="o">&lt;=</span> <span class="mi">3</span> <span class="n">milliseconds</span>
-</span></span><span class="line"><span class="cl"><span class="mf">99.62</span><span class="o">%</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="n">milliseconds</span>
-</span></span><span class="line"><span class="cl"><span class="mf">99.93</span><span class="o">%</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="n">milliseconds</span>
-</span></span><span class="line"><span class="cl"><span class="mf">100.00</span><span class="o">%</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="n">milliseconds</span>
-</span></span><span class="line"><span class="cl"><span class="mf">43066.32</span> <span class="n">requests</span> <span class="n">per</span> <span class="n">second</span>
+</span></span><span class="line"><span class="cl">85.37% &lt;= 1 milliseconds
+</span></span><span class="line"><span class="cl">98.06% &lt;= 2 milliseconds
+</span></span><span class="line"><span class="cl">99.18% &lt;= 3 milliseconds
+</span></span><span class="line"><span class="cl">99.62% &lt;= 4 milliseconds
+</span></span><span class="line"><span class="cl">99.93% &lt;= 5 milliseconds
+</span></span><span class="line"><span class="cl">100.00% &lt;= 5 milliseconds
+</span></span><span class="line"><span class="cl">43066.32 requests per second
 </span></span></code></pre></div>
     </div>
 
@@ -1475,7 +1475,7 @@ DON&rsquo;T DO THIS on PRODUCTION</p>
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1518,7 +1518,7 @@ DON&rsquo;T DO THIS on PRODUCTION</p>
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1611,7 +1611,7 @@ DON&rsquo;T DO THIS on PRODUCTION</p>
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

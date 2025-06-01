@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1099,10 +1099,10 @@ ELK Stack Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engi
 </span></span><span class="line"><span class="cl">* Runtime 超過 limit，Pod 會被 kubernetes 幹掉，不過我們是 JVM，外部 resource 爆掉前，應該會先因 heap 滿而死。一個施主自盡的感覺。
 </span></span><span class="line"><span class="cl">* CPU 蠻省的，吃比較多是 memory。但也要看你的使用情境
 </span></span></code></pre></div><p>prometheus</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="err">對我們有上</span> <span class="n">promethues</span><span class="err">，基本上就是</span> <span class="n">kafka</span><span class="o">-</span><span class="n">exporter</span> <span class="err">把</span> <span class="n">kafka</span> <span class="n">metrics</span> <span class="err">倒出去</span> <span class="n">prometheus</span><span class="err">，這個也是詳見下回分解。</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">對我們有上 promethues，基本上就是 kafka-exporter 把 kafka metrics 倒出去 prometheus，這個也是詳見下回分解。
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 跑起來了</span>
+</span></span><span class="line"><span class="cl"># 跑起來了
 </span></span></code></pre></div><p>$ kubectl get po | grep kafka</p>
 <p>NAME                                                     READY   STATUS      RESTARTS   AGE
 kafka-1-0                                                1/1     Running     0          224d
@@ -1457,7 +1457,7 @@ kafka-1-zookeeper-2                                      1/1     Running     0  
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1500,7 +1500,7 @@ kafka-1-zookeeper-2                                      1/1     Running     0  
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1593,7 +1593,7 @@ kafka-1-zookeeper-2                                      1/1     Running     0  
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

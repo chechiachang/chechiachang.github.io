@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: 2024年10月24日 --><html lang="zh-Hant" >
+<!-- Last Published: 2025年6月1日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -378,7 +378,7 @@
 <meta property="og:description" content="A SRE" /><meta property="og:image" content="https://chechia.net/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="zh-Hant" />
 
   
-    <meta property="og:updated_time" content="2024-10-23T13:20:00&#43;00:00" />
+    <meta property="og:updated_time" content="2025-06-05T12:45:00&#43;00:00" />
   
 
 
@@ -861,6 +861,98 @@
   
 
   
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/zh-hant/post/2020-09-12-borg-omega-and-kubernetes/" >Borg Omega and Kubernetes Translation 全文翻譯</a>
+    </div>
+
+    
+    <a href="/zh-hant/post/2020-09-12-borg-omega-and-kubernetes/"  class="summary-link">
+      <div class="article-style">
+        前言 這是原文完整版本。太長不讀 (TL;DR) 請見Borg Omega and Kubernetes 前世今生摘要
+原文：https://storage.googleapis.com/pub-tools-public-publication-data/pdf/44843.pdf
+摘要 在 container 技術夯起來前，Google 已經做了 container 十幾年，過程中發展出需三套容器管理系統。雖然每一代系統的開發需求不同，但每一代都深受上一代影響。這篇文章描述 Google 開發這些系統時，學到的經驗。
+第一套 container management 系統是 Borg，為了管理 1. 長期執行的服務 2. 批次的短期工作 (batch job)，原本分別是由 Babysitter 與 Global Work Queue 兩套系統分開管理。後者的架構深刻影響 Borg，但 Global Work Queue 專注於 batch job。兩套系統都在 Linux control groups 之前。Borg 將上述兩種應用放在共享的機器上，來增加資源的使用率，以節省成本。這種共享基於支援 container 的 Linux Kernel (Google 也貢獻許多 Linux kernel container 程式碼)，提供更好的隔離 (isolation) 給延遲敏感的使用者服務 (latency-sentitive user-facing services)，以及消耗大量 cpu 的 batch 程式。
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          最近更新於
+      
+    
+    9月 11, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 閱讀時間（分鐘）
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
   
     
 
@@ -1739,101 +1831,6 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
 </div>
 
   
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item view-compact">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/" >Kubernetes Nginx Ingress Controller</a>
-    </div>
-
-    
-    <a href="/zh-hant/post/2019-10-08-kubernetes-nginx-ingress-controller/"  class="summary-link">
-      <div class="article-style">
-        2020 It邦幫忙鐵人賽 系列文章
-這邊該了一些大綱，原本的內容還有一些 kubernetes 的設定，以及 GCP 相關服務的介紹。但既然我們的主題是把東西搬上 k8s 的踩雷旅程，那我們就繼續搬，繼續踩。剩下的時間大概會有四個題目。
-Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-manager (3) Deploy cert-manager How cert-manager work Cert-manager complete workflow Kubernetes CRD &amp; Operator-sdk (3) Introduction about custom resource Deployment &amp; Usage Deployment &amp; Usage 由於我比較熟悉 GCP / GKE 的服務，這篇的操作過程都會以 GCP 平台作為範例，不過操作過程大體上是跨平台通用的。
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          最近更新於
-      
-    
-    9月 11, 2023
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 閱讀時間（分鐘）
-  </span>
-  
-
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/zh-hant/category/kubernetes/">kubernetes</a>, <a href="/zh-hant/category/nginx/">nginx</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-  
 
   
 
@@ -1906,7 +1903,7 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1949,7 +1946,7 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -2042,7 +2039,7 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
   
 
 
-<script src="/zh-hant/js/wowchemy.min.c1296fcfda1f6e2549c8cd4fe453ac58.js"></script>
+<script src="/zh-hant/js/wowchemy.min.f5ce063f9bd2e47fdb1e51b445b2fb48.js"></script>
 
 
 

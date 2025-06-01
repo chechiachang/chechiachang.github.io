@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1115,34 +1115,34 @@ replicas, service, topology 等等</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">serverFiles:
 </span></span></code></pre></div><p>部屬完看一下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">--</span><span class="n">selector</span><span class="o">=</span><span class="s1">&#39;app=prometheus&#39;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pods --selector=&#39;app=prometheus&#39;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                                             <span class="n">READY</span>   <span class="n">STATUS</span>    <span class="n">RESTARTS</span>   <span class="n">AGE</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">alertmanager</span><span class="o">-</span><span class="mi">694</span><span class="n">d6694c6</span><span class="o">-</span><span class="n">dvkwd</span>         <span class="mi">2</span><span class="o">/</span><span class="mi">2</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">8</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">kube</span><span class="o">-</span><span class="n">state</span><span class="o">-</span><span class="n">metrics</span><span class="o">-</span><span class="mi">85</span><span class="n">f6d75f8b</span><span class="o">-</span><span class="mi">7</span><span class="n">vlkp</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">8</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="mi">2</span><span class="n">mpjc</span>                   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">8</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">kg7fj</span>                   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">51</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">snnn5</span>                   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">8</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">pushgateway</span><span class="o">-</span><span class="mi">5</span><span class="n">cdfb4979c</span><span class="o">-</span><span class="n">dnmjn</span>          <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">8</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mi">59</span><span class="n">b8b8ccb4</span><span class="o">-</span><span class="n">bplkx</span>               <span class="mi">2</span><span class="o">/</span><span class="mi">2</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">8</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl">NAME                                             READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">prometheus-alertmanager-694d6694c6-dvkwd         2/2     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-kube-state-metrics-85f6d75f8b-7vlkp   1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter-2mpjc                   1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter-kg7fj                   1/1     Running   0          51d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter-snnn5                   1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-pushgateway-5cdfb4979c-dnmjn          1/1     Running   0          8d
+</span></span><span class="line"><span class="cl">prometheus-server-59b8b8ccb4-bplkx               2/2     Running   0          8d
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">kubectl</span> <span class="n">get</span> <span class="n">services</span> <span class="o">--</span><span class="n">selector</span><span class="o">=</span><span class="s1">&#39;app=prometheus&#39;</span>
+</span></span><span class="line"><span class="cl">kubectl get services --selector=&#39;app=prometheus&#39;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                            <span class="n">TYPE</span>        <span class="n">CLUSTER</span><span class="o">-</span><span class="ne">IP</span>     <span class="n">EXTERNAL</span><span class="o">-</span><span class="ne">IP</span>   <span class="n">PORT</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>    <span class="n">AGE</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">alertmanager</span>         <span class="n">ClusterIP</span>   <span class="mf">10.15</span><span class="o">.</span><span class="mf">241.66</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>        <span class="mi">80</span><span class="o">/</span><span class="n">TCP</span>     <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">kube</span><span class="o">-</span><span class="n">state</span><span class="o">-</span><span class="n">metrics</span>   <span class="n">ClusterIP</span>   <span class="n">None</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>        <span class="mi">80</span><span class="o">/</span><span class="n">TCP</span>     <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="n">exporter</span>        <span class="n">ClusterIP</span>   <span class="n">None</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>        <span class="mi">9100</span><span class="o">/</span><span class="n">TCP</span>   <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">pushgateway</span>          <span class="n">ClusterIP</span>   <span class="mf">10.15</span><span class="o">.</span><span class="mf">254.0</span>    <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>        <span class="mi">9091</span><span class="o">/</span><span class="n">TCP</span>   <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">server</span>               <span class="n">ClusterIP</span>   <span class="mf">10.15</span><span class="o">.</span><span class="mf">245.10</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>        <span class="mi">80</span><span class="o">/</span><span class="n">TCP</span>     <span class="mi">197</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl">NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+</span></span><span class="line"><span class="cl">prometheus-alertmanager         ClusterIP   10.15.241.66   &lt;none&gt;        80/TCP     197d
+</span></span><span class="line"><span class="cl">prometheus-kube-state-metrics   ClusterIP   None           &lt;none&gt;        80/TCP     197d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter        ClusterIP   None           &lt;none&gt;        9100/TCP   197d
+</span></span><span class="line"><span class="cl">prometheus-pushgateway          ClusterIP   10.15.254.0    &lt;none&gt;        9091/TCP   197d
+</span></span><span class="line"><span class="cl">prometheus-server               ClusterIP   10.15.245.10   &lt;none&gt;        80/TCP     197d
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">kubectl</span> <span class="n">get</span> <span class="n">endpoints</span> <span class="o">--</span><span class="n">selector</span><span class="o">=</span><span class="s1">&#39;app=prometheus&#39;</span>
+</span></span><span class="line"><span class="cl">kubectl get endpoints --selector=&#39;app=prometheus&#39;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                            <span class="n">ENDPOINTS</span>                                             <span class="n">AGE</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">alertmanager</span>         <span class="mf">10.12</span><span class="o">.</span><span class="mf">6.220</span><span class="p">:</span><span class="mi">9093</span>                                      <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">kube</span><span class="o">-</span><span class="n">state</span><span class="o">-</span><span class="n">metrics</span>   <span class="mf">10.12</span><span class="o">.</span><span class="mf">6.222</span><span class="p">:</span><span class="mi">8080</span>                                      <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="n">exporter</span>        <span class="mf">10.140</span><span class="o">.</span><span class="mf">0.30</span><span class="p">:</span><span class="mi">9100</span><span class="p">,</span><span class="mf">10.140</span><span class="o">.</span><span class="mf">0.9</span><span class="p">:</span><span class="mi">9100</span><span class="p">,</span><span class="mf">10.140</span><span class="o">.</span><span class="mf">15.212</span><span class="p">:</span><span class="mi">9100</span>   <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">pushgateway</span>          <span class="mf">10.12</span><span class="o">.</span><span class="mf">6.211</span><span class="p">:</span><span class="mi">9091</span>                                      <span class="mi">197</span><span class="n">d</span>
-</span></span><span class="line"><span class="cl"><span class="n">prometheus</span><span class="o">-</span><span class="n">server</span>               <span class="mf">10.12</span><span class="o">.</span><span class="mf">3.14</span><span class="p">:</span><span class="mi">9090</span>                                       <span class="mi">197</span><span class="n">d</span>
+</span></span><span class="line"><span class="cl">NAME                            ENDPOINTS                                             AGE
+</span></span><span class="line"><span class="cl">prometheus-alertmanager         10.12.6.220:9093                                      197d
+</span></span><span class="line"><span class="cl">prometheus-kube-state-metrics   10.12.6.222:8080                                      197d
+</span></span><span class="line"><span class="cl">prometheus-node-exporter        10.140.0.30:9100,10.140.0.9:9100,10.140.15.212:9100   197d
+</span></span><span class="line"><span class="cl">prometheus-pushgateway          10.12.6.211:9091                                      197d
+</span></span><span class="line"><span class="cl">prometheus-server               10.12.3.14:9090                                       197d
 </span></span></code></pre></div><p>簡單說明一下</p>
 <ul>
 <li>prometheus-server 是主要的 api-server 以及 time series database</li>
@@ -1519,7 +1519,7 @@ replicas, service, topology 等等</p>
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1562,7 +1562,7 @@ replicas, service, topology 等等</p>
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1655,7 +1655,7 @@ replicas, service, topology 等等</p>
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

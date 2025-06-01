@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: 2024年10月24日 --><html lang="zh-Hant" >
+<!-- Last Published: 2025年6月1日 --><html lang="zh-Hant" >
 
 
 <head>
@@ -1045,28 +1045,28 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
 <h1 id="annotation">Annotation</h1>
 <p>有很多 Nginx 的設定是根據 ingress 不同而有調整，例如針對這個 ingress 做白名單，設定 session，設定 ssl 等等，這些針對特定 ingress 所做的設定，可以直接寫在 <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/" target="_blank" rel="noopener">ingress annotation</a> 裡面。</p>
 <p>例如下面這個 Ingress</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">apiVersion</span><span class="p">:</span> <span class="n">extensions</span><span class="o">/</span><span class="n">v1beta1</span>
-</span></span><span class="line"><span class="cl"><span class="n">kind</span><span class="p">:</span> <span class="n">Ingress</span>
-</span></span><span class="line"><span class="cl"><span class="n">metadata</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">  <span class="n">name</span><span class="p">:</span> <span class="n">ingress</span><span class="o">-</span><span class="n">nginx</span>
-</span></span><span class="line"><span class="cl">  <span class="n">annotations</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">ingress</span><span class="o">.</span><span class="k">class</span><span class="p">:</span> <span class="n">nginx</span>
-</span></span><span class="line"><span class="cl">    <span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">tls</span><span class="o">-</span><span class="n">acme</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">certmanager</span><span class="o">.</span><span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">cluster</span><span class="o">-</span><span class="n">issuer</span><span class="p">:</span> <span class="n">letsencrypt</span><span class="o">-</span><span class="n">prod</span>
-</span></span><span class="line"><span class="cl">    <span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">ingress</span><span class="o">.</span><span class="n">allow</span><span class="o">-</span><span class="n">http</span><span class="p">:</span> <span class="s2">&#34;true&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">force</span><span class="o">-</span><span class="n">ssl</span><span class="o">-</span><span class="n">redirect</span><span class="p">:</span> <span class="s2">&#34;true&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">whitelist</span><span class="o">-</span><span class="n">source</span><span class="o">-</span><span class="nb">range</span><span class="p">:</span> <span class="s2">&#34;34.35.36.37&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">proxy</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">size</span><span class="p">:</span> <span class="s2">&#34;20m&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">proxy</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">size</span><span class="p">:</span> <span class="s2">&#34;20m&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># https://github.com/Shopify/ingress/blob/master/docs/user-guide/nginx-configuration/annotations.md#custom-nginx-upstream-hashing</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="nb">load</span><span class="o">-</span><span class="n">balance</span><span class="p">:</span> <span class="s2">&#34;ip_hash&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># https://kubernetes.github.io/ingress-nginx/examples/affinity/cookie/</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">server</span><span class="o">-</span><span class="n">snippets</span><span class="p">:</span> <span class="n">gzip</span> <span class="n">on</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">affinity</span><span class="p">:</span> <span class="s2">&#34;cookie&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">session</span><span class="o">-</span><span class="n">cookie</span><span class="o">-</span><span class="n">name</span><span class="p">:</span> <span class="s2">&#34;route&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">session</span><span class="o">-</span><span class="n">cookie</span><span class="o">-</span><span class="nb">hash</span><span class="p">:</span> <span class="s2">&#34;sha1&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">session</span><span class="o">-</span><span class="n">cookie</span><span class="o">-</span><span class="n">expires</span><span class="p">:</span> <span class="s2">&#34;3600&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nginx</span><span class="o">.</span><span class="n">ingress</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">session</span><span class="o">-</span><span class="n">cookie</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="n">age</span><span class="p">:</span> <span class="s2">&#34;3600&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: extensions/v1beta1
+</span></span><span class="line"><span class="cl">kind: Ingress
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: ingress-nginx
+</span></span><span class="line"><span class="cl">  annotations:
+</span></span><span class="line"><span class="cl">    kubernetes.io/ingress.class: nginx
+</span></span><span class="line"><span class="cl">    kubernetes.io/tls-acme: &#39;true&#39;
+</span></span><span class="line"><span class="cl">    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+</span></span><span class="line"><span class="cl">    kubernetes.io/ingress.allow-http: &#34;true&#34;
+</span></span><span class="line"><span class="cl">    ingress.kubernetes.io/force-ssl-redirect: &#34;true&#34;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/whitelist-source-range: &#34;34.35.36.37&#34;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/proxy-body-size: &#34;20m&#34;
+</span></span><span class="line"><span class="cl">    ingress.kubernetes.io/proxy-body-size: &#34;20m&#34;
+</span></span><span class="line"><span class="cl">    # https://github.com/Shopify/ingress/blob/master/docs/user-guide/nginx-configuration/annotations.md#custom-nginx-upstream-hashing
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/load-balance: &#34;ip_hash&#34;
+</span></span><span class="line"><span class="cl">    # https://kubernetes.github.io/ingress-nginx/examples/affinity/cookie/
+</span></span><span class="line"><span class="cl">    nginx.org/server-snippets: gzip on;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/affinity: &#34;cookie&#34;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/session-cookie-name: &#34;route&#34;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/session-cookie-hash: &#34;sha1&#34;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/session-cookie-expires: &#34;3600&#34;
+</span></span><span class="line"><span class="cl">    nginx.ingress.kubernetes.io/session-cookie-max-age: &#34;3600&#34;
 </span></span></code></pre></div><ul>
 <li>nginx.ingress.kubernetes.io
 <ul>
@@ -1413,7 +1413,7 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1456,7 +1456,7 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1549,7 +1549,7 @@ Nginx Ingress (3) Deploy Nginx Ingress Controller Configure Nginx Ingress Cert-m
   
 
 
-<script src="/zh-hant/js/wowchemy.min.c1296fcfda1f6e2549c8cd4fe453ac58.js"></script>
+<script src="/zh-hant/js/wowchemy.min.f5ce063f9bd2e47fdb1e51b445b2fb48.js"></script>
 
 
 

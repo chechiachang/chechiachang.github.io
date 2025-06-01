@@ -789,22 +789,22 @@ dev 測試 PR branch，staging 跑 release candicate，production 選擇經過�
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Test</span> <span class="n">nginx</span> <span class="n">deployment</span>
-</span></span><span class="line"><span class="cl">  <span class="n">hosts</span><span class="p">:</span> <span class="p">{{</span> <span class="n">host</span> <span class="p">}}</span>
-</span></span><span class="line"><span class="cl">  <span class="n">gather_facts</span><span class="p">:</span> <span class="n">no</span>
-</span></span><span class="line"><span class="cl">  <span class="n">vars</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">deployment_name</span><span class="p">:</span> <span class="s2">&#34;nginx&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">tasks</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Get</span> <span class="n">deployment</span> <span class="n">status</span>
-</span></span><span class="line"><span class="cl">    <span class="n">shell</span><span class="p">:</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">deployment</span> <span class="p">{{</span> <span class="n">deployment_name</span> <span class="p">}}</span> <span class="o">-</span><span class="n">o</span><span class="o">=</span><span class="n">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.readyReplicas}&#39;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">register</span><span class="p">:</span> <span class="n">deployment_status</span>
-</span></span><span class="line"><span class="cl">    <span class="n">failed_when</span><span class="p">:</span> <span class="n">deployment_status</span><span class="o">.</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">Verify</span> <span class="n">deployment</span> <span class="n">is</span> <span class="n">running</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">assert</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">      <span class="n">that</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="o">-</span> <span class="n">deployment_status</span><span class="o">.</span><span class="n">stdout</span> <span class="o">!=</span> <span class="s1">&#39;null&#39;</span>
-</span></span><span class="line"><span class="cl">        <span class="o">-</span> <span class="n">deployment_status</span><span class="o">.</span><span class="n">stdout</span> <span class="o">!=</span> <span class="s1">&#39;0&#39;</span>
-</span></span><span class="line"><span class="cl">      <span class="n">fail_msg</span><span class="p">:</span> <span class="s1">&#39;Deployment {{ deployment_name }} is not running.&#39;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- name: Test nginx deployment
+</span></span><span class="line"><span class="cl">  hosts: {{ host }}
+</span></span><span class="line"><span class="cl">  gather_facts: no
+</span></span><span class="line"><span class="cl">  vars:
+</span></span><span class="line"><span class="cl">    deployment_name: &#34;nginx&#34;
+</span></span><span class="line"><span class="cl">  tasks:
+</span></span><span class="line"><span class="cl">  - name: Get deployment status
+</span></span><span class="line"><span class="cl">    shell: kubectl get deployment {{ deployment_name }} -o=jsonpath=&#39;{.status.readyReplicas}&#39;
+</span></span><span class="line"><span class="cl">    register: deployment_status
+</span></span><span class="line"><span class="cl">    failed_when: deployment_status.rc != 0
+</span></span><span class="line"><span class="cl">  - name: Verify deployment is running
+</span></span><span class="line"><span class="cl">    assert:
+</span></span><span class="line"><span class="cl">      that:
+</span></span><span class="line"><span class="cl">        - deployment_status.stdout != &#39;null&#39;
+</span></span><span class="line"><span class="cl">        - deployment_status.stdout != &#39;0&#39;
+</span></span><span class="line"><span class="cl">      fail_msg: &#39;Deployment {{ deployment_name }} is not running.&#39;
 </span></span></code></pre></div>
     </section>
     

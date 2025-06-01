@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1034,30 +1034,30 @@
 <h1 id="configuration">Configuration</h1>
 <h2 id="sentinel-specific-configuration-options">Sentinel specific configuration options</h2>
 <p>在上篇我們跳過 sentinel 的設定，這邊說明一下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sentinel</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">  <span class="n">port</span><span class="p">:</span> <span class="mi">26379</span>
-</span></span><span class="line"><span class="cl">  <span class="n">quorum</span><span class="p">:</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl">  <span class="n">config</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">## Additional sentinel conf options can be added below. Only options that</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">## are expressed in the format simialar to &#39;sentinel xxx mymaster xxx&#39; will</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">## be properly templated.</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">## For available options see http://download.redis.io/redis-stable/sentinel.conf</span>
-</span></span><span class="line"><span class="cl">    <span class="n">down</span><span class="o">-</span><span class="n">after</span><span class="o">-</span><span class="n">milliseconds</span><span class="p">:</span> <span class="mi">10000</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">## Failover timeout value in milliseconds</span>
-</span></span><span class="line"><span class="cl">    <span class="n">failover</span><span class="o">-</span><span class="n">timeout</span><span class="p">:</span> <span class="mi">180000</span>
-</span></span><span class="line"><span class="cl">    <span class="n">parallel</span><span class="o">-</span><span class="n">syncs</span><span class="p">:</span> <span class="mi">5</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sentinel:
+</span></span><span class="line"><span class="cl">  port: 26379
+</span></span><span class="line"><span class="cl">  quorum: 2
+</span></span><span class="line"><span class="cl">  config:
+</span></span><span class="line"><span class="cl">    ## Additional sentinel conf options can be added below. Only options that
+</span></span><span class="line"><span class="cl">    ## are expressed in the format simialar to &#39;sentinel xxx mymaster xxx&#39; will
+</span></span><span class="line"><span class="cl">    ## be properly templated.
+</span></span><span class="line"><span class="cl">    ## For available options see http://download.redis.io/redis-stable/sentinel.conf
+</span></span><span class="line"><span class="cl">    down-after-milliseconds: 10000
+</span></span><span class="line"><span class="cl">    ## Failover timeout value in milliseconds
+</span></span><span class="line"><span class="cl">    failover-timeout: 180000
+</span></span><span class="line"><span class="cl">    parallel-syncs: 5
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">## Custom sentinel.conf files used to override default settings. If this file is</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">## specified then the sentinel.config above will be ignored.</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># customConfig: |-</span>
-</span></span><span class="line"><span class="cl">      <span class="c1"># Define configuration here</span>
+</span></span><span class="line"><span class="cl">  ## Custom sentinel.conf files used to override default settings. If this file is
+</span></span><span class="line"><span class="cl">  ## specified then the sentinel.config above will be ignored.
+</span></span><span class="line"><span class="cl">  # customConfig: |-
+</span></span><span class="line"><span class="cl">      # Define configuration here
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">resources</span><span class="p">:</span> <span class="p">{}</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#  requests:</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#    memory: 200Mi</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#    cpu: 100m</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#  limits:</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#    memory: 200Mi</span>
+</span></span><span class="line"><span class="cl">  resources: {}
+</span></span><span class="line"><span class="cl">  #  requests:
+</span></span><span class="line"><span class="cl">  #    memory: 200Mi
+</span></span><span class="line"><span class="cl">  #    cpu: 100m
+</span></span><span class="line"><span class="cl">  #  limits:
+</span></span><span class="line"><span class="cl">  #    memory: 200Mi
 </span></span></code></pre></div><h3 id="quorum">Quorum</h3>
 <ul>
 <li>quorum 是每次確定 master 失效時，需要達成共識的 sentinel 數量。</li>
@@ -1556,7 +1556,7 @@
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1599,7 +1599,7 @@
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1692,7 +1692,7 @@
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

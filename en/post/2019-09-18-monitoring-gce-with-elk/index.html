@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1017,11 +1017,11 @@ Self-host ELK stack on GCP Secure ELK Stask 監測 Google Compute Engine 上服�
 <p>filebeat 具體的工作機制，可以看這篇<a href="https://www.elastic.co/guide/en/beats/filebeat/current/how-filebeat-works.html" target="_blank" rel="noopener">How Filebeat works?</a></p>
 <p>這篇文件也提到 filebeat 是確保至少一次(at-least-once delivery)的數據讀取，使用時要特別注意重複獲取的可能。</p>
 <p>首先把 input 加上 ubuntu 預設的 log 路徑</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">filebeat</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="n">type</span><span class="p">:</span> <span class="nb">log</span>
-</span></span><span class="line"><span class="cl">  <span class="n">enabled</span><span class="p">:</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">paths</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/*.</span><span class="n">log</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">filebeat.inputs:
+</span></span><span class="line"><span class="cl">- type: log
+</span></span><span class="line"><span class="cl">  enabled: true
+</span></span><span class="line"><span class="cl">  paths:
+</span></span><span class="line"><span class="cl">    - /var/log/*.log
 </span></span></code></pre></div><p>這邊注意 input 支援多種 type，參照完整設定檔案的說明配合自己的需求使用。</p>
 <h3 id="processor">Processor</h3>
 <p>在 filebeat 端先進行資料的第一層處理，可以大幅講少不必要的資料，降低檔案傳輸，以及對 elasticsearch server 的負擔。</p>
@@ -1411,7 +1411,7 @@ output.logstash: 先向後送到 logstash</p>
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1454,7 +1454,7 @@ output.logstash: 先向後送到 logstash</p>
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1547,7 +1547,7 @@ output.logstash: 先向後送到 logstash</p>
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

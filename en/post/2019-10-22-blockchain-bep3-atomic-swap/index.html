@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1690,19 +1690,19 @@ value: 10000 PPToken (乘上 10^18)</p>
 <p>Deputy 取得 10:BNB</p>
 <hr>
 <h3 id="gce">GCE</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">gcloud</span> <span class="n">compute</span> <span class="n">ssh</span> <span class="n">dep3</span><span class="o">-</span><span class="n">deputy</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gcloud compute ssh dep3-deputy
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span>
-</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">debian</span><span class="o">.</span><span class="n">cnf</span>
+</span></span><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install mysql-server
+</span></span><span class="line"><span class="cl">sudo cat /etc/mysql/debian.cnf
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dl</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">go1</span><span class="o">.</span><span class="mf">13.3</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-</span></span><span class="line"><span class="cl"><span class="n">tar</span> <span class="o">-</span><span class="n">C</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span> <span class="o">-</span><span class="n">xzf</span> <span class="n">go1</span><span class="o">.</span><span class="mf">13.3</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-</span></span><span class="line"><span class="cl"><span class="k">export</span> <span class="n">PATH</span><span class="o">=$</span><span class="n">PATH</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">bin</span>
+</span></span><span class="line"><span class="cl">wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+</span></span><span class="line"><span class="cl">tar -C /usr/local -xzf go1.13.3.linux-amd64.tar.gz
+</span></span><span class="line"><span class="cl">export PATH=$PATH:/usr/local/go/bin
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">go</span> <span class="n">get</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">binance</span><span class="o">-</span><span class="n">chain</span><span class="o">/</span><span class="n">bep3</span><span class="o">-</span><span class="n">deputy</span>
-</span></span><span class="line"><span class="cl"><span class="n">go</span> <span class="n">mod</span> <span class="n">tidy</span>
-</span></span><span class="line"><span class="cl"><span class="n">go</span> <span class="n">build</span>  <span class="o">-</span><span class="n">o</span> <span class="n">build</span><span class="o">/</span><span class="n">deputy</span> <span class="n">main</span><span class="o">.</span><span class="n">go</span>
+</span></span><span class="line"><span class="cl">go get github.com/binance-chain/bep3-deputy
+</span></span><span class="line"><span class="cl">go mod tidy
+</span></span><span class="line"><span class="cl">go build  -o build/deputy main.go
 </span></span></code></pre></div><h3 id="references">References</h3>
 <ul>
 <li><a href="https://docs.binance.org/atomic-swap.html" target="_blank" rel="noopener">Binace Chain Doc</a></li>
@@ -2055,7 +2055,7 @@ value: 10000 PPToken (乘上 10^18)</p>
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -2098,7 +2098,7 @@ value: 10000 PPToken (乘上 10^18)</p>
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -2191,7 +2191,7 @@ value: 10000 PPToken (乘上 10^18)</p>
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1082,33 +1082,33 @@ Terraform 官方文件，如何建立 module
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># aws_iam_account_password_policy.tf</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># aws_iam_account_password_policy.tf
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">resource</span> <span class="s2">&#34;aws_iam_account_password_policy&#34;</span> <span class="s2">&#34;strict&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">allow_users_to_change_password</span> <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">minimum_password_length</span>        <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">minimum_password_length</span>
-</span></span><span class="line"><span class="cl">  <span class="n">hard_expiry</span>                    <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">max_password_age</span>               <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">max_password_age</span>
-</span></span><span class="line"><span class="cl">  <span class="n">require_lowercase_characters</span>   <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">require_numbers</span>                <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">require_uppercase_characters</span>   <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">require_symbols</span>                <span class="o">=</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="n">password_reuse_prevention</span>      <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">resource &#34;aws_iam_account_password_policy&#34; &#34;strict&#34; {
+</span></span><span class="line"><span class="cl">  allow_users_to_change_password = true
+</span></span><span class="line"><span class="cl">  minimum_password_length        = var.minimum_password_length
+</span></span><span class="line"><span class="cl">  hard_expiry                    = true
+</span></span><span class="line"><span class="cl">  max_password_age               = var.max_password_age
+</span></span><span class="line"><span class="cl">  require_lowercase_characters   = true
+</span></span><span class="line"><span class="cl">  require_numbers                = true
+</span></span><span class="line"><span class="cl">  require_uppercase_characters   = true
+</span></span><span class="line"><span class="cl">  require_symbols                = true
+</span></span><span class="line"><span class="cl">  password_reuse_prevention      = 0
+</span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># variables.tf</span>
+</span></span><span class="line"><span class="cl"># variables.tf
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">variable</span> <span class="s2">&#34;minimum_password_length&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">type</span> <span class="o">=</span> <span class="n">number</span>
-</span></span><span class="line"><span class="cl">  <span class="n">description</span> <span class="o">=</span> <span class="s2">&#34;The number of days that an user password is valid.&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">default</span> <span class="o">=</span> <span class="mi">32</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">variable &#34;minimum_password_length&#34; {
+</span></span><span class="line"><span class="cl">  type = number
+</span></span><span class="line"><span class="cl">  description = &#34;The number of days that an user password is valid.&#34;
+</span></span><span class="line"><span class="cl">  default = 32
+</span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">variable</span> <span class="s2">&#34;max_password_age&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">type</span> <span class="o">=</span> <span class="n">number</span>
-</span></span><span class="line"><span class="cl">  <span class="n">description</span> <span class="o">=</span> <span class="s2">&#34;Minimum length to require for user passwords.&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">default</span> <span class="o">=</span> <span class="mi">90</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">variable &#34;max_password_age&#34; {
+</span></span><span class="line"><span class="cl">  type = number
+</span></span><span class="line"><span class="cl">  description = &#34;Minimum length to require for user passwords.&#34;
+</span></span><span class="line"><span class="cl">  default = 90
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>進行 terragrunt plan，沒問題的話就可以直接 apply</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws-vault exec terraform-30day-root-iam-user --no-session  --  terragrunt plan
 </span></span><span class="line"><span class="cl">
@@ -1626,7 +1626,7 @@ Terraform 官方文件，如何建立 module
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1669,7 +1669,7 @@ Terraform 官方文件，如何建立 module
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1762,7 +1762,7 @@ Terraform 官方文件，如何建立 module
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

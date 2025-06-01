@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+
+  
+  
+  
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Hugo Blox Builder 5.9.7">
+
+  
+    <link rel="manifest" href="/zh-hant/manifest.webmanifest">
+  
+
+  <link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png">
+
+  <link rel="canonical" href="https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/">
+
+  <title>Workshop: RAG打造企業AI知識庫：把一甲子功力傳給新人 | Che-Chia Chang</title>
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.min.css">
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css">
+  
+
+  
+  
+  
+</head>
+<body>
+
+  
+<div class="reveal">
+  <div class="slides">
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    <section>
+    
+      <h3 id="rag-workshop-行前通知">RAG workshop 行前通知</h3>
+<h6 id="本次-workshop-以-hands-on-的方式進行累積操作經驗為主講解與說明為輔觀念內容有準備教材需要參與者自行閱讀">本次 workshop 以 hands-on 的方式進行，累積操作經驗為主，講解與說明為輔。觀念內容有準備教材，需要參與者自行閱讀</h6>
+<h5 id="workshop-基本需求">Workshop 基本需求</h5>
+<ol>
+<li>有自己的電腦，可以上網</li>
+<li>選項1: 使用自己的電腦，在 docker 啟動開發環境</li>
+<li>選項2: 使用自己的電腦，遠端連線講師提供的 VM，在VM 中啟動 docker 開發環境</li>
+<li>會使用 docker</li>
+<li>會使用 python 與 jupyter notebook</li>
+</ol>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h5 id="選項1-使用自己的電腦">選項1: 使用自己的電腦</h5>
+<ul>
+<li>在 workshop 開始前，在自己的電腦上
+<ol>
+<li>安裝 <a href="https://docs.docker.com/get-started/get-docker/" target="_blank" rel="noopener">docker</a></li>
+<li>git clone 教材</li>
+<li>啟動 docker 開發環境，下載 docker images</li>
+<li>安裝所需的 Python 套件</li>
+<li>可以開啟瀏覽器，連線到 <a href="http://localhost:8888" target="_blank" rel="noopener">Jupyter Notebook</a></li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/chechiachang/rag-workshop.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> rag-workshop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker compose up -d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker <span class="nb">exec</span> -it notebook pip install pandas openai qdrant_client tqdm tenacity wget tenacity unstructured markdown ragas sacrebleu langchain_qdrant langchain-openai langchain_openai langchain_community tiktoken
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="選項2-使用遠端-vm">選項2: 使用遠端 VM</h3>
+<ul>
+<li>建議使用個人電腦，免費 VM 名額現場有限
+<ol>
+<li>需要有自己的電腦，有穩定的網路，可以連線到遠端 VM</li>
+<li>需要註冊 tunnel 工具（沒有業配）<a href="https://dashboard.ngrok.com/login" target="_blank" rel="noopener">Ngrok</a></li>
+<li>登入 Login -&gt; 左手邊 Identity &amp; Access -&gt; Authtokens -&gt; Add Tunnel authtoken -&gt; 記在安全的地方</li>
+<li>也可以使用 <a href="https://pinggy.io/" target="_blank" rel="noopener">Pinggy</a>，但免費有限時</li>
+</ol>
+</li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="投影片與教材會放在網站上">投影片與教材會放在網站上</h3>
+<p><a href="https://chechia.net" target="_blank" rel="noopener">https://chechia.net</a></p>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="rag-workshop">RAG Workshop</h3>
+<h5 id="本次-workshop-以-hands-on-的方式進行累積操作經驗為主講解與說明為輔觀念內容有準備教材需要參與者自行閱讀-1">本次 workshop 以 hands-on 的方式進行，累積操作經驗為主，講解與說明為輔。觀念內容有準備教材，需要參與者自行閱讀</h5>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="準備開發環境">準備開發環境</h3>
+<h5 id="選擇一使用自己的電腦">選擇一：使用自己的電腦</h5>
+<p>請提前在家先試跑一遍，把 docker image 跟 pip 套件都下載好，現場要載很久</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/chechiachang/rag-workshop.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd rag-workshop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker compose up -d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">open http://localhost:8888
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h5 id="選擇二講師提供的-vm">選擇二：講師提供的 VM</h5>
+<p>請註冊 ngrok 帳號</p>
+<ol>
+<li>至<a href="https://workshop.chechia.net" target="_blank" rel="noopener">workshop.chechia.net</a> 領取一台 VM 並簽名</li>
+<li>從講師取得使用者名稱與密碼</li>
+<li>使用瀏覽器，透過 url 連線至你的 VM，輸入使用者名稱與密碼登入</li>
+<li>Protocol: SSH，port 22，authentication type: password</li>
+<li>下載教材（滑鼠複製底下指令，滑鼠右鍵就能貼到 terminal 中）</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone https://github.com/chechiachang/rag-workshop.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd rag-workshop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker compose up -d
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="下課前如何保存自己的進度">下課前如何保存自己的進度</h3>
+<p><a href="https://github.com/" target="_blank" rel="noopener">github</a> repository 開一個新的 repository，然後上傳</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># ssh 進去 vm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cd rag-workshop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git remote add new &lt;your-repo-url&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git commit -m &#34;save my progress&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git push new main
+</span></span></code></pre></div>
+    </section>
+    
+
+    
+    
+  </div>
+</div>
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/markdown/markdown.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/search/search.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/math/math.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/zoom/zoom.min.js" crossorigin="anonymous"></script>
+
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/plugin.js" integrity="sha256-M6JwAjnRAWmi+sbXURR/yAhWZKYhAw7YXnnLvIxrdGs=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js" integrity="sha256-l14dklFcW5mWar6w/9KaW0fWVerf3mYr7Wt0+rXzFAA=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.css" integrity="sha256-0fU8HKLaTjgzfaV9CgSqbsN8ilA3zo6zK1M6rlgULd8=" crossorigin="anonymous">
+  
+
+  
+  
+
+  
+  
+  <script src="/js/wowchemy-slides.js"></script>
+
+</body>
+</html>

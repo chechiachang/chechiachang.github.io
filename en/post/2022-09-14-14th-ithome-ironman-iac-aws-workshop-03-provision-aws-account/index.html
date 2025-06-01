@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1021,24 +1021,24 @@ Provision AWS Account
 <p>O) 因為我們想要使用開源版本的 terraform module (XD)</p>
 <p>我們快速看一下 module 裡面的內容
 <a href="https://github.com/chechiachang/terragrunt-infrastructure-modules/tree/v0.0.1/aws/modules/account-baseline-root" target="_blank" rel="noopener">https://github.com/chechiachang/terragrunt-infrastructure-modules/tree/v0.0.1/aws/modules/account-baseline-root</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">resource</span> <span class="s2">&#34;aws_organizations_organization&#34;</span> <span class="s2">&#34;org&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">aws_service_access_principals</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;cloudtrail.amazonaws.com&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;config.amazonaws.com&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">resource &#34;aws_organizations_organization&#34; &#34;org&#34; {
+</span></span><span class="line"><span class="cl">  aws_service_access_principals = [
+</span></span><span class="line"><span class="cl">    &#34;cloudtrail.amazonaws.com&#34;,
+</span></span><span class="line"><span class="cl">    &#34;config.amazonaws.com&#34;,
+</span></span><span class="line"><span class="cl">  ]
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">feature_set</span> <span class="o">=</span> <span class="s2">&#34;ALL&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  feature_set = &#34;ALL&#34;
+</span></span><span class="line"><span class="cl">}
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">resource</span> <span class="s2">&#34;aws_organizations_account&#34;</span> <span class="s2">&#34;account&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="n">for_each</span> <span class="o">=</span> <span class="k">var</span><span class="o">.</span><span class="n">child_accounts</span>
-</span></span><span class="line"><span class="cl">  <span class="n">name</span>  <span class="o">=</span> <span class="n">each</span><span class="o">.</span><span class="n">key</span>
-</span></span><span class="line"><span class="cl">  <span class="n">email</span> <span class="o">=</span> <span class="n">each</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="s2">&#34;email&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">resource &#34;aws_organizations_account&#34; &#34;account&#34; {
+</span></span><span class="line"><span class="cl">  for_each = var.child_accounts
+</span></span><span class="line"><span class="cl">  name  = each.key
+</span></span><span class="line"><span class="cl">  email = each.value[&#34;email&#34;]
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">depends_on</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">    <span class="n">aws_organizations_organization</span><span class="o">.</span><span class="n">org</span>
-</span></span><span class="line"><span class="cl">  <span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  depends_on = [
+</span></span><span class="line"><span class="cl">    aws_organizations_organization.org
+</span></span><span class="line"><span class="cl">  ]
+</span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><p>我們的需求</p>
 <ul>
 <li>在 root account 下 provision 一個 aws organization
@@ -1710,7 +1710,7 @@ gruntwork enterprise 的 module 是 enterprise 等級的解決方案，有相當
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1753,7 +1753,7 @@ gruntwork enterprise 的 module 是 enterprise 等級的解決方案，有相當
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1846,7 +1846,7 @@ gruntwork enterprise 的 module 是 enterprise 等級的解決方案，有相當
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 

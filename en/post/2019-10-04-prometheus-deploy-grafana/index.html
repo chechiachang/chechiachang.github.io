@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: October 24, 2024 --><html lang="en-us" >
+<!-- Last Published: June 1, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -1190,22 +1190,22 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="c1">#     url: https://example.com/repository/test-b64.json
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="c1">#     b64content: true
 </span></span></span></code></pre></div><p>Data source, Dashboard 想要直接載入，可以在這邊設定，或是 grafana 起來後，透過 Web UI 進去新增也可以</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1">## Grafana&#39;s primary configuration</span>
-</span></span><span class="line"><span class="cl"><span class="c1">## NOTE: values in map will be converted to ini format</span>
-</span></span><span class="line"><span class="cl"><span class="c1">## ref: http://docs.grafana.org/installation/configuration/</span>
-</span></span><span class="line"><span class="cl"><span class="c1">##</span>
-</span></span><span class="line"><span class="cl"><span class="n">grafana</span><span class="o">.</span><span class="n">ini</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">  <span class="n">paths</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="p">:</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">grafana</span><span class="o">/</span><span class="n">data</span>
-</span></span><span class="line"><span class="cl">    <span class="n">logs</span><span class="p">:</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">grafana</span>
-</span></span><span class="line"><span class="cl">    <span class="n">plugins</span><span class="p">:</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">grafana</span><span class="o">/</span><span class="n">plugins</span>
-</span></span><span class="line"><span class="cl">    <span class="n">provisioning</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">grafana</span><span class="o">/</span><span class="n">provisioning</span>
-</span></span><span class="line"><span class="cl">  <span class="n">analytics</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">check_for_updates</span><span class="p">:</span> <span class="bp">true</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">log</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">mode</span><span class="p">:</span> <span class="n">console</span>
-</span></span><span class="line"><span class="cl">  <span class="n">grafana_net</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">grafana</span><span class="o">.</span><span class="n">net</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## Grafana&#39;s primary configuration
+</span></span><span class="line"><span class="cl">## NOTE: values in map will be converted to ini format
+</span></span><span class="line"><span class="cl">## ref: http://docs.grafana.org/installation/configuration/
+</span></span><span class="line"><span class="cl">##
+</span></span><span class="line"><span class="cl">grafana.ini:
+</span></span><span class="line"><span class="cl">  paths:
+</span></span><span class="line"><span class="cl">    data: /var/lib/grafana/data
+</span></span><span class="line"><span class="cl">    logs: /var/log/grafana
+</span></span><span class="line"><span class="cl">    plugins: /var/lib/grafana/plugins
+</span></span><span class="line"><span class="cl">    provisioning: /etc/grafana/provisioning
+</span></span><span class="line"><span class="cl">  analytics:
+</span></span><span class="line"><span class="cl">    check_for_updates: true
+</span></span><span class="line"><span class="cl">  log:
+</span></span><span class="line"><span class="cl">    mode: console
+</span></span><span class="line"><span class="cl">  grafana_net:
+</span></span><span class="line"><span class="cl">    url: https://grafana.net
 </span></span></code></pre></div><p>然後是 grafana.ini 核心 runtime 設定，更多設定可以參考<a href="http://docs.grafana.org/installation/configuration/" target="_blank" rel="noopener">官方文件</a></p>
 <h1 id="deployment">Deployment</h1>
 <p>部屬完看一下</p>
@@ -1608,7 +1608,7 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
 
   
   <p class="powered-by copyright-license-text">
-    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
   </p>
   
 
@@ -1651,7 +1651,7 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
   
 
 
-<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+<script src="/js/vendor-bundle.min.f64289d8217e08e3afcd597d60836062.js"></script>
 
 
 
@@ -1744,7 +1744,7 @@ Prometheus / Grafana (5) GKE 上自架 Prometheus GKE 上自架 Grafana scrape c
   
 
 
-<script src="/en/js/wowchemy.min.7a0c53d11be409aa2bde72889a671bd9.js"></script>
+<script src="/en/js/wowchemy.min.b4aa18ca30bd61a574eeea72304f9545.js"></script>
 
 
 
