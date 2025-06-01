@@ -19,7 +19,13 @@
       <guid>https://chechia.net/zh-hant/talk/workshop-rag%E6%89%93%E9%80%A0%E4%BC%81%E6%A5%ADai%E7%9F%A5%E8%AD%98%E5%BA%AB%E6%8A%8A%E4%B8%80%E7%94%B2%E5%AD%90%E5%8A%9F%E5%8A%9B%E5%82%B3%E7%B5%A6%E6%96%B0%E4%BA%BA/</guid>
       <description>&lt;hr&gt;
 &lt;h1 id=&#34;rag-workshop-行前通知&#34;&gt;RAG workshop 行前通知&lt;/h1&gt;
-&lt;p&gt;本次 workshop 以 hands-on 的方式進行，累積操作經驗為主，講解與說明為輔。觀念內容有準備教材，需要參與者自行閱讀&lt;/p&gt;
+&lt;p&gt;本次 workshop 以 hands-on 的方式進行，累積操作經驗為主，講解與說明為輔。觀念內容有準備教材，需要參與者自行閱讀。講師會免費提供&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Azure OpenAI models API key (gpt-4.1, gpt-4.1-mini, text-embedding-3, text-embedding-ada-002&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;Azure VM 供同學遠端操作使用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;---投影片與教材httpschechianetzh-hantslides2025-06-05-devops-rag-internal-ai---&#34;&gt;&amp;ndash;&amp;gt; &lt;a href=&#34;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;投影片與教材&lt;/a&gt; &amp;lt;&amp;ndash;&lt;/h1&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;workshop-基本需求&#34;&gt;Workshop 基本需求&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;有自己的電腦，可以上網&lt;/li&gt;
@@ -27,6 +33,7 @@
 &lt;li&gt;選項2: 使用自己的電腦，遠端連線講師提供的 VM，在VM 中啟動 docker 開發環境&lt;/li&gt;
 &lt;li&gt;會使用 docker&lt;/li&gt;
 &lt;li&gt;會使用 python 與 jupyter notebook&lt;/li&gt;
+&lt;li&gt;會使用 chatgpt.com 協助除錯&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;選項1-使用自己的電腦&#34;&gt;選項1: 使用自己的電腦&lt;/h3&gt;
@@ -56,7 +63,8 @@
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;投影片與教材會放在網站上&#34;&gt;投影片與教材會放在網站上&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如何存取 VM 也會放在敨影片裡&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;rag-workshop-行前通知完大家當天現場見&#34;&gt;RAG workshop 行前通知完，大家當天現場見&lt;/h2&gt;
 &lt;h1 id=&#34;info&#34;&gt;Info&lt;/h1&gt;
