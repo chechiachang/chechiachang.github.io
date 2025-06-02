@@ -13,14 +13,14 @@
       <guid>https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/</guid>
       <description>&lt;h3 id=&#34;rag-workshop-行前通知基本需求&#34;&gt;RAG workshop 行前通知：基本需求&lt;/h3&gt;
 &lt;ol&gt;
-&lt;li&gt;當天帶自己的電腦，可以上網&lt;/li&gt;
+&lt;li&gt;當天帶自己的電腦。當天建議自備手機網路&lt;/li&gt;
 &lt;li&gt;選項1: 用電腦在 docker 運行開發環境&lt;/li&gt;
 &lt;li&gt;選項2: 用電腦遠端連線講師提供的 VM，在遠端VM 中運行 docker 開發環境&lt;/li&gt;
 &lt;li&gt;會使用 docker&lt;/li&gt;
 &lt;li&gt;會使用 python 與 jupyter notebook&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h5 id=&#34;選項1-使用自己的電腦&#34;&gt;選項1: 使用自己的電腦&lt;/h5&gt;
+&lt;h5 id=&#34;選項1-使用自己的電腦-&#34;&gt;選項1: 使用自己的電腦 💻&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;在 workshop 開始前，在自己的電腦上
 &lt;ol&gt;
@@ -28,7 +28,7 @@
 &lt;li&gt;git clone 教材&lt;/li&gt;
 &lt;li&gt;啟動 docker 開發環境，下載 docker images&lt;/li&gt;
 &lt;li&gt;安裝所需的 Python 套件&lt;/li&gt;
-&lt;li&gt;可以開啟瀏覽器，連線到 &lt;a href=&#34;http://localhost:8888&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Jupyter Notebook&lt;/a&gt;，token=workshop1234!&lt;/li&gt;
+&lt;li&gt;開啟瀏覽器，連線到&lt;a href=&#34;http://localhost:8888&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:8888&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -39,10 +39,12 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker compose up -d
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker &lt;span class=&#34;nb&#34;&gt;exec&lt;/span&gt; -it notebook pip install pandas openai qdrant_client tqdm tenacity wget tenacity unstructured markdown ragas sacrebleu langchain_qdrant langchain-openai langchain_openai langchain_community tiktoken
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;登入token&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;workshop1234!&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h5 id=&#34;選項2-使用遠端-vm&#34;&gt;選項2: 使用遠端 VM&lt;/h5&gt;
 &lt;ol&gt;
-&lt;li&gt;有自己的電腦，當天有穩定的網路，可以連線到遠端 VM&lt;/li&gt;
+&lt;li&gt;有自己的電腦，當天建議自備手機網路，連線到遠端 VM&lt;/li&gt;
 &lt;li&gt;提前註冊 tunnel 工具（沒有業配）&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://dashboard.ngrok.com/login&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ngrok&lt;/a&gt; 登入 Login -&amp;gt; 左手邊 Identity &amp;amp; Access -&amp;gt; Authtokens -&amp;gt; Add Tunnel authtoken -&amp;gt; 記在安全的地方&lt;/li&gt;
 &lt;li&gt;也可以使用 &lt;a href=&#34;https://pinggy.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pinggy&lt;/a&gt;，但免費有限時&lt;/li&gt;
@@ -50,17 +52,17 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;建議&#34;&gt;建議&lt;/h3&gt;
 &lt;ol&gt;
-&lt;li&gt;優先使用個人電腦，免費 VM 名額會盡量提供，但依參與人數不保證現場有&lt;/li&gt;
+&lt;li&gt;優先使用個人電腦。會盡量提供免費 VM 名額，但依參與人數不保證現場有&lt;/li&gt;
 &lt;li&gt;在家先試跑一遍，把 docker image 跟 pip 套件都下載好，現場要載很久&lt;/li&gt;
-&lt;li&gt;在家試玩後記得關掉 ngrok，以免用完每月的免費額度&lt;/li&gt;
-&lt;li&gt;如果事先看完內容覺得太簡單可以不用來，但歡迎會後找我聊天ＸＤ&lt;/li&gt;
+&lt;li&gt;試完後記得關掉 ngrok，以免用完每月的免費額度&lt;/li&gt;
+&lt;li&gt;事先看完內容覺得太簡單可以不用來，但歡迎會後找我聊天ＸＤ&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;投影片與教材與完整程式碼放在網站上&#34;&gt;投影片與教材與完整程式碼放在網站上&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/chechiachang/chechiachang.github.io-src/blob/master/content/zh-hant/slides/2025-06-05-devops-rag-internal-ai/index.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github 投影片原始碼與講稿&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📝 &lt;a href=&#34;https://github.com/chechiachang/chechiachang.github.io-src/blob/master/content/zh-hant/slides/2025-06-05-devops-rag-internal-ai/index.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Github 投影片原始碼與講稿&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;以下是-rag-workshop-當天內容&#34;&gt;以下是 RAG Workshop 當天內容&lt;/h3&gt;
@@ -76,7 +78,7 @@
 &lt;li&gt;RAG 實際應用: 以 k8s official docs 為例&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h5 id=&#34;選項1-使用自己的電腦-1&#34;&gt;選項1: 使用自己的電腦&lt;/h5&gt;
+&lt;h5 id=&#34;選項1-使用自己的電腦&#34;&gt;選項1: 使用自己的電腦&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;有在家先試跑一遍，應該可以在本地存取 Notebook &lt;a href=&#34;http://localhost:8888&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:8888&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;到 &lt;a href=&#34;https://workshop.chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;workshop.chechia.net&lt;/a&gt; 取得 OpenAI Key&lt;/li&gt;
@@ -92,7 +94,7 @@
 &lt;li&gt;至&lt;a href=&#34;https://workshop.chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;workshop.chechia.net&lt;/a&gt; 領取一台 VM 並簽名&lt;/li&gt;
 &lt;li&gt;googel sheet 左邊 url，開啟 bastion 連線&lt;/li&gt;
 &lt;li&gt;Protocol: SSH，port 22，authentication type: password&lt;/li&gt;
-&lt;li&gt;帳號密碼在 google sheet 上&lt;/li&gt;
+&lt;li&gt;帳號密碼在&lt;a href=&#34;https://workshop.chechia.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;workshop.chechia.net&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;p&gt;
@@ -153,62 +155,21 @@
 &lt;li&gt;RAG 實際應用: 以 k8s official docs 為例&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;什麼是-rag&#34;&gt;什麼是 RAG&lt;/h3&gt;
-&lt;h5 id=&#34;ragretrieval-augmented-generation檢索增強生成是一種結合檢索系統與生成式模型如-gpt的自然語言處理架構在生成答案時引用外部知識使模型回答更準確且具事實根據&#34;&gt;RAG（Retrieval-Augmented Generation，檢索增強生成）是一種結合檢索系統與生成式模型（如 GPT）的自然語言處理架構，在生成答案時引用外部知識，使模型回答更準確且具事實根據。&lt;/h5&gt;
+&lt;h3 id=&#34;知識獲取效率在-devops-的難題&#34;&gt;知識獲取效率在 DevOps 的難題&lt;/h3&gt;
+&lt;p&gt;在快速變動、資訊分散的環境中，難以即時取得需要的知識。「有但找不到、看不懂、用不起來」&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Retrieval（檢索）：&lt;/strong&gt; 從一個外部知識庫（如文件、向量資料庫等）中找到與問題相關的資訊。通常會用語意向量（embeddings）做相似度搜尋。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Generation（生成）：&lt;/strong&gt; 把檢索到的內容與使用者問題一起丟給 LLM（如 GPT、Claude 等）去生成答案。生成的內容會更具事實根據，並能引用具體資料。&lt;/li&gt;
+&lt;li&gt;知識分散在多個系統、格式與工具中&lt;/li&gt;
+&lt;li&gt;知識多為「靜態文件」，難以互動問答，舉例，或是換句話說&lt;/li&gt;
+&lt;li&gt;隱性知識未被系統化儲存(例如：口頭傳承、slack 討論、會議紀錄等)&lt;/li&gt;
+&lt;li&gt;查詢流程與開發流程脫節&lt;/li&gt;
 &lt;/ol&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;為什麼會需要-rag&#34;&gt;為什麼會需要 RAG&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;資訊爆炸：企業內部文檔、知識庫、技術文件等資料量龐大，傳統搜尋方式無法有效檢索&lt;/li&gt;
-&lt;li&gt;選擇RAG（Retrieval-Augmented Generation）或傳統程式設計（Traditional Programming）&lt;/li&gt;
-&lt;li&gt;在特定任務的效能是否優於人類&lt;/li&gt;
-&lt;li&gt;不問「為什麼需要 RAG」，而是問「哪裡適合用 RAG，哪裡適合用傳統程式設計」。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-&lt;/aside&gt;
-&lt;hr&gt;
-&lt;p&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure  &gt;
-  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
-    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
-               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_8715252ce2925f2b574cec4bb2d0a84d.webp 400w,
-               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_5705bdacf67afc9f8d81663d6d7fea49.webp 760w,
-               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
-               src=&#34;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_8715252ce2925f2b574cec4bb2d0a84d.webp&#34;
-               width=&#34;760&#34;
-               height=&#34;481&#34;
-               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
-  &lt;/div&gt;&lt;/figure&gt;
-&lt;/p&gt;
-&lt;aside class=&#34;notes&#34;&gt;
-  適合用 RAG 的情境：客服問答、技術搜尋、知識型 Chatbot、內部知識導航、法規彙整、教學內容輔助。
-適合用傳統程式的情境：金流控制、流程引擎、帳務系統、驗證邏輯、安全控制、任務排程。
-&lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;情境新人工程師要如何到-k8s-doc-查到想要的內容&#34;&gt;情境：新人工程師要如何到 k8s doc 查到想要的內容？&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;有問題去 google / stack overflow&lt;/li&gt;
 &lt;li&gt;需要搜尋引擎(k8s doc 有提供，但內部文件系統不一定有)&lt;/li&gt;
 &lt;li&gt;需要關鍵字(新人怎麼知道要查 Dynamic Persistent Volume Resizing)&lt;/li&gt;
-&lt;li&gt;協助理解（例如：舉例，旁徵博引，換句話說）&lt;/li&gt;
+&lt;li&gt;協助理解（舉例，換句話說）&lt;/li&gt;
 &lt;li&gt;跨語言門檻&lt;/li&gt;
 &lt;/ol&gt;
 &lt;aside class=&#34;notes&#34;&gt;
@@ -248,13 +209,79 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
 &lt;aside class=&#34;notes&#34;&gt;
 &lt;/aside&gt;
 &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DevOps AI Copilot 不應該像圖書館守門員等人來借書，
+而應該像導航系統，在你開車時主動告訴你：前方有彎道。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;RAG + Context-Aware Knowledge Copilot&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  這邊扯的比較遠，但基本上我們期待的解決方案是這樣
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;什麼是-rag&#34;&gt;什麼是 RAG&lt;/h3&gt;
+&lt;h5 id=&#34;ragretrieval-augmented-generation檢索增強生成是一種結合檢索系統與生成式模型如-gpt的自然語言處理架構在生成答案時引用外部知識使模型回答更準確且具事實根據&#34;&gt;RAG（Retrieval-Augmented Generation，檢索增強生成）是一種結合檢索系統與生成式模型（如 GPT）的自然語言處理架構，在生成答案時引用外部知識，使模型回答更準確且具事實根據。&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval（檢索）：&lt;/strong&gt; 從一個外部知識庫（如文件、向量資料庫等）中找到與問題相關的資訊。通常會用語意向量（embeddings）做相似度搜尋。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Generation（生成）：&lt;/strong&gt; 把檢索到的內容與使用者問題一起丟給 LLM（如 GPT、Claude 等）去生成答案。生成的內容會更具事實根據，並能引用具體資料。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;rag-讓-devops-更智慧少繁瑣即時反應&#34;&gt;RAG 讓 DevOps 更智慧、少繁瑣、即時反應&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;提升知識獲取效率: 內部文檔知識AI助手&lt;/li&gt;
+&lt;li&gt;知識留存與新人 Onboarding&lt;/li&gt;
+&lt;li&gt;加速故障排查: 根據錯誤訊息自動從 Runbook 中檢索處理方式&lt;/li&gt;
+&lt;li&gt;優化流程自動化與提升決策品質: 通訊軟體對話 bot，自動生成建議&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;rag-vs-傳統程式設計traditional-programming&#34;&gt;RAG vs 傳統程式設計（Traditional Programming）&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;對我們需要工具提升知識獲取效率，如何選擇 RAG 或傳統程式設計&lt;/li&gt;
+&lt;li&gt;在特定任務的效能是否優於人類&lt;/li&gt;
+&lt;li&gt;哪裡適合用 RAG，哪裡適合用傳統程式設計&lt;/li&gt;
+&lt;/ul&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_8715252ce2925f2b574cec4bb2d0a84d.webp 400w,
+               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_5705bdacf67afc9f8d81663d6d7fea49.webp 760w,
+               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/rag-vs-code_hu9f4f7a7594cbcf741f81ea0e7ee1d93e_174431_8715252ce2925f2b574cec4bb2d0a84d.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;481&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  適合用 RAG 的情境：客服問答、技術搜尋、知識型 Chatbot、內部知識導航。
+適合用傳統程式的情境：金流控制、流程引擎、帳務系統、安全控制。
+&lt;/aside&gt;
+&lt;hr&gt;
 &lt;h3 id=&#34;有了大語言模型llm後情境變成&#34;&gt;有了大語言模型（LLM）後，情境變成：&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;去 google -&amp;gt; 先問 chatgpt，初步問答理解問題，找到關鍵字&lt;/li&gt;
 &lt;li&gt;需要搜尋引擎 -&amp;gt; chatgpt 整合，直接上網搜尋&lt;/li&gt;
-&lt;li&gt;需要關鍵字 -&amp;gt; chatgpt 會幫你找到關鍵字&lt;/li&gt;
-&lt;li&gt;協助理解 -&amp;gt; chatgpt 很會舉例，旁徵博引，換句話說&lt;/li&gt;
-&lt;li&gt;跨語言門檻 -&amp;gt; chatgpt 可以翻譯&lt;/li&gt;
+&lt;li&gt;需要關鍵字 -&amp;gt; chatgpt 幫你找到關鍵字&lt;/li&gt;
+&lt;li&gt;協助理解 -&amp;gt; chatgpt 舉例，換句話說&lt;/li&gt;
+&lt;li&gt;跨語言門檻 -&amp;gt; chatgpt 翻譯&lt;/li&gt;
 &lt;/ol&gt;
 &lt;aside class=&#34;notes&#34;&gt;
   chatgpt 會用通順的語言回答問題（優於平均工程師）
@@ -262,12 +289,41 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;chatgpt 會用通順的語言，快速（數秒內）上網搜尋，回答問題&lt;/li&gt;
-&lt;li&gt;過程中不厭其煩地對答，旁徵博引，換句話說&lt;/li&gt;
+&lt;li&gt;過程中不厭其煩地問答，換句話說&lt;/li&gt;
 &lt;li&gt;回答的格式高度客製化&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h5 id=&#34;llm-只差專業知識沒有內容根據llm-容易產生幻覺&#34;&gt;LLM 只差專業知識。沒有內容根據，LLM 容易產生幻覺&lt;/h5&gt;
+&lt;hr&gt;
+&lt;h5 id=&#34;llm-不具備專業知識缺乏內容根據時llm-容易產生幻覺hallucination&#34;&gt;LLM 不具備專業知識。缺乏內容根據時，LLM 容易產生幻覺(hallucination)&lt;/h5&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/llm-hallucination_hu42174c29bc98b9089191b47b3864fba5_212700_9fe73f5f2b5339e829b4fd9ff27bd59e.webp 400w,
+               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/llm-hallucination_hu42174c29bc98b9089191b47b3864fba5_212700_b69728d4bdba428622aca425a98eed1e.webp 760w,
+               /zh-hant/slides/2025-06-05-devops-rag-internal-ai/llm-hallucination_hu42174c29bc98b9089191b47b3864fba5_212700_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/llm-hallucination_hu42174c29bc98b9089191b47b3864fba5_212700_9fe73f5f2b5339e829b4fd9ff27bd59e.webp&#34;
+               width=&#34;500&#34;
+               height=&#34;500&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  LLM 只差專業知識，沒有內容根據的話，容易產生幻覺。這時候就需要 RAG 技術來補強。
+  LLM（大型語言模型）本身並不具備事實知識，而是依賴訓練時的語料與提示輸入來生成回答。當缺乏明確上下文或內容根據時，LLM 容易出現「幻覺」現象，即生成看似合理但實際不正確的資訊。專業領域問題若未提供準確資料支撐，也容易導致錯誤回答。
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;rag-workshop-流程-2&#34;&gt;RAG Workshop 流程&lt;/h3&gt;
