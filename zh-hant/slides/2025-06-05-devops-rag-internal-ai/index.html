@@ -97,7 +97,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker compose up -d
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">docker <span class="nb">exec</span> -it notebook pip install pandas openai qdrant_client tqdm tenacity wget tenacity unstructured markdown ragas sacrebleu langchain_qdrant langchain-openai langchain_openai langchain_community tiktoken
+</span></span><span class="line"><span class="cl">docker <span class="nb">exec</span> -it notebook pip install pandas openai qdrant_client tqdm tenacity wget tenacity unstructured markdown ragas sacrebleu langchain_qdrant langchain-openai langchain_openai langchain_community tiktoken ipywidgets
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">登入token</span><span class="o">=</span><span class="s2">&#34;workshop1234!&#34;</span>
 </span></span></code></pre></div>
@@ -174,12 +174,14 @@
       
 <h3 id="rag-workshop-流程">RAG Workshop 流程</h3>
 <ol>
-<li><strong>環境設定：確定參與者都有設定好開發環境</strong></li>
-<li>為什麼需要 RAG（Retrieval-Augmented Generation）</li>
-<li>RAG: Embedding 與向量數據庫</li>
-<li>RAG: Embedding Search</li>
-<li>RAG: Evaluation</li>
-<li>RAG 實際應用: 以 k8s official docs 為例</li>
+<li>10min - <strong>環境設定：確定參與者都有設定好開發環境</strong></li>
+<li>10min - 為什麼需要 RAG（Retrieval-Augmented Generation）</li>
+<li>10min - Notebook 2 Embedding 與向量數據庫</li>
+<li>10min - Notebook 3 Embedding Search</li>
+<li>10min - Notebook 4 DIY</li>
+<li>10min - Notebook 5 Evaluation</li>
+<li>10min - Notebook 6 k8s RAG QA</li>
+<li>20min - DIY + Q&amp;A</li>
 </ol>
 
     </section>
@@ -307,10 +309,12 @@
 <ol>
 <li>環境設定：確定參與者都有設定好開發環境</li>
 <li><strong>為什麼需要 RAG（Retrieval-Augmented Generation）</strong></li>
-<li>RAG: Embedding 與向量數據庫</li>
-<li>RAG: Embedding Search</li>
-<li>RAG: Evaluation</li>
-<li>RAG 實際應用: 以 k8s official docs 為例</li>
+<li>Embedding 與向量數據庫</li>
+<li>Embedding Search</li>
+<li>DIY</li>
+<li>Evaluation</li>
+<li>實際應用: 以 k8s official docs 為例</li>
+<li>DIY + Q&amp;A</li>
 </ol>
 
     </section>
@@ -456,7 +460,7 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
       
 <h3 id="rag-vs-傳統程式設計traditional-programming">RAG vs 傳統程式設計（Traditional Programming）</h3>
 <ul>
-<li>對我們需要工具提升知識獲取效率，如何選擇 RAG 或傳統程式設計</li>
+<li>需要工具提升知識獲取效率，如何選擇 RAG 或傳統程式設計</li>
 <li>在特定任務的效能是否優於人類</li>
 <li>哪裡適合用 RAG，哪裡適合用傳統程式設計</li>
 </ul>
@@ -601,10 +605,11 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
 <li>LLM 補強工程師的語言能力</li>
 </ol>
 </li>
-<li><strong>RAG: Embedding 與向量數據庫</strong></li>
-<li>RAG: Embedding Search</li>
-<li>RAG: Evaluation</li>
-<li>RAG 實際應用: 以 k8s official docs 為例</li>
+<li><strong>Embedding 與向量數據庫</strong></li>
+<li>Embedding Search</li>
+<li>DIY</li>
+<li>Evaluation</li>
+<li>k8s RAG QA.ipynb</li>
 </ol>
 
     </section>
@@ -616,14 +621,120 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
     <section>
     
       
-<h3 id="rag-jupyter-notebook">RAG Jupyter Notebook</h3>
+<h3 id="rag-workshop-流程-3">RAG Workshop 流程</h3>
 <ol>
-<li>Embedding with OpenAI.ipynb</li>
-<li>Embedding Search with Qdrant and OpenAI.ipynb</li>
-<li>RAG with OpenAI.ipynb</li>
-<li>RAG DIY.ipynb</li>
-<li>Evaluation.ipynb</li>
+<li>確定參與者都有跑一套RAG起來</li>
+<li><strong>Evaluation</strong></li>
 <li>k8s RAG QA.ipynb</li>
+</ol>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="如何評估-rag-系統的品質">如何評估 RAG 系統的品質?</h3>
+<ol>
+<li>人人都會下 prompt，但是誰的 prompt 更好？或是沒差別？</li>
+<li>如何選擇 vector store 的 chunking 策略？</li>
+<li>哪個 retriever 更好？</li>
+<li>要如何持續改善 RAG 系統？下個迭代的改善方向是什麼？</li>
+</ol>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="-評估目的確保回答品質可靠性與可控性">🎯 評估目的：確保回答品質、可靠性與可控性</h3>
+<ol>
+<li>保證正確性：檢索出的資訊是正確的，生成的答案忠實於原始 context</li>
+<li>降低幻覺風險：即使有資料，LLM 仍可能亂編</li>
+<li>測量系統品質</li>
+<li>改善依據：幫助驗證Chunking 策略，Prompt 設計，Retriever 模型調整</li>
+<li>自動化監控：品質追蹤、問題定位，建立類似 APM 的 QA 指標</li>
+<li>對 Stakeholder 展示成效：可視化與量化指標，有助溝通與資源投入</li>
+</ol>
+<aside class="notes">
+  <p>評估方式建議</p>
+<ul>
+<li>Retrieval：Recall@K, MRR, nDCG</li>
+<li>Generation：ROUGE, BERTScore, GPTScore</li>
+<li>Faithfulness：依據來源資料生成？</li>
+<li>人工標註：相關性、正確性、幫助程度</li>
+</ul>
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="rag-應用-以-k8s-official-docs-為例">RAG 應用: 以 k8s official docs 為例</h3>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="總結">總結</h3>
+<ol>
+<li>為什麼需要 RAG（Retrieval-Augmented Generation）</li>
+<li>Embedding 與向量數據庫</li>
+<li>Embedding Search</li>
+<li>DIY</li>
+<li>Evaluation</li>
+<li>k8s RAG QA.ipynb</li>
+</ol>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="maicoin-we-are-hiring">MaiCoin: We are Hiring!!</h3>
+<ul>
+<li><a href="https://www.linkedin.com/jobs/view/4236558674/" target="_blank" rel="noopener">Senior Site Reliability Engineer</a></li>
+<li><a href="https://www.linkedin.com/jobs/view/4236555801" target="_blank" rel="noopener">Senior Data Engineer</a></li>
+<li><a href="https://www.linkedin.com/jobs/view/4236555811" target="_blank" rel="noopener">Senior IT Engineer</a></li>
+<li><a href="https://www.linkedin.com/jobs/view/4236556713" target="_blank" rel="noopener">Blockchain Engineer (Wallet Team)</a></li>
+<li><a href="https://www.linkedin.com/jobs/view/4236558714" target="_blank" rel="noopener">Senior Backend Engineer</a></li>
+<li><a href="https://www.linkedin.com/jobs/view/4236523560/" target="_blank" rel="noopener">Micro Service Software Engineer</a></li>
+<li><a href="https://www.linkedin.com/jobs/view/4236559632" target="_blank" rel="noopener">Cyber Security Engineer</a></li>
+</ul>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="diy--qa--建議">DIY + Q&amp;A + 建議</h3>
+<ol>
+<li>下次會改用 Colab</li>
 </ol>
 
     </section>
