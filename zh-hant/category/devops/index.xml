@@ -357,14 +357,8 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
     &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://ih1.redbubble.net/image.4690208405.0033/st,small,507x507-pad,600x600,f8f8f8.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
   &lt;/div&gt;&lt;/figure&gt;
 &lt;/p&gt;
-&lt;hr&gt;
-&lt;blockquote&gt;
-&lt;p&gt;DevOps AI Copilot 不應該像圖書館守門員等人來借書，
-而應該像導航系統，在你開車時主動告訴你：前方有彎道。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;RAG + Context-Aware Knowledge Copilot&lt;/p&gt;
 &lt;aside class=&#34;notes&#34;&gt;
-  這邊扯的比較遠，但基本上我們期待的解決方案是這樣
+  我們不是懶，而是現在要解答許多基本問題，LLM 回答得比人好
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;rag-讓-devops-更智慧的即時反應&#34;&gt;RAG 讓 DevOps 更智慧的即時反應&lt;/h3&gt;
@@ -375,13 +369,26 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
 &lt;li&gt;優化流程自動化與提升決策品質: 通訊軟體對話 bot，自動生成建議&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;rag-vs-傳統程式設計&#34;&gt;RAG vs 傳統程式設計&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DevOps AI Copilot 不應該像圖書館守門員等人來借書，
+而應該像導航系統，在你開車時主動告訴你：前方有彎道。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;RAG + Context-Aware Knowledge Copilot&lt;/p&gt;
+&lt;aside class=&#34;notes&#34;&gt;
+  基本上我們期待的解決方案是這樣
+&lt;/aside&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;rag-vs-其他工具&#34;&gt;RAG vs 其他工具&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;需要工具提升知識獲取效率，如何選擇 RAG 或傳統程式設計（Traditional Programming）&lt;/li&gt;
-&lt;li&gt;在特定任務的效能是否優於人類&lt;/li&gt;
-&lt;li&gt;哪裡適合用 RAG，哪裡適合用傳統程式設計&lt;/li&gt;
+&lt;li&gt;需要工具提升知識獲取效率，如何選擇 RAG 或是其他 non-LLM 工具？例如 search engine / fulltext search engine / search algorithm&lt;/li&gt;
+&lt;li&gt;特定任務的效能是否優於人類&lt;/li&gt;
+&lt;li&gt;哪裡適合用 RAG，哪裡適合用 non-LLM 工具&lt;/li&gt;
 &lt;/ul&gt;
 &lt;aside class=&#34;notes&#34;&gt;
+  例如
+google search engine 但當然我們不知道他背後的實作
+elasticsearch / lucene / fulltext search engine
+GNU grep 的 Boyer–Moore string-search algorithm
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;p&gt;
@@ -497,6 +504,7 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
 &lt;li&gt;如何選擇 vector store 的 chunking 策略？&lt;/li&gt;
 &lt;li&gt;哪個 retriever 更好？&lt;/li&gt;
 &lt;li&gt;要如何持續改善 RAG 系統？下個迭代的改善方向是什麼？&lt;/li&gt;
+&lt;li&gt;是否符合 production criteria？&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;評估確保回答品質可靠性與可控性&#34;&gt;評估：確保回答品質可靠性與可控性&lt;/h3&gt;

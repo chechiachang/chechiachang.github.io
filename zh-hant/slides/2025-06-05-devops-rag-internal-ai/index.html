@@ -608,23 +608,8 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
     <div class="w-100" ><img src="https://ih1.redbubble.net/image.4690208405.0033/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
-
-    </section>
-    
-
-    
-    
-    
-    <section>
-    
-      
-<blockquote>
-<p>DevOps AI Copilot 不應該像圖書館守門員等人來借書，
-而應該像導航系統，在你開車時主動告訴你：前方有彎道。</p>
-</blockquote>
-<p>RAG + Context-Aware Knowledge Copilot</p>
 <aside class="notes">
-  這邊扯的比較遠，但基本上我們期待的解決方案是這樣
+  我們不是懶，而是現在要解答許多基本問題，LLM 回答得比人好
 </aside>
 
     </section>
@@ -653,13 +638,35 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
     <section>
     
       
-<h3 id="rag-vs-傳統程式設計">RAG vs 傳統程式設計</h3>
+<blockquote>
+<p>DevOps AI Copilot 不應該像圖書館守門員等人來借書，
+而應該像導航系統，在你開車時主動告訴你：前方有彎道。</p>
+</blockquote>
+<p>RAG + Context-Aware Knowledge Copilot</p>
+<aside class="notes">
+  基本上我們期待的解決方案是這樣
+</aside>
+
+    </section>
+    
+
+    
+    
+    
+    <section>
+    
+      
+<h3 id="rag-vs-其他工具">RAG vs 其他工具</h3>
 <ul>
-<li>需要工具提升知識獲取效率，如何選擇 RAG 或傳統程式設計（Traditional Programming）</li>
-<li>在特定任務的效能是否優於人類</li>
-<li>哪裡適合用 RAG，哪裡適合用傳統程式設計</li>
+<li>需要工具提升知識獲取效率，如何選擇 RAG 或是其他 non-LLM 工具？例如 search engine / fulltext search engine / search algorithm</li>
+<li>特定任務的效能是否優於人類</li>
+<li>哪裡適合用 RAG，哪裡適合用 non-LLM 工具</li>
 </ul>
 <aside class="notes">
+  例如
+google search engine 但當然我們不知道他背後的實作
+elasticsearch / lucene / fulltext search engine
+GNU grep 的 Boyer–Moore string-search algorithm
 </aside>
 
     </section>
@@ -838,6 +845,7 @@ Fulltext Search Engine 例如 elasticsearch 使用 Lucene
 <li>如何選擇 vector store 的 chunking 策略？</li>
 <li>哪個 retriever 更好？</li>
 <li>要如何持續改善 RAG 系統？下個迭代的改善方向是什麼？</li>
+<li>是否符合 production criteria？</li>
 </ol>
 
     </section>
