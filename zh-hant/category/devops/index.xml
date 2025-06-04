@@ -538,6 +538,15 @@ GNU grep 的 Boyer–Moore string-search algorithm
 &lt;li&gt;k8s RAG QA&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
+&lt;h3 id=&#34;延伸閱讀&#34;&gt;延伸閱讀&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://platform.openai.com/docs/guides/embeddings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://platform.openai.com/docs/guides/embeddings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://huggingface.co/blog/getting-started-with-embeddings&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://huggingface.co/blog/getting-started-with-embeddings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://platform.openai.com/docs/guides/optimizing-llm-accuracy#retrieval-augmented-generation-rag&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://platform.openai.com/docs/guides/optimizing-llm-accuracy#retrieval-augmented-generation-rag&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.ragas.io/en/stable/concepts/metrics/overview/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://docs.ragas.io/en/stable/concepts/metrics/overview/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.ragas.io/en/stable/concepts/test_data_generation/rag/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://docs.ragas.io/en/stable/concepts/test_data_generation/rag/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
 &lt;h5 id=&#34;由衷地感謝為-workshop-提供協助的夥伴&#34;&gt;由衷地感謝為 workshop 提供協助的夥伴!&lt;/h5&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/pymia&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mia // Huai-Wen Chang&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/hunkue&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hunkue&lt;/a&gt;&lt;/p&gt;
