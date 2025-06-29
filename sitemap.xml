@@ -2,22 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://chechia.net/tags/aws/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/categories/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/etcd/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/iac/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/posts/2025-10-22-k8s-summit/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/categories/kubernetes/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/kubernetes/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/posts/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/terraform/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/categories/workshop/</loc>
+    <lastmod>2025-06-28T13:20:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/slides/2025-07-02-cloud-summit-rag/</loc>
+    <lastmod>2025-06-25T00:45:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/categories/devops/</loc>
+    <lastmod>2025-06-25T00:45:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/devops/</loc>
+    <lastmod>2025-06-25T00:45:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/slides/2025-10-22-etcd-workshop/</loc>
+    <lastmod>2025-06-25T00:45:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/tags/rag/</loc>
+    <lastmod>2025-06-25T00:45:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chechia.net/slides/</loc>
+    <lastmod>2025-06-25T00:45:00+00:00</lastmod>
+  </url><url>
     <loc>https://chechia.net/categories/ai/</loc>
     <lastmod>2025-06-24T12:45:00+00:00</lastmod>
   </url><url>
     <loc>https://chechia.net/tags/ai/</loc>
     <lastmod>2025-06-24T12:45:00+00:00</lastmod>
   </url><url>
-    <loc>https://chechia.net/categories/</loc>
-    <lastmod>2025-06-24T12:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/</loc>
-    <lastmod>2025-06-24T12:45:00+00:00</lastmod>
-  </url><url>
     <loc>https://chechia.net/posts/2025-08-09-coscup/</loc>
-    <lastmod>2025-06-24T12:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/tags/devops/</loc>
     <lastmod>2025-06-24T12:45:00+00:00</lastmod>
   </url><url>
     <loc>https://chechia.net/categories/generative/</loc>
@@ -26,16 +71,7 @@
     <loc>https://chechia.net/tags/generative/</loc>
     <lastmod>2025-06-24T12:45:00+00:00</lastmod>
   </url><url>
-    <loc>https://chechia.net/tags/kubernetes/</loc>
-    <lastmod>2025-06-24T12:45:00+00:00</lastmod>
-  </url><url>
     <loc>https://chechia.net/tags/openai/</loc>
-    <lastmod>2025-06-24T12:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/posts/</loc>
-    <lastmod>2025-06-24T12:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/tags/</loc>
     <lastmod>2025-06-24T12:45:00+00:00</lastmod>
   </url><url>
     <loc>https://chechia.net/posts/2025-07-02-cloud-summit/</loc>
@@ -44,40 +80,13 @@
     <loc>https://chechia.net/posts/2025-06-06-devops-rag-internal-ai/</loc>
     <lastmod>2025-06-05T12:45:00+00:00</lastmod>
   </url><url>
-    <loc>https://chechia.net/categories/devops/</loc>
-    <lastmod>2025-06-01T00:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/tags/rag/</loc>
-    <lastmod>2025-06-01T00:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/slides/</loc>
-    <lastmod>2025-06-01T00:45:00+00:00</lastmod>
-  </url><url>
     <loc>https://chechia.net/slides/2025-06-05-devops-rag-internal-ai/</loc>
     <lastmod>2025-06-01T00:45:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/tags/aws/</loc>
-    <lastmod>2024-10-23T13:20:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/tags/etcd/</loc>
-    <lastmod>2024-10-23T13:20:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/tags/iac/</loc>
-    <lastmod>2024-10-23T13:20:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/categories/kubernetes/</loc>
-    <lastmod>2024-10-23T13:20:00+00:00</lastmod>
   </url><url>
     <loc>https://chechia.net/posts/2024-10-23-k8s-summit/</loc>
     <lastmod>2024-10-23T13:20:00+00:00</lastmod>
   </url><url>
-    <loc>https://chechia.net/tags/terraform/</loc>
-    <lastmod>2024-10-23T13:20:00+00:00</lastmod>
-  </url><url>
     <loc>https://chechia.net/tags/vault/</loc>
-    <lastmod>2024-10-23T13:20:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chechia.net/categories/workshop/</loc>
     <lastmod>2024-10-23T13:20:00+00:00</lastmod>
   </url><url>
     <loc>https://chechia.net/posts/2024-10-24-k8s-summit/</loc>

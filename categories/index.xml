@@ -11,8 +11,29 @@
     </image>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 24 Jun 2025 12:45:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Jun 2025 13:20:00 +0000</lastBuildDate>
     <atom:link href="https://chechia.net/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes</title>
+      <link>https://chechia.net/categories/kubernetes/</link>
+      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Workshop</title>
+      <link>https://chechia.net/categories/workshop/</link>
+      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/workshop/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Devops</title>
+      <link>https://chechia.net/categories/devops/</link>
+      <pubDate>Wed, 25 Jun 2025 00:45:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/devops/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Ai</title>
       <link>https://chechia.net/categories/ai/</link>
@@ -25,27 +46,6 @@
       <link>https://chechia.net/categories/generative/</link>
       <pubDate>Tue, 24 Jun 2025 12:45:00 +0000</pubDate>
       <guid>https://chechia.net/categories/generative/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Devops</title>
-      <link>https://chechia.net/categories/devops/</link>
-      <pubDate>Sun, 01 Jun 2025 00:45:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/devops/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Kubernetes</title>
-      <link>https://chechia.net/categories/kubernetes/</link>
-      <pubDate>Wed, 23 Oct 2024 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/kubernetes/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Workshop</title>
-      <link>https://chechia.net/categories/workshop/</link>
-      <pubDate>Wed, 23 Oct 2024 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/workshop/</guid>
       <description></description>
     </item>
     <item>
