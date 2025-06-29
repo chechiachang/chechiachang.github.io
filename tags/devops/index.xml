@@ -14,6 +14,13 @@
     <lastBuildDate>Sat, 28 Jun 2025 13:20:00 +0000</lastBuildDate>
     <atom:link href="https://chechia.net/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>HWRC 2025: Workshop: RAG 打造企業知識庫入門，從 embeddings 到 evaluation</title>
+      <link>https://chechia.net/posts/2025-10-14-hwdc-rag/</link>
+      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/posts/2025-10-14-hwdc-rag/</guid>
+      <description>學員將學會如何利用 RAG 技術，結合 OpenAI、LangChain、Qdrant 向量數據庫，構建企業內部文檔的智能知識庫，並能設計與實作一個基於自然語言處理（NLP）的查詢系統，來提升開發團隊的效率與知識管理能力。</description>
+    </item>
+    <item>
       <title>K8s Summit 2025: RAG &#43; k8sGPT 檢索增強生成與 K8sGPT</title>
       <link>https://chechia.net/posts/2025-10-23-k8s-summit/</link>
       <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
