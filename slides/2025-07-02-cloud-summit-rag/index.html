@@ -1,43 +1,230 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><title>Cloud Summit 2025: 用 RAG 打造企業可對話 AI 知識庫《有問題問過 AI 後再來問我》</title><meta name=description content="透過 RAG（檢索增強生成）技術，將企業內部文件轉為智能知識庫，提升資訊檢索與決策效率。本演講將探討 RAG 應用、技術架構與落地實踐，幫助開發團隊與企業更高效利用內部知識。企業內部文件往往分散於 Confluence、Google Drive、Notion 等平台，傳統關鍵字搜尋難以快速獲取準確資訊，導致溝通成本高、開發流程受阻。本演講將介紹如何運用 RAG（Retrieval-Augmented Generation）技術，結合 OpenAI 及向量數據庫，將企業內部文檔轉為智能知識庫。我們將探討文件解析、嵌入索引、AI 問答系統的技術架構與實作，幫助開發團隊構建高效 AI 助手，節省溝通成本，加速開發流程，提升決策與問題解決能力"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="black-translucent"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel=stylesheet href=/reveal-js/dist/reset.css><link rel=stylesheet href=/reveal-js/dist/reveal.css><link rel=stylesheet href=/reveal-hugo/themes/robot-lung.css id=theme><link rel=stylesheet href=/highlight-js/color-brewer.min.css></head><body><div class=reveal><div class=slides><section><h4 id=cloud-summit-2025>Cloud Summit 2025</h4><h2 id=用-rag-打造可對話-ai-知識庫>用 RAG 打造可對話 AI 知識庫</h2><h5 id=有問題問過-ai-後再來問我>《有問題問過 AI 後再來問我》</h5><h5 id=-che-chia-chang--chechianet->~ Che Chia Chang @ <a href=https://chechia.net>chechia.net</a> ~</h5></section><section data-shortcode-section><section data-noprocess data-shortcode-slide><h3 id=關於我>關於我</h3><ul><li>Che Chia Chang</li><li>SRE @ <a href=https://www.cake.me/companies/maicoin/jobs>Maicoin</a></li><li><a href=https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5>Microsoft MVP</a></li><li>投影片與講稿都在 <a href=https://chechia.net/>chechia.net</a></li><li><a href=/slides/2024-10-24-etcd-workshop/>K8s Summit 2024: Etcd Workshop</a></li><li><a href=/slides/2025-06-05-devops-rag-internal-ai/>DevOpsDay 2025: RAG Workshop</a></li><li>鐵人賽 (Terraform / Vault 手把手入門)</li></ul><p>🔽</p></section><section><h3 id=devopsday-2025-rag-workshop><a href=/slides/2025-06-05-devops-rag-internal-ai/>DevOpsDay 2025: RAG Workshop</a></h3></section></section><section><h3 id=大綱>大綱</h3><ol><li>為什麼需要 RAG（Retrieval-Augmented Generation）</li><li>Embedding 與向量數據庫</li><li>Embedding Search</li><li>Evaluation</li><li>k8s RAG QA</li></ol></section><section><section data-shortcode-section><h3 id=什麼是-rag>什麼是 RAG</h3><ul><li>RAG（Retrieval-Augmented Generation 檢索增強生成）</li><li>結合檢索系統與生成式模型（如 GPT）的自然語言處理架構</li><li>在生成答案時引用外部知識</li><li>使模型回答更準確且具事實根據</li></ul><p>🔽</p></section><section><h3 id=什麼是-rag-1>什麼是 RAG</h3><ol><li><strong>Retrieval（檢索）：</strong> 從一個外部知識庫（如文件、向量資料庫等）中找到與問題相關的資訊。通常會用文字嵌入向量（embeddings）做相似度搜尋。</li><li><strong>Generation（生成）：</strong> 把檢索到的內容與使用者問題一起丟給 LLM（如 GPT、Claude 等）去生成答案。生成的內容會更具事實根據，並能引用具體資料。</li></ol></section><section><div class=mermaid>---
-title: 生成式AI
----
-graph LR
-subgraph "RAG"
-direction LR
-A2(("使用者問題"))
-B2("大語言模型
-(ex. OpenAI gpt-4.2)")
-C2("文字接龍產生回答")
-A2 --User Input--> B2
-B2 --Chat Completion--> C2
-end
+<!doctype html><html lang=en><head><meta charset=utf-8><title>Cloud Summit 2025: 用 RAG 打造企業可對話 AI 知識庫《有問題問過 AI 後再來問我》</title><meta name=description content="透過 RAG（檢索增強生成）技術，將企業內部文件轉為智能知識庫，提升資訊檢索與決策效率。本演講將探討 RAG 應用、技術架構與落地實踐，幫助開發團隊與企業更高效利用內部知識。企業內部文件往往分散於 Confluence、Google Drive、Notion 等平台，傳統關鍵字搜尋難以快速獲取準確資訊，導致溝通成本高、開發流程受阻。本演講將介紹如何運用 RAG（Retrieval-Augmented Generation）技術，結合 OpenAI 及向量數據庫，將企業內部文檔轉為智能知識庫。我們將探討文件解析、嵌入索引、AI 問答系統的技術架構與實作，幫助開發團隊構建高效 AI 助手，節省溝通成本，加速開發流程，提升決策與問題解決能力"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="black-translucent"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel=stylesheet href=/reveal-js/dist/reset.css><link rel=stylesheet href=/reveal-js/dist/reveal.css><link rel=stylesheet href=/reveal-hugo/themes/robot-lung.css id=theme><link rel=stylesheet href=/highlight-js/color-brewer.min.css></head><body><div class=reveal><div class=slides><section><h4 id=cloud-summit-2025>Cloud Summit 2025</h4><h2 id=用-rag-打造可對話-ai-知識庫>用 RAG 打造可對話 AI 知識庫</h2><h5 id=有問題問過-ai-後再來問我>《有問題問過 AI 後再來問我》</h5><h5 id=-che-chia-chang--chechianet->~ Che Chia Chang @ <a href=https://chechia.net>chechia.net</a> ~</h5></section><section data-shortcode-section><section data-noprocess data-shortcode-slide><h3 id=關於我>關於我</h3><ul><li>Che Chia Chang</li><li>SRE @ <a href=https://www.cake.me/companies/maicoin/jobs>Maicoin</a></li><li><a href=https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5>Microsoft MVP</a></li><li>投影片與講稿都在 <a href=https://chechia.net/>chechia.net</a></li><li><a href=/slides/2024-10-24-etcd-workshop/>K8s Summit 2024: Etcd Workshop</a></li><li><a href=/slides/2025-06-05-devops-rag-internal-ai/>DevOpsDay 2025: RAG Workshop</a></li><li>鐵人賽 (Terraform / Vault 手把手入門)</li></ul><p>🔽</p></section><section><h3 id=devopsday-2025-rag-workshop><a href=/slides/2025-06-05-devops-rag-internal-ai/>DevOpsDay 2025: RAG Workshop</a></h3></section><section><p><img loading=lazy src=/images/2025-devopsday-rag-workshop.jpg></p></section></section><section><h3 id=大綱>大綱</h3><ol><li>什麼是 RAG</li><li>為什麼需要 RAG</li><li>為何需要內部知識庫</li><li>RAG Agent 的優勢</li><li>RAG Agent 的應用場景</li><li>如何開始/如何進步</li><li>QA</li></ol></section><section><section data-shortcode-section><h3 id=什麼是-rag>什麼是 RAG</h3><ul><li>RAG（Retrieval-Augmented Generation 檢索增強生成）</li><li>結合檢索系統與生成式模型（如 GPT）的自然語言處理架構</li><li>在生成答案時引用外部知識，增加上下文內容，提供給 LLM（大型語言模型）</li><li>使模型回答更準確且具事實根據</li></ul><p>🔽</p></section><section><h3 id=什麼是-rag-1>什麼是 RAG</h3><ol><li><strong>Retrieval（檢索）：</strong> 從一個外部知識庫（如文件、向量資料庫等）中找到與問題相關的資訊。通常會用文字嵌入向量（embeddings）做相似度搜尋。</li><li><strong>Generation（生成）：</strong> 把檢索到的內容與使用者問題一起丟給 LLM（如 GPT、Claude 等）去生成答案。生成的內容會更具事實根據，並能引用具體資料。</li></ol></section><section><div class=mermaid>graph LR
 subgraph "Generative AI"
 direction LR
-A1(("使用者問題 Query"))
-B1("大語言模型 LLM
-(ex. OpenAI gpt-4.2)")
+A1(("Query"))
+B1("LLM
+(gpt-4.2)")
 C1("文字接龍產生回答 Response")
 A1 --User Input--> B1
 B1 --Chat Completion--> C1
-end</div></section></section><section data-noprocess data-shortcode-slide class=side-by-side><h1 id=heading>📈</h1><h1 id=heading-1>📊</h1></section><section><ol><li>當天帶自己的電腦。當天建議自備手機網路</li><li>選項1: 用電腦在 docker 運行開發環境</li><li>選項2: 用電腦遠端連線講師提供的 VM，在遠端VM 中運行 docker 開發環境</li><li>會使用 docker</li><li>會使用 python 與 jupyter notebook</li></ol></section><section><h5 id=選項1-使用自己的電腦-computer>選項1: 使用自己的電腦 &#x1f4bb;</h5><p>在 workshop 開始前，在自己的電腦上</p><ol><li>安裝 <a href=https://docs.docker.com/get-started/get-docker/>docker</a></li><li>git clone 教材</li><li>啟動 docker 開發環境，下載 docker images</li><li>安裝所需的 Python 套件</li><li>開啟瀏覽器，連線到<a href=http://localhost:8888>http://localhost:8888</a></li><li>登入token=<code>workshop1234!</code></li></ol><pre><code class=language-bash>git clone https://github.com/chechiachang/rag-workshop.git
-cd rag-workshop
-docker compose up -d
-docker exec -it notebook pip install pandas openai qdrant_client tqdm tenacity wget tenacity unstructured markdown ragas sacrebleu langchain_qdrant langchain-openai langchain_openai langchain_community tiktoken ipywidgets
-</code></pre></section><section><h5 id=選項2-使用遠端-vm>選項2: 使用遠端 VM</h5><ol><li>有自己的電腦，當天建議自備手機網路，連線到遠端 VM</li><li>提前註冊 tunnel 工具（沒有業配）</li><li><a href=https://dashboard.ngrok.com/login>Ngrok</a> 登入 Login -> 左手邊 Identity & Access -> Authtokens -> Add Tunnel authtoken -> 記在安全的地方</li><li>也可以使用 <a href=https://pinggy.io/>Pinggy</a>，但免費有限時</li></ol></section><section><h3 id=建議>建議</h3><ol><li>優先使用個人電腦。會盡量提供免費 VM 名額，但依參與人數不保證現場有</li><li>在家先試跑一遍，把 docker image 跟 pip 套件都下載好，現場要載很久</li><li>試完後記得關掉 ngrok，以免用完每月的免費額度</li><li>事先看完內容覺得太簡單可以不用來，但歡迎會後找我聊天ＸＤ</li></ol></section><section><h3 id=投影片與教材與完整程式碼放在網站上>投影片與教材與完整程式碼放在網站上</h3><ul><li><a href=https://chechia.net>https://chechia.net</a></li><li><a href=https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/>https://chechia.net/zh-hant/slides/2025-06-05-devops-rag-internal-ai/</a></li><li>&#x1f4dd; <a href=https://github.com/chechiachang/chechiachang.github.io-src/blob/master/content/zh-hant/slides/2025-06-05-devops-rag-internal-ai/index.md>Github 投影片原始碼與講稿</a></li></ul></section><section><h5 id=以下是-rag-workshop-當天內容>以下是 RAG Workshop 當天內容</h5><p>可以先看，也可以當天再看</p><p><img loading=lazy src=https://media.tenor.com/aRF-Uwyl0p8AAAAM/frozen2.gif></p></section><section><h3 id=rag-workshop>RAG Workshop</h3></section><section><h3 id=關於我>關於我</h3><ul><li>Che Chia Chang</li><li>SRE @ <a href=https://www.cake.me/companies/maicoin/jobs>Maicoin</a></li><li><a href=https://mvp.microsoft.com/zh-TW/MVP/profile/e407d0b9-5c01-eb11-a815-000d3a8ccaf5>Microsoft MVP</a></li><li>個人部落格<a href=https://chechia.net/>chechia.net</a> 投影片講稿，鐵人賽 (Terraform / Vault 手把手入門 / Etcd Workshop)</li><li>&#x1f4dd; <a href=https://github.com/chechiachang/chechiachang.github.io-src/blob/master/content/zh-hant/slides/2025-06-05-devops-rag-internal-ai/index.md>今天的投影片原始碼與講稿</a></li></ul></section><section><h3 id=rag-workshop-流程>RAG Workshop 流程</h3><ol><li>10min - <strong>環境設定：確定參與者都有設定好開發環境</strong></li><li>10min - 為什麼需要 RAG（Retrieval-Augmented Generation）</li><li>10min - Notebook 2 Embedding 與向量數據庫</li><li>10min - Notebook 3 Embedding Search</li><li>10min - Notebook 4 DIY</li><li>10min - Notebook 5 Evaluation</li><li>10min - Notebook 6 k8s RAG QA</li><li>20min - DIY + Q&amp;A</li></ol></section><section><h5 id=選項1-使用自己的電腦>選項1: 使用自己的電腦</h5><ol><li>有在家先試跑一遍，應該可以在本地存取 Notebook <a href=http://localhost:8888>http://localhost:8888</a></li><li>到 <a href=https://workshop.chechia.net>workshop.chechia.net</a> 取得 OpenAI Key</li><li>可以試著跑 notebook 2-5</li><li>忘記怎麼啟動，可以回到投影片最開始</li></ol><pre><code>notebook token: workshop1234!
-AZURE_OPENAI_API_KEY=&quot;&quot;
-AZURE_OPENAI_ENDPOINT=&quot;&quot;
-</code></pre></section><section><h5 id=選項2-使用遠端-vm-1>選項2: 使用遠端 VM</h5><ol><li>至<a href=https://workshop.chechia.net>workshop.chechia.net</a> 領取一台 VM 並簽名</li><li>googel sheet 左邊 url，開啟 bastion 連線</li><li>Protocol: SSH，port 22，authentication type: password</li><li>帳號密碼在<a href=https://workshop.chechia.net>workshop.chechia.net</a></li></ol></section><section><p><img loading=lazy src=azure-bastion.png></p></section><section><h5 id=選項2-使用-ngrok-連線到-jupyter-notebook>選項2: 使用 ngrok 連線到 jupyter notebook</h5><ol><li>進入 VM 後，修改下面 ngrok authtoken。指令一行一行貼上（右鍵）到 bastion 中執行</li><li>透過 <a href=https://4d11-52-230-24-207.ngrok-free.app/>https://4d11-52-230-24-207.ngrok-free.app/</a> 就可以使用 notebook (每個人不一樣)</li></ol><pre><code>cd rag-workshop
-NGROK_AUTHTOKEN=&lt;改成你的token&gt;
-sed -i &quot;s/your-token/$NGROK_AUTHTOKEN/&quot; docker-compose.yaml
-docker compose up -d
-docker logs ngrok
+end</div></section><section><div class=mermaid>graph LR
+subgraph "RAG"
+direction LR
+A2(("Query"))
+B2("LLM
+(gpt-4.2)")
+C2("Response")
+D2("Vector DB")
+A2 --User Input--> B2
+A2 --Embedding Search--> D2
+D2 --Context--> B2
+B2 --Chat Completion--> C2
+end
+subgraph "Embedding"
+direction LR
+A3(("Document"))
+B3("Embedding Model")
+C3("Embedding Vector")
+D3("Vector DB")
+A3 ----> B3
+B3 --Embedding--> C3
+A3 --Store--> D3
+C3 --Store--> D3
+end</div></section><section><h3 id=為什麼使用-rag>為什麼使用 RAG？</h3><ul><li>希望 LLM 根據知識庫產生回答</li><li>而不是只根據 Model 訓練資料，進行生成式回答。</li><li>這樣做可以達到以下目的：<ul><li>✅ 減少模型幻覺（hallucination）</li><li>✅ 為使用者提供即時且相關的資訊</li><li>✅ 利用你自己的內容與知識庫</li></ul></li></ul></section><section><h5 id=llm-不具備專業知識缺乏內容根據時容易產生幻覺hallucination>LLM 不具備專業知識。缺乏內容根據時，容易產生幻覺(hallucination)</h5><p><img loading=lazy src=/slides/2025-07-02-cloud-summit-rag/llm-hallucination.png></p><aside class=notes><p>LLM（大型語言模型）本身並不具備事實知識，而是依賴訓練時的語料與提示輸入來生成回答。當缺乏明確上下文或內容根據時，LLM 容易出現「幻覺」現象，即生成看似合理但實際不正確的資訊。專業領域問題若未提供準確資料支撐，也容易導致錯誤回答。</p></aside></section><section><p><img loading=lazy src=/images/k8s-hallucination.jpg></p></section></section><section><section data-shortcode-section><h3 id=簡單的rag範例>簡單的RAG範例</h3><p><a href=https://github.com/chechiachang/rag-workshop/blob/main/notebook/3_RAG_with_OpenAI.ipynb>https://github.com/chechiachang/rag-workshop/blob/main/notebook/3_RAG_with_OpenAI.ipynb</a></p><pre><code>┌──────────────┐       ┌─────────────────────┐
+│ User Input   │       │ Embedding Model     │
+│ (e.g., Query)├──────▶│ (OpenAI Embeddings) │
+└──────────────┘       └────────────┬────────┘
+                                    │
+                                    ▼
+                            ┌───────────────┐
+                            │ Vector Query  │
+                            │ to Qdrant DB  │
+                            └──────┬────────┘
+                                   ▼
+                        ┌────────────────────┐
+                        │ Retrieved Contexts │
+                        └────────┬───────────┘
+                                 ▼
+                   ┌────────────────────────────┐
+                   │ Prompt Construction Module │
+                   │ (Query + Top-K Contexts)   │
+                   └────────┬───────────────────┘
+                            ▼
+                    ┌────────────────────┐
+                    │ OpenAI Chat Model  │
+                    │ (GPT-4.1 / GPT-4)  │
+                    └────────┬───────────┘
+                             ▼
+                    ┌────────────────────┐
+                    │ Final Answer       │
+                    └────────────────────┘
+</code></pre><p>🔽</p></section><section><pre><code class=language-python>import qdrant_client
 
-t=2025-06-02T06:17:41+0000 lvl=info msg=&quot;started tunnel&quot; obj=tunnels name=command_line addr=http://notebook:8888 url=https://4d11-52-230-24-207.ngrok-free.app
-</code></pre></section><section><h3 id=以上是-workshop-環境設定>以上是 Workshop 環境設定</h3><ol><li>後面上課都透過這個網址操作</li><li>還沒有看到 jupyter notebook 的人，請舉手</li></ol></section><section><p><img loading=lazy src=https://miro.medium.com/v2/resize:fit:996/1*ByWkrjbyWmC9W_uWjI1qrw.gif></p></section><section><h3 id=rag-workshop-流程-1>RAG Workshop 流程</h3><ol><li>環境設定：確定參與者都有設定好開發環境</li><li><strong>為什麼需要 RAG（Retrieval-Augmented Generation）</strong></li><li>Embedding 與向量數據庫</li><li>Embedding Search</li><li>DIY</li><li>Evaluation</li><li>實際應用: 以 k8s official docs 為例</li><li>DIY + Q&amp;A</li></ol></section><section><h3 id=什麼是-rag>什麼是 RAG</h3><h5 id=ragretrieval-augmented-generation-檢索增強生成結合檢索系統與生成式模型如-gpt的自然語言處理架構在生成答案時引用外部知識使模型回答更準確且具事實根據>RAG（Retrieval-Augmented Generation 檢索增強生成）結合檢索系統與生成式模型（如 GPT）的自然語言處理架構，在生成答案時引用外部知識，使模型回答更準確且具事實根據</h5><ol><li><strong>Retrieval（檢索）：</strong> 從一個外部知識庫（如文件、向量資料庫等）中找到與問題相關的資訊。通常會用語意向量（embeddings）做相似度搜尋。</li><li><strong>Generation（生成）：</strong> 把檢索到的內容與使用者問題一起丟給 LLM（如 GPT、Claude 等）去生成答案。生成的內容會更具事實根據，並能引用具體資料。</li></ol></section><section><p><img loading=lazy src=https://cookbook.openai.com/images/llamaindex_rag_overview.png></p><p><a href=https://cookbook.openai.com/images/llamaindex_rag_overview.png>https://cookbook.openai.com/images/llamaindex_rag_overview.png</a></p></section><section><h3 id=知識獲取效率在-devops-的難題>知識獲取效率在 DevOps 的難題</h3><p>在快速變動、資訊分散的環境中，難以即時取得需要的知識。「有但找不到、看不懂、用不起來」</p><ol><li>知識分散在多個系統、格式與工具中</li><li>知識多為「靜態文件」，難以互動問答，舉例，或是換句話說</li><li>隱性知識未被系統化儲存(例如：口頭傳承、slack 討論、會議紀錄等)</li><li>查詢流程與開發流程脫節</li></ol></section><section><h3 id=情境新人工程師要如何到-k8s-doc-查到想要的內容>情境：新人工程師要如何到 k8s doc 查到想要的內容？</h3><ol><li>有問題去 google / stack overflow</li><li>需要搜尋引擎(k8s doc 有提供，但內部文件系統不一定有)</li><li>需要關鍵字(新人怎麼知道要查 Dynamic Persistent Volume Resizing)</li><li>協助理解（舉例，換句話說）</li><li>跨語言門檻</li></ol><aside class=notes><p>k8s doc 有提供關鍵字搜尋，這個搜尋功能是怎麼做的？
-Programmable Search Engine（PSE）https://developers.google.com/custom-search/docs/tutorial/introduction
-Fulltext Search Engine 例如 elasticsearch 使用 Lucene</p></aside></section><section><p><img loading=lazy src=https://www.wackybuttons.com/designcodes/0/110/1100986.png></p></section><section><p><img loading=lazy src=search-in-k8s-official-doc.png></p><p><a href=https://kubernetes.io/search/>https://kubernetes.io/search/</a></p><aside class=notes></aside></section><section><h3 id=情境senior-工程師要如何分享知識>情境：Senior 工程師要如何分享知識？</h3><ol><li>『我有寫一篇文件在某個地方，你找一下』</li><li>『我忘記去年為什麼這樣做了』</li><li>『我去 Slack 上找一下』</li><li>『你要不要先去問 ChatGPT？』</li></ol><aside class=notes></aside></section><section><p><img loading=lazy src=https://ih1.redbubble.net/image.4690208405.0033/st,small,507x507-pad,600x600,f8f8f8.jpg></p><aside class=notes><p>我們不是懶，而是現在要解答許多基本問題，LLM 回答得比人好</p></aside></section><section><h3 id=rag-讓-devops-更智慧的即時反應>RAG 讓 DevOps 更智慧的即時反應</h3><ol><li>提升知識獲取效率: 內部文檔知識AI助手</li><li>知識留存與新人 Onboarding</li><li>加速故障排查: 根據錯誤訊息自動從 Runbook 中檢索處理方式</li><li>優化流程自動化與提升決策品質: 通訊軟體對話 bot，自動生成建議</li></ol></section><section><blockquote><p>DevOps AI Copilot 不應該像圖書館守門員等人來借書，
-而應該像導航系統，在你開車時主動告訴你：前方有彎道。</p></blockquote><p>RAG + Context-Aware Knowledge Copilot</p><aside class=notes><p>基本上我們期待的解決方案是這樣</p></aside></section><section><h3 id=rag-vs-其他工具>RAG vs 其他工具</h3><ul><li>需要工具提升知識獲取效率，如何選擇 RAG 或是其他 non-LLM 工具？例如 search engine / fulltext search engine / search algorithm</li><li>特定任務的效能是否優於人類</li><li>哪裡適合用 RAG，哪裡適合用 non-LLM 工具</li></ul><aside class=notes><p>例如
-google search engine 但當然我們不知道他背後的實作
-elasticsearch / lucene / fulltext search engine
-GNU grep 的 Boyer–Moore string-search algorithm</p></aside></section><section><p><img loading=lazy src=rag-vs-code.png></p><aside class=notes><p>適合用 RAG 的情境：客服問答、技術搜尋、知識型 Chatbot、內部知識導航。
-適合用傳統程式的情境：金流控制、流程引擎、帳務系統、安全控制。</p></aside></section><section><h3 id=有了大語言模型後>有了大語言模型後</h3><ol><li>去 google -> 先問 chatgpt，初步問答理解問題，找到關鍵字</li><li>需要搜尋引擎 -> chatgpt 整合，直接上網搜尋</li><li>需要關鍵字 -> chatgpt 幫你找到關鍵字</li><li>協助理解 -> chatgpt 舉例，換句話說</li><li>跨語言門檻 -> chatgpt 翻譯</li></ol><aside class=notes><p>chatgpt 會用通順的語言回答問題（優於平均工程師）</p></aside></section><section><ul><li>chatgpt 會用通順的語言，快速（數秒內）上網搜尋，回答問題</li><li>過程中不厭其煩地問答，換句話說</li><li>回答的格式高度客製化</li></ul></section><section><h5 id=llm-不具備專業知識缺乏內容根據時容易產生幻覺hallucination>LLM 不具備專業知識。缺乏內容根據時，容易產生幻覺(hallucination)</h5><p><img loading=lazy src=llm-hallucination.png></p><aside class=notes><p>LLM（大型語言模型）本身並不具備事實知識，而是依賴訓練時的語料與提示輸入來生成回答。當缺乏明確上下文或內容根據時，LLM 容易出現「幻覺」現象，即生成看似合理但實際不正確的資訊。專業領域問題若未提供準確資料支撐，也容易導致錯誤回答。</p></aside></section><section><h3 id=rag-workshop-流程-2>RAG Workshop 流程</h3><ol><li>環境設定：確定參與者都有設定好開發環境</li><li>為什麼需要 RAG（Retrieval-Augmented Generation）<ol><li>RAG 在「文件檢索與提示」上優於人類</li><li>LLM 補強工程師的語言能力</li></ol></li><li><strong>Embedding 與向量數據庫</strong></li><li>Embedding Search</li><li>DIY</li><li>Evaluation</li><li>k8s RAG QA.ipynb</li></ol></section><section><h3 id=rag-workshop-流程-3>RAG Workshop 流程</h3><ol><li>確定參與者都有跑一套RAG起來</li><li><strong>Evaluation</strong></li><li>k8s RAG QA.ipynb</li></ol></section><section><h3 id=如何評估-rag-系統的品質>如何評估 RAG 系統的品質?</h3><ol><li>人人都會下 prompt，但是誰的 prompt 更好？或是沒差別？</li><li>如何選擇 vector store 的 chunking 策略？</li><li>哪個 retriever 更好？</li><li>要如何持續改善 RAG 系統？下個迭代的改善方向是什麼？</li><li>是否符合 production criteria？</li></ol></section><section><h3 id=評估確保回答品質可靠性與可控性>評估：確保回答品質可靠性與可控性</h3><ol><li>保證正確性：檢索出的資訊是正確的，生成的答案忠實於原始 context</li><li>降低幻覺風險：即使有資料，LLM 仍可能亂編</li><li>測量系統品質</li><li>改善依據：幫助驗證Chunking 策略，Prompt 設計，Retriever 模型調整</li><li>自動化監控：品質追蹤、問題定位，建立類似 APM 的 QA 指標</li><li>對 Stakeholder 展示成效：可視化與量化指標，有助溝通與資源投入</li></ol><aside class=notes><p>評估方式建議</p><ul><li>Retrieval：Recall@K, MRR, nDCG</li><li>Generation：ROUGE, BERTScore, GPTScore</li><li>Faithfulness：依據來源資料生成？</li><li>人工標註：相關性、正確性、幫助程度</li></ul></aside></section><section><h3 id=rag-應用-以-k8s-official-docs-為例>RAG 應用: 以 k8s official docs 為例</h3></section><section><h3 id=總結>總結</h3><ol><li>為什麼需要 RAG</li><li>Embedding 與向量數據庫</li><li>Embedding Search</li><li>DIY</li><li>Evaluation</li><li>k8s RAG QA</li></ol></section><section><h5 id=由衷地感謝為-workshop-提供協助的夥伴>由衷地感謝為 workshop 提供協助的夥伴!</h5><p><a href=https://github.com/pymia>Mia // Huai-Wen Chang</a></p><p><a href=https://github.com/hunkue>hunkue</a></p></section><section><h3 id=maicoin-we-are-hiring>MaiCoin: We are Hiring!!</h3><ul><li><a href=https://www.linkedin.com/jobs/view/4236558674/>Senior Site Reliability Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236555801>Senior Data Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236555811>Senior IT Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236556713>Blockchain Engineer (Wallet Team)</a></li><li><a href=https://www.linkedin.com/jobs/view/4236558714>Senior Backend Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236523560/>Micro Service Software Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236559632>Cyber Security Engineer</a></li></ul></section><section><h3 id=diy--qa--建議>DIY + Q&amp;A + 建議</h3><ol><li>下次會改用 Colab</li></ol></section></div></div><script type=text/javascript src=/reveal-hugo/object-assign.js></script><script src=/reveal-js/dist/reveal.js></script><script type=text/javascript src=/reveal-js/plugin/markdown/markdown.js></script><script type=text/javascript src=/reveal-js/plugin/highlight/highlight.js></script><script type=text/javascript src=/reveal-js/plugin/zoom/zoom.js></script><script type=text/javascript src=/reveal-js/plugin/notes/notes.js></script><script type=text/javascript>function camelize(e){return e&&Object.keys(e).forEach(function(t){newK=t.replace(/(_\w)/g,function(e){return e[1].toUpperCase()}),newK!=t&&(e[newK]=e[t],delete e[t])}),e}var revealHugoDefaults={center:!0,controls:!0,history:!0,progress:!0,transition:"slide"},revealHugoSiteParams={},revealHugoPageParams={custom_theme:"reveal-hugo/themes/robot-lung.css",highlight_theme:"color-brewer",margin:.2,templates:{hotpink:{background:"#FF4081",class:"hotpink"}},transition:"slide",transition_speed:"fast"},revealHugoPlugins={plugins:[RevealMarkdown,RevealHighlight,RevealZoom,RevealNotes]},options=Object.assign({},camelize(revealHugoDefaults),camelize(revealHugoSiteParams),camelize(revealHugoPageParams),camelize(revealHugoPlugins));Reveal.initialize(options)</script><script type=text/javascript src=/mermaid.min_16862243754454536095.js></script><script type=text/javascript>mermaid.initialize({startOnLoad:!1});let render=e=>{let t=e.currentSlide.querySelectorAll(".mermaid");if(!t.length)return;t.forEach(e=>{let t=e.getAttribute("data-processed");t||mermaid.init(0[0],e)})};render({currentSlide:Reveal.getCurrentSlide()}),Reveal.on("slidechanged",render),Reveal.on("ready",render)</script></body></html>
+# 使用 Qdrant 作為向量數據庫
+client = qdrant_client.QdrantClient(
+    host=&quot;localhost&quot;,
+    prefer_grpc=True,
+)
+
+'''
+query_docs 函數用於查詢相關文檔
+查詢指定的 collection_name
+使用指定的模型model進行嵌入查詢
+返回最相關的文檔
+'''
+def query_docs(query, collection_name=&quot;covid-qa-3-large&quot;, model=&quot;text-embedding-3-large&quot; , top_k=5):
+
+    '''
+    query_embeddings 函數用於獲取查詢的語意嵌入向量
+    換句話說，把查詢的問題轉換為向量表示
+    example: &quot;What is COVID-19?&quot; -&gt; [0.1, 0.2, 0.3, ...] 一個固定長度的向量
+    '''
+    query_embeddings = get_embedding(query, model)
+
+    '''
+    使用 Qdrant 客戶端 query_points 函數查詢相關文檔
+    返回指定 collection_name 中與 query_embeddings 最相似的前 top_k 個點
+    '''
+    results = client.query_points(
+        cㄨollection_name=collection_name, // 查詢的 collection 名稱
+        query=query_embeddings, // 輸入查詢的語意嵌入向量
+        limit=5, // 返回前 5 個最相關的點
+        with_payload=True,
+        using=&quot;title&quot; // 使用指定的索引字段進行查詢
+    )
+
+    # 提取查詢結果中的 payload（即答案）
+    payloads = [point.payload[&quot;answer&quot;] for point in results.points]
+    return payloads
+
+'''
+使用 OpenAI 的 GPT 模型生成回答
+docs 是從向量數據庫中查詢到的相關文檔
+將 context 與原始問題組合成 prompt 將 query + context 組合起來，如：
+
+根據以下資料回答問題：
+===
+[段落1]
+[段落2]
+===
+問題：COVID 的全名是什麼？
+'''
+def generate_answer(query, docs, model=&quot;gpt-4o-mini&quot;):
+    context = &quot;\n\n&quot;.join(docs)
+    prompt = f&quot;&quot;&quot;根據以下內容回答問題：
+    1. 請用繁體中文回答
+    2. 依照內容產生回答
+    3. 附上內容原文作為依據，原文保留內容的原始語言
+    4. 如果內容不包含就回答我不知道
+    
+    內容：
+    {context}
+    
+    問題：
+    {query}
+    &quot;&quot;&quot;
+
+    res = openai_client.chat.completions.create(
+        model=model, # 使用指定的 OpenAI 模型
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;你是一個 helpful AI 助理&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}
+        ],
+        temperature=0.2
+    )
+    return res.choices[0].message.content.strip()
+
+# 使用範例
+query = &quot;COVID 的全名是什麼&quot;
+
+# 根據 query 查詢相關文檔 docs
+docs = query_docs(
+    query=query,
+    collection_name=&quot;covid-qa-3-large&quot;,
+    model=&quot;text-embedding-3-large&quot;)
+
+# 將查詢結果 docs 與 query 一起生成回答
+answer = generate_answer(
+    query=query, 
+    docs=docs, 
+    model=&quot;gpt-4o-mini&quot;)
+
+print(&quot;\n🧠 回答：&quot;)
+print(answer)
+
+🧠 回答：
+COVID 的全名是「Coronavirus Disease 2019」，簡稱 COVID-19。
+
+依據原文：
+&quot;WHO announced “COVID-19” as the name of this new disease on 11 February 2020, following guidelines previously developed with the World Organisation for Animal Health (OIE) and the Food and Agriculture Organization of the United Nations (FAO).&quot;
+</code></pre></section><section><h4 id=可以增強-gpt-4o-的冷笑話知識>可以增強 gpt-4o 的冷笑話知識</h4><p><img loading=lazy src=/images/rag-cold-joke.jpg></p></section><section><h4 id=或是把-k8s-官方文件全部塞進-vector-db>或是把 K8s 官方文件全部塞進 vector DB</h4><p><a href=https://github.com/chechiachang/rag-workshop/blob/main/notebook/6_k8s_RAG_QA.ipynb>https://github.com/chechiachang/rag-workshop/blob/main/notebook/6_k8s_RAG_QA.ipynb</a></p><ul><li>透過 prompt 嚴格限制 LLM 根據上下文提供的文件回答，而不要依賴 LLM 的訓練資料</li><li>LLM 只提供語言邏輯</li><li>這樣可以減少 LLM 的幻覺（hallucination），並提高回答的準確性</li><li>增加可觀測性，每個回答都可以追溯到具體的上下文文件</li></ul></section></section><section><section data-shortcode-section><h5 id=我知道-rag-是什麼了但為何要打造內部知識庫>我知道 RAG 是什麼了，但為何要打造內部知識庫？</h5><p>🔽</p></section><section><h5 id=我知道-rag-是什麼了但為何要打造內部知識庫-1>我知道 RAG 是什麼了，但為何要打造內部知識庫？</h5><ul><li>企業內部文件往往分散於 Slack、Confluence、Google Drive、Notion 等平台</li><li>傳統關鍵字搜尋難以快速獲取準確資訊</li><li>特定職位的工程師會變成回答問題的「門神」</li><li>相同的問題被問了無數次</li><li>新人需要花費大量時間去搜尋、理解與學習</li><li>導致溝通成本高、開發流程受阻</li></ul><p>需要一個統一的知識庫，能夠快速檢索、理解並回答問題</p></section><section><h5 id=使用-rag-agent-增強內部知識傳遞>使用 RAG Agent 增強內部知識傳遞</h5><ul><li>入門的的問題與重複的問題，不需要人類回答</li><li>LLM 的語言修飾能力優於平均工程師（表達的更通順）</li><li>LLM 可以根據使用者的問題，提供多元的回答方式（舉例說明，換句話說）</li><li><strong>Agent</strong> 結合 <a href=https://openai.github.io/openai-agents-python/tools/>function tools</a> / mcp server 可以整合更多資料來源</li><li>RAG Agent 24/7 可用不需休息，也不會失去耐心</li></ul></section><section><h5 id=rag-agent-的優勢>RAG Agent 的優勢</h5><ul><li>入門的的問題與重複的問題 &mdash;> 基礎問題的正確率高</li><li>LLM 的語言修飾能力優於平均人類 &mdash;> 表達的更通順</li><li>LLM 根據使用者的問題調整回答方式 &mdash;> 互動問答，舉例說明，換句話說</li><li>RAG Agent 不需休息，不會失去耐心 &mdash;> 比我本人還高可用</li><li>自動化 &mdash;> 結合監測系統，主動推送需要的訊息</li><li>標準化回答</li></ul></section><section><h5 id=rag-agent--mcp-server>RAG Agent + MCP Server</h5><div class=mermaid>graph LR
+subgraph " "
+direction LR
+A1("RAG Agent / MCP Client")
+B1("Confluence MCP Server")
+B2("Confluence")
+C1("Github MCP Server")
+C2("Github")
+D1("Slack MCP Server")
+D2("Slack Bot")
+E1("MySQL MCP Server")
+E2("MySQL")
+F1("工程師")
+A1 --> B1
+B1 --> B2
+A1 --> C1
+C1 --> C2
+A1 --> D1
+D1 --> D2
+A1 --> E1
+E1 --> E2
+D2 <--問答--> F1
+end</div><p>透過 <a href=https://modelcontextprotocol.io/introduction#general-architecture>MCP Protocol</a>，可以將不同的資料來源（如 Confluence、Github、Slack 等）整合到 RAG Agent 中。這樣，RAG Agent 可以在不同的上下文中提供一致的回答。不需要寫額外的程式碼，或只需要 LLM generate 一些簡單的程式碼。</p></section><section><h5 id=rag-自動化-新人-onboarding>RAG 自動化: 新人 onboarding</h5><div class=mermaid>graph LR
+subgraph " "
+direction LR
+A1("Onboarding Tasks")
+B1("RAG Agent")
+C1("架構設計文件/SOP/Runbook")
+D1("階段性測驗")
+F1("庶務/交接")
+E1("新人工程師")
+A1 --> B1
+C1 --> B1
+D1 --> B1
+F1 --> B1
+B1 --互動式 Onboarding--> E1
+E1 --提出問題--> B1
+end</div><p>新人在入職時需要了解公司的內部流程、架構設計和運維知識。傳統的 onboarding 過程往往依賴資深工程師手動指導和文檔查閱，效率低下。透過 RAG Agent，可以提供互動式的 onboarding 體驗，並且可以不斷溫習和更新知識。</p></section><section><h5 id=rag-自動化-第一時間alert處理>RAG 自動化: 第一時間Alert處理</h5><div class=mermaid>graph LR
+subgraph " "
+direction LR
+A1(("Alert/Metrics"))
+B1("內部文件 RAG")
+C1("內部Runbook")
+D1("架構設計文件")
+E1("Slack")
+F1("Alert/文件/處理步驟
+交給on-duty工程師")
+A1 --> B1
+B1 --> C1
+B1 --> D1
+A1 --> E1
+C1 --> E1
+D1 --> E1
+E1 --> F1
+end</div><p>工程師處理 alert 時，通常需要查閱內部文件、Runbook 或架構設計文件。這些文件往往分散在不同的系統中，導致查找過程耗時。</p></section><section><blockquote><p>AI Copilot 不應該像圖書館守門員等人來借書，
+而應該像導航系統，在你開車時主動告訴你：前方有彎道。</p></blockquote><aside class=notes><p>基本上我們期待的解決方案是這樣</p></aside></section><section><h5 id=修復完全自動化-k8sgpt>修復完全自動化 k8sGPT</h5><div class=mermaid>graph LR
+subgraph " "
+direction LR
+A1(("K8s Events/Metrics"))
+B1("內部文件 RAG")
+C1("錯誤處理Runbook")
+D1("架構設計文件")
+E1("k8sGPT Apply")
+A1 --> B1
+B1 --> C1
+B1 --> D1
+A1 --> E1
+C1 --> E1
+D1 --> E1
+end</div><p>當 k8s 事件或指標觸發時，k8sGPT 可以自動查詢內部文件、Runbook 或架構設計文件，並根據檢索到的內容生成修復建議。</p><ul><li><a href="https://www.youtube.com/watch?v=EXtCejkOJB0">KubeCon Europe 2025</a><ul><li>Superpowers for Humans of Kubernetes: How <a href=https://k8sgpt.ai/>K8sGPT</a> Is Transforming Enterprise Ops - Alex Jones, AWS & Anais Urlichs, JP Morgan Chase</li></ul></li></ul></section></section><section><h3 id=如何開始>如何開始？</h3><ol><li>學習如何使用 RAG 與 LLM Agent（ex. 參加我的工作坊）</li><li>挑選一個簡單卻耗時的日常任務</li><li>將任務所有已知的知識存入向量數據庫</li><li>使用 RAG Agent 來回答問題</li><li>結合通訊軟體（如 Slack）來提供即時回答</li><li>根據使用者反饋不斷優化知識庫與回答方式</li></ol></section><section><h3 id=如何改進>如何改進？</h3><ol><li>設定量化目標</li><li>Evaluation：量化 RAG Agent 性能</li><li>根據 Evaluation 結果調整RAG，追求特定 Metrics（如回答準確率）提升</li><li>持續迭代：根據使用者反饋與新知識更新向量數據庫</li></ol><ul><li><a href=https://chechia.net/slides/2025-06-05-devops-rag-internal-ai/#/32>https://chechia.net/slides/2025-06-05-devops-rag-internal-ai/#/32</a></li><li><a href=https://github.com/chechiachang/rag-workshop/blob/main/notebook/5_Evaluation.ipynb>https://github.com/chechiachang/rag-workshop/blob/main/notebook/5_Evaluation.ipynb</a></li></ul></section><section><h3 id=總結>總結</h3><ol><li>什麼是 RAG</li><li>為什麼需要 RAG</li><li>為何需要內部知識庫</li><li>RAG Agent 的優勢</li><li>RAG Agent 的應用場景</li><li>如何開始/如何進步</li></ol></section><section><h3 id=q--a>Q & A</h3><p>沒時間的話可以待會來找我聊天
+🔽</p></section><section><h3 id=maicoin-we-are-hiring>MaiCoin: We are Hiring!!</h3><ul><li><a href=https://www.linkedin.com/jobs/view/4236558674/>Senior Site Reliability Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236555801>Senior Data Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236555811>Senior IT Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236556713>Blockchain Engineer (Wallet Team)</a></li><li><a href=https://www.linkedin.com/jobs/view/4236558714>Senior Backend Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236523560/>Micro Service Software Engineer</a></li><li><a href=https://www.linkedin.com/jobs/view/4236559632>Cyber Security Engineer</a></li></ul></section></div></div><script type=text/javascript src=/reveal-hugo/object-assign.js></script><script src=/reveal-js/dist/reveal.js></script><script type=text/javascript src=/reveal-js/plugin/markdown/markdown.js></script><script type=text/javascript src=/reveal-js/plugin/highlight/highlight.js></script><script type=text/javascript src=/reveal-js/plugin/zoom/zoom.js></script><script type=text/javascript src=/reveal-js/plugin/notes/notes.js></script><script type=text/javascript>function camelize(e){return e&&Object.keys(e).forEach(function(t){newK=t.replace(/(_\w)/g,function(e){return e[1].toUpperCase()}),newK!=t&&(e[newK]=e[t],delete e[t])}),e}var revealHugoDefaults={center:!0,controls:!0,history:!0,progress:!0,transition:"slide"},revealHugoSiteParams={},revealHugoPageParams={custom_theme:"reveal-hugo/themes/robot-lung.css",highlight_theme:"color-brewer",margin:.2,templates:{hotpink:{background:"#FF4081",class:"hotpink"}},transition:"slide",transition_speed:"fast"},revealHugoPlugins={plugins:[RevealMarkdown,RevealHighlight,RevealZoom,RevealNotes]},options=Object.assign({},camelize(revealHugoDefaults),camelize(revealHugoSiteParams),camelize(revealHugoPageParams),camelize(revealHugoPlugins));Reveal.initialize(options)</script><script type=text/javascript src=/mermaid.min_16862243754454536095.js></script><script type=text/javascript>mermaid.initialize({startOnLoad:!1});let render=e=>{let t=e.currentSlide.querySelectorAll(".mermaid");if(!t.length)return;t.forEach(e=>{let t=e.getAttribute("data-processed");t||mermaid.init(0[0],e)})};render({currentSlide:Reveal.getCurrentSlide()}),Reveal.on("slidechanged",render),Reveal.on("ready",render)</script></body></html>
