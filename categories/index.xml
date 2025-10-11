@@ -11,13 +11,34 @@
     </image>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 01 Aug 2025 00:45:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chechia.net/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rag</title>
+      <link>https://chechia.net/categories/rag/</link>
+      <pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/rag/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Devops</title>
       <link>https://chechia.net/categories/devops/</link>
       <pubDate>Fri, 01 Aug 2025 00:45:00 +0000</pubDate>
       <guid>https://chechia.net/categories/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ai</title>
+      <link>https://chechia.net/categories/ai/</link>
+      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Generative</title>
+      <link>https://chechia.net/categories/generative/</link>
+      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/generative/</guid>
       <description></description>
     </item>
     <item>
@@ -32,20 +53,6 @@
       <link>https://chechia.net/categories/workshop/</link>
       <pubDate>Wed, 25 Jun 2025 00:45:00 +0000</pubDate>
       <guid>https://chechia.net/categories/workshop/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Ai</title>
-      <link>https://chechia.net/categories/ai/</link>
-      <pubDate>Tue, 24 Jun 2025 12:45:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/ai/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Generative</title>
-      <link>https://chechia.net/categories/generative/</link>
-      <pubDate>Tue, 24 Jun 2025 12:45:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/generative/</guid>
       <description></description>
     </item>
     <item>
