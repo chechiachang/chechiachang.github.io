@@ -21,6 +21,13 @@
       <description>學員將學會如何利用 RAG 技術，結合 OpenAI、LangChain、Qdrant 向量數據庫，構建企業內部文檔的智能知識庫，並能設計與實作一個基於自然語言處理（NLP）的查詢系統，來提升開發團隊的效率與知識管理能力。</description>
     </item>
     <item>
+      <title>K8s Summit 2025: Workshop: Get started with Etcd &amp; Kubernetes</title>
+      <link>https://chechia.net/posts/2025-10-22-k8s-summit/</link>
+      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/posts/2025-10-22-k8s-summit/</guid>
+      <description>Etcd 是 Kubernetes 的重要元件之一，本次工作坊將帶領觀眾初探 Etcd，包含安裝，設定，以及操作。並藉由本地的 Etcd 來架設一個最簡單的 Kubernetes Cluster。工作坊內容請見投影片</description>
+    </item>
+    <item>
       <title>COSCUP: 從 Model Context Protocol 初探 AI Agent Protocol：快速打造多工 Agent Server</title>
       <link>https://chechia.net/posts/2025-08-09-coscup/</link>
       <pubDate>Tue, 24 Jun 2025 12:45:00 +0000</pubDate>
