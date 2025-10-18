@@ -14,17 +14,24 @@
     <lastBuildDate>Wed, 01 Oct 2025 13:20:00 +0000</lastBuildDate>
     <atom:link href="https://chechia.net/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Ai</title>
-      <link>https://chechia.net/categories/ai/</link>
+      <title>Aiops</title>
+      <link>https://chechia.net/categories/aiops/</link>
       <pubDate>Wed, 01 Oct 2025 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/ai/</guid>
+      <guid>https://chechia.net/categories/aiops/</guid>
       <description></description>
     </item>
     <item>
-      <title>Generative</title>
-      <link>https://chechia.net/categories/generative/</link>
+      <title>Kubernetes</title>
+      <link>https://chechia.net/categories/kubernetes/</link>
       <pubDate>Wed, 01 Oct 2025 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/generative/</guid>
+      <guid>https://chechia.net/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Workshop</title>
+      <link>https://chechia.net/categories/workshop/</link>
+      <pubDate>Wed, 01 Oct 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/workshop/</guid>
       <description></description>
     </item>
     <item>
@@ -35,24 +42,24 @@
       <description></description>
     </item>
     <item>
+      <title>Ai</title>
+      <link>https://chechia.net/categories/ai/</link>
+      <pubDate>Mon, 01 Sep 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Generative</title>
+      <link>https://chechia.net/categories/generative/</link>
+      <pubDate>Mon, 01 Sep 2025 13:20:00 +0000</pubDate>
+      <guid>https://chechia.net/categories/generative/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Devops</title>
       <link>https://chechia.net/categories/devops/</link>
       <pubDate>Fri, 01 Aug 2025 00:45:00 +0000</pubDate>
       <guid>https://chechia.net/categories/devops/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Kubernetes</title>
-      <link>https://chechia.net/categories/kubernetes/</link>
-      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/kubernetes/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Workshop</title>
-      <link>https://chechia.net/categories/workshop/</link>
-      <pubDate>Sat, 28 Jun 2025 13:20:00 +0000</pubDate>
-      <guid>https://chechia.net/categories/workshop/</guid>
       <description></description>
     </item>
     <item>
