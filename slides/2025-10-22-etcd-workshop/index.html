@@ -3,7 +3,10 @@ ls
 </code></pre></section><section><h3 id=選項1-存取遠端vm-1>選項1: 存取遠端VM</h3><p><img loading=lazy src=/slides/2025-10-22-etcd-workshop/azure-bastion.png></p></section><section><h3 id=選項2-使用非-ubuntu-的電腦>選項2: 使用非 ubuntu 的電腦</h3><h5 id=mac-linux-或-windows-都可以用-windows-可能會有指令格式相容性問題>mac, linux 或 windows 都可以(用 windows 可能會有指令格式相容性問題)</h5><ol><li>自己電腦有裝 <a href=https://docs.docker.com/get-started/get-docker/>docker</a>, <a href=https://github.com/etcd-io/etcd/releases/>etcdctl</a>, <a href=https://kubernetes.io/docs/tasks/tools/#kubectl>kubectl</a></li><li>git clone repository</li><li>docker 啟動開發環境</li></ol><pre><code>git clone https://github.com/chechiachang/etcd-playground.git
 cd etcd-playground
 ls
-</code></pre></section><section><h3 id=選項3-產生-ubuntu-vm-的環境>選項3: 產生 ubuntu VM 的環境</h3><h3 id=回家想要自建-workshop-環境>回家想要自建 workshop 環境</h3><p>workshop 提供的機器，是 ubuntu 24.04 + docker 環境。安裝這些東西，即可自行產生一台 workshop 環境</p><ul><li><a href=https://github.com/chechiachang/terraform-azure/blob/main/templates/cloud_config/workshop.yaml>github.com/chechiachang/terraform-azure</a></li><li><a href=https://docs.docker.com/get-started/get-docker/>docker</a>, <a href=https://github.com/etcd-io/etcd/releases/>etcdctl</a>, <a href=https://kubernetes.io/docs/tasks/tools/#kubectl>kubectl</a></li></ul></section><section><section data-shortcode-section><h3 id=確認大家都有操作環境>確認大家都有操作環境</h3><h5 id=等待的同時說明何為-etcd>等待的同時，說明何為 Etcd</h5><p>🔽</p></section><section><p><a href=https://kubernetes.io/docs/concepts/overview/components/>https://kubernetes.io/docs/concepts/overview/components/</a></p><p><img loading=lazy src=https://kubernetes.io/images/docs/components-of-kubernetes.svg></p></section><section><p><a href=https://kubernetes.io/docs/concepts/overview/components/>https://kubernetes.io/docs/concepts/overview/components/</a></p><blockquote><p>Consistent and highly-available key value store used as Kubernetes&rsquo; backing store for all cluster data.</p></blockquote><ul><li>etcd 是一個分散式的 key-value 資料庫</li><li>Kubernetes 的資料都存放在 etcd 中</li><li>使用公有雲服務時，etcd 通常是被管理起來的<ul><li>例如 AWS 的 EKS, Azure 的 AKS, GCP 的 GKE</li></ul></li><li>使用自建的 Kubernetes 時，etcd 通常需要自行安裝與維運<ul><li>備份與還原，災難復原，擴充節點，安全性，效能&mldr;等等</li></ul></li></ul></section></section><section><h3 id=etcd-基礎操作-啟動一台-etcd>etcd 基礎操作: 啟動一台 etcd</h3><p>一行一行執行底下指令，來啟動一台 etcd</p><pre><code>cd etcd-playground
+</code></pre></section><section><h3 id=選項3-產生-ubuntu-vm-的環境>選項3: 產生 ubuntu VM 的環境</h3><h3 id=回家想要自建-workshop-環境>回家想要自建 workshop 環境</h3><p>workshop 提供的機器，是 ubuntu 24.04 + docker 環境。安裝這些東西，即可自行產生一台 workshop 環境</p><ul><li><a href=https://github.com/chechiachang/terraform-azure/blob/main/templates/cloud_config/workshop.yaml>github.com/chechiachang/terraform-azure</a></li><li><a href=https://docs.docker.com/get-started/get-docker/>docker</a>, <a href=https://github.com/etcd-io/etcd/releases/>etcdctl</a>, <a href=https://kubernetes.io/docs/tasks/tools/#kubectl>kubectl</a></li></ul></section><section><section data-shortcode-section><h3 id=確認大家都有操作環境>確認大家都有操作環境</h3><h5 id=等待的同時說明何為-etcd>等待的同時，說明何為 Etcd</h5><p>🔽</p><ul><li>使用自己的電腦<ul><li>裝 <a href=https://docs.docker.com/get-started/get-docker/>docker</a>, <a href=https://github.com/etcd-io/etcd/releases/>etcdctl</a>, <a href=https://kubernetes.io/docs/tasks/tools/#kubectl>kubectl</a></li><li>git clone repository + docker compose up -d</li></ul></li><li>使用 VM<ul><li><a href=https://workshop.chechia.net>workshop.chechia.net</a></li></ul></li></ul><pre><code>git clone https://github.com/chechiachang/etcd-playground.git
+cd etcd-playground/00-prerequsites/
+docker compose up -d
+</code></pre></section><section><p><a href=https://kubernetes.io/docs/concepts/overview/components/>https://kubernetes.io/docs/concepts/overview/components/</a></p><p><img loading=lazy src=https://kubernetes.io/images/docs/components-of-kubernetes.svg></p></section><section><p><a href=https://kubernetes.io/docs/concepts/overview/components/>https://kubernetes.io/docs/concepts/overview/components/</a></p><blockquote><p>Consistent and highly-available key value store used as Kubernetes&rsquo; backing store for all cluster data.</p></blockquote><ul><li>etcd 是一個分散式的 key-value 資料庫</li><li>Kubernetes 的資料都存放在 etcd 中</li><li>使用公有雲服務時，etcd 通常是被管理起來的<ul><li>例如 AWS 的 EKS, Azure 的 AKS, GCP 的 GKE</li></ul></li><li>使用自建的 Kubernetes 時，etcd 通常需要自行安裝與維運<ul><li>備份與還原，災難復原，擴充節點，安全性，效能&mldr;等等</li></ul></li></ul></section></section><section><h3 id=etcd-基礎操作-啟動一台-etcd>etcd 基礎操作: 啟動一台 etcd</h3><p>一行一行執行底下指令，來啟動一台 etcd</p><pre><code>cd etcd-playground
 ls
 
 cd 00-prerequsites/
@@ -13,16 +16,16 @@ docker compose up -d
 docker ps
 docker logs -f etcd-0
 </code></pre><p>卡住時 ctrl + c to exit</p><p>指令打一半可以按 tab auto complete</p></section><section><h5 id=etcd-基礎操作-啟動一台-etcd-1>etcd 基礎操作: 啟動一台 etcd</h5><div class=mermaid>graph TD
-subgraph "Host (Ubuntu)"
+subgraph "Remot Host (Ubuntu VM)"
 A("etcd-0 (driver: bridge)")
 B["terminal (kubectl, etcdctl)"]
 end
-subgraph "Local Host(自己的電腦)"
+subgraph "Local(自己的電腦)"
 C["Web Browser"]
 end
 B -- 控制 --> A
 C -- Azure ssh bastion --> B
-subgraph "Host (自己的電腦)"
+subgraph "Local Host (自己的電腦)"
 A1("etcd-0 (driver: bridge)")
 B1["terminal (kubectl, etcdctl)"]
 end
